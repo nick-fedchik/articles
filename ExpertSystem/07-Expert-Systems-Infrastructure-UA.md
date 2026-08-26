@@ -185,6 +185,61 @@ P_{\mathrm{peak}} = N_{\mathrm{units}} \times f_{\mathrm{clock}} \times \mathrm{
 
 Бренди й архітектури тут визначають межі: серверні x86-64 (Intel Xeon, AMD EPYC) дають багато ядер, широкі канали пам'яті й векторні розширення; ARM (AArch64) - Ampere Altra, AWS Graviton, Apple Silicon - виграє в продуктивності на ват. Практично: CPU лишається головним робочим шаром експертної системи, бо саме такої математики в ній найбільше.
 
+### AMD та Intel для локального AI: не один процесор, а кілька класів систем
+
+Порівнювати лише назви процесорів недостатньо. Для локальної AI-системи важливо, де міститься модель, який обчислювач її виконує та чи можна додати дискретні прискорювачі. Компактний APU з об'єднаною пам'яттю може запустити більшу квантизовану мовну модель, ніж дорога CPU-станція без GPU, але станція з Threadripper PRO або Xeon 600 дає більше ліній PCIe для кількох GPU, FPGA, швидких мережевих карт і накопичувачів.
+
+| Рішення AMD | Для чого найцікавіше в AI-системі |
+|---|---|
+| **Ryzen AI Max+ 395** | Компактна локальна AI-станція: 16 CPU-ядер, Radeon 8060S, NPU до 50 TOPS і до 128 ГБ об'єднаної пам'яті; великі квантизовані LLM без окремої відеокарти, прототипи розподілу роботи між CPU, GPU та NPU |
+| **Ryzen AI Max+ PRO 495 / Ryzen AI Max PRO 400** | Найбільший запас пам'яті серед наведених клієнтських платформ: до 192 ГБ об'єднаної пам'яті, з яких до 160 ГБ може бути виділено GPU; локальні агентні системи та моделі, що не вміщуються у звичайні 24–32 ГБ VRAM. Це нова платформа 2026 року, тому треба перевіряти фактичну доступність конкретної OEM-системи |
+| **Radeon AI PRO R9700, 32 ГБ** | Дискретний RDNA 4 GPU для локального виведення, донавчання й генеративних моделей; 32 ГБ VRAM і підтримка ROCm роблять його практичнішим за 16-гігабайтний клас для моделей середнього розміру |
+| **Radeon RX 9070 XT, 16 ГБ** | Доступніша ROCm-станція для розробки й тестів, якщо модель уміщується в 16 ГБ; підтримку ОС, фреймворку та конкретних операцій перевіряють за матрицею ROCm |
+| **Ryzen Threadripper 9000 + TRX50** | R&D-станція з високою CPU-продуктивністю та достатньою кількістю PCIe для кількох GPU, FPGA, NVMe й швидкої мережі |
+| **Ryzen Threadripper PRO 9000 WX + WRX90** | Велика керована робоча станція або корпоративна лабораторія: більше каналів пам'яті, ECC, ліній PCIe й засобів керування; доречно для багатьох прискорювачів та великих конвеєрів підготовки даних |
+| **AMD Instinct MI-серії** | Дата-центрове навчання, HPC і масове виведення; це серверні прискорювачі з HBM та ROCm, а не звичайна персональна відеокарта |
+
+| Рішення Intel | Для чого найцікавіше в AI-системі |
+|---|---|
+| **Core Ultra 200S / 200S Plus** | Настільна AI-станція початкового рівня: CPU, вбудована графіка й NPU; експерименти OpenVINO та фонове виведення, але не заміна дискретного GPU для великої LLM |
+| **Core Ultra Series 3 mobile** | Енергоощадна периферійна розробка: до 50 NPU TOPS у старших мобільних моделях, вбудована Arc-графіка, локальні audio/vision та постійно активні моделі |
+| **Intel AI Boost NPU** | Класифікація, розпізнавання, аудіо, невеликі embeddings і фонові моделі з низьким енергоспоживанням; реальний список операцій визначають OpenVINO, драйвер і покоління NPU |
+| **Intel Arc Pro B-серії** | Доступний дискретний GPU для OpenVINO, oneAPI та Level Zero: B50/B60/B65/B70 мають від 16 до 32 ГБ VRAM; локальне виведення та багатокарткові дослідницькі станції |
+| **Xeon 600 + W890** | Професійна робоча станція з пам'яттю ECC/MRDIMM, AMX і до 128 ліній PCIe 5.0; кілька GPU/FPGA, великі набори даних і CPU-виведення INT8/BF16 |
+| **Xeon 6 із продуктивними ядрами** | Серверне CPU-виведення через AMX, підготовка даних, векторні бази, мережеві служби та керування гетерогенними прискорювачами |
+| **Gaudi 3** | Дата-центрове навчання й виведення великих моделей у PCIe- або масштабованих системах зі стандартною Ethernet-мережею; окремий AI-прискорювач, а не функція Xeon |
+| **OpenVINO** | Єдиний високорівневий шлях виведення на підтриманих Intel CPU, вбудованій або дискретній графіці та NPU; модель однаково треба компілювати й вимірювати на кожному пристрої |
+| **oneAPI, oneDNN та Level Zero** | Оптимізовані CPU/GPU-ядра, гетерогенні обчислення й низькорівневе керування прискорювачами; це програмні шари, а не окреме обладнання |
+| **Altera Agilex FPGA та FPGA AI Suite** | Прототипи власних прискорювачів, детерміновані потоки даних, sensor fusion і периферійний AI; Agilex 5 має апаратні AI Tensor Blocks, але розробка й верифікація складніші, ніж для готового GPU/NPU |
+
+### Флагманські CPU робочих станцій: Threadripper PRO 9995WX проти Xeon 698X
+
+Це порівняння саме центральних процесорів і платформ. Воно не стверджує, що CPU швидший за GPU у великих матричних операціях.
+
+| Характеристика | AMD Ryzen Threadripper PRO 9995WX | Intel Xeon 698X | Значення для AI |
+|---|---:|---:|---|
+| Ядра / потоки | 96 / 192 | 86 / 172 | Більше ядер допомагає паралельному збиранню даних, токенізації, індексації, симуляції та CPU-serving |
+| Максимальна частота | До 5,4 ГГц | До 4,8 ГГц | Важлива для нерегулярної логіки, графових запитів і малих пакетів із низькою затримкою; це не гарантія швидшого inference |
+| Пам'ять | 8 каналів DDR5 RDIMM ECC, до 6400 MT/s | 8 каналів DDR5/MRDIMM ECC, DDR5 до 6400 MT/s, MRDIMM до 8000 MT/s; до 4 ТБ | Пропускна здатність і місткість визначають швидкість підготовки даних, CPU-моделей та кількість одночасних процесів |
+| PCIe 5.0 від CPU | До 128 ліній PCIe 5.0 із 144 придатних ліній загалом | До 128 ліній PCIe 5.0 | Обидві платформи придатні для багатьох GPU, FPGA, NVMe та мережевих адаптерів без вузького чипсетного каналу |
+| AI-інструкції CPU | AVX-512 | AVX-512, AMX, Intel DL Boost | Intel має спеціалізований матричний шлях для INT8/BF16; AMD компенсує це більшою кількістю ядер, але вибір вирішує вимірювання конкретної моделі |
+| Типовий сильний сценарій | Максимально паралельна універсальна workstation, preprocessing і multi-accelerator R&D | CPU-виведення через OpenVINO/oneDNN, матричні ядра AMX і multi-accelerator R&D | Для великої LLM основний throughput зазвичай дає дискретний GPU/прискорювач; CPU координує конвеєр і обробляє нерегулярні частини |
+
+### Флагманські серверні CPU для AI: EPYC 9965 проти Xeon 6787P
+
+Для Intel тут обрано флагман Xeon 6 із продуктивними ядрами й AMX, а не Xeon 6+ із максимальною кількістю енергоефективних ядер: мета таблиці — порівняти CPU для AI-виведення та гетерогенного сервера, а не лише щільність контейнерів.
+
+| Характеристика | AMD EPYC 9965 | Intel Xeon 6787P | Значення для AI |
+|---|---:|---:|---|
+| Ядра / потоки | 192 / 384 | 86 / 172 | EPYC орієнтований на високу щільність паралельних служб, підготовку даних і CPU-serving; число ядер не дорівнює швидкості однієї моделі |
+| Максимальна частота / TDP | До 3,7 ГГц / 500 Вт | До 3,8 ГГц / 350 Вт | Енергобюджет треба рахувати на рівні всього вузла разом із пам'яттю, GPU й мережею |
+| Пам'ять | 12 каналів DDR5-6400, до 614 ГБ/с на сокет | 8 каналів DDR5/MRDIMM, до 8000 MT/s | EPYC має більше каналів; Intel підтримує швидкі MRDIMM. Для CPU inference вирішує виміряна пропускна здатність на потрібній розрядності |
+| PCIe 5.0 / масштабування | 128 ліній, 1–2 сокети | 88 ліній, 1–2 сокети | Більше ліній спрощує пряме підключення прискорювачів і NVMe; конкретна серверна плата може розподіляти їх інакше |
+| AI та data-path інструкції | AVX-512 | AVX-512, AMX, DL Boost, QAT, DSA | Xeon має явні матричні й інфраструктурні прискорювачі; EPYC дає багато універсальних ядер і високу пропускну здатність пам'яті |
+| Типовий сильний сценарій | Велика кількість паралельних сервісів, векторні бази, ETL, симуляції, host CPU для багатьох прискорювачів | CPU-only або гібридне INT8/BF16-виведення, шифрування/стиснення, підготовка й переміщення даних біля прискорювачів | Для training та великого serving порівнюють уже всю систему: CPU + GPU/Gaudi/Instinct + пам'ять + мережа + runtime |
+
+Практичний висновок: **Ryzen AI Max** обирають, коли модель має поміститися у велику об'єднану пам'ять компактної локальної системи; **Threadripper PRO або Xeon 600** — коли потрібні кілька дискретних прискорювачів та багато PCIe; **EPYC або Xeon 6** — коли центральний процесор обслуговує великий серверний конвеєр. Порівнювати ці класи одним числом TOPS некоректно: для кожного треба виміряти якість моделі, час до першого токена, токени за секунду, p95-затримку, пам'ять, енергію та вартість корисної відповіді.
+
 Коли кажемо «векторні розширення», йдеться не про окремий прискорювач поруч із CPU, а про SIMD-блоки (*Single Instruction, Multiple Data*) всередині ядра: одна інструкція виконує одну операцію над кількома числами. На x86 це сімейство SSE, AVX, AVX2 і AVX-512: 128-бітні XMM-регістри, 256-бітні YMM-регістри, 512-бітні ZMM-регістри, маскові регістри k0-k7 для AVX-512, блоки FMA (*Fused Multiply-Add*) для операцій виду a*b+c і векторні блоки завантаження/запису пам'яті. У новіших серверних Intel є AMX (*Advanced Matrix Extensions*) з плитковими регістрами TMM для матричних множень у низькій розрядності. На ARM це NEON/Advanced SIMD зі 128-бітними Q/V-регістрами, а в серверному та HPC-сегменті - SVE/SVE2 зі масштабованими Z-регістрами і предикатними P-регістрами. Практично: CPU добре тягне невеликі ембедери, реранкери або фільтри там, де дані вже в кеші й важлива мала затримка; але для великих пакетів щільної математики GPU/NPU усе одно виграють за паралелізмом і енергією.
 
 **Приклад розрахунку для CPU.** Паралелізм центрального процесора дає SIMD: ширину векторного регістра ділимо на розрядність одного числа (для AVX-512 і 32-бітного FP32 це 512/32 = 16 чисел за інструкцію), множимо на кількість ядер, частоту, кількість FMA-блоків і на 2.
@@ -474,7 +529,11 @@ flowchart LR
 - Elham Tabassi. [*Artificial Intelligence Risk Management Framework 1.0*](https://doi.org/10.6028/NIST.AI.100-1), NIST, 2023. Чому швидкість не може бути єдиним критерієм придатності AI-системи.
 - NVIDIA. [*Vera Rubin platform*](https://developer.nvidia.com/blog/inside-the-nvidia-rubin-platform-six-new-chips-one-ai-supercomputer/), [*TensorRT prerequisites and support*](https://docs.nvidia.com/deeplearning/tensorrt/latest/installing-tensorrt/prerequisites.html) і [*Jetson modules*](https://developer.nvidia.com/embedded/jetson-modules). Первинні дані про сучасний стек Blackwell/Rubin, runtime і edge-модулі.
 - PNY Technologies. [*NVIDIA workstation GPUs*](https://www.pny.com/en-eu/professional/hardware/nvidia-workstation-gpus), [*NVIDIA DGX systems*](https://www.pny.com/en-eu/professional/hardware/nvidia-dgx-systems), [*NVIDIA L40S*](https://www.pny.com/nvidia-l40s?iscommercial=true) і [*PNY AI Lab*](https://www.pny.com/professional/resource-center/pny-ai-lab). Первинні матеріали про професійні GPU поколінь Blackwell/Ada/Ampere, дата-центрові та програмні рішення, DGX і попередню перевірку AI-конфігурацій.
+- AMD. [*Ryzen AI Max+ 395*](https://www.amd.com/en/products/processors/laptop/ryzen/ai-300-series/amd-ryzen-ai-max-plus-395.html), [*Ryzen AI Max PRO 400 та Ryzen AI Halo*](https://www.amd.com/en/blogs/2026/amd-powers-next-generation-agent-computers-with-new-ryzen-ai-hal.html), [*Threadripper PRO 9995WX*](https://www.amd.com/en/products/processors/workstations/ryzen-threadripper/9000-wx-series/amd-ryzen-threadripper-pro-9995wx.html) і [*EPYC 9965*](https://www.amd.com/en/products/processors/server/epyc/9005-series/amd-epyc-9965.html). Характеристики об'єднаної пам'яті, workstation- та server-платформ для порівняльних таблиць.
+- AMD. [*Radeon AI PRO R9700*](https://www.amd.com/en/products/graphics/workstations/radeon-ai-pro/ai-9000-series/amd-radeon-ai-pro-r9700.html) і [*матриця підтримки ROCm*](https://rocm.docs.amd.com/en/latest/reference/gpu-specs.html). Первинні характеристики дискретного AI GPU та перелік підтриманих Radeon/Instinct-пристроїв.
 - AMD. [*Instinct MI350 series*](https://www.amd.com/en/products/accelerators/instinct/mi350.html) і [*ROCm 7 documentation*](https://rocm.docs.amd.com/). Поточні прискорювачі, HBM і версійована матриця runtime/framework.
+- Intel. [*Xeon 698X*](https://www.intel.com/content/www/us/en/products/sku/243857/intel-xeon-698x-processor-336m-cache-2-00-ghz/specifications.html), [*Xeon 600 для робочих станцій*](https://www.intel.com/content/www/us/en/products/details/processors/xeon/workstations.html), [*Xeon 6787P*](https://www.intel.com/content/www/us/en/products/sku/241844/intel-xeon-6787p-processor-336m-cache-2-00-ghz/specifications.html) і [*Xeon 6 з продуктивними ядрами*](https://www.intel.com/content/www/us/en/products/details/processors/xeon/6-p-core-series.html). Первинні характеристики ядер, пам'яті, PCIe, AMX та серверного масштабування.
+- Intel та Altera. [*Core Ultra 200S Plus*](https://newsroom.intel.com/client-computing/intel-announces-new-intel-core-ultra-200s-plus-series-desktop-processors), [*Core Ultra Series 3*](https://newsroom.intel.com/artificial-intelligence/ces-2026-intel-core-ultra-series-3-debut-first-built-on-intel-18a), [*Arc Pro B-серії*](https://www.intel.com/content/www/us/en/ark/products/series/242616/intel-arc-pro-b-series-graphics.html), [*Gaudi 3*](https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators/gaudi.html) та [*Agilex 5*](https://www.altera.com/products/fpga/agilex/5). Первинні матеріали про NPU, GPU, дата-центрові AI-прискорювачі та програмовані AI Tensor Blocks.
 - Intel. [*OpenVINO toolkit*](https://www.intel.com/content/www/us/en/developer/tools/openvino-toolkit/overview.html) і [*oneAPI*](https://www.intel.com/content/www/us/en/developer/tools/oneapi/overview.html); Google Cloud. [*TPU*](https://cloud.google.com/tpu); AWS. [*Neuron SDK*](https://awsdocs-neuron.readthedocs-hosted.com/). Первинні програмні шляхи CPU/GPU/NPU/ASIC.
 - Infineon. [*AURIX TC4x*](https://www.infineon.com/products/microcontroller/32-bit-tricore/aurix-tc4x) і [*PSoC Edge with Ethos-U55*](https://documentation.infineon.com/psocedge/docs/bwb1750411526047). Приклади функціонально безпечного MCU та microNPU на периферії.
 - Hailo. [*Hailo-8 AI accelerator*](https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/); Qualcomm. [*AI Engine Direct / QNN*](https://www.qualcomm.com/developer/software/qualcomm-ai-engine-direct-sdk); Apple. [*Core ML*](https://developer.apple.com/machine-learning/core-ml/). Первинні SDK для low-power і on-device inference.
