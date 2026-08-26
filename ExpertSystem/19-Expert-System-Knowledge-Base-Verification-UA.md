@@ -1,6 +1,6 @@
 # Як перевіряти базу знань і машину виведення: верифікація експертної системи
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 19 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 19 із 22
 > **Попередня стаття:** [18 — Від доказової рекомендації до безпечної дії](18-Expert-System-From-Recommendation-To-Action-UA.md)  
 > **Наступна стаття:** [20 — Діагностика в експертних системах](20-Expert-System-Diagnosis-UA.md)  
 > **Зміст серії:** [README](README.md)  
@@ -62,9 +62,9 @@ validation.
 
 Перевірити лише `rules.yaml` недостатньо. Результат залежить від:
 
-$$
+```math
 y=F(x,K,O,P,C,M,R),
-$$
+```
 
 де $x$ — input snapshot, $K$ — knowledge base, $O$ — ontology, $P$ — policy,
 $C$ — conflict resolution, $M$ — ML/model stages, $R$ — runtime/configuration.
@@ -125,9 +125,9 @@ versioned artifact CI, але `sh:conforms=true` не доводить, що в�
 
 Для правила
 
-$$
+```math
 valid\_test\land signed\land\neg blocker\rightarrow allow
-$$
+```
 
 три позитивні facts не достатні. Треба перевірити, що `unknown(blocker)` не
 трактується як $\neg blocker$, якщо policy вимагає closed-world підтвердження.
@@ -137,9 +137,9 @@ $$
 Нехай $R$ — released rules, $R_f\subseteq R$ — rules, які хоча б раз спрацювали
 на suite. Firing coverage:
 
-$$
+```math
 C_{fire}=\frac{|R_f|}{|R|}.
-$$
+```
 
 Високе $C_{fire}$ не означає, що перевірено всі умови. Для rule із $m$
 предикатами потрібні condition/boundary cases. Низьке coverage може означати
@@ -163,25 +163,25 @@ valid і deliberately invalid snapshots, а oracle перевіряє інвар
 
 Критичний invariant:
 
-$$
+```math
 \forall s:\ blocker(s)=true\Rightarrow decision(s)\ne ALLOW.
-$$
+```
 
 Інші властивості:
 
-$$
+```math
 decision(s)=ALLOW\Rightarrow
 valid\_test(s)\lor authorized\_waiver(s),
-$$
+```
 
-$$
+```math
 retract(e,s)\Rightarrow e\notin support\bigl(recompute(s)\bigr),
-$$
+```
 
-$$
+```math
 unauthorized(u,e)\Rightarrow
 output(u,s)\ \text{does not depend on secret }e.
-$$
+```
 
 Останнє — information-flow property, яку складно довести end-to-end; у тестах
 її наближають paired inputs, canaries й leakage detectors. Якщо generator
@@ -198,22 +198,22 @@ $$
 
 **Metamorphic relation** для нерелевантної перестановки evidence:
 
-$$
+```math
 F(permute_{irrelevant}(x))=F(x).
-$$
+```
 
 Для додавання duplicate source за policy без подвійного підрахунку:
 
-$$
+```math
 confidence(x\cup duplicate(e))=confidence(x).
-$$
+```
 
 Для доступу результат не повинен ставати детальнішим після зменшення прав:
 
-$$
+```math
 ACL(u_2)\subseteq ACL(u_1)
 \Rightarrow disclosure(u_2,x)\subseteq disclosure(u_1,x).
-$$
+```
 
 Такі relation треба застосовувати лише там, де вони справді є інваріантами.
 У немонотонній логіці додавання нового факту може легітимно retract висновок;
@@ -222,9 +222,9 @@ $$
 Differential testing запускає той самий manifest на старому й новому engine або
 двох reasoners:
 
-$$
+```math
 \Delta(x)=F_{new}(x)-F_{baseline}(x).
-$$
+```
 
 Кожен неочікуваний semantic diff переглядають. Згода двох реалізацій не доводить
 правильність: вони можуть поділяти specification error або різну підтримку
@@ -245,9 +245,9 @@ Mutation operators навмисно створюють типові дефект
 
 Mutant «убито», якщо suite дає failure. Mutation score:
 
-$$
+```math
 MS=\frac{M_{killed}}{M_{total}-M_{equivalent}}.
-$$
+```
 
 Equivalent mutant не змінює семантику у визначеному domain і не може бути
 вбитий; їх виявлення саме по собі складне. Тому не слід оголошувати 100% без
@@ -274,9 +274,9 @@ flowchart LR
 Rule set можна кодувати як constraints і питати solver, чи існує стан, де
 порушено invariant. Для blocker:
 
-$$
+```math
 \exists s:\ blocker(s)\land decision(s)=ALLOW?
-$$
+```
 
 `SAT` повертає countermodel; `UNSAT` доводить відсутність такого стану **в
 межах кодування**. Якщо модель забула cache, time або waiver priority, доказ не
@@ -286,9 +286,9 @@ SMT корисний для arithmetic, units, timestamps і role constraints. M
 перевіряє temporal properties bounded або exhaustive у скінченній моделі. Для
 action workflow зі [статті 18](18-Expert-System-From-Recommendation-To-Action-UA.md):
 
-$$
+```math
 \Box(committed\Rightarrow \Diamond(verified\lor safe\_hold)),
-$$
+```
 
 тобто після commit система зрештою має прийти у verified або safe hold. Liveness
 потребує fairness/availability assumptions; якщо зовнішня система назавжди
@@ -323,12 +323,12 @@ version, options і bound є частиною evidence.
 
 Replay verifier перевіряє кожен edge:
 
-$$
+```math
 ValidProof(P,K,s)=
 \bigwedge_{v\in P}ValidNode(v,K,s)
 \land
 \bigwedge_{(u,v)\in P}ValidStep(u,v,K).
-$$
+```
 
 LLM-відповідь порівнюють не тільки lexical similarity: її claims прив'язують до
 IR і proof. Інакше точний label з hallucinated rationale пройде тест.
@@ -345,17 +345,17 @@ threat slices, як розібрано у [статтях
 якого pipeline не побачив. Високий recall не компенсує policy bypass. Release
 gate має conjunctive blocking criteria, а не одну середню метрику:
 
-$$
+```math
 Release=
 SchemaPass\land InvariantsPass\land SecurityPass
 \land EvidenceQualityPass\land NoBlockingRegression.
-$$
+```
 
 Для статистичної метрики порівнюють paired delta та confidence interval:
 
-$$
+```math
 \Delta=m_{candidate}-m_{baseline},
-$$
+```
 
 і заздалегідь визначають допустиму non-inferiority margin. Але один admitted
 cross-ACL leak або unsafe action може блокувати release незалежно від CI.
