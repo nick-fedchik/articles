@@ -435,7 +435,7 @@ completeness, citation correctness, NLI macro-F1 і end-to-end success. Для
 paraphrase group $V_g$:
 
 ```math
-GroupPass=\frac1{|G|}\sum_{g\in G}\prod_{i\in V_g}Success_i.
+GroupPass=\frac{1}{|G|}\sum_{g\in G}\prod_{i\in V_g}Success_i.
 ```
 
 $G\ne\varnothing$ і $V_g\ne\varnothing$; інакше empty product хибно дасть
@@ -447,7 +447,7 @@ citation, epistemic type, ACL і rendering.
 Calibration контролюється, зокрема, Brier score:
 
 ```math
-BS=\frac1N\sum_i(p_i-y_i)^2.
+BS=\frac{1}{N}\sum_i(p_i-y_i)^2.
 ```
 
 Тут $N>0$, $p_i$ — calibrated probability наперед визначеної binary події

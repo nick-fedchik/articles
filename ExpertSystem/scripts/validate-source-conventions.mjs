@@ -30,6 +30,10 @@ async function main() {
         report(file, lineNumber, "макрос \\operatorname несумісний із цільовим рендерером; використайте \\mathrm");
       }
 
+      if (/\\frac(?!\{)/u.test(line)) {
+        report(file, lineNumber, "аргументи \\frac мають бути явно взяті у фігурні дужки: \\frac{a}{b}");
+      }
+
       if (/екосистем/iu.test(line)) {
         report(file, lineNumber, "заборонене слово «екосистема» або його словоформа");
       }

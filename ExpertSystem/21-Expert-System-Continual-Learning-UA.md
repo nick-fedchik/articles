@@ -145,7 +145,7 @@ dataset coverage.
 policy $\pi$:
 
 ```math
-\widehat V_{IPS}(\pi)=\frac1N\sum_{i=1}^{N}
+\widehat V_{IPS}(\pi)=\frac{1}{N}\sum_{i=1}^{N}
 \frac{\pi(a_i\mid x_i)}{\mu(a_i\mid x_i)}r_i.
 ```
 
@@ -236,8 +236,8 @@ Catastrophic forgetting оцінюють по задачах або slices. Не
 після навчання task $k$ на старому task $i$. Forgetting після $T$ tasks:
 
 ```math
-F_T=\frac1{T-1}\sum_{i=1}^{T-1}
-\left(\max_{k<T}a_{k,i}-a_{T,i}\right).
+F_T=\frac{1}{T-1}\sum_{i=1}^{T-1}
+\left(\max_{i\le k<T}a_{k,i}-a_{T,i}\right).
 ```
 
 Негативне значення для slice може означати backward improvement; aggregate

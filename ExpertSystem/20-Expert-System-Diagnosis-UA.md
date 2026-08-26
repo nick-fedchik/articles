@@ -232,7 +232,7 @@ P(alarm=1\mid\neg F)=1-specificity.
 Для probabilistic output потрібна calibration. Brier score для $K$ diagnoses:
 
 ```math
-BS=\frac1N\sum_{n=1}^{N}\sum_{k=1}^{K}
+BS=\frac{1}{N}\sum_{n=1}^{N}\sum_{k=1}^{K}
 (p_{nk}-y_{nk})^2.
 ```
 
