@@ -1,6 +1,6 @@
 # Філософія для інженера експертних систем: що машина має право називати знанням
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 14 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 14 із 22
 > **Попередня стаття:** [13 — Знайти замало: як експертна система перетворює людське запитання на доказову відповідь](13-Knowledge-Acquisition-From-Question-To-Evidence-UA.md)  
 > **Наступна стаття:** [15 — Мовний контур експертної системи: лінгвістичні аналізатори та локальні SLM/LLM](15-Linguistic-Analysis-And-Local-Models-UA.md)  
 > **Зміст серії:** [README](README.md)  
@@ -93,9 +93,9 @@ entail-ить відповідь. Exact-match метрика зарахує ус
 
 Тому мінімальною одиницею є не абзац документа, а **claim**:
 
-$$
+```math
 c = \langle s, p, o, \sigma, I_v, I_s, m, v \rangle,
-$$
+```
 
 де $s$ — subject, $p$ — predicate, $o$ — object або value, $\sigma$ — scope,
 $I_v=[t_{from},t_{to})$ — інтервал чинності у предметному світі, $I_s$ —
@@ -172,14 +172,14 @@ flowchart LR
 Застосовність claim до query треба оцінювати і в предметному, і в системному
 часі. Для effective time $t_v$ та as-of transaction time $t_s$:
 
-$$
-\operatorname{Applicable}(c,q,t_v,t_s)=
-\operatorname{ScopeMatch}(\sigma_c,\sigma_q)
+```math
+\mathrm{Applicable}(c,q,t_v,t_s)=
+\mathrm{ScopeMatch}(\sigma_c,\sigma_q)
 \land t_v\in I_v(c)
 \land t_s\in I_s(c)
-\land \operatorname{UnitCompatible}(c,q)
-\land \operatorname{IdentityResolved}(c,q).
-$$
+\land \mathrm{UnitCompatible}(c,q)
+\land \mathrm{IdentityResolved}(c,q).
+```
 
 Предикат обчислюється у явно обраній тризначній семантиці: тут — за strong
 Kleene tables, де наявний `false` робить conjunction `false`, усі `true` дають
@@ -197,9 +197,9 @@ Kleene tables, де наявний `false` робить conjunction `false`, у�
 Стан знань, який система могла використати в момент $t_s$ для події в момент
 $t_v$, визначається так:
 
-$$
+```math
 K(t_v,t_s)=\{c\mid t_v\in I_v(c)\land t_s\in I_s(c)\}.
-$$
+```
 
 Це дає відповідь не лише «що чинне зараз?», а й «що система знала, коли дала
 рішення вчора?». OWL-Time стандартизує базову лексику для temporal entities та
@@ -245,9 +245,9 @@ flowchart TD
 У формальному записі відповідь повинна мати не лише conclusion $c$, а й proof
 object $\pi$:
 
-$$
+```math
 K_v, R_v, q \vdash c\;[\pi],
-$$
+```
 
 де $K_v$ — snapshot фактів, $R_v$ — snapshot правил, $q$ — нормалізований
 запит, а $\pi$ містить IDs premises, rules, їхні версії та intermediate steps.
@@ -277,11 +277,11 @@ OWL 2 натомість використовує open-world assumption: від�
 не підходить для неконсистентної operational KB. Корисне представлення,
 натхнене чотиризначною логікою Белнапа [13], зберігає два незалежні біти:
 
-$$
+```math
 V_{q,t_v,t_s}(c)=
 \bigl(P_{q,t_v,t_s}(c),N_{q,t_v,t_s}(c)\bigr)
 \in\{(1,0),(0,1),(1,1),(0,0)\}.
-$$
+```
 
 $P_{q,t_v,t_s}(c)$ означає наявність support-аргументу, а
 $N_{q,t_v,t_s}(c)$ — аргументу проти, **після** фільтрації за identity, scope,
@@ -334,10 +334,10 @@ flowchart LR
 пояснюють, чому literal semantics недостатньо. Інженерний наслідок —
 нормалізований query contract до retrieval:
 
-$$
+```math
 q^*=\langle intent, referents, scope, time, modality,
 requested\_evidence, audience, policy\_context\rangle.
-$$
+```
 
 Якщо `modality` або ключовий referent не визначені, LLM не повинна тихо
 вибирати найзручніше значення. Вона має поставити уточнювальне питання або
@@ -353,10 +353,10 @@ $$
 Тому evidence window треба будувати детерміновано як closure навколо source
 span:
 
-$$
+```math
 W(e)=e\cup Ancestors_d(e)\cup Definitions(e)\cup
 TableContext(e)\cup ResolvedReferences_k(e),
-$$
+```
 
 де $d$ і $k$ — versioned limits, а кожен доданий фрагмент має власний ID та
 причину включення. Hash повного window записується до answer trace. Retrieval
@@ -394,9 +394,9 @@ Measurement record повинен зберігати measurand, value, unit, met
 calibration state, environmental conditions, sample identity, timestamp і
 uncertainty. Запис
 
-$$
+```math
 T_{case}=94.6\ ^\circ\mathrm{C},\qquad U=1.2\ ^\circ\mathrm{C}\;(k=2)
-$$
+```
 
 суттєво відрізняється від точкового `94.6`. Позначення expanded uncertainty і
 coverage factor має використовуватися відповідно до metrology procedure, а не
@@ -412,10 +412,10 @@ checks і calibrated uncertainty на релевантній population. Нав�
 Гіпотеза стає інженерно корисною, коли наперед визначені спосіб її перевірки й
 можливий спростовувач:
 
-$$
+```math
 H=\langle prediction, protocol, controls, metric,
 acceptance\_region, deadline, owner\rangle.
-$$
+```
 
 Попперова falsifiability [7] корисна як вимога не захищати будь-який результат
 постфактум, але не є універсальним бінарним тестом усіх видів знання. Для
@@ -458,9 +458,9 @@ ABAC визначає authorization через attributes subject, object, opera
 
 Для похідної відповіді корисна консервативна label propagation:
 
-$$
+```math
 label(output)=\bigsqcup_{a\in Inputs(derivation)}label(a),
-$$
+```
 
 де $\sqcup$ — join у визначеній організацією lattice класифікацій, а inputs
 охоплюють не лише видимі citations, а й прихований context, rules та проміжні
@@ -490,9 +490,9 @@ Audit event має містити actor, purpose, policy version, knowledge snap
 query hash, IDs використаних evidence, decision, output label і correlation ID.
 Ланцюжок із зафіксованими алгоритмом hash і версією canonical serialization
 
-$$
+```math
 h_i=H(h_{i-1}\parallel canonical(event_i))
-$$
+```
 
 допомагає виявляти зміну або вилучення подій, але сам по собі не запобігає
 компрометації writer-а. Потрібні access separation, signatures або зовнішнє
@@ -554,7 +554,7 @@ reasoner — entailment і conflict; policy engine — authorization; reviewer �
 а $t_s$ — as-of transaction time. Система має право видати твердження лише
 якщо:
 
-$$
+```math
 \begin{aligned}
 Answerable(g,u,q,t_v,t_s)={}&SchemaValid(g)\\
 &\land Applicable(g,q,t_v,t_s)\\
@@ -563,7 +563,7 @@ Answerable(g,u,q,t_v,t_s)={}&SchemaValid(g)\\
 &\land Authorized(u,read,g)\\
 &\land RiskPolicySatisfied(g,q).
 \end{aligned}
-$$
+```
 
 Domain predicates тут обчислюються в тризначному просторі
 `true | false | unknown`: `false` у blocking condition веде до відмови, а
@@ -644,17 +644,17 @@ LLM у цій архітектурі корисна для query interpretation,
 Answer accuracy недостатня. Для confirmation set і shadow traffic варто
 вимірювати:
 
-$$
+```math
 Unsupported\ Answer\ Rate=
 \frac{\#\ accepted\ answers\ without\ valid\ proof}
 {\#\ accepted\ answers},
-$$
+```
 
-$$
+```math
 Stale\ Evidence\ Rate=
 \frac{\#\ answers\ using\ superseded\ or\ inapplicable\ evidence}
 {\#\ answers},
-$$
+```
 
 а також contradiction detection recall, proof-replay success, clarification
 rate, escalation rate, coverage-risk curve та latency. **ACL leakage rate для
