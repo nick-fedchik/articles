@@ -1,6 +1,6 @@
 # Як здобути знання з голови експерта: elicitation без самообману й втрати контексту
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 17 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 17 із 22
 > **Попередня стаття:** [16 — Чому саме так, чому ні й що треба змінити](16-Expert-System-Explanation-Engine-UA.md)  
 > **Наступна стаття:** [18 — Від доказової рекомендації до безпечної дії](18-Expert-System-From-Recommendation-To-Action-UA.md)  
 > **Зміст серії:** [README](README.md)  
@@ -192,16 +192,16 @@ engineer-а. Правка кандидата не переписує transcript.
 твердження можна зіставити з даними. Для $n$ релевантних cases, де outcome
 спостерігався $k$ разів, проста частота
 
-$$
+```math
 \hat p=\frac{k}{n}
-$$
+```
 
 без інтервалу невизначеності створює хибну точність. За Beta prior
-$p\sim\operatorname{Beta}(\alpha,\beta)$ posterior:
+$p\sim\mathrm{Beta}(\alpha,\beta)$ posterior:
 
-$$
-p\mid k,n\sim\operatorname{Beta}(\alpha+k,\beta+n-k).
-$$
+```math
+p\mid k,n\sim\mathrm{Beta}(\alpha+k,\beta+n-k).
+```
 
 Мета не «замінити експерта статистикою», а відрізнити три величини:
 `speaker confidence`, емпіричну частоту та calibrated model probability. Вони
@@ -210,9 +210,9 @@ $$
 Для кількох annotators raw agreement завищується, коли одна категорія домінує.
 Cohen's $\kappa$ для двох annotators:
 
-$$
+```math
 \kappa=\frac{p_o-p_e}{1-p_e},
-$$
+```
 
 де $p_o$ — observed agreement, $p_e$ — agreement, очікуване від marginal
 frequencies. Низька $\kappa$ може означати нечіткий guideline, різні domain
@@ -226,24 +226,24 @@ Krippendorff's alpha, із заздалегідь визначеною metric fo
 невідомі параметри або правила, $D$ — уже зібрані дані, $q$ — можливе питання,
 $a$ — відповідь. Очікуваний information gain:
 
-$$
+```math
 IG(q)=H(\Theta\mid D)-
 \mathbb E_{a\sim P(a\mid q,D)}[H(\Theta\mid D,q,a)].
-$$
+```
 
 Entropy для дискретної змінної:
 
-$$
+```math
 H(\Theta)=-\sum_i P(\theta_i)\log P(\theta_i).
-$$
+```
 
 Але найбільш невизначене питання може не мати operational value. Практичний
 пріоритет враховує ризик рішення, очікуване зменшення втрати та вартість:
 
-$$
+```math
 q^*=\arg\max_q
 \frac{\mathbb E[L(a_0)-L(a_q)]}{C_{expert}(q)+C_{validation}(q)}.
-$$
+```
 
 $a_0$ — найкраща дія без відповіді, $a_q$ — дія після відповіді, $L$ — loss.
 Оцінки приблизні, проте змушують команду питати не «що цікаво», а «яке знання
@@ -271,9 +271,9 @@ flowchart TD
 
 Спочатку моделюють disagreement:
 
-$$
+```math
 d=(claim, expert, context, rationale, evidence, confidence\_type).
-$$
+```
 
 Потім перевіряють: це суперечність фактів, різні definitions, різні applicability
 conditions чи різний trade-off. Іноді результат — два правила з явним context,
@@ -331,10 +331,10 @@ Member checking потрібен: експерт підтверджує, що ca
 Для rule $r$ на labeled cases корисні precision та recall, але loss часто
 асиметричний:
 
-$$
+```math
 \widehat R(r)=\frac{1}{N}\sum_{i=1}^{N}
 L\bigl(r(x_i),y_i; context_i\bigr).
-$$
+```
 
 Слід звітувати slices за revision, temperature, expert і rare failure mode.
 Один aggregate score може приховати саме той режим, для якого правило збирали.
