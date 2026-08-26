@@ -237,7 +237,7 @@ Catastrophic forgetting оцінюють по задачах або slices. Не
 
 ```math
 F_T=\frac{1}{T-1}\sum_{i=1}^{T-1}
-\left(\max_{i\le k<T}a_{k,i}-a_{T,i}\right).
+(\max_{i\le k\le T-1}a_{k,i}-a_{T,i}).
 ```
 
 Негативне значення для slice може означати backward improvement; aggregate
