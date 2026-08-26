@@ -1,6 +1,6 @@
 # Типи баз знань для експертних систем: чому правила, фрейми, онтології та випадки дають різні висновки
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 11 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 11 із 22
 > **Попередня стаття:** [10 — Здобуття знань для експертної системи: як збирати інженерні знання без хаосу і витоку даних](10-Knowledge-Acquisition-System-UA.md)  
 > **Наступна стаття:** [12 — Як навчати експертну систему: знання, іспит і перевірка змін](12-How-Expert-Systems-Learn-UA.md)  
 > **Зміст серії:** [README](README.md)  
@@ -404,12 +404,12 @@ outcome: "дефект знайдено до інтеграції"
 
 Формально правило можна подати як $r: b_1\land\dots\land b_m\rightarrow h$. Для множини фактів $F_t$ один крок прямого виведення додає всі наслідки правил, чиї умови виконуються після підстановки $\theta$:
 
-$$
+```math
 F_{t+1}=F_t\cup
 \left\{h\theta\;\middle|\;
 r\in R,\ \{b_1\theta,\ldots,b_m\theta\}\subseteq F_t
 \right\}.
-$$
+```
 
 Обчислення завершується у найменшій фіксованій точці $F^*$, коли $F_{t+1}=F_t$. Для скінченного Datalog-подібного фрагмента без породження нових функціональних термів це дає контрольовану процедуру. Але формула описує **монотонне** виведення: додавання факту не забирає старого наслідку. Винятки, `not`, пріоритети й відкликання роблять семантику немонотонною; тоді потрібні явно обрані semantics — stratified negation, defeasible rules або answer-set/stable-model semantics — і regression tests на конфлікти. «Порядок правил у файлі» не повинен непомітно ставати доменною політикою.
 
@@ -447,14 +447,14 @@ slots:
 
 Найпростіша operational semantics для слота $s$ екземпляра $x$:
 
-$$
+```math
 v(x,s)=
 \begin{cases}
 v_{\text{explicit}}(x,s), & \text{якщо значення задано для }x,\\
-v(\operatorname{parent}(x),s), & \text{якщо дозволено успадкування},\\
+v(\mathrm{parent}(x),s), & \text{якщо дозволено успадкування},\\
 \bot, & \text{інакше: значення невідоме}.
 \end{cases}
-$$
+```
 
 Разом зі значенням треба повертати його mode: `asserted`, `inherited`, `defaulted` або `unknown`. Інакше UI покаже типове `release_state: blocked` так само, як виміряний стан конкретного релізу, і provenance загубиться саме там, де він потрібен для рішення.
 
@@ -470,15 +470,15 @@ $$
 
 У нотації description logic дві різні аксіоми виглядають так:
 
-$$
+```math
 \textsf{SafetyRequirement}\sqsubseteq\textsf{Requirement},
-$$
+```
 
-$$
+```math
 \textsf{SafetyRequirement}
 \sqsubseteq
 \exists\,\textsf{verifiedBy}.\textsf{VerificationTest}.
-$$
+```
 
 Перша дає класифікацію. Друга в OWL-семантиці стверджує існування принаймні якогось verification test для кожної `SafetyRequirement`; ontology лишається задовільною, бо її модель може містити неіменований witness. Відсутність іменованої трійки `REQ-42 verifiedBy TEST-17` не є validation error сама по собі. Якщо production gate вимагає **наявного у цьому data graph** зв'язку, це окрема SHACL-умова:
 
@@ -551,13 +551,13 @@ CBR-модуль проходить чотири кроки: знаходить 
 
 Для query case $q$ і збереженого case $c$ змішану подібність можна задати як:
 
-$$
-\operatorname{sim}(q,c)=g(q,c)\,
-\frac{\sum_{j=1}^{m} w_j\operatorname{sim}_j(q_j,c_j)}
+```math
+\mathrm{sim}(q,c)=g(q,c)\,
+\frac{\sum_{j=1}^{m} w_j\mathrm{sim}_j(q_j,c_j)}
 {\sum_{j=1}^{m}w_j},
-$$
+```
 
-де локальна $\operatorname{sim}_j$ може бути exact match для safety class, відстанню для temperature/rate або cosine для текстового опису. Множник $g(q,c)\in\{0,1\}$ є hard applicability gate: несумісний стандарт, інша фізична architecture чи заборонений supplier context обнуляють case незалежно від високої embedding similarity. Ваги й пороги навчають або калібрують на judgments доменних експертів, а не підбирають за «правдоподібними» демонстраціями.
+де локальна $\mathrm{sim}_j$ може бути exact match для safety class, відстанню для temperature/rate або cosine для текстового опису. Множник $g(q,c)\in\{0,1\}$ є hard applicability gate: несумісний стандарт, інша фізична architecture чи заборонений supplier context обнуляють case незалежно від високої embedding similarity. Ваги й пороги навчають або калібрують на judgments доменних експертів, а не підбирають за «правдоподібними» демонстраціями.
 
 Схожий випадок є аргументом із досвіду, а не доказом придатності рішення. Інший стандарт, постачальник, масштаб або версія продукту можуть зробити аналогію хибною. Тому база випадків повинна зберігати не лише рішення, а й умови успіху, негативний результат, виконану адаптацію та перевірку нового рішення.
 
@@ -594,18 +594,18 @@ flowchart TB
 
 Для змінних $x_1,\ldots,x_n$ із доменами $D_1,\ldots,D_n$ задача виконуваності має форму:
 
-$$
+```math
 \text{знайти }\mathbf{x}\in D_1\times\cdots\times D_n
 \quad\text{таку, що}\quad
 \bigwedge_{i=1}^{k} C_i(\mathbf{x})=\text{true}.
-$$
+```
 
 Якщо потрібен найкращий допустимий варіант, додають objective:
 
-$$
+```math
 \mathbf{x}^*=\arg\min_{\mathbf{x}} f(\mathbf{x})
 \quad\text{за умов}\quad C_i(\mathbf{x}).
-$$
+```
 
 Boolean structure природно кодується SAT, bit-vectors/arrays/arithmetic — SMT, скінченні домени й scheduling — constraint programming або CP-SAT. Вибір solver family визначає не назва «база обмежень», а тип доменів, constraints, objective та вимога до certificate/explanation.
 
@@ -655,20 +655,20 @@ posterior:
 
 Усі числа тут навчальні. Для гіпотези $H$ і спостереження $E$ правило Баєса:
 
-$$
+```math
 P(H\mid E)=
 \frac{P(E\mid H)P(H)}
 {P(E\mid H)P(H)+P(E\mid\neg H)P(\neg H)}.
-$$
+```
 
 Підстановка дає:
 
-$$
+```math
 P(H\mid E)=
 \frac{0.90\cdot0.20}
 {0.90\cdot0.20+0.20\cdot0.80}
 =0.529.
-$$
+```
 
 Той самий update добре видно через odds: likelihood ratio $0.90/0.20=4.5$ множить prior odds $0.20/0.80=0.25$, тому posterior odds дорівнюють $1.125$, або probability $1.125/(1+1.125)=0.529$. Результат `TEST-17` може знову змінити апостеріорну оцінку.
 
@@ -697,14 +697,14 @@ $$
 
 Насправді три опорні точки визначають просту ramp-функцію:
 
-$$
+```math
 \mu_{\text{high}}(g)=
 \begin{cases}
 0, & g\le5,\\
 \dfrac{g-5}{4}, & 5<g<9,\\
 1, & g\ge9.
 \end{cases}
-$$
+```
 
 Тому $\mu_{\text{high}}(8)=3/4=0.75$. Для decision gate можна задати $\alpha$-cut, наприклад блокувати автоматичне погодження за $\mu_{\text{high}}(g)\ge0.7$, але значення $\alpha$ є policy threshold і потребує валідації за вартістю помилок.
 
@@ -718,26 +718,26 @@ $$
 
 Для тексту $x$ tokenizer утворює послідовність $t_1,\ldots,t_n$. Encoder повертає hidden states $h_i\in\mathbb{R}^d$; для masked mean pooling і L2-normalization:
 
-$$
+```math
 \bar h(x)=\frac{\sum_{i=1}^{n}m_i h_i}{\sum_{i=1}^{n}m_i},
 \qquad
 e(x)=\frac{\bar h(x)}{\|\bar h(x)\|_2},
-$$
+```
 
 де $m_i=0$ для padding і $m_i=1$ для змістовного token. Тоді cosine similarity для нормованих vectors дорівнює dot product:
 
-$$
+```math
 s_{\text{dense}}(q,d)=e(q)^\top e(d).
-$$
+```
 
 Approximate nearest-neighbor index, наприклад HNSW, прискорює top-$k$, але додає ще один параметр якості: ANN recall відносно exact search. Він не виправляє слабкий embedder, невдалий chunking або неправильну ACL.
 
 У production retrieval часто поєднують sparse ranker (BM25), dense vectors і graph traversal. Якщо scores несумірні, Reciprocal Rank Fusion працює з позиціями:
 
-$$
+```math
 S_{\text{RRF}}(d)=
-\sum_{m:\,d\in L_m}\frac{1}{k_0+\operatorname{rank}_m(d)}.
-$$
+\sum_{m:\,d\in L_m}\frac{1}{k_0+\mathrm{rank}_m(d)}.
+```
 
 $L_m$ — ranked list від retrieval-методу $m$; методи, які не повернули $d$, не додають внеску. $S_{\text{RRF}}$ є fusion score, а не calibrated probability істинності. Після candidate generation cross-encoder/late-interaction reranker може краще зіставити query і passage, але status, valid time, provenance та authorization лишаються hard gates поза semantic score.
 
@@ -806,9 +806,9 @@ confidence:
 
 Окремий security-інваріант: мітка derived fact або explanation не може бути слабшою за мітки premises. Для наслідку правила $h\theta$, виведеного з $b_i\theta$:
 
-$$
+```math
 L(h\theta)=\bigsqcup_i L(b_i\theta).
-$$
+```
 
 Тут $\bigsqcup$ — join у ґратці security labels: результат успадковує сукупність обмежень усіх premises. Інакше користувач може не побачити секретну трійку, але дізнатися її через derived verdict або natural-language explanation. Declassification має бути окремою авторизованою операцією, а не побічним ефектом summarization.
 
