@@ -1,6 +1,6 @@
 # Чому саме так, чому ні й що треба змінити: машина пояснення експертної системи
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 16 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 16 із 22
 > **Попередня стаття:** [15 — Мовний контур експертної системи: лінгвістичні аналізатори та локальні SLM/LLM](15-Linguistic-Analysis-And-Local-Models-UA.md)  
 > **Наступна стаття:** [17 — Як здобути знання з голови експерта](17-Knowledge-Elicitation-From-Experts-UA.md)  
 > **Зміст серії:** [README](README.md)  
@@ -111,9 +111,9 @@ flowchart TD
 Нехай система вивела claim $c$ із множини доступних premises $P$. Пояснення
 $E$ має бути підмножиною фактичних підстав, достатньою для того самого висновку:
 
-$$
+```math
 E \subseteq P, \qquad K \cup E \vdash c,
-$$
+```
 
 де $K$ — зафіксована версія правил, а $\vdash$ — конкретне відношення виведення.
 Ця формула не каже, що $c$ «правдиве у світі»; вона каже, що його можна повторно
@@ -122,11 +122,11 @@ $$
 Довгий trace також може бути поясненням, але він перевантажує читача. Тому
 шукають inclusion-minimal explanation:
 
-$$
+```math
 K\cup E\vdash c
 \quad\land\quad
 \forall E'\subsetneq E:\ K\cup E'\nvdash c.
-$$
+```
 
 `Minimal` тут означає: жоден елемент не можна викинути. Це не обов'язково
 найменша кількість елементів. Кілька різних мінімальних пояснень можуть
@@ -136,14 +136,14 @@ $$
 
 Для вибору з кількох пояснень корисна цільова функція:
 
-$$
+```math
 E^*=\arg\min_{E\in\mathcal E(c)}
 \bigl(
-\lambda_1|E|+\lambda_2\operatorname{complexity}(E)
-+\lambda_3\operatorname{disclosure}(E)
-+\lambda_4\operatorname{unstable}(E)
+\lambda_1|E|+\lambda_2\mathrm{complexity}(E)
++\lambda_3\mathrm{disclosure}(E)
++\lambda_4\mathrm{unstable}(E)
 \bigr).
-$$
+```
 
 Це компроміс між стислістю, когнітивною складністю, витоком закритих даних та
 нестабільністю. Ваги залежать від ролі й мети, але **faithfulness не є вагою**:
@@ -184,15 +184,15 @@ flowchart BT
 
 Для conjunctive rule
 
-$$
+```math
 r:\ p_1\land p_2\land\dots\land p_m\rightarrow c
-$$
+```
 
 множина незадоволених передумов на snapshot $s$:
 
-$$
+```math
 M_r(s)=\{p_i\mid s\not\models p_i\}.
-$$
+```
 
 Але `M_r` ще не є порадою. Частина умов може бути незмінною користувачем,
 закритою або неетичною для оптимізації. Так само SMT/SAT solver може повернути
@@ -223,16 +223,16 @@ owner?» Система створює дочірній immutable snapshot, зм
 Recourse шукає зміни, які не лише змінюють prediction, а можуть бути виконані
 цією людиною за правилами організації. Базова оптимізація:
 
-$$
+```math
 x^*=\arg\min_{x'} d(x,x')
-$$
+```
 
 за умов
 
-$$
+```math
 D(x')=y_{target},\qquad
 x'\in F_{feasible}\cap F_{actionable}\cap F_{authorized}.
-$$
+```
 
 $d(x,x')$ оцінює вартість змін; $D$ — зафіксована версія decision function;
 $F_{feasible}$ виключає фізично або логічно неможливі стани;
@@ -262,9 +262,9 @@ belief і що треба retract після зміни джерела. Це о�
 
 Для probabilistic inference система може показати prior, evidence і posterior:
 
-$$
+```math
 P(H\mid e)=\frac{P(e\mid H)P(H)}{P(e)}.
-$$
+```
 
 Але читачеві важливіше бачити, яка likelihood model використана, чи evidence
 незалежні, звідки взято prior і наскільки posterior чутливий до цих припущень.
@@ -272,9 +272,9 @@ $$
 
 Корисний аналіз чутливості:
 
-$$
+```math
 \Delta_j=P(H\mid e)-P(H\mid e_{-j}),
-$$
+```
 
 де $e_{-j}$ — набір evidence без елемента $j$. Велике $\Delta_j$ означає
 впливовий доказ у цій моделі, але не автоматично причинний фактор у світі.
@@ -284,9 +284,9 @@ $$
 Feature attribution пояснює поведінку моделі поблизу input або в межах
 обраного background distribution. Для additive explanation:
 
-$$
+```math
 f(x)\approx \phi_0+\sum_{j=1}^{d}\phi_j,
-$$
+```
 
 де $\phi_j$ — внесок ознаки за конкретним методом. Це корисний diagnostic
 artifact. Але attribution не є proof факту, не встановлює causality і не
@@ -333,10 +333,10 @@ LLM-renderer отримує allowlisted atoms, relation types і templates. Йо
 
 **Faithfulness / replay rate**:
 
-$$
+```math
 R_{replay}=\frac{\#\text{explanations whose cited proof reproduces decision}}
 {\#\text{tested explanations}}.
-$$
+```
 
 Для admitted explanation цільовий invariant — 1 на підтримуваному класі задач.
 Семплова оцінка не доводить абсолютної безпомилковості.
@@ -350,10 +350,10 @@ $$
 
 Для стабільності двох близьких inputs:
 
-$$
+```math
 S(x,x')=J(E(x),E(x'))=
 \frac{|E(x)\cap E(x')|}{|E(x)\cup E(x')|},
-$$
+```
 
 але високий Jaccard не завжди бажаний: якщо input перетнув decision boundary,
 пояснення повинно змінитися. Метрику рахують лише на парах, для яких invariant
