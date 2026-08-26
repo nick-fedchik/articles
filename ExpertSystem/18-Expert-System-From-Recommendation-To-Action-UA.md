@@ -1,6 +1,6 @@
 # Від доказової рекомендації до безпечної дії: агентний контур експертної системи
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 18 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 18 із 22
 > **Попередня стаття:** [17 — Як здобути знання з голови експерта](17-Knowledge-Elicitation-From-Experts-UA.md)  
 > **Наступна стаття:** [19 — Як перевіряти базу знань і машину виведення](19-Expert-System-Knowledge-Base-Verification-UA.md)  
 > **Зміст серії:** [README](README.md)  
@@ -111,15 +111,15 @@ Natural-language instruction неоднозначна. Виконавець пр
 Нехай стан середовища $s\in S$, дія $a\in A$, її precondition
 $Pre(a)$ та ефект $Eff(a)$. Дія застосовна лише якщо
 
-$$
+```math
 s\models Pre(a).
-$$
+```
 
 Після виконання спостерігаємо $o$ і будуємо новий стан:
 
-$$
+```math
 s' = T(s,a,o).
-$$
+```
 
 Важлива відмінність: executor не може просто оголосити $s'=Eff(a)$. Network
 timeout залишає щонайменше три гіпотези: операція не почалася, виконалася, або
@@ -128,11 +128,11 @@ timeout залишає щонайменше три гіпотези: опера�
 
 Для послідовності $\pi=(a_1,\ldots,a_n)$:
 
-$$
+```math
 s_{i-1}\models Pre(a_i),\qquad
 s_i=T(s_{i-1},a_i,o_i),\qquad
 s_n\models G,
-$$
+```
 
 де $G$ — goal. Перевіряти тільки останню умову недостатньо: план міг досягти
 цілі забороненим шляхом.
@@ -171,25 +171,25 @@ versioned schemas; довільне ім'я функції або URL від м�
 
 Очікувана втрата дії:
 
-$$
+```math
 \mathbb E[L(a)\mid b]=\sum_{s\in S}b(s)
 \sum_{s'}P(s'\mid s,a)L(s,a,s').
-$$
+```
 
 Для irreversible harm низька середня втрата може приховати неприйнятний хвіст.
 Тому додають hard constraints:
 
-$$
+```math
 a^*=\arg\min_{a\in A_{allowed}}\mathbb E[L(a)\mid b]
-$$
+```
 
 за умов
 
-$$
+```math
 P(H_{catastrophic}\mid a,b)\le \varepsilon,
 \qquad a\models Policy,
 \qquad Authority(principal,a)=true.
-$$
+```
 
 $\varepsilon$ не «вивчає» LLM: його встановлює accountable governance. Якщо
 ризик неможливо надійно оцінити, це аргумент зменшити автономність, а не
@@ -211,9 +211,9 @@ $\varepsilon$ не «вивчає» LLM: його встановлює accountab
 `production`, `1 device` на `all devices` або виконати план наступного дня на
 іншому snapshot. Approval bind-ить digest canonical Action Contract:
 
-$$
+```math
 h=H(serialize_{canonical}(contract)).
-$$
+```
 
 Перед commit executor перевіряє signature, $h$, approver authority, TTL та
 поточні preconditions. Будь-яка зміна аргументу створює новий digest і потребує
@@ -251,9 +251,9 @@ chain-of-thought. Approval fatigue — окремий failure mode: якщо л�
 контракт наближає її за рахунок idempotency key, deduplication store і
 query-before-retry:
 
-$$
+```math
 apply(a,k);apply(a,k) \equiv apply(a,k).
-$$
+```
 
 Еквівалентність має стосуватися business effect, не лише однакової HTTP
 відповіді. Для `create ticket` key стабільний від intent і target, а не новий UUID
@@ -336,10 +336,10 @@ health та rollout scope.
 Нехай verifier $V_a(o,s')\in\{PASS,FAIL,UNKNOWN\}$. Дію вважають успішною лише
 якщо:
 
-$$
+```math
 success(a)=
 [receipt\ verified]\land[V_a(o,s')=PASS].
-$$
+```
 
 Verifier бажано відділити від executor: не просити той самий generative model
 оцінити, чи добре вона виконала власну дію. Для фізичного процесу потрібні
@@ -354,20 +354,20 @@ digital twin або shadow mode. Зберігають candidate action і пор
 
 Метрики розділяють:
 
-$$
+```math
 R_{unsafe}=\frac{\#\text{proposed or executed policy-violating actions}}
 {\#\text{action opportunities}},
-$$
+```
 
-$$
+```math
 R_{verified}=\frac{\#\text{actions with verified postcondition}}
 {\#\text{committed actions}},
-$$
+```
 
-$$
+```math
 R_{duplicate}=\frac{\#\text{duplicate business effects}}
 {\#\text{retried actions}}.
-$$
+```
 
 Окремо: approval-bypass attempts, unknown-outcome duration, compensation success,
 mean time to safe state, unauthorized information access, blast radius,
