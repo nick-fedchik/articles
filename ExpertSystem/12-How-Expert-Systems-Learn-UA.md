@@ -1,6 +1,6 @@
 # Як навчати експертну систему: знання, іспит і перевірка змін
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 12 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 12 із 22
 > **Попередня стаття:** [11 — Типи баз знань для експертних систем: чому правила, фрейми, онтології та випадки дають різні висновки](11-Knowledge-Base-Types-UA.md)  
 > **Наступна стаття:** [13 — Знайти замало: як експертна система перетворює людське запитання на доказову відповідь](13-Knowledge-Acquisition-From-Question-To-Evidence-UA.md)  
 > **Зміст серії:** [README](README.md)  
@@ -55,17 +55,17 @@
 
 Для відтворюваного іспиту версію ЕС треба описувати не одним `model_id`, а system snapshot:
 
-$$
+```math
 \mathcal{S}_v=
 (F_v,K_v,R_v,G_v,I_v,E_v,M_v,P_v,A_v,T_v),
-$$
+```
 
 де $F$ — facts, $K$ — керовані knowledge objects, $R$ — rules, $G$ — graph, $I$ — sparse/vector indexes, $E$ — embedder/reranker, $M$ — мовні або інші ML-моделі, $P$ — prompts і output schemas, $A$ — authorization policies, $T$ — tool/runtime versions. Кандидат є явною трансформацією:
 
-$$
+```math
 \mathcal{S}_{v+1}^{\text{cand}}
-=\operatorname{Apply}(\mathcal{S}_v,\Delta),
-$$
+=\mathrm{Apply}(\mathcal{S}_v,\Delta),
+```
 
 а не набором файлів, які випадково лишилися на сервері після експерименту. Заміна embedder, наприклад, має тягнути сумісну перебудову vector index; зміна ontology може вимагати rematerialization derived facts і повторної SHACL-validation. Тому реальною одиницею promotion є dependency closure зміни, зафіксована manifest, а не лише рядок, який редагував інженер.
 
@@ -571,9 +571,9 @@ TARA обґрунтовує походження вимоги, але не до�
 
 Після зміни фактів, правил, пошуку або мовного компонента потрібен іспит. Невеликий еталонний набір (*gold set*) корисний як **smoke/regression suite**, якщо він представляє відомі ризики домену. Але 20–30 випадків не доводять узагальнення, калібрування або низьку частоту рідкісної небезпечної помилки. Навіть якщо на $n=30$ незалежних випадках не сталося жодної відмови, наближена однобічна 95%-ва верхня межа за «правилом трьох» дорівнює:
 
-$$
+```math
 p_{\text{failure}}\lesssim\frac{3}{n}=0.10.
-$$
+```
 
 Тобто результат сумісний навіть із частотою відмов близько 10%; це добрий сигнал для наступного етапу, але не safety claim. Розмір confirmation set планують за прийнятною похибкою, очікуваною частотою подій, потрібною statistical power і окремими critical slices.
 
@@ -613,25 +613,25 @@ Split роблять **до** tuning і не на рівні випадково�
 
 Ці властивості не можна стискати в одну «accuracy». Для binary або one-vs-rest verdict:
 
-$$
-\operatorname{Precision}=\frac{TP}{TP+FP},
+```math
+\mathrm{Precision}=\frac{TP}{TP+FP},
 \qquad
-\operatorname{Recall}=\frac{TP}{TP+FN},
-$$
+\mathrm{Recall}=\frac{TP}{TP+FN},
+```
 
-$$
+```math
 F_\beta=(1+\beta^2)
-\frac{\operatorname{Precision}\cdot\operatorname{Recall}}
-{\beta^2\operatorname{Precision}+\operatorname{Recall}}.
-$$
+\frac{\mathrm{Precision}\cdot\mathrm{Recall}}
+{\beta^2\mathrm{Precision}+\mathrm{Recall}}.
+```
 
 Якщо пропуск критичної вимоги дорожчий за зайву ескалацію, $\beta>1$ підвищує вагу recall, але не скасовує окремий blocking gate на відомі safety cases. Для retrieval із множиною релевантних доказів $G_q$:
 
-$$
-\operatorname{Recall@}k=
+```math
+\mathrm{Recall@}k=
 \frac{1}{|Q|}\sum_{q\in Q}
-\frac{|G_q\cap\operatorname{Top}_k(q)|}{|G_q|}.
-$$
+\frac{|G_q\cap\mathrm{Top}_k(q)|}{|G_q|}.
+```
 
 Окремо вимірюють nDCG/MRR, exact identifier match, retrieval чинної ревізії, ACL leakage і частку claims, підтриманих точним evidence span. Високий Recall@k не компенсує citation на obsolete baseline.
 
@@ -639,25 +639,25 @@ $$
 
 Порівняння має бути paired: ті самі cases запускають на $\mathcal{S}_v$ і $\mathcal{S}_{v+1}^{\text{cand}}$, а для стохастичного generation фіксують decoding config і повторюють запуск з кількома seeds. Для метрики $m$ у slice $s$:
 
-$$
+```math
 \Delta_{m,s}=
 m(\mathcal{S}_{v+1}^{\text{cand}},s)
 -m(\mathcal{S}_v,s).
-$$
+```
 
 Заздалегідь оголошений gate може мати форму:
 
-$$
-\operatorname{Promote}=
+```math
+\mathrm{Promote}=
 \left[\bigwedge_{s\in C}
-\operatorname{LCB}_{95\%}(\Delta_{m,s})\ge-\delta_s\right]
+\mathrm{LCB}_{95\%}(\Delta_{m,s})\ge-\delta_s\right]
 \land
 \left[N_{\text{blocking failures}}=0\right]
 \land
 \left[\text{latency, cost, memory, privacy SLO виконані}\right],
-$$
+```
 
-де $C$ — critical slices, $\delta_s$ — максимально допустима регресія, а $\operatorname{LCB}$ — нижня межа довірчого інтервалу paired difference. Для blocking safety/security scenarios зазвичай $\delta_s=0$ і перевіряють кожен case, а не лише частку. Інтервал можна оцінювати paired bootstrap; для парних binary verdicts доречний McNemar test. Метод і кількість повторів фіксують до перегляду результату, щоб не вибирати статистику, яка «пропустить» бажаного кандидата.
+де $C$ — critical slices, $\delta_s$ — максимально допустима регресія, а $\mathrm{LCB}$ — нижня межа довірчого інтервалу paired difference. Для blocking safety/security scenarios зазвичай $\delta_s=0$ і перевіряють кожен case, а не лише частку. Інтервал можна оцінювати paired bootstrap; для парних binary verdicts доречний McNemar test. Метод і кількість повторів фіксують до перегляду результату, щоб не вибирати статистику, яка «пропустить» бажаного кандидата.
 
 ```mermaid
 flowchart LR
@@ -725,33 +725,33 @@ source ranking або risk score. Їх треба оцінювати різни�
 
 Для binary probabilistic output із bins $B_1,\ldots,B_M$ поширена оцінка:
 
-$$
-\operatorname{ECE}=
+```math
+\mathrm{ECE}=
 \sum_{m=1}^{M}\frac{|B_m|}{N}
-\left|\operatorname{acc}(B_m)-\operatorname{conf}(B_m)\right|.
-$$
+\left|\mathrm{acc}(B_m)-\mathrm{conf}(B_m)\right|.
+```
 
 ECE залежить від кількості й меж bins, тому її не варто звітувати саму. Reliability diagram показує локальні відхилення, а Brier score є proper scoring rule:
 
-$$
-\operatorname{BS}=\frac{1}{N}\sum_{i=1}^{N}(p_i-y_i)^2,
+```math
+\mathrm{BS}=\frac{1}{N}\sum_{i=1}^{N}(p_i-y_i)^2,
 \qquad y_i\in\{0,1\}.
-$$
+```
 
 Temperature scaling, isotonic regression або Platt scaling fit-ять **лише на calibration set** після model selection; перевіряють на untouched confirmation set. Для multi-class або structured verdict треба вказати, що саме калібрується: top-label correctness, окремий class, claim support чи probability конкретної події.
 
 Для системи з abstention важлива не лише calibration, а крива risk–coverage. За confidence $c_i$, loss $\ell_i$ і threshold $\tau$:
 
-$$
-\operatorname{Coverage}(\tau)=
+```math
+\mathrm{Coverage}(\tau)=
 \frac{1}{N}\sum_{i=1}^{N}\mathbf{1}[c_i\ge\tau],
-$$
+```
 
-$$
-\operatorname{SelectiveRisk}(\tau)=
+```math
+\mathrm{SelectiveRisk}(\tau)=
 \frac{\sum_i \ell_i\mathbf{1}[c_i\ge\tau]}
 {\sum_i\mathbf{1}[c_i\ge\tau]}.
-$$
+```
 
 Збільшення $\tau$ зазвичай знижує risk, але збільшує частку ручного review. Поріг обирають за predeclared cost/risk policy, а не за найкрасивішою точкою графіка після тесту. Якщо denominator дорівнює нулю, система відмовилася всюди: risk не визначений, а не «ідеальний».
 
@@ -796,9 +796,9 @@ Feedback record має зберігати щонайменше input, system sna
 
 Для неоднозначної розмітки корисно вимірювати agreement, наприклад Cohen's kappa для двох reviewers:
 
-$$
+```math
 \kappa=\frac{p_o-p_e}{1-p_e},
-$$
+```
 
 де $p_o$ — спостережена згода, $p_e$ — очікувана випадкова згода за marginal frequencies. Низьке $\kappa$ сигналізує про нечітку rubric або складні cases; високе не доводить істинність, бо двоє reviewers можуть систематично помилятися. Critical disagreements проходять adjudication доменним власником і лишаються видимими в dataset history.
 
@@ -893,28 +893,28 @@ QLoRA додатково завантажує базову модель у кв�
 
 Для supervised fine-tuning із prompt $x$ і цільовою відповіддю $y_1,\ldots,y_T$ masked token loss:
 
-$$
+```math
 \mathcal{L}_{\text{SFT}}(\theta)=
 -\sum_{t=1}^{T}m_t
 \log p_\theta(y_t\mid x,y_{<t}),
-$$
+```
 
 де $m_t=1$ лише для токенів, на яких справді треба навчати loss. Для chat data зазвичай маскують system/user tokens і навчають assistant completion; помилка chat template або special tokens змінює саму навчальну задачу, тому template/tokenizer входять до manifest.
 
 LoRA не оновлює всю матрицю $W_0\in\mathbb{R}^{d_{out}\times d_{in}}$, а додає низькорангову поправку:
 
-$$
+```math
 W'=W_0+\frac{\alpha}{r}BA,
 \qquad
 B\in\mathbb{R}^{d_{out}\times r},\quad
 A\in\mathbb{R}^{r\times d_{in}},
-$$
+```
 
 тому замість $d_{out}d_{in}$ параметрів для цього шару навчається $r(d_{out}+d_{in})$ за $r\ll\min(d_{out},d_{in})$. QLoRA зберігає frozen base weights у 4-bit representation і навчає adapters у вищій compute precision. Це зменшує memory footprint, але не означає автоматично рівну якість: rank, target modules, quantization recipe, optimizer, sequence length і data mixture треба перевіряти ablation-ами.
 
 Preference optimization працює з парами $(x,y_w,y_l)$ — preferred і rejected answers. Для DPO типова objective:
 
-$$
+```math
 \mathcal{L}_{\text{DPO}}(\theta)=
 -\mathbb{E}\log\sigma\!\left(
 \beta\left[
@@ -922,7 +922,7 @@ $$
 -
 \log\frac{\pi_\theta(y_l\mid x)}{\pi_{ref}(y_l\mid x)}
 \right]\right).
-$$
+```
 
 DPO навчає відносну preference за наданою розміткою; він не перевіряє, чи preferred answer технічно істинна. Для ЕС pair має різнитися контрольованою властивістю — citation completeness, abstention, schema validity або calibrated wording — і зберігати evidence та rubric. GRPO/RL-подібні методи варто застосовувати лише коли reward справді верифікує потрібну поведінку; інакше система оптимізує proxy.
 
@@ -951,7 +951,7 @@ DPO навчає відносну preference за наданою розмітк�
 temporary buffers і communication workspace. Для $P$ параметрів груба нижня
 оцінка mixed-precision full fine-tuning з Adam-подібним optimizer має порядок:
 
-$$
+```math
 M_{\text{full}} \gtrsim
 \underbrace{2P}_{\text{BF16/FP16 weights}}+
 \underbrace{2P}_{\text{gradients}}+
@@ -959,7 +959,7 @@ M_{\text{full}} \gtrsim
 \underbrace{8P}_{\text{Adam moments}}+
 M_{\text{act}}+M_{\text{temp}}
 \approx 16P+M_{\text{act}}+M_{\text{temp}}\ \text{bytes}.
-$$
+```
 
 Це не обіцянка конкретного framework: fused optimizer, master weights,
 precision градієнтів і sharding змінюють коефіцієнт. Але формула пояснює, чому
@@ -968,12 +968,12 @@ precision градієнтів і sharding змінюють коефіцієнт
 
 Для QLoRA корисна інша декомпозиція:
 
-$$
+```math
 M_{\text{QLoRA}} \approx
 \frac{q}{8}P+c_{\text{opt}}P_A+
 M_{\text{act}}+M_{\text{quant}}+M_{\text{temp}},
 \qquad q\approx4,\quad P_A\ll P,
-$$
+```
 
 де $P_A$ — кількість параметрів adapters, а $c_{\text{opt}}$ залежить від
 precision та optimizer. Квантизація різко зменшує пам'ять frozen base, але не
