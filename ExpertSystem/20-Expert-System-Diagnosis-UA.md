@@ -1,6 +1,6 @@
 # Діагностика в експертних системах: від симптомів і гіпотез до першопричини та наступного тесту
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 20 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 20 із 22
 > **Попередня стаття:** [19 — Як перевіряти базу знань і машину виведення](19-Expert-System-Knowledge-Base-Verification-UA.md)  
 > **Наступна стаття:** [21 — Як експертна система навчається на власній роботі](21-Expert-System-Continual-Learning-UA.md)  
 > **Зміст серії:** [README](README.md)  
@@ -117,19 +117,19 @@ Source map має містити clock domain та bound похибки timestam
 а $AB(c)$ означає «компонент $c$ поводиться ненормально». Якщо припустити всі
 компоненти справними, спостереження суперечать моделі:
 
-$$
+```math
 SD\cup OBS\cup\{\neg AB(c)\mid c\in COMP\}\models\bot.
-$$
+```
 
 Diagnosis $\Delta\subseteq COMP$ — множина components, припущення про
 несправність яких відновлює consistency:
 
-$$
+```math
 SD\cup OBS
 \cup\{AB(c)\mid c\in\Delta\}
 \cup\{\neg AB(c)\mid c\in COMP\setminus\Delta\}
 \not\models\bot.
-$$
+```
 
 Це consistency-based diagnosis у дусі Reiter. Важлива межа: consistency не
 доводить, що $\Delta$ фактично є причиною; вона лише каже, що діагноз не
@@ -137,10 +137,10 @@ $$
 
 Зазвичай шукають inclusion-minimal diagnoses:
 
-$$
+```math
 \Delta\ \text{consistent}\quad\land\quad
 \forall\Delta'\subsetneq\Delta:\ \Delta'\ \text{inconsistent}.
-$$
+```
 
 `Minimal` не означає most probable. Single-fault $\{connector\}$ і
 double-fault $\{oscillator,sensor\}$ можуть бути двома minimal diagnoses.
@@ -152,24 +152,24 @@ assumption, а не прихована оптимізація solver-а.
 Conflict $C\subseteq COMP$ — множина components, які не можуть усі бути
 нормальними за наявних observations:
 
-$$
+```math
 SD\cup OBS\cup\{\neg AB(c)\mid c\in C\}\models\bot.
-$$
+```
 
 Кожний diagnosis мусить «влучити» в кожен conflict:
 
-$$
+```math
 \forall C_i\in\mathcal C:\quad \Delta\cap C_i\ne\varnothing.
-$$
+```
 
 Тому diagnoses можна будувати як minimal hitting sets множини conflicts. Для
 `BOOT-17` нехай отримано:
 
-$$
+```math
 C_1=\{power,connector\},\qquad
 C_2=\{power,clock\},\qquad
 C_3=\{connector,sensor\}.
-$$
+```
 
 Тоді серед minimal hitting sets є $\{power,connector\}$,
 $\{power,sensor\}$ і $\{clock,connector\}$. Це не готові repair plans: вони
@@ -198,18 +198,18 @@ priors і domain constraints. Але pruning має бути видимим: «�
 
 Якщо є надійні historical data або оцінені likelihoods, diagnoses ранжують:
 
-$$
+```math
 P(H_i\mid E)=\frac{P(E\mid H_i)P(H_i)}
 {\sum_jP(E\mid H_j)P(H_j)}.
-$$
+```
 
 $P(H_i)$ — prior fault rate у визначеній population; $P(E|H_i)$ — likelihood
 спостережень. Дані іншої board revision або клімату не можна мовчки переносити
 в prior. Для rare multiple faults незалежність
 
-$$
+```math
 P(H_a\land H_b)=P(H_a)P(H_b)
-$$
+```
 
 є лише припущенням. Common-cause event — волога, supply transient, невдала
 партія — робить faults залежними.
@@ -218,11 +218,11 @@ $$
 
 Observation `alarm=1` залежить і від fault $F$, і від sensor quality:
 
-$$
+```math
 P(alarm=1\mid F)=sensitivity,
 \qquad
 P(alarm=1\mid\neg F)=1-specificity.
-$$
+```
 
 Якщо система приймає alarm за безпомилковий факт, вона занулює правдоподібні
 альтернативи. Sensor artifact має бути hypothesis, а не спеціальний текстовий
@@ -231,10 +231,10 @@ $$
 
 Для probabilistic output потрібна calibration. Brier score для $K$ diagnoses:
 
-$$
+```math
 BS=\frac1N\sum_{n=1}^{N}\sum_{k=1}^{K}
 (p_{nk}-y_{nk})^2.
-$$
+```
 
 Він оцінює probability quality, але не достатність fault model. Система може
 бути добре calibrated серед відомих класів і не мати гіпотези `unknown fault`.
@@ -269,11 +269,11 @@ root cause. Кандидат із тексту проходить grounding, я�
 Intermittent defect залежить від прихованого стану $z_t$: cold, warming,
 unstable, normal. Для Hidden Markov Model:
 
-$$
+```math
 P(z_{1:T},o_{1:T})=P(z_1)
 \prod_{t=2}^{T}P(z_t\mid z_{t-1})
 \prod_{t=1}^{T}P(o_t\mid z_t).
-$$
+```
 
 Viterbi path знаходить most probable state sequence, а smoothing оцінює
 $P(z_t|o_{1:T})$ після пізніших observations. Але Markov і stationarity
@@ -294,29 +294,29 @@ Power-cycle змінює state і censor-ить попередню траєкт�
 
 Якщо diagnoses кілька, треба обрати observation або intervention. Entropy:
 
-$$
+```math
 H(H\mid E)=-\sum_iP(H_i\mid E)\log P(H_i\mid E).
-$$
+```
 
 Очікуваний information gain test $T$:
 
-$$
+```math
 IG(T)=H(H\mid E)-
 \sum_oP(o\mid E,T)H(H\mid E,o,T).
-$$
+```
 
 Test із найбільшим $IG$ може бути дорогим або небезпечним. Практична utility:
 
-$$
+```math
 U(T)=\mathbb E[\Delta L_{decision}\mid T]
 -C_{time}(T)-C_{money}(T)-C_{risk}(T)-C_{evidence\ loss}(T).
-$$
+```
 
 Обираємо
 
-$$
+```math
 T^*=\arg\max_{T\in T_{allowed}}U(T),
-$$
+```
 
 де `allowed` враховує authority, equipment state і safety constraints. Для
 `BOOT-17` power-cycle дешевий, але має високу evidence-loss cost. Повторне
@@ -345,11 +345,11 @@ conditional associations не обов'язково зберігаються.
 
 У causal model різниця виражається між
 
-$$
+```math
 P(Y\mid X=x)
 \quad\text{та}\quad
 P(Y\mid do(X=x)).
-$$
+```
 
 Перше — спостережна залежність, друге — distribution після контрольованого
 втручання за structural causal assumptions. Навіть успішне intervention не
@@ -412,9 +412,9 @@ Abstention обов'язкове, якщо:
 
 Selective diagnosis оцінюють risk-coverage curve. Для coverage $c$:
 
-$$
+```math
 R_{sel}(c)=\mathbb E[L(\hat H,H)\mid accepted\ at\ coverage\ c].
-$$
+```
 
 Зменшити errors відмовою на всіх складних cases легко; тому звітують і risk, і
 coverage, окремо для fault slices.
@@ -436,12 +436,12 @@ coverage, окремо для fault slices.
 
 Для troubleshooting policy сумарний episode cost:
 
-$$
+```math
 J(\pi)=\mathbb E_{\pi}
 \left[\sum_{t=1}^{\tau}
 (c_{test,t}+c_{repair,t}+c_{downtime,t}+c_{risk,t})
 +c_{misdiagnosis}\right].
-$$
+```
 
 Порівнюють із baseline procedure та експертами на paired cases. Historical
 repair label не завжди gold truth; root cause має бути adjudicated через
