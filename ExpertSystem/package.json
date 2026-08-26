@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "npm run validate:markdown && npm run validate:github && npm run validate:gitlab",
+    "validate": "npm run validate:source && npm run validate:markdown && npm run validate:github && npm run validate:gitlab",
+    "validate:source": "node scripts/validate-source-conventions.mjs",
     "validate:markdown": "markdownlint-cli2 \"*.md\"",
     "validate:github": "node scripts/validate-github-markdown.mjs",
     "validate:gitlab": "node scripts/validate-gitlab-markdown.mjs"
