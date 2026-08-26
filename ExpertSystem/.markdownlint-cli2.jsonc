@@ -1,0 +1,39 @@
+{
+  "config": {
+    "default": false,
+    "MD001": true,
+    "MD003": { "style": "atx" },
+    "MD009": { "br_spaces": 2 },
+    "MD011": true,
+    "MD012": true,
+    "MD018": true,
+    "MD019": true,
+    "MD020": true,
+    "MD021": true,
+    "MD022": true,
+    "MD023": true,
+    "MD025": true,
+    "MD027": true,
+    "MD031": true,
+    "MD032": true,
+    "MD037": true,
+    "MD038": true,
+    "MD039": true,
+    "MD042": true,
+    "MD045": true,
+    "MD047": true,
+    "MD048": { "style": "backtick" },
+    "MD049": { "style": "asterisk" },
+    "MD050": { "style": "asterisk" },
+    "MD051": true,
+    "MD052": true,
+    "MD053": true,
+    "MD055": true,
+    "MD056": true,
+    "MD058": true
+  },
+  "globs": [
+    "*.md",
+    "!node_modules/**"
+  ]
+}
