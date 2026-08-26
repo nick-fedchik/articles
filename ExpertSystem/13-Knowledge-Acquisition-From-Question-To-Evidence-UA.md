@@ -1,6 +1,6 @@
 # Знайти замало: як експертна система перетворює людське запитання на доказову відповідь
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 13 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 13 із 22
 > **Попередня стаття:** [12 — Як навчати експертну систему: знання, іспит і перевірка змін](12-How-Expert-Systems-Learn-UA.md)  
 > **Наступна стаття:** [14 — Філософія для інженера експертних систем: що машина має право називати знанням](14-Philosophy-For-Expert-Systems-UA.md)  
 > **Зміст серії:** [README](README.md)  
@@ -226,10 +226,10 @@ retrieval query.
 корпусу. Для dense retrieval query і passage кодуються векторами
 $\mathbf q,\mathbf d\in\mathbb R^m$, а косинусна схожість має вигляд:
 
-$$
+```math
 s_{\text{dense}}(q,d)=
 \frac{\mathbf q^\top\mathbf d}{\lVert\mathbf q\rVert_2\lVert\mathbf d\rVert_2}.
-$$
+```
 
 Формула визначена лише для ненульових embedding-векторів. Zero vector,
 `NaN` або невідповідна dimension мають блокувати candidate до ranking, а не
@@ -241,10 +241,10 @@ $$
 шкали, тому без каліброваного learned fusion безпечніше об'єднати ранги через
 Reciprocal Rank Fusion:
 
-$$
+```math
 s_{\text{RRF}}(d)=\sum_{r\in\mathcal R(d)}
-\frac{1}{k_0+\operatorname{rank}_r(d)},
-$$
+\frac{1}{k_0+\mathrm{rank}_r(d)},
+```
 
 де $\mathcal R(d)$ — множина rank lists, у яких присутній $d$; відсутній у
 списку passage не отримує штучного rank. $k_0$ — гіперпараметр, який
@@ -254,9 +254,9 @@ $$
 Після coarse retrieval cross-encoder або instruction-tuned reranker оцінює
 пару $(q,d)$ разом:
 
-$$
+```math
 s_{\text{rerank}}(q,d)=f_\theta([q;d]).
-$$
+```
 
 Він дорожчий за bi-encoder, тому production cascade зазвичай виглядає як
 $N\gg k_r\ge k_e$: дешевий retriever повертає $N$ passage-ів, reranker залишає
@@ -273,9 +273,9 @@ recall, але водночас ростуть latency, cost і площа ат�
 повинен містити fingerprint authorization context, corpus snapshot, embedding
 model і query normalization version:
 
-$$
+```math
 K_{cache}=H(q_{norm},\ authz_{fp},\ corpus_v,\ embed_v,\ ranker_v).
-$$
+```
 
 Не варто класти до ключа сирі токени доступу або персональні claims. Потрібен
 стабільний непрозорий fingerprint, строк життя не довший за policy decision і
@@ -309,10 +309,10 @@ candidate evidence: passage P
 
 Формально це можна подати як трикласову задачу:
 
-$$
+```math
 \hat y_{det}=\arg\max_{y\in\{present, absent, ambiguous\}}
 p_\theta(y\mid q,d,Q_c),
-$$
+```
 
 де $Q_c$ — Query Contract. Клас `present` означає не «passage схожий», а
 «passage містить material, з якого можна видобути claim потрібної форми».
@@ -324,10 +324,10 @@ $$
 recall. Але надмірний recall збільшує число дорогих extraction/verification
 викликів. Корисна операційна ціль має враховувати обидва наслідки:
 
-$$
+```math
 J_{det}=\lambda_{fn}FN+\lambda_{fp}FP+
 \lambda_{tok}Tokens+\lambda_{ms}Latency,
-$$
+```
 
 де ваги $\lambda$ задає use case, а не модель. Це cost function, не
 універсальна метрика якості.
@@ -402,10 +402,10 @@ relation і qualifier можуть бути material, а локалізован�
 похідним. Нехай $A_m(C)$ — множина material atoms claim-а, а $b(a)$ —
 перевірене прив'язування атома. Тоді structural completeness:
 
-$$
+```math
 Comp(C)=\frac{\sum_{a\in A_m(C)} w_a\,\mathbb 1[b(a)\neq\varnothing]}
 {\sum_{a\in A_m(C)}w_a}.
-$$
+```
 
 Контракт вимагає $A_m(C)\neq\varnothing$ і $w_a>0$; інакше $Comp$ не
 визначений, а claim є schema-invalid, а не «повним».
@@ -468,10 +468,10 @@ flowchart LR
 
 Практичний content identifier можна визначити як
 
-$$
+```math
 passage\_id=H(document\_id,revision,transform\_chain,byte\_start,byte\_end,
 passage\_bytes).
-$$
+```
 
 $H$ тут застосовується не до неоднозначної конкатенації рядків, а до
 domain-separated canonical length-delimited serialization усіх полів; назва й
@@ -526,9 +526,9 @@ RAGChecker використовує перевірку підтримки на �
 Нехай claim $C=\{a_1,\ldots,a_n\}$, а $E$ — дозволене evidence window.
 Verifier повинен повернути не довільний `confidence`, а щонайменше три стани:
 
-$$
+```math
 y_{ver}\in\{entailed, contradicted, unknown\}.
-$$
+```
 
 `Unknown` охоплює неповний доказ, невирішену кореференцію, відсутню умову та
 недостатній контекст. NLI-модель або LLM-as-judge може оцінювати
@@ -536,28 +536,28 @@ $p_\theta(y_{ver}\mid C,E)$, але її logit чи self-reported confidence н�
 гарантією. Якщо score використовується для порогу, його калібрують на окремому
 calibration set, наприклад temperature scaling:
 
-$$
-p_T(y\mid C,E)=\operatorname{softmax}(z(C,E)/T)_y,
-$$
+```math
+p_T(y\mid C,E)=\mathrm{softmax}(z(C,E)/T)_y,
+```
 
 де $T$ навчають **без** sealed confirmation set. Навіть після калібрування
 semantic score не замінює hard invariants. Для події «claim підтриманий»
 калібрування можна контролювати Brier score і reliability diagram:
 
-$$
+```math
 BS=\frac{1}{N}\sum_{i=1}^{N}(p_i-y_i)^2.
-$$
+```
 
 Тут $N>0$, $p_i$ — calibrated probability саме події «claim підтриманий», а
 $y_i\in\{0,1\}$. ECE теж корисна, але залежить від binning, тому одна цифра
 ECE не повинна бути
 єдиним release criterion. Безпечне правило admission можна записати так:
 
-$$
+```math
 Admit(C,E,u,t)=I_{authz}(C,E,u,t)\land I_{integrity}\land[Comp(C)=1]
 \land[y_{ver}=entailed]\land[p_T(entailed)\ge\tau]
 \land\neg I_{unresolved\ conflict}.
-$$
+```
 
 Authorization перевіряється fail closed для поточного principal $u$, purpose,
 operation і моменту $t$ не лише перед retrieval, а й перед фінальним admission:
@@ -901,18 +901,18 @@ $Q_+=\{q\in Q\mid |G_q|>0\}$ — непорожня множина answerable qu
 непорожнім gold evidence, а $R_k(q)$ — top-$k$. Наявність хоча б одного
 потрібного доказу вимірює $Hit@k$:
 
-$$
+```math
 Hit@k=\frac{1}{|Q_+|}\sum_{q\in Q_+}
 \mathbb 1[G_q\cap R_k(q)\neq\varnothing].
-$$
+```
 
 Якщо для повного твердження потрібно знайти кілька доказів, ця метрика надто
 поблажлива. Тоді потрібен власне recall множини evidence:
 
-$$
+```math
 Recall@k=\frac{1}{|Q_+|}\sum_{q\in Q_+}
 \frac{|G_q\cap R_k(q)|}{|G_q|}.
-$$
+```
 
 Unanswerable queries не додають із порожнім denominator до цих двох метрик:
 для них окремо оцінюють false-answer і коректність abstention/clarification.
@@ -923,10 +923,10 @@ Unanswerable queries не додають із порожнім denominator до 
 Для claim-level evaluation після ручної або adjudicated декомпозиції відповіді
 на атомарні твердження:
 
-$$
+```math
 ClaimPrecision=\frac{|C_{out}^{supported}|}{|C_{out}|},\qquad
 ClaimRecall=\frac{|C_{gold}\cap C_{out}^{supported}|}{|C_{gold}|}.
-$$
+```
 
 Ці частки визначені для answerable cases із $|C_{gold}|>0$; precision також
 вимагає $|C_{out}|>0$. Порожній output є abstention і входить до
@@ -936,10 +936,10 @@ risk–coverage/abstention metrics, а не отримує довільний pr
 довільно міняти гранулярність claim-ів між системами. Grounding оцінюють
 окремо:
 
-$$
+```math
 GroundingCompleteness=
 \frac{|A_{material}^{correct\ span}|}{|A_{material}^{gold}|},
-$$
+```
 
 де $|A_{material}^{gold}|>0$ є інваріантом answerable gold claim.
 
@@ -949,17 +949,17 @@ Citation correctness — частка citation links, чиї passage-и спра
 
 End-to-end success для case — кон'юнкція, а не середнє:
 
-$$
+```math
 Success_i=I_{query}\,I_{retrieve}\,I_{extract}\,I_{ground}\,
 I_{verify}\,I_{render}\,I_{authz}.
-$$
+```
 
 Якщо будь-який множник нуль, користувач не отримав доказової відповіді. Для
 групи перефразувань $V_g$ корисно виміряти сувору invariance:
 
-$$
+```math
 GroupPass=\frac{1}{|G|}\sum_{g\in G}\prod_{i\in V_g}Success_i.
-$$
+```
 
 Тут $G\neq\varnothing$ і кожна група $V_g\neq\varnothing$; порожня група не
 повинна автоматично «проходити» через empty product.
@@ -973,15 +973,15 @@ classification та known/unknown answerability.
 Нехай $c_i$ — калібрований score події «відповідь буде повністю підтримана»,
 $N>0$ — кількість evaluation cases, а $\tau$ — поріг admission. Тоді:
 
-$$
+```math
 Coverage(\tau)=\frac{1}{N}\sum_i\mathbb 1[c_i\ge\tau],
-$$
+```
 
-$$
+```math
 SelectiveRisk(\tau)=
 \frac{\sum_i\ell_i\mathbb 1[c_i\ge\tau]}
 {\sum_i\mathbb 1[c_i\ge\tau]}.
-$$
+```
 
 За нульового coverage risk не дорівнює нулю — він не визначений. Потрібна
 risk–coverage curve, окрема false-answer rate для unanswerable queries і
@@ -998,10 +998,10 @@ $p$-value не замінює practical margin. Перед gate усі deltas п
 для risk, latency і cost — $\Delta=m_{baseline}-m_{candidate}$. Тоді release
 gate може вимагати:
 
-$$
+```math
 \bigwedge_{m,s}LCB_{95\%}(\Delta_{m,s})\ge-\delta_{m,s}
 \quad\land\quad blocking\_failures=0,
-$$
+```
 
 де $s$ — критичний slice, $m$ — метрика, $\delta$ — наперед узгоджена допустима
 регресія. Для ACL bypass, provenance mismatch і відповіді на contradicted
@@ -1110,10 +1110,10 @@ Instruction detector знижує ризик, але не створює док�
 
 Для послідовного critical path грубий budget має вигляд:
 
-$$
+```math
 T_{e2e}=T_{gateway}+T_{retrieval}+T_{rerank}+T_{extract}+
 T_{bind}+T_{verify}+T_{render}+T_{queue}.
-$$
+```
 
 Середнє приховує tail latency, тому release SLO задають через p50/p95/p99 і
 окремо для cache hit/miss, answer/abstain та різних source types. Deadline має
@@ -1123,10 +1123,10 @@ $$
 Якщо coarse retrieval повертає $N$ passage-ів, reranker залишає $k_r$, а
 extractor/verifier перевіряє $k_e\le k_r$, змінна вартість запиту приблизно:
 
-$$
+```math
 C(q)=C_{embed}+C_{search}(N,\theta_{ANN})+N\,C_{rerank}+
 k_e(C_{extract}+C_{verify})+C_{render}.
-$$
+```
 
 Це accounting model, а не рахунок конкретного провайдера. Важливий наслідок:
 підвищувати $k_e$ «про всяк випадок» дорого, а знижувати — небезпечно для
