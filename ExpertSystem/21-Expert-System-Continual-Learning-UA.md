@@ -1,7 +1,8 @@
 # Як експертна система навчається на власній роботі: continual learning без самопідсилення помилок
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 21 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 21 із 22
 > **Попередня стаття:** [20 — Діагностика в експертних системах](20-Expert-System-Diagnosis-UA.md)  
+> **Наступна стаття:** [22 — Кібернетика XXI століття й експертні системи](22-Cybernetics-Expert-Systems-Edge-Backend-UA.md)
 > **Зміст серії:** [README](README.md)  
 > **Рівень:** ML / Knowledge / MLOps / Decision Systems Engineer: middle+  
 > **Після статті:** розрізняти пам'ять, knowledge revision, online calibration, continual model learning і policy learning; збирати unbiased-enough feedback та випускати зміни через safe admission.
@@ -72,10 +73,10 @@ label, а успішний tool call — правильним causal outcome.
 policy $\mu_t$, отримує доступні одразу observations $o_t$, а outcome $y$ може
 з'явитися через затримку $d$:
 
-$$
+```math
 a_t\sim\mu_t(a\mid x_t),
 \qquad y_{t+d}\sim P(y\mid x_t,a_t,e_t),
-$$
+```
 
 де $e_t$ — environment state, спостережений лише частково. Для діагностики action
 може бути `perform synchronized capture`, outcome — підтверджений root cause
@@ -118,7 +119,7 @@ sequenceDiagram
     H-->>L: correction / override with reason
     E-->>L: delayed operational outcome
     H-->>L: adjudicated label and applicability
-    Note over L: Події не перезаписують одна одну; статус еволюціонує
+    Note over L: Події не перезаписують одна одну, статус еволюціонує
 ```
 
 Feedback має event time і availability time. Інакше система випадково навчає
@@ -131,9 +132,9 @@ label із негативним результатом.
 decision problem behavior policy індукує власний distribution $d^{\mu}(x)$.
 Нова policy $\pi$ може потрапити в states, яких майже немає в logs:
 
-$$
+```math
 d^{\pi}(x)\ne d^{\mu}(x).
-$$
+```
 
 Це одна з причин, чому behavior cloning деградує після власних помилок, а
 DAgger збирає labels на states, які відвідує поточна policy. Проте в
@@ -143,16 +144,16 @@ dataset coverage.
 Для logged contextual decisions простий inverse-propensity estimator value
 policy $\pi$:
 
-$$
+```math
 \widehat V_{IPS}(\pi)=\frac1N\sum_{i=1}^{N}
 \frac{\pi(a_i\mid x_i)}{\mu(a_i\mid x_i)}r_i.
-$$
+```
 
 Він потребує correct propensities і overlap:
 
-$$
+```math
 \pi(a\mid x)>0\Rightarrow\mu(a\mid x)>0.
-$$
+```
 
 Малі $\mu(a_i|x_i)$ дають великі weights і variance. Weight clipping зменшує
 variance, але додає bias; doubly robust estimators поєднують reward model та
@@ -181,21 +182,21 @@ prospective confirmation.
 
 **Covariate drift**:
 
-$$
+```math
 P_t(X)\ne P_{t+1}(X),
-$$
+```
 
 **prior/label shift**:
 
-$$
+```math
 P_t(Y)\ne P_{t+1}(Y),
-$$
+```
 
 і **concept drift**:
 
-$$
+```math
 P_t(Y\mid X)\ne P_{t+1}(Y\mid X).
-$$
+```
 
 Нова board revision може змінити $P(X)$; новий component supplier — fault
 priors; firmware architecture — саме mapping від symptoms до faults. Schema
@@ -204,9 +205,9 @@ change, broken sensor або labeling guideline іноді імітують drif
 ADWIN-подібний detector порівнює статистику двох частин adaptive window і
 сигналізує, якщо difference перевищує bound. У спрощеній формі Hoeffding bound:
 
-$$
+```math
 \epsilon=\sqrt{\frac{1}{2m}\ln\frac{2}{\delta}},
-$$
+```
 
 де $m$ — effective sample size, $\delta$ — false-alarm parameter. Реальний
 ADWIN використовує власні оптимізації й bounds; ця формула пояснює trade-off:
@@ -234,10 +235,10 @@ Fine-tuning на останньому місяці може поліпшити r
 Catastrophic forgetting оцінюють по задачах або slices. Нехай $a_{k,i}$ — якість
 після навчання task $k$ на старому task $i$. Forgetting після $T$ tasks:
 
-$$
+```math
 F_T=\frac1{T-1}\sum_{i=1}^{T-1}
 \left(\max_{k<T}a_{k,i}-a_{T,i}\right).
-$$
+```
 
 Негативне значення для slice може означати backward improvement; aggregate
 середнє не повинно приховувати critical regression.
@@ -252,10 +253,10 @@ $$
 
 Elastic Weight Consolidation додає penalty:
 
-$$
+```math
 \mathcal L(\theta)=\mathcal L_{new}(\theta)
 +\frac{\lambda}{2}\sum_iF_i(\theta_i-\theta_i^*)^2,
-$$
+```
 
 де $\theta^*$ — parameters після старої task, $F_i$ наближує їх важливість через
 Fisher information. EWC не гарантує відсутність forgetting у довільній задачі;
@@ -282,11 +283,11 @@ Inductive Logic Programming або rule learner може запропонува�
 positive examples $E^+$, negative $E^-$; candidate hypothesis $H$ бажано
 задовольняє:
 
-$$
+```math
 B\cup H\models E^+,
 \qquad
 B\cup H\not\models E^-.
-$$
+```
 
 У noisy domain ці умови замінюють loss/coverage trade-off. Навіть perfect fit не
 робить $H$ causal або policy-authoritative. Candidate отримує provenance,
@@ -316,19 +317,19 @@ flowchart LR
 
 Uncertainty sampling вибирає case з великою entropy:
 
-$$
+```math
 H(Y\mid x)=-\sum_yP(y\mid x)\log P(y\mid x).
-$$
+```
 
 Але outlier може бути дуже невизначеним і неважливим. Запит до експерта має
 враховувати expected decision loss, representativeness, diversity, labeling
 cost і privacy:
 
-$$
+```math
 x^*=\arg\max_{x\in U}
 \frac{\mathbb E[\Delta L_{decision}\mid label(x)]}
 {C_{expert}(x)+C_{evidence}(x)+C_{risk}(x)}.
-$$
+```
 
 Експерт не безпомилковий oracle. Незгода, abstention й expertise scope
 зберігаються за протоколом [статті
@@ -340,10 +341,10 @@ $$
 Для contextual bandit або sequential policy reward — не просто «користувач
 натиснув корисно». Він має відображати verified outcome і harm. Online regret:
 
-$$
+```math
 Regret_T=\sum_{t=1}^{T}\ell_t(a_t)
 -\min_{a\in A}\sum_{t=1}^{T}\ell_t(a).
-$$
+```
 
 У nonstationary environment статичний comparator може бути непридатним; у
 safety domain низький cumulative regret не компенсує одну catastrophic action.
@@ -352,16 +353,16 @@ safety domain низький cumulative regret не компенсує одну 
 Safe policy improvement порівнює candidate $\pi$ з baseline $\pi_b$. Один
 практичний release criterion:
 
-$$
+```math
 LCB_{1-\alpha}\left(V(\pi)-V(\pi_b)\right)\ge-\varepsilon
-$$
+```
 
 разом із
 
-$$
+```math
 F_{critical}(\pi)=0,
 \qquad \pi(a\mid x)=0\ \text{для forbidden }(x,a).
-$$
+```
 
 LCB — lower confidence bound, $\varepsilon$ — допустима non-inferiority margin.
 Гарантія залежить від estimator, data coverage та assumptions. Якщо overlap
@@ -466,9 +467,9 @@ episodes, transformations, exclusions й label availability. Candidate versions
 
 Effective sample size для importance weights $w_i$:
 
-$$
+```math
 ESS=\frac{(\sum_iw_i)^2}{\sum_iw_i^2}.
-$$
+```
 
 Великий raw $N$ із кількома величезними weights може мати малий ESS; confidence
 у OPE має це відображати.
