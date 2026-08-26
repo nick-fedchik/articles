@@ -1,6 +1,6 @@
 # Мовний контур експертної системи: лінгвістичні аналізатори та локальні SLM/LLM
 
-> **Серія:** [Експертні системи для R&D](README.md) · стаття 15 із 21  
+> **Серія:** [Експертні системи для R&D](README.md) · стаття 15 із 22
 > **Попередня стаття:** [14 — Філософія для інженера експертних систем: що машина має право називати знанням](14-Philosophy-For-Expert-Systems-UA.md)  
 > **Наступна стаття:** [16 — Чому саме так, чому ні й що треба змінити](16-Expert-System-Explanation-Engine-UA.md)  
 > **Зміст серії:** [README](README.md)  
@@ -91,10 +91,10 @@ $Y$ у одну або кілька батьківських областей п
 evidence token → bytes є композицією відношень. Нехай $T_E\subseteq T$ —
 model tokens, що походять саме з evidence:
 
-$$
+```math
 R_{B\leftarrow T_E}=R_{B\leftarrow C}\circ R_{C\leftarrow N}
 \circ R_{N\leftarrow T_E}.
-$$
+```
 
 Це не one-to-one function. Token може охопити кілька code points; графема може
 складатися з кількох code points; normalized code point може походити з
@@ -114,15 +114,15 @@ Template/special tokens, system policy й query tokens не мають удав�
 byte intervals, $Bytes_B(M)$ — їхні bytes у source order, а $Frame_B(M)$ —
 canonical length-framed records `(start, end, bytes)`. Round-trip invariant:
 
-$$
+```math
 Normalize_v(Decode_e(Bytes_B(M_B(s))))=Surface_N(s),
-$$
+```
 
 а незмінність raw evidence:
 
-$$
+```math
 SHA256(Frame_B(M_B(s)))=evidence\_sha256(s).
-$$
+```
 
 $e$ фіксує encoding/error policy, $v$ — Unicode version і normalization form.
 Після reordering combining marks map може бути списком interval-ів, а не одним
@@ -144,9 +144,9 @@ UAX #29 дає default boundaries, але `10.0.0.0/8`, `v2.1.4` і скороч
 потребують domain tailoring. Parser і SentencePiece мають різні tokens. Для
 tokenizer-а перевіряється:
 
-$$
+```math
 Detok_v(Tok_v(x;special=false);cleanup=false)=x.
-$$
+```
 
 До manifest входять vocabulary/model hash, added tokens, normalization config,
 chat template і library version. Offset API має явно назвати bytes, code points
@@ -241,10 +241,10 @@ Host знаходить anchors у дозволених raw bytes.
 Model token не дорівнює слову. Count залежить від мови, tokenizer-а, Unicode
 representation, chat template і special tokens. Budget має бути явним:
 
-$$
+```math
 L_{sys}+L_{schema}+L_{dialog}+L_{query}+L_{evidence}+L_{tools}
 +L_{output}\le C_{runtime}.
-$$
+```
 
 $C_{runtime}$ — протестований limit конкретного profile. Якщо evidence не
 вміщується, система не обрізає exception, а звужує retrieval або відмовляється.
@@ -265,9 +265,9 @@ KV cache приблизно лінійний за sequence length. Для одн
 $n_l$ layers, $n_{kv}$ KV-heads, head size $d_h$, length $L$ і $b$
 bytes/element:
 
-$$
+```math
 M_{KV}\approx2n_lLn_{kv}d_hb.
-$$
+```
 
 Batching, paging, quantized KV й alignment додають overhead, тому формула не
 замінює peak-memory measurement. Вона описує conventional full-context
@@ -280,10 +280,10 @@ prefix cache не можна вдруге приписувати кожній se
 
 Для $\mathbf q,\mathbf d\in\mathbb R^m$ cosine similarity:
 
-$$
+```math
 s_{dense}(q,d)=\frac{\mathbf q^\top\mathbf d}
 {\lVert\mathbf q\rVert_2\lVert\mathbf d\rVert_2}.
-$$
+```
 
 Cosine визначений лише для ненульових vector-ів однакової dimension; `NaN`,
 zero norm або shape mismatch блокують candidate до ranking.
@@ -291,9 +291,9 @@ zero norm або shape mismatch блокують candidate до ranking.
 Це ranking score, не probability підтримки. Lexical search бере exact atoms;
 dense retrieval — перефразування. RRF поєднує ранги без змішування шкал:
 
-$$
+```math
 s_{RRF}(d)=\sum_{r\in\mathcal R(d)}\frac{1}{k_0+rank_r(d)}.
-$$
+```
 
 $\mathcal R(d)$ містить лише rank lists, у яких $d$ присутній; відсутній
 candidate не отримує вигаданого rank. Використовують $k_0\ge0$ і
@@ -301,10 +301,10 @@ $rank_r(d)\ge1$, тому denominator додатний.
 
 NLI оцінює claim $c$ відносно evidence $e$:
 
-$$
+```math
 p_\theta(y\mid c,e)=softmax(z_\theta(c,e)),\quad
 y\in\{entailment,contradiction,neutral\}.
-$$
+```
 
 У типовому NLI checkpoint третій label — `neutral`. Application state
 `unknown` ширший: він також охоплює incomplete evidence, failed binding і
@@ -313,12 +313,12 @@ $$
 Нехай $y_{ver}$ — дискретний verifier verdict за versioned decision policy, а
 $p_{cal}$ — окремо калібрована probability визначеної події support. Host admission:
 
-$$
+```math
 Admit(c,e,q,u,t)=I_{authz}(c,e,u,t)\land I_{integrity}
 \land I_{material\ spans}\land I_{applicable}(c,q,t)
 \land[y_{ver}=entailment]\land[p_{cal}(entailment)\ge\tau]
 \land\neg I_{conflict}\land I_{epistemic\ type}.
-$$
+```
 
 Останній predicate не дозволяє називати prediction фактом або draft чинною
 нормою — прямий зв'язок зі статтею 14. Authorization для principal $u$,
@@ -349,19 +349,19 @@ remote endpoints, telemetry й update checks перевіряють окремо
 
 Спрощена affine quantization:
 
-$$
+```math
 q(w)=clip\left(round\left(\frac{w}{s}\right)+z,q_{min},q_{max}\right),
 \qquad\hat w=s(q(w)-z).
-$$
+```
 
 $s>0$, $q_{min}<q_{max}$ і
 $z\in\mathbb Z\cap[q_{min},q_{max}]$ задаються для конкретного tensor або
 group. Реальні schemes мають group scales та calibration. «4-bit» не визначає
 однакову якість або швидкість. Quantized artifact — новий candidate. Drift:
 
-$$
+```math
 \Delta_{m,s}=m(model_q,s)-m(model_{base},s).
-$$
+```
 
 Цей знак придатний для higher-is-better quality. Для risk, latency, memory й
 energy використовують $\Delta_{m,s}=m(model_{base},s)-m(model_q,s)$ або
@@ -415,17 +415,17 @@ candidates проти власних baselines. Один ablation змінює �
 $Q_+=\{q\mid |G_q|>0\}$ — непорожня множина answerable queries. Наявність хоча
 б одного правильного passage вимірює $Hit@k$:
 
-$$
+```math
 Hit@k=\frac{1}{|Q_+|}\sum_{q\in Q_+}
 \mathbb{1}[G_q\cap R_k(q)\ne\varnothing].
-$$
+```
 
 Якщо повний claim потребує кількох evidence objects, окремо рахують:
 
-$$
+```math
 Recall@k=\frac{1}{|Q_+|}\sum_{q\in Q_+}
 \frac{|G_q\cap R_k(q)|}{|G_q|}.
-$$
+```
 
 Unanswerable queries не отримують порожнього denominator: для них окремо
 рахують false answer, correct abstention і clarification quality.
@@ -434,9 +434,9 @@ Unanswerable queries не отримують порожнього denominator: �
 completeness, citation correctness, NLI macro-F1 і end-to-end success. Для
 paraphrase group $V_g$:
 
-$$
+```math
 GroupPass=\frac1{|G|}\sum_{g\in G}\prod_{i\in V_g}Success_i.
-$$
+```
 
 $G\ne\varnothing$ і $V_g\ne\varnothing$; інакше empty product хибно дасть
 автоматичний pass.
@@ -446,19 +446,19 @@ citation, epistemic type, ACL і rendering.
 
 Calibration контролюється, зокрема, Brier score:
 
-$$
+```math
 BS=\frac1N\sum_i(p_i-y_i)^2.
-$$
+```
 
 Тут $N>0$, $p_i$ — calibrated probability наперед визначеної binary події
 «повний claim підтриманий», $y_i\in\{0,1\}$. Поріг задається на calibration
 set. Для abstention:
 
-$$
+```math
 Coverage(\tau)=\frac{1}{N}\sum_i\mathbb{1}[p_i\ge\tau],\qquad
 Risk(\tau)=\frac{\sum_i\ell_i\mathbb{1}[p_i\ge\tau]}
 {\sum_i\mathbb{1}[p_i\ge\tau]}.
-$$
+```
 
 $\ell_i$ — наперед визначений per-case loss. Для цих формул $N>0$; за
 нульового coverage risk не визначений. Окремо рахують false answers, correct
@@ -466,10 +466,10 @@ abstentions і clarification quality.
 
 Для повністю послідовного profile latency accounting має вигляд:
 
-$$
+```math
 T_{e2e}=T_{decode}+T_{map}+T_{retrieve}+T_{rerank}+T_{prefill}
 +T_{generation}+T_{verify}+T_{render}+T_{queue}.
-$$
+```
 
 Якщо stages overlap, batch або працюють паралельно, $T_{e2e}$ вимірюють
 wall-clock, а не сумою service times; trace окремо показує critical path.
@@ -478,10 +478,10 @@ wall-clock, а не сумою service times; trace окремо показує 
 cold start. Для isolated answer $N_{admitted}=1$; під batching/concurrency
 енергію атрибутують на рівні всього measurement window:
 
-$$
+```math
 E_{admitted}=\frac{\int_{t_0}^{t_1}(P(t)-P_{idle})dt}{N_{admitted}},
 \qquad N_{admitted}>0,
-$$
+```
 
 із методикою, sampling interval і warm-up. Tokens/s між різними tokenizer,
 output length і batching без пояснення не порівнюються.
