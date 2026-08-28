@@ -29,7 +29,7 @@ system model, fault modes та observation contract. Реальна safety-criti
 повернути не один label, а diagnostic packet із моделлю, evidence, conflicts,
 альтернативами, наступним test і межами висновку.
 
-## Діагноз — не синонім prediction
+## Симптом, прогноз, діагноз і першопричина — різні речі
 
 [Стаття 04](04-Expert-Systems-Applied-Mathematics-UA.md) ввела Bayesian
 inference, causality та value of information, [стаття
@@ -67,7 +67,7 @@ flowchart LR
     HYP --> PACK["Diagnostic proof packet"]
 ```
 
-## Observation Contract: якість входу є частиною логіки
+## Спостереження: дані, без яких висновок ненадійний
 
 Симптом не зберігають як рядок `voltage low`. Мінімальний observation:
 
@@ -111,7 +111,7 @@ sequenceDiagram
 clocks можуть бути не синхронізовані, а log buffering змінює порядок запису.
 Source map має містити clock domain та bound похибки timestamp.
 
-## Model-based diagnosis: що треба припустити несправним
+## Модель діагностики: які припущення пояснюють факти
 
 Нехай `COMP` — компоненти, `SD` — system description, `OBS` — спостереження,
 а $AB(c)$ означає «компонент $c$ поводиться ненормально». Якщо припустити всі
@@ -147,7 +147,7 @@ double-fault $\{oscillator,sensor\}$ можуть бути двома minimal di
 Припущення «ламається лише один компонент» має бути explicit operating
 assumption, а не прихована оптимізація solver-а.
 
-## Conflicts і hitting sets
+## Конфлікти моделі та альтернативні діагнози
 
 Conflict $C\subseteq COMP$ — множина components, які не можуть усі бути
 нормальними за наявних observations:
@@ -194,7 +194,7 @@ flowchart TD
 priors і domain constraints. Але pruning має бути видимим: «гіпотези понад дві
 одночасні faults не розглядалися» входить до diagnostic packet.
 
-## Від сумісності до ймовірності
+## Як ранжувати діагнози, не видаючи ймовірність за доказ
 
 Якщо є надійні historical data або оцінені likelihoods, diagnoses ранжують:
 
@@ -214,7 +214,7 @@ P(H_a\land H_b)=P(H_a)P(H_b)
 є лише припущенням. Common-cause event — волога, supply transient, невдала
 партія — робить faults залежними.
 
-### Ненадійний sensor
+### Як врахувати, що помилятися може сам сенсор
 
 Observation `alarm=1` залежить і від fault $F$, і від sensor quality:
 
@@ -239,7 +239,7 @@ BS=\frac{1}{N}\sum_{n=1}^{N}\sum_{k=1}^{K}
 Він оцінює probability quality, але не достатність fault model. Система може
 бути добре calibrated серед відомих класів і не мати гіпотези `unknown fault`.
 
-## Правила, cases, граф і ML мають різні повноваження
+## Правила, моделі, прецеденти й ML: межі їхніх ролей
 
 ```mermaid
 flowchart LR
@@ -264,7 +264,7 @@ verbalization packet. Вона не має самостійно додавати
 root cause. Кандидат із тексту проходить grounding, як у [статті
 13](13-Knowledge-Acquisition-From-Question-To-Evidence-UA.md).
 
-## Temporal diagnosis: fault може бути режимом, а не компонентом
+## Часова діагностика: несправність може бути режимом
 
 Intermittent defect залежить від прихованого стану $z_t$: cold, warming,
 unstable, normal. Для Hidden Markov Model:
@@ -290,7 +290,7 @@ Temporal model допомагає відрізнити:
 Power-cycle змінює state і censor-ить попередню траєкторію. Тому правило
 `capture-before-reset` є не порадою LLM, а safety/evidence invariant.
 
-## Наступний тест: найбільш імовірне — не завжди найкорисніше
+## Наступний тест: корисність важливіша за ймовірність
 
 Якщо diagnoses кілька, треба обрати observation або intervention. Entropy:
 
@@ -337,7 +337,7 @@ flowchart TD
     OBS --> H
 ```
 
-## Observation і intervention не треба змішувати
+## Чому результат втручання не доводить причину
 
 Виміряти voltage — observation. Замінити connector, нагріти board або змінити
 firmware — intervention: вона змінює system. Після intervention старі
@@ -362,7 +362,7 @@ Action Contract, idempotency, approval та postcondition verification. Diagnost
 planner використовує той самий contract: він не обходить safety gate через те,
 що назвав дію «тестом».
 
-## Diagnostic packet: що система має віддати людині
+## Що має отримати інженер: зрозумілий diagnostic packet
 
 ```json
 {
@@ -398,7 +398,7 @@ Explanation engine зі статті 16 може відповісти:
 - `WHAT IF rail dip is sensor artifact?` — replay на дочірньому snapshot;
 - `WHAT TEST NEXT?` — чому observation розділяє hypotheses і які має costs.
 
-## Коли система має утриматися від діагнозу
+## Коли чесна відповідь системи — «даних недостатньо»
 
 Abstention обов'язкове, якщо:
 
@@ -419,9 +419,9 @@ R_{sel}(c)=\mathbb E[L(\hat H,H)\mid accepted\ at\ coverage\ c].
 Зменшити errors відмовою на всіх складних cases легко; тому звітують і risk, і
 coverage, окремо для fault slices.
 
-## Як оцінювати diagnostic subsystem
+## Як перевірити, що діагностика справді допомагає
 
-Один top-1 accuracy приховує головне. Потрібні:
+Один top-1 accuracy приховує важливі відмінності. Потрібні:
 
 - top-$k$ diagnosis recall і exact-set accuracy для multiple faults;
 - calibration/Brier score для posterior;
@@ -448,7 +448,7 @@ repair label не завжди gold truth; root cause має бути adjudicate
 independent evidence. Cases розділяють за unit/incident lineage, щоб traces
 одного defect не потрапили в train і test.
 
-## Режими відмови й протидія
+## Помилки діагностики та запобіжники
 
 | Відмова | Наслідок | Протидія |
 |---|---|---|
@@ -461,7 +461,7 @@ independent evidence. Cases розділяють за unit/incident lineage, щ�
 | усі known diagnoses inconsistent | система все одно обирає top-1 | `unknown_fault` і abstention |
 | LLM додала правдоподібну причину | немає fault mode/proof edge | proposal-only LLM + verifier |
 
-## Мінімальна реалізація
+## Мінімальна діагностична система
 
 1. Обрати один bounded subsystem і 5–15 відомих fault modes.
 2. Описати components, behavioral constraints, observations, units і clocks.
@@ -478,6 +478,16 @@ independent evidence. Cases розділяють за unit/incident lineage, щ�
 Достатньо коректно показати три сумісні diagnoses, не виключити sensor fault,
 заборонити ранній power-cycle і запропонувати synchronized capture. Вона вже
 зменшує ризик втрати доказу й непотрібної заміни component.
+
+## Висновок: чого навчився читач
+
+Діагностика — це не вгадування найсхожішого label, а послідовний перехід від
+якісного спостереження до кількох перевірюваних гіпотез і безпечного наступного
+тесту. Ви навчилися відрізняти симптом від першопричини, будувати діагнози,
+які не суперечать моделі, враховувати похибку сенсорів і не видавати
+ймовірність за доказ. Практичний результат — уміти пояснити, чому
+обрано саме цей тест, які альтернативи залишилися та коли системі слід
+утриматися від висновку.
 
 Наступна стаття розгляне, що станеться після сотень таких cases. Система може
 помітити новий pattern, зміну fault rates або слабке правило. Але автоматично

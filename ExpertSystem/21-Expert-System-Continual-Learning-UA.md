@@ -16,7 +16,7 @@ connector часто завершує troubleshooting, і починає рек�
 попередніх рекомендацій системи, outcomes запізнюються, а помилковий feedback
 може сам себе підсилювати.**
 
-Це теоретичний референсний дизайн керованого continual-learning контуру, а не
+Це теоретичний референсний дизайн процесу continual learning, а не
 заява про безпечну повністю автономну самозміну. Навіть алгоритм із формальною
 гарантією діє лише за своїх assumptions; production admission, domain
 validation, security review і rollback залишаються окремими повноваженнями.
@@ -29,7 +29,7 @@ validation, security review і rollback залишаються окремими 
 помітити drift, як не забути старі режими, як оцінити нову policy на biased logs
 і що насправді означає «LLM навчилася на своїй помилці».
 
-## «Самонавчання» приховує шість різних механізмів
+## Що саме в системі «навчається»
 
 | Механізм | Persistent state | Що реально змінюється | Основний ризик |
 |---|---|---|---|
@@ -67,7 +67,7 @@ flowchart TB
 підвищує їх epistemic status. Memory item не стає правилом, user click — gold
 label, а успішний tool call — правильним causal outcome.
 
-## Learning episode: що саме сталося
+## Навчальний епізод: що саме сталося і як це перевірити
 
 У момент $t$ система бачить context $x_t$, обирає action $a_t$ за behavior
 policy $\mu_t$, отримує доступні одразу observations $o_t$, а outcome $y$ може
@@ -126,7 +126,7 @@ Feedback має event time і availability time. Інакше система в�
 модель на outcome, якого не могла знати в момент рішення, або плутає відсутність
 label із негативним результатом.
 
-## Чому власний журнал не є i.i.d. dataset
+## Проблема даних: власний журнал уже зміщений попередніми рішеннями
 
 Стан, який система зустріне завтра, залежить від її дій сьогодні. У sequential
 decision problem behavior policy індукує власний distribution $d^{\mu}(x)$.
@@ -176,7 +176,7 @@ flowchart LR
 exploration лише в безпечній області, expert-selected probes, simulation і
 prospective confirmation.
 
-## Drift: система змінилася чи змінився світ
+## Drift: чи змінився світ, дані або сама система
 
 Не кожне падіння метрики вимагає retraining. Розрізняють:
 
@@ -229,7 +229,7 @@ seasonality, product mix, deployment change і policy change. Delayed outcomes
 можуть створити тимчасове погіршення calibration, якщо рахувати незавершені
 episodes як failures.
 
-## Stability–plasticity: вивчити нове й не забути старе
+## Нове знання без втрати перевірених старих режимів
 
 Fine-tuning на останньому місяці може поліпшити revision E й зламати revision C.
 Catastrophic forgetting оцінюють по задачах або slices. Нехай $a_{k,i}$ — якість
@@ -267,16 +267,16 @@ retention, privacy або license; synthetic replay може відтворит�
 Для експертної системи часто безпечніше не стискати volatile fact у weights, а
 оновити versioned knowledge чи retrieval layer.
 
-## Як навчаються правила, cases і knowledge graph
+## Як оновлювати правила, прецеденти й граф знань
 
-### Case-Based Reasoning
+### Прецеденти: коли схожий випадок справді доречний
 
 Класичний цикл CBR: retrieve → reuse → revise → retain. Автоматичним може бути
 retrieve; retain дозволяють лише після verified outcome та applicability review.
 Case зберігає problem, context, action, outcome, adaptation і negative result.
 Інакше база накопичить дублікати успішних anecdotes й уповільнить retrieval.
 
-### Індукція та revision правил
+### Правила: як створити кандидата, а не непомітно переписати базу знань
 
 Inductive Logic Programming або rule learner може запропонувати clause, що
 пояснює positive і відсікає negative examples. Нехай background knowledge $B$,
@@ -313,7 +313,7 @@ flowchart LR
 Відхилений candidate теж корисний: його причина стає negative example і тестом,
 але не правилом «ніколи більше не пропонувати» без scope.
 
-## Active learning: запитувати не найневпевненіше, а найцінніше
+## Active learning: яку перевірку варто замовити
 
 Uncertainty sampling вибирає case з великою entropy:
 
@@ -336,7 +336,7 @@ x^*=\arg\max_{x\in U}
 17](17-Knowledge-Elicitation-From-Experts-UA.md). Model-generated label не стає
 незалежною перевіркою тієї самої model.
 
-## Policy learning: дія змінює дані
+## Policy learning: як рекомендації змінюють майбутні дані
 
 Для contextual bandit або sequential policy reward — не просто «користувач
 натиснув корисно». Він має відображати verified outcome і harm. Online regret:
@@ -369,7 +369,7 @@ LCB — lower confidence bound, $\varepsilon$ — допустима non-inferio
 немає, candidate повертається до baseline в uncertain regions або проходить
 simulation/shadow/human gate — не отримує вигаданий score.
 
-## LLM feedback: критика не є ground truth
+## Межа LLM: самокритика — ще не перевірений факт
 
 LLM може сформувати self-critique, reflection, synthetic example або rule draft.
 Це proposals із спільними помилками generator/verifier. Якщо одна model пише
@@ -390,7 +390,7 @@ LLM може сформувати self-critique, reflection, synthetic example �
 Model update dataset проходить deduplication, contamination, license, ACL,
 poisoning і canary-extraction checks.
 
-## Feedback poisoning, reward hacking і Goodhart
+## Як не дати feedback-у отруїти навчання
 
 Коли metric стає target, система або користувачі можуть оптимізувати proxy:
 
@@ -419,7 +419,7 @@ Feedback authority є типізованою. End user може повідоми
 затвердити policy. Велика кількість low-authority votes не повинна автоматично
 перемогти один verified safety artifact.
 
-## Candidate factory і release boundary
+## Candidate і робоча версія: чому їх не можна змішувати
 
 ```mermaid
 flowchart LR
@@ -449,7 +449,7 @@ episodes, transformations, exclusions й label availability. Candidate versions
 - model weights — рідше через leakage/forgetting/evaluation cost;
 - high-impact policy — лише після OPE, simulation, shadow і approval.
 
-## Як вимірювати здатність навчатися
+## Як перевірити, що нова версія стала кращою, а не лише новішою
 
 Потрібні не лише candidate accuracy:
 
@@ -480,7 +480,7 @@ security/safety failures не усереднюються з latency gain. [Ст�
 property-based і formal gates; тут до них додаються temporal split, feedback
 lineage, forgetting та policy-induced distribution.
 
-## Режими відмови й протидія
+## Типові збої самонавчання та запобіжники
 
 | Відмова | Чому виникає | Протидія |
 |---|---|---|
@@ -494,7 +494,7 @@ lineage, forgetting та policy-induced distribution.
 | candidate сам себе тестує | shared error і leakage | sealed set, independent verifier/reviewer |
 | online update неможливо відкотити | state змішано з runtime | immutable ledger, versioned atomic manifest |
 
-## Перший безпечний continual-learning контур
+## Перший безпечний процес навчання
 
 1. Обрати один low-risk decision і визначити verified delayed outcome.
 2. Логувати context, action, behavior-policy version, propensity та timestamps.
@@ -514,12 +514,18 @@ sensor-fault cases не мають регресувати. Policy вибору t
 частіший connector inspection не повинен витіснити synchronized capture там,
 де transient evidence незворотний.
 
-Самонавчання зрілої експертної системи — не право безперервно змінювати себе.
+## Висновок: чого навчився читач
+
+Самонавчання експертної системи — не право безперервно змінювати себе.
 Це здатність перетворювати власну роботу на **трасовані сигнали**, сигнали — на
 **ізольовані candidates**, а candidates — на **нові версії лише після доказу**.
 Система справді навчається тоді, коли пам'ятає не лише успіх, а й те, за якої
 policy його спостерігала, які альтернативи не перевірила, що могла забути і як
-повернути попередню поведінку.
+повернути попередню поведінку. Ви навчилися розрізняти пам’ять, корекцію знань,
+перенавчання моделі та зміну policy; бачити, чому історія власних рекомендацій
+не є нейтральним набором даних; і випускати зміни лише через ізольованого
+кандидата, перевірку, поетапне ввімкнення та rollback. Отже, навчання стає не
+джерелом самопідсилення помилок, а контрольованим способом поліпшувати систему.
 
 ## Питання до читачів
 
