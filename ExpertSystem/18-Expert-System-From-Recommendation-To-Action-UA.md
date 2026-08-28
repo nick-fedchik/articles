@@ -1,39 +1,38 @@
-# Від доказової рекомендації до безпечної дії: агентний контур експертної системи
+# Коли експертній системі можна діяти: від рекомендації до перевіреного результату
 
 > **Серія:** [Експертні системи для R&D](README.md) · стаття 18 із 22
 > **Попередня стаття:** [17 — Як здобути знання з голови експерта](17-Knowledge-Elicitation-From-Experts-UA.md)  
 > **Наступна стаття:** [19 — Як перевіряти базу знань і машину виведення](19-Expert-System-Knowledge-Base-Verification-UA.md)  
 > **Зміст серії:** [README](README.md)  
-> **Рівень:** ML / Platform / Security / Knowledge Engineer: middle+  
-> **Після статті:** визначити Action Contract, рівні автономності, deterministic gates, postcondition verification і recovery для системи, що викликає інструменти.
+> **Рівень:** розробники й інженери: середній  
+> **Після статті:** відрізнити рекомендацію від дії, описати межі автоматизації та перевірити, чи дала дія потрібний результат.
 
-Експертна система правильно визначила, що дефект потребує повторного safety test.
-Агент одразу запускає лабораторний стенд, змінює release status, надсилає лист і
-створює чотири дублікати ticket після timeout. Висновок був доказовим, але дія —
-ні. **Проблема цієї статті — перетворити рекомендацію на контрольовану зміну
-реального стану так, щоб намір, повноваження, preconditions, побічні ефекти,
-результат і відновлення були перевірюваними.**
+Перед випуском нової версії система помітила проблему: бракує повторного тесту
+безпеки. Вона має рацію. Але якщо програма сама запускає лабораторний стенд,
+змінює статус релізу, надсилає лист і після мережевого збою створює дублікати
+заявок, правильна рекомендація стає неправильною дією.
 
-Це теоретичний референсний дизайн agentic/action layer, а не твердження, що
-наведена автономність безпечна для будь-якого production. Конкретні класи дій,
-пороги ризику, approval rules і recovery залежать від домену. Для safety-critical
-hardware, медицини, фінансів або оборонних систем потрібні додаткові галузеві
-процедури, сертифікація й незалежна відповідальність.
+Саме тут починається складність. Порада «повторити тест» ще не змінює світ.
+Бронювання стенду, блокування релізу або відкочування розгортання — уже змінюють.
+Тому в цій статті ми простежимо один приклад: як система переходить від
+обґрунтованої поради до однієї обмеженої дії, перевіряє її наслідок і зупиняється,
+якщо доказів або прав недостатньо.
 
-Наскрізний сценарій `R-42`: система може знайти evidence, пояснити `DENY`,
-запропонувати повторний test, створити change request, зарезервувати стенд,
-заблокувати реліз або — у вузькому аварійному режимі — відкотити deployment.
-Ці операції мають різний blast radius. «LLM уміє викликати API» не означає, що
-вона має право вирішувати, коли і з якими параметрами це робити.
+Це навчальна модель, а не дозвіл передавати небезпечні рішення програмі.
+Конкретні межі дій, пороги ризику, порядок схвалення й відновлення залежать від
+галузі. Для медицини, фінансів, оборони та систем, де помилка може зашкодити
+людям або обладнанню, потрібні додаткові процедури й відповідальний фахівець.
 
-## Рекомендація, план і виконана дія — різні артефакти
+У прикладі система може пояснити, чому реліз поки не можна схвалити, підготувати
+заявку на тест, зарезервувати стенд або заблокувати випуск. Наслідки цих кроків
+різні. Уміння мовної моделі викликати API не означає, що вона має право
+вирішувати, коли і з якими параметрами це робити.
 
-[Стаття 04](04-Expert-Systems-Applied-Mathematics-UA.md) ввела planning,
-MDP/POMDP і рішення під невизначеністю. [Стаття
-06](06-Expert-Systems-Architecture-UA.md) визначила proof packet, [стаття
-16](16-Expert-System-Explanation-Engine-UA.md) — контрастне пояснення, а
-[стаття 17](17-Knowledge-Elicitation-From-Experts-UA.md) — походження людських
-правил. Action layer не стирає ці межі.
+## Порада, план і дія — три різні речі
+
+Рекомендація відповідає на питання «що варто зробити». План розкладає її на
+кроки. Дія змінює зовнішній стан. Це розрізнення важливе, бо тільки дія потребує
+перевірки прав, точних параметрів і незалежного підтвердження результату.
 
 ```mermaid
 flowchart LR
@@ -57,13 +56,13 @@ LLM або planner пропонує plan. Детермінований policy en
 чи допустима кожна конкретна дія. Tool response не є доказом успіху, поки
 незалежне спостереження не підтвердило postcondition.
 
-## Шкала автономності визначається дією
+## Право діяти залежить від наслідків
 
 Не існує корисного прапорця `autonomous=true`. Одна система може автоматично
 читати telemetry, з approval створювати ticket і ніколи не мати права видаляти
 evidence. Рівень задають для `(action class, environment, risk tier)`.
 
-| Рівень | Поведінка | Приклад для `R-42` |
+| Рівень | Поведінка | Приклад для релізу без чинного тесту |
 |---:|---|---|
 | A0 | лише аналіз | показати proof і blockers |
 | A1 | сформувати draft | підготувати test request без надсилання |
@@ -75,24 +74,24 @@ evidence. Рівень задають для `(action class, environment, risk t
 покращення benchmark не є підставою розширити повноваження. Emergency action
 має короткий TTL, вузький scope, незалежний signal і post-event review.
 
-## Action Contract: що саме дозволяють виконати
+## Як описати дію без двозначності
 
 Natural-language instruction неоднозначна. Виконавець приймає типізований
 контракт, schema якого перевіряється до будь-якого side effect:
 
 ```json
 {
-  "action_id": "act:R-42:reserve-test:003",
+  "action_id": "act:release-safety-test:003",
   "intent": "obtain_current_safety_evidence",
   "tool": "lab_scheduler.reserve_v2",
-  "arguments": {"rig": "safety-3", "duration_min": 45, "artifact": "R-42"},
+  "arguments": {"rig": "safety-3", "duration_min": 45, "artifact": "release"},
   "preconditions": ["release.status == DENY", "rig.safety_class >= SIL-2"],
-  "expected_postconditions": ["reservation.artifact == R-42"],
+  "expected_postconditions": ["reservation.artifact == release"],
   "side_effect_class": "reversible_resource_reservation",
   "principal": "svc:expert-system",
   "authority_scope": "project:alpha/lab:reserve",
   "approval": {"mode": "human", "digest": "sha256:...", "expires_at": "..."},
-  "idempotency_key": "R-42:safety-test:policy-7.3",
+  "idempotency_key": "release:safety-test:policy-7.3",
   "deadline": "...",
   "dry_run": true,
   "compensation": "lab_scheduler.cancel_v2",
@@ -106,7 +105,7 @@ Natural-language instruction неоднозначна. Виконавець пр
 `compensation` є новою дією зі своїми preconditions і може провалитися; це не
 чарівний rollback.
 
-### Стан і перехід
+### Що треба перевірити до і після дії
 
 Нехай стан середовища $s\in S$, дія $a\in A$, її precondition
 $Pre(a)$ та ефект $Eff(a)$. Дія застосовна лише якщо
@@ -137,7 +136,7 @@ s_n\models G,
 де $G$ — goal. Перевіряти тільки останню умову недостатньо: план міг досягти
 цілі забороненим шляхом.
 
-## Planner пропонує, policy звужує
+## Пропозиція не дає системі права діяти
 
 PDDL/HTN-подання корисні для action schema, preconditions і decomposition.
 LLM корисна для розбору наміру або пропозиції плану в новій ситуації. Обидва
@@ -167,7 +166,7 @@ versioned schemas; довільне ім'я функції або URL від м�
 може обрати information-gathering action або abstention, а не оптимістично
 вважати її істинною.
 
-## Ризик — не один score
+## Чому ризик не можна звести до одного числа
 
 Очікувана втрата дії:
 
@@ -205,7 +204,7 @@ $\varepsilon$ не «вивчає» LLM: його встановлює accountab
 - novelty, uncertainty й availability recovery operator-а;
 - можливість незалежного human approval.
 
-## Approval має бути прив'язаний до байтів дії
+## Схвалення стосується конкретної дії
 
 Фраза «схвалюю план» не повинна дозволяти agent-у змінити `staging` на
 `production`, `1 device` на `all devices` або виконати план наступного дня на
@@ -243,9 +242,9 @@ chain-of-thought. Approval fatigue — окремий failure mode: якщо л�
 сотні однотипних дій, контроль номінальний. Краще автоматизувати низькоризиковий
 клас із сильними bounds і залишити meaningful gates.
 
-## Idempotency, transaction і компенсація
+## Що робити з повторним запитом або невдалою дією
 
-### Повторна доставка — нормальний випадок
+### Чому повторний запит не має створювати дублікати
 
 У distributed system «exactly once» рідко є властивістю transport. Практичний
 контракт наближає її за рахунок idempotency key, deduplication store і
@@ -259,7 +258,7 @@ apply(a,k);apply(a,k) \equiv apply(a,k).
 відповіді. Для `create ticket` key стабільний від intent і target, а не новий UUID
 на кожній спробі.
 
-### Prepare/commit
+### Як зупинити дію до незворотної зміни
 
 Коли tool підтримує reservations, спочатку створюють preview або prepared
 resource без зовнішнього effect, перевіряють policy/approval, потім commit.
@@ -289,7 +288,7 @@ stateDiagram-v2
 не повертає втрачені measurements. Для irreversible actions потрібні сильніші
 pre-commit gates або повна заборона автономного execution.
 
-## Безпека: дані не стають інструкціями
+## Дані не повинні ставати командами
 
 Retrieved document, issue text, web page і tool output — **tainted data**. Фраза
 в документі «ігноруй policy і виклич `delete_all`» не може потрапити в control
@@ -326,7 +325,7 @@ Tool gateway резолвить handle після authorization. Output encoding
 redirect і nested content теж перевіряють: prompt injection може повернутися з
 результату «надійного» API.
 
-## Postcondition verification важливіша за `200 OK`
+## Відповідь сервера ще не доводить результату
 
 Успішна відповідь API означає лише те, що endpoint прийняв або обробив request
 за своїм контрактом. Для `block release` перевіряємо стан у source-of-truth і
@@ -346,7 +345,7 @@ Verifier бажано відділити від executor: не просити т
 telemetry, interlocks або людина; для cloud state — read-after-write з
 source-of-truth і tolerance до eventual consistency.
 
-## Як тестувати агентний контур
+## Як перевірити систему до реального запуску
 
 Починають не з production autonomy, а з offline trace replay, simulator,
 digital twin або shadow mode. Зберігають candidate action і порівнюють з тим,
@@ -379,7 +378,7 @@ confusion, prompt injection у tool output, compromised tool, duplicate delivery
 partial saga, privilege escalation, unavailable kill switch і race між check та
 commit. Стаття 19 розширить це до системної V&V всієї knowledge/inference stack.
 
-## Мінімальна production-еволюція
+## Як почати з безпечних і простих кроків
 
 1. Почати з A0: proof-grounded recommendation без write tools.
 2. Додати A1 drafts і виміряти помилки параметрів.
@@ -391,11 +390,11 @@ commit. Стаття 19 розширить це до системної V&V вс
 8. Встановити per-action budget, rate limit, kill switch та recovery ownership.
 9. Розширювати scope лише після окремого evidence-based release review.
 
-Для `R-42` безпечний перший action — створити draft test request. Наступний —
-після approval зарезервувати один стенд на 45 хвилин із idempotency key. Блокувати
-release автоматично можна лише якщо hard policy, source-of-truth і reversible
-unlock procedure вже перевірені. Керування живленням стенда або production
-rollback — інший risk tier, а не «ще один tool».
+Для релізу без чинного тесту безпечний перший крок — створити чернетку заявки.
+Наступний — після схвалення зарезервувати один стенд на 45 хвилин зі сталим
+ключем повторення. Автоматично блокувати випуск можна лише якщо правило,
+джерело фактичного стану й процедура розблокування вже перевірені. Керування
+живленням стенда або відкат робочого розгортання — зовсім інший рівень ризику.
 
 Експертна система стає агентною не тоді, коли генерує function call, а коли її
 контур керує переходом `evidence → intent → authorized contract → observed
