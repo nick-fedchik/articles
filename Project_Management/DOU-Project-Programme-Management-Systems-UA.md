@@ -1,65 +1,132 @@
-# Система управління складною програмою: від розрізнених трекерів до рішень із доказами
+# Сучасні системи проєктного й програмного менеджменту: від статусів до рішень
 
-У складному інженерному продукті стан роботи майже ніколи не міститься в одному інструменті. Беклог живе у трекері, код — у репозиторії, вимоги — у спеціалізованій системі, результати тестів — ще десь, а причини важливих рішень — у чатах і пам’яті кількох людей. Кожна частина може бути якісною; проблема виникає на стиках. Саме там губиться відповідь на просте запитання: **чи готові ми робити наступний крок і чим це доведено?**
+Уявімо типову ситуацію перед релізом: команда бачить «зелений» план, але не може за пів години відповісти, чи зміна вимоги зачепила тести, постачання, ризики й потрібні погодження. Дані існують, проте розкладені між трекером задач, репозиторієм коду, системою вимог, таблицями та чатами. Це вже не проблема одного звіту — це втрата керованого контексту.
 
-Для hardware/software розробки це не академічна тонкість. Від зміни мікросхеми може залежати прошивка, стенд, протокол випробувань, сертифікаційний пакет і дата інтеграції. Дошка задач показує рух окремих робіт, але не весь причинно-наслідковий ланцюг.
+Системи управління проєктами давно перестали бути лише дошками задач і календарями. Для складних інженерних продуктів, особливо апаратно-програмних програм, вони мають поєднувати планування, вимоги, архітектурні рішення, ризики, залежності, докази виконання, відповідність вимогам, AI-асистентів і формальні правила. Інакше проєктний менеджмент лишається набором інструментів, а не системою прийняття рішень.
 
-## Проєкт, програма і спільна модель реальності
+У багатьох компаніях ситуація знайома: backlog в одному інструменті, code в іншому, requirements у третьому, tests у четвертому, risks у таблиці, status у презентації, а частина decisions у chat history. Коли команда невелика, це ще працює. Коли продукт має кілька підсистем, supplier-ів, safety/security вимоги, regulatory audits і багаторічний lifecycle, звичайний task tracker перестає відповідати на головні питання.
 
-Керівник проєкту відповідає за доставку конкретного результату: обсяг, команду, строки, ризики й якість. Керівник програми дивиться на спільний результат кількох проєктів: залежності, інтеграційні вікна, конфлікти ресурсів, користь і рішення між командами. Тому «всі проєкти зелені» не означає, що програма здорова: один пропущений лабораторний слот може зупинити кілька формально не пов’язаних робіт.
+Чи достатньо evidence для release? Які requirements зачеплені зміною? Які dependencies блокують інші teams? Чи зростає programme risk? Чому саме було прийнято technical decision? Як product priority вплине на architecture, testing, schedule і compliance scope? Якщо відповідь на кожне питання треба збирати вручну, система ще не зріла.
+
+## Проєкт і програма мають різні горизонти
+
+Project manager відповідає за delivery конкретного result. Його фокус - scope, team, plan, schedule, capacity, tasks, risks, changes, quality, communication. Programme manager працює з кількома проектами, які разом мають дати strategic outcome. Його фокус - cross-project dependencies, integration, shared risks, benefits, programme gates, release trains, resource conflicts і decisions на вищому рівні.
+
+Це різні ролі. Project manager питає: чи ця команда доставить затверджений scope? Programme manager питає: чи всі частини разом дадуть потрібний результат? Саме тому programme management не можна замінити агрегацією project status reports.
+
+Кілька проєктів можуть виглядати «зеленими» окремо, але разом створити критичний ризик для програми. Апаратний результат затримався на два дні, збірка прошивки не потрапила в інтеграційне вікно, втрачено слот лабораторії, не надійшов документ постачальника. Жоден окремий статус не пояснює системний ризик повністю.
+
+Для термінології корисно орієнтуватися на серію ISO 21500: ISO 21502:2020 описує практики управління проєктом, а ISO 21503:2022 — поняття, передумови й практики управління програмою. Це не рецепти конкретного інструменту, а спільна мова для ролей і рішень.
+
+## Спільні артефакти замість нескінченних статус-зустрічей
+
+Здорова взаємодія PM і PgM будується не на тому, що всі частіше зустрічаються. Вона будується на shared artifacts: dependency map, programme risk register, gate criteria, decision records, RACI, traceability, escalation path.
+
+Керівник проєкту приносить факти: стан виконання, блокери, ризики, потреби в ресурсах, зміни вимог, тести, дефекти й докази. Керівник програми повертає контекст: пріоритети програми, міжпроєктні залежності, рішення керівного органу, зміни дорожньої карти та стратегічні компроміси.
+
+Якщо ця взаємодія тримається тільки на meetings, організація платить часом. Якщо вона тримається на operational memory системи, meetings стають коротшими і змістовнішими.
 
 ```mermaid
 flowchart LR
-  PI[Product intent] --> R[Вимоги]
-  R --> A[Архітектурні рішення]
-  A --> W[Роботи та WBS]
-  W --> T[Тести й вимірювання]
-  T --> E[Докази релізу]
-  D[Залежності та ризики] --> W
-  D --> G[Програмний gate]
-  E --> G
-  G --> O[Рішення: продовжити, змінити або зупинити]
+    PI[Задум продукту] --> R[Вимоги]
+    R --> W[Роботи й віхи]
+    W --> T[Тести та результати]
+    R --> D[Архітектурні рішення]
+    D --> T
+    W --> K[Ризики й залежності]
+    T --> E[Докази готовності]
+    K --> E
+    E --> G{Рішення контрольного пункту}
+    G -->|схвалено| REL[Реліз]
+    G -->|є прогалини| W
 ```
 
-Така схема не закликає замінити всі наявні інструменти «мегаплатформою». Вона описує мінімальну спільну модель: вимога, зміна, ризик, залежність, рішення, тест, доказ, baseline і відповідальна роль мають бути зв’язаними та мати версію. Інтеграційний шар через API, події й посилання часто цінніший за ще одну базу даних.
+*Діаграма показує не послідовність «раз і назавжди», а зв'язки, які система має вміти пояснити під час зміни або контрольного пункту.*
 
-## Чому план сам по собі не є станом системи
+## Чому апаратно-програмний продукт складніший
 
-WBS і календар потрібні, але в інженерній програмі вони є гіпотезою про майбутнє. Плата може не пройти випробування, постачальник — змінити дату, а нова загроза безпеці — розширити тестовий обсяг. Baseline не забороняє змін; він робить їх видимими й порівнюваними.
+Software-only project може швидше змінювати scope, release cadence і implementation plan. Hardware/software programme має фізичні constraints: component lead time, board spin, prototype batch, lab availability, supplier delivery, firmware dependency, certification window, test equipment booking, environmental tests, EMC tests, safety reviews, cybersecurity assessment, production readiness.
 
-Практичний change package має відповідати на чотири питання: що саме змінюється, чому, які артефакти зачеплено і яке рішення пропонується. Корисна груба оцінка пріоритету зміни може виглядати так:
+Такий продукт живе не тільки в tasks. Він живе в BOM, schematics, PCB revisions, mechanical constraints, firmware branches, calibration data, test benches, lab measurements, supplier notices, manufacturing feedback, field returns і safety/security evidence.
 
-$$I_c = w_rR + w_sS + w_cC + w_dD,$$
+Якщо system of management бачить тільки tasks, вона втрачає половину реальності. Наприклад, task може бути on track, але потрібний hardware sample не приїхав. Test campaign може бути запланована, але fixture не ready. Firmware готовий, але register map змінився. Це не "деталі", це schedule і risk.
 
-де $R$ — вплив на вимоги, $S$ — безпеку або кібербезпеку, $C$ — вартість чи ресурси, $D$ — затримка; ваги $w$ команда погоджує заздалегідь. Це не «математика, що вирішує замість людей», а спосіб не приховати критичний вимір за одним усередненим світлофором.
+## Як керувати планом і змінами без ручної реконструкції
 
-## Від звіту до підтримки рішення
+Детальний WBS для багаторічного проекту корисний, але небезпечний, якщо живе окремо від engineering reality. На старті програми сотні rows, dependencies, durations і milestones дають відчуття control. Через кілька місяців змінюються components, architecture, supplier dates, lab schedule, requirements або cybersecurity impact. План починає вимагати постійного ручного обслуговування.
 
-Звіт пояснює, що вже сталося. Система підтримки рішень показує, що зміниться за різних сценаріїв і які припущення за цим стоять. Для цього потрібні не сотні метрик, а сигнали з власником, порогом і наступною дією.
+Якщо WBS уже став baseline, його не можна тихо поправити. Зміна має пройти Change Control Board, impact analysis, resource review, stakeholder communication. Це правильно, але тільки якщо система допомагає. Якщо PM мусить вручну збирати affected requirements, tests, suppliers і risks, governance стає важкою ношею.
 
-```mermaid
-sequenceDiagram
-  participant X as Подія: зміна вимоги
-  participant S as Система зв’язків
-  participant P as PM/PgM
-  participant C as Change board
-  X->>S: нова версія
-  S->>S: знайти тести, ризики, залежності
-  S->>P: impact summary із посиланнями
-  P->>C: варіанти та рекомендація
-  C->>S: рішення і новий baseline
-```
+Інтегрована система має пов'язувати WBS, milestones, dependencies, risks, requirements, tests, suppliers і evidence. Зміна milestone має одразу показати impacted objects і підготувати draft change package.
 
-У такому циклі метрика має сенс лише тоді, коли запускає розмову або workflow. Наприклад, ризик від затримки не є числом «для звіту»: він має власника, горизонт, пов’язані віхи та варіанти пом’якшення.
+## Інструменти: сильні, але фрагментовані
 
-## Де доречні AI та правила
+Ринок інструментів великий. Jira, YouTrack, Azure DevOps, GitLab Issues і GitHub Issues сильні як task/backlog trackers. GitLab і GitHub дають близький до code контур: repositories, code review, CI/CD, security scanning, releases. Confluence, SharePoint, Notion і wiki зберігають documents. Polarion, DOORS Next, Jama Connect, codeBeamer сильні у requirements, baselines і traceability. TestRail, Zephyr, Xray закривають testing. Aha!, Productboard, Jira Product Discovery допомагають product management. MS Project, Smartsheet, Planview, Planisware, Clarity дивляться на planning, portfolio і reporting.
 
-AI корисний там, де потрібні пошук, пояснення, зіставлення і чернетка: звести статус з задач, коду й тестів; підготувати impact analysis; пояснити, чому gate не готовий; знайти суперечність між roadmap і виконанням. Але відповідь асистента має містити джерела, версії, припущення і невизначеність. Інакше це переконливий текст, а не доказ.
+Проблема не в тому, що ці systems погані. Проблема в межах. Requirement тут, code там, test в іншому місці, risk у таблиці, decision у листуванні, explanation у голові людини. Складний product живе між системами, а саме там найменше automation.
 
-Для формальних обмежень на кшталт «критична вимога не може бути закрита без незалежної верифікації» краще працюють явні правила. Найстійкіша комбінація проста: мовна модель пояснює й готує варіанти, правила перевіряють повноту та заборони, людина приймає рішення. Для конфіденційних даних до цього додаються контроль доступу, журналювання запитів, версія моделі й розмежування проєктних контекстів.
+## Починати потрібно з моделі предметної області
 
-## З чого почати
+Сучасна project/programme system має починатися з domain model. Вона має розуміти project, programme, portfolio, product requirement, stakeholder requirement, system requirement, work product, risk, dependency, decision, baseline, test evidence, release, role, approval, audit trail.
 
-Не починайте з закупівлі платформи. Візьміть один болючий маршрут, наприклад `вимога → зміна → тест → релізний gate`, і зробіть його відтворюваним. Далі додайте карту міжпроєктних залежностей, а потім — огляд готовності до релізу. Якість системи легко перевірити питанням: чи може нова людина за кілька хвилин пояснити стан важливої вимоги, не шукаючи автора в чаті?
+Ключова вимога — простежуваність. Бізнес-ціль або продуктова вимога має вести до вимог зацікавлених сторін, системних, програмних та апаратних вимог, архітектурних рішень, задач, запитів на злиття, тестів, дефектів, ризиків, погоджень і доказів готовності до релізу. Не кожному проєкту потрібні всі ці ланки, але для обраного контуру вони мають бути явними. Інакше аудит і перевірка готовності до релізу перетворюються на ручну реконструкцію.
 
-Сучасне управління програмою — це не виробництво звітів. Це операційна пам’ять, яка з’єднує продуктовий намір, інженерну реальність і докази. Вона скорочує не лише кількість слайдів, а й час на пошук контексту перед відповідальним рішенням.
+Потрібні baselines і versioning. Стан проекту на момент gate review або release candidate має бути відтворюваним. Якщо requirement змінився через два місяці, система має показати, що було approved тоді.
+
+Потрібна integration architecture: APIs, webhooks, event streams, schema versioning, idempotency, audit logs, access control. Нова система не замінить усі tools. Вона має зв'язати їх.
+
+## Decision support замість reporting
+
+Reporting відповідає на питання "що сталося". Decision support допомагає з питаннями "що буде, якщо", "які alternatives", "які trade-offs", "які assumptions", "який confidence". Для programme management це критично: зміна одного milestone може зачепити supplier delivery, compliance gates, lab booking, release train і customer commitment.
+
+Metrics теж мають бути signals for action, а не картинки для report. Якщо defect trend погіршився, coverage впав, critical resource перевантажений, supplier затримує delivery або requirements накопичуються без review, система має не чекати кінця тижня. Вона має показати impact, owner-а і possible actions.
+
+## AI-асистент корисний лише в керованому контексті
+
+AI Assistant у такій системі не має бути просто chat поруч із backlog. Найбільша цінність з'являється, коли AI працює в context конкретного artifact, role і workflow.
+
+Для PM він може підсумувати status із tasks, merge requests, tests і risks; знайти tasks без owner; виявити discrepancies між roadmap і execution; підготувати draft status report with sources. Для PgM - знайти cross-project dependencies, systemic risks, release scenarios, gate review gaps. Для engineers - пояснити requirement history, знайти related defects and tests, підготувати impact analysis або draft ADR.
+
+Але рекомендації AI мають бути придатними до перевірки: з джерелами, версіями, припущеннями, рівнем упевненості й обмеженнями. «AI так сказав» не є доказом. Добрий результат AI — це структурована чернетка для людського рішення, а не саме рішення. Такий підхід узгоджується з профілем NIST для генеративного AI: ризики треба керувати протягом життєвого циклу, а не оцінювати лише після появи помилки.
+
+## Мовні моделі, локальне розгортання й експертні правила
+
+LLM добре працює з language, summary, explanation. Але вона потребує керованого context: retrieval, access control, prompt logs, model version, source links, separation of facts and assumptions, human approval.
+
+Для confidential engineering потрібні різні modes: cloud LLM для low-risk tasks, private deployment, local models, air-gapped inference, hybrid routing, data redaction, sensitivity labels, project compartments. Для defense-related, automotive, aviation, MedTech або semiconductor дані не завжди можуть покидати controlled perimeter.
+
+Там, де потрібні formal checks, LLM недостатньо. Expert systems можуть тримати rules, facts, domain model, inference, explanations, conflict detection, case-based reasoning. Hybrid approach виглядає найперспективніше: LLM працює з текстом і неструктурованими sources, expert rules перевіряють traceability, gates, missing evidence і conflicts.
+
+## Докази мають виникати в процесі роботи
+
+У regulated domains compliance має виникати з роботи, а не збиратися після. Review records, approvals, test runs, trace updates, risk decisions, release notes, security scan results і change history мають формувати evidence chain у процесі.
+
+Тоді audit package не збирається в останній момент. Release readiness не залежить від ручного optimism. Safety, cybersecurity, QA, requirements і systems engineering бачать свої gaps у реальному context.
+
+Engineers теж отримують користь. Software engineer бачить, яка requirement стоїть за change. QA отримує risk-based testing. Systems engineer бачить duplicates і conflicts. Safety бачить link між hazards і evidence. Cybersecurity бачить assets, threats, mitigations і release decisions. Hardware/embedded бачать board revisions, firmware, errata, lab measurements і integration risks.
+
+Система перестає бути місцем, куди люди здають status. Вона починає повертати їм context.
+
+## Перші кроки без великого переписування
+
+Не обов'язково одразу будувати нову платформу. Можна почати з integration layer для кількох критичних links: requirement -> task -> test -> defect -> release gate. Потім додати dependency map для programme level. Потім зробити release readiness view, який не дозволяє сховати missing evidence за green status.
+
+Важливо вибирати workflow, де користь відчують і managers, і engineers. Якщо система лише додає поля для PMO, її обходитимуть. Якщо вона допомагає швидше знайти impacted tests, пояснити delay, підготувати gate package або уникнути повторної помилки, adoption буде природнішим.
+
+## Висновок: система має повертати контекст
+
+Сучасна система project і programme management - це не один mega-tool і не ще один dashboard. Це інтегрований operational layer між product intent, engineering reality, evidence, risks, dependencies і decisions.
+
+Її цінність у тому, що вона зменшує ручну реконструкцію context. PM і PgM отримують більше часу на decisions. Engineers отримують кращий context. PMO отримує governance, вбудовану в workflow. Leadership отримує не traffic lights, а trade-offs and evidence.
+
+AI має бути частиною цієї системи, але не її заміною. Там, де потрібна мова, AI пояснює. Там, де потрібні rules, працюють expert systems. Там, де потрібне decision, відповідальність лишається за людьми.
+
+Тепер можна чіткіше сформулювати мінімальний результат: керівник та інженер мають бачити не лише статус, а й підстави для нього, вплив зміни та наступне відповідальне рішення. Це не означає побудувати «мегаінструмент». Часто достатньо почати з одного ланцюга — вимога → робота → тест → доказ → рішення контрольного пункту — і зробити його надійним.
+
+## Посилання
+
+- [ISO 21502:2020 — guidance on project management](https://www.iso.org/standard/74947.html)
+- [ISO 21503:2022 — guidance on programme management](https://committee.iso.org/sites/tc258/home/projects/published/iso-21503.html)
+- [NIST AI 600-1: Generative AI Profile](https://doi.org/10.6028/NIST.AI.600-1)
+
+Питання до читачів: що для вас було б мінімальним стандартом сучасної системи управління складними апаратно-програмними програмами: простежуваність, підсумок від AI з посиланнями на джерела, готовність до релізу, карта залежностей, ланцюг доказів чи підтримка рішень на рівні програми?
