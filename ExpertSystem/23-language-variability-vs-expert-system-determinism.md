@@ -148,8 +148,6 @@ $$p_i = \frac{e^{z_i}}{\sum_{j \in V} e^{z_j}}$$
 Логіти токенів, які не відповідають схемі, примусово зануляються (прирівнюються до $$\(-\infty\))$$ перед етапом обчислення ймовірностей:
 
 
-$$z'_i = \begin{cases} z_i, & \text{якщо } i \in M \\ -\infty, & \text{якщо } i \notin M \end{cases} \qquad \Longrightarrow \qquad p'_i = \frac{e^{z'_i}}{\sum_{j \in V} e^{z'_j}}$$
-
 $$z'_i = \begin{cases} z_i, & \text{якщо } i \in M \\\\ -\infty, & \text{якщо } i \notin M \end{cases} \qquad \Longrightarrow \qquad p'_i = \frac{e^{z'_i}}{\sum_{j \in V} e^{z'_j}}$$
 
 
