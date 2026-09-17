@@ -517,5 +517,6 @@ knowledge candidates, не плутаючи впевненість, автори
 - Scott M. Lundberg, Su-In Lee. [A Unified Approach to Interpreting Model Predictions](https://papers.nips.cc/paper_files/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html), NeurIPS 2017.
 - Sandra Wachter, Brent Mittelstadt, Chris Russell. [Counterfactual Explanations without Opening the Black Box](https://arxiv.org/abs/1711.00399), 2017/2018.
 - Finale Doshi-Velez, Been Kim. [Towards a Rigorous Science of Interpretable Machine Learning](https://arxiv.org/abs/1702.08608), 2017.
+- Ulrich Junker. [QUICKXPLAIN: Preferred Explanations and Critical Relaxations for Over-Constrained Problems], *AAAI*, 2004.
 - W3C. [PROV-O: The PROV Ontology](https://www.w3.org/TR/prov-o/), W3C Recommendation.
 - W3C. [Shapes Constraint Language (SHACL)](https://www.w3.org/TR/shacl/), W3C Recommendation.
