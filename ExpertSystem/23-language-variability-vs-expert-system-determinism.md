@@ -50,16 +50,16 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    subgraph Індексація (Офлайн)
+    subgraph SG_OFFLINE ["Індексація (Офлайн)"]
         DOC["Інженерна документація (RFC, ISO, Specs)"] --> CHUNK["Механічний Chunking (512 токенів)"]
         CHUNK --> EMB_DOC["Енкодер ембедингів"]
         EMB_DOC --> VDB[("Векторна база даних (VDB)")]
     end
 
-    subgraph Пошук та Генерація (Онлайн)
+    subgraph SG_ONLINE ["Пошук та Генерація (Онлайн)"]
         REQ["Запит користувача (User Query)"] --> EMB_Q["Енкодер ембедингів"]
         EMB_Q --> SCAN["Наївний векторний пошук: Прямий перебір (Exhaustive Scan)"]
-        VDB -.->|Всі N векторів бази| SCAN
+        VDB -.->|"Всі N векторів бази"| SCAN
         SCAN --> TOPK["Top-k розрізнених чанків"]
         TOPK --> PROMPT["Конкатенація контексту і запиту в промпт"]
         REQ --> PROMPT
