@@ -168,21 +168,21 @@ flowchart TD
 
 Оскільки реальні вбудовані системи працюють у неперервному або дискретному часі, статичних предикатів недостатньо для моделювання реактивності. Експертна система транслює подійні вимоги у формули $LTL$:
 
-1. **Інваріант безпеки (Safety Invariant — «нічого поганого не станеться»):**
+**1. Інваріант безпеки (Safety Invariant — «нічого поганого не станеться»):**
 
-   ```math
-   \Box\,\neg\bigl(\mathit{Current} > I_{\max} \land \mathit{ContactorState} = \mathit{CLOSED}\bigr)
-   ```
+```math
+\Box\,\neg\bigl(\mathit{Current} > I_{\max} \land \mathit{ContactorState} = \mathit{CLOSED}\bigr)
+```
 
-   (Оператор $\Box$ означає «завжди в усіх майбутніх станах»).
+Оператор $\Box$ означає «завжди в усіх майбутніх станах».
 
-2. **Вимога живучості та обмеженого часу реакції (Bounded Liveness):**
+**2. Вимога живучості та обмеженого часу реакції (Bounded Liveness):**
 
-   ```math
-   \Box\,\Bigl(\mathit{FaultTriggered} \Rightarrow \Diamond_{\le \tau}\,\mathit{SafeStateAchieved}\Bigr)
-   ```
+```math
+\Box\,\Bigl(\mathit{FaultTriggered} \Rightarrow \Diamond_{\le \tau}\,\mathit{SafeStateAchieved}\Bigr)
+```
 
-   (Оператор $\Diamond_{\le \tau}$ означає «не пізніше ніж через час $\tau$ настане подія»).
+Оператор $\Diamond_{\le \tau}$ означає «не пізніше ніж через час $\tau$ настане подія».
 
 ### Формалізація в синтаксисі SMT-LIB v2
 
