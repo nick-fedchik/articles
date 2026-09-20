@@ -233,7 +233,8 @@ flowchart LR
 
 * **Суть дефекту:** використання слів, які не мають точного фізичного або математичного вираження.
 * **Чорний список лексики для експертної системи:**
-  - *Швидкісні показники:* `fast`, `promptly`, `immediately`, `as soon as possible`, `low latency`. *(Повинно бути замінено на: $t \le 15\,\mathrm{ms}$).*
+  - *Швидкісні показники:* `fast`, `promptly`, `immediately`, `as soon as possible`, `low latency` — замінити на точний числовий дедлайн, наприклад: $t \le 15\,\mathrm{ms}$.
+
   - *Якісні показники:* `user-friendly`, `adequate`, `robust`, `efficient`, `suitable`, `optimal`.
   - *Кількісні невизначеності:* `mostly`, `high throughput`, `large capacity`, `approximately`, `etc.`
 
