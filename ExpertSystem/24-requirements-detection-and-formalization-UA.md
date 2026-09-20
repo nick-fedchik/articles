@@ -49,8 +49,8 @@ flowchart TD
 
 | Градація нормативності | Ключові маркери (EN) | Ключові маркери (UA) | Семантичне значення для експертної системи | Інженерний статус артефакту |
 |---|---|---|---|---|
-| **Суворе зобов'язання (Requirement)** | `SHALL`, `MUST`, `REQUIRED` | *повинен*, *зобов'язаний*, *необхідно* | Абсолютна вимога специфікації. Невиконання веде до бракування релізу або непроходження сертифікації. | Формує обов'язковий логічний інваріант $\forall s, \text{Inv}(s)$. Потребує 100% покриття тестами та верифікацією. |
-| **Сувора заборона (Prohibition)** | `SHALL NOT`, `MUST NOT` | *не повинен*, *заборонено* | Абсолютна заборона стану або переходу. Порушення є критичною загрозою безпеці (*Safety Violation*). | Формує інваріант безпеки $\square \neg \text{ForbiddenState}$. Автоматично генерує негативні тести (*Fault Injection*). |
+| **Суворе зобов'язання (Requirement)** | `SHALL`, `MUST`, `REQUIRED` | *повинен*, *зобов'язаний*, *необхідно* | Абсолютна вимога специфікації. Невиконання веде до бракування релізу або непроходження сертифікації. | Формує обов'язковий логічний інваріант $\forall s : \mathit{Inv}(s)$. Потребує 100% покриття тестами та верифікацією. |
+| **Сувора заборона (Prohibition)** | `SHALL NOT`, `MUST NOT` | *не повинен*, *заборонено* | Абсолютна заборона стану або переходу. Порушення є критичною загрозою безпеці (*Safety Violation*). | Формує інваріант безпеки $\Box\,\neg\,\mathit{ForbiddenState}$. Автоматично генерує негативні тести (*Fault Injection*). |
 | **Рекомендація (Recommendation)** | `SHOULD`, `RECOMMENDED` | *слід*, *рекомендовано* | Допускається відхилення за наявності обґрунтованої інженерної причини (*Waiver / Justification*). | Фіксується як м'яке обмеження (*Soft Constraint*). Потребує наявності підписаного інженерного обґрунтування у разі відхилення. |
 | **Небажана дія (Deprecation)** | `SHOULD NOT`, `NOT RECOMMENDED` | *не слід*, *не рекомендовано* | Поведінка, якої треба уникати, якщо немає вагомих архітектурних обмежень. | Генерує попередження статичного аналізу (*Warning*), що потребує рев'ю архітектора. |
 | **Дозвіл (Permission)** | `MAY`, `OPTIONAL` | *може*, *допускається* | Повністю опціональна поведінка або додатковий функціонал вендора. | Реєструється як опціональна фіча. Не може бути підставою для відхилення релізу. |
@@ -103,7 +103,7 @@ flowchart TD
 
 * **Канонічний синтаксис:** `The <system name> shall <system response>.`
 * **Інженерний приклад:** *"The CAN controller shall support extended 29-bit identifiers."*
-* **Логічна інтерпретація:** $\forall t \ge 0, \quad \text{Capability}(\text{CAN\_Controller}, \text{Ext29Bit}) = \mathrm{True}$.
+* **Логічна інтерпретація:** $\forall t \ge 0 : \text{Capability}(\mathit{CAN\_Controller},\; \mathit{Ext29Bit}) = \top$.
 
 #### 2. Подійна вимога (Event-driven Requirement)
 
@@ -111,7 +111,7 @@ flowchart TD
 
 * **Канонічний синтаксис:** `When <trigger>, the <system name> shall <system response>.`
 * **Інженерний приклад:** *"When the E-STOP button is pressed, the motor driver shall disable gate drive outputs within 5 ms."*
-* **Логічна інтерпретація:** $\square (\text{Pressed}(\text{E\_STOP}) \implies \lozenge_{\le 5\,\mathrm{ms}} \text{Disabled}(\text{GateOutputs}))$.
+* **Логічна інтерпретація:** $\Box\bigl(\mathit{Pressed}(\mathit{E\text{-}STOP}) \Rightarrow \Diamond_{\le 5\,\mathrm{ms}}\, \mathit{Disabled}(\mathit{GateOutputs})\bigr)$.
 
 #### 3. Станова вимога (State-driven Requirement)
 
@@ -119,7 +119,7 @@ flowchart TD
 
 * **Канонічний синтаксис:** `While <in state>, the <system name> shall <system response>.`
 * **Інженерний приклад:** *"While in PRE-CHARGE mode, the BMS shall limit the pre-charge resistor current to 10 A."*
-* **Логічна інтерпретація:** $\forall t, \quad (\text{State}(t) = \text{PRE\_CHARGE}) \implies (\text{Current}(t) \le 10\,\mathrm{A})$.
+* **Логічна інтерпретація:** $\forall t :\; (\mathit{State}(t) = \mathit{PRE\text{-}CHARGE}) \Rightarrow (\mathit{Current}(t) \le 10\,\mathrm{A})$.
 
 #### 4. Обробка нештатних ситуацій та відмов (Unwanted Behavior Requirement)
 
@@ -127,7 +127,7 @@ flowchart TD
 
 * **Канонічний синтаксис:** `If <trigger/fault condition>, then the <system name> shall <system response>.`
 * **Інженерний приклад:** *"If the cell temperature exceeds 65°C, then the cooling controller shall activate the refrigerant pump at 100% duty cycle."*
-* **Логічна інтерпретація:** $\forall t, \quad (\text{Temp}(t) > 65^{\circ}\mathrm{C}) \implies (\text{PumpDutyCycle}(t) = 1.0)$.
+* **Логічна інтерпретація:** $\forall t :\; (\mathit{Temp}(t) > 65^{\circ}\mathrm{C}) \Rightarrow (\mathit{PumpDutyCycle}(t) = 1.0)$.
 
 #### 5. Опціональна функціональність (Optional Feature Requirement)
 
@@ -135,7 +135,7 @@ flowchart TD
 
 * **Канонічний синтаксис:** `Where <feature is included>, the <system name> shall <system response>.`
 * **Інженерний приклад:** *"Where the hardware watchdog is populated, the CPU supervisor shall toggle the WDI pin every 50 ms."*
-* **Логічна інтерпретація:** $\text{HasHW}(\text{Watchdog}) \implies \square (\text{ToggleInterval} = 50\,\mathrm{ms})$.
+* **Логічна інтерпретація:** $\mathit{HasHW}(\mathit{Watchdog}) \Rightarrow \Box\,(\mathit{ToggleInterval} = 50\,\mathrm{ms})$.
 
 #### 6. Комплексна вимога (Complex EARS Requirement)
 
@@ -155,7 +155,7 @@ flowchart TD
 Узагальнена вимога до системи моделюється як відношення над простором станів системи $\mathcal{S}$ та вектором вхідних сигналів $\mathbf{x} \in \mathcal{X}$:
 
 ```math
-\forall s \in \mathcal{S}, \; \forall \mathbf{x} \in \mathcal{X}: \quad \Phi_{\mathrm{pre}}(s, \mathbf{x}) \implies \Phi_{\mathrm{post}}(s', \mathbf{y}) \land \mathcal{T}(s, s')
+\forall s \in \mathcal{S},\; \forall \mathbf{x} \in \mathcal{X}:\quad \Phi_{\mathrm{pre}}(s, \mathbf{x}) \Rightarrow \Phi_{\mathrm{post}}(s', \mathbf{y}) \land \mathcal{T}(s, s')
 ```
 
 де:
@@ -171,18 +171,18 @@ flowchart TD
 1. **Інваріант безпеки (Safety Invariant — «нічого поганого не станеться»):**
 
    ```math
-   \square \, \neg \bigl(\text{Current} > I_{\max} \land \text{ContactorState} = \text{CLOSED}\bigr)
+   \Box\,\neg\bigl(\mathit{Current} > I_{\max} \land \mathit{ContactorState} = \mathit{CLOSED}\bigr)
    ```
 
-   (Оператор $\square$ означає «завжди в усіх майбутніх станах»).
+   (Оператор $\Box$ означає «завжди в усіх майбутніх станах»).
 
 2. **Вимога живучості та обмеженого часу реакції (Bounded Liveness):**
 
    ```math
-   \square \, \Bigl(\text{FaultTriggered} \implies \lozenge_{\le \tau} \, \text{SafeStateAchieved}\Bigr)
+   \Box\,\Bigl(\mathit{FaultTriggered} \Rightarrow \Diamond_{\le \tau}\,\mathit{SafeStateAchieved}\Bigr)
    ```
 
-   (Оператор $\lozenge_{\le \tau}$ означає «не пізніше ніж через час $\tau$ настане подія»).
+   (Оператор $\Diamond_{\le \tau}$ означає «не пізніше ніж через час $\tau$ настане подія»).
 
 ### Формалізація в синтаксисі SMT-LIB v2
 
@@ -253,335 +253,401 @@ flowchart LR
 
 ## Практична реалізація: Експертний конвеєр екстракції та аудиту вимог
 
-Нижче наведено модульний код мовою Python 3.11+, що реалізує виробничий конвеєр: вилучення нормативних маркерів, мапінг на EARS, аудит інженерних запахів і генерацію SMT-перевірок.
+Нижче наведено модульний код мовою **Go 1.22+**, що реалізує виробничий конвеєр: вилучення нормативних маркерів, мапінг на EARS, аудит інженерних запахів і генерацію SMT-перевірок. Вибір Go обумовлений статичною типізацією, яка виключає цілий клас помилок під час рефакторингу конвеєра, та компіляцією у єдиний бінарний файл без зовнішніх залежностей — критично важливо для розгортання в ізольованих CI-середовищах сертифікаційних проєктів.
 
-```python
-"""
-Модуль: requirement_expert_extractor.py
-Призначення: Детермінована детекція нормативних вимог, мапінг на синтаксичні
-шаблони EARS, виявлення дефектів та генерація формальних предикатів.
-"""
+```go
+// Файл: requirement_extractor.go
+// Призначення: детермінована детекція нормативних вимог, класифікація за
+// шаблонами EARS, виявлення дефектів та генерація SMT-LIB фрагментів.
+package main
 
-from __future__ import annotations
-import re
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import List, Optional, Dict, Any
+import (
+	"fmt"
+	"regexp"
+	"strings"
+)
 
+// ---------------------------------------------------------------------------
+// Типи предметної галузі
+// ---------------------------------------------------------------------------
 
-class ModalityLevel(str, Enum):
-    REQUIREMENT = "REQUIREMENT"       # SHALL, MUST
-    PROHIBITION = "PROHIBITION"       # SHALL NOT, MUST NOT
-    RECOMMENDATION = "RECOMMENDATION" # SHOULD
-    PERMISSION = "PERMISSION"         # MAY
-    INFORMATIONAL = "INFORMATIONAL"   # Не містить нормативних маркерів
+// ModalityLevel визначає нормативну силу речення згідно з RFC 2119 / ISO Directives.
+type ModalityLevel string
 
+const (
+	ModalityRequirement    ModalityLevel = "REQUIREMENT"    // SHALL, MUST
+	ModalityProhibition    ModalityLevel = "PROHIBITION"    // SHALL NOT, MUST NOT
+	ModalityRecommendation ModalityLevel = "RECOMMENDATION" // SHOULD
+	ModalityPermission     ModalityLevel = "PERMISSION"     // MAY
+	ModalityInformational  ModalityLevel = "INFORMATIONAL"  // без маркерів
+)
 
-class EARSType(str, Enum):
-    UBIQUITOUS = "UBIQUITOUS"
-    EVENT_DRIVEN = "EVENT_DRIVEN"
-    STATE_DRIVEN = "STATE_DRIVEN"
-    UNWANTED_BEHAVIOR = "UNWANTED_BEHAVIOR"
-    OPTIONAL_FEATURE = "OPTIONAL_FEATURE"
-    COMPLEX = "COMPLEX"
-    INVALID = "INVALID"
+// EARSType відповідає одному з шаблонів Easy Approach to Requirements Syntax.
+type EARSType string
 
+const (
+	EARSUbiquitous      EARSType = "UBIQUITOUS"
+	EARSEventDriven     EARSType = "EVENT_DRIVEN"
+	EARSStateDriven     EARSType = "STATE_DRIVEN"
+	EARSUnwantedBehavior EARSType = "UNWANTED_BEHAVIOR"
+	EARSOptionalFeature EARSType = "OPTIONAL_FEATURE"
+	EARSComplex         EARSType = "COMPLEX"
+	EARSInvalid         EARSType = "INVALID"
+)
 
-@dataclass(frozen=True)
-class SourceAnchor:
-    file_path: str
-    sha256_hash: str
-    section_id: str
-    byte_offset_start: int
-    byte_offset_end: int
+// SourceAnchor зберігає прив'язку речення до байтового діапазону у джерельному файлі.
+type SourceAnchor struct {
+	FilePath        string
+	SHA256Hash      string
+	SectionID       string
+	ByteOffsetStart int
+	ByteOffsetEnd   int
+}
 
+// QualitySmell описує один виявлений дефект вимоги.
+type QualitySmell struct {
+	SmellType    string // наприклад, AMBIGUITY_FUZZY_TERM
+	Severity     string // CRITICAL | WARNING | INFO
+	Detail       string
+	SuggestedFix string
+}
 
-@dataclass
-class QualitySmell:
-    smell_type: str
-    severity: str  # CRITICAL, WARNING, INFO
-    detail: str
-    suggested_fix: str
+// FormalizedRequirement — результат аналізу одного нормативного речення.
+type FormalizedRequirement struct {
+	ReqID      string
+	RawText    string
+	Anchor     SourceAnchor
+	Modality   ModalityLevel
+	EARSType   EARSType
+	Subject    string
+	Trigger    string
+	State      string
+	Fault      string
+	Action     string
+	TimingMs   float64 // 0 означає «не задано»
+	Smells     []QualitySmell
+	SMTFormula string
+}
 
+// IsAcceptableForBaseline повертає true, якщо вимога не містить критичних дефектів.
+func (r *FormalizedRequirement) IsAcceptableForBaseline() bool {
+	for _, s := range r.Smells {
+		if s.Severity == "CRITICAL" {
+			return false
+		}
+	}
+	return true
+}
 
-@dataclass
-class FormalizedRequirement:
-    req_id: str
-    raw_text: str
-    anchor: SourceAnchor
-    modality: ModalityLevel
-    ears_type: EARSType
-    subject: str = ""
-    trigger: Optional[str] = None
-    state: Optional[str] = None
-    fault: Optional[str] = None
-    action: str = ""
-    timing_ms: Optional[float] = None
-    smells: List[QualitySmell] = field(default_factory=list)
-    smt_formula: Optional[str] = None
+// ---------------------------------------------------------------------------
+// Скомпільовані регулярні вирази (ініціалізуються один раз)
+// ---------------------------------------------------------------------------
 
-    @property
-    def is_acceptable_for_baseline(self) -> bool:
-        return not any(s.severity == "CRITICAL" for s in self.smells)
+var (
+	reShallNot = regexp.MustCompile(`(?i)\b(shall not|must not|cannot)\b`)
+	reShall    = regexp.MustCompile(`(?i)\b(shall|must|is required to)\b`)
+	reShould   = regexp.MustCompile(`(?i)\b(should|recommended)\b`)
+	reMay      = regexp.MustCompile(`(?i)\b(may|optional)\b`)
 
+	// Часові обмеження: "within 50 ms", "less than 2.5 s", "maximum of 100 ms"
+	reTiming = regexp.MustCompile(
+		`(?i)\b(?:within|less than|max|maximum of)\s+(\d+(?:\.\d+)?)\s*(ms|s|sec|seconds|milliseconds)\b`,
+	)
 
-class RequirementAnalysisEngine:
-    # Заборонені розмиті слова відповідно до IEEE 29148 / INCOSE
-    FUZZY_TERMS_MAP = {
-        r"\bpromptly\b": "Замініть на максимальний час у мілісекундах (наприклад, <= 10 ms).",
-        r"\bquickly\b": "Вкажіть точний часовий дедлайн.",
-        r"\bas soon as possible\b": "Замініть на детерміноване обмеження часу відповіді.",
-        r"\buser[- ]friendly\b": "Неможливо верифікувати. Вкажіть вимоги до UI/UX у термінах кроків.",
-        r"\brobust\b": "Вкажіть конкретні діапазони стійкості (напруга, температура, шум).",
-        r"\bapproximately\b": "Вкажіть номінал та допустиме відхилення (толеранс у % або абс. одиницях).",
-        r"\betc\b": "Перелік має бути вичерпним і замкненим.",
-    }
+	// Шаблони EARS (порядок перевірки важливий: складніші — першими)
+	reComplex = regexp.MustCompile(
+		`(?i)^While\s+(?P<state>.+?),\s*(?:When\s+(?P<trigger>.+?),\s*)?` +
+			`(?:If\s+(?P<fault>.+?),\s*)?(?:then\s+)?the\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+?)\.?$`,
+	)
+	reUnwanted = regexp.MustCompile(
+		`(?i)^If\s+(?P<fault>.+?),\s*(?:then\s+)?the\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+?)\.?$`,
+	)
+	reState = regexp.MustCompile(
+		`(?i)^While\s+(?P<state>.+?),\s*the\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+?)\.?$`,
+	)
+	reEvent = regexp.MustCompile(
+		`(?i)^When\s+(?P<trigger>.+?),\s*the\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+?)\.?$`,
+	)
+	reOptional = regexp.MustCompile(
+		`(?i)^Where\s+(?P<feature>.+?),\s*the\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+?)\.?$`,
+	)
+	reUbiquitous = regexp.MustCompile(
+		`(?i)^The\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+?)\.?$`,
+	)
 
-    # Регулярні вирази для модальностей
-    RE_SHALL_NOT = re.compile(r"\b(shall not|must not|cannot)\b", re.IGNORECASE)
-    RE_SHALL = re.compile(r"\b(shall|must|is required to)\b", re.IGNORECASE)
-    RE_SHOULD = re.compile(r"\b(should|recommended)\b", re.IGNORECASE)
-    RE_MAY = re.compile(r"\b(may|optional)\b", re.IGNORECASE)
+	// Чорний список розмитих термінів (IEEE 29148 / INCOSE)
+	fuzzyTerms = []struct {
+		re  *regexp.Regexp
+		fix string
+	}{
+		{regexp.MustCompile(`(?i)\bpromptly\b`), "Замініть на максимальний час у мілісекундах (наприклад, <= 10 ms)."},
+		{regexp.MustCompile(`(?i)\bquickly\b`), "Вкажіть точний часовий дедлайн."},
+		{regexp.MustCompile(`(?i)\bas soon as possible\b`), "Замініть на детерміноване обмеження часу відповіді."},
+		{regexp.MustCompile(`(?i)\buser[- ]friendly\b`), "Неможливо верифікувати. Вкажіть вимоги до UI/UX у термінах кроків."},
+		{regexp.MustCompile(`(?i)\brobust\b`), "Вкажіть конкретні діапазони стійкості (напруга, температура, шум)."},
+		{regexp.MustCompile(`(?i)\bapproximately\b`), "Вкажіть номінал та допустиме відхилення (толеранс у % або абс. одиницях)."},
+		{regexp.MustCompile(`(?i)\betc\b`), "Перелік має бути вичерпним і замкненим."},
+	}
+)
 
-    # Шаблони пошуку часових обмежень (наприклад: "within 50 ms", "less than 2.5 s")
-    RE_TIMING = re.compile(
-        r"\b(?:within|less than|max|maximum of)\s+(\d+(?:\.\d+)?)\s*(ms|s|sec|seconds|milliseconds)\b",
-        re.IGNORECASE,
-    )
+// ---------------------------------------------------------------------------
+// Допоміжна функція: витяг іменованих груп із regexp.Regexp
+// ---------------------------------------------------------------------------
 
-    def __init__(self):
-        pass
+func namedGroups(re *regexp.Regexp, s string) map[string]string {
+	match := re.FindStringSubmatch(s)
+	if match == nil {
+		return nil
+	}
+	result := make(map[string]string, len(re.SubexpNames()))
+	for i, name := range re.SubexpNames() {
+		if name != "" {
+			result[name] = match[i]
+		}
+	}
+	return result
+}
 
-    def classify_modality(self, text: str) -> ModalityLevel:
-        if self.RE_SHALL_NOT.search(text):
-            return ModalityLevel.PROHIBITION
-        if self.RE_SHALL.search(text):
-            return ModalityLevel.REQUIREMENT
-        if self.RE_SHOULD.search(text):
-            return ModalityLevel.RECOMMENDATION
-        if self.RE_MAY.search(text):
-            return ModalityLevel.PERMISSION
-        return ModalityLevel.INFORMATIONAL
+// ---------------------------------------------------------------------------
+// Класифікація модальності
+// ---------------------------------------------------------------------------
 
-    def extract_timing_constraint(self, text: str) -> Optional[float]:
-        match = self.RE_TIMING.search(text)
-        if not match:
-            return None
-        value = float(match.group(1))
-        unit = match.group(2).lower()
-        if unit in ("s", "sec", "seconds"):
-            return value * 1000.0  # Нормалізація до мілісекунд
-        return value
+// ClassifyModality визначає нормативну силу речення за модальними маркерами.
+func ClassifyModality(text string) ModalityLevel {
+	switch {
+	case reShallNot.MatchString(text):
+		return ModalityProhibition
+	case reShall.MatchString(text):
+		return ModalityRequirement
+	case reShould.MatchString(text):
+		return ModalityRecommendation
+	case reMay.MatchString(text):
+		return ModalityPermission
+	default:
+		return ModalityInformational
+	}
+}
 
-    def parse_ears_pattern(self, text: str) -> tuple[EARSType, Dict[str, str]]:
-        clean_text = text.strip()
-        data: Dict[str, str] = {}
+// ---------------------------------------------------------------------------
+// Класифікація шаблонів EARS
+// ---------------------------------------------------------------------------
 
-        # 1. Complex Pattern: While ... When/If ... shall ...
-        re_complex = re.compile(
-            r"^While\s+(?P<state>.+?),\s*(?:When\s+(?P<trigger>.+?),\s*)?(?:If\s+(?P<fault>.+?),\s*)?(?:then\s+)?the\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+)\.?$",
-            re.IGNORECASE,
-        )
-        m = re_complex.match(clean_text)
-        if m:
-            groups = m.groupdict()
-            if sum(x is not None for x in [groups.get('trigger'), groups.get('fault')]) >= 1:
-                return EARSType.COMPLEX, groups
+// ParseEARSPattern повертає тип EARS і словник іменованих груп для речення text.
+func ParseEARSPattern(text string) (EARSType, map[string]string) {
+	text = strings.TrimSpace(text)
 
-        # 2. Unwanted Behavior Pattern: If ... then the ... shall ...
-        re_unwanted = re.compile(
-            r"^If\s+(?P<fault>.+?),\s*(?:then\s+)?the\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+)\.?$",
-            re.IGNORECASE,
-        )
-        m = re_unwanted.match(clean_text)
-        if m:
-            return EARSType.UNWANTED_BEHAVIOR, m.groupdict()
+	// Complex: While + (When і/або If) + shall
+	if groups := namedGroups(reComplex, text); groups != nil {
+		if groups["trigger"] != "" || groups["fault"] != "" {
+			return EARSComplex, groups
+		}
+	}
+	// Unwanted Behavior: If fault, then shall
+	if groups := namedGroups(reUnwanted, text); groups != nil {
+		return EARSUnwantedBehavior, groups
+	}
+	// State-driven: While state, shall
+	if groups := namedGroups(reState, text); groups != nil {
+		return EARSStateDriven, groups
+	}
+	// Event-driven: When trigger, shall
+	if groups := namedGroups(reEvent, text); groups != nil {
+		return EARSEventDriven, groups
+	}
+	// Optional Feature: Where feature, shall
+	if groups := namedGroups(reOptional, text); groups != nil {
+		return EARSOptionalFeature, groups
+	}
+	// Ubiquitous: The <subject> shall
+	if groups := namedGroups(reUbiquitous, text); groups != nil {
+		return EARSUbiquitous, groups
+	}
 
-        # 3. State-driven Pattern: While ... the ... shall ...
-        re_state = re.compile(
-            r"^While\s+(?P<state>.+?),\s*the\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+)\.?$",
-            re.IGNORECASE,
-        )
-        m = re_state.match(clean_text)
-        if m:
-            return EARSType.STATE_DRIVEN, m.groupdict()
+	return EARSInvalid, map[string]string{"raw": text}
+}
 
-        # 4. Event-driven Pattern: When ... the ... shall ...
-        re_event = re.compile(
-            r"^When\s+(?P<trigger>.+?),\s*the\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+)\.?$",
-            re.IGNORECASE,
-        )
-        m = re_event.match(clean_text)
-        if m:
-            return EARSType.EVENT_DRIVEN, m.groupdict()
+// ---------------------------------------------------------------------------
+// Витяг часового обмеження
+// ---------------------------------------------------------------------------
 
-        # 5. Optional Feature: Where ... the ... shall ...
-        re_opt = re.compile(
-            r"^Where\s+(?P<feature>.+?),\s*the\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+)\.?$",
-            re.IGNORECASE,
-        )
-        m = re_opt.match(clean_text)
-        if m:
-            return EARSType.OPTIONAL_FEATURE, m.groupdict()
+// ExtractTimingMs повертає часове обмеження у мілісекундах або 0, якщо не знайдено.
+func ExtractTimingMs(text string) float64 {
+	m := reTiming.FindStringSubmatch(text)
+	if m == nil {
+		return 0
+	}
+	var value float64
+	fmt.Sscanf(m[1], "%f", &value)
+	unit := strings.ToLower(m[2])
+	if unit == "s" || unit == "sec" || unit == "seconds" {
+		return value * 1000.0
+	}
+	return value
+}
 
-        # 6. Ubiquitous: The ... shall ...
-        re_ubi = re.compile(
-            r"^The\s+(?P<subject>[A-Za-z0-9_ -]+?)\s+shall\s+(?P<action>.+)\.?$",
-            re.IGNORECASE,
-        )
-        m = re_ubi.match(clean_text)
-        if m:
-            return EARSType.UBIQUITOUS, m.groupdict()
+// ---------------------------------------------------------------------------
+// Аудит якості вимог
+// ---------------------------------------------------------------------------
 
-        return EARSType.INVALID, {"raw": clean_text}
+// DetectQualitySmells перевіряє вимогу за п'ятьма критеріями IEEE 29148 / INCOSE.
+func DetectQualitySmells(text string, modality ModalityLevel, earsType EARSType, groups map[string]string) []QualitySmell {
+	var smells []QualitySmell
 
-    def detect_quality_smells(
-        self, text: str, modality: ModalityLevel, ears_type: EARSType, parsed_data: Dict[str, str]
-    ) -> List[QualitySmell]:
-        smells: List[QualitySmell] = []
+	// Аудит 1: розмиті терміни
+	for _, ft := range fuzzyTerms {
+		if loc := ft.re.FindString(text); loc != "" {
+			smells = append(smells, QualitySmell{
+				SmellType:    "AMBIGUITY_FUZZY_TERM",
+				Severity:     "CRITICAL",
+				Detail:       fmt.Sprintf("Знайдено неприпустимий евфемізм %q.", loc),
+				SuggestedFix: ft.fix,
+			})
+		}
+	}
 
-        # Аудит 1: Перевірка розмитих термінів
-        for pattern, fix in self.FUZZY_TERMS_MAP.items():
-            if re.search(pattern, text, re.IGNORECASE):
-                matched = re.search(pattern, text, re.IGNORECASE).group(0)
-                smells.append(
-                    QualitySmell(
-                        smell_type="AMBIGUITY_FUZZY_TERM",
-                        severity="CRITICAL",
-                        detail=f"Знайдено неприпустимий евфемізм '{matched}'.",
-                        suggested_fix=fix,
-                    )
-                )
+	// Аудит 2: неатомарність — кілька дієслівних дій під одним SHALL
+	action := groups["action"]
+	if action != "" {
+		reMultiAction := regexp.MustCompile(`(?i)\b(and|as well as)\s+(?:shall\s+)?[a-z]+(?:s|ed|ing)?\b`)
+		if (strings.Contains(action, " and ") || strings.Contains(action, " as well as ")) &&
+			reMultiAction.MatchString(action) {
+			smells = append(smells, QualitySmell{
+				SmellType:    "NON_ATOMIC_REQUIREMENT",
+				Severity:     "WARNING",
+				Detail:       "Вимога містить кілька дій під одним SHALL.",
+				SuggestedFix: "Декомпозуйте речення на окремі вимоги для кожної дії.",
+			})
+		}
+	}
 
-        # Аудит 2: Перевірка на неатомарність (розщеплення дій)
-        action_text = parsed_data.get("action", "")
-        if action_text and (" and " in action_text or " as well as " in action_text):
-            # Перевіряємо, чи це дійсно кілька дієслівних дій, а не складений іменник
-            if re.search(r"\b(and|as well as)\s+(?:shall\s+)?[a-z]+(?:s|ed|ing)?\b", action_text):
-                smells.append(
-                    QualitySmell(
-                        smell_type="NON_ATOMIC_REQUIREMENT",
-                        severity="WARNING",
-                        detail="Вимога містить кілька дій під одним SHALL.",
-                        suggested_fix="Декомпозуйте речення на окремі вимоги для кожної дії.",
-                    )
-                )
+	// Аудит 3: занадто абстрактний або відсутній суб'єкт
+	subject := strings.ToLower(strings.TrimSpace(groups["subject"]))
+	if subject == "" || subject == "system" || subject == "software" || subject == "it" {
+		smells = append(smells, QualitySmell{
+			SmellType:    "GENERIC_OR_MISSING_SUBJECT",
+			Severity:     "WARNING",
+			Detail:       fmt.Sprintf("Суб'єкт %q занадто абстрактний або відсутній.", subject),
+			SuggestedFix: "Вкажіть точну назву компонента (наприклад, 'BMS_Gateway').",
+		})
+	}
 
-        # Аудит 3: Відсутність суб'єкта або пасивний стан
-        subject = parsed_data.get("subject", "").strip().lower()
-        if not subject or subject in ("system", "software", "it"):
-            smells.append(
-                QualitySmell(
-                    smell_type="GENERIC_OR_MISSING_SUBJECT",
-                    severity="WARNING",
-                    detail=f"Суб'єкт '{subject}' занадто абстрактний або відсутній.",
-                    suggested_fix="Вкажіть точний назву компонента, модуля або контролера (наприклад, 'BMS_Gateway').",
-                )
-            )
+	// Аудит 4: відсутнє часове обмеження у подійних / аварійних вимогах
+	if earsType == EARSEventDriven || earsType == EARSUnwantedBehavior {
+		if !reTiming.MatchString(text) {
+			smells = append(smells, QualitySmell{
+				SmellType:    "MISSING_TIMING_BOUND",
+				Severity:     "CRITICAL",
+				Detail:       "Подійна вимога або реакція на збій не містить максимального часу реакції.",
+				SuggestedFix: "Додайте детермінований ліміт часу (наприклад, 'within 50 ms').",
+			})
+		}
+	}
 
-        # Аудит 4: Відсутність часового обмеження у подійних або аварійних вимогах
-        if ears_type in (EARSType.EVENT_DRIVEN, EARSType.UNWANTED_BEHAVIOR):
-            if not self.RE_TIMING.search(text):
-                smells.append(
-                    QualitySmell(
-                        smell_type="MISSING_TIMING_BOUND",
-                        severity="CRITICAL",
-                        detail="Подійна вимога або реакція на збій не містить максимального часу реакції.",
-                        suggested_fix="Додайте детермінований ліміт часу (наприклад, 'within 50 ms').",
-                    )
-                )
+	// Аудит 5: REQUIREMENT-речення не відповідає жодному шаблону EARS
+	if modality == ModalityRequirement && earsType == EARSInvalid {
+		smells = append(smells, QualitySmell{
+			SmellType:    "NON_CONFORMANT_EARS_STRUCTURE",
+			Severity:     "CRITICAL",
+			Detail:       "Структура речення не відповідає жодному канонічному шаблону EARS.",
+			SuggestedFix: "Переформулюйте у формі: When/While/If... the <system> shall...",
+		})
+	}
 
-        # Аудит 5: Невалідний синтаксис EARS
-        if modality == ModalityLevel.REQUIREMENT and ears_type == EARSType.INVALID:
-            smells.append(
-                QualitySmell(
-                    smell_type="NON_CONFORMANT_EARS_STRUCTURE",
-                    severity="CRITICAL",
-                    detail="Структура речення не відповідає жодному з канонічних шаблонів EARS.",
-                    suggested_fix="Переформулюйте речення у канонічній формі: When/While/If... the <system> shall...",
-                )
-            )
+	return smells
+}
 
-        return smells
+// ---------------------------------------------------------------------------
+// Генерація SMT-LIB v2 фрагмента
+// ---------------------------------------------------------------------------
 
-    def compile_to_smt(self, req: FormalizedRequirement) -> Optional[str]:
-        """Генерація фрагмента SMT-LIB v2 для перевірки несуперечності."""
-        if req.ears_type == EARSType.UNWANTED_BEHAVIOR and req.fault and req.action:
-            safe_id = re.sub(r"[^A-Za-z0-9_]", "_", req.req_id)
-            return (
-                f";; SMT Contract for {req.req_id}\n"
-                f"(assert (=> (and true ; Condition: {req.fault}\n"
-                f"            ) \n"
-                f"            (and true ; Action: {req.action}\n"
-                f"            )))\n"
-            )
-        return None
+// CompileToSMT генерує декларацію assert для SMT-рішувача (Z3 / CVC5).
+func CompileToSMT(req *FormalizedRequirement) string {
+	if req.EARSType != EARSUnwantedBehavior || req.Fault == "" || req.Action == "" {
+		return ""
+	}
+	return fmt.Sprintf(
+		";; SMT Contract for %s\n(assert (=> (and true ; Condition: %s\n            )\n            (and true ; Action: %s\n            )))\n",
+		req.ReqID, req.Fault, req.Action,
+	)
+}
 
-    def analyze_requirement(
-        self, req_id: str, raw_text: str, anchor: SourceAnchor
-    ) -> FormalizedRequirement:
-        modality = self.classify_modality(raw_text)
-        ears_type, parsed_data = self.parse_ears_pattern(raw_text)
-        timing_ms = self.extract_timing_constraint(raw_text)
+// ---------------------------------------------------------------------------
+// Головна функція аналізу
+// ---------------------------------------------------------------------------
 
-        smells = self.detect_quality_smells(raw_text, modality, ears_type, parsed_data)
+// AnalyzeRequirement виконує повний конвеєр аналізу одного нормативного речення.
+func AnalyzeRequirement(reqID, rawText string, anchor SourceAnchor) *FormalizedRequirement {
+	modality := ClassifyModality(rawText)
+	earsType, groups := ParseEARSPattern(rawText)
+	timingMs := ExtractTimingMs(rawText)
+	smells := DetectQualitySmells(rawText, modality, earsType, groups)
 
-        req = FormalizedRequirement(
-            req_id=req_id,
-            raw_text=raw_text,
-            anchor=anchor,
-            modality=modality,
-            ears_type=ears_type,
-            subject=parsed_data.get("subject", ""),
-            trigger=parsed_data.get("trigger"),
-            state=parsed_data.get("state"),
-            fault=parsed_data.get("fault"),
-            action=parsed_data.get("action", ""),
-            timing_ms=timing_ms,
-            smells=smells,
-        )
-        req.smt_formula = self.compile_to_smt(req)
-        return req
+	req := &FormalizedRequirement{
+		ReqID:    reqID,
+		RawText:  rawText,
+		Anchor:   anchor,
+		Modality: modality,
+		EARSType: earsType,
+		Subject:  groups["subject"],
+		Trigger:  groups["trigger"],
+		State:    groups["state"],
+		Fault:    groups["fault"],
+		Action:   groups["action"],
+		TimingMs: timingMs,
+		Smells:   smells,
+	}
+	req.SMTFormula = CompileToSMT(req)
+	return req
+}
 
+// ---------------------------------------------------------------------------
+// Точка входу: демонстраційний аналіз трьох речень специфікації BMS
+// ---------------------------------------------------------------------------
 
-# Приклад виконання аналізу
-if __name__ == "__main__":
-    engine = RequirementAnalysisEngine()
-    test_anchor = SourceAnchor(
-        file_path="specs/ISO26262_BMS_Subsystem.docx",
-        sha256_hash="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        section_id="Section 4.2.1",
-        byte_offset_start=1240,
-        byte_offset_end=1410,
-    )
+func main() {
+	anchor := SourceAnchor{
+		FilePath:        "specs/ISO26262_BMS_Subsystem.docx",
+		SHA256Hash:      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		SectionID:       "Section 4.2.1",
+		ByteOffsetStart: 1240,
+		ByteOffsetEnd:   1410,
+	}
 
-    test_samples = [
-        (
-            "REQ-BMS-001",
-            "When cell temperature exceeds 60 C, the BMS shall open the main contactor within 100 ms.",
-        ),
-        (
-            "REQ-BMS-002",
-            "The system shall promptly validate all incoming CAN messages and flash an LED.",
-        ),
-        (
-            "REQ-BMS-003",
-            "While in CHARGING mode, the BatteryManager shall limit charge current to 20 A.",
-        ),
-    ]
+	samples := []struct{ id, text string }{
+		{
+			"REQ-BMS-001",
+			"When cell temperature exceeds 60 C, the BMS shall open the main contactor within 100 ms.",
+		},
+		{
+			"REQ-BMS-002",
+			"The system shall promptly validate all incoming CAN messages and flash an LED.",
+		},
+		{
+			"REQ-BMS-003",
+			"While in CHARGING mode, the BatteryManager shall limit charge current to 20 A.",
+		},
+	}
 
-    for req_id, text in test_samples:
-        analyzed = engine.analyze_requirement(req_id, text, test_anchor)
-        print(f"\n--- Результат аналізу: {analyzed.req_id} ---")
-        print(f"Текст: {analyzed.raw_text}")
-        print(f"Модальність: {analyzed.modality.value}")
-        print(f"Тип EARS: {analyzed.ears_type.value}")
-        print(f"Суб'єкт: '{analyzed.subject}', Час реакції: {analyzed.timing_ms} ms")
-        print(f"Придатність до бейзлайну: {analyzed.is_acceptable_for_baseline}")
-        if analyzed.smells:
-            print("Виявлені інженерні дефекти:")
-            for s in analyzed.smells:
-                print(f"  [{s.severity}] {s.smell_type}: {s.detail} -> {s.suggested_fix}")
+	for _, s := range samples {
+		r := AnalyzeRequirement(s.id, s.text, anchor)
+		fmt.Printf("\n--- Результат аналізу: %s ---\n", r.ReqID)
+		fmt.Printf("Текст:       %s\n", r.RawText)
+		fmt.Printf("Модальність: %s\n", r.Modality)
+		fmt.Printf("Тип EARS:    %s\n", r.EARSType)
+		fmt.Printf("Суб'єкт:     %q  Час реакції: %.1f ms\n", r.Subject, r.TimingMs)
+		fmt.Printf("Готовність до базелайну: %v\n", r.IsAcceptableForBaseline())
+		if len(r.Smells) > 0 {
+			fmt.Println("Виявлені інженерні дефекти:")
+			for _, sm := range r.Smells {
+				fmt.Printf("  [%s] %s: %s -> %s\n", sm.Severity, sm.SmellType, sm.Detail, sm.SuggestedFix)
+			}
+		}
+		if r.SMTFormula != "" {
+			fmt.Println("SMT-LIB фрагмент:")
+			fmt.Println(r.SMTFormula)
+		}
+	}
+}
 ```
 
 ---
