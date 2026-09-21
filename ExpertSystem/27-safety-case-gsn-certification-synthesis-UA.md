@@ -121,18 +121,19 @@ flowchart LR
 1. **Визначення кореневої мети ($G_{\mathrm{root}}$):**
    Формулюється глобальне твердження сертифікації:
 
-   ```math
-   G_{\mathrm{root}} = \text{Система } \mathcal{S} \text{ у конфігурації } \mathcal{K} \text{ відповідає всім обов'язковим вимогам стандарту } \mathrm{STD}
-   ```
+```math
+G_{\mathrm{root}} = \text{Система } \mathcal{S} \text{ у конфігурації } \mathcal{K} \text{ відповідає всім обов'язковим вимогам стандарту } \mathrm{STD}
+```
 
 2. **Стратегія декомпозиції вимог ($S_{\mathrm{req}}$):**
    Експертна система робить запит до EKG:
 
-   ```math
-   \mathcal{R}_{\mathrm{mandatory}} = \{ r \in V_R \mid r.\mathrm{modality} \in \{\mathrm{SHALL}, \mathrm{MUST}\} \}
-   ```
+```math
+\mathcal{R}_{\mathrm{mandatory}} = \{ r \in V_R \mid r.\mathrm{modality} \in \{\mathrm{SHALL}, \mathrm{MUST}\} \}
+```
 
-   Створюється стратегія: *«Декомпозиція за множиною обов'язкових нормативних інваріантів»*.
+Створюється стратегія: *«Декомпозиція за множиною обов'язкових нормативних інваріантів»*.
+
 
 3. **Генерація підцілей для кожної вимоги ($G_{r}$):**
    Для кожної вимоги $r \in \mathcal{R}_{\mathrm{mandatory}}$ створюється підціль:
@@ -255,33 +256,33 @@ flowchart TD
 
 де чотири правила істинності визначаються так:
 
-1. **Правило повноти розкриття (No Undeveloped Goals):**
-   Будь-яка мета $g \in \mathrm{Goals}(\mathcal{T})$ повинна або декомпозуватися через стратегію $s \in \mathrm{Strategies}(\mathcal{T})$, або спиратися на перевірене свідчення $sn \in \mathrm{Solutions}(\mathcal{T})$. Наявність нерозкритих цілей (*Undeveloped*) заборонена:
+**1. Правило повноти розкриття (No Undeveloped Goals):**
+Будь-яка мета $g \in \mathrm{Goals}(\mathcal{T})$ повинна або декомпозуватися через стратегію $s \in \mathrm{Strategies}(\mathcal{T})$, або спиратися на перевірене свідчення $sn \in \mathrm{Solutions}(\mathcal{T})$. Наявність нерозкритих цілей (*Undeveloped*) заборонена:
 
-   ```math
-   \mathcal{P}_1: \forall g \in \mathrm{Goals}(\mathcal{T}) \implies (\mathrm{deg}^{+}(g) > 0)
-   ```
+```math
+\mathcal{P}_1: \forall g \in \mathrm{Goals}(\mathcal{T}) \Rightarrow (\mathrm{deg}^{+}(g) > 0)
+```
 
-2. **Правило обов'язкового свідчення (Evidence Grounding):**
-   Кожне рішення $sn \in \mathrm{Solutions}(\mathcal{T})$ зобов'язане містити криптографічно валідне ребро до реального прогону тесту в EKG з позитивним вердиктом:
+**2. Правило обов'язкового свідчення (Evidence Grounding):**
+Кожне рішення $sn \in \mathrm{Solutions}(\mathcal{T})$ зобов'язане містити криптографічно валідне ребро до реального прогону тесту в EKG з позитивним вердиктом:
 
-   ```math
-   \mathcal{P}_2: \forall sn \in \mathrm{Solutions}(\mathcal{T}) \implies (sn.\mathrm{verdict} = \mathrm{PASS} \land \mathrm{VerifyHash}(sn) = \mathrm{True})
-   ```
+```math
+\mathcal{P}_2: \forall sn \in \mathrm{Solutions}(\mathcal{T}) \Rightarrow (sn.\mathrm{verdict} = \mathrm{PASS} \land \mathrm{VerifyHash}(sn) = \top)
+```
 
-3. **Правило узгодженості контекстів (Context Consistency):**
-   Жодна гілка не може містити взаємовиключних контекстів (наприклад, посилання одночасно на конфігурацію для малопотужного контролера і на драйвер 64-бітного сервера):
+**3. Правило узгодженості контекстів (Context Consistency):**
+Жодна гілка не може містити взаємовиключних контекстів (наприклад, посилання одночасно на конфігурацію для малопотужного контролера і на драйвер 64-бітного сервера):
 
-   ```math
-   \mathcal{P}_3: \forall g \in \mathrm{Goals}(\mathcal{T}) \implies \mathrm{Consistent}(\mathrm{Context}(g))
-   ```
+```math
+\mathcal{P}_3: \forall g \in \mathrm{Goals}(\mathcal{T}) \Rightarrow \mathrm{Consistent}(\mathrm{Context}(g))
+```
 
-4. **Правило відсутності циклів (Acyclicity):**
-   Дерево аргументації повинно бути суворим спрямованим ациклічним графом (*DAG*), що унеможливлює тавтологічну аргументацію виду «А безпечно, тому що Б безпечно, а Б безпечно, тому що А безпечно»:
+**4. Правило відсутності циклів (Acyclicity):**
+Дерево аргументації повинно бути суворим спрямованим ациклічним графом (*DAG*), що унеможливлює тавтологічну аргументацію виду «А безпечно, тому що Б безпечно, а Б безпечно, тому що А безпечно»:
 
-   ```math
-   \mathcal{P}_4: \mathrm{IsDAG}(\mathcal{T}) = \mathrm{True}
-   ```
+```math
+\mathcal{P}_4: \mathrm{IsDAG}(\mathcal{T}) = \top
+```
 
 ---
 
