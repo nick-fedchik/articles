@@ -2,7 +2,7 @@
 
 **Електронна книга про проєктування, математичні моделі, архітектуру та верифікацію інтелектуальних систем високого рівня довіри (Safety-Critical & Evidence-Grounded AI)**
 
-**Автор:** Микола Федчик (Mykola Fedchyk)  
+**Автор:** [Микола Федчик (Mykola Fedchyk)](about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
 **Формат:** Інженерна монографія / Настільна книга архітектора ШІ  
 **Рік:** 2026  
 
@@ -168,6 +168,7 @@ flowchart TD
 ### Додатки
 
 * [Додаток А. Практичний фреймворк доказового дослідження в складних інженерних проєктах](appendix-a-evidence-governed-framework.md)
+* [Про автора: Микола Федчик (Nick Fedchik)](about-the-author.md)
 
 ---
 
