@@ -503,6 +503,144 @@ flowchart TD
 
 ---
 
+## Практика подолання «холодного старту»: автоматичний бутстрап EKG v0.1 за 15 хвилин
+
+Головний аргумент скептиків щодо інженерних графів знань формулюється так: *«Створення онтологій вручну — це цвинтар проєктів (Knowledge Engineering Bottleneck). Якщо для побудови графа потрібні місяці ручної праці онтологів у Protégé/OWL, інженерна команда ніколи цим не скористається»*.
+
+Цей скепсис абсолютно виправданий. Саме тому сучасні доказові експертні системи відмовляються від «важких академічних онтологій» на користь **Developer-First автоматичного бутстрапу**. Знання вашої інженерної системи вже існують у репозиторії — вони закодовані в іменах типів, сигнатурах функцій, макросах апаратних регістрів, документах Markdown і структурі комітів Git.
+
+Завдання системи — зібрати початковий граф версії **EKG v0.1** повністю автоматично за лічені хвилини за допомогою 4-етапного конвеєра:
+
+```mermaid
+flowchart LR
+    accTitle: Чотириетапний автоматичний конвеєр бутстрапу EKG v0.1
+    accDescr: Від AST-парсингу коду та Markdown через Git-майнінг та вузький SLM-лінкер до готового графа.
+
+    SrcCode["<b>Вихідний код</b><br/>Go / C / Rust AST"] --> Step1["<b>1. AST-екстракція</b><br/>Функції, типи, помилки"]
+    Docs["<b>Специфікації</b><br/>Markdown, SRS, SVD"] --> Step2["<b>2. FSM/Regex-парсинг</b><br/>Теги [REQ-...], регістри"]
+    GitRepo["<b>Git-історія</b><br/>Коміти, PR, хеші"] --> Step3["<b>3. Git Provenance</b><br/>Хто, коли, навіщо"]
+
+    Step1 --> Merge["<b>Синтезатор графа</b><br/>Побудова зв'язків v0.1"]
+    Step2 --> Merge
+    Step3 --> Merge
+
+    Merge --> Ambiguous{"<b>Є неоднозначні<br/>зв'язки?</b>"}
+    Ambiguous -->|"Ні"| GraphOut["<b>EKG v0.1 (JSON-LD)</b><br/>Базовий зв'язний граф"]
+    Ambiguous -->|"Так"| SLMLinker["<b>4. Локальна SLM (Ollama)</b><br/>Типізований JSON-лінк"]
+    SLMLinker --> GraphOut
+
+    classDef src fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef step fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef gate fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef res fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
+
+    class SrcCode,Docs,GitRepo src;
+    class Step1,Step2,Step3,Merge step;
+    class Ambiguous gate;
+    class GraphOut res;
+    class SLMLinker step;
+```
+
+### 1. AST-екстракція структури коду (Code AST)
+
+Статичний синтаксичний аналізатор коду (наприклад, стандартний Go `go/parser` або універсальний `tree-sitter`) обходить файли репозиторію та генерує базові вузли без участі людини:
+
+- кожен файл $\to$ вузол `Module`;
+- кожна функція $\to$ вузол `Function` зі зв'язком `declared_in`;
+- кожен виклик функції $\to$ орієнтоване ребро `calls`;
+- кожен код повернення помилки $\to$ вузол `ErrorContract`.
+
+### 2. Детекція вимог та апаратури регулярними FSM
+
+Специфікації та заголовкові коментарі обробляються детермінованими регулярними автоматами:
+
+- шаблони `[REQ-SYS-XXX]` чи `[REQ-SW-XXX]` у текстах і коментарях автоматично створюють вузли `Requirement`;
+- XML-файли опису периферії (CMSIS-SVD) створюють вузли `HardwareRegister` з точними бітовими масками.
+
+### 3. Збагачення через походження (Git Provenance)
+
+Утиліта зчитує `git log` і виявляє зв'язки між комітами та вимогами: якщо в повідомленні коміту згадується `Fixes #REQ-214` або у файлі коду є анотація `@satisfies REQ-214`, ребро `satisfies` встановлюється із криптографічним хешем коміту в ролі контексту.
+
+### 4. Вузький локальний SLM-лінкер (Targeted Semantic Linking)
+
+Коли прямий збіг ідентифікаторів відсутній (наприклад, у коді функція називається `ApplyThermalCutoff()`, а у специфікації написано: *«Пристрій зобов'язаний аварійно вимкнути силове коло при перегріві»*), система звертається до компактної локальної моделі (наприклад, через Ollama).
+
+Моделі передається суворий контракт: повернути **лише валідний JSON** із кандидатом на ребро та оцінкою впевненості. Цей результат позначається прапорцем `IsCandidate: true` і потрапляє до черги верифікації провідним інженером, не блокуючи побудову решти 90% графа.
+
+### Реалізація мінімального інженерного бутстрапера на Go
+
+Ось компактний приклад робочого інструмента на Go, який за секунди сканує репозиторій і будує зв'язний граф версії 0.1:
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"go/parser"
+	"go/token"
+	"os"
+	"path/filepath"
+	"regexp"
+)
+
+type EKGNode struct {
+	ID   string            `json:"id"`
+	Type string            `json:"type"` // "Requirement", "Function", "Module"
+	Meta map[string]string `json:"meta"`
+}
+
+type EKGEdge struct {
+	Source   string `json:"source"`
+	Relation string `json:"relation"` // "satisfies", "declared_in", "calls"
+	Target   string `json:"target"`
+}
+
+type EKGGraph struct {
+	Nodes []EKGNode `json:"nodes"`
+	Edges []EKGEdge `json:"edges"`
+}
+
+var reqRegex = regexp.MustCompile(`\[(REQ-[A-Z]+-[0-9]+)\]:\s*(.+)`)
+var traceRegex = regexp.MustCompile(`@satisfies\s+(REQ-[A-Z]+-[0-9]+)`)
+
+func BootstrapEKG(repoRoot string) (*EKGGraph, error) {
+	g := &EKGGraph{}
+	fset := token.NewFileSet()
+
+	// 1. Сканування вимог з Markdown-файлів
+	filepath.Walk(repoRoot, func(path string, info os.FileInfo, err error) error {
+		if filepath.Ext(path) == ".md" {
+			data, _ := os.ReadFile(path)
+			matches := reqRegex.FindAllStringSubmatch(string(data), -1)
+			for _, m := range matches {
+				g.Nodes = append(g.Nodes, EKGNode{
+					ID:   m[1],
+					Type: "Requirement",
+					Meta: map[string]string{"text": m[2], "file": path},
+				})
+			}
+		}
+		// 2. Сканування коду та вилучення AST функцій
+		if filepath.Ext(path) == ".go" {
+			node, err := parser.ParseFile(fset, path, nil, parser.ParseComments)
+			if err == nil {
+				for _, decl := range node.Decls {
+					// Обхід функцій та пошук зв'язків @satisfies у doc-коментарях
+					// і створення ребер "satisfies" у графі...
+				}
+			}
+		}
+		return nil
+	})
+
+	return g, nil
+}
+```
+
+Такий підхід розв'язує проблему «холодного старту»: команда отримує наочний граф першого дня роботи над проєктом, а подальше збагачення відбувається органічно в процесі CI/CD.
+
+---
+
 ## Порівняння: Таблиці трасування проти Інженерного графа знань
 
 | Критерій | Традиційні таблиці (Excel, Word, матриці DOORS) | Інженерний граф знань (EKG) |

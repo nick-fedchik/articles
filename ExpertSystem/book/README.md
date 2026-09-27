@@ -26,6 +26,24 @@
 
 ---
 
+## Навігація та інженерні профілі читання (Reading Paths)
+
+Книга охоплює широкий міждисциплінарний спектр. Щоб уникнути когнітивного перевантаження, рекомендується обрати один із трьох фокусних маршрутів залежно від вашої інженерної ролі:
+
+* 🛤 **Шлях розробника-практика (The Builder / Systems Developer):**
+  * *Фокус:* швидкий перехід до дієвого коду, реалізація детермінованих рушіїв на Go/C, підключення локальної Ollama без хмарних залежностей.
+  * *Маршрут:* [Глава 1](ch01-introduction-to-expert-systems.md) → [Глава 7](ch07-knowledge-base-typology.md) → [Глава 8](ch08-engineering-artifacts-as-data.md) → [Глава 14](ch14-requirements-detection-and-formalization.md) → [Глава 16](ch16-expert-systems-architecture.md) → [Глава 17](ch17-implementation-stack.md) → [Глава 18](ch18-execution-infrastructure.md) → [Глава 21](ch21-from-recommendation-to-action.md) → [Глава 29](ch29-neuro-symbolic-architecture.md).
+
+* 🛤 **Шлях інженера функціональної безпеки та аудитора (The Safety & Verification Lead):**
+  * *Фокус:* математичні інваріанти, дотримання DO-178C / ISO 26262, синтез сертифікаційних GSN-дерев, подолання галюцинацій та режим Fail-Closed.
+  * *Маршрут:* [Глава 1](ch01-introduction-to-expert-systems.md) → [Глава 2](ch02-epistemology-of-machine-knowledge.md) → [Глава 5](ch05-triad-of-trust-and-corporate-memory.md) → [Глава 6](ch06-applied-mathematics-for-expert-systems.md) → [Глава 9](ch09-engineering-knowledge-graph-traceability.md) → [Глава 23](ch23-knowledge-base-verification.md) → [Глава 24](ch24-system-diagnosis.md) → [Глава 26](ch26-continual-learning.md) → [Глава 27](ch27-safety-case-gsn-synthesis.md) → [Глава 28](ch28-dual-mode-expert-systems.md) → [Додаток А](appendix-a-evidence-governed-framework.md).
+
+* 🛤 **Шлях архітектора знань та R&D-лідера (The Researcher & Knowledge Engineer):**
+  * *Фокус:* подолання «холодного старту» бази знань, автоматизований парсинг специфікацій, когнітивні карти експертів, усунення мовного шуму та дослідницька пам'ять.
+  * *Маршрут:* [Глава 1](ch01-introduction-to-expert-systems.md) → [Глава 4](ch04-evolution-from-bayes-to-evidence-ai.md) → [Глава 9](ch09-engineering-knowledge-graph-traceability.md) → [Глава 10](ch10-knowledge-acquisition-systems.md) → [Глава 11](ch11-knowledge-elicitation-from-experts.md) → [Глава 12](ch12-linguistic-analysis-and-local-models.md) → [Глава 13](ch13-language-variability-vs-determinism.md) → [Глава 15](ch15-knowledge-extraction-and-kb-construction.md) → [Глава 20](ch20-explanation-engine.md) → [Глава 25](ch25-how-expert-systems-learn.md) → [Додаток А](appendix-a-evidence-governed-framework.md).
+
+---
+
 ## Структура книги
 
 Книга складається з шести тематичних частин, 29 розділів та практичного додатка.
