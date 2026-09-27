@@ -152,13 +152,13 @@ flowchart LR
     classDef doc fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#1a237e;
     classDef claim fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
     classDef actor fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
-    classDef graph fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef grf fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
     classDef out fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
 
     class D1,SP,W1 doc;
     class A1,A2 actor;
     class C1,C2 claim;
-    class P graph;
+    class P grf;
     class O out;
 ```
 

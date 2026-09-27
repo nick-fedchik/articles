@@ -160,7 +160,7 @@ sequenceDiagram
     H-->>L: Корекція / Override з обґрунтуванням
     E-->>L: Відкладений операційний результат (Delayed outcome)
     H-->>L: Підтверджений вердикт (Adjudicated label)
-    Note over L: Записи не перезаписуються; формується аудитний слід життєвого циклу
+    Note over L: Записи не перезаписуються - формується аудитний слід життєвого циклу
 ```
 
 Запис має розрізняти час самої події та час, коли результат став відомим.
@@ -276,10 +276,10 @@ flowchart TD
     SIG["<b>Потік метрик та спостережень</b><br/>Telemetry stream"] --> QUAL["<b>Контроль схеми та сенсорів</b><br/>Schema & sensor checks"]
     QUAL --> DET["<b>Детектори дрейфу</b><br/>ADWIN / statistical bounds"]
     DET --> TYP{"<b>Ймовірне джерело дрейфу?</b>"}
-    TYP -->|Зсув даних (Covariate)| ING["<b>Оновлення нормалізації</b><br/>Data ingestion update"]
-    TYP -->|Зсув концепту (Concept)| CAND["<b>Кандидат оновлення знань</b><br/>Model / rule candidate"]
-    TYP -->|Зсув політики (Policy)| LOG["<b>Аудит журналювання</b><br/>OPE & exploration check"]
-    TYP -->|Невідомо (Unknown)| INV["<b>Інженерне розслідування</b><br/>Жодних автооновлень!"]
+    TYP -->|"Зсув даних (Covariate)"| ING["<b>Оновлення нормалізації</b><br/>Data ingestion update"]
+    TYP -->|"Зсув концепту (Concept)"| CAND["<b>Кандидат оновлення знань</b><br/>Model / rule candidate"]
+    TYP -->|"Зсув політики (Policy)"| LOG["<b>Аудит журналювання</b><br/>OPE & exploration check"]
+    TYP -->|"Невідомо (Unknown)"| INV["<b>Інженерне розслідування</b><br/>Жодних автооновлень!"]
 
     classDef inp fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
     classDef det fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;

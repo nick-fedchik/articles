@@ -33,8 +33,8 @@ flowchart LR
     PLN --> CON["<b>Typed Action Contracts</b><br/>Строга типізація виклику"]
     CON --> POL["<b>Політика авторизації (PEP)</b><br/>ABAC / Інваріанти"]
 
-    POL -->|Схвалено (Low risk)| EX["<b>Tool Executor</b><br/>Виконавець інструментів"]
-    POL -->|Human Gate (High risk)| HUM["<b>Криптографічний підпис інженера</b>"]
+    POL -->|"Схвалено (Low risk)"| EX["<b>Tool Executor</b><br/>Виконавець інструментів"]
+    POL -->|"Human Gate (High risk)"| HUM["<b>Криптографічний підпис інженера</b>"]
     POL -->|Заборонено| STOP["<b>Вето / Ескалація</b>"]
     HUM --> EX
 
