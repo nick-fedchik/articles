@@ -52,21 +52,21 @@ flowchart TD
 
 Вектор стану системи $\mathbf{x}_k$ містить стан інерціального вимірювального блока (IMU) та історію поз камери у вікні ковзання з $N$ кадрів:
 
-```math
+$$
 \mathbf{x}_k = \begin{bmatrix} \mathbf{x}_{IMU}^T & \mathbf{x}_{C_1}^T & \mathbf{x}_{C_2}^T & \dots & \mathbf{x}_{C_N}^T \end{bmatrix}^T
-```
+$$
 
 де стан інерціального блока $\mathbf{x}_{IMU}$ описується вектором 16-го або 15-го порядку:
 
-```math
+$$
 \mathbf{x}_{IMU} = \begin{bmatrix} {}^I_G \mathbf{q}^T & {}^G \mathbf{p}_I^T & {}^G \mathbf{v}_I^T & \mathbf{b}_g^T & \mathbf{b}_a^T \end{bmatrix}^T
-```
+$$
 
 а стан кожної пози камери $\mathbf{x}_{C_i}$ у вікні ковзання визначається орієнтацією та позицією відносно глобальної СК:
 
-```math
+$$
 \mathbf{x}_{C_i} = \begin{bmatrix} {}^{C_i}_G \mathbf{q}^T & {}^G \mathbf{p}_{C_i}^T \end{bmatrix}^T
-```
+$$
 
 Тут:
 
@@ -91,11 +91,9 @@ flowchart TD
 - **Дескрипторне зіставлення на базі глибинних нейромереж (SuperPoint + LightGlue):** інваріантне до кута повороту, масштабу та погодних умов.
 - **Нормалізована взаємна кореляція (NCC / ZNCC) градієнтних мап:**
 
-- **Нормалізована взаємна кореляція (NCC / ZNCC) градієнтних мап:**
-
-```math
+$$
 \text{NCC}(u, v) = \frac{\sum_{x, y} \big(I_{curr}(x, y) - \bar{I}_{curr}\big)\big(I_{ref}(x+u, y+v) - \bar{I}_{ref}(u,v)\big)}{\sqrt{\sum_{x, y} \big(I_{curr}(x, y) - \bar{I}_{curr}\big)^2 \cdot \sum_{x, y} \big(I_{ref}(x+u, y+v) - \bar{I}_{ref}(u,v)\big)^2}}
-```
+$$
 
 Пік кореляційного відгуку $\max_{(u, v)} \text{NCC}(u, v)$ визначає просторове зміщення БАС $(\Delta x, \Delta y)$ щодо еталонної матриці координат.
 
@@ -105,9 +103,9 @@ flowchart TD
 
 Різниця формує виміряну висоту рельєфу:
 
-```math
+$$
 z_{elev}(t) = H_{baro}(t) - h_{alt}(t)
-```
+$$
 
 Масив точок $z_{elev}(t)$ зіставляється з бортовою цифровою моделлю рельєфу (**DEM / DSM** роздільною здатністю 10–30 м на піксель, наприклад SRTM/Copernicus) за допомогою алгоритму TERCOM або розширеного точкового зіставлення (Point-to-Mesh ICP).
 
@@ -119,15 +117,15 @@ z_{elev}(t) = H_{baro}(t) - h_{alt}(t)
 
 Для захисту від інтеграції хибних геоприв'язок розроблено протокол **VAIM (Visual Autonomous Integrity Monitoring)** на основі статистичної відстані Махаланобіса та символічного дерева правил:
 
-```math
+$$
 d_M = \sqrt{\big(z_{DSMAC} - \mathbf{H}\hat{\mathbf{x}}_{k|k-1}\big)^T \mathbf{S}_k^{-1} \big(z_{DSMAC} - \mathbf{H}\hat{\mathbf{x}}_{k|k-1}\big)} \le \gamma_{\text{threshold}}
-```
+$$
 
 де коваріаційна матриця інновації (нев'язки) $\mathbf{S}_k$ визначається як:
 
-```math
+$$
 \mathbf{S}_k = \mathbf{H} \mathbf{P}_{k|k-1} \mathbf{H}^T + \mathbf{R}
-```
+$$
 
 Тут:
 

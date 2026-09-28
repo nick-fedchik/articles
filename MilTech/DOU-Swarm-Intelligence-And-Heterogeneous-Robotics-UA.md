@@ -55,41 +55,31 @@ flowchart TB
 
 У розширеній моделі адаптивного рою сумарний вектор керуючого прискорення $\mathbf{a}_i$ для $i$-го агента розраховується як суперпозиція сил штучних потенційних полів (Artificial Potential Fields, APF):
 
-```math
+$$
 \mathbf{a}_i = w_{sep} \mathbf{F}_{sep, i} + w_{align} \mathbf{F}_{align, i} + w_{coh} \mathbf{F}_{coh, i} + w_{goal} \mathbf{F}_{goal, i} + w_{obs} \mathbf{F}_{obs, i}
-```
+$$
 
 ### Компоненти векторного поля
 
 1. **Сила взаємного відштовхування (Separation):** гарантує відсутність колізій між сусідами у радіусі безпеки $R_{safe}$:
 
-   ```math
-   \mathbf{F}_{sep, i} = \sum_{j \in \mathcal{N}_i, \, j \neq i} \frac{\mathbf{p}_i - \mathbf{p}_j}{\|\mathbf{p}_i - \mathbf{p}_j\|^3}
-   ```
+   $$\mathbf{F}_{sep, i} = \sum_{j \in \mathcal{N}_i, \, j \neq i} \frac{\mathbf{p}_i - \mathbf{p}_j}{\|\mathbf{p}_i - \mathbf{p}_j\|^3}$$
 
 2. **Сила вирівнювання швидкостей (Alignment):** синхронізує вектор курсу та швидкість із сусідніми апаратами у радіусі комунікації $R_{comm}$:
 
-   ```math
-   \mathbf{F}_{align, i} = \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} (\mathbf{v}_j - \mathbf{v}_i)
-   ```
+   $$\mathbf{F}_{align, i} = \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} (\mathbf{v}_j - \mathbf{v}_i)$$
 
 3. **Сила когезії (Cohesion):** утримує єдність групи та спрямовує агента до локального центру мас:
 
-   ```math
-   \mathbf{F}_{coh, i} = \left( \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} \mathbf{p}_j \right) - \mathbf{p}_i
-   ```
+   $$\mathbf{F}_{coh, i} = \left( \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} \mathbf{p}_j \right) - \mathbf{p}_i$$
 
 4. **Сила цільового притягання (Goal Attraction):** спрямовує центр мас рою до заданого рубежу або навігаційного коридору:
 
-   ```math
-   \mathbf{F}_{goal, i} = \frac{\mathbf{p}_{target} - \mathbf{p}_i}{\|\mathbf{p}_{target} - \mathbf{p}_i\|}
-   ```
+   $$\mathbf{F}_{goal, i} = \frac{\mathbf{p}_{target} - \mathbf{p}_i}{\|\mathbf{p}_{target} - \mathbf{p}_i\|}$$
 
 5. **Сила відштовхування від перешкод та зон РЕБ (Obstacle Avoidance):** активується при наближенні до рельєфних перешкод або виявлених секторів ворожого радіовипромінювання:
 
-   ```math
-   \mathbf{F}_{obs, i} = \sum_{k \in \mathcal{O}_i} \eta \left( \frac{1}{d_k} - \frac{1}{d_{safe}} \right) \frac{1}{d_k^2} \frac{\mathbf{p}_i - \mathbf{p}_{obs, k}}{d_k}, \quad \text{де } d_k = \|\mathbf{p}_i - \mathbf{p}_{obs, k}\| \le d_{safe}
-   ```
+   $$\mathbf{F}_{obs, i} = \sum_{k \in \mathcal{O}_i} \eta \left( \frac{1}{d_k} - \frac{1}{d_{safe}} \right) \frac{1}{d_k^2} \frac{\mathbf{p}_i - \mathbf{p}_{obs, k}}{d_k}, \quad \text{де } d_k = \|\mathbf{p}_i - \mathbf{p}_{obs, k}\| \le d_{safe}$$
 
 ---
 
@@ -103,9 +93,9 @@ flowchart TB
 
 Для реплікації метрик сенсорного покриття, залишку палива/заряду акумуляторів та стану бортового обладнання застосовуються безконфліктні структури даних (LWW-Element-Set або ORSet). Злиття даних відбувається детерміновано за правилом:
 
-```math
+$$
 S_{merged} = S_A \sqcup S_B = \big\{ (x, t_x) \mid t_x = \max(t_A(x), t_B(x)) \big\}
-```
+$$
 
 Це гарантує математичну збіжність стану знань на всіх платформах після відновлення прямого радіоконтакту без необхідності блокування каналу.
 

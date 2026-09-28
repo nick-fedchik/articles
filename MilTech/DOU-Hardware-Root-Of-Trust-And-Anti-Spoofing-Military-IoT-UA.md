@@ -97,9 +97,9 @@ flowchart TD
 
 В архітектурі **Zero-Trust Sensor Fusion** кожен вимірювальний елемент має власний мікроконтролер із підтримкою ARM TrustZone, який формує самодостатній підписаний кадр:
 
-```math
+$$
 \text{TelemetryFrame} = \Big\langle \text{ID}_{sensor}, \, t_{timestamp}, \, C_{seq}, \, \mathbf{D}, \, \text{Sign}_{SK}\big(\text{SHA-256}(\text{ID}_{sensor} \parallel t_{timestamp} \parallel C_{seq} \parallel \mathbf{D})\big) \Big\rangle
-```
+$$
 
 де:
 
