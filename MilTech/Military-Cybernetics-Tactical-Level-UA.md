@@ -106,10 +106,10 @@ $$
 - $\mathcal{O}(o \mid s', a)$ — імовірність отримати спостереження $o$ за умови переходу в стан $s'$;
 - $\gamma \in (0, 1)$ — коефіцієнт дисконтування майбутніх наслідків.
 
-Оптимальна тактична стратегія $\pi^*(b)$ формується відносно поточного вектора довіри (Belief State) $b(s) = P(s_t = s \mid o_{1:t}, a_{1:t-1})$:
+Оптимальна тактична стратегія $\pi^{\ast}(b)$ формується відносно поточного вектора довіри (Belief State) $b(s) = P(s_{t} = s \mid o_{1:t}, \, a_{1:t-1})$:
 
 $$
-\pi^*(b) = \arg\max_{a \in \mathcal{A}} \left[ \sum_{s \in \mathcal{S}} b(s) \mathcal{R}(s, a) + \gamma \sum_{o \in \Omega} P(o \mid b, a) V^*(\tau(b, a, o)) \right]
+\pi^{\ast}(b) = \arg\max_{a \in \mathcal{A}} \left[ \sum_{s \in \mathcal{S}} b(s) \mathcal{R}(s, a) + \gamma \sum_{o \in \Omega} P(o \mid b, a) V^{\ast}(\tau(b, a, o)) \right]
 $$
 
 де $\tau(b, a, o)$ — байєсівське оновлення вектора довіри після отримання нового спостереження.

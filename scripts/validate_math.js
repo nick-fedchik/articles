@@ -84,6 +84,13 @@ for (const target of targetDirs) {
         totalErrors++;
       }
 
+      // Check for literal '*' (must use \ast, \star, \cdot, \times)
+      if (/\*/.test(formula)) {
+        console.error(`[GFM MATH ERROR] ${file}:${lineNum} - Literal '*' found inside display math. Markdown interprets '*' as italics/bold. Use \\ast, \\star, \\cdot, or \\times instead.`);
+        console.error(`  Formula: ${formula}\n`);
+        totalErrors++;
+      }
+
       // KaTeX strict parse
       try {
         katex.renderToString(formula, { displayMode: true, throwOnError: true, strict: 'warn' });
@@ -113,6 +120,13 @@ for (const target of targetDirs) {
         // Leading / trailing space check
         if (formula.startsWith(' ') || formula.endsWith(' ')) {
           console.error(`[GFM MATH ERROR] ${file}:${lineIdx + 1} - Leading or trailing space inside inline math: "$${formula}$"`);
+          totalErrors++;
+        }
+
+        // Check for literal '*' in inline math
+        if (/\*/.test(formula)) {
+          console.error(`[GFM MATH ERROR] ${file}:${lineIdx + 1} - Literal '*' found inside inline math. Markdown interprets '*' as italics/bold. Use \\ast, \\star, \\cdot, or \\times instead.`);
+          console.error(`  Expression: $${formula}$\n`);
           totalErrors++;
         }
 
