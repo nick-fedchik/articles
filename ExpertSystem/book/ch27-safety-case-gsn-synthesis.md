@@ -169,13 +169,13 @@ flowchart TD
     classDef leaf fill:#c8e6c9,stroke:#388e3c,stroke-width:2px;
 ```
 
-### Формат сертифіката `znavets.gsn-proof.v1`
+### Формат сертифіката `gsn-proof.v1`
 
 Сертифікат експортується у канонічному, детермінованому форматі JSON:
 
 ```json
 {
-  "schema_version": "znavets.gsn-proof.v1",
+  "schema_version": "gsn-proof.v1",
   "certificate_id": "cert-gsn-2026-09-28-iso26262-asil-d",
   "scope": "automotive",
   "standard": "ISO26262",
@@ -212,14 +212,14 @@ flowchart TD
 
 1. **Автономність (Zero-Knowledge Audit):** аудитору достатньо перевірити математичну коректність Merkle-гілок (`tree_digest`) та зв'язності цілей із доказами. Для підтвердження того, що прошивка відповідає стандарту, аудитору не потрібно отримувати приватний вихідний код — достатньо перевірити криптографічний сертифікат.
 2. **Неможливість підробки:** зміна хоча б одного байта в описі вимоги, статусі або доказах повністю спотворює канонічний хеш вузла та корінь дерева (`tree_digest`).
-3. **Миттєва валідація у CLI:** перевірка сертифіката здійснюється єдиним інструментом `znavets verify`:
+3. **Миттєва валідація у CLI:** перевірка сертифіката здійснюється єдиним інструментом `expert-cli verify`:
 
    ```bash
    # Експорт сертифіката аудиту
-   znavets audit compliance --scope automotive --standard ISO26262 --export-proof proof-certificate.json
+   expert-cli audit compliance --scope automotive --standard ISO26262 --export-proof proof-certificate.json
 
    # Автономна верифікація сертифіката незалежним аудитором
-   znavets verify proof-certificate.json
+   expert-cli verify proof-certificate.json
    # [OK] GSN Proof Certificate valid: scope 'automotive', standard 'ISO26262', 12 goals proven, digest matches.
    ```
 

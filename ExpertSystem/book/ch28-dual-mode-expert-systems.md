@@ -76,7 +76,7 @@ $$H(\vec{X}) \leftarrow B_1(\vec{X}_1) \land B_2(\vec{X}_2) \land \dots \land B_
 де $H$ — голова правила (новий виведений предикат), $B_i$ — позитивні атоми тіла, а $N_j$ — атоми стратифікованого заперечення (*Negation as Failure*). Стратифікація гарантує відсутність рекурсивних петель через заперечення, забезпечуючи поліноміальний час обчислення:
 
 ```go
-// HornClause представляє декларативне Datalog-правило в znavets
+// HornClause представляє декларативне Datalog-правило експертної системи
 type HornClause struct {
     ID      string      `json:"id"`
     Head    Predicate   `json:"head"`
@@ -213,8 +213,8 @@ sequenceDiagram
     Engine->>Buffer: ElicitCandidateOnRefusal(кандидат цитати)
     Note over Buffer: Статус: pending_review (Не потрапляє у FactBase!)
     
-    Dev->>Buffer: znavets ingest proposals list
-    Dev->>Buffer: znavets ingest proposals approve prop-123
+    Dev->>Buffer: expert-cli ingest proposals list
+    Dev->>Buffer: expert-cli ingest proposals approve prop-123
     Buffer->>Daemon: Перевірка цілісності перед інтеграцією
     Daemon->>Daemon: Перевірка на цикли застарівання та колізії
     Daemon-->>FactBase: Схвалено -> Інтеграція факту
@@ -276,7 +276,7 @@ func (m *DiagnosticCaseMemory) RetrieveSimilar(symptoms []string, protocol strin
 
 ```bash
 # 1. Строгий сертифікаційний режим (за замовчуванням)
-$ znavets ask "What is the maximum line length in SMTP?" --format text
+$ expert-cli ask "What is the maximum line length in SMTP?" --format text
 
 Answer: 1000 characters
   [rfc5321 (Section 4.5.3.1.6), bytes 123450-123540]
@@ -285,7 +285,7 @@ Answer: 1000 characters
 Якщо інформація відсутня, строгий режим повертає вичерпну типізовану відмову:
 
 ```bash
-$ znavets ask "Why is connection timeout occurring on port 25?" --format text
+$ expert-cli ask "Why is connection timeout occurring on port 25?" --format text
 
 Refusal: unresolved-no-matching-fact
   Cannot answer: question phrasing could not be deterministically mapped to verified knowledge.
@@ -294,7 +294,7 @@ Refusal: unresolved-no-matching-fact
 При активації розширеного режилю `--extended` система виводить строгий блок і додає секцію евристичних припущень із умовами підтвердження:
 
 ```bash
-$ znavets ask "Why is connection timeout occurring on port 25?" --format text --extended
+$ expert-cli ask "Why is connection timeout occurring on port 25?" --format text --extended
 
 Refusal: unresolved-no-matching-fact
   Cannot answer: question phrasing could not be deterministically mapped to verified knowledge.

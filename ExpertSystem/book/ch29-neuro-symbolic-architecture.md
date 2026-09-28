@@ -229,9 +229,9 @@ flowchart TD
 
 Вирішенням є **доменна ізоляція (Domain Isolation)**:
 1. Кожен інженерний домен обслуговується незалежним набором LoRA/QLoRA ваг або спеціалізованою квантованою моделлю:
-   - `znavets-rfc:7b`: спеціалізація на транспортних та прикладних протоколах (SMTP, IMAP, DNS, TLS);
-   - `znavets-w3c:7b`: спеціалізація на специфікаціях веб-інтерфейсів, DOM та доступності;
-   - `znavets-automotive:7b`: спеціалізація на ISO 26262, AUTOSAR, діагностиці шини CAN та рівнях ASIL.
+   - `slm-rfc-expert:7b`: спеціалізація на транспортних та прикладних протоколах (SMTP, IMAP, DNS, TLS);
+   - `slm-w3c-expert:7b`: спеціалізація на специфікаціях веб-інтерфейсів, DOM та доступності;
+   - `slm-automotive-expert:7b`: спеціалізація на ISO 26262, AUTOSAR, діагностиці шини CAN та рівнях ASIL.
 2. Семантичний порт системи реалізує детерміновану таблицю маршрутизації (`ResolveDomainModel`), яка на основі ідентифікатора документа або контексту запиту автоматично адресує виклик до відповідної моделі без змішування контекстів.
 
 ### Методологія донавчання та апаратний бюджет (GPU QLoRA Pipeline)
@@ -245,7 +245,7 @@ flowchart TD
 
 ### Конфігурація Ollama Modelfile для доменного екстрактора
 
-Практичне закріплення гіперпараметрів і системного контракту в середовищі Ollama реалізується через файл `Modelfile` (на прикладі `znavets-rfc:7b`):
+Практичне закріплення гіперпараметрів і системного контракту в середовищі Ollama реалізується через файл `Modelfile` (на прикладі `slm-rfc-expert:7b`):
 
 ```dockerfile
 FROM qwen2.5-coder:7b
@@ -261,7 +261,7 @@ PARAMETER stop "<|im_end|>"
 PARAMETER stop "<|im_start|>"
 
 # Системний контракт доменного екстрактора
-SYSTEM """You are Znavets Domain Fact Extractor for technical specifications and standards.
+SYSTEM """You are Domain Fact Extractor for technical specifications and standards.
 Extract candidate factual triples and their exact supporting verbatim quotes from the provided text passage.
 Output JSON list of objects with fields:
 - "subject": entity name (e.g. protocol name, command, parameter)
@@ -374,10 +374,10 @@ func NewOllamaClient(endpoint, defaultModel string) *OllamaClient {
 		endpoint:     endpoint,
 		defaultModel: defaultModel,
 		domainModelMap: map[string]string{
-			"rfc":        "znavets-rfc:7b",
-			"w3c":        "znavets-w3c:7b",
-			"automotive": "znavets-automotive:7b",
-			"iso26262":   "znavets-automotive:7b",
+			"rfc":        "slm-rfc-expert:7b",
+			"w3c":        "slm-w3c-expert:7b",
+			"automotive": "slm-automotive-expert:7b",
+			"iso26262":   "slm-automotive-expert:7b",
 		},
 		httpClient: &http.Client{Timeout: 5 * time.Second},
 	}
@@ -419,7 +419,7 @@ Synthesize a concise 2-sentence diagnostic explanation strictly using only the f
 	reqBody, _ := json.Marshal(map[string]any{
 		"model": targetModel,
 		"messages": []map[string]string{
-			{"role": "system", "content": "You are Znavets Explanation Synthesizer. Output strictly verified text."},
+			{"role": "system", "content": "You are Expert Explanation Synthesizer. Output strictly verified text."},
 			{"role": "user", "content": prompt},
 		},
 		"stream": false,
@@ -544,9 +544,9 @@ func processQuery(query string, isAdvisoryAllowed bool) {
 
 ## 7. Емпіричні результати та порівняльний аналіз
 
-Емпіричні випробування нейро-символьної експертної системи Znavets (на масивах специфікацій IETF RFC, W3C та нормативів автомобільної безпеки ISO 26262 / ASIL-D) підтверджують безкомпромісну надійність гібридної архітектури:
+Емпіричні випробування нейро-символьної експертної системи (на масивах специфікацій IETF RFC, W3C та нормативів автомобільної безпеки ISO 26262 / ASIL-D) підтверджують безкомпромісну надійність гібридної архітектури:
 
-| Метрика / Характеристика | Традиційний LLM / RAG | Класична Rule-Based Система | Нейро-символьна Експертна Система (Znavets) |
+| Метрика / Характеристика | Традиційний LLM / RAG | Класична Rule-Based Система | Нейро-символьна Експертна Система (Доказове ядро) |
 |---|---|---|---|
 | **Точність відповідей (Concordance)** | 70% – 85% | 100% (у межах бази) | **100% (329/329 тестів пройдено)** |
 | **Рівень галюцинацій (Hallucination Rate)** | 15% – 30% | 0% | **0.00% (Fail-Closed Gate)** |
@@ -554,7 +554,7 @@ func processQuery(query string, isAdvisoryAllowed bool) {
 | **Стійкість до мовної варіативності** | Висока | Крихка (синтаксичний збій) | **Висока (забезпечується SLM у ролі Proposer)** |
 | **Пам'ять під час виконання (VRAM / RAM)** | > 16–48 ГБ (важкі хмарні API) | ~ 20 МБ | **~ 4.8–5.8 ГБ VRAM (4-bit NF4 QLoRA на споживчих GPU)** |
 | **Швидкість виведення (Reasoning Latency)** | 2.5 – 10 с | < 1 мс | **15 – 80 мс (символьне ядро) / 1.5–2.5 с (з генерацією $Q_3$)** |
-| **Формальна сертифікація (GSN / ISO 26262)** | Неможлива (чорна скринька) | Можлива, але ручна | **Автоматичний синтез сертифікатів `znavets.gsn-proof.v1`** |
+| **Формальна сертифікація (GSN / ISO 26262)** | Неможлива (чорна скринька) | Можлива, але ручна | **Автоматичний синтез сертифікатів `gsn-proof.v1`** |
 
 ### Верифікація за принципом «Fail-Closed»
 
