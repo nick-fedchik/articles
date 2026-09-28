@@ -61,11 +61,10 @@ flowchart TD
 Нехай $x(t) \in \mathbb{R}^n$ та $y(t) \in \mathbb{R}^m$ — вектори чисельності різнорідних бойових платформ дружніх та ворожих сил відповідно (танки, артилерія, ППО, дрони). Динаміка втрат описується системою матричних диференціальних рівнянь:
 
 $$
-\frac{d\mathbf{x}}{dt} = - \mathbf{A}(I_y) \, \mathbf{y}(t) - \mathbf{D}_x \, \mathbf{x}(t)
-$$
-
-$$
-\frac{d\mathbf{y}}{dt} = - \mathbf{B}(I_x) \, \mathbf{x}(t) - \mathbf{D}_y \, \mathbf{y}(t)
+\begin{cases}
+\dfrac{d\mathbf{x}}{dt} = - \mathbf{A}(I_y) \, \mathbf{y}(t) - \mathbf{D}_x \, \mathbf{x}(t) \\[8pt]
+\dfrac{d\mathbf{y}}{dt} = - \mathbf{B}(I_x) \, \mathbf{x}(t) - \mathbf{D}_y \, \mathbf{y}(t)
+\end{cases}
 $$
 
 де:
@@ -112,10 +111,10 @@ flowchart LR
 Масоване придушення радіоканалів противника станціями РЕБ бригадного і корпусного підпорядкування («Буковель», «Нота») не повинно паралізувати радіолінії управління власних безпілотників чи супутникового зв'язку:
 
 $$
-\forall i \in \text{FriendlyRadios}, \; \forall j \in \text{ActiveJammers} \implies |f_i - f_j| \ge \Delta f_{\text{guard}} \quad \lor \quad \|\mathbf{r}_i - \mathbf{r}_j\| \ge R_{\text{safe}}(P_j)
+\forall i \in \mathcal{F}_{\text{radio}}, \; \forall j \in \mathcal{J}_{\text{jam}} \implies |f_i - f_j| \ge \Delta f_{\text{guard}} \quad \lor \quad \|\mathbf{r}_i - \mathbf{r}_j\| \ge R_{\text{safe}}(P_j)
 $$
 
-Якщо умова порушується, символічний деконфліктор автоматично наказує передавачу завад зменшити сектор випромінювання або скоригувати сітку частот.
+де $\mathcal{F}_{\text{radio}}$ — множина радіоліній дружніх підрозділів, $\mathcal{J}_{\text{jam}}$ — активні передавачі завад. Якщо умова порушується, символічний деконфліктор автоматично наказує передавачу завад зменшити сектор випромінювання або скоригувати сітку частот.
 
 ---
 

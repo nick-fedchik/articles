@@ -94,14 +94,14 @@ flowchart TD
 В архітектурі **Zero-Trust Sensor Fusion** кожен вимірювальний елемент має власний мікроконтролер із підтримкою ARM TrustZone, який формує самодостатній підписаний кадр:
 
 $$
-\text{TelemetryFrame} = \Big\langle \text{ID}_{sensor}, \, t_{timestamp}, \, C_{seq}, \, \mathbf{D}, \, \text{Sign}_{SK}\big(\text{SHA-256}(\text{ID}_{sensor} \parallel t_{timestamp} \parallel C_{seq} \parallel \mathbf{D})\big) \Big\rangle
+\text{TelemetryFrame} = \Big\langle \text{ID}_{\text{sensor}}, \, t_{\text{timestamp}}, \, C_{\text{seq}}, \, \mathbf{D}, \, \text{Sign}_{SK}\big(\text{SHA-256}(\text{ID}_{\text{sensor}} \parallel t_{\text{timestamp}} \parallel C_{\text{seq}} \parallel \mathbf{D})\big) \Big\rangle
 $$
 
 де:
 
-- $\text{ID}_{sensor}$ — унікальний 128-бітний ідентифікатор сенсора;
-- $t_{timestamp}$ — синхронізована мітка часу (Unix nanoseconds / GPS time);
-- $C_{seq}$ — строго монотонний 64-бітний лічильник пакетів (захист від повтору та пропуску пакетів);
+- $\text{ID}_{\text{sensor}}$ — унікальний 128-бітний ідентифікатор сенсора;
+- $t_{\text{timestamp}}$ — синхронізована мітка часу (Unix nanoseconds / GPS time);
+- $C_{\text{seq}}$ — строго монотонний 64-бітний лічильник пакетів (захист від повтору та пропуску пакетів);
 - $\mathbf{D}$ — вектор корисного навантаження вимірювання (кутові швидкості, спектрограма, просторові координати цілі);
 - $\text{Sign}_{SK}$ — цифровий підпис на закритому криптографічному ключі сенсора.
 
