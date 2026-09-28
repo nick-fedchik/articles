@@ -61,25 +61,45 @@ $$
 
 ### Компоненти векторного поля
 
-1. **Сила взаємного відштовхування (Separation):** гарантує відсутність колізій між сусідами у радіусі безпеки $R_{safe}$:
+#### 1. Сила взаємного відштовхування (Separation)
 
-   $$\mathbf{F}_{sep, i} = \sum_{j \in \mathcal{N}_i, \, j \neq i} \frac{\mathbf{p}_i - \mathbf{p}_j}{\|\mathbf{p}_i - \mathbf{p}_j\|^3}$$
+Гарантує відсутність колізій між сусідами у радіусі безпеки $R_{\text{safe}}$:
 
-2. **Сила вирівнювання швидкостей (Alignment):** синхронізує вектор курсу та швидкість із сусідніми апаратами у радіусі комунікації $R_{comm}$:
+$$
+\mathbf{F}_{\text{sep}, i} = \sum_{j \in \mathcal{N}_i, \, j \neq i} \frac{\mathbf{p}_i - \mathbf{p}_j}{\|\mathbf{p}_i - \mathbf{p}_j\|^3}
+$$
 
-   $$\mathbf{F}_{align, i} = \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} (\mathbf{v}_j - \mathbf{v}_i)$$
+#### 2. Сила вирівнювання швидкостей (Alignment)
 
-3. **Сила когезії (Cohesion):** утримує єдність групи та спрямовує агента до локального центру мас:
+Синхронізує вектор курсу та швидкість із сусідніми апаратами у радіусі комунікації $R_{\text{comm}}$:
 
-   $$\mathbf{F}_{coh, i} = \left( \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} \mathbf{p}_j \right) - \mathbf{p}_i$$
+$$
+\mathbf{F}_{\text{align}, i} = \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} (\mathbf{v}_j - \mathbf{v}_i)
+$$
 
-4. **Сила цільового притягання (Goal Attraction):** спрямовує центр мас рою до заданого рубежу або навігаційного коридору:
+#### 3. Сила когезії (Cohesion)
 
-   $$\mathbf{F}_{goal, i} = \frac{\mathbf{p}_{target} - \mathbf{p}_i}{\|\mathbf{p}_{target} - \mathbf{p}_i\|}$$
+Утримує єдність групи та спрямовує агента до локального центру мас:
 
-5. **Сила відштовхування від перешкод та зон РЕБ (Obstacle Avoidance):** активується при наближенні до рельєфних перешкод або виявлених секторів ворожого радіовипромінювання:
+$$
+\mathbf{F}_{\text{coh}, i} = \left( \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} \mathbf{p}_j \right) - \mathbf{p}_i
+$$
 
-   $$\mathbf{F}_{obs, i} = \sum_{k \in \mathcal{O}_i} \eta \left( \frac{1}{d_k} - \frac{1}{d_{safe}} \right) \frac{1}{d_k^2} \frac{\mathbf{p}_i - \mathbf{p}_{obs, k}}{d_k}, \quad \text{де } d_k = \|\mathbf{p}_i - \mathbf{p}_{obs, k}\| \le d_{safe}$$
+#### 4. Сила цільового притягання (Goal Attraction)
+
+Спрямовує центр мас рою до заданого рубежу або навігаційного коридору:
+
+$$
+\mathbf{F}_{\text{goal}, i} = \frac{\mathbf{p}_{\text{target}} - \mathbf{p}_i}{\|\mathbf{p}_{\text{target}} - \mathbf{p}_i\|}
+$$
+
+#### 5. Сила відштовхування від перешкод та зон РЕБ (Obstacle Avoidance)
+
+Активується при наближенні до рельєфних перешкод або виявлених секторів ворожого радіовипромінювання:
+
+$$
+\mathbf{F}_{\text{obs}, i} = \sum_{k \in \mathcal{O}_i} \eta \left( \frac{1}{d_k} - \frac{1}{d_{\text{safe}}} \right) \frac{1}{d_k^2} \frac{\mathbf{p}_i - \mathbf{p}_{\text{obs}, k}}{d_k}, \quad \text{де } d_k = \|\mathbf{p}_i - \mathbf{p}_{\text{obs}, k}\| \le d_{\text{safe}}
+$$
 
 ---
 
@@ -94,7 +114,7 @@ $$
 Для реплікації метрик сенсорного покриття, залишку палива/заряду акумуляторів та стану бортового обладнання застосовуються безконфліктні структури даних (LWW-Element-Set або ORSet). Злиття даних відбувається детерміновано за правилом:
 
 $$
-S_{merged} = S_A \sqcup S_B = \big\{ (x, t_x) \mid t_x = \max(t_A(x), t_B(x)) \big\}
+S_{\text{merged}} = S_A \sqcup S_B = \big\{ (x, t_x) \mid t_x = \max(t_A(x), t_B(x)) \big\}
 $$
 
 Це гарантує математичну збіжність стану знань на всіх платформах після відновлення прямого радіоконтакту без необхідності блокування каналу.
@@ -132,7 +152,7 @@ assign_task(WinnerPlatform, TaskId) :-
 
 Експертний модуль безпеки на кожному борту в реальному часі контролює дотримання формальних просторових обмежень:
 
-- **Мінімальна дистанція ешелонування:** $\Delta d_{horizontal} \ge 15\text{ м}$, $\Delta h_{vertical} \ge 10\text{ м}$.
+- **Мінімальна дистанція ешелонування:** $\Delta d_{\text{horizontal}} \ge 15\text{ м}$, $\Delta h_{\text{vertical}} \ge 10\text{ м}$.
 - **Заборона перетину векторів:** якщо дві платформи рухаються зустрічними курсами з часом зближення $TTC \le 3.0\text{ с}$, модуль безпеки детерміновано призначає маневр ухилення (правило: дрон із нижчим ID змінює висоту на $+10\text{ м}$, дрон із вищим ID — на $-10\text{ м}$).
 
 ### Динамічний розподіл радіочастот (TDMA / FHSS Coordination)
