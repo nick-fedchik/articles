@@ -169,59 +169,58 @@ flowchart TD
     classDef leaf fill:#c8e6c9,stroke:#388e3c,stroke-width:2px;
 ```
 
-### Формат сертифіката `.proof`
+### Формат сертифіката `znavets.gsn-proof.v1`
 
-Сертифікат зберігається у канонічному, детермінованому форматі JSON або CBOR:
+Сертифікат експортується у канонічному, детермінованому форматі JSON:
 
 ```json
 {
-  "schema_version": "2.0.0",
-  "certificate_id": "CERT-2026-AVIONICS-0842",
-  "system_claim": {
-    "standard": "DO-178C",
-    "target_dal": "DAL_A",
-    "claim": "All low-level requirements verified with 100% MC/DC coverage"
-  },
-  "merkle_root": "8f4c3b7a1e0d9a6c2f5b8e7d4a1c0b3e5f7a9d2c4e6b8a0d2f4e6a8b0c2d4e6f",
-  "gsn_tree": {
-    "goal_id": "G_TOP",
-    "status": "PROVEN",
-    "children": [
-      {
-        "goal_id": "G_REQ_42",
-        "requirement_provenance": {
-          "uri": "standards/rfc-5321.txt",
-          "byte_start": 18420,
-          "byte_end": 18890,
-          "quote_sha256": "4a1c0b3e5f7a9d2c4e6b8a0d2f4e6a8b0c2d4e6f8f4c3b7a1e0d9a6c2f5b8e7d"
-        },
-        "solution_evidence": {
-          "test_id": "hil_sequence_validation_test",
-          "verdict": "PASS",
-          "execution_hash": "2f4e6a8b0c2d4e6f8f4c3b7a1e0d9a6c2f5b8e7d4a1c0b3e5f7a9d2c4e6b8a0d",
-          "testbed_id": "HIL-RIG-ALPHA-04",
-          "timestamp": "2026-09-21T07:15:32Z"
-        }
-      }
-    ]
-  },
-  "signature": {
-    "algorithm": "Ed25519",
-    "public_key": "MCowBQYDK2VwAyEA9...",
-    "signature_bytes": "3b7a1e0d..."
+  "schema_version": "znavets.gsn-proof.v1",
+  "certificate_id": "cert-gsn-2026-09-28-iso26262-asil-d",
+  "scope": "automotive",
+  "standard": "ISO26262",
+  "generated_at": "2026-09-28T05:40:00Z",
+  "root_goal_id": "G_TOP",
+  "compliance_verdict": "COMPLIANT",
+  "tree_digest": "4a1c0b3e5f7a9d2c4e6b8a0d2f4e6a8b0c2d4e6f8f4c3b7a1e0d9a6c2f5b8e7d",
+  "nodes": [
+    {
+      "id": "G_TOP",
+      "type": "goal",
+      "title": "Automotive ECU Firmware complies with ISO 26262 ASIL-D",
+      "status": "PROVEN",
+      "supported_by": ["S_DECOMP"],
+      "digest": "8f4c3b7a1e0d9a6c2f5b8e7d4a1c0b3e5f7a9d2c4e6b8a0d2f4e6a8b0c2d4e6f"
+    },
+    {
+      "id": "Sn_WDG_PASS",
+      "type": "solution",
+      "title": "Hardware watchdog test passed (HIL run #402)",
+      "status": "PROVEN",
+      "evidence_ref": "ev-hil-wdg-402",
+      "digest": "2f4e6a8b0c2d4e6f8f4c3b7a1e0d9a6c2f5b8e7d4a1c0b3e5f7a9d2c4e6b8a0d"
+    }
+  ],
+  "engine_build": {
+    "git_commit": "8376f2a",
+    "compiler": "gc"
   }
 }
 ```
 
 ### Переваги такого сертифіката
 
-1. **Автономність (Zero-Knowledge Audit):** аудитору достатньо перевірити математичну коректність Merkle-гілок і цифровий підпис. Для підтвердження того, що функція пройшла верифікацію, аудитору не потрібно читати приватний код — достатньо перевірити хеш коміту та підтверджене ребро зв'язку.
-2. **Неможливість підробки:** зміна хоча б одного байта в описі вимоги чи лозі тесту повністю руйнує дерево Меркла та робить цифровий підпис недійсним.
-3. **Миттєва валідація:** перевірка сертифіката займає соті частки секунди за допомогою легковагової утиліти командного рядка:
+1. **Автономність (Zero-Knowledge Audit):** аудитору достатньо перевірити математичну коректність Merkle-гілок (`tree_digest`) та зв'язності цілей із доказами. Для підтвердження того, що прошивка відповідає стандарту, аудитору не потрібно отримувати приватний вихідний код — достатньо перевірити криптографічний сертифікат.
+2. **Неможливість підробки:** зміна хоча б одного байта в описі вимоги, статусі або доказах повністю спотворює канонічний хеш вузла та корінь дерева (`tree_digest`).
+3. **Миттєва валідація у CLI:** перевірка сертифіката здійснюється єдиним інструментом `znavets verify`:
 
    ```bash
-   cert-verifier --certificate CERT-2026-AVIONICS-0842.proof --pubkey safety-board.pub
-   # [OK] All 412 GSN goals verified. Merkle root valid. Signature confirmed.
+   # Експорт сертифіката аудиту
+   znavets audit compliance --scope automotive --standard ISO26262 --export-proof proof-certificate.json
+
+   # Автономна верифікація сертифіката незалежним аудитором
+   znavets verify proof-certificate.json
+   # [OK] GSN Proof Certificate valid: scope 'automotive', standard 'ISO26262', 12 goals proven, digest matches.
    ```
 
 ---

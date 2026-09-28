@@ -277,6 +277,69 @@ flowchart TD
 
 ---
 
+## Нейро-символьний синтез природномовних пояснень ($Q_3$ Grounded Synthesis)
+
+У сучасних промислових системах інженер рідко читає сирий JSON `Explanation IR` чи граф доказів `Proof DAG`. Йому потрібне стисле, людинозрозуміле природномовне пояснення причин збою, але з **абсолютною гарантією відсутності галюцинацій**.
+
+Традиційний підхід передати запит генеративній LLM є катастрофічним: модель вигадує правдоподібні, але неіснуючі пункти стандартів чи хибні кроки відновлення.
+
+У доказовій архітектурі реалізується протокол **$Q_3$ SynthesizeNaturalExplanation**:
+
+```mermaid
+flowchart LR
+    accTitle: Контур синтезу пояснень Q3
+    accDescr: Трансляція верифікованого дерева пояснень у природну мову через локальну SLM під наглядом Host Evidence Gate.
+
+    Tree["<b>ExplanationTree (Детерміноване)</b><br/>• RootCause: відсутнє привітання<br/>• Violated: очікується HELO<br/>• ValidTransitions: [HELO, EHLO]<br/>• Citations: [RFC 5321 s4.1.1.4]"] --> SLM["<b>Доменна SLM (Proposer)</b><br/>Синтез стислого тексту (2-3 речення)"]
+    SLM --> Gate{"<b>Host Evidence Gate</b><br/>Перевірка сутностей і фактів"}
+    
+    Gate -->|"Усі твердження підтверджено"| NL["<b>Природномовне пояснення</b><br/>Професійний звіт оператору"]
+    Gate -->|"Виявлено сторонній текст / помилка"| Fallback["<b>Детермінований шаблон</b><br/>formatDeterministicExplanation(Tree)"]
+
+    classDef dt fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef ai fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef gate fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef out fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    class Tree dt;
+    class SLM ai;
+    class Gate gate;
+    class NL,Fallback out;
+```
+
+### Принцип роботи $Q_3$ у CLI
+
+Кориспондент або оператор ініціює діагностику через інтерфейс командного рядка з прапорцем `--natural`:
+
+```bash
+znavets explain --protocol SMTP --state IDLE --command DATA --natural
+```
+
+Виконавчий контур формує структуру `ExplanationTree`:
+
+```json
+{
+  "protocol": "SMTP",
+  "current_state": "IDLE",
+  "attempted_command": "DATA",
+  "claim": "Command DATA invalid in state IDLE",
+  "root_cause": "Missing greeting and transaction initialization",
+  "violated_prerequisite": "Session must be initialized via HELO/EHLO and MAIL FROM",
+  "valid_transitions": ["HELO", "EHLO", "QUIT"],
+  "remediation_path": ["HELO", "MAIL FROM", "RCPT TO", "DATA"],
+  "evidence_grounded": true
+}
+```
+
+Локальна доменна модель (`znavets-rfc:7b`) отримує суворий промпт із вимогою озвучити **виключно зазначені вузли**. Вивід моделі перевіряється шлюзом `Host Evidence Gate`:
+- якщо SLM зберегла фактологічну точність, користувач отримує живий лаконічний текст;
+- якщо модель додала хоча б одну недоведену команду або втратила зв'язок із протоколом, спрацьовує детермінований fallback:
+  *«Протокол SMTP: Помилка послідовності. Команда DATA не дозволена у стані IDLE. Першопричина: відсутність ініціалізації сесії. Дозволені команди: HELO, EHLO, QUIT. Шлях відновлення: HELO -> MAIL FROM -> RCPT TO -> DATA.»*
+
+Тим самим природна мова слугує ергономічним фасадом, але математичний фундамент залишається 100% формалізованим.
+
+---
+
 ## Резюме глави
 
 Рушій пояснень перетворює символьну експертну систему на прозорий інструмент прийняття рішень. Він оперує структурованим представленням Explanation IR, що базується на імутабельних зрізах вхідних фактів та графах виведення (Proof DAG).
