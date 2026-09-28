@@ -44,9 +44,9 @@ flowchart TD
         HQ <==>|"Захищений супутниковий та КХ зв'язок"| Sea
         HQ <==>|"Захищені оптичні та квантово-стійкі канали"| CyberEW
 
-        Land <.-.->|"Горизонтальний деконфліктинг (Peer-to-Peer)"| AirDefense
-        Air <.-.->|"Коридори прольоту (ACO)"| AirDefense
-        CyberEW <.-.->|"Частотний деконфліктинг (EMCON)"| Land
+        Land <-.->|"Горизонтальний деконфліктинг (Peer-to-Peer)"| AirDefense
+        Air <-.->|"Коридори прольоту (ACO)"| AirDefense
+        CyberEW <-.->|"Частотний деконфліктинг (EMCON)"| Land
     end
 ```
 
