@@ -1,11 +1,11 @@
-# Ройовий інтелект і координація гетерогенних безпілотних комплексів (UAS/UGV/USV): від локальних правил зграї до доказового C2
+# Розділ 6. Ройовий інтелект і координація гетерогенних роботокомплексів
 
-> [!NOTE]
-> Цей матеріал є Розділом 6 (Частина II: Внутрішня кібернетика озброєння та автономних платформ) фундаментальної монографії [«Військова Кібернетика початку XXI століття»](README.md).
->
-> **Автор:** [Микола Федчик (Mykola Fedchyk)](../ExpertSystem/book/about-the-author.md)
->
-> Праця узгоджена з монографією [«Експертні системи: інженерія знань, нейросимволічні архітектури та доказовий ШІ»](../ExpertSystem/book/README.md).
+> **Монографія:** [Військова Кібернетика початку XXI століття](README.md) · [Частина II: Внутрішня кібернетика озброєння та автономних платформ](README.md#частина-ii-внутрішня-кібернетика-озброєння-та-автономних-платформ)  
+> **Попередній розділ:** [← Розділ 5. Автономна навігація БАС без GNSS: VIO, DSMAC та арбітраж цілісності](Autonomous-Navigation-GNSS-Denied-MilTech-UA.md)  
+> **Наступний розділ:** [Розділ 7. Військова кібернетика тактичного рівня: людино-машинна синергія відділення, взводу та роти →](Military-Cybernetics-Tactical-Level-UA.md)  
+> **Зміст монографії:** [README.md](README.md)  
+> **Автор:** [Микола Федчик (Mykola Fedchyk)](../ExpertSystem/book/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
+> **Пов'язана монографія:** [«Експертні системи: інженерія знань, нейросимволічні архітектури та доказовий ШІ»](../ExpertSystem/book/README.md)
 
 ---
 
@@ -217,3 +217,7 @@ assign_task(WinnerPlatform, TaskId) :-
 - [Reynolds, C. W. (1987). Flocks, herds and schools: A distributed behavioral model](https://dl.acm.org/doi/10.1145/37401.37406)
 - [Eclipse Cyclone DDS: Ultra-reliable OMG DDS Implementation](https://cyclonedds.io/)
 - [Війська зв'язку та кібербезпеки Збройних Сил України](https://mod.gov.ua/pro-nas/vijska-zv-yazku-ta-kiberbezpeki)
+
+---
+
+[← Розділ 5. Автономна навігація БАС без GNSS: VIO, DSMAC та арбітраж цілісності](Autonomous-Navigation-GNSS-Denied-MilTech-UA.md) | [Зміст монографії](README.md) | [Розділ 7. Військова кібернетика тактичного рівня: людино-машинна синергія відділення, взводу та роти →](Military-Cybernetics-Tactical-Level-UA.md)

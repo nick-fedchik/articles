@@ -1,11 +1,11 @@
-# Апаратний корінь довіри (Hardware Root of Trust) та захист від сенсорного спуфінгу у тактичних кіберфізичних мережах
+# Розділ 12. Апаратний корінь довіри (Hardware Root of Trust) та антиспуфінг у MilTech IoT
 
-> [!NOTE]
-> Цей матеріал є Розділом 12 (Частина IV: Доказовий штучний інтелект та кіберфізична безпека) фундаментальної монографії [«Військова Кібернетика початку XXI століття»](README.md).
->
-> **Автор:** [Микола Федчик (Mykola Fedchyk)](../ExpertSystem/book/about-the-author.md)
->
-> Праця узгоджена з монографією [«Експертні системи: інженерія знань, нейросимволічні архітектури та доказовий ШІ»](../ExpertSystem/book/README.md).
+> **Монографія:** [Військова Кібернетика початку XXI століття](README.md) · [Частина IV: Доказовий штучний інтелект та кіберфізична безпека](README.md#частина-iv-доказовий-штучний-інтелект-та-кіберфізична-безпека)  
+> **Попередній розділ:** [← Розділ 11. Експертні системи для БАС, ППО, РЕР та РЕБ](Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md)  
+> **Наступний розділ:** [До змісту монографії →](README.md)  
+> **Зміст монографії:** [README.md](README.md)  
+> **Автор:** [Микола Федчик (Mykola Fedchyk)](../ExpertSystem/book/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
+> **Пов'язана монографія:** [«Експертні системи: інженерія знань, нейросимволічні архітектури та доказовий ШІ»](../ExpertSystem/book/README.md)
 
 ---
 
@@ -264,3 +264,7 @@ func (v *TelemetryVerifier) VerifyFrame(frame *SignedTelemetryFrame) error {
 - [NIST Post-Quantum Cryptography Standardization](https://csrc.nist.gov/projects/post-quantum-cryptography)
 - [ARM TrustZone Technology for Cortex-M Architecture](https://www.arm.com/technologies/trustzone-for-cortex-m)
 - [Війська зв'язку та кібербезпеки Збройних Сил України](https://mod.gov.ua/pro-nas/vijska-zv-yazku-ta-kiberbezpeki)
+
+---
+
+[← Розділ 11. Експертні системи для БАС, ППО, РЕР та РЕБ](Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md) | [Зміст монографії](README.md) | [До змісту монографії →](README.md)

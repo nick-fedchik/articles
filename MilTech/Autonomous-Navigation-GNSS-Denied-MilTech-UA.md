@@ -1,11 +1,11 @@
-# Автономна навігація БАС без GNSS: VIO, DSMAC та експертний арбітраж цілісності (VAIM) в умовах тотального РЕБ
+# Розділ 5. Автономна навігація БАС без GNSS: VIO, DSMAC та арбітраж цілісності
 
-> [!NOTE]
-> Цей матеріал є Розділом 5 (Частина II: Внутрішня кібернетика озброєння та автономних платформ) фундаментальної монографії [«Військова Кібернетика початку XXI століття»](README.md).
->
-> **Автор:** [Микола Федчик (Mykola Fedchyk)](../ExpertSystem/book/about-the-author.md)
->
-> Праця узгоджена з монографією [«Експертні системи: інженерія знань, нейросимволічні архітектури та доказовий ШІ»](../ExpertSystem/book/README.md).
+> **Монографія:** [Військова Кібернетика початку XXI століття](README.md) · [Частина II: Внутрішня кібернетика озброєння та автономних платформ](README.md#частина-ii-внутрішня-кібернетика-озброєння-та-автономних-платформ)  
+> **Попередній розділ:** [← Розділ 4. Військова кібернетика і АСУ озброєнням: внутрішні автоматизовані системи керованої зброї](Military-Cybernetics-Weapons-Control-Systems-UA.md)  
+> **Наступний розділ:** [Розділ 6. Ройовий інтелект і координація гетерогенних роботокомплексів →](Swarm-Intelligence-And-Heterogeneous-Robotics-UA.md)  
+> **Зміст монографії:** [README.md](README.md)  
+> **Автор:** [Микола Федчик (Mykola Fedchyk)](../ExpertSystem/book/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
+> **Пов'язана монографія:** [«Експертні системи: інженерія знань, нейросимволічні архітектури та доказовий ШІ»](../ExpertSystem/book/README.md)
 
 ---
 
@@ -250,3 +250,7 @@ flowchart TB
 - [LightGlue: Local Feature Matching at Light Speed (ETH Zurich)](https://github.com/cvg/lightglue)
 - [Zephyr Project RTOS for Safety-Critical Embedded Systems](https://www.zephyrproject.org/)
 - [Військовий інститут телекомунікацій та інформатизації імені Героїв Крут](https://uk.wikipedia.org/wiki/%D0%92%D1%96%D0%B9%D1%81%D1%8C%D0%BA%D0%BE%D0%B2%D0%B8%D0%B9_%D1%96%D0%BD%D1%81%D1%82%D0%B8%D1%82%D1%83%D1%82_%D1%82%D0%B5%D0%BB%D0%B5%D0%BA%D0%BE%D0%BC%D1%83%D0%BD%D1%96%D0%BA%D0%B0%D1%86%D1%96%D0%B9_%D1%82%D0%B0_%D1%96%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%97_%D1%96%D0%BC%D0%B5%D0%BD%D1%96_%D0%93%D0%B5%D1%80%D0%BE%D1%97%D0%B2_%D0%9A%D1%80%D1%83%D1%82)
+
+---
+
+[← Розділ 4. Військова кібернетика і АСУ озброєнням: внутрішні автоматизовані системи керованої зброї](Military-Cybernetics-Weapons-Control-Systems-UA.md) | [Зміст монографії](README.md) | [Розділ 6. Ройовий інтелект і координація гетерогенних роботокомплексів →](Swarm-Intelligence-And-Heterogeneous-Robotics-UA.md)
