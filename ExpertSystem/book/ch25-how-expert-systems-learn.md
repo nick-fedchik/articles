@@ -1139,6 +1139,50 @@ Adapter не можна атомарно просунути окремо від 
 версії. Команда, яка ще не має потреби в доналаштуванні, може почати з цього
 самого керованого циклу для фактів, правил, трасування та пошуку.
 
+### Гібридний AgentOps CI/CD: ізольовані обчислювальні раннери (Buildkite Pattern)
+
+У промислових, оборонних та медичних експертних системах автоматизація регресійного тестування стикається з жорстким безпековим протиріччям: корпоративні знання, телеметрія та еталонні набори є конфіденційними, тоді як інструменти CI/CD потребують зручної хмарної оркестрації.
+
+Як зазначає дослідник автономних агентних систем Юрій Котович (*Kotovich AI*), провідні лабораторії ШІ (зокрема OpenAI, Anthropic та Nvidia) розв'язують це протиріччя за допомогою **гібридної архітектури AgentOps CI/CD (патерн Buildkite)**:
+
+```mermaid
+flowchart LR
+    accTitle: Гібридна архітектура AgentOps CI/CD з ізольованими раннерами
+    accDescr: Розділення хмарної площини управління та приватних GPU-раннерів у захищеному корпоративному контурі.
+
+    subgraph Cloud["Хмарна площина управління (Control Plane)"]
+        CP["Buildkite / CI Orchestrator<br/>Пайплайни, розклад, логи статусів"]
+    end
+
+    subgraph Secure["Захищений корпоративний / Edge-контур (VPC / On-Prem)"]
+        AR["Private Agent Runners<br/>(Daemon на локальних GPU)"]
+        KB[("Корпоративна база знань<br/>та золоті датасети")]
+        SIM["Апаратні емулятори /<br/>Моделі виведення (Z3, SLM)"]
+        REP["Генератор регресійних<br/>звітів та ECE-калібрування"]
+
+        AR --> KB
+        AR --> SIM
+        SIM --> REP
+    end
+
+    CP <== "HTTPS Polling (тільки метадані завдань)" ==> AR
+    REP -->|Знеособлений статус гейту| CP
+
+    classDef cloud fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef sec fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef comp fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
+
+    class CP cloud;
+    class AR,REP sec;
+    class KB,SIM comp;
+```
+
+Ключові принципи гібридного AgentOps-конвеєра:
+
+1. **Розділення Control Plane та Data Plane:** Хмарний оркестратор керує чергою задач, тригерами та візуалізацією, але **жоден байт** конфіденційних знань, коду чи тестових відповідей не залишає внутрішнього контуру підприємства.
+2. **Приватні агентні раннери (Private Runners):** Працюють як локальні демони на захищених GPU-серверах або апаратних стендах, підтягуючи завдання через одностороннє опитування (*outbound polling*).
+3. **Автоматизований іспит агентних ланцюгів:** Під час кожного комміту чи оновлення онтології раннери піднімають локальний екземпляр ЕС $\mathcal{S}_{v+1}^{\text{cand}}$, проганяють тисячі багатокрокових сценаріїв виведення, перевіряють інваріанти формальних предикатів і повертають у пайплайн лише числовий вердикт проходження регресійних гейтів.
+
 ## Перший керований цикл для команди
 
 Навіть якщо команда ще не готова доналаштовувати мовну модель, вона вже може
@@ -1272,6 +1316,7 @@ DFAR стають у ній версійованими фактами та зв'
 - ISO. [ISO 26262-6:2018, Road vehicles, Functional safety, Part 6: Product development at the software level](https://www.iso.org/standard/68388.html), 2018. Вимоги до розробки на програмному рівні у контексті функційної безпеки.
 - ISO. [ISO 26262-9:2018, Road vehicles, Functional safety, Part 9: Automotive safety integrity level (ASIL)-oriented and safety-oriented analyses](https://www.iso.org/standard/68391.html), 2018. Вимоги до ASIL-oriented і safety-oriented analyses, зокрема аналізу залежних відмов та аналізів безпеки.
 - ISO, SAE International. [ISO/SAE 21434:2021, Road vehicles, Cybersecurity engineering](https://www.iso.org/standard/70918.html), 2021. Вимоги до керування ризиками кібербезпеки протягом життєвого циклу автомобільних електричних та електронних систем.
+- Yurii Kotovich. [AgentOps CI/CD: Hybrid Control Plane and Isolated Runners for LLM Multi-Agent Systems](https://github.com/kotovich-ai), Kotovich AI, 2024.
 
 ---
 
