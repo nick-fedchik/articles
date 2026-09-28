@@ -411,6 +411,15 @@ $$\text{KnowledgeBundle} = \{\text{Rules}, \; \text{Models}, \; \text{Schemas}, 
 4. **Кібернетична стійкість:**
    У разі повної відмови центрального нейроінференсу або обриву Ethernet-шини вузол AURIX + FPGA автономно активує процедуру керованої аварійної зупинки (*Graceful Degradation*), зберігаючи підписаний криптографічний зліпок телеметрії у захищеній пам'яті для подальшого аудиту.
 
+### Кейс 3. Високопродуктивний периферійний конвеєр комп'ютерного зору (Raspberry Pi 5 + Hailo-8L на Go)
+
+У системах моніторингу повітряного простору та детекції дронів (як показав Роман Журавель) критично уникнути затримок інтерпретованих мов (Python GIL) на рівні L2:
+
+1. Одноплатний комп'ютер Raspberry Pi 5 підключається до PCIe-прискорювача Hailo-8L (13 TOPS).
+2. Скомпільований Go-бінарник через CGO безпосередньо взаємодіє з бібліотекою `libhailort` та відеодрайвером V4L2.
+3. Кадри обробляються у відокремлених горутинах через кільцеві буфери пам'яті з нульовим динамічним копіюванням (Zero-Copy), забезпечуючи стабільні 30 FPS квантованої YOLOv8n при навантаженні на CPU $< 15\%$.
+4. Семантичні координати виявлених цілей транслюються детермінованими UDP/CAN-повідомленнями у контур L3/L4 для ухвалення рішень.
+
 ---
 
 ## Резюме глави та Частини IV
@@ -425,7 +434,7 @@ $$\text{KnowledgeBundle} = \{\text{Rules}, \; \text{Models}, \; \text{Schemas}, 
 
 ## Питання для самоперевірки та дискусії
 
-1. **Закон Ешбі:** Як інженер знань може математично оцінити, чи має розроблювана експертна система достатню різноманітність для керування конкретним виробничим процесом?
+1. **Закон Ешбі:** Як інженер знань може математично оцінити, чи має розроблювана експертна система достатню різноманітності для керування конкретним виробничим процесом?
 2. **Розподіл за горизонтами:** Чому розміщення мовної моделі (LLM) у контурі аварійного зупину турбіни (горизонт L1) є грубим порушенням вимог функціональної безпеки?
 3. **Обрив зв'язку:** Які механізми запобігають неконтрольованому накопиченню помилок периферійним вузлом у режимі `DegradedLocalOnly`?
 4. **Конфлікти узгодження:** За яким правилом вирішується суперечність, якщо під час автономної роботи Edge заблокував двигун, а центральний сервер за розкладом надіслав команду старту нової технологічної партії?
@@ -440,6 +449,8 @@ $$\text{KnowledgeBundle} = \{\text{Rules}, \; \text{Models}, \; \text{Schemas}, 
 - Roger C. Conant, W. Ross Ashby. [*Every Good Regulator of a System Must Be a Model of that System*](https://doi.org/10.1080/00207727008920220), International Journal of Systems Science, 1970. Теорема про необхідність внутрішньої моделі для ефективного регулятора.
 - Edward A. Lee, Sanjit A. Seshia. [*Introduction to Embedded Systems: A Cyber-Physical Systems Approach*](https://ptolemy.berkeley.edu/books/leeseshia/), MIT Press, 2017. Базовий підручник з кіберфізичних систем.
 - International Electrotechnical Commission. [*IEC 62443: Security for industrial automation and control systems*](https://www.isa.org/standards-and-publications/isa-standards/isa-iec-62443-series). Міжнародний комплекс стандартів промислової кібербезпеки.
+- Roman Zhuravel. [*Real-Time Edge Vision Pipelines on Go and NPU Accelerators for Autonomous Detection Systems*](https://github.com/romanzhuravel), 2024.
+- Anton Meyris. [*Simulation-Driven Engineering and Physics-Based CAE Modeling for Mission-Critical Defense Systems*](https://vectordynamics.com.ua/), Vector Dynamics, 2024.
 - Petro Sidliarchuk. [*Hardware Root of Trust and Evidence-Signed Measurement Layers in Embedded Networks*](http://github.com/sidliarchukpetro), InfraVeritas LLC, 2024.
 - Oleksandr Bondar. [*Non-Functional Physical Coupling and Mismatched Engineering Assumptions in Complex Systems Integration*](https://sequtr.com/), Sequtr, 2024.
 
