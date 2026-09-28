@@ -1,0 +1,439 @@
+# Додаток Б. Практичний посібник: Доказові експертні системи в автономній робототехніці та кіберфізичних комплексах
+
+> **Книга:** [Архітектура доказових експертних систем](README.md) · Додатки  
+> **Попередня частина:** [Додаток А. Практичний фреймворк доказового дослідження](appendix-a-evidence-governed-framework.md)  
+> **Зміст книги:** [README.md](README.md)  
+> **Пов'язані глави книги:** [Глава 18. Інфраструктура виконання](ch18-execution-infrastructure.md) · [Глава 21. Від рекомендації до дії](ch21-from-recommendation-to-action.md) · [Глава 22. Кібернетичний контур Edge-to-Backend](ch22-cybernetics-edge-to-backend.md) · [Глава 29. Нейро-символьна архітектура](ch29-neuro-symbolic-architecture.md)  
+> **Суміжні дослідження автора:** [Військові експертні системи: БПЛА, ППО, РЕР/РЕБ](../MilTech/DOU-Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md) · [Військова кібернетика](../MilTech/DOU-Ukrainian-Military-Cybernetics-UA.md)  
+> **Рівень:** архітектори автономних платформ, embedded-інженери, фахівці з робототехніки (ROS 2 / Zephyr), розробники критичних систем реального часу  
+> **Призначення:** інженерне керівництво з проєктування бортових експертних систем для мобільних роботів, безпілотних апаратів (UAS/UGV) та промислових маніпуляторів, де статистичний штучний інтелект сприйняття відокремлений від контуру прийняття рішень за допомогою детермінованого символьного ядра та апаратного вето (Simplex Architecture).
+
+---
+
+## 1. Проблема: Чому робот — це не «чат-бот на колесах»
+
+В інженерії споживчого штучного інтелекту помилка мовної моделі чи рекомендаційного алгоритму означає невдало згенерований текст, повторний запит або перезавантаження сторінки. У кіберфізичних системах (Cyber-Physical Systems, CPS) та автономній робототехніці ціна помилки принципово інша:
+
+* **Зміна фізичного світу:** програмний агент безпосередньо керує напругою на силових інверторах, тиском у гідравліці, кутами відхилення елеронів чи швидкістю обертання безколекторних моторів.
+* **Необоротність фізичних наслідків:** команда `DropPayload()`, `EmergencyBraking()` або поворот сервопривода на $90^\circ$ на швидкості 60 км/год споживають кінетичну енергію і змінюють матеріальний стан середовища. Їх неможливо «скасувати» через `Ctrl+Z`.
+* **Стохастична прірва надійності:** як показано в [Главі 29](ch29-neuro-symbolic-architecture.md), найкращі нейромережеві моделі сприйняття та генеративні планувальники мають частоту помилок близько $10^{-3} \dots 10^{-4}$ на крок інференсу. У контурі стабілізації робота з частотою 50 Гц це означає гарантовану критичну помилку кожні кілька хвилин автономного руху.
+
+> [!CRITICAL]
+> **Головний принцип кіберфізичної безпеки:**
+> Жодна ймовірнісна нейромережа (чи то згорткова мережа комп'ютерного зору, чи мультимодальна LLM/VLM) не має права володіти прямим доступом до шини керування приводами (Actuation Bus). Між сенсорним інтелектом і виконавчими органами зобов'язаний стояти детермінований **шлюз допуску (Admission Gate)** — експертна система, реалізована на надійному кремнії.
+
+Цей посібник демонструє, як транслювати теоретичні моделі онтологій, стратифікованого Datalog та кібернетичного регулювання у практичну бортову архітектуру робота.
+
+---
+
+## 2. Гетерогенний апаратний стек бортового обчислювача (HW/SW Co-Design)
+
+Мобільний робот, дрон або польова платформа обмежені жорсткими рамками **SWaP-C (Size, Weight, Power, and Cost)**. Спроба розмістити на борту важкі сервери з універсальними GPU призводить до швидкого вичерпання акумулятора, надлишкового нагріву та втрати корисного навантаження.
+
+Згідно з концепцією [Глави 18](ch18-execution-infrastructure.md), обчислювальна архітектура робота розділяється на три взаємодоповнюючі субстрати:
+
+```mermaid
+flowchart TD
+    accTitle: Бортова гетерогенна архітектура обчислювача робота
+    accDescr: Розподіл завдань між нейропроцесором сприйняття, процесором безпеки на базі Zephyr RTOS та апаратною логікою FPGA.
+
+    subgraph Perception["<b>1. Контур сприйняття (Perception Plane — Best Effort)</b>"]
+        CAM["Камери / Стереозір"] --> NPU["<b>Edge NPU / SoC (Jetson Orin / RK3588)</b><br/>• Детекція перешкод (YOLOv10)<br/>• Візуальна одометрія (VIO / SLAM)<br/>• Семантичні предикати середовища"]
+        LIDAR["Лідар / Радар"] --> NPU
+    end
+
+    subgraph Reasoning["<b>2. Контур доказового мислення (Control & Reasoning Plane — ASIL-D / SIL 3)</b>"]
+        LKB["<b>Бортова база знань (Local KB)</b><br/>Стан платформи, просторові зони,<br/>енергетичний бюджет"] <--> MCU["<b>Safety MCU (Infineon AURIX TC499 / STM32H7)</b><br/>• <b>Zephyr RTOS</b> (жорсткий реальний час)<br/>• <b>Datalog-рушій</b> (інваріанти, правила коридорів)<br/>• Валідація Typed Action Contracts"]
+    end
+
+    subgraph Arbiter["<b>3. Контур апаратного вето (Hardware Safety Gate)</b>"]
+        FPGA["<b>FPGA Co-Processor / CPLD</b><br/>• Апаратні сторожові автомати (Watchdog)<br/>• Миттєве блокування ШІМ-сигналів (< 1 мкс)<br/>• TCAM-зіставлення аварійних масок"]
+    end
+
+    subgraph Physical["<b>4. Виконавчі органи (Actuators)</b>"]
+        MOT["Тягові двигуни / ЕСП"]
+        STEER["Сервоприводи керма / елеронів"]
+        PAYLOAD["Корисне навантаження"]
+    end
+
+    NPU -->|"Семантичні факти та пропозиції дій (micro-ROS / SPI)"| MCU
+    MCU -->|"Авторизовані імпульси керування"| FPGA
+    FPGA -->|"Детерміновані ШІМ / CAN FD сигнали"| MOT
+    FPGA -->|"Детерміновані ШІМ / CAN FD сигнали"| STEER
+    FPGA --> PAYLOAD
+
+    classDef perc fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef safe fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef gate fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef act fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+
+    class CAM,LIDAR,NPU perc;
+    class LKB,MCU safe;
+    class FPGA gate;
+    class MOT,STEER,PAYLOAD act;
+```
+
+### Специфікація апаратних ролей
+
+1. **Edge NPU (Neural Processing Unit):**
+   * *Обладнання:* NVIDIA Jetson Orin Nano/NX, Rockchip RK3588 або інтегровані NPU.
+   * *Операційне середовище:* Embedded Linux (Ubuntu Core, Yocto) з ROS 2 (Humble/Jazzy).
+   * *Завдання:* обробка сирих сенсорних потоків високої пропускної здатності ($> 1\text{ ГБ/с}$), швидке розпізнавання перешкод, побудова хмари точок.
+   * *Статус надійності:* **Unsafe / Complex Controller**. Може перезавантажуватися або давати збої без зупинки базової стабілізації платформи.
+2. **Safety MCU (Microcontroller Unit):**
+   * *Обладнання:* багатоядерний мікроконтролер із апаратним резервуванням (Infineon AURIX TC3xx/TC4xx з ядрами TriCore у режимі Lockstep, або STM32H7 dual-core).
+   * *Операційне середовище:* **Zephyr RTOS** — забезпечує детерміноване планування потоків із витісненням, низьку латентність переривань та нульове динамічне виділення пам'яті.
+   * *Завдання:* підтримка локальної бази фактів, виконання скомпільованих правил експертної системи, перевірка передумов і постумов.
+   * *Статус надійності:* **Deterministic / ASIL-D / SIL 3**.
+3. **FPGA / CPLD Gate (Апаратний арбітр):**
+   * *Обладнання:* низькоспоживаюча ПЛІС (Lattice iCE40, Microchip PolarFire або Xilinx Artix-7).
+   * *Завдання:* апаратний моніторинг шин живлення, контроль лімітів струму, апаратне блокування драйверів моторів у разі перевищення критичних кутів крену або виходу за межі геозони (*Geofencing*).
+   * *Час реакції:* менше 1 мікросекунди.
+
+---
+
+## 3. Програмна архітектура: Simplex-контур безпеки
+
+Для гарантування надійності використовується перевірена в авіації та критичній автоматиці **архітектура Сімплекс (Simplex Architecture)**. Вона складається з трьох ключових блоків:
+
+1. **Advanced Controller (Складний оптимізаційний планувальник):** працює на NPU у середовищі ROS 2 (Nav2). Він використовує нейромережі та складні алгоритми траєкторного планування для пошуку найбільш енергоефективного шляху.
+2. **Safety / Baseline Controller (Простий детермінований контролер):** реалізований на Safety MCU. Він містить примітивну, але математично доведену логіку безаварійного сповільнення, зависання на місці або аварійної посадки.
+3. **Decision / Safety Arbiter (Експертний арбітр допуску):** символьний рушій, що в реальному часі зіставляє запропоновану складним контролером команду з поточною моделлю стану робота:
+
+```mermaid
+flowchart LR
+    accTitle: Схема Simplex-архітектури для автономного робота
+    accDescr: Перемикання між Advanced Controller та Baseline Controller через Safety Arbiter на базі правил експертної системи.
+
+    SENS["Сенсорний стан<br/>(Одометрія, IMU, Батарея)"] --> ADV["<b>Advanced Controller (NPU)</b><br/>Планувальник траєкторій (ROS 2 Nav2)"]
+    SENS --> BASE["<b>Baseline Controller (MCU)</b><br/>Детермінована аварійна зупинка"]
+    SENS --> ARB{"<b>Safety Arbiter (Експертна система)</b><br/>Чи порушує дія інваріанти безпеки?"}
+
+    ADV -->|"Кандидатна траєкторія U_adv"| ARB
+
+    ARB -->|"ТАК (Інваріант порушено / Збій)"| SW["<b>Апаратний перемикач (Switch)</b>"]
+    ARB -->|"НІ (Траєкторія валідна)"| SW
+
+    BASE -.->|"Аварійна команда U_safe"| SW
+    ADV -.->|"Штатна команда U_adv"| SW
+
+    SW --> ACT["Приводи та мотори"]
+
+    classDef sens fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef adv fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef safe fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef arb fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef act fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
+
+    class SENS sens;
+    class ADV adv;
+    class BASE safe;
+    class ARB,SW arb;
+    class ACT act;
+```
+
+### Формалізація інваріанта безпеки
+
+Нехай $X(t)$ — фазовий вектор стану робота (координати, лінійна швидкість $v$, кутова швидкість $\omega$, дистанція до найближчої перешкоди $d_{obs}$). Запропоноване керування $U_{adv} = (a, \alpha)$ схвалюється тоді й лише тоді, коли прогнозований гальмівний шлях $S_{stop}(v, a_{max})$ задовольняє умову:
+
+$$d_{obs} - S_{stop}(v, a_{max}) \ge D_{margin} + v \cdot \tau_{reaction}$$
+
+де:
+
+* $D_{margin}$ — гарантований захисний бар'єр (наприклад, 0.5 м);
+* $\tau_{reaction}$ — максимальний час затримки реакції апаратного контуру (для Zephyr RTOS на AURIX — $< 2\text{ мс}$).
+
+Якщо $U_{adv}$ порушує цю нерівність або якщо NPU не надав наступну команду за визначений таймаут watchdog ($50\text{ мс}$), арбітр миттєво знеструмлює лінію $U_{adv}$ і передає керування на $U_{safe}$ (гальмування з прискоренням $-a_{max}$).
+
+---
+
+## 4. База знань на борту: скомпільований Datalog без динамічної пам'яті
+
+На вбудованих контролерах мікросекундного класу пам'ять RAM обмежена сотнями кілобайт (наприклад, 512 КБ у STM32H7 або кілька мегабайт локальної SRAM у AURIX TC499). Використання стандартних інтерпретаторів Prolog або рушіїв RETE з динамічним виділенням об'єктів (`malloc` / `new`) **категорично заборонено** стандартами функціональної безпеки через ризик фрагментації пам'яті та недетермінованих пауз.
+
+### Концепція скомпільованих правил (Knowledge-to-C)
+
+Відповідно до архітектури [Глави 18](ch18-execution-infrastructure.md), правила бази знань транслюються під час збірки (*Compile-Time*) у компактні C-структури, маски бітових прапорів та статичні таблиці переходів.
+
+Розглянемо фрагмент системи оцінки польотного завдання для БПЛА на мові Datalog:
+
+```prolog
+% Бортові правила безпеки польоту
+hazard(critical_battery) :- 
+    telemetry(battery_voltage, V), V < 21.0.
+
+hazard(geofence_breach) :- 
+    position(Alt, Dist), Dist > 5000.
+
+hazard(sensor_blindness) :- 
+    sensor_health(lidar, failed), 
+    sensor_health(optical_flow, degraded).
+
+% Рішення про перехід у Failsafe
+action(emergency_landing) :- 
+    hazard(critical_battery).
+
+action(return_to_home) :- 
+    hazard(geofence_breach), 
+    not hazard(critical_battery).
+
+action(hold_position) :- 
+    hazard(sensor_blindness), 
+    not hazard(critical_battery).
+```
+
+### Генерація коду для Zephyr RTOS
+
+Під час компіляції генератор знань перетворює ці правила на високооптимізований код мовою C без жодного динамічного виділення:
+
+```c
+/* Generated by KnowledgeCompiler for Zephyr RTOS */
+#include <zephyr/kernel.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+typedef struct {
+    float battery_voltage;
+    float distance_from_home;
+    float altitude;
+    uint8_t lidar_status;       /* 0=OK, 1=Degraded, 2=Failed */
+    uint8_t opt_flow_status;
+} RobotTelemetry_t;
+
+typedef enum {
+    ACTION_CONTINUE = 0,
+    ACTION_HOLD_POSITION,
+    ACTION_RETURN_TO_HOME,
+    ACTION_EMERGENCY_LANDING
+} SafetyVerdict_t;
+
+SafetyVerdict_t evaluate_safety_rules(const RobotTelemetry_t *const telem) {
+    /* 1. Атомарна перевірка інваріантів у регістрах */
+    const bool critical_battery = (telem->battery_voltage < 21.0f);
+    if (critical_battery) {
+        return ACTION_EMERGENCY_LANDING; /* Найвищий пріоритет */
+    }
+
+    const bool geofence_breach = (telem->distance_from_home > 5000.0f);
+    if (geofence_breach) {
+        return ACTION_RETURN_TO_HOME;
+    }
+
+    const bool sensor_blind = (telem->lidar_status == 2) && 
+                              (telem->opt_flow_status >= 1);
+    if (sensor_blind) {
+        return ACTION_HOLD_POSITION;
+    }
+
+    return ACTION_CONTINUE;
+}
+```
+
+Ця функція виконується за **12–15 тактів процесора** (менше $0.05\text{ мкс}$ на частоті 300 МГц), має суворо константний час виконання $\mathcal{O}(1)$ і нульовий стек, що усуває будь-яку загрозу переповнення пам'яті.
+
+---
+
+## 5. Типізовані контракти дій (Typed Action Contracts) та транзакції фізичного світу
+
+У [Главі 21](ch21-from-recommendation-to-action.md) детально розібрано проблему: *виконання команди у фізичному світі вимагає зворотного зв'язку*. Робот не може просто «відправити байти в шину CAN» і вважати задачу виконаною.
+
+Будь-яка складна дія оформлюється у вигляді контракту, що реалізує шаблон **Saga**:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant High as NPU / ROS 2 Action Client
+    participant Expert as Safety Arbiter (MCU Zephyr)
+    participant Act as Motor Actuator (CAN Node)
+    participant Sens as Independent Sensor (Encoder/IMU)
+
+    High->>Expert: RequestAction(RotateTurret, Angle=45, MaxTorque=12Nm)
+    
+    Note over Expert: 1. Check Preconditions:<br/>- Battery > 15%<br/>- No Obstacle in Sweep Zone<br/>- Interlock Switch Closed
+    
+    alt Preconditions Failed
+        Expert-->>High: Reject(PreconditionFailed: InterlockOpen)
+    else Preconditions OK
+        Expert->>Act: ExecuteCommand(SetAngle=45, CurrentLimit=12A)
+        Expert->>Expert: Start Watchdog Timer (2000 ms)
+        
+        loop Verification Loop (Every 20 ms)
+            Sens-->>Expert: Feedback(CurrentAngle, AngularVelocity)
+            Note over Expert: Check Dynamic Invariant:<br/>Velocity <= MaxAllowed
+        end
+        
+        Sens-->>Expert: FinalState(CurrentAngle=45.1, Stalled=false)
+        Note over Expert: 2. Check Postconditions:<br/>|CurrentAngle - Target| <= 0.5 deg
+        
+        Expert-->>High: ActionCompleted(Receipt: SHA256_Hash)
+    end
+```
+
+### Структура контракту дії на C (Zephyr RTOS)
+
+```c
+struct ActionContract {
+    uint32_t action_id;
+    uint32_t timeout_ms;
+    
+    /* Preconditions: повертає true, якщо залізо готове */
+    bool (*check_preconditions)(void);
+    
+    /* Dispatch: безпосередній запис у регістри/CAN */
+    int (*execute_command)(void *params);
+    
+    /* Postconditions: незалежне підтвердження датчиками */
+    bool (*verify_postconditions)(void *params);
+    
+    /* Compensation / Safe Rollback: аварійна дія при зриві */
+    void (*compensate_failure)(void);
+};
+```
+
+Якщо під час повороту привода датчик струму фіксує перевантаження ($I > 15\text{ А}$), а енкодер не реєструє зміну кута (механічне заклинювання редуктора), контракт зривається: спрацьовує процедура `compensate_failure()`, яка миттєво знімає напругу з обмоток двигуна, фіксує механічне гальмо та повертає статус аномалії на верхній рівень.
+
+---
+
+## 6. Автономність при втраті зв'язку та радіоелектронній боротьбі (РЕБ)
+
+У реальних сценаріях польової робототехніки та військових застосуваннях ([Військові експертні системи](../MilTech/DOU-Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md)) зв'язок із пунктом керування зазнає навмисного придушення, спотворення або повної втрати.
+
+Бортова система реалізує **4-стадійний кібернетичний автомат деградації** згідно з [Главою 22](ch22-cybernetics-edge-to-backend.md):
+
+```mermaid
+stateDiagram-v2
+    accTitle: Автомат режимів автономності робота при втраті зв'язку
+    accDescr: Переходи між ConnectedNormal, DegradedLocalOnly, AutonomousSafeHold та Reconciliation.
+
+    [*] --> ConnectedNormal: Радіолінк стабільний
+
+    ConnectedNormal --> DegradedLocalOnly: Втрата телеметрії (Timeout > 500 ms)
+    note right of DegradedLocalOnly
+        • Заборонено наступальні маневри (A3 -> A2)
+        • Активація інерційної одометрії
+        • Ліміт швидкості: 50%
+    end note
+
+    DegradedLocalOnly --> AutonomousSafeHold: Закінчився TTL локальної автономності
+    note right of AutonomousSafeHold
+        • Зупинка платформи / зависання
+        • Очікування радіомаяка
+        • Захисний периметр 360°
+    end note
+
+    DegradedLocalOnly --> ConnectedNormal: Відновлення сигналу (Handshake OK)
+
+    AutonomousSafeHold --> Reconciliation: Виявлено авторизований сигнал бази
+    Reconciliation --> ConnectedNormal: Успішна верифікація бортового журналу
+```
+
+### Правила поведінки за відсутності GPS/GNSS
+
+При попаданні в зону спуфінгу супутникової навігації експертна система на MCU виконує детекцію аномалій:
+
+1. **Інваріант консистентності одометрії:**
+   $$|\mathbf{v}_{GNSS} - \mathbf{v}_{Wheel/IMU}| > \Delta V_{threshold}$$
+   Якщо супутниковий приймач повідомляє про швидкість 80 км/год, тоді як інтегровані показання колісних енкодерів та акселерометра вказують на 10 км/год, супутниковий канал позначається як скомпрометований (`Status = SPOOFED`).
+2. **Апаратна реакція:** джерело координат GNSS виключається з фільтра Калмана; система переходить у режим чистої інерційно-оптичної навігації зі збереженням останньої доведеної точки бази в енергонезалежній пам'яті FRAM.
+
+---
+
+## 7. Покрокове керівництво з розгортання прототипу (Quickstart)
+
+Для створення мінімального стенду бортової експертної системи робота рекомендується наступний інженерний конвеєр:
+
+### Крок 1. Конфігурація середовища розробки
+
+Встановіть оточення для крос-компіляції під STM32 / AURIX та ROS 2:
+
+```bash
+# Встановлення Zephyr SDK та west tool
+python3 -m venv ~/zephyrproject/.venv
+source ~/zephyrproject/.venv/bin/activate
+pip install west
+west init ~/zephyrproject
+cd ~/zephyrproject && west update
+west zephyr-export
+pip install -r ~/zephyrproject/zephyr/scripts/requirements.txt
+```
+
+### Крок 2. Формування правил безпеки (Datalog Rules)
+
+Створіть файл правил `safety_rules.dl` у директорії проєкту:
+
+```prolog
+% Вхідні предикати: distance(SensorID, Centimeters)
+unsafe_zone(SensorID) :- distance(SensorID, D), D < 30.
+emergency_stop :- unsafe_zone(_).
+```
+
+### Крок 3. Складання мікро-сервісу на Zephyr RTOS
+
+Створіть потік нагляду (*Supervisor Thread*) із фіксованим періодом $10\text{ мс}$:
+
+```c
+#include <zephyr/kernel.h>
+#include <zephyr/drivers/gpio.h>
+
+#define SUPERVISOR_PERIOD_MS 10
+#define MOTOR_ENABLE_PIN     4
+
+static const struct gpio_dt_spec motor_en = GPIO_DT_SPEC_GET(DT_NODELABEL(motor_switch), gpios);
+
+void safety_supervisor_thread(void *arg1, void *arg2, void *arg3) {
+    gpio_pin_configure_dt(&motor_en, GPIO_OUTPUT_ACTIVE);
+
+    while (1) {
+        /* Зчитування дистанції з апаратного АЦП/SPI */
+        uint16_t front_distance = read_sonar_distance();
+
+        /* Перевірка інваріанта безпеки */
+        if (front_distance < 30) {
+            /* Миттєве апаратне вимкнення живлення приводів */
+            gpio_pin_set_dt(&motor_en, 0);
+            printk("SAFETY INTERLOCK: Obstacle at %d cm! Motors DISABLED.\n", front_distance);
+        } else {
+            gpio_pin_set_dt(&motor_en, 1);
+        }
+
+        k_msleep(SUPERVISOR_PERIOD_MS);
+    }
+}
+
+K_THREAD_DEFINE(safety_thread_id, 1024, safety_supervisor_thread, NULL, NULL, NULL, 1, 0, 0);
+```
+
+### Крок 4. HIL-симуляція перед фізичним виїздом
+
+Перед завантаженням у фізичний контролер проведіть моделювання в контурі **Hardware-in-the-Loop (HIL)**:
+
+1. Запустіть симулятор середовища (Gazebo Sim або Isaac Sim) на робочій станції.
+2. Підключіть плату контролера через USB-CAN адаптер до віртуальної шини `vcan0`.
+3. Переконайтеся, що при штучному внесенні шуму в топік `/cmd_vel` плата контролера стабільно перехоплює керування за визначений норматив часу ($< 5\text{ мс}$).
+
+---
+
+## 8. Чекліст перевірки автономного робота перед виходом на полігон
+
+Перед польовими випробуваннями кіберфізичної платформи заповніть чекліст аудиту безпеки:
+
+| № | Перевірка безпеки | Механізм контролю | Статус |
+| :-: | :--- | :--- | :-: |
+| 1 | **Фізична ізоляція приводів** | Апаратний перемикач (Kill-Switch) розриває силове коло акумулятора незалежно від прошивки MCU | [ ] |
+| 2 | **Апаратний сторожовий пес** | Активовано незалежний апаратний Watchdog Timer (WDT) на MCU з таймаутом $\le 100\text{ мс}$ | [ ] |
+| 3 | **Нульові динамічні алокації** | У коді безпекового наглядача відсутні виклики `malloc()`, `free()`, динамічні списки та рекурсія | [ ] |
+| 4 | **Коридори швидкостей** | Максимальні кутові швидкості обмежені апаратним насиченням (Saturation) на рівні драйвера двигуна | [ ] |
+| 5 | **Перевірка зворотного зв'язку** | Кожна команда переміщення має тайм-аут постумови, що опитує незалежний енкодер або датчик струму | [ ] |
+| 6 | **Захист від засліплення** | Вихід з ладу камер або лідара призводить до переходу в режим `AutonomousSafeHold` | [ ] |
+| 7 | **Шлюз розмежування NPU-MCU** | Обмін між високорівневим Linux-планувальником та безпековим MCU ведеться через суворо типізовані пакети CRC32 | [ ] |
+| 8 | **Захист від спуфінгу GNSS** | Алгоритм крос-валідації відсікає супутникові стрибки координат, що суперечать показанням IMU | [ ] |
+| 9 | **Підписана конфігурація** | Бандл правил та уставка геозон підписані цифровим підписом розробника ([Глава 22](ch22-cybernetics-edge-to-backend.md)) | [ ] |
+| 10 | **Імутабельний чорний ящик** | Останні 10 хвилин телеметрії, станів скінченного автомата та дій бекапляться в енергонезалежну FRAM-пам'ять | [ ] |
+
+---
+
+## 9. Резюме
+
+Поєднання сучасного нейромережевого сприйняття (Perception AI) та доказових експертних систем на базі формальної логіки (Reasoning Engine) відкриває шлях до створення дійсно надійних автономних роботів нового покоління.
+
+Розподіл системи на **ймовірнісного радника** на базі NPU та **детермінованого арбітра** на базі Lockstep MCU під керуванням Zephyr RTOS дозволяє використовувати всі переваги глибокого навчання, не поступаючись жодним відсотком функціональної безпеки та надійності у фізичному світі.

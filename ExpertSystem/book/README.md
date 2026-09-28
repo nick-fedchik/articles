@@ -168,6 +168,7 @@ flowchart TD
 ### Додатки
 
 * [Додаток А. Практичний фреймворк доказового дослідження в складних інженерних проєктах](appendix-a-evidence-governed-framework.md)
+* [Додаток Б. Практичний посібник: Доказові експертні системи в автономній робототехніці та кіберфізичних комплексах](appendix-b-robotics-and-cyber-physical-systems.md)
 * [Про автора: Микола Федчик (Nick Fedchik)](about-the-author.md)
 
 ---
