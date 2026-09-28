@@ -169,6 +169,7 @@ flowchart TD
 
 * [Додаток А. Практичний фреймворк доказового дослідження в складних інженерних проєктах](appendix-a-evidence-governed-framework.md)
 * [Додаток Б. Практичний посібник: Доказові експертні системи в автономній робототехніці та кіберфізичних комплексах](appendix-b-robotics-and-cyber-physical-systems.md)
+* [Додаток В. Автономна навігація без GNSS: геопросторове зіставлення (TRN/DSMAC), візуальна одометрія (VIO) та експертний арбітраж сенсорного злиття](appendix-c-autonomous-navigation-and-geosearch.md)
 * [Про автора: Микола Федчик (Nick Fedchik)](about-the-author.md)
 
 ---

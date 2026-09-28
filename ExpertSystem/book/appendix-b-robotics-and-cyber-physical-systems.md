@@ -2,6 +2,7 @@
 
 > **Книга:** [Архітектура доказових експертних систем](README.md) · Додатки  
 > **Попередня частина:** [Додаток А. Практичний фреймворк доказового дослідження](appendix-a-evidence-governed-framework.md)  
+> **Наступна частина:** [Додаток В. Автономна навігація без GNSS: геопросторове зіставлення (TRN/DSMAC), візуальна одометрія (VIO) та експертний арбітраж сенсорного злиття](appendix-c-autonomous-navigation-and-geosearch.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Пов'язані глави книги:** [Глава 18. Інфраструктура виконання](ch18-execution-infrastructure.md) · [Глава 21. Від рекомендації до дії](ch21-from-recommendation-to-action.md) · [Глава 22. Кібернетичний контур Edge-to-Backend](ch22-cybernetics-edge-to-backend.md) · [Глава 29. Нейро-символьна архітектура](ch29-neuro-symbolic-architecture.md)  
 > **Суміжні дослідження автора:** [Військові експертні системи: БПЛА, ППО, РЕР/РЕБ](../MilTech/DOU-Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md) · [Військова кібернетика](../MilTech/DOU-Ukrainian-Military-Cybernetics-UA.md)  
@@ -609,3 +610,7 @@ K_THREAD_DEFINE(safety_thread_id, 1024, safety_supervisor_thread, NULL, NULL, NU
 - Petro Sidliarchuk. [Hardware Root of Trust and Evidence-Signed Measurement Layers in Embedded Networks](http://github.com/sidliarchukpetro), InfraVeritas LLC, 2024.
 - Oleksandr Bondar. [Non-Functional Physical Coupling and Mismatched Engineering Assumptions in Complex Systems Integration](https://sequtr.com/), Sequtr, 2024.
 - Pavlo Kosolapkin. [Lessons in Hardware-Software Co-Design and RF Shielding for Autonomous Robotics](https://frontlinerobotics.com/), Frontline Robotics, 2024.
+
+---
+
+[← Додаток А](appendix-a-evidence-governed-framework.md) · [Зміст книги](README.md) · [Додаток В →](appendix-c-autonomous-navigation-and-geosearch.md)
