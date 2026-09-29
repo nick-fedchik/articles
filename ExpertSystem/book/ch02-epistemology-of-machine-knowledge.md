@@ -805,6 +805,166 @@ NIST Generative AI Profile радить керувати ризиками GenAI 
 означає, що acceptance criteria, monitoring, incident review та відповідальні
 ролі є частиною системи, а не документацією «на потім».
 
+---
+
+## Від філософії до коду: практичні епістемічні контракти в ядрі системи
+
+Теоретичні положення семи філософських дисциплін у сучасній інженерній практиці трансформуються у конкретні програмні контракти системного ядра (на прикладі реалізації в чистому Go без зовнішніх CGO-залежностей):
+
+```mermaid
+flowchart TD
+    accTitle: Карта реалізації семи епістемічних контрактів у коді
+    accDescr: Від епістемології до соціальної епістемології — відображення філософських вимог на Go-структури.
+
+    subgraph Contracts["7 епістемічних контрактів у ядрі"]
+        direction TB
+        E1["<b>1. Епістемологія</b><br/>DefeaterGraph (умови винятків UNLESS)"]
+        E2["<b>2. Онтологія</b><br/>Quantity (безпечне приведення розмірностей SI)"]
+        E3["<b>3. Герменевтика</b><br/>section_path + is_normative (контекст документа)"]
+        E4["<b>4. Філософія мови</b><br/>TurnContext (анафора та комунікативні акти)"]
+        E5["<b>5. Формальна логіка</b><br/>Strong Kleene 3VL (True, False, Unknown)"]
+        E6["<b>6. Філософія науки</b><br/>Falsification & Acceptance Criteria"]
+        E7["<b>7. Соціальна епістемологія</b><br/>EpistemicClearance (політики ABAC/RBAC)"]
+    end
+
+    E1 & E2 & E3 & E4 & E5 & E6 & E7 ==> ENGINE["<b>Експертний рушій рішень</b><br/>Fail-Closed, нуль галюцинацій"]
+
+    classDef c fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef eng fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    class E1,E2,E3,E4,E5,E6,E7 c;
+    class ENGINE eng;
+```
+
+### 1. Формальна логіка: подолання Closed-World Fallacy за тризначною логікою Кліні (Strong Kleene 3VL)
+
+Класичне реляційне програмування спирається на *припущення про замкненість світу* (*Closed-World Assumption — CWA*): якщо факт не знайдено в таблиці, він вважається хибним (`NOT EXISTS == False`). В інженерних стандартах це призводить до фатальних помилок: якщо система не знайшла прямої заборони на запуск двигуна за 105 °C, вона вважає такий запуск дозволеним.
+
+Експертне ядро реалізує **тризначну логіку Кліні (Strong Kleene 3-Valued Logic)** з базовим типом `KleeneBool`:
+
+```go
+type KleeneBool uint8
+
+const (
+    KleeneUnknown KleeneBool = iota // 0: Інформація відсутня або неперевірена
+    KleeneFalse                     // 1: Спростовано фактами
+    KleeneTrue                      // 2: Доведено першоджерелами
+)
+
+func (a KleeneBool) And(b KleeneBool) KleeneBool {
+    if a == KleeneFalse || b == KleeneFalse {
+        return KleeneFalse
+    }
+    if a == KleeneUnknown || b == KleeneUnknown {
+        return KleeneUnknown
+    }
+    return KleeneTrue
+}
+
+func (a KleeneBool) Or(b KleeneBool) KleeneBool {
+    if a == KleeneTrue || b == KleeneTrue {
+        return KleeneTrue
+    }
+    if a == KleeneUnknown || b == KleeneUnknown {
+        return KleeneUnknown
+    }
+    return KleeneFalse
+}
+
+func (a KleeneBool) Not() KleeneBool {
+    switch a {
+    case KleeneTrue:
+        return KleeneFalse
+    case KleeneFalse:
+        return KleeneTrue
+    default:
+        return KleeneUnknown
+    }
+}
+```
+
+Усі предикати інваріантів безпеки та комбінатори запитів у підзапитах (Subquery DAG) обчислюються за цими правилами: якщо хоча б одна критична передумова повертає `KleeneUnknown`, система не має права генерувати стверджувальний дозвіл — спрацьовує шлюз **Fail-Closed**, і формується запит на уточнення (`KindClarification`).
+
+### 2. Онтологія: типізовані фізичні величини та розмірно-безпечні порівняння (Dimension-Safe Quantities)
+
+Типовий дефект RAG-систем — сліпе порівняння числових значень. Якщо стандарт вимагає `Timeout <= 2 s`, а спостережуваний лог містить `250 ms`, наївна система порівнює `250 > 2` і помилково фіксує порушення нормативу. Навпаки, спроба порівняти 95 °C із 100 кПа повинна блокуватися на рівні компілятора правил як семантична нісенітниця.
+
+У системному ядрі кожна числова ознака інкапсулюється у структуру `Quantity`:
+
+```go
+type Dimension uint8
+const (
+    DimDimensionless Dimension = iota
+    DimTime                    // Секунди (s)
+    DimInformation             // Байти (bytes)
+    DimTemperature             // Кельвіни (K)
+    DimPressure                // Паскалі (Pa)
+    DimVoltage                 // Вольти (V)
+)
+
+type Quantity struct {
+    RawValue   float64
+    Dimension  Dimension
+    BaseSI     float64 // Нормалізоване значення у системі SI
+    UnitSymbol string
+}
+
+func (q Quantity) Compare(other Quantity) (int, error) {
+    if q.Dimension != other.Dimension {
+        return 0, fmt.Errorf("НЕСУМІСНІ РОЗМІРНОСТІ: неможливо порівняти %s та %s", 
+            q.UnitSymbol, other.UnitSymbol)
+    }
+    if q.BaseSI < other.BaseSI {
+        return -1, nil
+    } else if q.BaseSI > other.BaseSI {
+        return 1, nil
+    }
+    return 0, nil
+}
+```
+
+Автоматична нормалізація (наприклад, $1500\text{ мс} \to 1.5\text{ с}$, $1024\text{ КБ} \to 1\,048\,576\text{ байт}$, $95\text{ }^\circ\text{C} \to 368.15\text{ K}$) гарантує фізичну та інженерну коректність будь-яких діапазонних перевірок.
+
+### 3. Герменевтика: шлях секції (`section_path`) та маркери нормативності (`is_normative`)
+
+У будь-якому інженерному стандарті (IETF RFC, ISO 26262, специфікації W3C) документ структурований на функціональні зони:
+- Нормативні розділи (*Normative Specifications*);
+- Інформаційні додатки (*Informative Appendices*);
+- Зауваження авторів (*Author's Notes*);
+- Історичні коментарі та приклади реалізації.
+
+Спроба вилучити правило зі статусом `MUST` із інформаційного додатка або навчального прикладу спотворює нормативний статус стандарту. Тому кожна атомарна цитата (`EvidenceAtom`) доповнюється герменевтичним дескриптором:
+
+```go
+type EvidenceAtom struct {
+    DocID       string
+    SectionPath []string // наприклад: ["Section 4. Protocol Details", "4.1. Error Handling", "Appendix A. Examples"]
+    IsNormative bool     // True лише для розділів з нормативною силою
+    ByteStart   int64
+    ByteEnd     int64
+    SHA256      [32]byte
+}
+```
+
+Правило дедукції: твердження може отримати деонтичний статус `NormativeObligation` виключно за умови `IsNormative == true`. Твердження з ненормативних розділів трактуються як рекомендаційні приклади або гіпотези.
+
+### 4. Соціальна епістемологія: політики доступу та епістемічний кліренс (`EpistemicClearance`)
+
+Знання не існує у вакуумі — воно функціонує в ієрархії соціальних ролей, дозволів та таємниць. Відмова надати відповідь не повинна демаскувати наявність закритого документа (*Non-Disclosure Invariant*).
+
+```go
+type EpistemicClearance struct {
+    Role        string   // "Operator", "SafetyReviewer", "SecurityAuditor"
+    Clearance   int      // Рівень допуску: 1..5
+    ScopeAccess []string // Дозволені області: ["Public_RFC", "Internal_Standard", "Proprietary_Waiver"]
+}
+```
+
+Якщо користувач із роллю `Operator` запитує про дозвіл на тест за 95 °C, а дозвіл зафіксовано в закритому `Waiver W-17` з рівнем допуску 4, система не повідомляє: *«Вам заборонено читати W-17»* (що підтверджує існування лазівки). Вона повертає нейтральну типізовану відмову:  
+*«Загальнодоступних стандартних підстав для авторизації недостатньо. Зверніться до уповноваженого інженера безпеки»*.
+
+---
+
 ## Епістемічний аудит за 20 хвилин
 
 Візьміть одну недавню відповідь production-системи й пройдіть checklist:
