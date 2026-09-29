@@ -272,7 +272,7 @@ flowchart LR
 
 Канонічний ідентифікатор фрагмента розраховується криптографічно:
 
-$$\text{passage\_id} = H(\text{document\_id} \,\|\, \text{revision} \,\|\, \text{transform\_chain} \,\|\, \text{byte\_start} \,\|\, \text{byte\_end} \,\|\, \text{bytes})$$
+$$\text{passage-id} = H(\text{document-id} \,\|\, \text{revision} \,\|\, \text{transform-chain} \,\|\, \text{byte-start} \,\|\, \text{byte-end} \,\|\, \text{bytes})$$
 
 Будь-яка зміна алгоритму парсингу, очищення чи нарізання тексту породжує новий `passage_id`, що гарантує стабільність цитувань і унеможливлює ситуацію, коли старе посилання вказує на зміщений текст.
 

@@ -289,17 +289,17 @@ stateDiagram-v2
 1. **Контракт цільового геополігону (Strict Target Geofencing):**
 
    ```math
-   \mathbf{P}_{\text{target}} \in \mathcal{P}\text{oly}_{\text{authorized}} \quad \land \quad \mathbf{P}_{\text{target}} \notin \bigcup \mathcal{P}\text{oly}_{\text{no\_strike}}
+   \mathbf{P}_{\text{target}} \in \mathcal{P}\text{oly}_{\text{authorized}} \quad \land \quad \mathbf{P}_{\text{target}} \notin \bigcup \mathcal{P}\text{oly}_{\text{no-strike}}
    ```
 
 2. **Кінематичний контракт пропорційного наведення (Proportional Navigation Invariant):**
    Кутова швидкість лінії візування $\dot{\lambda}$ повинна прагнути до нуля при зближенні:
 
    ```math
-   a_c = N V_c \dot{\lambda} \le A_{\text{max\_g}}
+   a_c = N V_c \dot{\lambda} \le A_{\text{max-g}}
    ```
 
-   Якщо для утримання цілі потрібне перевантаження, що перевищує аеродинамічні ліміти $A_{\text{max\_g}}$, захоплення вважається зірваним.
+   Якщо для утримання цілі потрібне перевантаження, що перевищує аеродинамічні ліміти $A_{\text{max-g}}$, захоплення вважається зірваним.
 3. **Контракт оптичної цілісності (Visual Persistence Contract):**
    Якщо оптичний трекер втрачає кореляцію (коефіцієнт $IoU < 0.4$ або різка зміна спектрального дескриптора на $N$ послідовних кадрах), система забороняє «вгадування» точки ураження і миттєво ініціює команду `EmergencyAbort()`.
 

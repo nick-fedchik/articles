@@ -266,7 +266,7 @@ $$x^* = \arg\min_{x'} d(x, x') \quad \text{за умов} \quad x' \in F_{\text{
 
 Для запобігання цьому хост-система застосовує динамічне маскування Explanation IR:
 
-$$\text{EIR}_{\text{redacted}} = \{e \in \text{EIR} \mid \text{ACL}(e, \text{user\_role}) = \text{ALLOW}\}$$
+$$\text{EIR}_{\text{redacted}} = \{e \in \text{EIR} \mid \text{ACL}(e, \text{user-role}) = \text{ALLOW}\}$$
 
 Якщо елемент доведення має вищий рівень таємності, ніж права запитувача, деталь приховується з генерацією нейтрального замінника: *«Реліз відхилено за регламентом корпоративної безпеки. Деталі доступні аудитору за запитом SEC-AUTH-8»*.
 

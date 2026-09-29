@@ -112,7 +112,7 @@ flowchart LR
 Судження є твердженням про наявність або відсутність відношення між поняттями. У доказовій експертній системі судження типізується деонтичним оператором:
 $$\mathcal{J} = \langle \text{Subject}, \; \mathcal{R}, \; \text{Object}, \; \mathcal{M}, \; \mathcal{D}, \; \text{Provenance} \rangle$$
 де:
-- $\mathcal{M} \in \{ \text{MUST}, \text{MUST\_NOT}, \text{SHOULD}, \text{SHOULD\_NOT}, \text{MAY} \}$ — нормативна модальність;
+- $\mathcal{M} \in \{ \text{MUST}, \text{MUST-NOT}, \text{SHOULD}, \text{SHOULD-NOT}, \text{MAY} \}$ — нормативна модальність;
 - $\mathcal{D}$ — множина умов спростування (*Defeaters*);
 - $\text{Provenance}$ — криптографічний хеш першоджерела з байтовими координатами.
 
@@ -123,7 +123,7 @@ $$\mathcal{J} = \langle \text{Subject}, \; \mathcal{R}, \; \text{Object}, \; \ma
 - **Висновок ($C$, Conclusion):** Результуюча дія або твердження.
 
 $$
-\frac{\forall x : \big( \text{Packet}(x) \land \text{InvalidCRC}(x) \implies \text{MUST\_DROP}(x) \big), \quad \text{Packet}(p_1) \land \text{InvalidCRC}(p_1)}{\text{MUST\_DROP}(p_1)}
+\frac{\forall x : \big( \text{Packet}(x) \land \text{InvalidCRC}(x) \implies \text{MUST-DROP}(x) \big), \quad \text{Packet}(p_1) \land \text{InvalidCRC}(p_1)}{\text{MUST-DROP}(p_1)}
 $$
 
 ---
@@ -270,7 +270,7 @@ flowchart TD
 1. `HypotheticalPremises`: локальні аксіоми користувача, що діють лише під час цієї сесії міркування:
    $$\mathcal{H}_1: \text{Implements}(\text{Client}, \text{RFC 5321})$$
 2. `TargetGoal`: цільовий предикат, який необхідно довести або спростувати:
-   $$\mathcal{T}: \text{MustSendBefore}(\text{Client}, \text{EHLO}, \text{MAIL\_FROM})$$
+   $$\mathcal{T}: \text{MustSendBefore}(\text{Client}, \text{EHLO}, \text{MAIL-FROM})$$
 3. `ContextBranch`: сервер підтримує застарілий RFC 821 (активація дефітера зворотного зв'язку).
 
 Рушій будує шлях через граматику правил:

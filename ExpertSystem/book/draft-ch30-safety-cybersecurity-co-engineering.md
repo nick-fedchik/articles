@@ -108,7 +108,7 @@ classDiagram
 В аналізі загроз TARA (розділ 15 стандарту ISO/SAE 21434) оцінка впливу на безпеку (*Safety Impact*) не може призначатися довільно чи на основі суб'єктивних припущень. Вона математично та детерміновано виводиться з оцінки тяжкості шкоди HARA (*Severity*, $S_0\dots S_3$ згідно з ISO 26262-3):
 
 $$
-\text{TARA\_Safety\_Impact}(\text{Threat}) = \begin{cases}
+\text{SafetyImpact}_{\text{TARA}}(\text{Threat}) = \begin{cases}
 \text{Severe}, & \text{якщо } \exists H \in \text{ImpactedHazards}(\text{Threat}) : \text{Severity}(H) = S_3 \\
 \text{Major}, & \text{якщо } \exists H : \text{Severity}(H) = S_2 \land \forall H : \text{Severity}(H) \le S_2 \\
 \text{Moderate}, & \text{якщо } \exists H : \text{Severity}(H) = S_1 \land \forall H : \text{Severity}(H) \le S_1 \\

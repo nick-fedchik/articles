@@ -261,7 +261,7 @@ flowchart TD
 
 Детермінований код хосту звіряє згенерований JSON з поточною версією онтології та правами доступу. Після успішної перевірки формується предикат числення предикатів першого порядку:
 
-$$\text{Query}(X) \leftarrow \text{DefinitionOf}(X, \text{protocol}\_\text{udp}) \wedge \text{Context}(X, \text{RFC}\_\text{768})$$
+$$\text{Query}(X) \leftarrow \text{DefinitionOf}(X, \text{protocol-udp}) \wedge \text{Context}(X, \text{RFC-768})$$
 
 ### Крок 5. Багатоходова умовна граматика (Conditional Syllogistic NLQ)
 
@@ -282,7 +282,7 @@ type ConditionalQueryPlan struct {
 Гіпотетичні засновки, висловлені користувачем у запитанні, тимчасово ізолюються в сесійному контексті `ProofContext`. Вони **категорично не записуються** у постійну базу фактів `FactBase`. Логічний рушій будує силогістичне доведення:
 
 $$
-\text{Hypothesis}(X \in \text{RFC\_5321}) \land \text{FactBase}(\text{RFC\_5321} \models \text{STARTTLS\_Required}) \vdash \text{Conclusion}
+\text{Hypothesis}(X \in \text{RFC 5321}) \land \text{FactBase}(\text{RFC 5321} \models \text{STARTTLS-Required}) \vdash \text{Conclusion}
 $$
 
 Якщо ланцюг дедукції розривається, система формує типізовану кваліфіковану відмову (`KindQualifiedNonanswer`) із зазначенням конкретної відсутньої ланки в нормативному ланцюзі.
