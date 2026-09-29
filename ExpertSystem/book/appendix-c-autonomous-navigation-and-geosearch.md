@@ -2,6 +2,7 @@
 
 > **Книга:** [Архітектура доказових експертних систем](README.md) · Додатки  
 > **Попередній додаток:** [Додаток Б. Практичний посібник: Доказові експертні системи в автономній робототехніці](appendix-b-robotics-and-cyber-physical-systems.md)  
+> **Наступний додаток:** [Додаток Г. Аналогові експертні системи, нейроморфні обчислення та апаратне логічне виведення](appendix-d-analog-expert-systems-and-neuromorphic-computing.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Пов'язані глави книги:** [Глава 18. Інфраструктура виконання](ch18-execution-infrastructure.md) · [Глава 21. Від рекомендації до дії](ch21-from-recommendation-to-action.md) · [Глава 22. Кібернетичний контур Edge-to-Backend](ch22-cybernetics-edge-to-backend.md) · [Глава 29. Нейро-символьна архітектура](ch29-neuro-symbolic-architecture.md)  
 > **Суміжні дослідження автора:** [Військові експертні системи: БПЛА, ППО, РЕР/РЕБ](../MilTech/Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md) · [Військова кібернетика](../MilTech/Ukrainian-Military-Cybernetics-UA.md)  
@@ -528,4 +529,4 @@ func (a *NavigationIntegrityArbiter) calculateMahalanobisDistance(state NavState
 
 ---
 
-[← Додаток Б](appendix-b-robotics-and-cyber-physical-systems.md) · [Зміст книги](README.md) · [Про автора →](about-the-author.md)
+[← Додаток Б](appendix-b-robotics-and-cyber-physical-systems.md) · [Зміст книги](README.md) · [Додаток Г →](appendix-d-analog-expert-systems-and-neuromorphic-computing.md)
