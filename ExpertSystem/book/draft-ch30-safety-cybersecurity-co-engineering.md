@@ -180,7 +180,10 @@ flowchart LR
 - Нормативний текст із модальними маркерами (`SHALL`, `MUST`);
 - Атрибути безпеки (`ASIL_Allocation`, `CAL_Allocation`);
 - Відношення спадкоємності `<SPEC-RELATION>`:
-  $$\text{Req}_{\text{SWE.1}} \xrightarrow{\text{refines}} \text{Req}_{\text{SYS.2}} \xrightarrow{\text{satisfies}} \text{SafetyGoal}$$
+
+  ```math
+  \text{Req}_{\text{SWE.1}} \xrightarrow{\text{refines}} \text{Req}_{\text{SYS.2}} \xrightarrow{\text{satisfies}} \text{SafetyGoal}
+  ```
 
 ### 3.2. Автоматична перевірка метрик повноти ASPICE
 
@@ -190,7 +193,10 @@ flowchart LR
    Кожна програмна вимога $\text{SWE.1}_i$ зобов'язана мати хоча б одне ребро `satisfies` до системної вимоги $\text{SYS.2}_j$.
 2. **100% покриття тестами (Test Coverage Invariant):**  
    Для кожної вимоги рівня ASIL B, C або D зобов'язаний існувати тестовий випадок у звіті SWE.6:
-   $$\forall r \in \text{Reqs}_{\text{SWE.1}} : \text{ASIL}(r) \ge B \implies \exists t \in \text{Tests}_{\text{SWE.6}} : \text{Verifies}(t, r) \land \text{Status}(t) = \text{Passed}$$
+
+   ```math
+   \forall r \in \text{Reqs}_{\text{SWE.1}} : \text{ASIL}(r) \ge B \implies \exists t \in \text{Tests}_{\text{SWE.6}} : \text{Verifies}(t, r) \land \text{Status}(t) = \text{Passed}
+   ```
 3. **Метрика MC/DC для ASIL D:**  
    Для критичного ПЗ рівня ASIL D автоматично верифікується звіт покриття за критерієм модифікованої умови/рішення (*Modified Condition / Decision Coverage — MC/DC = 100%*).
 

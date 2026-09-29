@@ -104,9 +104,16 @@ flowchart LR
 ### 2.1. Поняття (Concept / Terminus)
 Поняття фіксує сутність інженерного домену. Воно характеризується двома математичними множинами:
 - **Інтенсіонал (Зміст):** Множина суттєвих ознак, властивостей та інваріантів, які визначають сутність:
-  $$\text{Intension}(C) = \{ P_1, P_2, \dots, P_k \}$$
+
+  ```math
+  \text{Intension}(C) = \{ P_1, P_2, \dots, P_k \}
+  ```
+
 - **Екстенсіонал (Обсяг):** Множина всіх конкретних об'єктів або підпонять, що задовольняють ці ознаки:
-  $$\text{Extension}(C) = \{ x \mid \forall P \in \text{Intension}(C) : P(x) = \text{True} \}$$
+
+  ```math
+  \text{Extension}(C) = \{ x \mid \forall P \in \text{Intension}(C) : P(x) = \text{True} \}
+  ```
 
 ### 2.2. Судження (Judgment / Proposition)
 Судження є твердженням про наявність або відсутність відношення між поняттями. У доказовій експертній системі судження типізується деонтичним оператором:
@@ -174,8 +181,9 @@ flowchart TD
 ### Математичні правила субсумції:
 
 1. **Спрямована дедукція (Query Generalization):**  
-   Якщо запит шукає узагальнене відношення $R_{\text{query}}$ (наприклад, `normative_requirement`), будь-який факт із специфічним предикатом $R_{\text{fact}} \sqsubseteq R_{\text{query}}$ (наприклад, `must_requirement`) задовольняє умову пошуку:
-   $$\text{Subsumes}(R_{\text{query}}, R_{\text{fact}}) \iff (R_{\text{fact}} = R_{\text{query}}) \lor (R_{\text{fact}} \sqsubseteq^* R_{\text{query}})$$
+   ```math
+   \text{Subsumes}(R_{\text{query}}, R_{\text{fact}}) \iff (R_{\text{fact}} = R_{\text{query}}) \lor (R_{\text{fact}} \sqsubseteq^* R_{\text{query}})
+   ```
 2. **Сувора спеціалізація (Strict Specialization):**  
    Зворотна підстановка категорично заборонена. Якщо запит запитує суворий `must_requirement`, загальний рекомендаційний факт `recommended_practice` не може вважатися прямою стверджувальною відповіддю.
 3. **Метрика семантичної дистанції:**  
@@ -268,9 +276,16 @@ flowchart TD
 
 Граматичний процесор ядра розбиває такий запит на **План умовного доведення (`ConditionalQueryPlan`)**:
 1. `HypotheticalPremises`: локальні аксіоми користувача, що діють лише під час цієї сесії міркування:
-   $$\mathcal{H}_1: \text{Implements}(\text{Client}, \text{RFC 5321})$$
+
+   ```math
+   \mathcal{H}_1: \text{Implements}(\text{Client}, \text{RFC 5321})
+   ```
+
 2. `TargetGoal`: цільовий предикат, який необхідно довести або спростувати:
-   $$\mathcal{T}: \text{MustSendBefore}(\text{Client}, \text{EHLO}, \text{MAIL-FROM})$$
+
+   ```math
+   \mathcal{T}: \text{MustSendBefore}(\text{Client}, \text{EHLO}, \text{MAIL-FROM})
+   ```
 3. `ContextBranch`: сервер підтримує застарілий RFC 821 (активація дефітера зворотного зв'язку).
 
 Рушій будує шлях через граматику правил:
