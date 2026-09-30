@@ -770,7 +770,11 @@ sequenceDiagram
 
 ---
 
-### Рекомендовані джерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - S. Bradner. [RFC 2119: Key words for use in RFCs to Indicate Requirement Levels](https://www.rfc-editor.org/rfc/rfc2119), IETF Network Working Group, 1997.
 - B. Leiba. [RFC 8174: Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words](https://www.rfc-editor.org/rfc/rfc8174), IETF, 2017.

@@ -564,7 +564,11 @@ independent evidence. Cases розділяють за unit/incident lineage, щ�
 - Який test мінімізує expected loss, а не лише entropy?
 - Як ви підтверджуєте, що repair усунув причину, а не тимчасово symptom?
 
-## Посилання на інших авторів, стандарти й офіційну документацію
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Raymond Reiter. [A Theory of Diagnosis from First Principles](https://doi.org/10.1016/0004-3702(87)90062-2), *Artificial Intelligence*, 1987.
 - Johan de Kleer, Brian C. Williams. [Diagnosing Multiple Faults](https://doi.org/10.1016/0004-3702(87)90063-4), *Artificial Intelligence*, 1987.

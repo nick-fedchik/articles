@@ -428,7 +428,11 @@ flowchart TD
 
 ---
 
-### Рекомендовані джерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Anna Hart. [Knowledge Elicitation: Issues and Methods](https://doi.org/10.1016/0010-4485(85)90293-3), *Computer-Aided Design*, 1985.
 - Nancy J. Cooke. [Varieties of Knowledge Elicitation Techniques](https://doi.org/10.1006/ijhc.1994.1083), *International Journal of Human-Computer Studies*, 1994.

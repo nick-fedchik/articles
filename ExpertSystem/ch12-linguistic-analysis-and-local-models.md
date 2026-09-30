@@ -456,7 +456,11 @@ flowchart LR
 
 ---
 
-### Рекомендовані джерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Unicode Consortium. [Unicode Normalization Forms, UAX #15](https://www.unicode.org/reports/tr15/), Unicode 17.0.0.
 - Unicode Consortium. [Unicode Text Segmentation, UAX #29](https://www.unicode.org/reports/tr29/).

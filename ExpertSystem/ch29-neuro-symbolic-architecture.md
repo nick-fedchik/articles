@@ -801,7 +801,11 @@ $$\text{Natural Language} \longrightarrow \text{Neural Semantic Layer} \longrigh
 
 ---
 
-## Посилання на першоджерела та дослідження
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Tom Zahavy et al. [LLMs Can't Jump: Limits of Autoregressive Models in Non-Local Search and Abduction](https://www.tomzahavy.com/files/llms-cant-jump.pdf), Google DeepMind, 2024.
 - Denis Yuvzhenko. [The Leap AI Cannot Make: Epistemic Grounding and Abductive Bottlenecks in Large Language Models](https://dou.ua/forums/topic/61201/), QR, 2024.

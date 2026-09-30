@@ -377,7 +377,11 @@ flowchart TD
 
 ---
 
-## Посилання на першоджерела, стандарти й документацію
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - The Assurance Case Working Group (ACWG). [Goal Structuring Notation (GSN) Standard Community Standard, Version 3](https://scsc.uk/gsn), SCSC-141C, Safety-Critical Systems Club, 2021.
 - T. Kelly, R. Weaver. [The Goal Structuring Notation: A Safety Argumentation Grid](https://doi.org/10.1007/978-1-4471-0211-3_11), *Proceedings of the 2004 International Conference on Dependable Systems and Networks*, 2004.

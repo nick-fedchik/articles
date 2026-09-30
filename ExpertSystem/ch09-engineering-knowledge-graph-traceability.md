@@ -700,7 +700,11 @@ func BootstrapEKG(repoRoot string) (*EKGGraph, error) {
 
 ---
 
-## Посилання на першоджерела, стандарти й документацію
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Damien Berezenko. [Knowledge Graphs and Agentic RAG: Extraction Topologies, Coreference Resolution, and Temporal Validity](https://dou.ua/forums/topic/49883/), WITC, 2024.
 - RTCA / EUROCAE. [DO-178C: Software Considerations in Airborne Systems and Equipment Certification](https://www.rtca.org/standards/), 2011. (Розділи про двоспрямоване трасування та непередбачений код).

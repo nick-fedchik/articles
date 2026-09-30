@@ -594,7 +594,11 @@ Externalization, Combination, Internalization, SECI)**. Людина знає б
 реальною інженерною роботою, а коментарі читачів допомогли зробити останню
 статтю вступної групи зрозумілішою та практичнішою.
 
-## Посилання на інших авторів і публікації
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Timothy Lebo, Satya Sahoo, Deborah McGuinness (ред.). [*PROV-O: The PROV Ontology*](https://www.w3.org/TR/prov-o/), W3C Recommendation, 2013. Формальна модель джерел, перетворень і відповідальних агентів.
 - Elham Tabassi. [*Artificial Intelligence Risk Management Framework 1.0*](https://doi.org/10.6028/NIST.AI.100-1), NIST, 2023. Рамка для вимірювання та керування довіреністю AI-систем.

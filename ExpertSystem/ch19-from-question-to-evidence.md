@@ -397,7 +397,11 @@ stateDiagram-v2
 
 ---
 
-## Література та першоджерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Patrick Lewis та ін. [*Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*](https://arxiv.org/abs/2005.11401), NeurIPS, 2020. Базова концепція генерації з доповненням пошуку.
 - Timothy Lebo, Satya Sahoo, Deborah McGuinness (ред.). [*PROV-O: The PROV Ontology*](https://www.w3.org/TR/prov-o/), W3C Recommendation, 2013. Модель метаданих походження знань.

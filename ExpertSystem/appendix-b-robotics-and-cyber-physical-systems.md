@@ -602,7 +602,11 @@ K_THREAD_DEFINE(safety_thread_id, 1024, safety_supervisor_thread, NULL, NULL, NU
 
 ---
 
-## 13. Рекомендовані першоджерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Lui Sha. [Using Simplex to Build Reliable Systems from Unreliable Components](https://doi.org/10.1109/HCW.1998.666548), *IEEE Proceedings of Software Engineering*, 1998.
 - Anton Meyris. [Simulation-Driven Engineering and Physics-Based CAE Modeling for Mission-Critical Defense Systems](https://vectordynamics.com.ua/), Vector Dynamics, 2024.

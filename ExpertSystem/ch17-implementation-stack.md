@@ -278,7 +278,11 @@ flowchart TD
 
 ---
 
-## Література та першоджерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Object Management Group. [*Decision Model and Notation (DMN) Specification v1.5*](https://www.omg.org/dmn/). Стандарт інженерного опису таблиць рішень та вимог.
 - W3C. [*SPARQL 1.1 Query Language*](https://www.w3.org/TR/sparql11-query/) та [*Shapes Constraint Language (SHACL)*](https://www.w3.org/TR/shacl/). Специфікації семантичних запитів та валідації форм графів.

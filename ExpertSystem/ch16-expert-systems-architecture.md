@@ -461,7 +461,11 @@ flowchart LR
 
 ---
 
-## Література та першоджерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Timothy Lebo, Satya Sahoo, Deborah McGuinness (ред.). [*PROV-O: The PROV Ontology*](https://www.w3.org/TR/prov-o/), W3C Recommendation, 2013. Стандарт побудови графів походження та доказовості знань.
 - W3C. [*OWL 2 Web Ontology Language Document Overview*](https://www.w3.org/TR/owl2-overview/) та [*Shapes Constraint Language (SHACL)*](https://www.w3.org/TR/shacl/). Специфікації для онтологічного моделювання та валідації графів знань.

@@ -442,7 +442,11 @@ $$\text{KnowledgeBundle} = \{\text{Rules}, \; \text{Models}, \; \text{Schemas}, 
 
 ---
 
-## Література та першоджерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Norbert Wiener. [*Cybernetics: Or Control and Communication in the Animal and the Machine*](https://mitpress.mit.edu/9780262730099/cybernetics/), MIT Press, 1948 / 1965. Фундаментальна праця з теорії кібернетичного керування.
 - W. Ross Ashby. [*An Introduction to Cybernetics*](https://archive.org/details/introductiontocy00ashb), Chapman & Hall, 1956. Формулювання закону необхідної різноманітності.

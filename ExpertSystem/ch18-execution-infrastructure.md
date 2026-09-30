@@ -546,7 +546,11 @@ flowchart LR
 
 ---
 
-## Література та першоджерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Samuel Williams, Andrew Waterman, David A. Patterson. [*Roofline: An Insightful Visual Performance Model for Multicore Architectures*](https://doi.org/10.1145/1498765.1498785), Communications of the ACM, 2009. Основоположна стаття про обмеження пам'яті та обчислень.
 - MLCommons. [*MLPerf Inference Benchmark Suite*](https://docs.mlcommons.org/inference/). Міжнародний стандарт вимірювання швидкодії та енергоефективності машинного виведення.

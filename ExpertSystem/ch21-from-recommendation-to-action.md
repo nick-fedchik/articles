@@ -298,7 +298,11 @@ flowchart LR
 
 ---
 
-## Література та першоджерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Malik Ghallab, Dana Nau, Paolo Traverso. [*Automated Planning and Acting*](https://doi.org/10.1017/CBO9781139583923), Cambridge University Press, 2016. Фундаментальний підручник із планування та виконання дій.
 - Hector Garcia-Molina, Kenneth Salem. [*Sagas*](https://doi.org/10.1145/38713.38742), ACM SIGMOD, 1987. Класична праця про управління розподіленими транзакціями та компенсації.

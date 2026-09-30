@@ -441,7 +441,11 @@ flowchart TB
 
 ---
 
-### Рекомендовані джерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - Noam Chomsky. [Three Models for the Description of Language](https://doi.org/10.1109/TIT.1956.1056813), *IRE Transactions on Information Theory*, 1956.
 - Patrick Lewis et al. [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html), NeurIPS 2020.

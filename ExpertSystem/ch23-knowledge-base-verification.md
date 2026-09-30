@@ -529,7 +529,11 @@ invariant test — production risk, не косметичний CI noise.
 - Чи відкочується knowledge/model/policy manifest атомарно?
 - Який survived mutant ви готові прийняти — і хто підписує цей ризик?
 
-## Посилання на інших авторів, стандарти й офіційну документацію
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - W3C. [Shapes Constraint Language (SHACL)](https://www.w3.org/TR/shacl/), W3C Recommendation.
 - W3C. [OWL 2 Web Ontology Language: Document Overview](https://www.w3.org/TR/owl2-overview/), W3C Recommendation.

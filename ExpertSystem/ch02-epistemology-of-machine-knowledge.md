@@ -1023,7 +1023,11 @@ referents та структуру claim, не отримуючи права са
 4. Який типізований abstention приніс би більше користі: ambiguity, conflict,
    stale evidence чи missing authorization?
 
-## Посилання на інших авторів і публікації
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 1. Edmund L. Gettier. [*Is Justified True Belief Knowledge?*](https://doi.org/10.1093/analys/23.6.121). *Analysis*, 23(6), 121–123, 1963.
 2. Igor Douven. [*Abduction*](https://plato.stanford.edu/entries/abduction/). *Stanford Encyclopedia of Philosophy*.

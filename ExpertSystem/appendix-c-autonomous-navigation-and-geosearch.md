@@ -517,7 +517,11 @@ func (a *NavigationIntegrityArbiter) calculateMahalanobisDistance(state NavState
 
 ---
 
-## 10. Рекомендовані першоджерела та стандарти
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - RTCA. [DO-311: Minimum Operational Performance Standards for Airborne GNSS / Optical Hybrid Systems](https://www.rtca.org/standards/), 2008.
 - Kevin Leahy et al. [Visual-Inertial Navigation Systems in GNSS-Denied Environments: A Review of VIO and Factor Graph Architectures](https://doi.org/10.1109/JPROC.2020.2985678), *IEEE Proceedings*, 2020.

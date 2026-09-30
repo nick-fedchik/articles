@@ -403,7 +403,11 @@ expert-cli explain --protocol SMTP --state IDLE --command DATA --natural
 
 ---
 
-## Література та першоджерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - William J. Clancey. [*The Epistemology of a Rule-Based Expert System: A Framework for Explanation*](https://doi.org/10.1016/0004-3702(83)90008-5), Artificial Intelligence, 1983. Класична праця з епістемології машинних пояснень.
 - Ulrich Junker. [*QUICKXPLAIN: Preferred Explanations and Critical Relaxations for Over-Constrained Problems*](https://www.aaai.org/Papers/AAAI/2004/AAAI04-027.pdf), AAAI, 2004. Базовий алгоритм пошуку мінімальних конфліктів.

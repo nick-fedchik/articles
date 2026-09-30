@@ -557,7 +557,11 @@ $ system-verifier verify-proof --certificate session_diag_proof.cert
 
 ---
 
-### Рекомендовані джерела
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - D. Crockford. [RFC 5234: Augmented BNF for Syntax Specifications: ABNF](https://www.rfc-editor.org/rfc/rfc5234), IETF, 2008.
 - J. Klensin. [RFC 5321: Simple Mail Transfer Protocol](https://www.rfc-editor.org/rfc/rfc5321), IETF, 2008.

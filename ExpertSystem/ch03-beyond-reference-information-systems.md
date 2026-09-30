@@ -446,7 +446,11 @@ flowchart TB
 
 ---
 
-## Посилання на інших авторів і публікації
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 1. Elham Tabassi. [*Artificial Intelligence Risk Management Framework (AI RMF 1.0)*](https://doi.org/10.6028/NIST.AI.100-1). NIST, 2023.
 2. Timothy Lebo, Satya Sahoo, Deborah McGuinness (eds.). [*PROV-O: The PROV Ontology*](https://www.w3.org/TR/prov-o/). W3C Recommendation, 2013.

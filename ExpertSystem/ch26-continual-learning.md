@@ -808,7 +808,11 @@ flowchart TD
 - Чи може candidate бути повністю відхилений і атомарно відкочений?
 - Хто має право підвищити episodic memory до released knowledge?
 
-## Посилання на інших авторів і публікації
+## Словник
+
+## Абревіатури
+
+## Джерела
 
 - João Gama та ін. [A Survey on Concept Drift Adaptation](https://doi.org/10.1145/2523813), *ACM Computing Surveys*, 2014.
 - Albert Bifet, Ricard Gavaldà. [Learning from Time-Changing Data with Adaptive Windowing](https://doi.org/10.1137/1.9781611972771.42), SIAM International Conference on Data Mining, 2007.
