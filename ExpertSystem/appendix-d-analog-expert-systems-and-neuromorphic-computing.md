@@ -241,7 +241,8 @@ flowchart TD
 Функції належності нечітких множин $\mu_A(x)$ (гаусові, трикутні або трапецієподібні) формуються безпосередньо на вольт-амперних характеристиках диференціальних пар транзисторів MOS у підпороговому (субпороговому) режимі:
 
 $$
-I_d = I_0 \cdot \exp\left( \frac{\kappa V_{gs} - V_{ds}}{U_T} \right)
+I_d \approx I_0 \cdot \exp\left(\frac{\kappa (V_{gs} - V_{th})}{U_T}\right)
+\left(1 - \exp\left(-\frac{V_{ds}}{U_T}\right)\right)
 $$
 
 Зміщенням опорних напруг на затворах формуються плавні колоколоподібні криві ступеня істинності ознаки («Висока швидкість», «Небезпечна дистанція», «Рівень завади») без єдиного рядка програмного коду.
@@ -254,8 +255,8 @@ $$
 
 $$
 I_{\text{out},k} = \begin{cases}
-I_{\text{bias}}, & \text{якщо } I_{\text{in},k} = \max_{j} \{ I_{\text{in},j} \} \\
-0, & \text{для всіх інших } j \neq k
+I_{\text{bias}}, & \text{якщо } k \in \arg\max_j I_{\text{in},j} \\
+0, & \text{якщо } k \notin \arg\max_j I_{\text{in},j}
 \end{cases}
 $$
 
@@ -275,10 +276,10 @@ $$
 \tau_m \frac{du(t)}{dt} = -(u(t) - u_{\text{rest}}) + R_m I_{\text{syn}}(t)
 $$
 
-Коли мембранний потенціал перевищує критичний поріг $V_{\text{th}}$, компаратор генерує короткий дельта-імпульс (спайк), скидає потенціал до $u_{\text{reset}}$ та блокує канал на час рефрактерного періоду $\tau_{\text{ref}}$:
+Коли мембранний потенціал перевищує критичний поріг $V_{\text{th}}$ у момент $t_{\text{spike}}$, компаратор генерує короткий дельта-імпульс (спайк), скидає потенціал до $u_{\text{reset}}$ та блокує канал на час рефрактерного періоду $\tau_{\text{ref}}$:
 
 $$
-\text{IF } u(t) \ge V_{\text{th}} \implies \text{EMIT SPIKE } s(t) = \delta(t), \quad u(t^+) = u_{\text{reset}}
+\mathrm{IF}\; u(t) \ge V_{\text{th}} \implies \mathrm{EMIT\ SPIKE}\; s(t) = \delta(t - t_{\text{spike}}), \quad u(t^+) = u_{\text{reset}}
 $$
 
 У такій системі інформація кодується не рівнем напруги й не 64-бітними числами з рухомою комою, а **часовим інтервалом між окремими спайками** (*Time-to-First-Spike / Spike Rate*). Якщо події в середовищі відсутні, енергія не витрачається взагалі ($P_{\text{idle}} \approx 0$).
@@ -290,7 +291,7 @@ $$
 Нейроморфний сенсор DVS (Dynamic Vision Sensor) містить незалежні аналогові пікселі, кожен з яких реагує винятково на логарифмічну зміну інтенсивності світла:
 
 $$
-\Delta \ln I(x, y, t) = \ln I(x, y, t) - \ln I(x, y, t - \Delta t) \ge \pm \theta_{\text{threshold}}
+\left|\Delta \ln I(x, y, t)\right| = \left|\ln I(x, y, t) - \ln I(x, y, t - \Delta t)\right| \ge \theta_{\text{threshold}}
 $$
 
 ```mermaid

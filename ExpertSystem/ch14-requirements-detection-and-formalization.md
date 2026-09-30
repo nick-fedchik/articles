@@ -180,10 +180,10 @@ flowchart TD
 
 ### Логіка предикатів першого порядку (FOL)
 
-Узагальнена вимога до системи моделюється як відношення над простором станів системи $\mathcal{S}$ та вектором вхідних сигналів $\mathbf{x} \in \mathcal{X}$:
+Узагальнена вимога до системи моделюється як відношення над простором станів системи $\mathcal{S}$, вектором вхідних сигналів $\mathbf{x} \in \mathcal{X}$ та вихідними сигналами $\mathbf{y} \in \mathcal{Y}$:
 
 ```math
-\forall s \in \mathcal{S},\; \forall \mathbf{x} \in \mathcal{X}:\quad \Phi_{\mathrm{pre}}(s, \mathbf{x}) \Rightarrow \Phi_{\mathrm{post}}(s', \mathbf{y}) \land \mathcal{T}(s, s')
+\forall s \in \mathcal{S},\; \forall \mathbf{x} \in \mathcal{X}:\quad \Phi_{\mathrm{pre}}(s, \mathbf{x}) \Rightarrow \exists s' \in \mathcal{S},\; \exists \mathbf{y} \in \mathcal{Y}: \bigl(\Phi_{\mathrm{post}}(s', \mathbf{y}) \land \mathcal{T}(s, s')\bigr)
 ```
 
 де:
@@ -194,7 +194,7 @@ flowchart TD
 
 ### Лінійна темпоральна логіка (LTL) та сигнальна темпоральна логіка (STL)
 
-Оскільки реальні вбудовані системи працюють у неперервному або дискретному часі, статичних предикатів недостатньо для моделювання реактивності. Експертна система транслює подійні вимоги у формули $LTL$:
+Оскільки реальні вбудовані системи працюють у неперервному або дискретному часі, статичних предикатів недостатньо для моделювання реактивності. Експертна система транслює подійні вимоги у формули темпоральної логіки, зокрема $LTL$ та метричної/сигнальної темпоральної логіки $MTL/STL$:
 
 **1. Інваріант безпеки (Safety Invariant — «нічого поганого не станеться»):**
 
@@ -204,7 +204,7 @@ flowchart TD
 
 Оператор $\Box$ означає «завжди в усіх майбутніх станах».
 
-**2. Вимога живучості та обмеженого часу реакції (Bounded Liveness):**
+**2. Вимога живучості та обмеженого часу реакції (Bounded Liveness, MTL/STL):**
 
 ```math
 \Box\,\Bigl(\mathit{FaultTriggered} \Rightarrow \Diamond_{\le \tau}\,\mathit{SafeStateAchieved}\Bigr)

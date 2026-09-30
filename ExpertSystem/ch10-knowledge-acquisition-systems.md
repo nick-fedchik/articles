@@ -409,11 +409,12 @@ flowchart TB
 ```math
 \hat y(x)=
 \begin{cases}
-\arg\max_y p(y\mid x), & \max_y p(y\mid x)\ge\tau
-\text{ і політика дозволяє автоматизацію},\\
+\arg\max_y p(y\mid x), & \text{якщо } \max_y p(y\mid x)\ge\tau \land \mathrm{AutoAllowed}(x),\\
 \text{review}, & \text{інакше}.
 \end{cases}
 ```
+
+Тут $\mathrm{AutoAllowed}(x)$ означає, що політика дозволяє автоматичне рішення для документа $x$.
 
 Поріг $\tau$ задають не «на око», а за risk-weighted validation: помилково позначити конфіденційне як публічне значно дорожче, ніж відправити зайвий документ на review. Некалібрований softmax score не слід називати ймовірністю; confidence треба перевіряти reliability diagram/ECE на даних тієї ж організації.
 

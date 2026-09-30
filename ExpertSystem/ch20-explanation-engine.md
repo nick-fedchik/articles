@@ -237,7 +237,7 @@ flowchart TD
 
 Математичне визначення нездійсненного ядра обмежень:
 
-$$\text{UnsatCore} \subseteq C \quad \text{таке, що} \quad K \cup \text{UnsatCore} \vdash \bot$$
+$$\text{UnsatCore} \subseteq C, \quad K \cup \text{UnsatCore} \vdash \bot, \quad \forall C' \subsetneq \text{UnsatCore}: K \cup C' \not\vdash \bot$$
 
 Де $\bot$ позначає логічну суперечність. QuickXPlain знаходить мінімальне ядро за логарифмічний час $O(k \log(n/k) + k^2)$, де $n$ — кількість правил у системі, а $k$ — розмір ядра конфлікту.
 

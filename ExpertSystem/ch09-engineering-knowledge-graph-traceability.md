@@ -90,13 +90,13 @@ flowchart TD
 Формально **Інженерний граф знань (EKG)** визначається як гетерогенний розмічений мультиграф із семантичними атрибутами та обмеженнями цілісності:
 
 ```math
-\mathcal{G}_{\mathrm{EKG}} = (\mathcal{V}, \mathcal{E}, \tau_v, \tau_e, \mathcal{A}_v, \mathcal{A}_e, \mathcal{P})
+\mathcal{G}_{\mathrm{EKG}} = (\mathcal{V}, \mathcal{E}, s, t, \tau_v, \tau_e, \mathcal{A}_v, \mathcal{A}_e, \mathcal{P})
 ```
 
 де:
 
 - $\mathcal{V}$ — множина вузлів (інженерних артефактів);
-- $\mathcal{E} \subseteq \mathcal{V} \times \mathcal{V}$ — множина орієнтованих ребер (зв'язків між артефактами);
+- $\mathcal{E}$ — множина ідентифікованих орієнтованих ребер, а $s,t: \mathcal{E} \to \mathcal{V}$ — функції початкового та кінцевого вузлів;
 - $\tau_v: \mathcal{V} \to \mathcal{T}_V$ — функція типізації вузлів;
 - $\tau_e: \mathcal{E} \to \mathcal{T}_E$ — функція типізації ребер;
 - $\mathcal{A}_v, \mathcal{A}_e$ — атрибутні відображення, що закріплюють метадані (хеші, часові мітки, зсуви в тексті, результати вимірювань);
