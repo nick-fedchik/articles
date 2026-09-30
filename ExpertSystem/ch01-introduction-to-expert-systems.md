@@ -647,7 +647,7 @@ C_{answer}=\frac{A_{answered}}{Q_{eligible}},
 - **[Частина IV](part-04-architecture-and-inference.md) (глави 16–22)** описує архітектуру, технологічний стек, інфраструктуру виконання, шлях від запитання до доказу, пояснення, безпечне виконання дій і розподіл обчислень від сенсорів до серверів.
 - **[Частина V](part-05-verification-and-learning.md) (глави 23–26)** присвячена перевірці бази знань, технічній діагностиці та навчанню експертної системи.
 - **[Частина VI](part-06-frontiers-neuro-symbolic.md) (глави 27–29)** розглядає синтез сертифікаційних доказів, дворежимні експертні системи та поєднання мовних моделей із детермінованим виведенням.
-- **Додатки А–Г** містять практичну методику доказового дослідження ([Додаток А](appendix-a-evidence-governed-framework.md)) та приклади з робототехніки ([Додаток Б](appendix-b-robotics-and-cyber-physical-systems.md)), автономної навігації ([Додаток В](appendix-c-autonomous-navigation-and-geosearch.md)) й аналогових обчислень ([Додаток Г](appendix-d-analog-expert-systems-and-neuromorphic-computing.md)).
+- **Додатки А–Д** містять практичну методику доказового дослідження ([Додаток А](appendix-a-evidence-governed-framework.md)) та приклади з робототехніки ([Додаток Б](appendix-b-robotics-and-cyber-physical-systems.md)), автономної навігації ([Додаток В](appendix-c-autonomous-navigation-and-geosearch.md)), аналогових обчислень ([Додаток Г](appendix-d-analog-expert-systems-and-neuromorphic-computing.md)) й змішаних аналого-цифрових експертних систем ([Додаток Д](appendix-e-mixed-signal-neuromorphic-expert-systems.md)).
 
 Читати книгу підряд не обов'язково. Якщо ви прийшли з конкретною роллю, почніть із глав, які відповідають вашій задачі:
 
