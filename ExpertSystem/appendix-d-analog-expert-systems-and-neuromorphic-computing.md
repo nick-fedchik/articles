@@ -4,7 +4,7 @@
 > **Попередній додаток:** [Додаток В. Автономна навігація без GNSS: геопросторове зіставлення (TRN/DSMAC), візуальна одометрія (VIO) та експертний арбітраж сенсорного злиття](appendix-c-autonomous-navigation-and-geosearch.md)  
 > **Наступний додаток:** [Додаток Д. Змішані аналого-цифрові експертні системи](appendix-e-mixed-signal-neuromorphic-expert-systems.md)  
 > **Зміст книги:** [README.md](README.md)  
-> **Пов'язані глави книги:** [Глава 6. Прикладна математика експертних систем](ch06-applied-mathematics-for-expert-systems.md) · [Глава 18. Інфраструктура виконання](ch18-execution-infrastructure.md) · [Глава 22. Кібернетичний контур XXI століття](ch22-cybernetics-edge-to-backend.md) · [Глава 29. Нейро-символьна архітектура](ch29-neuro-symbolic-architecture.md)  
+> **Пов'язані глави книги:** [Глава 6. Прикладна математика експертних систем](ch06-applied-mathematics-for-expert-systems.md) · [Глава 18. Інфраструктура виконання](ch18-execution-infrastructure.md) · [Глава 22. Кібернетичний цикл керування XXI століття](ch22-cybernetics-edge-to-backend.md) · [Глава 29. Нейро-символьна архітектура](ch29-neuro-symbolic-architecture.md)  
 > **Суміжні дослідження автора:** [Військові експертні системи: БПЛА, ППО, РЕР/РЕБ](../MilTech/Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md) · [Військова кібернетика](../MilTech/Ukrainian-Military-Cybernetics-UA.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** поглиблений інженерний: системні архітектори, розробники аналогових і змішаних інтегральних схем, фахівці з нейроморфних обчислень, інженери вбудованих систем  

@@ -4,7 +4,7 @@
 > **Попередній додаток:** [Додаток Б. Доказові експертні системи в автономній робототехніці та кіберфізичних комплексах](appendix-b-robotics-and-cyber-physical-systems.md)  
 > **Наступний додаток:** [Додаток Г. Аналогові експертні системи, нейроморфні обчислення та апаратне логічне виведення](appendix-d-analog-expert-systems-and-neuromorphic-computing.md)  
 > **Зміст книги:** [README.md](README.md)  
-> **Пов'язані глави книги:** [Глава 6. Прикладна математика експертних систем](ch06-applied-mathematics-for-expert-systems.md) · [Глава 18. Інфраструктура виконання](ch18-execution-infrastructure.md) · [Глава 21. Від рекомендації до дії](ch21-from-recommendation-to-action.md) · [Глава 22. Кібернетичний контур XXI століття](ch22-cybernetics-edge-to-backend.md)  
+> **Пов'язані глави книги:** [Глава 6. Прикладна математика експертних систем](ch06-applied-mathematics-for-expert-systems.md) · [Глава 18. Інфраструктура виконання](ch18-execution-infrastructure.md) · [Глава 21. Від рекомендації до дії](ch21-from-recommendation-to-action.md) · [Глава 22. Кібернетичний цикл керування XXI століття](ch22-cybernetics-edge-to-backend.md)  
 > **Суміжні дослідження автора:** [Автономна навігація без GNSS](../MilTech/Autonomous-Navigation-GNSS-Denied-MilTech-UA.md) · [Військові експертні системи: БПЛА, ППО, РЕР/РЕБ](../MilTech/Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** архітектори автономних безпілотних апаратів, інженери вбудованих систем, фахівці з комп'ютерного зору та інерціальної навігації  
