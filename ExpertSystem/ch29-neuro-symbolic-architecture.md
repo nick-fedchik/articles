@@ -2,7 +2,7 @@
 
 > **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Передовий край: регуляторна сертифікація та нейро-символьний ШІ](part-06-frontiers-neuro-symbolic.md)  
 > **Попередня глава:** [Глава 28. Дворежимні експертні системи: поєднання строгої дедукції (Fail-Closed) та евристичного дорадчого виведення (CBR)](ch28-dual-mode-expert-systems.md)  
-> **Наступний розділ:** [Додаток А. Практичний фреймворк доказового дослідження в складних інженерних проєктах](appendix-a-evidence-governed-framework.md)  
+> **Наступна глава:** [Глава 30. Ко-інженерія функціональної безпеки та кібербезпеки](ch30-safety-cybersecurity-co-engineering.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** поглиблений: системні архітектори, інженери машинного навчання, розробники критичних систем  
@@ -509,4 +509,4 @@ func main() {
 
 ---
 
-[← Глава 28. Дворежимні експертні системи](ch28-dual-mode-expert-systems.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Додаток А →](appendix-a-evidence-governed-framework.md)
+[← Глава 28. Дворежимні експертні системи](ch28-dual-mode-expert-systems.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 30. Ко-інженерія безпеки та кібербезпеки →](ch30-safety-cybersecurity-co-engineering.md)
