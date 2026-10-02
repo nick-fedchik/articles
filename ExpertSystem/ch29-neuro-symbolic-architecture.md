@@ -16,11 +16,7 @@
 
 Авторегресивна мовна модель $\mathcal{M}$ навчається передбачати наступний токен за попередніми:
 
-```math
-P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1}),
-\qquad
-\hat w_{1:N}=\arg\max_{w_{1:N}}\prod_{t=1}^{N}P_{\mathcal{M}}(w_t\mid w_{<t}).
-```
+$$P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1}),\qquad \hat{w}_{1:N}=\arg\max_{w_{1:N}}\prod_{t=1}^{N}P_{\mathcal{M}}(w_t\mid w_{<t})$$
 
 Позначення:
 
