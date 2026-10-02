@@ -1,0 +1,118 @@
+:root {
+  color-scheme: light;
+  --ink: #232622;
+  --muted: #596157;
+  --link: #246448;
+  --accent: #b54332;
+  --rule: #d6dcd5;
+}
+
+html { background: #fafcf9; }
+
+body {
+  box-sizing: border-box;
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+  color: var(--ink);
+  background: #ffffff;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  letter-spacing: 0;
+  overflow-wrap: break-word;
+}
+
+#title-block-header {
+  padding-bottom: 1.5rem;
+  border-bottom: 3px solid var(--accent);
+}
+
+#title-block-header .title {
+  font-size: 2.6rem;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+#title-block-header .subtitle {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+#title-block-header .author { font-size: 1.1rem; }
+.date { color: var(--muted); font-size: 0.9rem; }
+
+h1, h2, h3 {
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: 0;
+  break-after: avoid;
+}
+
+h1 { font-size: 1.95rem; margin: 3rem 0 1.5rem; }
+h2 { font-size: 1.45rem; margin: 2rem 0 1rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 0.6rem; }
+p { margin: 0 0 1rem; orphans: 3; widows: 3; }
+
+a {
+  color: var(--link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+  overflow-wrap: anywhere;
+}
+
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.book-contents {
+  margin: 2rem 0 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.book-contents ul { list-style: none; padding-left: 0; }
+.book-contents li { margin: 0.65rem 0; }
+.level1 + .level1 { border-top: 1px solid var(--rule); padding-top: 1rem; }
+
+.chapter-navigation {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9rem;
+}
+
+table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.85em;
+  line-height: 1.4;
+}
+
+th, td {
+  padding: 0.6rem 0.45rem;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+th { border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+code { font-family: Consolas, "Liberation Mono", monospace; font-size: 0.85em; }
+blockquote { margin: 1.5rem 0; padding-left: 1rem; border-left: 3px solid var(--accent); }
+
+@media (max-width: 600px) {
+  body { padding: 1.5rem 1rem 3rem; font-size: 1rem; }
+  #title-block-header .title { font-size: 2rem; }
+  h1 { font-size: 1.65rem; }
+  h2 { font-size: 1.3rem; }
+  th, td { padding: 0.5rem 0.3rem; }
+}
+
+@media print {
+  html, body { background: white; }
+  body { max-width: none; padding: 0; font-size: 11pt; }
+  .level1 { break-before: page; }
+  .chapter-navigation { display: none; }
+  a { color: inherit; }
+}
