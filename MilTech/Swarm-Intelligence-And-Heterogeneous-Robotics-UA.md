@@ -97,7 +97,7 @@ $$
 \mathbf{F}_{\text{obs}, i} = \sum_{k \in \mathcal{O}_i} \eta \left( \frac{1}{d_k} - \frac{1}{d_{\text{safe}}} \right) \frac{1}{d_k^2} \frac{\mathbf{p}_i - \mathbf{p}_{\text{obs}, k}}{d_k}
 $$
 
-де дистанція до $k$-ї перешкоди становить $d_k = \|\mathbf{p}_i - \mathbf{p}_{\text{obs}, k}\| \le d_{\text{safe}}$.
+де дистанція до $k$-ї перешкоди становить $`d_k = \|\mathbf{p}_i - \mathbf{p}_{\text{obs}, k}\| \le d_{\text{safe}}`$.
 
 ---
 
