@@ -280,7 +280,7 @@ d_M^{2}=(\mathbf{z}-\hat{\mathbf{z}})^{\top}\mathbf{S}^{-1}(\mathbf{z}-\hat{\mat
 
 ### Схема для некорельованих вимірювань
 
-Нехай інновація подана двома диференційними напругами $V_x=z_x-\hat z_x$ і $V_y=z_y-\hat z_y$, а вимірювання некорельовані, тобто $\mathbf{S}=\operatorname{diag}(\sigma_x^{2},\sigma_y^{2})$. Тоді
+Нехай інновація подана двома диференційними напругами $V_x=z_x-\hat z_x$ і $V_y=z_y-\hat z_y$, а вимірювання некорельовані, тобто $\mathbf{S}=\mathrm{diag}(\sigma_x^{2},\sigma_y^{2})$. Тоді
 
 ```math
 d_M^{2}=\frac{V_x^{2}}{\sigma_x^{2}}+\frac{V_y^{2}}{\sigma_y^{2}}\le\gamma .
