@@ -212,7 +212,7 @@ classDiagram
 
 ## 3. Обробка та верифікація вимог у форматі ReqIF (ASPICE 4.0)
 
-В авіаційній, автомобільній та оборонній індустріях обмін вимогами між замовником, генеральним підрядником (Tier-1) та розробниками мікроелектроніки (Tier-2) здійснюється через відкритий XML-стандарт **ReqIF (Requirements Interchange Format)**, стандартизований консорціумом OMG [[8]](#src-8).
+В авіаційній, автомобільній та оборонній індустріях обмін вимогами між замовником, генеральним підрядником (Tier-1) та розробниками мікроелектроніки (Tier-2) здійснюється через відкритий XML-стандарт **ReqIF (Requirements Interchange Format)**, стандартизований консорціумом OMG [[1]](#src-1).
 
 ```mermaid
 flowchart LR
@@ -292,7 +292,7 @@ flowchart LR
 
 ### 3.2. Автоматична перевірка метрик повноти ASPICE 4.0
 
-Стандарт Automotive SPICE (ASPICE 4.0, виданий VDA QMC у 2023 році [[9]](#src-9)) та авіаційний еквівалент DO-178C встановлюють суворі критерії двонапрямленої простежуваності (*Bidirectional Traceability*). Формальний валідатор графа знань перевіряє три обов'язкові інваріанти сертифікації:
+Стандарт Automotive SPICE (ASPICE 4.0, виданий VDA QMC у 2023 році [[2]](#src-2)) та авіаційний еквівалент DO-178C встановлюють суворі критерії двонапрямленої простежуваності (*Bidirectional Traceability*). Формальний валідатор графа знань перевіряє три обов'язкові інваріанти сертифікації:
 
 **Інваріант відсутності вимог без системного зв'язку ($\mathcal{I}_{\text{no-orphan}}$).**  
 Кожна програмна вимога $`r \in \text{Reqs}_{\text{SWE.1}}`$ зобов'язана бути спадкоємцем хоча б однієї системної вимоги $`s \in \text{Reqs}_{\text{SYS.2}}`$:
@@ -346,7 +346,7 @@ flowchart LR
 
 ## 4. Синтез доказів безпеки за стандартом Goal Structuring Notation (GSN)
 
-Замість написання сотень сторінок суб'єктивних описових звітів, сучасний регуляторний аудит спирається на побудову формальних дерев аргументації у нотації **Goal Structuring Notation (GSN Community Standard v3)** [[2]](#src-2), [[3]](#src-3).
+Замість написання сотень сторінок суб'єктивних описових звітів, сучасний регуляторний аудит спирається на побудову формальних дерев аргументації у нотації **Goal Structuring Notation (GSN Community Standard v3)** [[3]](#src-3), [[4]](#src-4).
 
 ```mermaid
 flowchart TD
@@ -656,15 +656,75 @@ ACTION: TRANSITION_TO_SAFE_STATE -> SHUTDOWN_ALL_ACTUATORS_AND_GLIDE
 
 ---
 
-## 7. Регуляторний аудит: контрольний чек-лист для сертифікації
+## 7. Кваліфікація самої експертної системи як програмного інструмента (ISO 26262-8, розділ 11)
+
+Попередні розділи показали, як експертна система перевіряє простежуваність ReqIF, обчислює метрики повноти ASPICE і синтезує сертифікати доказів `.zproof`. Аудитор, який отримує такий сертифікат, поставить запитання вже до самої експертної системи: чому висновкам цього інструмента можна довіряти? Для автомобільних проєктів форму відповіді задає розділ 11 частини 8 стандарту ISO 26262 «Впевненість у використанні програмних інструментів» (*Confidence in the use of software tools*) [[5]](#src-5). Стандарт не вимагає сертифікувати кожен інструмент: стандарт вимагає оцінити, що станеться, якщо інструмент помилиться, і чи помітить цю помилку інший захід процесу розроблення.
+
+### 7.1. Вплив інструмента, виявлення помилки й рівень довіри
+
+Оцінка спирається на дві характеристики конкретного сценарію використання інструмента. Вплив інструмента (*Tool Impact*, TI) показує, чи може несправність інструмента внести помилку в елемент, пов'язаний із безпекою, або не виявити наявну помилку: TI1 означає, що такої можливості немає, TI2 охоплює решту випадків. Виявлення помилки інструмента (*Tool error Detection*, TD) показує, наскільки впевнено інші заходи процесу запобіжать хибному результату інструмента або виявлять його: TD1 означає високий ступінь впевненості, TD2 середній, TD3 решту випадків. З цих двох оцінок виводять рівень довіри до інструмента (*Tool Confidence Level*, TCL).
+
+```math
+\mathrm{TCL}(\mathrm{TI}, \mathrm{TD}) =
+\begin{cases}
+1, & \mathrm{TI} = \mathrm{TI1} \;\lor\; \mathrm{TD} = \mathrm{TD1},\\
+2, & \mathrm{TI} = \mathrm{TI2} \;\land\; \mathrm{TD} = \mathrm{TD2},\\
+3, & \mathrm{TI} = \mathrm{TI2} \;\land\; \mathrm{TD} = \mathrm{TD3}.
+\end{cases}
+```
+
+Складники класифікації інструмента:
+
+- $\mathrm{TI}$ є оцінкою впливу інструмента для одного сценарію використання й набуває значень TI1 або TI2;
+- $\mathrm{TD}$ є оцінкою того, наскільки впевнено процес запобіжить хибному результату інструмента або виявить його, і набуває значень TD1, TD2 або TD3;
+- $\lor$ означає логічне «або», а $\land$ означає логічне «і»;
+- $\mathrm{TCL}$ є рівнем довіри від 1 до 3: TCL1 не потребує кваліфікації, TCL2 і TCL3 потребують кваліфікації, а для TCL3 вимоги до неї суворіші.
+
+Формулу читають так: інструмент не потребує кваліфікації, якщо його помилка не може зашкодити продукту (TI1) або помилку майже напевно виявить незалежний захід (TD1). Кваліфікація потрібна лише тоді, коли помилка інструмента може потрапити в продукт, і процес не гарантує, що помилку зупинить. Таблиця застосовує формулу до трьох сценаріїв використання однієї й тієї самої експертної системи.
+
+| Сценарій використання експертної системи | TI | Захід, що виявляє помилку інструмента | TD | TCL |
+|---|---|---|---|---|
+| Пошук норм і показ цитат; рішення ухвалює інженер після читання першоджерела | TI2: пропущена норма може не потрапити до вимог | незалежний перелік застосовних стандартів і побайтова перевірка кожної цитати | TD1 | TCL1 |
+| Виявлення прогалин простежуваності ReqIF (розділ 3.2) | TI2: пропущена прогалина не потрапить до звіту аудиту | вибіркова ручна перевірка й порівняльний прогін іншим інструментом | TD2 | TCL2 |
+| Синтез сертифіката `.zproof` без рецензування людиною | TI2: хибний аргумент потрапляє до обґрунтування безпеки | незалежного заходу немає | TD3 | TCL3 |
+
+Таблиця ілюструє логіку класифікації, а не дає готових оцінок: TD залежить від того, які перевірки справді виконує процес конкретного проєкту. З таблиці випливає два практичні наслідки. По-перше, класифікують не експертну систему взагалі, а кожен сценарій її використання. По-друге, найдешевший спосіб знизити TCL полягає не в кваліфікації, а в незалежному заході виявлення. Цитати з байтовими межами, дерево доведення й позначена відмова, які книга описує в [Главах 20](ch20-explanation-engine.md) і [31](ch31-syllogistic-reasoning-and-relation-lattices.md), саме таким заходом і є: рецензент перевіряє кожне твердження за першоджерелом, не довіряючи інструменту на слово.
+
+### 7.2. Методи кваліфікації й особливість експертної системи
+
+Для TCL2 і TCL3 стандарт пропонує чотири методи кваліфікації, а рекомендованість кожного методу залежить від TCL і від ASIL продукту [[5]](#src-5):
+
+1. підвищення впевненості через досвід використання (*increased confidence from use*);
+2. оцінювання процесу розроблення інструмента;
+3. валідація програмного інструмента;
+4. розроблення інструмента відповідно до стандарту безпеки.
+
+Для експертної системи найпрактичніший метод є валідацією: еталонний набір випадків із відомими правильними відповідями, метаморфні й порівняльні перевірки ([Глава 23](ch23-knowledge-base-verification.md)), виміряні частоти хибних відповідей і відмов. Особливість експертної системи полягає в тому, що поведінку інструмента визначає не лише версія механізму виведення, а й покоління пакета знань ([Глава 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)). Тому версією кваліфікованого інструмента є пара «версія механізму виведення і ідентифікатор покоління пакета знань», і кожне нове покоління пакета потребує повторного прогону валідаційного набору. Метод досвіду використання для експертної системи слабкий з тієї самої причини: історія використання накопичується для конкретної пари версій, а знання оновлюються швидше, ніж накопичується статистика.
+
+Авіаційні проєкти розв'язують ту саму задачу за розділом 12.2 DO-178C [[6]](#src-6) і документом DO-330 [[7]](#src-7). Рівень кваліфікації інструмента (*Tool Qualification Level*, TQL, від TQL-1 до TQL-5) визначають за трьома критеріями й рівнем бортового ПЗ: чи може вихід інструмента внести помилку в бортове ПЗ, чи автоматизує інструмент перевірку, якою замінюють інші перевірки, чи інструмент може лише не виявити помилку. Логіка збігається з ISO 26262-8: оцінюють наслідок помилки інструмента й незалежність її виявлення.
+
+### 7.3. Комплект документів кваліфікації
+
+Результат класифікації й кваліфікації оформлюють так, щоб аудитор міг перевірити його незалежно від розробника експертної системи. Практично це три документи:
+
+1. **Звіт про класифікацію інструмента:** перелік сценаріїв використання, оцінки TI і TD з обґрунтуванням і отриманий TCL для кожного сценарію.
+2. **Звіт про кваліфікацію:** обраний метод, валідаційний набір, виміряні результати і пара версій «механізм виведення і покоління пакета знань», для якої результати чинні.
+3. **Настанова з використання інструмента:** дозволені сценарії, обов'язкові людські перевірки, відомі несправності й обхідні шляхи, середовище виконання.
+
+Третій документ найкорисніший для інженерів: настанова прямо каже, для чого експертній системі довіряти не можна. Цей негативний результат є такою самою частиною кваліфікації, як і позитивний, і саме негативний результат не дає інструменту непомітно розширити сферу застосування. Контрольний перелік аудиту в наступному розділі тому містить окремий пункт про кваліфікацію інструментів.
+
+---
+
+## 8. Регуляторний аудит: контрольний чек-лист для сертифікації
 
 При проходженні сертифікаційного аудиту за стандартами ISO 26262:2018, ISO/SAE 21434:2021 та DO-326A/DO-178C незалежний аудитор здійснює перевірку проекту за формальним чек-листом, що транслюється у запити до графа EKG:
 
 1. **Єдність реєстру активів:** Чи кожен актив, зазначений у розділі HARA, має відповідний запис у матриці TARA? (Запит EKG: перевірка бієкції між вузлами `SafetyAsset` та `CyberAsset`).
-2. **Обґрунтування FTTI/ARTI:** Чи містить технічний звіт підтверджені осцилограмами та логами вимірювання інтервалів виявлення та блокування загроз? Чи виконується сувора нерівність $\text{ARTI} + \text{FRTI} < \text{FTTI}$?
+2. **Обґрунтування FTTI/ARTI:** Чи містить технічний звіт підтверджені осцилограмами та логами вимірювання інтервалів виявлення та блокування загроз? Чи виконується сувора нерівність $`\text{ARTI} + \text{FRTI} < \text{FTTI}`$?
 3. **ReqIF-простежуваність:** Чи повністю відсутні в системній специфікації SWE.1 вимоги без батьківських цілей SYS.2 (вимоги-сироти) та вимоги без прив'язаних тестів SWE.6?
 4. **Покриття MC/DC для ASIL D:** Чи надано машиночитні логи покриття звітів верифікації коду, що свідчать про досягнення 100.0% покриття для всіх модулів, що керують критичними виконавчими механізмами?
 5. **Валідація ланцюга постачання (Supply Chain):** Чи всі сторонні бінарні бібліотеки (SOUP/COTS) мають сертифікати походження, хеші SHA-256 та звіти про відсутність відомих вразливостей (CVE)?
+6. **Кваліфікація інструментів:** Чи класифіковано експертну систему та інші інструменти за ISO 26262-8 для кожного сценарію використання, і чи збігається пара версій «механізм виведення і покоління пакета знань» у звіті про кваліфікацію з тією, що сформувала подані докази?
 
 ---
 
@@ -674,6 +734,7 @@ ACTION: TRANSITION_TO_SAFE_STATE -> SHUTDOWN_ALL_ACTUATORS_AND_GLIDE
 2. **Детермінізм замість суб'єктивізму:** Відображення оцінки впливу TARA на рівні тяжкості HARA повинно спиратися на математичні інваріанти, виключаючи людський фактор та суб'єктивні заниження ризиків.
 3. **Часовий бюджет як головний критерій:** Якщо сумарний час розпізнавання атаки та реакції захисту $\text{ARTI}$ перевищує інтервал стійкості до відмов $\text{FTTI}$, жодні програмні протоколи не врятують систему. У таких точках необхідне впровадження фізичної або апаратної ізоляції.
 4. **Машиночитна сертифікація:** Використання відкритого стандарту обміну вимогами ReqIF, інженерного графа EKG та дерев цілей GSN з криптографічними сертифікатами доказів дозволяє перетворити виснажливий процес аудиту на автоматизоване компілювання верифікованих доказів.
+5. **Довіра до самого інструмента:** експертна система, що формує докази безпеки, сама підлягає класифікації за ISO 26262-8. Рівень довіри визначають для кожного сценарію використання, незалежна перевірка цитат знижує його дешевше за кваліфікацію, а кваліфікація чинна лише для пари «версія механізму виведення і покоління пакета знань».
 
 ---
 
@@ -685,6 +746,7 @@ ACTION: TRANSITION_TO_SAFE_STATE -> SHUTDOWN_ALL_ACTUATORS_AND_GLIDE
 4. Які три обов'язкові інваріанти сертифікації ASPICE 4.0 перевіряються експертною системою на базі аналізу структури ReqIF?
 5. У чому полягає перевага підписаних сертифікатів доказів формату `.zproof` над класичними паперовими сертифікаційними звітами?
 6. Як декомпозиція вимог за стандартом ISO 26262-9 дозволяє одночасно задовольнити найвищий рівень функціональної безпеки (ASIL D) та забезпечити кіберзахист каналу керування?
+7. Чому одна й та сама експертна система може мати TCL1 в одному сценарії використання і TCL3 в іншому, і чому нове покоління пакета знань вимагає повторної валідації інструмента?
 
 ---
 
@@ -706,6 +768,10 @@ ACTION: TRANSITION_TO_SAFE_STATE -> SHUTDOWN_ALL_ACTUATORS_AND_GLIDE
 | Нотація структурування цілей | GSN (Goal Structuring Notation) | Графічна мова для явної структуризації сертифікаційних аргументів безпеки |
 | Апаратний модуль безпеки | HSM (Hardware Security Module) | Ізольований апаратний криптографічний співпроцесор для збереження ключів та швидкого обчислення підписів/CMAC |
 | Модуль захисту пам'яті | MPU (Memory Protection Unit) | Апаратний вузол мікроконтролера, що контролює права доступу процесорних завдань до адресного простору |
+| Кваліфікація програмного інструмента | Software tool qualification | Підтвердження доказами, що інструменту можна довіряти в певному сценарії використання |
+| Вплив інструмента | TI (Tool Impact) | Оцінка того, чи може несправність інструмента внести або пропустити помилку в елементі, пов'язаному з безпекою |
+| Виявлення помилки інструмента | TD (Tool error Detection) | Оцінка того, наскільки впевнено інші заходи процесу виявлять хибний результат інструмента |
+| Рівень довіри до інструмента | TCL (Tool Confidence Level) | Рівень від 1 до 3 за ISO 26262-8, який визначає, чи потрібна кваліфікація інструмента |
 
 ---
 
@@ -731,27 +797,33 @@ ACTION: TRANSITION_TO_SAFE_STATE -> SHUTDOWN_ALL_ACTUATORS_AND_GLIDE
 | OTA | Over-The-Air | технологія бездротового дистанційного оновлення прошивки |
 | ReqIF | Requirements Interchange Format | відкритий формат обміну вимогами консорціуму OMG |
 | TARA | Threat Analysis and Risk Assessment | аналіз загроз та оцінювання ризиків кібербезпеки |
+| TCL | Tool Confidence Level | рівень довіри до програмного інструмента за ISO 26262-8 |
+| TD | Tool error Detection | оцінка виявлення помилки інструмента за ISO 26262-8 |
+| TI | Tool Impact | оцінка впливу інструмента на елемент, пов'язаний із безпекою, за ISO 26262-8 |
+| TQL | Tool Qualification Level | рівень кваліфікації інструмента за DO-178C і DO-330 |
 | VDA | Verband der Automobilindustrie | Союз автомобільної промисловості Німеччини |
 
 ---
 
 ## Джерела
 
-1. <a id="src-1"></a>International Organization for Standardization. [*ISO 26262:2018: Road Vehicles - Functional Safety (Parts 1–12)*](https://www.iso.org/standard/68383.html). ISO, Geneva, Switzerland, 2018.
-2. <a id="src-2"></a>International Organization for Standardization, SAE International. [*ISO/SAE 21434:2021: Road Vehicles - Cybersecurity Engineering*](https://www.iso.org/standard/70918.html). ISO/SAE, Geneva, Switzerland, 2021.
-3. <a id="src-3"></a>Assurance Case Working Group. [*Goal Structuring Notation Community Standard, Version 3*](https://doi.org/10.65391/r1386). SCSC-141C, Safety-Critical Systems Club, 2021.
-4. <a id="src-4"></a>RTCA / EUROCAE. [*DO-178C / ED-12C: Software Considerations in Airborne Systems and Equipment Certification*](https://www.rtca.org/). RTCA, Washington, D.C., 2011.
-5. <a id="src-5"></a>RTCA / EUROCAE. [*DO-326A / ED-202A: Airworthiness Security Process Specification*](https://www.rtca.org/). RTCA, Washington, D.C., 2014.
-6. <a id="src-6"></a>International Electrotechnical Commission. [*IEC 61508: Functional Safety of Electrical/Electronic/Programmable Electronic Safety-related Systems (Parts 1–7)*](https://www.iec.ch/). IEC, Geneva, Switzerland, 2010.
-7. <a id="src-7"></a>Charles Haddon-Cave. [*The Nimrod Review: An Independent Review into the Broader Issues Surrounding the Loss of the RAF Nimrod MR2 Aircraft XV230 in Afghanistan in 2006*](https://www.gov.uk/government/publications/the-nimrod-review). HC 1025, The Stationery Office, London, 2009.
-8. <a id="src-8"></a>Object Management Group (OMG). [*Requirements Interchange Format (ReqIF), Version 1.2*](https://www.omg.org/spec/ReqIF/). OMG Specification formal/2013-10-01, 2013.
-9. <a id="src-9"></a>VDA QMC Working Group 13. [*Automotive SPICE Process Assessment / Reference Model, Version 4.0*](https://vda-qmc.de/). Verband der Automobilindustrie e.V. (VDA), Berlin, 2023.
-10. <a id="src-10"></a>John Rushby. [*Formalism in Safety Cases*](https://www.csl.sri.com/users/rushby/abstracts/sss10). *Making Systems Safer: Proceedings of the Eighteenth Safety-Critical Systems Symposium*, Springer, 3–17, 2010.
-11. <a id="src-11"></a>Ewen Denney, Ganesh Pai. [*Automating the Assembly of Aviation Safety Cases*](https://doi.org/10.1109/TR.2014.2335995). *IEEE Transactions on Reliability*, 63(4), 830–849, 2014.
-12. <a id="src-12"></a>Chunho Lee, Erkuden Rios, et al. [*Combined Safety and Security Co-Engineering for Cyber-Physical Systems: A Systematic Survey*](https://doi.org/10.1145/3543851). *ACM Computing Surveys*, 55(4), 1–38, 2022.
-13. <a id="src-13"></a>Phan Minh Dung. [*On the Acceptability of Arguments and Its Fundamental Role in Nonmonotonic Reasoning, Logic Programming and n-Person Games*](https://doi.org/10.1016/0004-3702(94)00041-X). *Artificial Intelligence*, 77(2), 321–357, 1995.
-14. <a id="src-14"></a>Anders Rundgren, Bret Jordan, Samuel Erdtman. [*RFC 8785: JSON Canonicalization Scheme (JCS)*](https://www.rfc-editor.org/rfc/rfc8785). IETF, 2020.
-15. <a id="src-15"></a>National Institute of Standards and Technology. [*NIST Special Publication 800-38B: Recommendation for Block Cipher Modes of Operation: The CMAC Mode for Authentication*](https://doi.org/10.6028/NIST.SP.800-38B). NIST, Gaithersburg, MD, 2005.
+1. <a id="src-1"></a>Object Management Group (OMG). [*Requirements Interchange Format (ReqIF), Version 1.2*](https://www.omg.org/spec/ReqIF/). OMG Specification formal/2013-10-01, 2013.
+2. <a id="src-2"></a>VDA QMC Working Group 13. [*Automotive SPICE Process Assessment / Reference Model, Version 4.0*](https://vda-qmc.de/). Verband der Automobilindustrie e.V. (VDA), Berlin, 2023.
+3. <a id="src-3"></a>International Organization for Standardization, SAE International. [*ISO/SAE 21434:2021: Road Vehicles - Cybersecurity Engineering*](https://www.iso.org/standard/70918.html). ISO/SAE, Geneva, Switzerland, 2021.
+4. <a id="src-4"></a>Assurance Case Working Group. [*Goal Structuring Notation Community Standard, Version 3*](https://doi.org/10.65391/r1386). SCSC-141C, Safety-Critical Systems Club, 2021.
+5. <a id="src-5"></a>ISO. [*ISO 26262-8:2018. Road vehicles: Functional safety: Part 8: Supporting processes*](https://www.iso.org/standard/68390.html). ISO, Geneva, Switzerland, 2018. Розділ 11: Confidence in the use of software tools.
+6. <a id="src-6"></a>RTCA / EUROCAE. [*DO-178C / ED-12C: Software Considerations in Airborne Systems and Equipment Certification*](https://www.rtca.org/). RTCA, Washington, D.C., 2011.
+7. <a id="src-7"></a>RTCA. [*DO-330: Software Tool Qualification Considerations*](https://www.rtca.org/). RTCA, Washington, D.C., 2011.
+8. <a id="src-8"></a>International Organization for Standardization. [*ISO 26262:2018: Road Vehicles - Functional Safety (Parts 1–12)*](https://www.iso.org/standard/68383.html). ISO, Geneva, Switzerland, 2018.
+9. <a id="src-9"></a>RTCA / EUROCAE. [*DO-326A / ED-202A: Airworthiness Security Process Specification*](https://www.rtca.org/). RTCA, Washington, D.C., 2014.
+10. <a id="src-10"></a>International Electrotechnical Commission. [*IEC 61508: Functional Safety of Electrical/Electronic/Programmable Electronic Safety-related Systems (Parts 1–7)*](https://www.iec.ch/). IEC, Geneva, Switzerland, 2010.
+11. <a id="src-11"></a>Charles Haddon-Cave. [*The Nimrod Review: An Independent Review into the Broader Issues Surrounding the Loss of the RAF Nimrod MR2 Aircraft XV230 in Afghanistan in 2006*](https://www.gov.uk/government/publications/the-nimrod-review). HC 1025, The Stationery Office, London, 2009.
+12. <a id="src-12"></a>John Rushby. [*Formalism in Safety Cases*](https://www.csl.sri.com/users/rushby/abstracts/sss10). *Making Systems Safer: Proceedings of the Eighteenth Safety-Critical Systems Symposium*, Springer, 3–17, 2010.
+13. <a id="src-13"></a>Ewen Denney, Ganesh Pai. [*Automating the Assembly of Aviation Safety Cases*](https://doi.org/10.1109/TR.2014.2335995). *IEEE Transactions on Reliability*, 63(4), 830–849, 2014.
+14. <a id="src-14"></a>Chunho Lee, Erkuden Rios, et al. [*Combined Safety and Security Co-Engineering for Cyber-Physical Systems: A Systematic Survey*](https://doi.org/10.1145/3543851). *ACM Computing Surveys*, 55(4), 1–38, 2022.
+15. <a id="src-15"></a>Phan Minh Dung. [*On the Acceptability of Arguments and Its Fundamental Role in Nonmonotonic Reasoning, Logic Programming and n-Person Games*](https://doi.org/10.1016/0004-3702(94)00041-X). *Artificial Intelligence*, 77(2), 321–357, 1995.
+16. <a id="src-16"></a>Anders Rundgren, Bret Jordan, Samuel Erdtman. [*RFC 8785: JSON Canonicalization Scheme (JCS)*](https://www.rfc-editor.org/rfc/rfc8785). IETF, 2020.
+17. <a id="src-17"></a>National Institute of Standards and Technology. [*NIST Special Publication 800-38B: Recommendation for Block Cipher Modes of Operation: The CMAC Mode for Authentication*](https://doi.org/10.6028/NIST.SP.800-38B). NIST, Gaithersburg, MD, 2005.
 
 ---
 
