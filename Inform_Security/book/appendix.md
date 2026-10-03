@@ -116,6 +116,7 @@
 | BSD | Berkeley Software Distribution | Сім'я операційних систем на основі Unix з Каліфорнійського університету в Берклі |
 | BGP | Border Gateway Protocol | Обмін маршрутами між мережевими операторами |
 | CAN | Controller Area Network | Мережа контролерів, поширена в автомобілях |
+| CCDCOE | Cooperative Cyber Defence Centre of Excellence | Об'єднаний центр передового досвіду з кібероборони НАТО |
 | CERT | Computer Emergency Response Team | Команда реагування на комп'ютерні надзвичайні події |
 | CERT-UA | Computer Emergency Response Team of Ukraine | Українська національна команда реагування у складі Держспецзв'язку |
 | CSF | Cybersecurity Framework | Рамка управління ризиками NIST; у назві джерела R13 використано редакцію 2.0 |
@@ -154,6 +155,7 @@
 | IP | Internet Protocol | Інтернет-протокол |
 | IPv4, IPv6 | Internet Protocol Version 4, Version 6 | Четверта й шоста версії IP |
 | IPX | Internetwork Packet Exchange | Мережевий протокол Novell NetWare |
+| IoC | Indicator of Compromise | Індикатор компрометації інформаційної системи |
 | IPS | Intrusion Prevention System | Засіб запобігання вторгненням із можливістю блокування |
 | IR | Interagency or Internal Report | Серія міжвідомчих або внутрішніх звітів NIST |
 | ISO | International Organization for Standardization | Міжнародна організація зі стандартизації |
@@ -165,6 +167,7 @@
 | MAVLink | Micro Air Vehicle Link | Протокол обміну повідомленнями для роботизованих платформ |
 | MBR | Master Boot Record | Головний завантажувальний запис на накопичувачі інформації |
 | MFA | Multi-Factor Authentication | Багатофакторна автентифікація |
+| MFT | Master File Table | Головна таблиця файлів файлової системи NTFS |
 | MITM | Man-in-the-Middle | Активний посередник у каналі |
 | MSC | Maritime Safety Committee | Комітет безпеки на морі IMO |
 | ML-DSA | Module-Lattice-Based Digital Signature Algorithm | Постквантовий підпис за FIPS 204 |
@@ -180,6 +183,7 @@
 | PGP | Pretty Good Privacy | Інструмент шифрування й цифрового підпису |
 | PKCE | Proof Key for Code Exchange | Прив'язування обміну кодом авторизації до запиту клієнта |
 | PLC | Programmable Logic Controller | Програмований логічний контролер |
+| PLM | Product Lifecycle Management | Системи управління життєвим циклом промислових виробів |
 | PNT | Positioning, Navigation, and Timing | Позиціювання, навігація та час |
 | PQC | Post-Quantum Cryptography | Постквантова криптографія |
 | RFC | Request for Comments | Серія документів інтернет-протоколів та практик; не кожен RFC є стандартом |
@@ -187,6 +191,7 @@
 | ROV | Remotely Operated Vehicle | Дистанційно керований підводний апарат у морській главі |
 | RST | Reset | Прапорець скидання TCP |
 | RSA | Rivest-Shamir-Adleman | Криптографічний алгоритм Рівеста, Шаміра й Адлемана |
+| RaaS | Ransomware-as-a-Service | Модель «програма-вимагач як послуга» у кіберкриміналі |
 | SAE | Society of Automotive Engineers | Історичне розшифрування назви SAE International |
 | SCADA | Supervisory Control and Data Acquisition | Диспетчерське керування зі збором даних |
 | SBOM | Software Bill of Materials | Перелік складників програмного забезпечення |
@@ -220,15 +225,17 @@
 | WWW | World Wide Web | Всесвітня павутина |
 | XSS | Cross-Site Scripting | Міжсайтовий скриптинг |
 | XDR | Extended Detection and Response | Зіставлення виявлення й реагування між різними захисними джерелами |
+| YARA | Yet Another Recursive Acronym | Інструмент та мова правил для класифікації шкідливого програмного забезпечення |
 | АСУВ і ОТ | Автоматизовані системи управління військами та обчислювальна техніка | Назва кафедри КВІУЗ у 1990-х |
 | ВІТІ | Військовий інститут телекомунікацій та інформатизації імені Героїв Крут | Заклад, створений 2001 року на базі КВІУЗ |
+| ГУР МО | Головне управління розвідки Міністерства оборони України | Воєнна розвідка України |
 | КВІУЗ | Київський військовий інститут управління і зв'язку | Заклад, де навчався автор |
 | КПІ ім. Ігоря Сікорського | Національний технічний університет України «Київський політехнічний інститут імені Ігоря Сікорського» | Університет, до складу якого входить Інститут спеціального зв'язку та захисту інформації |
 | КСЗІ | Комплексна система захисту інформації | Узгоджені організаційні та інженерні заходи захисту |
 | НД ТЗІ | Нормативні документи з технічного захисту інформації | Документи з вимогами й процедурами перевірки захисту |
 | СБУ | Служба безпеки України | Державний орган; у главі 1 згадано його історичний профільний департамент |
 
-OAuth, Okta, Uconnect, KA-SAT, OPS-SAT, Mirai, Stuxnet, NotPetya та Industroyer використовуються як усталені назви протоколу, продуктів, місій або програм. Назва не є твердженням про однакову будову всіх версій.
+OAuth, Okta, Uconnect, KA-SAT, OPS-SAT, Mirai, Stuxnet, NotPetya, Industroyer, LockBit, Emotet, Solntsepek, Blackjack, AcidRain, ArguePatch та CaddyWiper використовуються як усталені назви протоколу, продуктів, місій або програм. Назва не є твердженням про однакову будову всіх версій.
 
 ## Бібліографія
 
