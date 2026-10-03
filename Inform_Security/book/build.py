@@ -13,9 +13,9 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parent
-TITLE = "Від модема до автономного руху"
+TITLE = "Еволюція кібербезпеки: від першого модема до автономних систем"
 AUTHOR = "Микола Федчик / Mykola Fedchyk"
-STEM = "vid-modema-do-avtonomnoho-rukhu"
+STEM = "evolyutsiya-kiberbezpeky"
 SOURCE_CODE = re.compile(r"(?<![A-Z0-9])[HNAPVDMSRU]\d{2}(?![A-Z0-9])")
 EDITORIAL_MARKERS = re.compile(
     r"—|екосистем|ecosystem|чесн|Таким чином|контур|фундаментальн|"
@@ -144,16 +144,21 @@ def assemble():
     for block in first["blocks"]:
         if block["t"] == "Header":
             label = text_of(block["c"][2])
-            if label == "Від автора":
+            if label in {"Анотація", "Про автора", "Від автора"}:
                 active = True
                 block["c"][0] = 1
-                block["c"][1][0] = "preface"
+                if label == "Анотація":
+                    block["c"][1][0] = "abstract"
+                elif label == "Про автора":
+                    block["c"][1][0] = "about-author"
+                elif label == "Від автора":
+                    block["c"][1][0] = "preface"
             elif label == "Зміст":
                 break
         if active:
             front.append(block)
     require(front, "Author preface missing")
-    items = [("Від автора", "preface"), *chapter_labels,
+    items = [("Анотація", "abstract"), ("Про автора", "about-author"), ("Від автора", "preface"), *chapter_labels,
              ("Словник, абревіатури та джерела", "appendix")]
     contents = {"t": "Div", "c": [
         ["contents", ["book-contents"], [["role", "doc-toc"]]],
@@ -172,7 +177,7 @@ def assemble():
             first["blocks"].append(rewrite(block, path.resolve()))
     first["meta"] = {key: {"t": "MetaString", "c": value} for key, value in {
         "title": TITLE, "author": AUTHOR, "lang": "uk", "date": "2026-10",
-        "subtitle": "Як інформаційні системи вчаться не довіряти чужим командам",
+        "subtitle": "Як інформаційні системи вчаться протистояти атакам і не довіряти чужим командам",
         "toc-title": "Зміст",
     }.items()}
     return first
