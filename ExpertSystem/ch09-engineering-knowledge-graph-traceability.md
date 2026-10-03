@@ -248,7 +248,7 @@ protocol_status_t validate_command_sequence(session_context_t *ctx, command_t cm
 
 </details>
 
-Сканер обходить синтаксичне дерево, яке будує компіляторний інструментарій (Clang LibTooling, проміжне подання компілятора Rust) або універсальний аналізатор [tree-sitter](https://tree-sitter.github.io/tree-sitter/), знаходить символ `validate_command_sequence`, фіксує сигнатуру й розташування у файлі та створює ребро `satisfies` до вузла `REQ-PROTO-MAIL-042`. Якщо анотація містить межі цитати в першоджерелі, сканер звіряє хеш цитати з нормативною базою знань; якщо стандарт змінився або посилання веде на інший пункт, перевірка в конвеєрі зупиняє збирання.
+Сканер обходить синтаксичне дерево, знаходить символ `validate_command_sequence`, фіксує сигнатуру й розташування та вилучає заяву `declares_satisfies` до `REQ-PROTO-MAIL-042`. Коментар не доводить виконання вимоги. Ребро `satisfies`, яке враховують у перевірці покриття, потребує окремої підстави: перегляду змісту, застосовного результату верифікації й рішення уповноваженого власника. Хеш цитати підтверджує незмінність фрагмента, не реалізацію описаної поведінки. Ця різниця однакова для анотації людини й пропозиції моделі.
 
 ### Код і апаратні регістри
 
@@ -351,7 +351,7 @@ flowchart TD
 
 ### Пошук прогалин і покриття вимог
 
-Покриття вимог у критичних до безпеки виробах визначають суворіше, ніж покриття рядків коду. Треба показати, що кожна вимога має реалізацію в коді, має тест, який вимогу перевіряє, і що тест успішно виконано в поточному випуску. Множину непокритих вимог визначає формула:
+Покриття вимог у критичних до безпеки виробах визначають суворіше, ніж покриття рядків коду. Треба показати, що кожна вимога має реалізацію, тест і успішний запуск для потрібного випуску. У наступній навчальній формулі множини вже відфільтровано за чинною версією, схваленням, доступом і відсутністю відкликання. Заявлені й прогнозовані ребра не входять до множини підтверджених зв'язків. Перелік вимог і потрібні ділянки реєстрів мають бути оголошені повними; інакше відсутність ребра означає невідомість, а не доведену прогалину.
 
 ```math
 \mathcal{U}_R=\Big\{\,r\in V_R\ \Big|\ \neg\exists\,c\in V_C:\ c\xrightarrow{\mathrm{satisfies}}r\ \ \lor\ \ \neg\exists\,t\in V_T,\ e\in V_E:\ t\xrightarrow{\mathrm{verifies}}r\ \land\ e\xrightarrow{\mathrm{produced\_by}}t\ \land\ \mathrm{verdict}(e)=\mathrm{PASS}\ \land\ \mathrm{release}(e)=\rho\,\Big\}
@@ -530,14 +530,14 @@ flowchart TD
 Експертна система вбудовується в перевірку запиту на злиття (*pull request quality gate*). Перед злиттям гілки валідатор графа перевіряє три блокувальні правила:
 
 1. **збереження цілісності:** нову функцію не можна додати без ребра `satisfies` до затвердженої вимоги або без шляху викликів від такої функції;
-2. **перевірюваність:** зміна логіки функції знімає статус чинності з ребер `verifies` і `exercises` пов'язаних тестів, доки тести не пройдуть на поточному коміті;
+2. **перевірюваність:** зміна логіки функції робить результати старих запусків недостатніми для нового коміту; визначення тесту й заявлений зв'язок `verifies` можуть залишитися чинними. Новий запуск створює окремий запис, а старий лишається в історії;
 3. **відсутність регресії:** підграф впливу зміни $\mathrm{Impact}(\Delta)$ не містить неперевірених вузлів найвищих рівнів критичності: ASIL D за ISO 26262 чи рівня A за DO-178C.
 
 Підсумок розділу: незмінний журнал четвірок дає відтворюваність, а правила в конвеєрі змін не дають графу застаріти. Лишається головне заперечення скептиків: скільки коштує побудувати граф уперше.
 
 ## Холодний старт: автоматична початкова версія графа
 
-Скептики кажуть: ручне створення онтологій є цвинтарем проєктів, і якщо граф потребує місяців ручної праці в редакторі онтологій Protégé, інженерна команда ніколи графом не скористається. Заперечення слушне, і проблему давно називають вузьким місцем здобуття знань (*knowledge acquisition bottleneck*), яке розбирає [Глава 10](ch10-knowledge-acquisition-systems.md). Відповідь полягає не у важкій академічній онтології, а в автоматичному початковому графі: знання про виріб уже закодовані в іменах типів, сигнатурах функцій, макросах регістрів, документах Markdown та історії комітів Git. Початкову версію графа збирає конвеєр із чотирьох кроків.
+Початковий граф не обов'язково створювати вручну. Аналізатори можуть зібрати структуру коду, явні посилання й результати запусків, а редактор Protégé допомагає переглянути схему та змістові рішення, як показує [Глава 15](ch15-knowledge-extraction-and-kb-construction.md). Автоматизація зменшує копіювання, але не скасовує інженерного моделювання. Початкова версія з анотацій є реєстром заявлених зв'язків, не готовим доказом виконання вимог.
 
 ```mermaid
 flowchart LR
@@ -573,10 +573,10 @@ flowchart LR
 
 1. **Синтаксичне дерево коду.** Аналізатор (стандартний пакет `go/parser` мови Go чи універсальний tree-sitter) обходить файли репозиторію: кожен файл стає вузлом модуля, кожна функція вузлом функції з ребром `declared_in`, кожен виклик ребром `calls`, кожен код повернення помилки вузлом контракту помилки.
 2. **Регулярні вирази для вимог і апаратури.** Детерміновані шаблони `[REQ-SYS-XXX]` чи `[REQ-SW-XXX]` у текстах і коментарях створюють вузли вимог, а файли CMSIS-SVD створюють вузли регістрів із бітовими полями.
-3. **Походження з Git.** Інструмент читає журнал комітів: якщо повідомлення коміту згадує `REQ-214` або функція має анотацію `@satisfies REQ-214`, ребро `satisfies` отримує хеш коміту як контекст.
+3. **Походження з Git.** Згадування `REQ-214` у повідомленні коміту створює зв'язок згадування, а `@satisfies REQ-214` створює заяву про реалізацію. Обидва записи отримують коміт як контекст, але сам коміт не перетворює заяву на підтверджене `satisfies`.
 4. **Вузька компактна модель для неоднозначних зв'язків.** Коли прямого збігу ідентифікаторів немає (функція називається `ApplyThermalCutoff()`, а специфікація каже «пристрій зобов'язаний аварійно вимкнути силове коло при перегріві»), збирач графа звертається до компактної локальної мовної моделі, наприклад через середовище Ollama. Модель зобов'язана повернути лише коректний JSON з кандидатом ребра й оцінкою впевненості; кандидат отримує позначку «кандидат» і потрапляє в чергу перевірки провідним інженером, не блокуючи побудови решти графа.
 
-Програма мовою Go нижче реалізує кроки 1 і 3 у мінімальному вигляді: збирає вимоги з Markdown, функції з коду Go й ребра `satisfies` з анотацій і повідомляє про посилання на неіснуючі вимоги.
+Програма нижче читає визначення вимог, функції й анотації. Вона не читає історію Git, не обчислює повний граф викликів і не перевіряє поведінку. Ідентифікатор функції включає файл і тип отримувача методу, щоб однойменні символи не зливалися. Переміщення файла змінить цей навчальний ідентифікатор; стійка міжверсійна ідентичність потребує окремої моделі відповідності.
 
 <details>
 <summary>Приклад мовою Go: початковий граф із репозиторію</summary>
@@ -590,12 +590,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"go/ast"
+  "go/format"
 	"go/parser"
 	"go/token"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"regexp"
+  "strings"
 )
 
 // Node є вузлом графа: вимогою, модулем або функцією.
@@ -655,14 +657,22 @@ func bootstrap(root string) (*Graph, error) {
 				if !ok {
 					continue
 				}
-				id := "func:" + fn.Name.Name
+        receiver := ""
+        if fn.Recv != nil {
+          var receiverText strings.Builder
+          if err := format.Node(&receiverText, fset, fn.Recv.List[0].Type); err != nil {
+            return err
+          }
+          receiver = receiverText.String() + "."
+        }
+        id := "func:" + p + "#" + receiver + fn.Name.Name
 				g.Nodes = append(g.Nodes, Node{ID: id, Type: "Function", File: p})
 				g.Edges = append(g.Edges, Edge{id, "declared_in", module})
 				if fn.Doc == nil {
 					continue
 				}
 				for _, m := range reqTrace.FindAllStringSubmatch(fn.Doc.Text(), -1) {
-					traces = append(traces, Edge{id, "satisfies", m[1]})
+          traces = append(traces, Edge{id, "declares_satisfies", m[1]})
 				}
 			}
 		}
@@ -750,40 +760,98 @@ func LogTemperature(tempC float64) {}
       "file": "sample/thermal.go"
     },
     {
-      "id": "func:ApplyThermalCutoff",
+      "id": "func:sample/thermal.go#ApplyThermalCutoff",
       "type": "Function",
       "file": "sample/thermal.go"
     },
     {
-      "id": "func:LogTemperature",
+      "id": "func:sample/thermal.go#LogTemperature",
       "type": "Function",
       "file": "sample/thermal.go"
     }
   ],
   "edges": [
     {
-      "source": "func:ApplyThermalCutoff",
+      "source": "func:sample/thermal.go#ApplyThermalCutoff",
       "relation": "declared_in",
       "target": "module:sample/thermal.go"
     },
     {
-      "source": "func:LogTemperature",
+      "source": "func:sample/thermal.go#LogTemperature",
       "relation": "declared_in",
       "target": "module:sample/thermal.go"
     },
     {
-      "source": "func:ApplyThermalCutoff",
-      "relation": "satisfies",
+      "source": "func:sample/thermal.go#ApplyThermalCutoff",
+      "relation": "declares_satisfies",
       "target": "REQ-SW-214"
     }
   ],
   "broken_links": [
-    "func:LogTemperature → REQ-SW-215"
+    "func:sample/thermal.go#LogTemperature → REQ-SW-215"
   ]
 }
 ```
 
-Функція `ApplyThermalCutoff` отримала ребро `satisfies` до існуючої вимоги, а анотація функції `LogTemperature` посилається на неіснуючу вимогу `REQ-SW-215`, тож програма не створює ребра й повідомляє про розірване посилання. Вимога `REQ-SYS-214` лишилася без реалізації: запит пошуку прогалин одразу поверне `REQ-SYS-214`.
+Програма знайшла заяву для `ApplyThermalCutoff` і розірване посилання для `LogTemperature`. Вона не довела виконання жодної вимоги. Ба більше, REQ-SW-214 задає період 10 мс, а функція лише порівнює температуру; приклад навмисно показує, чому правильний ідентифікатор не означає змістового покриття. Для відсутніх підтверджень потрібен звіт прогалин або невідомостей за оголошеною повнотою реєстру.
+
+Наступний тест перевіряє саме межі збирача: однойменні функції та методи мають різні ідентифікатори, неіснуюча вимога дає розірване посилання, а анотація не створює підтвердженого `satisfies`. Тест розміщують поруч із програмою як `main_test.go` і виконують `go test main.go main_test.go`.
+
+```go
+package main
+
+import (
+  "os"
+  "path/filepath"
+  "testing"
+)
+
+func TestBootstrapIdentityAndClaims(t *testing.T) {
+  root := t.TempDir()
+  files := map[string]string{
+    "requirements.md": "[REQ-SW-1]: example\n",
+    "a/code.go": "package a\ntype First struct{}\ntype Second struct{}\n// @satisfies REQ-SW-1\nfunc Run() {}\n// @satisfies REQ-SW-1\nfunc (First) Run() {}\n// @satisfies REQ-SW-9\nfunc (Second) Run() {}\n",
+    "b/code.go": "package b\n// @satisfies REQ-SW-1\nfunc Run() {}\n",
+  }
+  for relative, content := range files {
+    path := filepath.Join(root, relative)
+    if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
+      t.Fatal(err)
+    }
+    if err := os.WriteFile(path, []byte(content), 0600); err != nil {
+      t.Fatal(err)
+    }
+  }
+  graph, err := bootstrap(root)
+  if err != nil {
+    t.Fatal(err)
+  }
+  identifiers := map[string]bool{}
+  for _, node := range graph.Nodes {
+    if node.Type == "Function" {
+      if identifiers[node.ID] {
+        t.Fatalf("duplicate function ID: %s", node.ID)
+      }
+      identifiers[node.ID] = true
+    }
+  }
+  if len(identifiers) != 4 || len(graph.Broken) != 1 {
+    t.Fatalf("unexpected functions or broken links: %d, %v", len(identifiers), graph.Broken)
+  }
+  claims := 0
+  for _, edge := range graph.Edges {
+    if edge.Relation == "satisfies" {
+      t.Fatal("annotation promoted to verified realization")
+    }
+    if edge.Relation == "declares_satisfies" {
+      claims++
+    }
+  }
+  if claims != 3 {
+    t.Fatalf("expected three claims, got %d", claims)
+  }
+}
+```
 
 </details>
 

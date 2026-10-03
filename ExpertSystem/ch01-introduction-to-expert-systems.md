@@ -154,6 +154,144 @@ flowchart LR
 
 Реальні машини виведення працюють не лише з правилами «ЯКЩО … ТО». Вони використовують логіку, ймовірності, обмеження, графи зв'язків і попередні випадки. Принцип залишається тим самим: знання зберігаються окремо від механізму, який ці знання застосовує.
 
+### Перший виконуваний приклад: перевірка зміни інтерфейсу
+
+Для звичайної програмної команди експертна задача може бути невеликою: чи достатньо підстав передати зміну програмного інтерфейсу на перегляд перед випуском? Навчальна політика вимагає схваленого успішного запуску `TEST-API` для випуску 3.2 з часом відповіді не більше 100 мс. Числа й ідентифікатори вигадані. Виняток може дозволити більшу затримку лише для конкретних політики, випуску й звіту; він не виправляє проваленого тесту або відсутності доказу.
+
+Код нижче відокремлює запис політики від звіту й функції перевірки. Він не шукає документів і не генерує текст. Для запуску потрібний встановлений Go; програму й тест розміщують у навчальному каталозі та виконують `go run release.go` і `go test -v release.go release_test.go`. Весь приклад наведено в згорнутому блоці, тож знати решту технологічного стека для першої перевірки не потрібно.
+
+<details>
+<summary>Мінімальна перевірка на Go: програма та тести меж її застосування</summary>
+
+Програма `release.go`:
+
+```go
+package main
+
+import "fmt"
+
+type Policy struct {
+    Version, RequiredTest string
+    MaxLatencyMS          int
+}
+
+type Report struct {
+    ID, Release, TestID          string
+    LatencyMS                    int
+    Passed, Approved, Revoked    bool
+}
+
+type Exception struct {
+    PolicyVersion, Release, ReportID string
+    MaxLatencyMS                     int
+    Approved, Revoked                bool
+}
+
+func Assess(policy Policy, release string, reports []Report, exception *Exception) (string, []string) {
+    if policy.Version == "" || policy.RequiredTest == "" || policy.MaxLatencyMS <= 0 || release == "" {
+        return "UNKNOWN", []string{"incomplete policy or release"}
+    }
+    basis := []string{"policy:" + policy.Version}
+    var applicable []Report
+    for _, report := range reports {
+        if report.ID != "" && report.Release == release && report.TestID == policy.RequiredTest && report.Approved && !report.Revoked {
+            applicable = append(applicable, report)
+        }
+    }
+    if len(applicable) == 0 {
+        return "UNKNOWN", append(basis, "no admissible report for this release")
+    }
+    if len(applicable) > 1 {
+        return "CONFLICT", append(basis, "multiple reports require an explicit selection policy")
+    }
+    report := applicable[0]
+    basis = append(basis, "report:"+report.ID)
+    if report.LatencyMS < 0 {
+        return "UNKNOWN", append(basis, "invalid measurement")
+    }
+    if !report.Passed {
+        return "BLOCKED", append(basis, "required test failed")
+    }
+    if report.LatencyMS <= policy.MaxLatencyMS {
+        return "READY_FOR_REVIEW", basis
+    }
+    if exception != nil && exception.Approved && !exception.Revoked &&
+        exception.PolicyVersion == policy.Version && exception.Release == release &&
+        exception.ReportID == report.ID && report.LatencyMS <= exception.MaxLatencyMS {
+        return "REVIEW_EXCEPTION", append(basis, "approved scoped latency exception")
+    }
+    return "BLOCKED", append(basis, "latency exceeds the project limit")
+}
+
+func main() {
+    policy := Policy{Version: "P1", RequiredTest: "TEST-API", MaxLatencyMS: 100}
+    report := Report{ID: "RUN-32-1", Release: "3.2", TestID: "TEST-API", LatencyMS: 90, Passed: true, Approved: true}
+    status, basis := Assess(policy, "3.2", []Report{report}, nil)
+    fmt.Printf("%s: %v\n", status, basis)
+}
+```
+
+Тест `release_test.go`:
+
+```go
+package main
+
+import "testing"
+
+func TestAssessmentBoundaries(t *testing.T) {
+    policy := Policy{Version: "P1", RequiredTest: "TEST-API", MaxLatencyMS: 100}
+    base := Report{ID: "RUN-32-1", Release: "3.2", TestID: "TEST-API", LatencyMS: 100, Passed: true, Approved: true}
+    for _, testCase := range []struct {
+        name     string
+        mutate   func(*Report)
+        expected string
+    }{
+        {"boundary", func(report *Report) {}, "READY_FOR_REVIEW"},
+        {"over limit", func(report *Report) { report.LatencyMS = 101 }, "BLOCKED"},
+        {"negative measurement", func(report *Report) { report.LatencyMS = -1 }, "UNKNOWN"},
+        {"other release", func(report *Report) { report.Release = "3.1" }, "UNKNOWN"},
+        {"revoked", func(report *Report) { report.Revoked = true }, "UNKNOWN"},
+        {"unapproved", func(report *Report) { report.Approved = false }, "UNKNOWN"},
+        {"test failed", func(report *Report) { report.Passed = false }, "BLOCKED"},
+    } {
+        t.Run(testCase.name, func(t *testing.T) {
+            report := base
+            testCase.mutate(&report)
+            status, basis := Assess(policy, "3.2", []Report{report}, nil)
+            if status != testCase.expected || len(basis) == 0 {
+                t.Fatalf("got %s %v, want %s", status, basis, testCase.expected)
+            }
+        })
+    }
+    for _, reports := range [][]Report{nil, {base, base}} {
+        status, _ := Assess(policy, "3.2", reports, nil)
+        if status == "READY_FOR_REVIEW" {
+            t.Fatal("missing or competing evidence must not pass")
+        }
+    }
+    base.LatencyMS = 110
+    exception := Exception{PolicyVersion: "P1", Release: "3.2", ReportID: base.ID, MaxLatencyMS: 120, Approved: true}
+    if status, _ := Assess(policy, "3.2", []Report{base}, &exception); status != "REVIEW_EXCEPTION" {
+        t.Fatal("scoped approved exception not recognized")
+    }
+    exception.PolicyVersion = "P0"
+    if status, _ := Assess(policy, "3.2", []Report{base}, &exception); status != "BLOCKED" {
+        t.Fatal("exception from another policy applied")
+    }
+    exception.PolicyVersion = "P1"
+    exception.Revoked = true
+    if status, _ := Assess(policy, "3.2", []Report{base}, &exception); status != "BLOCKED" {
+        t.Fatal("revoked exception applied")
+    }
+}
+```
+
+</details>
+
+Програма друкує `READY_FOR_REVIEW: [policy:P1 report:RUN-32-1]`. Вердикт означає лише проходження цієї політики, не дозвіл на випуск усього продукту. Тести показують інші результати: відсутній або відкликаний звіт дає `UNKNOWN`, провал тесту чи перевищення порогу дає `BLOCKED`, конкурентні звіти дають `CONFLICT`. Виняток потребує окремого перегляду, а не автоматичної дії.
+
+Межі прикладу: прапорці схвалення й відкликання є вхідними фактами. Програма не перевіряє підпису, не підключає реєстр дозволів, не доводить достатності тесту й не встановлює чинності політики самостійно. Такі перевірки додають окремо; починати з мовної моделі або графового сервера для цієї задачі не потрібно. [Глава 17](ch17-implementation-stack.md) пояснює, коли мінімальної реалізації вже недостатньо, а [Глава 25](ch25-how-expert-systems-learn.md) показує зміну й відкликання знання в часі.
+
 ### Які бувають експертні системи
 
 Фредерік Гейз-Рот, Дональд Вотерман і Дуглас Ленат у книзі *Building Expert Systems* (1983) виділили десять типових задач експертних систем [[8]](#src-8):
