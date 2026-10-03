@@ -57,9 +57,15 @@ def link(label, target):
 def assemble():
     chapters = sorted((ROOT / "chapters").glob("[0-9][0-9]-*.md"))
     require(len(chapters) == 10, "Expected ten chapter files")
-    paths = [ROOT / "README.md", *chapters, ROOT / "appendix.md"]
+    appendix_a = ROOT / "appendix-a.md"
+    appendix_b = ROOT / "appendix-b.md"
+    paths = [ROOT / "README.md", *chapters, appendix_a, appendix_b]
     documents = {}
-    destinations = {paths[0].resolve(): "contents", paths[-1].resolve(): "appendix"}
+    destinations = {
+        paths[0].resolve(): "contents",
+        appendix_a.resolve(): "appendix-a",
+        appendix_b.resolve(): "appendix-b",
+    }
     destinations.update((path.resolve(), f"chapter-{index:02d}")
                         for index, path in enumerate(chapters, 1))
     for path in paths:
@@ -75,6 +81,7 @@ def assemble():
     references = set()
     heading_targets = {}
     chapter_labels = []
+    appendix_labels = []
     for path in paths[1:]:
         chapter_headers = 0
         for block in documents[path.resolve()]["blocks"]:
@@ -84,7 +91,7 @@ def assemble():
             original_id = attributes[0]
             label = text_of(inlines)
             reference = re.match(r"([HNAPVDMSRU]\d{2})\.", label)
-            if path == paths[-1] and reference:
+            if path == appendix_a and reference:
                 require(reference.group(1) not in references, "Duplicate source code")
                 references.add(reference.group(1))
                 identifier = "ref-" + reference.group(1).lower()
@@ -93,6 +100,8 @@ def assemble():
                 chapter_headers += 1
                 if path in chapters:
                     chapter_labels.append((label, identifier))
+                elif path in {appendix_a, appendix_b}:
+                    appendix_labels.append((label, identifier))
             else:
                 identifier = destinations[path.resolve()] + "-" + original_id
             heading_targets[(path.resolve(), original_id)] = identifier
@@ -158,8 +167,8 @@ def assemble():
         if active:
             front.append(block)
     require(front, "Author preface missing")
-    items = [("Анотація", "abstract"), ("Про автора", "about-author"), ("Від автора", "preface"), *chapter_labels,
-             ("Словник, абревіатури та джерела", "appendix")]
+    items = [("Анотація", "abstract"), ("Про автора", "about-author"), ("Від автора", "preface"),
+             *chapter_labels, *appendix_labels]
     contents = {"t": "Div", "c": [
         ["contents", ["book-contents"], [["role", "doc-toc"]]],
         [{"t": "Header", "c": [2, ["contents-heading", [], []], [{"t": "Str", "c": "Зміст"}]]},
@@ -209,7 +218,7 @@ class HTMLIndex(HTMLParser):
 def check_chapters_and_sources(ids, expected):
     require(all(f"chapter-{index:02d}" in ids for index in range(1, 11)), "Missing chapter")
     require(sum(identifier.startswith("ref-") for identifier in ids) == expected, "Missing sources")
-    require("contents" in ids and "appendix" in ids, "Missing contents or appendix")
+    require("contents" in ids and "appendix-a" in ids and "appendix-b" in ids, "Missing contents or appendices")
 
 
 def validate_html(path, expected):
@@ -281,7 +290,7 @@ def validate_epub(path, expected):
 def main():
     require(shutil.which("pandoc"), "Install Pandoc and add it to PATH")
     serialized = json.dumps(assemble(), ensure_ascii=False)
-    appendix = (ROOT / "appendix.md").read_text(encoding="utf-8-sig")
+    appendix = (ROOT / "appendix-a.md").read_text(encoding="utf-8-sig")
     expected = len(re.findall(r"^### [HNAPVDMSRU]\d{2}\.", appendix, re.MULTILINE))
     destination = ROOT / "dist"
     destination.mkdir(exist_ok=True)
@@ -294,7 +303,7 @@ def main():
     validate_epub(epub_path, expected)
     plain = pandoc("--from=json", "--to=plain", input_text=serialized)
     words = len(re.findall(r"\b[^\W\d_]+(?:['’-][^\W\d_]+)*\b", plain))
-    print(f"Reading edition: approximately {words:,} words, ten chapters and appendix")
+    print(f"Reading edition: approximately {words:,} words, ten chapters and two appendices")
     print(html_path)
     print(epub_path)
 

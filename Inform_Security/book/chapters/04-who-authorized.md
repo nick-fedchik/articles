@@ -145,6 +145,6 @@
 
 [A06] RFC 4187, мобільна взаємна автентифікація; [A07] Ericsson і огляд Diameter; [A08] Apple, історія та будова біометричної перевірки.
 
-[N07] OWASP; [H06] Saltzer, Schroeder; [H08] Morris, Thompson; [H18] Ylonen; [A05] W3C WebAuthn Level 1; [A01] звіт Cloudflare про фішинг 2022 року; [U04] Фесьоха та співавтори; [A02] RFC 6749, RFC 9700 і OpenID Connect Core; [A03] RFC 8725; [A04] Microsoft, аналіз Storm-0558. Повні записи наведено в [бібліографії](../appendix.md).
+[N07] OWASP; [H06] Saltzer, Schroeder; [H08] Morris, Thompson; [H18] Ylonen; [A05] W3C WebAuthn Level 1; [A01] звіт Cloudflare про фішинг 2022 року; [U04] Фесьоха та співавтори; [A02] RFC 6749, RFC 9700 і OpenID Connect Core; [A03] RFC 8725; [A04] Microsoft, аналіз Storm-0558. Повні записи наведено в [бібліографії](../appendix-a.md).
 
 [Назад: мережі без довіри](03-internet-without-owner.md) · [Далі: коли команда вимикає світло](05-industrial-control.md) · [Зміст](../README.md)

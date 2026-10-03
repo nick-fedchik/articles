@@ -118,6 +118,6 @@ Stuxnet не був першим випадком, коли цифрове вт�
 
 [P08] огляд наслідків українського відключення; [P09] Colonial Pipeline, публічні описи й слухання 2021 року.
 
-[P01] NIST SP 800-82 Rev. 3; [P07] Modbus; [P02] Symantec, *W32.Stuxnet Dossier*; [P03] ESET, BlackEnergy; [P04] ESET, Industroyer; [P06] Mandiant, Triton; [P05] ESET і CERT-UA, Industroyer2; [U05] Субач, Микитюк, Кубрак. Повні записи наведено в [бібліографії](../appendix.md).
+[P01] NIST SP 800-82 Rev. 3; [P07] Modbus; [P02] Symantec, *W32.Stuxnet Dossier*; [P03] ESET, BlackEnergy; [P04] ESET, Industroyer; [P06] Mandiant, Triton; [P05] ESET і CERT-UA, Industroyer2; [U05] Субач, Микитюк, Кубрак. Повні записи наведено в [бібліографії](../appendix-a.md).
 
 [Назад: хто видав дозвіл](04-who-authorized.md) · [Далі: хто керує рухом](06-vehicles-and-ground-robots.md) · [Зміст](../README.md)

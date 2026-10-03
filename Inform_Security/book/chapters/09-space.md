@@ -94,6 +94,6 @@
 
 ## Джерела глави
 
-[S01] Matthew Scholl, Theresa Suloway, NIST IR 8270; [S02] Viasat, *KA-SAT Network Cyber Attack Overview*; [S03] повідомлення Thales від 25 квітня 2023 року та доступний передрук Space & Cybersecurity Info. Повні записи наведено в [бібліографії](../appendix.md).
+[S01] Matthew Scholl, Theresa Suloway, NIST IR 8270; [S02] Viasat, *KA-SAT Network Cyber Attack Overview*; [S03] повідомлення Thales від 25 квітня 2023 року та доступний передрук Space & Cybersecurity Info. Повні записи наведено в [бібліографії](../appendix-a.md).
 
 [Назад: безпека на воді](08-maritime.md) · [Далі: архітектура стійкості](10-resilience-and-future.md) · [Зміст](../README.md)

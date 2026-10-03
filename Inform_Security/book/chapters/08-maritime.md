@@ -85,6 +85,6 @@ IMO пов'язує керування кіберризиком із безпе�
 
 ## Джерела глави
 
-[M04] IMO, AIS і SOLAS V/19; [M01] Balduzzi, Pasta, Wilhoit, безпека AIS; [D01] University of Texas at Austin, яхта White Rose of Drachs; [M03] Stojanovic, Preisig, підводний акустичний канал; [M05] MAGURA V5; [U06] Горнійчук, Микитюк, Заровний; [M02] IMO, Maritime Cyber Risk. Повні записи наведено в [бібліографії](../appendix.md).
+[M04] IMO, AIS і SOLAS V/19; [M01] Balduzzi, Pasta, Wilhoit, безпека AIS; [D01] University of Texas at Austin, яхта White Rose of Drachs; [M03] Stojanovic, Preisig, підводний акустичний канал; [M05] MAGURA V5; [U06] Горнійчук, Микитюк, Заровний; [M02] IMO, Maritime Cyber Risk. Повні записи наведено в [бібліографії](../appendix-a.md).
 
 [Назад: між командою і координатою](07-uav.md) · [Далі: орбіта під прицілом](09-space.md) · [Зміст](../README.md)

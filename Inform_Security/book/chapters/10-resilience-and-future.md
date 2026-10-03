@@ -193,6 +193,6 @@ PQC не перевіряє правдивості координати, не в
 
 [R06] Merck, наслідки й відновлення 2017 року; [R07] FireEye, SolarWinds; [R08] Log4Shell; [R09] Microsoft, WhisperGate; [R10] NTIA, SBOM; [R11] SLSA; [R12] FIRST, EPSS; [R13] NIST SP 800-61 Rev. 3; [R14] NIST і Microsoft, засоби виявлення й реагування; [R15] RFC 9334; [R16] Шор і NIST, квантова загроза; [R17] STIX і TAXII; [A08] ізоляція біометричних операцій.
 
-[R01] NIST SP 800-207; [R02] Microsoft, аналіз поширення NotPetya 2017 року; [H28] Freund і Cox, xz; [R03] Trusted Computing Group і NIST щодо апаратного захисту; [R04] NIST, стандарти PQC 2024 року; [P05] ESET і CERT-UA, Industroyer2; [R05] CERT-UA, офіційні завдання; [U08] Субач і Копич; [U09] Субач і Кубрак. Повні записи наведено в [бібліографії](../appendix.md).
+[R01] NIST SP 800-207; [R02] Microsoft, аналіз поширення NotPetya 2017 року; [H28] Freund і Cox, xz; [R03] Trusted Computing Group і NIST щодо апаратного захисту; [R04] NIST, стандарти PQC 2024 року; [P05] ESET і CERT-UA, Industroyer2; [R05] CERT-UA, офіційні завдання; [U08] Субач і Копич; [U09] Субач і Кубрак. Повні записи наведено в [бібліографії](../appendix-a.md).
 
-[Назад: орбіта під прицілом](09-space.md) · [Словник, абревіатури та джерела](../appendix.md) · [Зміст](../README.md)
+[Назад: орбіта під прицілом](09-space.md) · [Далі: додаток А](../appendix-a.md) · [Зміст](../README.md)

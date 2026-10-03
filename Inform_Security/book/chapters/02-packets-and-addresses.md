@@ -92,6 +92,6 @@ TCP встановлює з'єднання трьома службовими п�
 
 ## Джерела глави
 
-[H11] Metcalfe, Boggs, Ethernet, 1976; [N01] David Plummer, RFC 826; [H15] Steven Bellovin, 1989; [H16] RFC 1948; [N03] Wesley Eddy, RFC 4987; [N02] Paul Ferguson, Daniel Senie, RFC 2267 і RFC 2827; [H29] модуль `ebt_vlan`; [U02] Субач, Шарадкін, Яковів; [H18] Ylonen і RFC 4251; [H19] SSL 3.0 і TLS 1.0; [N04] специфікації TLS і документи про припинення використання SSL. Повні записи наведено в [бібліографії](../appendix.md).
+[H11] Metcalfe, Boggs, Ethernet, 1976; [N01] David Plummer, RFC 826; [H15] Steven Bellovin, 1989; [H16] RFC 1948; [N03] Wesley Eddy, RFC 4987; [N02] Paul Ferguson, Daniel Senie, RFC 2267 і RFC 2827; [H29] модуль `ebt_vlan`; [U02] Субач, Шарадкін, Яковів; [H18] Ylonen і RFC 4251; [H19] SSL 3.0 і TLS 1.0; [N04] специфікації TLS і документи про припинення використання SSL. Повні записи наведено в [бібліографії](../appendix-a.md).
 
 [Назад: хронологія протистояння](01-chronology.md) · [Далі: мережі без довіри](03-internet-without-owner.md) · [Зміст](../README.md)

@@ -128,6 +128,6 @@ DDoS може вичерпати три різні ресурси: пропус�
 
 [N10] історичний огляд естонських атак 2007 року.
 
-[H12] RFC 1034; [N09] історія DNS 2008-2010; [N05] RFC 4033 про DNSSEC; [H23] RIPE NCC, YouTube; [N06] Louis Poinsignon, Cloudflare; [H24] Google, DigiNotar, і RFC 6962; [N07] Open Worldwide Application Security Project (OWASP), відкритий проєкт безпеки застосунків, рекомендації щодо XSS, SQL-ін'єкцій і серверних запитів; [U03] Субач і Власенко; [N08] Manos Antonakakis та співавтори, Mirai. Повні записи наведено в [бібліографії](../appendix.md).
+[H12] RFC 1034; [N09] історія DNS 2008-2010; [N05] RFC 4033 про DNSSEC; [H23] RIPE NCC, YouTube; [N06] Louis Poinsignon, Cloudflare; [H24] Google, DigiNotar, і RFC 6962; [N07] Open Worldwide Application Security Project (OWASP), відкритий проєкт безпеки застосунків, рекомендації щодо XSS, SQL-ін'єкцій і серверних запитів; [U03] Субач і Власенко; [N08] Manos Antonakakis та співавтори, Mirai. Повні записи наведено в [бібліографії](../appendix-a.md).
 
 [Назад: пакет без паспорта](02-packets-and-addresses.md) · [Далі: хто видав дозвіл](04-who-authorized.md) · [Зміст](../README.md)

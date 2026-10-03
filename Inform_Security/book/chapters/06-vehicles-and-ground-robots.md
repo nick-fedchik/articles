@@ -116,6 +116,6 @@
 
 ## Джерела глави
 
-[V05] історія CAN; [V04] Koscher та співавтори, 2010, і Checkoway та співавтори, 2011; [V01] Charlie Miller, Chris Valasek, Jeep, 2015, і репортаж Andy Greenberg; [V02] Tencent Keen Security Lab, Tesla Model S, 2016; [U06] Горнійчук, Микитюк, Заровний; [V03] UNECE R155/R156 та ISO/SAE 21434. Повні записи наведено в [бібліографії](../appendix.md).
+[V05] історія CAN; [V04] Koscher та співавтори, 2010, і Checkoway та співавтори, 2011; [V01] Charlie Miller, Chris Valasek, Jeep, 2015, і репортаж Andy Greenberg; [V02] Tencent Keen Security Lab, Tesla Model S, 2016; [U06] Горнійчук, Микитюк, Заровний; [V03] UNECE R155/R156 та ISO/SAE 21434. Повні записи наведено в [бібліографії](../appendix-a.md).
 
 [Назад: коли команда вимикає світло](05-industrial-control.md) · [Далі: між командою і координатою](07-uav.md) · [Зміст](../README.md)
