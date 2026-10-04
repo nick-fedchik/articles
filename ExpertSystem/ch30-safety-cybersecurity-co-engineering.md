@@ -20,7 +20,7 @@
 
 ---
 
-## 1. Проблема відокремлених силосів (The Silo Problem)
+## 1. Проблема роздільних інженерних культур
 
 У промисловості, транспортному машинобудуванні та оборонному секторі традиційно склався розкол між двома інженерними культурами:
 
@@ -56,13 +56,13 @@ flowchart TD
 
 Роздільне проєктування може приховати взаємний вплив заходів. Наведені ситуації є класами питань для спільного перегляду, не доказом неминучої помилки ручної експертизи:
 
-1. **Кібер-індуковані фізичні аварії (Cyber-Induced Physical Hazards):**  
+1. **Фізичні небезпеки, спричинені кібератакою:**  
   Порушення цілісності керувальних даних може мати фізичний наслідок. Фахівці мають встановити сценарій, умови й причинний зв'язок між загрозою та небезпекою. Аналіз кібербезпеки автомобільного виробу не обмежується конфіденційністю даних; експертна система не повинна приписувати всім методикам такого обмеження.
-2. **Конфлікт «Fail-Safe проти Availability»:**  
+2. **Конфлікт захисної реакції й доступності:**  
   Захисна реакція може перервати потрібну функцію. Помилка контрольної суми не задає універсального наказу знеструмити виріб: реакцію визначають режим, тип відмови, резервування й вимоги виробу. Потрібно перевірити, чи погоджена реакція не створює нової небезпеки, а не оголосити доступність або зупинку безумовним пріоритетом.
-3. **Конфлікт життєвих циклів (Fast OTA Patching vs Rigorous V-Model):**  
+3. **Конфлікт швидкого оновлення й повної перевірки змін:**  
   Термінове оновлення може конфліктувати з потребою перевірити вплив зміни. Обсяг повторної перевірки визначають змінені функції, залежності й застосовний процес; не кожна зміна вимагає однакового повного повторення всіх робіт. Експертна система готує перелік зачеплених вимог і свідчень, а власник процесу визначає достатній набір перевірок.
-4. **Конфлікт діагностичних інтерфейсів (Debug Ports vs Attack Surface):**  
+4. **Конфлікт діагностичного доступу й поверхні атаки:**  
   Діагностичний доступ може бути потрібним для обслуговування й водночас створювати додатковий ризик. Це не означає ані загальної вимоги тримати всі порти відкритими, ані загальної заборони діагностики. У моделі потрібно назвати дозволену роль, режим виробу, спосіб автентифікації, перелік операцій і умови закриття доступу.
 
 ---
@@ -141,17 +141,18 @@ classDiagram
 
 ### 2.2. Часовий бюджет ко-інженерії: FTTI проти ARTI
 
-Один із найбільш критичних аспектів спільного проектування полягає в гармонізації часових характеристик реакції системи. У функціональній безпеці визначальним параметром є **інтервал часу стійкості до відмов (Fault Tolerant Time Interval, FTTI)**, тобто максимальний час від виникнення первинної апаратно-програмної несправності до переходу системи в небезпечний стан:
+Спільне проєктування потребує узгодити часові характеристики захисних реакцій. У функціональній безпеці визначальним параметром є **інтервал часу стійкості до відмов (Fault Tolerant Time Interval, FTTI)**. ISO 26262-1:2018 визначає його як мінімальний проміжок часу від виникнення несправності в елементі до можливої небезпечної події [[2]](#src-2). Формулювання звірено не з офіційним текстом стандарту, а з дослівними цитатами в двох рецензованих статтях Філіппа Кіліана та співавторів, які посилаються саме на ISO 26262-1:2018 [[3]](#src-3), [[4]](#src-4). Слово «мінімальний» важливе: FTTI обмежує найшвидший шлях до небезпеки, а не середній. FTTI є властивістю цілі безпеки й визначається на рівні елемента з аналізу HARA [[3]](#src-3), а час оброблення несправності (*Fault Handling Time Interval*, FHTI) є властивістю конкретного механізму безпеки [[4]](#src-4). Навчальна умова балансу часу має такий вигляд:
 
 ```math
-\text{FTTI} \ge \text{FDTI} + \text{FRTI}.
+\text{FHTI} = \text{FDTI} + \text{FRTI} \le \text{FTTI}.
 ```
 
 Складники часового балансу стійкості:
 
 - $\text{FTTI}$ є інтервалом часу стійкості до відмов (*Fault Tolerant Time Interval*), у мілісекундах;
-- $\text{FDTI}$ є часом виявлення несправності вбудованою діагностикою (*Fault Detection Time Interval*), у мілісекундах;
-- $\text{FRTI}$ є часом переведення об'єкта в безпечний стан (*Fault Reaction Time Interval*), у мілісекундах.
+- $\text{FHTI}$ є часом оброблення несправності механізмом безпеки (*Fault Handling Time Interval*), тобто сумою FDTI і FRTI, у мілісекундах;
+- $\text{FDTI}$ є проміжком часу від виникнення несправності до її виявлення (*Fault Detection Time Interval*), у мілісекундах;
+- $\text{FRTI}$ є проміжком часу від виявлення несправності до досягнення безпечного стану або аварійного режиму роботи (*Fault Reaction Time Interval*), у мілісекундах.
 
 Наведена нерівність дозволяє сумі часу виявлення й реакції не перевищувати FTTI. За навчальних 100 мс і 30 мс залишок становить 70 мс. Якщо політика потребує додатного резерву, рівність потрібно заборонити окремо; саме такий суворіший профіль перевіряє код розділу 5. Для реального виробу вимірювання мають враховувати найгірші умови й визначені межі інтервалів.
 
@@ -207,35 +208,35 @@ classDiagram
 
 ## 3. Обробка та верифікація вимог у форматі ReqIF (ASPICE 4.0)
 
-В авіаційній, автомобільній та оборонній індустріях обмін вимогами між замовником, генеральним підрядником (Tier-1) та розробниками мікроелектроніки (Tier-2) здійснюється через відкритий XML-стандарт **ReqIF (Requirements Interchange Format)**, стандартизований консорціумом OMG [[3]](#src-3).
+В авіаційній, автомобільній та оборонній індустріях обмін вимогами між замовником, генеральним підрядником (Tier-1) та розробниками мікроелектроніки (Tier-2) здійснюється через відкритий XML-стандарт **ReqIF (Requirements Interchange Format)**, стандартизований консорціумом OMG [[5]](#src-5).
 
 ```mermaid
 flowchart LR
     accTitle: Простежуваність V-моделі ASPICE 4.0 в інженерному графі
     accDescr: Двонапрямлена відповідність системних та програмних процесів від вимог до тестування.
 
-    subgraph Design["Висхідна гілка V-моделі (Специфікація)"]
-        SYS1["SYS.1: Збір вимог замовника"]
-        SYS2["SYS.2: Системні вимоги (ReqIF)"]
-        SYS3["SYS.3: Системна архітектура"]
-        SWE1["SWE.1: Вимоги до ПЗ (Software ReqIF)"]
-        SWE2["SWE.2: Архітектура ПЗ"]
-        SWE3["SWE.3: Детальне проектування та код"]
+    subgraph Design["Низхідна гілка V-моделі (специфікація)"]
+        SYS1["SYS.1: Виявлення вимог"]
+        SYS2["SYS.2: Аналіз системних вимог (ReqIF)"]
+        SYS3["SYS.3: Проєктування архітектури системи"]
+        SWE1["SWE.1: Аналіз вимог до ПЗ (ReqIF)"]
+        SWE2["SWE.2: Проєктування архітектури ПЗ"]
+        SWE3["SWE.3: Детальне проєктування й створення програмних модулів"]
     end
 
-    subgraph Verification["Низхідна гілка V-моделі (Верифікація)"]
-        SYS5["SYS.5: Кваліфікаційне тестування системи"]
-        SYS4["SYS.4: Інтеграційне тестування системи"]
-        SWE6["SWE.6: Кваліфікаційне тестування ПЗ"]
-        SWE5["SWE.5: Інтеграційне тестування ПЗ"]
-        SWE4["SWE.4: Юніт-тестування ПЗ"]
+    subgraph Verification["Висхідна гілка V-моделі (перевірка)"]
+        SYS5["SYS.5: Перевірка системи"]
+        SYS4["SYS.4: Інтеграція системи та перевірка інтеграції"]
+        SWE6["SWE.6: Перевірка ПЗ"]
+        SWE5["SWE.5: Перевірка компонентів ПЗ та перевірка інтеграції"]
+        SWE4["SWE.4: Перевірка програмних модулів"]
     end
 
-    SYS2 <== "<b>100% двонапрямлена простежуваність</b>" ==> SYS5
+    SYS2 <== "<b>Двонапрямлена простежуваність</b>" ==> SYS5
     SYS3 <== "Простежуваність архітектури" ==> SYS4
     SWE1 <== "Простежуваність вимог ПЗ" ==> SWE6
-    SWE2 <== "Простежуваність модулів" ==> SWE5
-    SWE3 <== "Покриття коду тестами (MC/DC)" ==> SWE4
+    SWE2 <== "Простежуваність компонентів" ==> SWE5
+    SWE3 <== "Перевірка модулів за погодженим профілем" ==> SWE4
 
     classDef vdesign fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
     classDef vtest fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
@@ -247,6 +248,9 @@ flowchart LR
 ### 3.1. Структура ReqIF та нормативні атрибути
 
 Файл ReqIF є стандартизованим XML-документом, у якому вимога може бути записана елементом `<SPEC-OBJECT>`, а зв'язки задаються елементами `<SPEC-RELATION>`. Нижче наведено навчальний фрагмент. Визначення типів, заголовок і частину обов'язкових метаданих опущено, тому фрагмент не є самодостатнім валідним файлом ReqIF:
+
+<details>
+<summary>Навчальний фрагмент ReqIF: вимога й зв'язок уточнення</summary>
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -285,9 +289,11 @@ flowchart LR
 </REQ-IF>
 ```
 
+</details>
+
 ### 3.2. Автоматична перевірка метрик повноти ASPICE 4.0
 
-Модель процесів Automotive SPICE 4.0 [[4]](#src-4) і авіаційний документ DO-178C мають різні області застосування; вони не є еквівалентними стандартами. Наступні умови є навчальним профілем перевірки простежуваності (*bidirectional traceability*). Пороги й винятки профілю потрібно обґрунтувати для конкретного проєкту, а не приписувати універсальній сертифікації.
+Модель процесів Automotive SPICE 4.0 [[6]](#src-6) і авіаційний документ DO-178C мають різні області застосування; вони не є еквівалентними стандартами. Automotive SPICE 4.0 вимагає забезпечити узгодженість і встановити двонапрямлену простежуваність (*bidirectional traceability*), зокрема між програмними й системними вимогами (базова практика SWE.1.BP5) та між заходами перевірки й програмними вимогами (SWE.6.BP4); результати перевірки окремо простежують до заходів перевірки [[6]](#src-6). Наступні умови є навчальним профілем автоматичної перевірки частини цих зв'язків, а не перекладом базових практик. Пороги й винятки профілю потрібно обґрунтувати для конкретного проєкту, а не приписувати універсальній сертифікації.
 
 **Інваріант відсутності вимог без системного зв'язку ($\mathcal{I}_{\text{no-orphan}}$).**  
 Кожна програмна вимога $`r \in \text{Reqs}_{\text{SWE.1}}`$ зобов'язана бути спадкоємцем хоча б однієї системної вимоги $`s \in \text{Reqs}_{\text{SYS.2}}`$:
@@ -320,7 +326,7 @@ flowchart LR
 - $\text{Verifies}(t, r)$ задає зв'язок підтвердження вимоги тестом;
 - $\text{Status}(t) = \text{Passed}$ фіксує успішне виконання тесту на стенді.
 
-Якщо для критичної вимоги тест відсутній або завершився збоєм, інваріант набуває значення «хиба», що автоматично зупиняє формування сертифікаційного пакета.
+Якщо для критичної вимоги тест відсутній або завершився збоєм, інваріант набуває значення «хиба». Експертна система тоді позначає пакет свідчень як неповний і показує відсутній зв'язок, а рішення про подальші дії ухвалює власник процесу.
 
 **Метрика MC/DC для коду рівня ASIL D.**  
 Критерій покриття модифікованої умови та рішення MC/DC (*Modified Condition/Decision Coverage*) показує незалежний вплив умов на рішення. Приклад нижче задає ціль повного покриття для обраного модуля. Вимоги до методу й обґрунтування непокритих елементів залежать від застосовного стандарту; ASIL D і авіаційний рівень A не слід зводити до однієї універсальної умови.
@@ -332,16 +338,16 @@ flowchart LR
 де:
 
 - $M$ є модулем коду, що реалізує функції безпеки рівня ASIL D;
-- $\text{Coverage}_{\text{MC/DC}}(M)$ є часткою верифікованих логічних умов, у межах від 0 до 1{,}0;
-- значення 1{,}0 (100 %) вимагає, щоб кожен логічний стан складного умовного виразу був протестований на здатність самостійно змінювати результат виразу незалежно від решти умов.
+- $\text{Coverage}_{\text{MC/DC}}(M)$ є часткою умов, для яких показано незалежний вплив на рішення, у межах від 0 до 1,0;
+- значення 1,0 (100 %) означає, що такий вплив показано для кожної умови кожного рішення модуля.
 
-При цьому кожен логічний стан складного умовного виразу (наприклад, `if (crc_ok && auth_valid && !timeout)`) повинен бути перевірений у такий спосіб, щоб зміна значення саме однієї умови призводила до зміни результату всього виразу незалежно від решти умов.
+Для виразу `if (crc_ok && auth_valid && !timeout)` кожна з трьох умов потребує пари тестів, у якій змінюється значення цієї умови й через це змінюється результат усього виразу. У варіанті з унікальною причиною решта умов у парі залишається незмінною; варіант із маскуванням дозволяє змінювати інші умови, якщо їхній вплив замасковано. Обраний варіант і обґрунтування непокритих умов фіксують у плані перевірки.
 
 ---
 
 ## 4. Синтез доказів безпеки за стандартом Goal Structuring Notation (GSN)
 
-Нотація структурування цілей GSN (*Goal Structuring Notation*) допомагає явно зв'язати твердження, аргументацію, контекст і свідчення [[5]](#src-5). Вона не замінює звітів випробувань і не робить аргумент правильним лише через заповнення графа. Машина збирає каркас і перевіряє визначені структурні умови, а достатність аргументу оцінюють фахівці. Межі формалізації обґрунтувань розглядає Джон Рашбі [[6]](#src-6).
+Нотація структурування цілей GSN (*Goal Structuring Notation*) допомагає явно зв'язати твердження, аргументацію, контекст і свідчення [[7]](#src-7). Вона не замінює звітів випробувань і не робить аргумент правильним лише через заповнення графа. Машина збирає каркас і перевіряє визначені структурні умови, а достатність аргументу оцінюють фахівці. Межі формалізації обґрунтувань розглядає Джон Рашбі [[8]](#src-8).
 
 ```mermaid
 flowchart TD
@@ -423,7 +429,7 @@ flowchart TD
 
 ## 5. Навчальні перевірки в експертній системі мовою Go
 
-Наведений модуль `compliance` демонструє навчальну політику зіставлення вже погоджених категорій, перевірку часових бюджетів і кілька умов до записів вимог. Модуль не встановлює, яку небезпеку спричиняє загроза, не читає повну модель виробу й не доводить відповідності стандартам. Невідомі категорії та недопустимі часові значення повертають помилку, а не дозвіл. Для запуску потрібен Go 1.20 або новіший; залежності лише зі стандартної бібліотеки.
+Наведений модуль `compliance` демонструє навчальну політику зіставлення вже погоджених категорій, перевірку часових бюджетів, кілька умов до записів вимог і правило оновлення з розділу 6.2, яке відрізняє конфлікт від нестачі свідчень. Модуль не встановлює, яку небезпеку спричиняє загроза, не читає повну модель виробу й не доводить відповідності стандартам. Невідомі категорії та недопустимі часові значення повертають помилку, а не дозвіл. Для запуску потрібен Go 1.20 або новіший; залежності лише зі стандартної бібліотеки.
 
 <details>
 <summary>Приклад мовою Go: модуль відповідності стандартам і верифікації часових бюджетів</summary>
@@ -435,10 +441,10 @@ import (
 	"crypto/ecdsa"
 	"crypto/rand"
 	"crypto/sha256"
-  "encoding/json"
+	"encoding/json"
 	"errors"
 	"fmt"
-  "math/big"
+	"math/big"
 	"time"
 )
 
@@ -480,66 +486,103 @@ type SafetyGoal struct {
 }
 
 func DeriveTARAImpact(severity SeverityClass) (ThreatImpact, error) {
-  switch severity {
+	switch severity {
 	case SeverityS3:
-    return ImpactSevere, nil
+		return ImpactSevere, nil
 	case SeverityS2:
-    return ImpactMajor, nil
+		return ImpactMajor, nil
 	case SeverityS1:
-    return ImpactModerate, nil
-  case SeverityS0:
-    return ImpactNegligible, nil
+		return ImpactModerate, nil
+	case SeverityS0:
+		return ImpactNegligible, nil
 	default:
-    return "", fmt.Errorf("unknown severity: %q", severity)
+		return "", fmt.Errorf("unknown severity: %q", severity)
 	}
 }
 
 // VerifyTimingBudget перевіряє умову ARTI + FRTI < FTTI
 func VerifyTimingBudget(sg SafetyGoal, ts ThreatScenario) error {
-  if sg.FTTI <= 0 || sg.FRTI < 0 || ts.ARTIDuration < 0 {
-    return errors.New("invalid timing input")
-  }
-  if sg.FRTI >= sg.FTTI || ts.ARTIDuration >= sg.FTTI-sg.FRTI {
-    return errors.New("timing budget exceeded or no reserve remains")
+	if sg.FTTI <= 0 || sg.FRTI < 0 || ts.ARTIDuration < 0 {
+		return errors.New("invalid timing input")
+	}
+	if sg.FRTI >= sg.FTTI || ts.ARTIDuration >= sg.FTTI-sg.FRTI {
+		return errors.New("timing budget exceeded or no reserve remains")
 	}
 	return nil
 }
 
-// DetectCoEngineeringConflicts перевіряє несумісність Fail-Safe стану з вимогами безпеки
-func DetectCoEngineeringConflicts(safetyState string, secRequirements []string) []string {
-	var conflicts []string
-	if safetyState == "SHUTDOWN_COMMUNICATION" || safetyState == "POWER_OFF_BUS" {
-		for _, req := range secRequirements {
-			if req == "MAINTAIN_INCIDENT_LOGGING_STREAM" || req == "ALLOW_EMERGENCY_PATCH" || req == "BROADCAST_TELEMETRY" {
-				conflicts = append(conflicts, fmt.Sprintf(
-					"КРИТИЧНА КОЛІЗІЯ: Безпечний стан безпеки '%s' унеможливлює вимогу кіберзахисту '%s'",
-					safetyState, req,
-				))
-			}
+// UpdateFinding є результатом правила POLICY-UPDATE-1 з розділу 6.2
+type UpdateFinding string
+
+const (
+	FindingNoConflict      UpdateFinding = "no_conflict"
+	FindingConflict        UpdateFinding = "conflict"
+	FindingMissingEvidence UpdateFinding = "missing_evidence"
+)
+
+// RestartTest описує звіт про перезапуск журналювання для однієї конфігурації
+type RestartTest struct {
+	ID               string
+	Configuration    string
+	RecordsPreserved bool // записи збережено незалежним шляхом під час перезапуску
+}
+
+// UpdateContext містить погоджені входи правила
+type UpdateContext struct {
+	ActiveOperation   bool   // REQ-OBS-1: активна операція потребує журналу
+	UpdateRestartsLog bool   // FACT-RESTART-1: оновлення перезапускає журналювання
+	Configuration     string // поточна конфігурація контролера
+	Tests             []RestartTest
+}
+
+// EvaluateUpdatePolicy відрізняє підтверджений конфлікт від нестачі свідчень
+func EvaluateUpdatePolicy(ctx UpdateContext) (UpdateFinding, []string) {
+	if !ctx.ActiveOperation || !ctx.UpdateRestartsLog {
+		return FindingNoConflict, nil
+	}
+	if ctx.Configuration == "" {
+		return FindingMissingEvidence, nil
+	}
+	var preserved, lost []string
+	for _, test := range ctx.Tests {
+		if test.Configuration != ctx.Configuration {
+			continue
+		}
+		if test.RecordsPreserved {
+			preserved = append(preserved, test.ID)
+		} else {
+			lost = append(lost, test.ID)
 		}
 	}
-	return conflicts
+	switch {
+	case len(lost) > 0:
+		return FindingConflict, lost
+	case len(preserved) > 0:
+		return FindingNoConflict, preserved
+	default:
+		return FindingMissingEvidence, nil
+	}
 }
 
 // ReqIFObject представляє вершину вимоги у форматі ReqIF
 type ReqIFObject struct {
-	ID       string
-	Text     string
-	ASIL     string
-	CAL      string
-	ParentID string // Посилання на вищу системну вимогу
-  RequiresMCDC bool
-	HasMCDC  bool   // Чи є підтверджене покриття 100% MC/DC
+	ID           string
+	Text         string
+	ASIL         string
+	CAL          string
+	ParentID     string // Посилання на вищу системну вимогу
+	RequiresMCDC bool
+	HasMCDC      bool // Чи є підтверджене покриття 100% MC/DC
 }
 
 func ValidateProjectTraceability(objects []ReqIFObject, approvedParents map[string]bool) []string {
 	var violations []string
 	for _, obj := range objects {
-    if !approvedParents[obj.ParentID] {
-      violations = append(violations, fmt.Sprintf("%s: approved parent is missing", obj.ID))
+		if !approvedParents[obj.ParentID] {
+			violations = append(violations, fmt.Sprintf("%s: approved parent is missing", obj.ID))
 		}
-    if obj.RequiresMCDC && !obj.HasMCDC {
-      violations = append(violations, fmt.Sprintf("%s: required coverage evidence is missing", obj.ID))
+		if obj.RequiresMCDC && !obj.HasMCDC {
+			violations = append(violations, fmt.Sprintf("%s: required coverage evidence is missing", obj.ID))
 		}
 	}
 	return violations
@@ -555,46 +598,46 @@ type EvidenceRecord struct {
 }
 
 func recordDigest(record *EvidenceRecord) ([32]byte, error) {
-  payload, err := json.Marshal(struct {
-    AssertionID, ProofType, TimestampUTC, DigestHex string
-  }{record.AssertionID, record.ProofType, record.TimestampUTC, record.DigestHex})
-  return sha256.Sum256(payload), err
+	payload, err := json.Marshal(struct {
+		AssertionID, ProofType, TimestampUTC, DigestHex string
+	}{record.AssertionID, record.ProofType, record.TimestampUTC, record.DigestHex})
+	return sha256.Sum256(payload), err
 }
 
 func SignEvidence(assertionID, proofType, evidenceData string, privKey *ecdsa.PrivateKey) (*EvidenceRecord, error) {
-  if privKey == nil || assertionID == "" || proofType == "" {
-    return nil, errors.New("missing signing key or record metadata")
-  }
-  evidenceDigest := sha256.Sum256([]byte(evidenceData))
-  record := &EvidenceRecord{
-    AssertionID: assertionID, ProofType: proofType,
-    TimestampUTC: time.Now().UTC().Format(time.RFC3339),
-    DigestHex: fmt.Sprintf("%x", evidenceDigest),
-  }
-  digest, err := recordDigest(record)
-  if err != nil {
-    return nil, err
-  }
-  r, s, err := ecdsa.Sign(rand.Reader, privKey, digest[:])
-	if err != nil {
-    return nil, err
+	if privKey == nil || assertionID == "" || proofType == "" {
+		return nil, errors.New("missing signing key or record metadata")
 	}
-  record.SignatureR, record.SignatureS = r.Text(16), s.Text(16)
-  return record, nil
+	evidenceDigest := sha256.Sum256([]byte(evidenceData))
+	record := &EvidenceRecord{
+		AssertionID: assertionID, ProofType: proofType,
+		TimestampUTC: time.Now().UTC().Format(time.RFC3339),
+		DigestHex:    fmt.Sprintf("%x", evidenceDigest),
+	}
+	digest, err := recordDigest(record)
+	if err != nil {
+		return nil, err
+	}
+	r, s, err := ecdsa.Sign(rand.Reader, privKey, digest[:])
+	if err != nil {
+		return nil, err
+	}
+	record.SignatureR, record.SignatureS = r.Text(16), s.Text(16)
+	return record, nil
 }
 
 func VerifyEvidence(record *EvidenceRecord, evidenceData string, publicKey *ecdsa.PublicKey) bool {
-  if record == nil || publicKey == nil {
-    return false
-  }
-  evidenceDigest := sha256.Sum256([]byte(evidenceData))
-  if record.DigestHex != fmt.Sprintf("%x", evidenceDigest) {
-    return false
-  }
-  r, validR := new(big.Int).SetString(record.SignatureR, 16)
-  s, validS := new(big.Int).SetString(record.SignatureS, 16)
-  digest, err := recordDigest(record)
-  return validR && validS && err == nil && ecdsa.Verify(publicKey, digest[:], r, s)
+	if record == nil || publicKey == nil {
+		return false
+	}
+	evidenceDigest := sha256.Sum256([]byte(evidenceData))
+	if record.DigestHex != fmt.Sprintf("%x", evidenceDigest) {
+		return false
+	}
+	r, validR := new(big.Int).SetString(record.SignatureR, 16)
+	s, validS := new(big.Int).SetString(record.SignatureS, 16)
+	digest, err := recordDigest(record)
+	return validR && validS && err == nil && ecdsa.Verify(publicKey, digest[:], r, s)
 }
 ```
 
@@ -604,72 +647,120 @@ func VerifyEvidence(record *EvidenceRecord, evidenceData string, publicKey *ecds
 package compliance
 
 import (
-  "crypto/ecdsa"
-  "crypto/elliptic"
-  "crypto/rand"
-  "testing"
-  "time"
+	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
+	"testing"
+	"time"
 )
 
 func TestSeverityPolicy(t *testing.T) {
-  known := map[SeverityClass]ThreatImpact{
-    SeverityS0: ImpactNegligible, SeverityS1: ImpactModerate,
-    SeverityS2: ImpactMajor, SeverityS3: ImpactSevere,
-  }
-  for severity, expected := range known {
-    actual, err := DeriveTARAImpact(severity)
-    if err != nil || actual != expected {
-      t.Fatalf("%q: got %q, %v", severity, actual, err)
-    }
-  }
-  for _, severity := range []SeverityClass{"", "S4"} {
-    if actual, err := DeriveTARAImpact(severity); err == nil || actual != "" {
-      t.Fatalf("unknown %q was accepted", severity)
-    }
-  }
+	known := map[SeverityClass]ThreatImpact{
+		SeverityS0: ImpactNegligible, SeverityS1: ImpactModerate,
+		SeverityS2: ImpactMajor, SeverityS3: ImpactSevere,
+	}
+	for severity, expected := range known {
+		actual, err := DeriveTARAImpact(severity)
+		if err != nil || actual != expected {
+			t.Fatalf("%q: got %q, %v", severity, actual, err)
+		}
+	}
+	for _, severity := range []SeverityClass{"", "S4"} {
+		if actual, err := DeriveTARAImpact(severity); err == nil || actual != "" {
+			t.Fatalf("unknown %q was accepted", severity)
+		}
+	}
 }
 
 func TestTimingPolicy(t *testing.T) {
-  for _, testCase := range []struct {
-    limit, reaction, detection time.Duration
-    wantError bool
-  }{
-    {100, 20, 79, false}, {100, 20, 80, true},
-    {100, -1, 20, true}, {100, 20, -1, true},
-    {0, 0, 0, true}, {100, 120, 0, true},
-  } {
-    goal := SafetyGoal{FTTI: testCase.limit, FRTI: testCase.reaction}
-    scenario := ThreatScenario{ARTIDuration: testCase.detection}
-    if err := VerifyTimingBudget(goal, scenario); (err != nil) != testCase.wantError {
-      t.Fatalf("%+v: got %v", testCase, err)
-    }
-  }
+	for _, testCase := range []struct {
+		limit, reaction, detection time.Duration
+		wantError                  bool
+	}{
+		{100, 20, 79, false}, {100, 20, 80, true},
+		{100, -1, 20, true}, {100, 20, -1, true},
+		{0, 0, 0, true}, {100, 120, 0, true},
+	} {
+		goal := SafetyGoal{FTTI: testCase.limit, FRTI: testCase.reaction}
+		scenario := ThreatScenario{ARTIDuration: testCase.detection}
+		if err := VerifyTimingBudget(goal, scenario); (err != nil) != testCase.wantError {
+			t.Fatalf("%+v: got %v", testCase, err)
+		}
+	}
 }
 
 func TestProjectTraceability(t *testing.T) {
-  parents := map[string]bool{"SYS-1": true}
-  valid := ReqIFObject{ID: "REQ-1", ParentID: "SYS-1", RequiresMCDC: true, HasMCDC: true}
-  if len(ValidateProjectTraceability([]ReqIFObject{valid}, parents)) != 0 { t.Fatal("valid links rejected") }
-  valid.ParentID = "unknown"
-  valid.HasMCDC = false
-  if len(ValidateProjectTraceability([]ReqIFObject{valid}, parents)) != 2 { t.Fatal("missing links were accepted") }
+	parents := map[string]bool{"SYS-1": true}
+	valid := ReqIFObject{ID: "REQ-1", ParentID: "SYS-1", RequiresMCDC: true, HasMCDC: true}
+	if len(ValidateProjectTraceability([]ReqIFObject{valid}, parents)) != 0 {
+		t.Fatal("valid links rejected")
+	}
+	valid.ParentID = "unknown"
+	valid.HasMCDC = false
+	if len(ValidateProjectTraceability([]ReqIFObject{valid}, parents)) != 2 {
+		t.Fatal("missing links were accepted")
+	}
+}
+
+func TestUpdatePolicyFindings(t *testing.T) {
+	base := UpdateContext{ActiveOperation: true, UpdateRestartsLog: true, Configuration: "cfg-B"}
+	lost := RestartTest{ID: "TEST-RESTART-1", Configuration: "cfg-B", RecordsPreserved: false}
+	kept := RestartTest{ID: "TEST-RESTART-2", Configuration: "cfg-B", RecordsPreserved: true}
+	other := RestartTest{ID: "TEST-RESTART-0", Configuration: "cfg-A", RecordsPreserved: true}
+	for _, testCase := range []struct {
+		name  string
+		tests []RestartTest
+		want  UpdateFinding
+	}{
+		{"lost records", []RestartTest{lost}, FindingConflict},
+		{"no test for configuration", []RestartTest{other}, FindingMissingEvidence},
+		{"records preserved", []RestartTest{kept}, FindingNoConflict},
+		{"contradicting reports", []RestartTest{kept, lost}, FindingConflict},
+	} {
+		ctx := base
+		ctx.Tests = testCase.tests
+		if got, _ := EvaluateUpdatePolicy(ctx); got != testCase.want {
+			t.Fatalf("%s: got %s, want %s", testCase.name, got, testCase.want)
+		}
+	}
+	idle := base
+	idle.ActiveOperation = false
+	if got, _ := EvaluateUpdatePolicy(idle); got != FindingNoConflict {
+		t.Fatalf("idle controller: got %s", got)
+	}
+	unknown := base
+	unknown.Configuration = ""
+	unknown.Tests = []RestartTest{lost}
+	if got, _ := EvaluateUpdatePolicy(unknown); got != FindingMissingEvidence {
+		t.Fatalf("unknown configuration: got %s", got)
+	}
 }
 
 func TestEvidenceBinding(t *testing.T) {
-  key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-  if err != nil { t.Fatal(err) }
-  record, err := SignEvidence("REQ-42", "test", "passed", key)
-  if err != nil { t.Fatal(err) }
-  if !VerifyEvidence(record, "passed", &key.PublicKey) { t.Fatal("valid record rejected") }
-  if VerifyEvidence(record, "failed", &key.PublicKey) { t.Fatal("changed evidence accepted") }
-  record.AssertionID = "REQ-99"
-  if VerifyEvidence(record, "passed", &key.PublicKey) { t.Fatal("changed metadata accepted") }
+	key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+	record, err := SignEvidence("REQ-42", "test", "passed", key)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !VerifyEvidence(record, "passed", &key.PublicKey) {
+		t.Fatal("valid record rejected")
+	}
+	if VerifyEvidence(record, "failed", &key.PublicKey) {
+		t.Fatal("changed evidence accepted")
+	}
+	record.AssertionID = "REQ-99"
+	if VerifyEvidence(record, "passed", &key.PublicKey) {
+		t.Fatal("changed metadata accepted")
+	}
 }
 ```
 
 </details>
 
-Тести перевіряють відомі й невідомі категорії, часові входи, посилання на погоджених батьків і зв'язування підпису з даними та метаданими. Значення `time.Duration` у тестах задано в наносекундах; для реального запису одиницю вказують явно, наприклад `100 * time.Millisecond`. Порівняння через залишок бюджету не приховує переповнення суми. Прапорець `RequiresMCDC` задає погоджений профіль проєкту, а не автоматичне тлумачення ASIL. Обробку похідних вимог, довіру до ключа, його чинність і відкликання приклад не реалізує.
+Тести перевіряють відомі й невідомі категорії, часові входи, посилання на погоджених батьків, три результати правила оновлення, зокрема суперечливі звіти й звіт для іншої конфігурації, і зв'язування підпису з даними та метаданими. Значення `time.Duration` у тестах задано в наносекундах; для реального запису одиницю вказують явно, наприклад `100 * time.Millisecond`. Порівняння через залишок бюджету не приховує переповнення суми. Прапорець `RequiresMCDC` задає погоджений профіль проєкту, а не автоматичне тлумачення ASIL. Обробку похідних вимог, довіру до ключа, його чинність і відкликання приклад не реалізує.
 
 ---
 
@@ -692,7 +783,7 @@ func TestEvidenceBinding(t *testing.T) {
 
 Правило `POLICY-UPDATE-1` перевіряє три умови: активна операція потребує журналу, оновлення перезапускає процес журналу й немає прийнятого свідчення про незалежне збереження записів. За виконання умов правило повертає **конфлікт вимог**, ідентифікатори підстав і вимогу фахового рішення. Правило не робить висновку, що будь-яке оновлення заборонене або що потрібен певний апаратний модуль.
 
-Якщо тест не охоплює поточної конфігурації, результат є «бракує свідчень». Цей результат відрізняється від підтвердженого конфлікту. Навчальні функції розділу 5 перевіряють лише окремі умови; повний граф джерел, версій і станів вони не реалізують.
+Якщо тест не охоплює поточної конфігурації, результат є «бракує свідчень». Цей результат відрізняється від підтвердженого конфлікту. Функція `EvaluateUpdatePolicy` з розділу 5 реалізує саме це розрізнення: звіт про втрату записів для поточної конфігурації дає конфлікт, звіт лише для іншої конфігурації або невідома конфігурація дають «бракує свідчень», а звіт про збереження записів знімає конфлікт. Суперечливі звіти для однієї конфігурації правило трактує як конфлікт, бо успішний повторний прогін не скасовує зафіксованої втрати записів, доки фахівець не з'ясує причину розбіжності. Повний граф джерел, версій і станів функція не реалізує.
 
 ### 6.3. Альтернативи й перевірки
 
@@ -708,7 +799,7 @@ func TestEvidenceBinding(t *testing.T) {
 
 ## 7. Кваліфікація самої експертної системи як програмного інструмента (ISO 26262-8, розділ 11)
 
-Попередні розділи показали навчальні перевірки вимог і підписаний запис свідчення. Аудитор поставить запитання до самої експертної системи: чому результатам цього інструмента можна довіряти? Для автомобільних проєктів форму відповіді задає розділ 11 частини 8 стандарту ISO 26262 «Впевненість у використанні програмних інструментів» (*Confidence in the use of software tools*) [[7]](#src-7). Стандарт не вимагає сертифікувати кожен інструмент: потрібно оцінити наслідок його помилки й незалежні заходи її виявлення.
+Попередні розділи показали навчальні перевірки вимог і підписаний запис свідчення. Аудитор поставить запитання до самої експертної системи: чому результатам цього інструмента можна довіряти? Для автомобільних проєктів форму відповіді задає розділ 11 частини 8 стандарту ISO 26262 «Впевненість у використанні програмних інструментів» (*Confidence in the use of software tools*) [[9]](#src-9). Стандарт не вимагає сертифікувати кожен інструмент: потрібно оцінити наслідок його помилки й незалежні заходи її виявлення.
 
 ### 7.1. Вплив інструмента, виявлення помилки й рівень довіри
 
@@ -742,7 +833,7 @@ func TestEvidenceBinding(t *testing.T) {
 
 ### 7.2. Методи кваліфікації й особливість експертної системи
 
-Для TCL2 і TCL3 стандарт пропонує чотири методи кваліфікації, а рекомендованість кожного методу залежить від TCL і від ASIL продукту [[7]](#src-7):
+Для TCL2 і TCL3 стандарт пропонує чотири методи кваліфікації, а рекомендованість кожного методу залежить від TCL і від ASIL продукту [[9]](#src-9):
 
 1. підвищення впевненості через досвід використання (*increased confidence from use*);
 2. оцінювання процесу розроблення інструмента;
@@ -751,7 +842,7 @@ func TestEvidenceBinding(t *testing.T) {
 
 Для експертної системи найпрактичніший метод є валідацією: еталонний набір випадків із відомими правильними відповідями, метаморфні й порівняльні перевірки ([Глава 23](ch23-knowledge-base-verification.md)), виміряні частоти хибних відповідей і відмов. Особливість експертної системи полягає в тому, що поведінку інструмента визначає не лише версія механізму виведення, а й покоління пакета знань ([Глава 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)). Тому версією кваліфікованого інструмента є пара «версія механізму виведення і ідентифікатор покоління пакета знань», і кожне нове покоління пакета потребує повторного прогону валідаційного набору. Метод досвіду використання для експертної системи слабкий з тієї самої причини: історія використання накопичується для конкретної пари версій, а знання оновлюються швидше, ніж накопичується статистика.
 
-Авіаційні проєкти розв'язують ту саму задачу за розділом 12.2 DO-178C [[8]](#src-8) і документом DO-330 [[9]](#src-9). Рівень кваліфікації інструмента (*Tool Qualification Level*, TQL, від TQL-1 до TQL-5) визначають за трьома критеріями й рівнем бортового ПЗ: чи може вихід інструмента внести помилку в бортове ПЗ, чи автоматизує інструмент перевірку, якою замінюють інші перевірки, чи інструмент може лише не виявити помилку. Логіка збігається з ISO 26262-8: оцінюють наслідок помилки інструмента й незалежність її виявлення.
+Авіаційні проєкти розв'язують ту саму задачу за розділом 12.2 DO-178C [[10]](#src-10) і документом DO-330 [[11]](#src-11). Рівень кваліфікації інструмента (*Tool Qualification Level*, TQL, від TQL-1 до TQL-5) визначають за трьома критеріями й рівнем бортового ПЗ: чи може вихід інструмента внести помилку в бортове ПЗ, чи автоматизує інструмент перевірку, якою замінюють інші перевірки, чи інструмент може лише не виявити помилку. Логіка збігається з ISO 26262-8: оцінюють наслідок помилки інструмента й незалежність її виявлення.
 
 ### 7.3. Комплект документів кваліфікації
 
@@ -778,23 +869,56 @@ func TestEvidenceBinding(t *testing.T) {
 
 ---
 
+## 9. Сучасні засоби й аналіз даних для спільної інженерії
+
+Розділи 2–8 припускали, що погоджені записи вже існують: зв'язки загроз і небезпек, вимоги з батьками, звіти тестів, склад компонентів. На практиці ці записи виробляють різні інструменти, і експертна система отримує їх у різних форматах. Тому постає прикладне запитання: які відкриті методи й формати дають машинно-читані свідчення для перевірок цієї глави і чого кожен із них не гарантує.
+
+| Метод або формат | Що дає експертній системі | Чого не гарантує |
+|---|---|---|
+| STPA-Sec, системно-теоретичний аналіз процесів для безпеки й кібербезпеки [[12]](#src-12) | одну функціональну структуру керування для аналізу небезпек і вразливостей; перелік небезпечних або незахищених керувальних дій як факти графа | повноти моделі керування; автори прямо пишуть, що повноту не можна довести, а людська рецензія залишається обов'язковою |
+| ReqIF і бібліотека `reqif` для Python [[5]](#src-5), [[13]](#src-13) | розбір, форматування й перевірку файла ReqIF за офіційною схемою OMG перед завантаженням до графа | схема перевіряє структуру, а не правильність тексту вимоги чи зв'язку |
+| CycloneDX 1.7, стандартизований як ECMA-424 [[14]](#src-14) | перелік складу програмного забезпечення (*Software Bill of Materials*, SBOM): компоненти, залежності, сервіси, відомі вразливості, позначку повноти переліку | перелік повний лише настільки, наскільки повний процес збирання; позначка повноти є твердженням виробника переліку |
+| OpenVEX 0.2.0, реалізація формату VEX (*Vulnerability Exploitability eXchange*) [[15]](#src-15) | твердження «продукт, вразливість, статус, час» зі статусами `not_affected`, `affected`, `fixed`, `under_investigation` і машинно-читаним обґрунтуванням | статус `not_affected` є твердженням постачальника; специфікація сама зазначає, що деякі обґрунтування важко довести |
+| Uptane 2.1.0 [[16]](#src-16) | вимоги до перевірки оновлень у транспортному засобі: два репозиторії метаданих, повна й часткова перевірка, захист від відкату та заморожування оновлень | захист від шкідливого коду в довіреному пакеті й компрометації збірки стандарт виводить за свої межі; для цього потрібні атестації походження з [Глави 27](ch27-safety-case-gsn-synthesis.md) |
+
+Таблиця показує спільну межу: кожен засіб формалізує одну частину свідчень і не встановлює причинності між загрозою та фізичною небезпекою. Ця причинність, як і в розділі 2.1, залишається предметним рішенням.
+
+**STPA-Sec як спільна модель.** Вільям Янг і Ненсі Левесон запропонували розширити системно-теоретичний аналіз процесів (*System-Theoretic Process Analysis*, STPA) на кібербезпеку [[12]](#src-12). Обидва аналізи будують одну функціональну структуру керування й шукають чотири види небезпечних керувальних дій: дію, що веде до небезпеки; відсутню потрібну дію; дію зарано, запізно або не в тій послідовності; дію, що триває задовго або припиняється зарано. Відмінність STPA-Sec, за авторами, полягає лише в тому, що причинні сценарії останнього кроку охоплюють і навмисні дії. Для цієї глави це важливо з двох причин. По-перше, третій і четвертий види дій прямо пов'язані з часовим бюджетом розділу 2.2: реакція на атаку, що настала запізно, є небезпечною керувальною дією, навіть якщо сама дія правильна. По-друге, обидві команди працюють з одним переліком керувальних дій, тому експертна система може перевіряти, що кожна небезпечна дія має обмеження, кожне обмеження має вимогу, а кожна вимога має тест. Автори зазначили, що формальне порівняння STPA-Sec із червоними командами на 2014 рік ще тривало, тому перевагу методу для кібербезпеки слід вважати гіпотезою, яку проєкт перевіряє на власних даних.
+
+**Склад компонентів і статус вразливостей.** Пункт 5 переліку з розділу 8 питає про залежності й відомі вразливості. CycloneDX описує компоненти, залежності й вразливості, а OpenVEX додає до кожної пари «продукт, вразливість» статус і час. Твердження в OpenVEX упорядковані в часі: нове твердження уточнює попереднє, тому експертна система має зберігати історію статусів, а не лише останній. Перевірки стають простими правилами: вразливість зі статусом `affected` без запису про дію є незакритою; статус `under_investigation`, старший за погоджений строк, потребує ескалації; `not_affected` без машинно-читаного обґрунтування не приймається.
+
+**Аналіз даних над свідченнями.** Три прийоми з аналізу даних доповнюють правила глави, але дають лише кандидатів для перевірки:
+
+1. **Зіставлення складу компонентів зі стрічками вразливостей.** З'єднання компонентів SBOM за ідентифікаторами пакетів із публічними базами вразливостей дає кандидатні пари «компонент, вразливість». Неточні назви й версії дають і хибні збіги, і пропуски, тому кожна пара отримує статус VEX від відповідального фахівця, а частку хибних збігів вимірюють на розміченій вибірці.
+2. **Пошук прогалин простежуваності.** Запити до графа знаходять вимоги без батька, критичні вимоги без тесту й тести, прив'язані до застарілої редакції вимоги. Пошук асоціативних правил над історією змін показує, які типи вимог найчастіше втрачають зв'язки після зміни; цей результат визначає порядок ручного перегляду, а не замінює перегляду. Методи відновлення зв'язків простежуваності розглянуто в [Главі 27](ch27-safety-case-gsn-synthesis.md).
+3. **Аналіз історії розв'язаних конфліктів.** Кейси на зразок розділу 6 накопичуються: пара «захисна реакція, захід кібербезпеки», рішення, винятки й строк чинності. Кластеризація таких пар підказує запитання для переліку перегляду нового проєкту. Збіг із минулим кейсом є аналогією, а не доказом: умови нового виробу потрібно перевірити окремо.
+
+Ці прийоми змінюють порядок і повноту людської перевірки, але не її статус. Тому для кожного прийому вимірюють власну похибку: частку хибних збігів SBOM, тривалість відкритих статусів VEX і повноту пошуку прогалин.
+
+---
+
 ## Висновок
 
-Експертна система допомагає зіставляти погоджені вимоги, знаходити конфлікт і пояснювати відсутню підставу. Вона не встановлює автоматично причинності між загрозою й небезпекою та не замінює предметного оцінювання ризику. Кейс складського контролера розділив конфлікт, нестачу даних і кандидатні дії; Go-тести перевірили невідомі входи, часову межу, простежуваність та захист метаданих підписом.
+Експертна система допомагає зіставляти погоджені вимоги, знаходити конфлікт і пояснювати відсутню підставу. Вона не встановлює автоматично причинності між загрозою й небезпекою та не замінює предметного оцінювання ризику. Кейс складського контролера розділив конфлікт, нестачу даних і кандидатні дії, а функція `EvaluateUpdatePolicy` відтворила це розрізнення в коді. Go-тести перевірили невідомі входи, часову межу, простежуваність, три результати правила оновлення та захист метаданих підписом.
 
-Підписаний запис не є сертифікацією виробу, а нотація аргументації не доводить достатності свідчень. Кваліфікація інструмента залежить від сценарію використання та незалежності перевірок. Погоджені предметні політики, тести й рішення відповідальних осіб залишаються потрібними навіть за повної автоматизації збирання записів.
+Відкриті методи й формати роблять свідчення машинно-читаними: STPA-Sec дає спільну модель керування, CycloneDX і OpenVEX описують склад компонентів і статус вразливостей, Uptane задає перевірку оновлень. Кожен із цих засобів звужує одну частину ручної роботи, але не встановлює достатності свідчень.
+
+Підписаний запис не є сертифікацією виробу, а нотація аргументації не доводить достатності свідчень. Кваліфікація інструмента залежить від сценарію використання та незалежності перевірок. Визначення FTTI, FDTI, FRTI і FHTI звірено з дослівними цитатами ISO 26262-1:2018 у рецензованих статтях, а назви процесів і базові практики простежуваності з текстом Automotive SPICE 4.0; для сертифікаційного проєкту визначення беруть із ліцензованої копії стандарту. Погоджені предметні політики, тести й рішення відповідальних осіб залишаються потрібними навіть за повної автоматизації збирання записів.
 
 ---
 
 ## Запитання для самоперевірки
 
 1. Які підстави потрібні, перш ніж програма застосує погоджену таблицю впливу до зв'язку загрози й небезпеки? Чому порожній перелік небезпек не означає найнижчий ризик?
-2. Поясніть сутність колізії «Fail-Safe проти Availability». За яких умов автоматика функціональної безпеки сама стає інструментом реалізації кібератаки?
+2. Поясніть сутність конфлікту захисної реакції й доступності. За яких умов автоматика функціональної безпеки сама стає інструментом реалізації кібератаки?
 3. За яких припущень можна додавати ARTI й FRTI? Чому перевищення бюджету одного шляху не доводить неможливості будь-якого іншого рішення?
 4. Чому непорожнє поле `ParentID` не доводить правильності посилання на батьківську вимогу?
 5. Які дані захищає підпис запису свідчення й чого підпис не доводить про продукт?
 6. Які свідчення потрібні для оновлення складського контролера під час активної операції? Хто погоджує альтернативну дію?
 7. Чому одна й та сама експертна система може мати TCL1 в одному сценарії використання і TCL3 в іншому, і чому нове покоління пакета знань вимагає повторної валідації інструмента?
+8. Чому правило оновлення повертає «бракує свідчень», а не «конфлікту немає», якщо є лише звіт для іншої конфігурації?
+9. Які перевірки можна автоматизувати над парою CycloneDX і OpenVEX, і чому статус `not_affected` залишається твердженням, а не доведеним фактом?
+10. Як часовий бюджет розділу 2.2 пов'язаний із видами небезпечних керувальних дій у STPA-Sec?
 
 ---
 
@@ -809,7 +933,8 @@ func TestEvidenceBinding(t *testing.T) {
 | Аналіз загроз та оцінка ризиків | TARA (Threat Analysis and Risk Assessment) | Метод виявлення сценаріїв кібератак, векторів загроз та оцінки їх критичності за ISO/SAE 21434 |
 | Рівень повноти безпеки автомобіля | ASIL (Automotive Safety Integrity Level) | Клас критичності за ISO 26262 від A (найнижчий) до D (найсуворіший) |
 | Рівень кібербезпеки | CAL (Cybersecurity Assurance Level) | Ступінь впевненості у захисті від атак за шкалою ISO/SAE 21434 від 1 до 4 |
-| Інтервал часу стійкості до відмов | FTTI (Fault Tolerant Time Interval) | Максимальний інтервал часу від виникнення відмови до настання небезпечної фізичної події |
+| Інтервал часу стійкості до відмов | FTTI (Fault Tolerant Time Interval) | Мінімальний проміжок часу від виникнення несправності в елементі до можливої небезпечної події за ISO 26262-1:2018 |
+| Час оброблення несправності | FHTI (Fault Handling Time Interval) | Сума часу виявлення й часу реакції на несправність; властивість конкретного механізму безпеки |
 | Інтервал часу реакції на атаку | ARTI (Attack Response Time Interval) | Час, необхідний системі для детекції кібератаки та активації захисних бар'єрів |
 | Формат обміну вимогами | ReqIF (Requirements Interchange Format) | Відкритий XML-стандарт консорціуму OMG для передачі вимог між різнорідними інженерними середовищами |
 | Покриття модифікованої умови/рішення | MC/DC (Modified Condition/Decision Coverage) | Суворий метод структурного тестування ПЗ, де кожна умова перевіряється на незалежний вплив на результат |
@@ -820,6 +945,9 @@ func TestEvidenceBinding(t *testing.T) {
 | Вплив інструмента | TI (Tool Impact) | Оцінка того, чи може несправність інструмента внести або пропустити помилку в елементі, пов'язаному з безпекою |
 | Виявлення помилки інструмента | TD (Tool error Detection) | Оцінка того, наскільки впевнено інші заходи процесу виявлять хибний результат інструмента |
 | Рівень довіри до інструмента | TCL (Tool Confidence Level) | Рівень від 1 до 3 за ISO 26262-8, який визначає, чи потрібна кваліфікація інструмента |
+| Небезпечна керувальна дія | Unsafe control action | Дія контролера, яка в певному контексті веде до небезпеки: надана, не надана, надана не вчасно або не тієї тривалості |
+| Перелік складу програмного забезпечення | SBOM (Software Bill of Materials) | Машинно-читаний перелік компонентів і залежностей продукту |
+| Твердження про експлуатованість вразливості | VEX statement | Запис «продукт, вразливість, статус, час», який повідомляє, чи зачіпає вразливість продукт |
 
 ---
 
@@ -828,6 +956,8 @@ func TestEvidenceBinding(t *testing.T) {
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ARTI | Attack Response Time Interval | інтервал часу реакції на кібератаку |
+| ATDI | Attack Detection Time Interval | час розпізнавання атаки в навчальній моделі глави |
+| ATRI | Attack Reaction Time Interval | час активації захисних заходів у навчальній моделі глави |
 | ASIL | Automotive Safety Integrity Level | рівень повноти безпеки автомобіля за стандартом ISO 26262 |
 | ASPICE | Automotive Software Process Improvement and Capability Determination | стандарт оцінки та вдосконалення процесів розробки ПЗ для автопрому |
 | CAL | Cybersecurity Assurance Level | рівень гарантії кібербезпеки за стандартом ISO/SAE 21434 |
@@ -835,6 +965,9 @@ func TestEvidenceBinding(t *testing.T) {
 | CMAC | Cipher-based Message Authentication Code | блочний алгоритм обчислення коду автентифікації повідомлень на базі симетричного шифрування (AES) |
 | DoS | Denial of Service | атака типу «відмова в обслуговуванні» |
 | EKG | Engineering Knowledge Graph | інженерний граф знань проєкту |
+| FDTI | Fault Detection Time Interval | проміжок часу від виникнення несправності до її виявлення |
+| FHTI | Fault Handling Time Interval | час оброблення несправності, сума FDTI і FRTI |
+| FRTI | Fault Reaction Time Interval | проміжок часу від виявлення несправності до безпечного стану або аварійного режиму |
 | FTTI | Fault Tolerant Time Interval | інтервал часу стійкості до відмов |
 | GSN | Goal Structuring Notation | нотація структурування сертифікаційних цілей |
 | HARA | Hazard Analysis and Risk Assessment | аналіз небезпек та оцінка ризиків функціональної безпеки |
@@ -844,12 +977,16 @@ func TestEvidenceBinding(t *testing.T) {
 | ODD | Operational Design Domain | експлуатаційний домен проектування автономної системи |
 | OTA | Over-The-Air | технологія бездротового дистанційного оновлення прошивки |
 | ReqIF | Requirements Interchange Format | відкритий формат обміну вимогами консорціуму OMG |
+| SBOM | Software Bill of Materials | перелік складу програмного забезпечення |
+| STPA | System-Theoretic Process Analysis | системно-теоретичний аналіз процесів |
+| STPA-Sec | STPA for Security | розширення STPA на навмисні причинні сценарії |
 | TARA | Threat Analysis and Risk Assessment | аналіз загроз та оцінювання ризиків кібербезпеки |
 | TCL | Tool Confidence Level | рівень довіри до програмного інструмента за ISO 26262-8 |
 | TD | Tool error Detection | оцінка виявлення помилки інструмента за ISO 26262-8 |
 | TI | Tool Impact | оцінка впливу інструмента на елемент, пов'язаний із безпекою, за ISO 26262-8 |
 | TQL | Tool Qualification Level | рівень кваліфікації інструмента за DO-178C і DO-330 |
 | VDA | Verband der Automobilindustrie | Союз автомобільної промисловості Німеччини |
+| VEX | Vulnerability Exploitability eXchange | формат тверджень про те, чи зачіпає вразливість продукт |
 
 ---
 
@@ -857,13 +994,20 @@ func TestEvidenceBinding(t *testing.T) {
 
 1. <a id="src-1"></a>International Organization for Standardization, SAE International. [*ISO/SAE 21434:2021: Road Vehicles - Cybersecurity Engineering*](https://www.iso.org/standard/70918.html). ISO/SAE, Geneva, Switzerland, 2021.
 2. <a id="src-2"></a>International Organization for Standardization. [*ISO 26262:2018: Road Vehicles - Functional Safety (Parts 1–12)*](https://www.iso.org/standard/68383.html). ISO, Geneva, Switzerland, 2018.
-3. <a id="src-3"></a>Object Management Group (OMG). [*Requirements Interchange Format (ReqIF), Version 1.2*](https://www.omg.org/spec/ReqIF/1.2/About-ReqIF). OMG, 2016.
-4. <a id="src-4"></a>VDA QMC Working Group 13. [*Automotive SPICE Process Assessment / Reference Model, Version 4.0*](https://vda-qmc.de/). Verband der Automobilindustrie e.V. (VDA), Berlin, 2023.
-5. <a id="src-5"></a>Assurance Case Working Group. [*Goal Structuring Notation Community Standard, Version 3*](https://doi.org/10.65391/r1386). SCSC-141C, Safety-Critical Systems Club, 2021.
-6. <a id="src-6"></a>John Rushby. [*Formalism in Safety Cases*](https://www.csl.sri.com/users/rushby/abstracts/sss10). *Making Systems Safer: Proceedings of the Eighteenth Safety-Critical Systems Symposium*, Springer, 3–17, 2010.
-7. <a id="src-7"></a>ISO. [*ISO 26262-8:2018. Road vehicles: Functional safety: Part 8: Supporting processes*](https://www.iso.org/standard/68390.html). ISO, Geneva, Switzerland, 2018. Розділ 11: Confidence in the use of software tools.
-8. <a id="src-8"></a>RTCA / EUROCAE. [*DO-178C / ED-12C: Software Considerations in Airborne Systems and Equipment Certification*](https://www.rtca.org/). RTCA, Washington, D.C., 2011.
-9. <a id="src-9"></a>RTCA. [*DO-330: Software Tool Qualification Considerations*](https://www.rtca.org/). RTCA, Washington, D.C., 2011.
+3. <a id="src-3"></a>Philipp Kilian, Armin Köhler, Patrick Van Bergen та ін. [*Principle Guidelines for Safe Power Supply Systems Development*](https://doi.org/10.1109/ACCESS.2021.3100711). *IEEE Access*, 9, 107751–107766, 2021.
+4. <a id="src-4"></a>Philipp Kilian, Armin J. Köhler, Patrick Van Bergen та ін. [*Best Practices for Advanced Modeling of Safety Mechanisms in an FTA*](https://doi.org/10.1109/ACCESS.2023.3284751). *IEEE Access*, 11, 60109–60129, 2023.
+5. <a id="src-5"></a>Object Management Group (OMG). [*Requirements Interchange Format (ReqIF), Version 1.2*](https://www.omg.org/spec/ReqIF/1.2/About-ReqIF). OMG, 2016.
+6. <a id="src-6"></a>VDA Working Group 13. [*Automotive SPICE Process Assessment / Reference Model, Version 4.0*](https://vda-qmc.de/wp-content/uploads/2023/12/Automotive-SPICE-PAM-v40.pdf). VDA QMC, 2023-11-29.
+7. <a id="src-7"></a>Assurance Case Working Group. [*Goal Structuring Notation Community Standard, Version 3*](https://doi.org/10.65391/r1386). SCSC-141C, Safety-Critical Systems Club, 2021.
+8. <a id="src-8"></a>John Rushby. [*Formalism in Safety Cases*](https://www.csl.sri.com/users/rushby/abstracts/sss10). *Making Systems Safer: Proceedings of the Eighteenth Safety-Critical Systems Symposium*, Springer, 3–17, 2010.
+9. <a id="src-9"></a>ISO. [*ISO 26262-8:2018. Road vehicles: Functional safety: Part 8: Supporting processes*](https://www.iso.org/standard/68390.html). ISO, Geneva, Switzerland, 2018. Розділ 11: Confidence in the use of software tools.
+10. <a id="src-10"></a>RTCA / EUROCAE. [*DO-178C / ED-12C: Software Considerations in Airborne Systems and Equipment Certification*](https://www.rtca.org/). RTCA, Washington, D.C., 2011.
+11. <a id="src-11"></a>RTCA. [*DO-330: Software Tool Qualification Considerations*](https://www.rtca.org/). RTCA, Washington, D.C., 2011.
+12. <a id="src-12"></a>William Young, Nancy G. Leveson. [*An Integrated Approach to Safety and Security Based on Systems Theory*](https://doi.org/10.1145/2556938). *Communications of the ACM*, 57(2), 31–35, 2014.
+13. <a id="src-13"></a>StrictDoc Project. [*reqif: Python library for ReqIF format*](https://github.com/strictdoc-project/reqif). Реліз 0.1.0.
+14. <a id="src-14"></a>OWASP Foundation, Ecma International TC54. [*CycloneDX Specification, Version 1.7 (ECMA-424)*](https://cyclonedx.org/specification/overview/). 2025.
+15. <a id="src-15"></a>OpenVEX. [*OpenVEX Specification v0.2.0*](https://github.com/openvex/spec/blob/main/OPENVEX-SPEC.md). Реалізація документа CISA *Minimum Requirements for VEX*, квітень 2023.
+16. <a id="src-16"></a>Uptane Community, Joint Development Foundation Projects. [*Uptane Standard for Design and Implementation 2.1.0*](https://uptane.org/docs/latest/standard/uptane-standard).
 
 ---
 
