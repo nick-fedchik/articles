@@ -2,7 +2,7 @@
 
 > **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Передовий край: регуляторна сертифікація та нейро-символьний ШІ](part-06-frontiers-neuro-symbolic.md)  
 > **Попередня глава:** [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](ch33-inter-system-knowledge-exchange-and-model-teaching.md)  
-> **Наступна глава:** [Глава 35. Реактивні експертні системи: подійно-орієнтований рантайм, апаратне прискорення NPU та динамічна еволюція онтологій без операторського втручання](ch35-reactive-runtime-event-driven-knowledge-and-npu-acceleration.md)  
+> **Наступна глава:** [Глава 35. Самоорганізовані експертні системи: синергетика знань, нерівноважний рантайм, апаратне прискорення NPU та еволюція онтологій без операторського втручання](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні архітектори, інженери знань, фахівці з математичної логіки та філософії штучного інтелекту: просунутий  
@@ -849,4 +849,4 @@ func TestAbductionEngine_And_SocraticDialogue(t *testing.T) {
 
 ---
 
-[← До Глави 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md) | [До Частини VI](part-06-frontiers-neuro-symbolic.md) | [До змісту книги](README.md) | [До Глави 35 →](ch35-reactive-runtime-event-driven-knowledge-and-npu-acceleration.md)
+[← До Глави 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md) | [До Частини VI](part-06-frontiers-neuro-symbolic.md) | [До змісту книги](README.md) | [До Глави 35 →](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
