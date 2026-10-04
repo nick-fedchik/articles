@@ -497,7 +497,7 @@ flowchart LR
 Ідентифікатор фрагмента обчислюють хеш-функцією $H$ від усіх параметрів, що впливають на його вміст:
 
 ```math
-  ext{passage-id} = H(\text{document-id} \,\|\, \text{revision} \,\|\, \text{transform-chain} \,\|\, \text{byte-start} \,\|\, \text{byte-end} \,\|\, \text{bytes}).
+\text{passage-id} = H(\text{document-id} \,\|\, \text{revision} \,\|\, \text{transform-chain} \,\|\, \text{byte-start} \,\|\, \text{byte-end} \,\|\, \text{bytes}).
 ```
 
 - Для ідентифікатора $H$ є детермінованою криптографічною хеш-функцією, а її аргументи задають повний набір параметрів, від яких залежить вміст фрагмента;
