@@ -497,6 +497,8 @@ func TestAdmissionBoundaries(t *testing.T) {
 
 **Конфіденційний аудит.** Дерево Меркла з [Глави 27](ch27-safety-case-gsn-synthesis.md) фіксує цілісність, але розкриває перевіреному оцінювачеві зміст показаних записів. Докази з нульовим розголошенням, наприклад компактні неінтерактивні аргументи Єнса Ґрота [[22]](#src-22), у принципі дозволяють довести властивість приховних даних без їхнього розкриття. Перетворення інженерних вимог на арифметичні обмеження таких доказів поки що є дослідницькою задачею.
 
+**Самоузгодженість виведення кандидатів (Self-Consistency).** За неоднозначних або складних формулювань вимог одноразова генерація кандидатної структури мовною моделлю ризикує випадковою помилкою жадібного декодування. Ван та співавтори показали, що вибірка множини незалежних шляхів міркувань і вибір мажоритарного консенсусу суттєво підвищують надійність виведення порівняно з жадібним пошуком [[23]](#src-23). Для експертної системи це дає статистичний фільтр стійкості: на детермінований шлюз допуску передається лише та структура фактів, яку модель підтвердила на кількох незалежних трасах генерації.
+
 Інші напрями, пов'язані з фізичним світом, книга розглядає в додатках: робототехніку й кіберфізичні системи в [Додатку Б](appendix-b-robotics-and-cyber-physical-systems.md), автономну навігацію в [Додатку В](appendix-c-autonomous-navigation-and-geosearch.md), аналогові та нейроморфні обчислення в [Додатку Г](appendix-d-analog-expert-systems-and-neuromorphic-computing.md) і [Додатку Д](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
 
 ## Висновки
@@ -581,6 +583,7 @@ func TestAdmissionBoundaries(t *testing.T) {
 20. <a id="src-20"></a>Leonardo de Moura, Sebastian Ullrich. [*The Lean 4 Theorem Prover and Programming Language*](https://doi.org/10.1007/978-3-030-79876-5_37). CADE 28, LNCS 12699, 625–635, 2021.
 21. <a id="src-21"></a>Lucas Bourtoule, Varun Chandrasekaran, Christopher A. Choquette-Choo, Hengrui Jia та ін. [*Machine Unlearning*](https://arxiv.org/abs/1912.03817). IEEE Symposium on Security and Privacy, 2021.
 22. <a id="src-22"></a>Jens Groth. [*On the Size of Pairing-Based Non-interactive Arguments*](https://doi.org/10.1007/978-3-662-49896-5_11). EUROCRYPT 2016, LNCS 9666, 305–326, 2016.
+23. <a id="src-23"></a>Xuezhi Wang et al. [*Self-Consistency Improves Chain of Thought Reasoning in Language Models*](https://research.google/pubs/self-consistency-improves-chain-of-thought-reasoning-in-language-models/). *Proceedings of the 11th International Conference on Learning Representations (ICLR 2023)*, 2023.
 
 ---
 

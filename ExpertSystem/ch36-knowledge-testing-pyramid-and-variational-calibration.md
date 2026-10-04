@@ -2,7 +2,7 @@
 
 > **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Передовий край: регуляторна сертифікація та нейро-символьний ШІ](part-06-frontiers-neuro-symbolic.md)  
 > **Попередня глава:** [Глава 35. Самоорганізовані експертні системи: синергетика знань, нерівноважний рантайм, апаратне прискорення NPU та еволюція онтологій без операторського втручання](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
-> **Наступна глава:** [Додаток А. Практичний фреймворк доказового дослідження в складних інженерних проєктах](appendix-a-evidence-governed-framework.md)  
+> **Наступна глава:** [Глава 37. Аналітична оцінка вхідної інформації](ch37-input-information-assessment-and-algorithmic-skepticism.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні архітектори, інженери знань, інженери верифікації (QA/QE), математики: поглиблений  
@@ -670,4 +670,4 @@ func main() {
 
 ---
 
-[← Глава 35. Самоорганізовані експертні системи](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Додаток А. Практичний фреймворк доказового дослідження →](appendix-a-evidence-governed-framework.md)
+[← Глава 35. Самоорганізовані експертні системи](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 37. Аналітична оцінка вхідної інформації →](ch37-input-information-assessment-and-algorithmic-skepticism.md)
