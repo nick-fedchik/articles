@@ -228,7 +228,7 @@ $$H(\dots H(H(f_i), h_1) \dots) = R_{\text{Merkle}}$$
 
 ## 7. Підтвердження фактів (Fact Attestation) та захист від отруєння знань
 
-При отриманні спостережень, результатів тестування чи правил від сторонніх систем експертна система наражається на ризик **отруєння знань (knowledge poisoning)**. Зловмисник або скомпрометований сенсорний вузол може надсилати спотворені факти (наприклад, стверджуючи, що критична температура становить 500 °C замість 100 °C), що паралізує або спотворить подальше логічне виведення.
+При отриманні спостережень, результатів тестування чи правил від сторонніх систем експертна система наражається на ризик **отруєння знань (knowledge poisoning)**. Зловмисник або скомпрометований сенсорний вузол може надсилати спотворені факти (наприклад, стверджуючи, що критична температура становить 500 °C замість 100 °C або що аварійний клапан повинен залишатися закритим під час перевищення тиску), що паралізує або спотворить подальше логічне виведення.
 
 ### 7.1. Криптографічна атестація фактів за схемою Ed25519
 
@@ -238,13 +238,51 @@ $$\sigma = \text{Ed25519}_{\text{Sign}}(SK_{\text{source}}, \text{SHA-256}(s \pa
 
 Перевірка підпису гарантує цілісність даних та неспростовність авторства (non-repudiation) згідно з принципами ланцюжків постачання артефактів in-toto Торрес-Аріаса та співавторів [[13]](#src-13).
 
-### 7.2. Шлюз вхідного контролю та карантинний буфер
+### 7.2. Таксономія загроз: форми атак отруєння знань (Knowledge Poisoning)
 
-Шлюз вхідного контролю (Admission Controller) пропускає вхідні факти крізь трирівневий фільтр:
+Отруєння бази знань у доказових системах класифікується за чотирма основними векторами впливу:
 
-1. **Криптографічна валідація:** факт відхиляється, якщо відкритий ключ джерела відсутній у списку довірених або підпис не відповідає згортці байтів.
-2. **Перевірка суперечностей з аксіомами:** факт відхиляється негайно, якщо його предикат прямо заперечує встановлені фундаментальні аксіоми безпеки.
-3. **Карантинний буфер (Quarantine Buffer):** синтаксично коректні факти, що містять раніше невідомі предикати або нові зв'язки, не потрапляють одразу до канонічного шару бази знань. Вони поміщаються в ізольований буфер кандидатів, де проходять регресійні тести та перевірку формальним розв'язувачем Z3 або Clingo ([Глава 23](ch23-knowledge-base-verification.md)) на відсутність циклів і прихованих протиріч.
+1. **Пряма інверсія аксіоми (Axiom Inversion / Overwrite):**  
+   Атакуючий вузол (навіть володіючи валідним сертифікатом доступу) надсилає твердження, що прямо суперечить засадничим законам фізики чи нормам безпеки:
+   $$\text{Attestation}: (\texttt{emergency\_brake}, \texttt{status\_on\_failure}, \texttt{DISABLED})$$
+   Мета: зняття захисних блокувань у критичний момент.
+2. **Прихований семантичний дрейф (Stealth Semantic Drift):**  
+   Атака розтягується в часі: щосекунди надсилаються ледь помітні дельти числових меж або допусків (наприклад, граничний струм зсувається на $+0{,}1\%$ за кожне спостереження). Окремо кожен факт проходить локальний фільтр аномалій, але накопичувальний ефект виводить систему за безпечний експлуатаційний конверт.
+3. **Індукція зациклення розв'язувача (Cyclic Denial-of-Reasoning):**  
+   Впровадження циклічних взаємозалежностей між новими предикатами:
+   $$P_1(x) \leftarrow P_2(x), \quad P_2(x) \leftarrow P_3(x), \quad P_3(x) \leftarrow P_1(x)$$
+   Це провокує експоненційне зростання обчислювальної складності або зависання під час резолюційного виведення чи пошуку найменшої нерухомої точки.
+4. **Атака Сивіли у зворотному зв'язку (Sybil Consensus Poisoning):**  
+   Компрометація пулу сенсорів для одночасної відправки фіктивних контрприкладів, що штучно перевищують поріг $N_{\text{threshold}}$ і змушують систему вважати фальшиву аномалію реальним зсувом фізичного середовища.
+
+### 7.3. Шлюз вхідного контролю та життєвий цикл карантину знань
+
+Щоб нейтралізувати зазначені загрози, шлюз вхідного контролю (Admission Controller) реалізує суворий багатоетапний **життєвий цикл карантину знань (Knowledge Quarantine Lifecycle)**:
+
+```mermaid
+flowchart TD
+    IN["Вхідний атестований факт<br/>(Attested Fact)"] --> C1{"Криптографічний підпис<br/>(Ed25519 & Trusted Registry)"}
+    C1 -->|НЕДІЙСНИЙ| REJ_SIG["Відхилено:<br/>DecisionRejectSignature"]
+    C1 -->|ВАЛІДНИЙ| C2{"Сумісність з аксіомами<br/>(Authoritative Axioms)"}
+    
+    C2 -->|СУПЕРЕЧНІСТЬ| REJ_POI["Блоковано:<br/>DecisionRejectPoisoning"]
+    C2 -->|ВІДПОВІДАЄ| C3{"Статус у базі знань"}
+    
+    C3 -->|Відомий факт/клас| ADMIT["Прямий допуск:<br/>DecisionAdmit"]
+    C3 -->|Новий предикат/зв'язок| QUAR["Карантинний буфер:<br/>DecisionQuarantine"]
+    
+    subgraph Карантинний контур верифікації (Offline/Batch Audit)
+        QUAR --> SMT["Формальна перевірка SMT/ASP<br/>(Z3 / Clingo: відсутність циклів)"]
+        SMT --> REG["Регресійне тестування<br/>на екзаменаційній матриці"]
+        REG --> HITL{"Аудит інженера знань<br/>(Human-in-the-Loop)"}
+        HITL -->|ЗАТВЕРДЖЕНО| PROMOTE["Просування в канонічну базу<br/>(Promoted Fact)"]
+        HITL -->|ВІДХИЛЕНО| PURGE["Вилучення з карантину<br/>з фіксацією інциденту"]
+    end
+```
+
+1. **Криптографічна валідація:** факт відхиляється (`DecisionRejectSignature`), якщо відкритий ключ джерела відсутній у списку довірених або підпис не відповідає згортці байтів.
+2. **Перевірка суперечностей з аксіомами:** факт відхиляється негайно (`DecisionRejectPoisoning`), якщо його предикат прямо заперечує встановлені фундаментальні аксіоми безпеки.
+3. **Карантинний буфер (Quarantine Buffer):** синтаксично коректні факти, що містять раніше невідомі предикати або нові структурні зв'язки, не потрапляють одразу до робочого простору виведення. Вони поміщаються в ізольований буфер кандидатів (`DecisionQuarantine`), де проходять регресійні тести та перевірку формальним розв'язувачем Z3 або Clingo ([Глава 23](ch23-knowledge-base-verification.md)) на відсутність циклів, прихованих протиріч та збереження інваріантів безпеки перед остаточним допуском.
 
 ---
 
@@ -400,6 +438,7 @@ const (
 	DecisionAdmit AdmissionDecision = iota
 	DecisionRejectSignature
 	DecisionRejectPoisoning
+	DecisionQuarantine
 )
 
 // AdmissionController перевіряє справжність вхідних фактів і захищає від отруєння знань.
@@ -407,6 +446,8 @@ type AdmissionController struct {
 	mu          sync.RWMutex
 	trustedKeys map[string]ed25519.PublicKey
 	axioms      map[string]string
+	knownPreds  map[string]bool
+	quarantine  map[string]AttestedFact
 }
 
 // NewAdmissionController ініціалізує шлюз вхідного контролю.
@@ -414,6 +455,8 @@ func NewAdmissionController() *AdmissionController {
 	return &AdmissionController{
 		trustedKeys: make(map[string]ed25519.PublicKey),
 		axioms:      make(map[string]string),
+		knownPreds:  make(map[string]bool),
+		quarantine:  make(map[string]AttestedFact),
 	}
 }
 
@@ -424,19 +467,28 @@ func (ac *AdmissionController) RegisterTrustedSource(sourceID string, pub ed2551
 	ac.trustedKeys[sourceID] = pub
 }
 
+// RegisterKnownPredicate реєструє перевірений і безпечний предикат базової онтології.
+func (ac *AdmissionController) RegisterKnownPredicate(predicate string) {
+	ac.mu.Lock()
+	defer ac.mu.Unlock()
+	ac.knownPreds[predicate] = true
+}
+
 // SetAuthoritativeAxiom фіксує непорушну норму, спростування якої кваліфікується як отруєння знань.
 func (ac *AdmissionController) SetAuthoritativeAxiom(subject, predicate, object string) {
 	ac.mu.Lock()
 	defer ac.mu.Unlock()
 	key := subject + "#" + predicate
 	ac.axioms[key] = object
+	ac.knownPreds[predicate] = true
 }
 
-// Ingest здійснює атестацію факту: перевірку підпису та сумісності з аксіомами.
+// Ingest здійснює атестацію факту: перевірку підпису, сумісності з аксіомами та маршрутизацію в карантин.
 func (ac *AdmissionController) Ingest(af AttestedFact) AdmissionDecision {
-	ac.mu.RLock()
+	ac.mu.Lock()
+	defer ac.mu.Unlock()
+
 	pub, ok := ac.trustedKeys[af.Fact.SourceID]
-	ac.mu.RUnlock()
 	if !ok {
 		return DecisionRejectSignature
 	}
@@ -451,8 +503,6 @@ func (ac *AdmissionController) Ingest(af AttestedFact) AdmissionDecision {
 		return DecisionRejectSignature
 	}
 
-	ac.mu.RLock()
-	defer ac.mu.RUnlock()
 	key := af.Fact.Subject + "#" + af.Fact.Predicate
 	if existing, hasAxiom := ac.axioms[key]; hasAxiom {
 		if existing != af.Fact.Object {
@@ -460,7 +510,26 @@ func (ac *AdmissionController) Ingest(af AttestedFact) AdmissionDecision {
 		}
 	}
 
+	// Якщо предикат раніше не атестовано — скеровуємо в карантинний буфер
+	if !ac.knownPreds[af.Fact.Predicate] {
+		ac.quarantine[key] = af
+		return DecisionQuarantine
+	}
+
 	return DecisionAdmit
+}
+
+// PromoteFromQuarantine переводить перевірений SMT/ASP-розв'язувачем факт у статус затверджених.
+func (ac *AdmissionController) PromoteFromQuarantine(key string) (AttestedFact, bool) {
+	ac.mu.Lock()
+	defer ac.mu.Unlock()
+	af, ok := ac.quarantine[key]
+	if !ok {
+		return AttestedFact{}, false
+	}
+	delete(ac.quarantine, key)
+	ac.knownPreds[af.Fact.Predicate] = true
+	return af, true
 }
 
 // AnomalyReport фіксує крайовий випадок чи порушення меж сенсорної інформації стороннім процесором.
@@ -558,6 +627,7 @@ func TestAdmissionAndPoisoningDefense(t *testing.T) {
 
 	ac := NewAdmissionController()
 	ac.RegisterTrustedSource("es-primary-node", exp.PublicKey)
+	ac.RegisterKnownPredicate("nominal_celsius")
 	ac.SetAuthoritativeAxiom("safety_valve", "state_at_overpressure", "OPEN")
 
 	facts := []Fact{
@@ -568,7 +638,7 @@ func TestAdmissionAndPoisoningDefense(t *testing.T) {
 		t.Fatalf("expected 1 attested fact, got %d", len(attested))
 	}
 
-	// 1. Успішний допуск валідного факту
+	// 1. Успішний допуск валідного факту з відомим предикатом
 	if dec := ac.Ingest(attested[0]); dec != DecisionAdmit {
 		t.Errorf("expected DecisionAdmit, got %v", dec)
 	}
@@ -587,6 +657,25 @@ func TestAdmissionAndPoisoningDefense(t *testing.T) {
 	attestedPoison := exp.Export(poisoningFact, LevelPublic)
 	if dec := ac.Ingest(attestedPoison[0]); dec != DecisionRejectPoisoning {
 		t.Errorf("expected DecisionRejectPoisoning, got %v", dec)
+	}
+
+	// 4. Новий невідомий предикат спрямовується в карантин
+	candidateFact := []Fact{
+		{Subject: "coolant_pump", Predicate: "experimental_flow_rate", Object: "42.0", Level: LevelPublic},
+	}
+	attestedCandidate := exp.Export(candidateFact, LevelPublic)
+	if dec := ac.Ingest(attestedCandidate[0]); dec != DecisionQuarantine {
+		t.Errorf("expected DecisionQuarantine for novel predicate, got %v", dec)
+	}
+
+	// 5. Просування з карантину після успішної верифікації
+	promoted, ok := ac.PromoteFromQuarantine("coolant_pump#experimental_flow_rate")
+	if !ok || promoted.Fact.Object != "42.0" {
+		t.Errorf("failed to promote fact from quarantine")
+	}
+	// Після просування предикат стає відомим і допускається безпосередньо
+	if dec := ac.Ingest(attestedCandidate[0]); dec != DecisionAdmit {
+		t.Errorf("expected DecisionAdmit after promotion, got %v", dec)
 	}
 }
 
