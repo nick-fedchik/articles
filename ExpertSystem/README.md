@@ -37,6 +37,7 @@
 | **Формальні щити безпеки та сертифікація (Safe AI)** | Bettina Könighofer, Roderick Bloem et al. (*Shield Synthesis*, 2017); Tim Kelly, Rob Weaver (*Goal Structuring Notation*, York, 2004); André Platzer (*Logical Foundations of CPS*, Springer, 2018) | Синтез обґрунтування безпеки за нотацією GSN для стандартів ISO 26262/21434; формальні щити та числові конверти валідності для периферійних приводів ([Глави 27](ch27-safety-case-gsn-synthesis.md), [30](ch30-safety-cybersecurity-co-engineering.md), [33](ch33-inter-system-knowledge-exchange-and-model-teaching.md)). |
 | **Епістемічна логіка та семіотика знань** | John F. Sowa (*Knowledge Representation: Logical, Philosophical, and Computational Foundations*, 2000); Frank van Harmelen et al. (*Handbook of Knowledge Representation*, Elsevier, 2008) | Епістемічна тріада Чарльза Сандерса Пірса (Поняття $\to$ Судження $\to$ Висновки); абдуктивне виведення робочих гіпотез під строгим дедуктивним контролем ([Глави 6](ch06-applied-mathematics-for-expert-systems.md), [34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)). |
 | **Кібернетика та синергетика складних систем** | Norbert Wiener (*Cybernetics*, 1948); W. Ross Ashby (*An Introduction to Cybernetics*, 1956); Hermann Haken (*Synergetics: An Introduction*, 1977; *Advanced Synergetics*, 1983); Ilya Prigogine (*Order out of Chaos*, 1984) | Закон необхідної різноманітності Ешбі, замкнені контури керування L0–L4, редукція фазового простору до параметрів порядку за принципом підпорядкування Хакена, передбачення фазових переходів за критичним уповільненням (*Critical Slowing Down*) та дисипативна стабілізація баз знань ([Глави 6](ch06-applied-mathematics-for-expert-systems.md), [22](ch22-cybernetics-edge-to-backend.md), [35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)). |
+| **Тестування знань, лінгвістична інваріантність та Ліпшицеве калібрування** | Kent Beck (*TDD*, 2002); Martin Fowler (*Refactoring*, 2018); Clark Barrett, Leonardo de Moura (*Z3 SMT Solver*, 2008); Chuan Guo et al. (*On Calibration of Modern Neural Networks*, ICML 2017); Marco Tulio Ribeiro et al. (*CheckList*, ACL 2020); John L. Pollock (*Defeasible Reasoning*, 1987) | Чотирирівнева піраміда тестування знань (Knowledge Testing Pyramid): ізольоване тестування атомів (KUT) з моками передумов (`PremiseMock`), блокування пастки вакуумної істинності, 6-точковий спектральний BVA, решітки правил та дефітери (KIT), метрика семантичної інваріантності ($\text{SIS} \ge 0{,}98$) на лінгвістичних варіаціях запиту, Ліпшицева неперервність ($L_{\mathcal{K}} \le L_{\max}$) проти релейного брязкоту та стигмергічне накопичення прогалин бази знань ([Глава 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md)). |
 
 ---
 
@@ -68,6 +69,9 @@
 8. **Синергетична редукція розмірності простору та передбіфуркаційна діагностика CSD ([Глави 6](ch06-applied-mathematics-for-expert-systems.md), [22](ch22-cybernetics-edge-to-backend.md), [35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)):**
    * *Авторська знахідка:* Інтеграція синергетичного апарату параметрів порядку Хакена та передбіфуркаційного детектора критичного уповільнення (*Critical Slowing Down*) з детермінованими правилами логічного виведення.
    * *Практичний результат:* Згортання тисяч сирих сенсорних сигналів у семантичні параметри порядку та завчасне виявлення наближення до аварійного фазового переходу за математичними провісниками (автокореляція $\rho_1 \to 1$, дивергенція дисперсії) задовго до перетину фізичних червоних ліній.
+9. **Піраміда тестування знань: модульне тестування (KUT), варіативне калібрування (SIS) та Ліпшицева стійкість ([Глава 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md)):**
+   * *Авторська знахідка:* Чотирирівнева піраміда тестування знань (Knowledge Testing Pyramid, KTP), концепція Knowledge Unit Testing (KUT) для ізольованої атестації окремих правил з мокуванням передумов (`PremiseMock`), непорушний інваріант блокування вакуумної істинності ($P \to Q$ при $P \equiv \text{False}$), 6-точковий аналіз граничних значень (BVA), метрика семантичної інваріантності ($\text{SIS} \ge 0{,}98$) на многовиді лінгвістичних перефразувань запиту та критерій Ліпшицевої неперервності логічного простору ($L_{\mathcal{K}} \le L_{\max}$).
+   * *Практичний результат:* Ліквідація історичної методологічної прогалини між статичним аналізом та загальними іспитами, унеможливлення релейного брязкоту (Chattering) у кіберфізичних контурах при збуреннях порядку $10^{-5}$ та автономне стигмергічне накопичення прогалин бази знань (`KnowledgeGapSpool`) з феромонною пріоритезацією задач інженерів.
 
 ---
 
@@ -77,7 +81,7 @@
 
 **Інженерія знань:** [7–11](part-02-knowledge-models.md) → [12–15](part-03-knowledge-engineering-nlp.md) → [19](ch19-from-question-to-evidence.md) → [20](ch20-explanation-engine.md) → [26](ch26-continual-learning.md). Мета: узгодити семантику, походження, отримання знань і перевірку нових кандидатів. У Частині II є окрема програма наукового посилення глав 7–11.
 
-**Архітектура й спеціалізація:** [16–22](part-04-architecture-and-inference.md), далі [27–35](part-06-frontiers-neuro-symbolic.md) та потрібні додатки. Мета: багатокомпонентне виконання, контроль дій, аргументи безпеки, нейро-символьне поєднання й пакети знань. [Глава 2](ch02-epistemology-of-machine-knowledge.md) пояснює контракт відповіді, [Глава 4](ch04-evolution-from-bayes-to-evidence-ai.md) історію, [Глава 6](ch06-applied-mathematics-for-expert-systems.md) потрібну для задачі математику. Їх можна читати за запитанням, а не як суцільний вступний іспит.
+**Архітектура й спеціалізація:** [16–22](part-04-architecture-and-inference.md), далі [27–36](part-06-frontiers-neuro-symbolic.md) та потрібні додатки. Мета: багатокомпонентне виконання, контроль дій, аргументи безпеки, нейро-символьне поєднання й пакети знань. [Глава 2](ch02-epistemology-of-machine-knowledge.md) пояснює контракт відповіді, [Глава 4](ch04-evolution-from-bayes-to-evidence-ai.md) історію, [Глава 6](ch06-applied-mathematics-for-expert-systems.md) потрібну для задачі математику. Їх можна читати за запитанням, а не як суцільний вступний іспит.
 
 ---
 
@@ -93,7 +97,7 @@
 
 ## Структура книги
 
-Книга складається з шести тематичних частин, 35 глав і п'яти додатків.
+Книга складається з шести тематичних частин, 36 глав і п'яти додатків.
 
 ```mermaid
 flowchart TD
@@ -197,6 +201,7 @@ flowchart TD
 * [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Глава 34. Детерміністичний реляційний аналіз, абдукція та сократівський діалог: відкриття прихованих зв'язків між фактами, подолання неповноти бази знань через робочі гіпотези та епістемічна тріада пізнання](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
 * [Глава 35. Самоорганізовані експертні системи: синергетика знань, нерівноважний рантайм, апаратне прискорення NPU та еволюція онтологій без операторського втручання](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
+* [Глава 36. Тестування знань (Knowledge Testing): модульна верифікація атомів (KUT), інтеграційні решітки правил, дефітери та варіативне калібрування стійкості онтологій](ch36-knowledge-testing-pyramid-and-variational-calibration.md)
 
 ---
 

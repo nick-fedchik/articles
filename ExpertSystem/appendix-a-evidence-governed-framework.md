@@ -366,4 +366,4 @@ TRACEABILITY.md        зв'язок питання, експерименту, �
 
 ---
 
-[← Глава 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Зміст книги](README.md) | [Додаток Б →](appendix-b-robotics-and-cyber-physical-systems.md)
+[← Глава 36. Тестування знань та варіативне калібрування](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Зміст книги](README.md) | [Додаток Б →](appendix-b-robotics-and-cyber-physical-systems.md)

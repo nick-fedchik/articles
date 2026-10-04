@@ -2,7 +2,7 @@
 
 > **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Передовий край: регуляторна сертифікація та нейро-символьний ШІ](part-06-frontiers-neuro-symbolic.md)  
 > **Попередня глава:** [Глава 34. Детерміністичний реляційний аналіз, абдукція та сократівський діалог: відкриття прихованих зв'язків між фактами, подолання неповноти бази знань через робочі гіпотези та епістемічна тріада пізнання](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
-> **Наступна глава:** [Додаток А. Практичний фреймворк доказового дослідження в складних інженерних проєктах](appendix-a-evidence-governed-framework.md)  
+> **Наступна глава:** [Глава 36. Тестування знань (Knowledge Testing): модульна верифікація атомів (KUT), інтеграційні решітки правил, дефітери та варіативне калібрування стійкості онтологій](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні архітектори, інженери знань, фахівці з безпеки та апаратного прискорення: просунутий  
@@ -764,4 +764,4 @@ func TestQuarantineBuffer_Lifecycle(t *testing.T) {
 
 ---
 
-[← Глава 34. Детерміністичний реляційний аналіз, абдукція та сократівський діалог](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Додаток А. Практичний фреймворк доказового дослідження →](appendix-a-evidence-governed-framework.md)
+[← Глава 34. Детерміністичний реляційний аналіз, абдукція та сократівський діалог](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 36. Тестування знань та варіативне калібрування →](ch36-knowledge-testing-pyramid-and-variational-calibration.md)
