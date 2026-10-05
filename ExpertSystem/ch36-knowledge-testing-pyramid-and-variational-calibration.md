@@ -89,7 +89,9 @@ flowchart TD
 
 ### 3.2. Метод фіктивних передумов (Premise Mocking)
 У реальній системі правило звертається до графа знань:
-$$\text{Query}(\text{"engine\_rpm"}) > 3000 \land \text{Query}(\text{"oil\_temp"}) > 100 \implies \text{Mode} = \text{"COOLING\_HIGH"}$$
+
+$$\mathtt{Query}(\mathtt{"engine\_rpm"}) > 3000 \land \mathtt{Query}(\mathtt{"oil\_temp"}) > 100 \implies \mathtt{Mode} = \mathtt{"COOLING\_HIGH"}$$
+
 
 Під час виконання KUT глобальне середовище підміняється ізольованим контекстом-стабом (`PremiseMock`):
 ```go
@@ -107,7 +109,7 @@ res := knowledgetest.RunKUT(coolingRule, mock, "COOLING_HIGH")
 
 ```mermaid
 flowchart TD
-    subgraph Пастка вакуумної істинності (Vacuous Truth Trap)
+    subgraph "Пастка вакуумної істинності (Vacuous Truth Trap)"
         COND["Передумови в PremiseMock відсутні або хибні (P = False)"] --> IMPL["Матеріальна імплікація: False &rarr; Q &equiv; True"]
         IMPL --> VULN["<b>КАТАСТРОФІЧНИЙ ДЕФЕКТ</b><br/>Правило вважається валідним,<br/>але в польоті/на виробництві не спрацює!"]
         IMPL --> GATE["<b>Інваріант KUT #1 (Vacuous Implication Gate)</b><br/>Примусове блокування тесту:<br/>VacuousTruthTrap = true, Passed = false"]
@@ -210,16 +212,20 @@ $$\mathcal{Q}_{\text{base}} = \text{«Який мінімальний MTU для
 $$\mathcal{Q}_{\text{var1}} = \text{«Вкажіть найменший допустимий розмір пакета в мережах IPv6»}$$
 $$\mathcal{Q}_{\text{var2}} = \text{«Least transmission unit required by RFC 8200 IPv6 specification»}$$
 
-Якщо система на $\mathcal{Q}_{\text{base}}$ видає `1280 octets`, а на $\mathcal{Q}_{\text{var1}}$ відмовляє за CWA або змінює шлях доведення, така система є лінгвістично нестабільною.
+Якщо система на $\mathcal{Q}\_{\text{base}}$ видає `1280 octets`, а на $\mathcal{Q}\_{\text{var1}}$ відмовляє за CWA або змінює шлях доведення, така система є лінгвістично нестабільною.
+
+
 
 Авторська метрика **Semantic Invariance Score ($\text{SIS}$)** оцінює стійкість системи на многовиді збурень запиту $\mathbb{V}(\mathcal{Q})$:
 
 $$\text{SIS}(\mathcal{Q}) = \alpha \cdot \text{VerdictsMatchRate} + \beta \cdot \text{ProofGraphJaccard}$$
 
 де:
-* $\text{VerdictsMatchRate} = \frac{1}{N} \sum_{i=1}^N \mathbb{I}(\text{Verdict}(\mathcal{Q}_i) == \text{Verdict}(\mathcal{Q}_{\text{base}}))$;
-* $\text{ProofGraphJaccard} = \frac{1}{N} \sum_{i=1}^N \frac{|\mathcal{P}(\mathcal{Q}_i) \cap \mathcal{P}(\mathcal{Q}_{\text{base}})|}{|\mathcal{P}(\mathcal{Q}_i) \cup \mathcal{P}(\mathcal{Q}_{\text{base}})|}$, де $\mathcal{P}(\mathcal{Q})$ — множина вузлів і цитат графа доведення;
-* $\alpha = 0{,}6, \; \beta = 0{,}4$ — калібрувальні ваги довіри.
+- $\mathrm{VerdictsMatchRate} = \frac{1}{N} \sum_{i=1}^{N} I\left(\mathrm{Verdict}(Q_i) = \mathrm{Verdict}(Q_{\mathrm{base}})\right)$;
+- $\mathrm{ProofGraphJaccard} = \frac{1}{N} \sum_{i=1}^{N} \frac{|P(Q_i) \cap P(Q_{\mathrm{base}})|}{|P(Q_i) \cup P(Q_{\mathrm{base}})|}$, де $P(Q)$ — множина вузлів і цитат графа доведення;
+- $\alpha = 0.6,\quad \beta = 0.4$ — калібрувальні ваги довіри.
+
+
 
 **Умова варіативного тестового допуску:**  
 Для навчального прикладу задано поріг показника семантичної інваріантності:
