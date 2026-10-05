@@ -1,8 +1,8 @@
 # Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Передовий край: регуляторна сертифікація та нейро-символьний ШІ](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 32. Високопродуктивні інженерні бази знань: mmap-індексування з нульовою десеріалізацією, побайтовий допуск знань від мовних моделей та інженерія знаннєвої щільності](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)  
-> **Наступна глава:** [Глава 34. Детерміністичний реляційний аналіз, абдукція та сократівський діалог: відкриття прихованих зв'язків між фактами, подолання неповноти бази знань через робочі гіпотези та епістемічна тріада пізнання](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VII: Реалізація, розгортання та обмін знаннями](part-07-runtime-and-knowledge-exchange.md)  
+> **Попередня глава:** [Глава 35. Реактивна експертна система: події, відкликання й адаптація знань](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
+> **Наступна глава:** [Додаток А](appendix-a-evidence-governed-framework.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні архітектори, інженери знань, розробники розподілених систем і вбудованих обчислювачів: просунутий  
@@ -753,7 +753,6 @@ func TestFeedbackCollectorThreshold(t *testing.T) {
 ---
 
 ## Висновки
-
 1. **Міжсистемна роль експертної системи:** у розподілених гетерогенних комплексах експертна система діє як нормативний оракул, формальний щит безпеки для виконавчих приводів та генератор верифікованого курікулуму для сторонніх моделей.
 2. **Конверти валідності для фізичних сигналів:** предикатні правила експертної системи транслюються у числові межі значень, допустимі швидкості наростання та строби інновацій фільтрів Калмана, забезпечуючи захист сенсорних обчислювачів (DSP, CV) від шумів і навмисного спуфінгу.
 3. **Символьна дистиляція та безпечне підкріплюване навчання:** логічні інваріанти передаються нейромережам через семантичні функції втрат або апостеріорну регуляризацію розподілу цільових імовірностей, а формальні щити блокують небезпечні дії агентів у режимі реального часу.
@@ -780,7 +779,6 @@ func TestFeedbackCollectorThreshold(t *testing.T) {
 ---
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Постачання знань | Knowledge Provisioning | Процес експорту верифікованих логічних тверджень, обмежень та правил стороннім системам |
@@ -800,7 +798,6 @@ func TestFeedbackCollectorThreshold(t *testing.T) {
 ---
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ABAC | Attribute-Based Access Control | атрибутна модель керування доступом на основі характеристик суб'єкта й об'єкта |
@@ -824,7 +821,6 @@ func TestFeedbackCollectorThreshold(t *testing.T) {
 ---
 
 ## Джерела
-
 1. <a id="src-1"></a>Yaakov Bar-Shalom, X. Rong Li, Thiagalingam Kirubarajan. [*Estimation with Applications to Tracking and Navigation: Theory Algorithms and Software*](https://doi.org/10.1002/0471221279). John Wiley & Sons, New York, 2001.
 2. <a id="src-2"></a>Zhiting Hu, Xuezhe Ma, Zhengzhong Liu, Eduard Hovy, Eric P. Xing. [*Harnessing Deep Neural Networks with Logic Rules*](https://doi.org/10.18653/v1/P16-1228). *Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)*, 2410–2420, 2016.
 3. <a id="src-3"></a>Jingyi Xu, Zilu Zhang, Tal Friedman, Yitao Liang, Guy Van den Broeck. [*A Semantic Loss Function for Deep Learning with Symbolic Knowledge*](https://proceedings.mlr.press/v80/xu18h.html). *Proceedings of the 35th International Conference on Machine Learning*, PMLR 80, 5502–5511, 2018.
@@ -838,3 +834,7 @@ func TestFeedbackCollectorThreshold(t *testing.T) {
 11. <a id="src-11"></a>Ralph C. Merkle. [*A Digital Signature Based on a Conventional Encryption Function*](https://doi.org/10.1007/3-540-48184-2_32). *Advances in Cryptology - CRYPTO '87*, Lecture Notes in Computer Science, vol. 293, 369–378. Springer, Berlin, Heidelberg, 1987.
 12. <a id="src-12"></a>Daniel J. Bernstein, Niels Duif, Tanja Lange, Peter Schwabe, Bo-Yin Yang. [*High-Speed High-Security Signatures*](https://doi.org/10.1007/s13389-012-0027-1). *Journal of Cryptographic Engineering*, 2(2), 77–89, 2012.
 13. <a id="src-13"></a>Santiago Torres-Arias, Hammad Afzali, Trishank Karthik Kuppusamy, Radu Curtmola, Justin Cappos. [*in-toto: Providing Farm-to-Table Guarantees for Bits and Bytes*](https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias). *28th USENIX Security Symposium (USENIX Security 19)*, 1393–1410, 2019.
+
+---
+
+[← Глава 35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md) | [Зміст книги](README.md) | [Частина VII](part-07-runtime-and-knowledge-exchange.md) | [До додатків →](appendix-a-evidence-governed-framework.md)

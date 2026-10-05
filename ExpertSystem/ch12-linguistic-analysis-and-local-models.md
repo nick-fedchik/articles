@@ -1,6 +1,6 @@
-# Глава 12. Лінгвістичний аналіз та локальні моделі: як система розуміє текст без втрати джерела
+# Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Інженерія знань: здобуття, NLP та екстракція з нормативів](part-03-knowledge-engineering-nlp.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Здобуття знань, мовний аналіз та оцінювання входу](part-03-knowledge-engineering-nlp.md)  
 > **Попередня глава:** [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](ch11-knowledge-elicitation-from-experts.md)  
 > **Наступна глава:** [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](ch13-language-variability-vs-determinism.md)  
 > **Зміст книги:** [README.md](README.md)  
@@ -616,7 +616,6 @@ flowchart LR
 5. Чим нейтральний клас моделі логічного слідування відрізняється від системного стану «невідомо»?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Карта джерела | *source map* | Відображення фрагментів похідного тексту на байти першоджерела |
@@ -638,7 +637,6 @@ flowchart LR
 | Верифікатор на хості | *host verifier* | Детермінований компонент, що ухвалює рішення про допуск твердження |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | CUDA | Compute Unified Device Architecture | платформа обчислень на графічних процесорах NVIDIA |
@@ -655,7 +653,6 @@ flowchart LR
 | UTF-8, UTF-16 | Unicode Transformation Format | способи кодування кодових позицій байтами |
 
 ## Джерела
-
 1. <a id="src-1"></a>Unicode Consortium. [*UAX #15: Unicode Normalization Forms*](https://www.unicode.org/reports/tr15/). Unicode Standard Annex.
 2. <a id="src-2"></a>Unicode Consortium. [*UAX #29: Unicode Text Segmentation*](https://www.unicode.org/reports/tr29/). Unicode Standard Annex.
 3. <a id="src-3"></a>Nicholas Boucher, Ross Anderson. [*Trojan Source: Invisible Vulnerabilities*](https://www.usenix.org/conference/usenixsecurity23/presentation/boucher). *32nd USENIX Security Symposium*, 2023.
@@ -692,4 +689,4 @@ flowchart LR
 
 ---
 
-[← Глава 11. Вилучення знань у експертів](ch11-knowledge-elicitation-from-experts.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 13. Варіативність природної мови проти детермінізму →](ch13-language-variability-vs-determinism.md)
+[← Глава 11](ch11-knowledge-elicitation-from-experts.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 13 →](ch13-language-variability-vs-determinism.md)

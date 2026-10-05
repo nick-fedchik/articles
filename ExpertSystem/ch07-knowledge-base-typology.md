@@ -1,7 +1,7 @@
 # Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина II: Математичний апарат та моделі знань](part-02-knowledge-models.md)  
-> **Попередня глава:** [Глава 6. Прикладна математика експертних систем: від правил і ймовірностей до графів, причинності та рішень](ch06-applied-mathematics-for-expert-systems.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина II: Математичні моделі, подання та зберігання знань](part-02-knowledge-models.md)  
+> **Попередня глава:** [Глава 6. Прикладна математика експертних систем: правила, ймовірності, графи та причинність](ch06-applied-mathematics-for-expert-systems.md)  
 > **Наступна глава:** [Глава 8. Інженерні артефакти як дані експертної системи](ch08-engineering-artifacts-as-data.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
@@ -1107,7 +1107,6 @@ flowchart TB
 9. Що ваша експертна система відповідає на запитання про факт, коли один з її вузлів або сховищ не відповідає, і чи відрізняє вона цей випадок від відсутності факту?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | База знань | *knowledge base* | Сховище знань із семантикою предметної області, контекстом чинності, походженням і механізмом отримання результату |
@@ -1175,7 +1174,6 @@ flowchart TB
 | Частка розрізаних залежностей | *edge cut fraction* | Частка залежностей між документами, кінці яких розміщено в різних шардах |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ASIL | Automotive Safety Integrity Level | рівень повноти безпеки автомобільних систем |
@@ -1203,7 +1201,6 @@ flowchart TB
 | ШІ | штучний інтелект | *artificial intelligence*, AI |
 
 ## Джерела
-
 1. <a id="src-1"></a>Charles L. Forgy. [*Rete: A Fast Algorithm for the Many Pattern/Many Object Pattern Match Problem*](https://doi.org/10.1016/0004-3702(82)90020-0). *Artificial Intelligence*, 19(1), 17–37, 1982.
 2. <a id="src-2"></a>Michael Gelfond, Vladimir Lifschitz. [*The Stable Model Semantics for Logic Programming*](https://openalex.org/W1672891595). *Proceedings of the Fifth International Conference and Symposium on Logic Programming*, 1070–1080, 1988.
 3. <a id="src-3"></a>Holger Knublauch, Dimitris Kontokostas (ред.). [*Shapes Constraint Language (SHACL)*](https://www.w3.org/TR/shacl/). W3C Recommendation, 2017.
@@ -1240,4 +1237,4 @@ flowchart TB
 
 ---
 
-[← Глава 6. Прикладна математика експертних систем](ch06-applied-mathematics-for-expert-systems.md) | [Зміст книги](README.md) | [Частина II](part-02-knowledge-models.md) | [Глава 8. Інженерні артефакти як дані експертної системи →](ch08-engineering-artifacts-as-data.md)
+[← Глава 6](ch06-applied-mathematics-for-expert-systems.md) | [Зміст книги](README.md) | [Частина II](part-02-knowledge-models.md) | [Глава 8 →](ch08-engineering-artifacts-as-data.md)

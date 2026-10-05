@@ -1,7 +1,7 @@
-# Глава 20. Рушій пояснень: як система обґрунтовує рішення, відмову та межі компетентності
+# Глава 20. Рушій пояснень: рішення, відмова та межі компетентності
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виконання та механізми висновку](part-04-architecture-and-inference.md)  
-> **Попередня глава:** [Глава 19. Від запитання до доказу: як система трансформує неструктурований запит на ланцюг фактів](ch19-from-question-to-evidence.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виведення, пояснення та дія](part-04-architecture-and-inference.md)  
+> **Попередня глава:** [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](ch31-syllogistic-reasoning-and-relation-lattices.md)  
 > **Наступна глава:** [Глава 21. Від рекомендації до дії: контроль повноважень і безпечне виконання у виробничому середовищі](ch21-from-recommendation-to-action.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
@@ -577,7 +577,6 @@ flowchart LR
 7. Які сутності перевіряє шлюз природномовного пояснення в прикладі з SMTP і що відбувається, коли модель згадує зайву команду?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Рушій пояснень | Explanation engine | Підсистема, що обчислює пояснення з траси виведення рішення |
@@ -595,7 +594,6 @@ flowchart LR
 | Виняток | Waiver | Погоджений дозвіл відступити від правила за певних умов |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ACL | Access Control List | список прав доступу |
@@ -609,7 +607,6 @@ flowchart LR
 | SMTP | Simple Mail Transfer Protocol | протокол передавання електронної пошти |
 
 ## Джерела
-
 1. <a id="src-1"></a>William J. Clancey. [*The Epistemology of a Rule-Based Expert System: A Framework for Explanation*](https://doi.org/10.1016/0004-3702(83)90008-5). *Artificial Intelligence*, 20(3), 215–251, 1983.
 2. <a id="src-2"></a>Tim Miller. [*Explanation in Artificial Intelligence: Insights from the Social Sciences*](https://doi.org/10.1016/j.artint.2018.07.007). *Artificial Intelligence*, 267, 1–38, 2019.
 3. <a id="src-3"></a>Scott M. Lundberg, Su-In Lee. [*A Unified Approach to Interpreting Model Predictions*](https://papers.nips.cc/paper_files/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html). *Advances in Neural Information Processing Systems 30 (NeurIPS 2017)*, 2017.
@@ -622,4 +619,4 @@ flowchart LR
 
 ---
 
-[← Глава 19. Від запитання до доказу](ch19-from-question-to-evidence.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 21. Від рекомендації до дії →](ch21-from-recommendation-to-action.md)
+[← Глава 31](ch31-syllogistic-reasoning-and-relation-lattices.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 21 →](ch21-from-recommendation-to-action.md)

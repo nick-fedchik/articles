@@ -1,7 +1,7 @@
 # Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика та неперервне навчання](part-05-verification-and-learning.md)  
-> **Попередня глава:** [Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил](ch23-knowledge-base-verification.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)  
+> **Попередня глава:** [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
 > **Наступна глава:** [Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій](ch25-how-expert-systems-learn.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
@@ -843,7 +843,6 @@ J(\pi) = \mathbb{E}_{\pi}\left[\sum_{t=1}^{\tau} \left(c_{\text{test},t} + c_{\t
 10. За яких умов експертна система має відмовитися від діагнозу і як оцінюють якість таких відмов?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Симптом | Symptom | Спостережуване відхилення поведінки |
@@ -868,7 +867,6 @@ J(\pi) = \mathbb{E}_{\pi}\left[\sum_{t=1}^{\tau} \left(c_{\text{test},t} + c_{\t
 | Атрибуція аномалії | Anomaly attribution | Розподіл оцінки аномальності між вузлами заданого причинного графа |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ATMS | Assumption-based Truth Maintenance System | підтримання істинності на основі припущень |
@@ -882,7 +880,6 @@ J(\pi) = \mathbb{E}_{\pi}\left[\sum_{t=1}^{\tau} \left(c_{\text{test},t} + c_{\t
 | TCP | Transmission Control Protocol | протокол керування передаванням |
 
 ## Джерела
-
 1. <a id="src-1"></a>Raymond Reiter. [*A Theory of Diagnosis from First Principles*](https://doi.org/10.1016/0004-3702(87)90062-2). *Artificial Intelligence*, 32(1), 57–95, 1987.
 2. <a id="src-2"></a>Johan de Kleer, Brian C. Williams. [*Diagnosing Multiple Faults*](https://doi.org/10.1016/0004-3702(87)90063-4). *Artificial Intelligence*, 32(1), 97–130, 1987.
 3. <a id="src-3"></a>Johan de Kleer. [*An Assumption-Based TMS*](https://doi.org/10.1016/0004-3702(86)90080-9). *Artificial Intelligence*, 28(2), 127–162, 1986.
@@ -908,4 +905,4 @@ J(\pi) = \mathbb{E}_{\pi}\left[\sum_{t=1}^{\tau} \left(c_{\text{test},t} + c_{\t
 
 ---
 
-[← Глава 23. Верифікація бази знань](ch23-knowledge-base-verification.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 25. Як навчати експертну систему →](ch25-how-expert-systems-learn.md)
+[← Глава 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 25 →](ch25-how-expert-systems-learn.md)

@@ -519,4 +519,4 @@ flowchart LR
 
 ---
 
-[← Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною](ch24-system-diagnosis.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 25. Як навчати експертну систему: екзаменаційні матриці →](ch25-how-expert-systems-learn.md)
+[← Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною](ch24-system-diagnosis.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій](ch25-how-expert-systems-learn.md)

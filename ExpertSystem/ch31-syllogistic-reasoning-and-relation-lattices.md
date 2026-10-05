@@ -1,8 +1,8 @@
-# Глава 31. Багатоходове виведення: ієрархії предикатів, винятки та чинність норм
+# Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Передовий край: регуляторна сертифікація та нейро-символьний ШІ](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 30. Ко-інженерія функціональної безпеки та кібербезпеки](ch30-safety-cybersecurity-co-engineering.md)  
-> **Наступна глава:** [Глава 32. Високопродуктивні інженерні бази знань: mmap-індексування з нульовою десеріалізацією, побайтовий допуск знань від мовних моделей та інженерія знаннєвої щільності](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виведення, пояснення та дія](part-04-architecture-and-inference.md)  
+> **Попередня глава:** [Глава 19. Від запитання до доказу: пошук, прив'язка та перевірка твердження](ch19-from-question-to-evidence.md)  
+> **Наступна глава:** [Глава 20. Рушій пояснень: рішення, відмова та межі компетентності](ch20-explanation-engine.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** розробники логічних рушіїв, системні архітектори, інженери знань, фахівці з формальних методів: просунутий  
@@ -933,7 +933,6 @@ func TestRebuttingAndUndercuttingDefeaters(t *testing.T) {
 ---
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Силогізм | Syllogism | Дедуктивний умовивід, у якому з двох засновків виводиться третє судження |
@@ -960,7 +959,6 @@ func TestRebuttingAndUndercuttingDefeaters(t *testing.T) {
 ---
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | 3VL | Three-Valued Logic | тризначна логіка |
@@ -983,7 +981,6 @@ func TestRebuttingAndUndercuttingDefeaters(t *testing.T) {
 ---
 
 ## Джерела
-
 1. <a id="src-1"></a>Scott Bradner. [*RFC 2119: Key words for use in RFCs to Indicate Requirement Levels*](https://www.rfc-editor.org/rfc/rfc2119). IETF, 1997.
 2. <a id="src-2"></a>Barry Leiba. [*RFC 8174: Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words*](https://www.rfc-editor.org/rfc/rfc8174). IETF, 2017.
 3. <a id="src-3"></a>Robin Smith. [*Aristotle's Logic*](https://plato.stanford.edu/entries/aristotle-logic/). *Stanford Encyclopedia of Philosophy*. Огляд, не текст перекладу «Першої аналітики».
@@ -1003,4 +1000,4 @@ func TestRebuttingAndUndercuttingDefeaters(t *testing.T) {
 
 ---
 
-[← Глава 30. Ко-інженерія безпеки](ch30-safety-cybersecurity-co-engineering.md) · [Зміст книги](README.md) · [Глава 32. Високопродуктивні інженерні бази знань →](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)
+[← Глава 19](ch19-from-question-to-evidence.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 20 →](ch20-explanation-engine.md)

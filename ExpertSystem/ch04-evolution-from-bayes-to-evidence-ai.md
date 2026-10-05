@@ -1008,7 +1008,6 @@ func main() {
 4. Спробуйте відтворити ту саму відповідь вашого асистента ШІ через тиждень: чи збігаються висновок, джерела й обґрунтування? Що корисніше показати користувачеві: одне число впевненості чи набір складників?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Свідчення | *evidence* | Спостереження, документ чи вимірювання, яке підтримує або послаблює гіпотезу |
@@ -1055,7 +1054,6 @@ func main() {
 | Калібрування | *calibration* | Відповідність заявленої впевненості фактичній частці правильних висновків |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ASIL | Automotive Safety Integrity Level | рівень повноти безпеки автомобільних систем |
@@ -1092,7 +1090,6 @@ func main() {
 | ШІ | штучний інтелект | *artificial intelligence*, AI |
 
 ## Джерела
-
 1. <a id="src-1"></a>J. L. Alty, M. J. Coombs. [*Expert Systems: Concepts and Examples*](https://openlibrary.org/works/OL24825917W). Manchester: NCC Publications, 1984. ISBN 0-85012-399-2.
 2. <a id="src-2"></a>Stuart Russell, Peter Norvig. [*Artificial Intelligence: A Modern Approach*](https://aima.cs.berkeley.edu/). 4-те видання. Pearson, 2020. Розділ 1.3: історія ШІ, промисловий бум і «зима ШІ».
 3. <a id="src-3"></a>Edward A. Feigenbaum. [*The Art of Artificial Intelligence: Themes and Case Studies of Knowledge Engineering*](https://doi.org/10.21236/ADA046289). Stanford University, 1977; також *Proceedings of the 5th International Joint Conference on Artificial Intelligence (IJCAI-77)*.
@@ -1125,4 +1122,4 @@ func main() {
 
 ---
 
-[← Глава 3. Чим експертна система відрізняється від інформаційно-довідкової системи](ch03-beyond-reference-information-systems.md) | [Зміст книги](README.md) | [Частина I](part-01-foundations.md) | [Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять →](ch05-triad-of-trust-and-corporate-memory.md)
+[← Глава 3](ch03-beyond-reference-information-systems.md) | [Зміст книги](README.md) | [Частина I](part-01-foundations.md) | [Глава 5 →](ch05-triad-of-trust-and-corporate-memory.md)

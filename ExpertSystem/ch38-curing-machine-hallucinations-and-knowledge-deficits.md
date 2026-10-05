@@ -1,8 +1,8 @@
-# Глава 38. Лікування машинних галюцинацій та епістемічного дефіциту: детерміновані доказові фільтри, абдуктивні замикання та предикатне екранування нейромереж
+# Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 37. Аналітична оцінка вхідної інформації: розвідувальні методики та алгоритмічний скепсис експертної системи](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
-> **Наступний матеріал:** [Додаток А. Практичний фреймворк доказового дослідження в складних інженерних проєктах](appendix-a-evidence-governed-framework.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні відповіді, гіпотези та прогалини знань](part-06-frontiers-neuro-symbolic.md)  
+> **Попередня глава:** [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
+> **Наступна глава:** [Глава 17. Технологічний стек: критерії вибору інструментів, мов програмування та рушіїв правил](ch17-implementation-stack.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** поглиблений: інженери знань, архітектори нейро-символьних систем, розробники критичного програмного забезпечення  
@@ -468,7 +468,6 @@ func TestAntiHallucination(t *testing.T) {
 У результаті штучний інтелект перетворюється з джерела непередбачуваних ризиків на надійний інструмент інженерного аналізу, керований строгою логікою доказової експертної системи.
 
 ## Словник
-
 | Термін | Значення в цій главі |
 |---|---|
 | Машинна галюцинація (конфабуляція) | генерація мовною моделлю синтаксично правдоподібного тексту, який не має підтвердження у зареєстрованих першоджерелах |
@@ -483,7 +482,6 @@ func TestAntiHallucination(t *testing.T) {
 | Граматично кероване декодування | перехоплення й маскування логітів токенів на кожному кроці генерації для гарантії відповідності схемі чи синтаксичному дереву |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування |
 |---|---|
 | ШІ | штучний інтелект |
@@ -505,7 +503,6 @@ func TestAntiHallucination(t *testing.T) {
 | SHA | Secure Hash Algorithm, безпечний алгоритм гешування |
 
 ## Джерела
-
 1. <a id="src-1"></a>Adam Tauman Kalai, Santosh S. Vempala. *Calibrated Language Models Must Hallucinate*. In *Proceedings of the 56th Annual ACM Symposium on Theory of Computing (STOC 2024)*, 2024. [DOI](https://doi.org/10.1145/3618260.3649777). Див. також: Adam Tauman Kalai, Ofir Nachum, Santosh S. Vempala, Edwin Zhang. *Evaluating large language models for accuracy incentivizes hallucinations*. Nature, 2026. [DOI](https://doi.org/10.1038/s41586-026-10549-w).
 2. <a id="src-2"></a>Ziwei Ji, Nayeon Lee, Rita Frieske, Tiezheng Yu, Dan Su, Yan Xu, Etsuko Ishii, Ye Jin Bang, Andrea Madotto, Pascale Fung. *Survey of Hallucination in Natural Language Generation*. ACM Computing Surveys, 55(12), 2023, pp. 1–38. [DOI](https://doi.org/10.1145/3571730).
 3. <a id="src-3"></a>Ilia Shumailov, Zakhar Shumaylov, Yiren Zhao, Nicolas Papernot, Ross Anderson, Yarin Gal. *AI models collapse when trained on recursively generated data*. Nature, 631, 2024, pp. 755–759. [DOI](https://doi.org/10.1038/s41586-024-07566-y).
@@ -522,4 +519,4 @@ func TestAntiHallucination(t *testing.T) {
 
 ---
 
-[← До Глави 37](ch37-input-information-assessment-and-algorithmic-skepticism.md) | [До Частини VI](part-06-frontiers-neuro-symbolic.md) | [До змісту книги](README.md) | [До Додатка А →](appendix-a-evidence-governed-framework.md)
+[← Глава 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 17 →](ch17-implementation-stack.md)

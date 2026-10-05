@@ -502,7 +502,6 @@ flowchart TB
 4. Чи перевіряли ви калібрування числової впевненості моделей у ваших внутрішніх інструментах?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Інформаційно-довідкова система | *information retrieval system*, *reference system* | Інформаційна система, яка знаходить і подає відомості, уже записані в корпусі документів |
@@ -543,7 +542,6 @@ flowchart TB
 | Аварійний вимикач | *kill switch* | Засіб, який негайно зупиняє автоматичні дії |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | AI RMF | Artificial Intelligence Risk Management Framework | рамка керування ризиками штучного інтелекту NIST |
@@ -566,7 +564,6 @@ flowchart TB
 | СКБД | система керування базами даних | *database management system* |
 
 ## Джерела
-
 1. <a id="src-1"></a>Ziwei Ji, Nayeon Lee, Rita Frieske та ін. [*Survey of Hallucination in Natural Language Generation*](https://doi.org/10.1145/3571730). *ACM Computing Surveys*, 55(12), 1–38, 2023.
 2. <a id="src-2"></a>Patrick Lewis, Ethan Perez, Aleksandra Piktus та ін. [*Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*](https://arxiv.org/abs/2005.11401). *Advances in Neural Information Processing Systems 33* (NeurIPS), 2020.
 3. <a id="src-3"></a>Timothy Lebo, Satya Sahoo, Deborah McGuinness (ред.). [*PROV-O: The PROV Ontology*](https://www.w3.org/TR/prov-o/). W3C Recommendation, 2013.
@@ -582,4 +579,4 @@ flowchart TB
 
 ---
 
-[← Глава 2. Філософія для інженера](ch02-epistemology-of-machine-knowledge.md) | [Зміст книги](README.md) | [Частина I](part-01-foundations.md) | [Глава 4. Еволюція експертних систем →](ch04-evolution-from-bayes-to-evidence-ai.md)
+[← Глава 2](ch02-epistemology-of-machine-knowledge.md) | [Зміст книги](README.md) | [Частина I](part-01-foundations.md) | [Глава 4 →](ch04-evolution-from-bayes-to-evidence-ai.md)

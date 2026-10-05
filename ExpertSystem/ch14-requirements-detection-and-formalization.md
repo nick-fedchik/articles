@@ -1,8 +1,8 @@
-# Глава 14. Детекція вимог та модальностей: від SHALL/MUST до формальних інваріантів
+# Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Інженерія знань: здобуття, NLP та екстракція з нормативів](part-03-knowledge-engineering-nlp.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Здобуття знань, мовний аналіз та оцінювання входу](part-03-knowledge-engineering-nlp.md)  
 > **Попередня глава:** [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](ch13-language-variability-vs-determinism.md)  
-> **Наступна глава:** [Глава 15. Екстракція знань і побудова бази знань: від тексту специфікацій до онтологій](ch15-knowledge-extraction-and-kb-construction.md)  
+> **Наступна глава:** [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](ch15-knowledge-extraction-and-kb-construction.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: системні інженери, архітектори, розробники, фахівці з верифікації та валідації  
@@ -651,7 +651,6 @@ Z3 перевіряє формальну модель, а не текст. Дл�
 5. Чому вимога без альтернативної гілки небезпечна для релейного керування і як гістерезис розв'язує цю проблему?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Модальність | *modality* | Нормативна сила речення: вимога, заборона, рекомендація, дозвіл, можливість чи твердження |
@@ -671,7 +670,6 @@ Z3 перевіряє формальну модель, а не текст. Дл�
 | Інтервал толерантності до відмови | *fault tolerant time interval* | Найменший проміжок від відмови до можливої небезпеки без спрацювання механізмів безпеки |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | IR | Intermediate Representation | типізоване проміжне подання вимоги |
@@ -694,7 +692,6 @@ Z3 перевіряє формальну модель, а не текст. Дл�
 | VCU | Vehicle Control Unit | контролер транспортного засобу |
 
 ## Джерела
-
 1. <a id="src-1"></a>Object Management Group. [*Requirements Interchange Format (ReqIF), Version 1.2*](https://www.omg.org/spec/ReqIF/1.2/About-ReqIF). OMG, 2016.
 2. <a id="src-2"></a>ISO. [*ISO 26262-8:2018. Road vehicles: Functional safety: Part 8: Supporting processes*](https://www.iso.org/standard/68390.html). 2018.
 3. <a id="src-3"></a>RTCA. [*DO-178C: Software Considerations in Airborne Systems and Equipment Certification*](https://www.rtca.org/do-178/). RTCA, 2011.
@@ -715,4 +712,4 @@ Z3 перевіряє формальну модель, а не текст. Дл�
 
 ---
 
-[← Глава 13. Варіативність природної мови проти детермінізму](ch13-language-variability-vs-determinism.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 15. Екстракція знань і побудова бази знань →](ch15-knowledge-extraction-and-kb-construction.md)
+[← Глава 13](ch13-language-variability-vs-determinism.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 15 →](ch15-knowledge-extraction-and-kb-construction.md)

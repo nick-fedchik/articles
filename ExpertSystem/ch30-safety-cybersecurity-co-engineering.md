@@ -1,8 +1,8 @@
-# Глава 30. Ко-інженерія функціональної безпеки та кібербезпеки: гармонізація суперечливих стандартів та спільний синтез GSN-доказів (ISO 26262, ISO/SAE 21434, ASPICE 4.0)
+# Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Передовий край: регуляторна сертифікація та нейро-символьний ШІ](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 29. Нейро-символьна архітектура (Neuro-Symbolic AI)](ch29-neuro-symbolic-architecture.md)  
-> **Наступна глава:** [Глава 31. Багатоходове виведення: ієрархії предикатів, винятки та чинність норм](ch31-syllogistic-reasoning-and-relation-lattices.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)  
+> **Попередня глава:** [Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів](ch27-safety-case-gsn-synthesis.md)  
+> **Наступна глава:** [Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза](ch28-dual-mode-expert-systems.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні інженери безпеки (Safety Managers), архітектори кібербезпеки (Security Engineers), лід-розробники вбудованих та автономних систем (Robotics, DefTech, Automotive): просунутий  
@@ -919,7 +919,6 @@ func TestEvidenceBinding(t *testing.T) {
 ---
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Функціональна безпека | Functional Safety | Властивість системи усувати невиправданий ризик фізичної шкоди, викликаної збоями в роботі апаратури чи ПЗ |
@@ -948,7 +947,6 @@ func TestEvidenceBinding(t *testing.T) {
 ---
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ARTI | Attack Response Time Interval | інтервал часу реакції на кібератаку |
@@ -987,7 +985,6 @@ func TestEvidenceBinding(t *testing.T) {
 ---
 
 ## Джерела
-
 1. <a id="src-1"></a>International Organization for Standardization, SAE International. [*ISO/SAE 21434:2021: Road Vehicles - Cybersecurity Engineering*](https://www.iso.org/standard/70918.html). ISO/SAE, Geneva, Switzerland, 2021.
 2. <a id="src-2"></a>International Organization for Standardization. [*ISO 26262:2018: Road Vehicles - Functional Safety (Parts 1–12)*](https://www.iso.org/standard/68383.html). ISO, Geneva, Switzerland, 2018.
 3. <a id="src-3"></a>Philipp Kilian, Armin Köhler, Patrick Van Bergen та ін. [*Principle Guidelines for Safe Power Supply Systems Development*](https://doi.org/10.1109/ACCESS.2021.3100711). *IEEE Access*, 9, 107751–107766, 2021.
@@ -1007,4 +1004,4 @@ func TestEvidenceBinding(t *testing.T) {
 
 ---
 
-[← Глава 29. Нейро-символьна архітектура](ch29-neuro-symbolic-architecture.md) · [Зміст книги](README.md) · [Глава 31. Багатоходове виведення →](ch31-syllogistic-reasoning-and-relation-lattices.md)
+[← Глава 27](ch27-safety-case-gsn-synthesis.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 28 →](ch28-dual-mode-expert-systems.md)

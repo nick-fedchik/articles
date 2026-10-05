@@ -1,8 +1,8 @@
 # Глава 16. Архітектура експертної системи: від формального знання до доказового рішення
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виконання та механізми висновку](part-04-architecture-and-inference.md)  
-> **Попередня глава:** [Глава 15. Екстракція знань і побудова бази знань: від тексту специфікацій до онтологій](ch15-knowledge-extraction-and-kb-construction.md)  
-> **Наступна глава:** [Глава 17. Технологічний стек: критерії вибору інструментів, мов програмування та рушіїв правил](ch17-implementation-stack.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виведення, пояснення та дія](part-04-architecture-and-inference.md)  
+> **Попередня глава:** [Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
+> **Наступна глава:** [Глава 19. Від запитання до доказу: пошук, прив'язка та перевірка твердження](ch19-from-question-to-evidence.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: системні архітектори, інженери знань, розробники експертних систем  
@@ -674,7 +674,6 @@ rule-R-SEC-BLOCK-v3
 7. Як граф PROV-O і запит SPARQL дають змогу відновити версії артефактів, на яких ґрунтувалося рішення?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Архітектурне ядро | Architectural core | Частина експертної системи, яка володіє фактами, правилами, рішенням і аудитом |
@@ -699,7 +698,6 @@ rule-R-SEC-BLOCK-v3
 | Шард | Shard | Частина бази знань, яку обслуговує один вузол; визначення наведено в Главі 7 |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ABAC | Attribute-Based Access Control | керування доступом на основі атрибутів |
@@ -743,7 +741,6 @@ rule-R-SEC-BLOCK-v3
 | XML | Extensible Markup Language | мова розмітки |
 
 ## Джерела
-
 1. <a id="src-1"></a>Elham Tabassi. [*Artificial Intelligence Risk Management Framework (AI RMF 1.0)*](https://doi.org/10.6028/NIST.AI.100-1). NIST AI 100-1, National Institute of Standards and Technology, 2023.
 2. <a id="src-2"></a>W3C OWL Working Group. [*OWL 2 Web Ontology Language Document Overview (Second Edition)*](https://www.w3.org/TR/owl2-overview/). W3C Recommendation, 2012.
 3. <a id="src-3"></a>Holger Knublauch, Dimitris Kontokostas (ред.). [*Shapes Constraint Language (SHACL)*](https://www.w3.org/TR/shacl/). W3C Recommendation, 2017.
@@ -772,4 +769,4 @@ rule-R-SEC-BLOCK-v3
 
 ---
 
-[← Глава 15. Екстракція знань і побудова бази знань](ch15-knowledge-extraction-and-kb-construction.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 17. Технологічний стек →](ch17-implementation-stack.md)
+[← Глава 37](ch37-input-information-assessment-and-algorithmic-skepticism.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 19 →](ch19-from-question-to-evidence.md)

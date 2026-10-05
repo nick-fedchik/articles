@@ -1,8 +1,8 @@
-# Глава 34. Детерміністичний реляційний аналіз, абдукція та сократівський діалог: відкриття прихованих зв'язків між фактами, подолання неповноти бази знань через робочі гіпотези та епістемічна тріада пізнання
+# Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Передовий край: регуляторна сертифікація та нейро-символьний ШІ](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](ch33-inter-system-knowledge-exchange-and-model-teaching.md)  
-> **Наступна глава:** [Глава 35. Самоорганізовані експертні системи: синергетика знань, нерівноважний рантайм, апаратне прискорення NPU та еволюція онтологій без операторського втручання](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні відповіді, гіпотези та прогалини знань](part-06-frontiers-neuro-symbolic.md)  
+> **Попередня глава:** [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](ch29-neuro-symbolic-architecture.md)  
+> **Наступна глава:** [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні архітектори, інженери знань, фахівці з математичної логіки та філософії штучного інтелекту: просунутий  
@@ -773,7 +773,6 @@ func TestAbductionEngine_And_SocraticDialogue(t *testing.T) {
 ---
 
 ## Висновки
-
 1. **Подолання дилеми неповноти:** реальні експертні системи не повинні обирати між галюцинаціями генеративних моделей та безпорадною відмовою правил замкненого світу. Символьна абдукція надає легітимний математичний інструмент висунення контрольованих гіпотез.
 2. **Онтологічна тріада пізнання:** формалізація понять, побайтово верифікованих суджень та типізованих висновків забезпечує уніфіковане функціонування рантайму незалежно від предметної області (мережеві протоколи, право, автомобільна функціональна безпека).
 3. **Детерміністичний реляційний аналіз:** двонаправлений обмежений BFS ($k \le 6$) із захистом від циклів та композитними ланцюгами цитувань дозволяє знаходити приховані багатоходові залежності з гарантією повної відтворюваності.
@@ -798,7 +797,6 @@ func TestAbductionEngine_And_SocraticDialogue(t *testing.T) {
 ---
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Епістемічна тріада | Epistemic Triad | Класична тріада пізнання: Поняття — Судження — Висновки |
@@ -817,7 +815,6 @@ func TestAbductionEngine_And_SocraticDialogue(t *testing.T) {
 ---
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | AMIE | Association Rule Mining under Incomplete Evidence | алгоритм індуктивного видобування правил під неповною інформацією |
@@ -835,7 +832,6 @@ func TestAbductionEngine_And_SocraticDialogue(t *testing.T) {
 ---
 
 ## Джерела
-
 1. <a id="src-1"></a>Stuart Russell, Peter Norvig. [*Artificial Intelligence: A Modern Approach (4th Edition)*](https://aima.cs.berkeley.edu/). Pearson, 2020.
 2. <a id="src-2"></a>Luis Antonio Galárraga, Christina Tefliovich, Fabian M. Suchanek. [*AMIE: Association Rule Mining under Incomplete Evidence in Ontological Knowledge Bases*](https://doi.org/10.1145/2488388.2488425). *Proceedings of the 22nd International Conference on World Wide Web (WWW '13)*, 413–422, 2013.
 3. <a id="src-3"></a>Charles Sanders Peirce. [*Collected Papers of Charles Sanders Peirce (Volumes I-VIII)*](https://www.hup.harvard.edu/books/9780674138001). Harvard University Press, Cambridge, MA, 1931–1958.
@@ -848,4 +844,4 @@ func TestAbductionEngine_And_SocraticDialogue(t *testing.T) {
 
 ---
 
-[← До Глави 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md) | [До Частини VI](part-06-frontiers-neuro-symbolic.md) | [До змісту книги](README.md) | [До Глави 35 →](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
+[← Глава 29](ch29-neuro-symbolic-architecture.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 38 →](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)

@@ -1,8 +1,8 @@
 # Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика та неперервне навчання](part-05-verification-and-learning.md)  
-> **Попередня глава:** [Глава 22. Кібернетичний цикл керування XXI століття: від сенсорів на периферії до центру ухвалення рішень](ch22-cybernetics-edge-to-backend.md)  
-> **Наступна глава:** [Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти](ch24-system-diagnosis.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)  
+> **Попередня глава:** [Глава 21. Від рекомендації до дії: контроль повноважень і безпечне виконання у виробничому середовищі](ch21-from-recommendation-to-action.md)  
+> **Наступна глава:** [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: розробники експертних систем, інженери знань, інженери з якості  
@@ -866,7 +866,6 @@ flowchart LR
 10. Які поля маніфесту запуску потрібні, щоб відтворити відповідь через місяці, і як тлумачити розбіжність, спричинену полем, якого в маніфесті немає?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Верифікація | Verification | Перевірка відповідності реалізації специфікації |
@@ -895,7 +894,6 @@ flowchart LR
 | Мовчання шарда | Shard silence | Стан, коли потрібний шард не відповів або відповів із покоління, відмінного від закріпленого; не дорівнює відсутності факту |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ACL | Access Control List | список прав доступу |
@@ -917,7 +915,6 @@ flowchart LR
 | ЄС | Європейський Союз | видавець Регламенту 2024/1689 про штучний інтелект |
 
 ## Джерела
-
 1. <a id="src-1"></a>B. W. Boehm. [*Verifying and Validating Software Requirements and Design Specifications*](https://doi.org/10.1109/MS.1984.233702). *IEEE Software*, 1(1), 75–88, 1984.
 2. <a id="src-2"></a>E. J. Weyuker. [*On Testing Non-Testable Programs*](https://doi.org/10.1093/comjnl/25.4.465). *The Computer Journal*, 25(4), 465–470, 1982.
 3. <a id="src-3"></a>Alun D. Preece, Rajjan Shinghal. [*Foundation and Application of Knowledge Base Verification*](https://doi.org/10.1002/int.4550090804). *International Journal of Intelligent Systems*, 9(8), 683–701, 1994.
@@ -946,4 +943,4 @@ flowchart LR
 
 ---
 
-[← Глава 22. Кібернетичний цикл керування](ch22-cybernetics-edge-to-backend.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 24. Технічна діагностика →](ch24-system-diagnosis.md)
+[← Глава 21](ch21-from-recommendation-to-action.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 36 →](ch36-knowledge-testing-pyramid-and-variational-calibration.md)

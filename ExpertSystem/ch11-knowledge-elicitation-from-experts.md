@@ -1,8 +1,8 @@
 # Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Інженерія знань: здобуття, NLP та екстракція з нормативів](part-03-knowledge-engineering-nlp.md)  
-> **Попередня глава:** [Глава 10. Системи здобуття знань: архітектура збирання інженерного досвіду без втрат і витоку даних](ch10-knowledge-acquisition-systems.md)  
-> **Наступна глава:** [Глава 12. Лінгвістичний аналіз та локальні моделі: як система розуміє текст без втрати джерела](ch12-linguistic-analysis-and-local-models.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Здобуття знань, мовний аналіз та оцінювання входу](part-03-knowledge-engineering-nlp.md)  
+> **Попередня глава:** [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](ch10-knowledge-acquisition-systems.md)  
+> **Наступна глава:** [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](ch12-linguistic-analysis-and-local-models.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній: інженери знань, розробники й технічні керівники  
@@ -500,7 +500,6 @@ flowchart TD
 7. Які частини прикладу діагностики належать до предметних знань, знань про виведення й знань про задачу? Що зміниться після заміни вимірювального приладу, а що після зміни ревізії плати?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Неявне знання | *tacit knowledge* | Досвід, яким людина користується, але не може повністю виразити словами |
@@ -521,7 +520,6 @@ flowchart TD
 | Роль знання | *knowledge role* | Призначення запису як входу чи виходу операції міркування, наприклад спостереження або гіпотеза |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | CDM | Critical Decision Method | метод критичних рішень |
@@ -530,7 +528,6 @@ flowchart TD
 | YAML | YAML Ain't Markup Language | текстовий формат структурованих даних |
 
 ## Джерела
-
 1. <a id="src-1"></a>Michael Polanyi. [*The Tacit Dimension*](https://openlibrary.org/works/OL117061W). 1966.
 2. <a id="src-2"></a>Anna Hart. [*Knowledge Elicitation: Issues and Methods*](https://doi.org/10.1016/0010-4485(85)90293-3). *Computer-Aided Design*, 17(9), 455–462, 1985.
 3. <a id="src-3"></a>Nancy J. Cooke. [*Varieties of Knowledge Elicitation Techniques*](https://doi.org/10.1006/ijhc.1994.1083). *International Journal of Human-Computer Studies*, 41(6), 801–849, 1994.
@@ -557,4 +554,4 @@ flowchart TD
 
 ---
 
-[← Глава 10. Системи здобуття знань](ch10-knowledge-acquisition-systems.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 12. Лінгвістичний аналіз та локальні моделі →](ch12-linguistic-analysis-and-local-models.md)
+[← Глава 10](ch10-knowledge-acquisition-systems.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 12 →](ch12-linguistic-analysis-and-local-models.md)

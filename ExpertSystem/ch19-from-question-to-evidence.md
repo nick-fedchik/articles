@@ -1,8 +1,8 @@
-# Глава 19. Від запитання до доказу: як система трансформує неструктурований запит на ланцюг фактів
+# Глава 19. Від запитання до доказу: пошук, прив'язка та перевірка твердження
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виконання та механізми висновку](part-04-architecture-and-inference.md)  
-> **Попередня глава:** [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](ch18-execution-infrastructure.md)  
-> **Наступна глава:** [Глава 20. Рушій пояснень: як система обґрунтовує рішення, відмову та межі компетентності](ch20-explanation-engine.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виведення, пояснення та дія](part-04-architecture-and-inference.md)  
+> **Попередня глава:** [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](ch16-expert-systems-architecture.md)  
+> **Наступна глава:** [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](ch31-syllogistic-reasoning-and-relation-lattices.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: розробники, інженери знань, фахівці з мовних моделей  
@@ -648,7 +648,6 @@ stateDiagram-v2
 7. Яку загрозу для бази знань усуває процедура просування твердження від відповіді до об'єкта знань?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Контракт запиту | Query contract | Типізоване представлення запитання: предмет, відношення, комунікативна дія, форма відповіді |
@@ -668,7 +667,6 @@ stateDiagram-v2
 | Неповний результат пошуку | Partial result | Результат, зібраний без відповіді одного з потрібних шардів; не доводить і чинності норми, і її відсутності |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ABAC | Attribute-Based Access Control | керування доступом на основі атрибутів |
@@ -689,7 +687,6 @@ stateDiagram-v2
 | СУБД | система управління базами даних | програмне забезпечення для зберігання даних і запитів до них |
 
 ## Джерела
-
 1. <a id="src-1"></a>Patrick Lewis та ін. [*Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*](https://arxiv.org/abs/2005.11401). *Advances in Neural Information Processing Systems 33 (NeurIPS 2020)*, 2020.
 2. <a id="src-2"></a>J. Postel. [*RFC 768: User Datagram Protocol*](https://www.rfc-editor.org/rfc/rfc768). RFC Editor, 1980.
 3. <a id="src-3"></a>Tom Kwiatkowski та ін. [*Natural Questions: A Benchmark for Question Answering Research*](https://doi.org/10.1162/tacl_a_00276). *Transactions of the Association for Computational Linguistics*, 7, 453–466, 2019.
@@ -705,4 +702,4 @@ stateDiagram-v2
 
 ---
 
-[← Глава 18. Інфраструктура виконання](ch18-execution-infrastructure.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 20. Рушій пояснень →](ch20-explanation-engine.md)
+[← Глава 16](ch16-expert-systems-architecture.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 31 →](ch31-syllogistic-reasoning-and-relation-lattices.md)

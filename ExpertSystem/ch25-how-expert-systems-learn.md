@@ -1,6 +1,6 @@
 # Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика та неперервне навчання](part-05-verification-and-learning.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)  
 > **Попередня глава:** [Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти](ch24-system-diagnosis.md)  
 > **Наступна глава:** [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](ch26-continual-learning.md)  
 > **Зміст книги:** [README.md](README.md)  
@@ -1045,7 +1045,6 @@ flowchart LR
 12. Чому слабкий зріз, знайдений автоматичним пошуком на розробницькому наборі, треба підтвердити на нових випадках, перш ніж додати його до екзаменаційної матриці?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Життєвий цикл знань | Knowledge life cycle | Керований шлях від сигналу про потребу змін до перевіреної версії або обґрунтованого відхилення кандидата |
@@ -1093,7 +1092,6 @@ flowchart LR
 | Атестація факту | Fact attestation | Криптографічне засвідчення походження та цілісності твердження цифровим підписом системи-джерела |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ACL | Access Control List | список керування доступом |
@@ -1157,7 +1155,6 @@ flowchart LR
 | ZeRO | Zero Redundancy Optimizer | оптимізатор без надлишкового дублювання станів моделі |
 
 ## Джерела
-
 1. <a id="src-1"></a>Maryam Alavi, Dorothy E. Leidner. [*Review: Knowledge Management and Knowledge Management Systems: Conceptual Foundations and Research Issues*](https://doi.org/10.2307/3250961). *MIS Quarterly*, 25(1), 107–136, 2001.
 2. <a id="src-2"></a>Rudi Studer, V. Richard Benjamins, Dieter Fensel. [*Knowledge Engineering: Principles and Methods*](https://doi.org/10.1016/S0169-023X(97)00056-6). *Data & Knowledge Engineering*, 25(1–2), 161–197, 1998.
 3. <a id="src-3"></a>Paul Groth, Luc Moreau (ред.). [*PROV-Overview: An Overview of the PROV Family of Documents*](https://www.w3.org/TR/prov-overview/). W3C Working Group Note, 2013.
@@ -1208,4 +1205,4 @@ flowchart LR
 
 ---
 
-[← Глава 24. Технічна діагностика](ch24-system-diagnosis.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 26. Неперервне навчання →](ch26-continual-learning.md)
+[← Глава 24](ch24-system-diagnosis.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 26 →](ch26-continual-learning.md)

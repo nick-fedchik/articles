@@ -1,8 +1,8 @@
 # Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Інженерія знань: здобуття, NLP та екстракція з нормативів](part-03-knowledge-engineering-nlp.md)  
-> **Попередня глава:** [Глава 12. Лінгвістичний аналіз та локальні моделі: як система розуміє текст без втрати джерела](ch12-linguistic-analysis-and-local-models.md)  
-> **Наступна глава:** [Глава 14. Детекція вимог та модальностей: від SHALL/MUST до формальних інваріантів](ch14-requirements-detection-and-formalization.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Здобуття знань, мовний аналіз та оцінювання входу](part-03-knowledge-engineering-nlp.md)  
+> **Попередня глава:** [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](ch12-linguistic-analysis-and-local-models.md)  
+> **Наступна глава:** [Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів](ch14-requirements-detection-and-formalization.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній: розробники та інженери знань  
@@ -640,7 +640,6 @@ flowchart TB
 ---
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | автомат із магазинною пам'яттю | pushdown automaton | автомат зі стеком, що розпізнає контекстно-вільні мови |
@@ -668,7 +667,6 @@ flowchart TB
 | тест інваріантності | invariance test | перевірка, що зміна входу, яка не змінює змісту, не змінює результату |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ASIL | Automotive Safety Integrity Level | рівень цілісності безпеки автомобільної системи |
@@ -696,7 +694,6 @@ flowchart TB
 | UDP | User Datagram Protocol | протокол датаграм користувача |
 
 ## Джерела
-
 1. <a id="src-1"></a>Patrick Lewis, Ethan Perez, Aleksandra Piktus, et al. [*Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*](https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html). *Advances in Neural Information Processing Systems 33 (NeurIPS 2020)*, 2020.
 2. <a id="src-2"></a>Yunfan Gao, Yun Xiong, Xinyu Gao, Kangxiang Jia, et al. [*Retrieval-Augmented Generation for Large Language Models: A Survey*](https://arxiv.org/abs/2312.10997). arXiv:2312.10997, 2023.
 3. <a id="src-3"></a>Yu. A. Malkov, D. A. Yashunin. [*Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs*](https://doi.org/10.1109/TPAMI.2018.2889473). *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 42(4), 824–836, 2020.
@@ -729,4 +726,4 @@ flowchart TB
 
 ---
 
-[← Глава 12. Лінгвістичний аналіз та локальні моделі](ch12-linguistic-analysis-and-local-models.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 14. Детекція вимог та модальностей →](ch14-requirements-detection-and-formalization.md)
+[← Глава 12](ch12-linguistic-analysis-and-local-models.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 14 →](ch14-requirements-detection-and-formalization.md)

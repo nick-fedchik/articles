@@ -1,8 +1,8 @@
 # Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виконання та механізми висновку](part-04-architecture-and-inference.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VII: Реалізація, розгортання та обмін знаннями](part-07-runtime-and-knowledge-exchange.md)  
 > **Попередня глава:** [Глава 17. Технологічний стек: критерії вибору інструментів, мов програмування та рушіїв правил](ch17-implementation-stack.md)  
-> **Наступна глава:** [Глава 19. Від запитання до доказу: як система трансформує неструктурований запит на ланцюг фактів](ch19-from-question-to-evidence.md)  
+> **Наступна глава:** [Глава 22. Кібернетичний цикл керування: сенсори, периферія та зворотний зв'язок](ch22-cybernetics-edge-to-backend.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: системні інженери, архітектори інфраструктури машинного навчання, розробники вбудованих і периферійних пристроїв  
@@ -609,7 +609,6 @@ flowchart LR
 8. Які шість умов має задовольнити задача, щоб її варто було передати мережі простійних NPU, і чому стиснення пакетів знань таких умов не задовольняє?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Власний периметр | On-premise | Розміщення на серверах організації всередині її периметра безпеки |
@@ -633,7 +632,6 @@ flowchart LR
 | Шард | Shard | Частина бази знань чи її індексу, яку обслуговує один вузол або процес; визначення наведено в Главі 7 |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ABAC | Attribute-Based Access Control | керування доступом на основі атрибутів |
@@ -665,7 +663,6 @@ flowchart LR
 | ПЛІС | програмовна логічна інтегральна схема | мікросхема з конфігуровною логікою |
 
 ## Джерела
-
 1. <a id="src-1"></a>Samuel Williams, Andrew Waterman, David Patterson. [*Roofline: An Insightful Visual Performance Model for Multicore Architectures*](https://doi.org/10.1145/1498765.1498785). *Communications of the ACM*, 52(4), 65–76, 2009.
 2. <a id="src-2"></a>Yu. A. Malkov, D. A. Yashunin. [*Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs*](https://doi.org/10.1109/TPAMI.2018.2889473). *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 42(4), 824–836, 2020.
 3. <a id="src-3"></a>Vijay Janapa Reddi та ін. [*MLPerf Inference Benchmark*](https://doi.org/10.1109/ISCA45697.2020.00045). *2020 ACM/IEEE 47th Annual International Symposium on Computer Architecture (ISCA)*, 446–459, 2020.
@@ -689,4 +686,4 @@ flowchart LR
 
 ---
 
-[← Глава 17. Технологічний стек](ch17-implementation-stack.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 19. Від запитання до доказу →](ch19-from-question-to-evidence.md)
+[← Глава 17](ch17-implementation-stack.md) | [Зміст книги](README.md) | [Частина VII](part-07-runtime-and-knowledge-exchange.md) | [Глава 22 →](ch22-cybernetics-edge-to-backend.md)

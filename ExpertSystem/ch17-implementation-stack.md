@@ -1,7 +1,7 @@
 # Глава 17. Технологічний стек: критерії вибору інструментів, мов програмування та рушіїв правил
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виконання та механізми висновку](part-04-architecture-and-inference.md)  
-> **Попередня глава:** [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](ch16-expert-systems-architecture.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VII: Реалізація, розгортання та обмін знаннями](part-07-runtime-and-knowledge-exchange.md)  
+> **Попередня глава:** [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
 > **Наступна глава:** [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](ch18-execution-infrastructure.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
@@ -409,7 +409,6 @@ flowchart TD
 7. З яким базовим варіантом ви порівняли б графову СУБД чи векторний індекс перед прийняттям до стека і чому точний перебір векторів лишається корисним навіть після переходу на наближений індекс?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Технологічний стек | Technology stack | Сукупність мов, бібліотек, рушіїв і сховищ, з яких зібрано експертну систему |
@@ -432,7 +431,6 @@ flowchart TD
 | Точний пошук найближчих сусідів | Exact nearest neighbor search | Пошук перебором усіх векторів, який завжди повертає справжніх найближчих сусідів |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ACID | Atomicity, Consistency, Isolation, Durability | атомарність, узгодженість, ізольованість і довговічність транзакцій |
@@ -474,7 +472,6 @@ flowchart TD
 | СУБД | система управління базами даних | програмне забезпечення для зберігання даних і запитів до них |
 
 ## Джерела
-
 1. <a id="src-1"></a>Ollama. [*ollama/ollama*](https://github.com/ollama/ollama). GitHub.
 2. <a id="src-2"></a>NATS.io. [*nats-io/nats-server: High-Performance Server for NATS.io*](https://github.com/nats-io/nats-server). GitHub.
 3. <a id="src-3"></a>hyperjumptech. [*grule-rule-engine: Rule Engine Implementation in Golang*](https://github.com/hyperjumptech/grule-rule-engine). GitHub.
@@ -515,4 +512,4 @@ flowchart TD
 
 ---
 
-[← Глава 16. Архітектура експертної системи](ch16-expert-systems-architecture.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 18. Інфраструктура виконання →](ch18-execution-infrastructure.md)
+[← Глава 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | [Зміст книги](README.md) | [Частина VII](part-07-runtime-and-knowledge-exchange.md) | [Глава 18 →](ch18-execution-infrastructure.md)

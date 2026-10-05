@@ -1,6 +1,6 @@
-# Глава 6. Прикладна математика експертних систем: від правил і ймовірностей до графів, причинності та рішень
+# Глава 6. Прикладна математика експертних систем: правила, ймовірності, графи та причинність
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина II: Математичний апарат та моделі знань](part-02-knowledge-models.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина II: Математичні моделі, подання та зберігання знань](part-02-knowledge-models.md)  
 > **Попередня глава:** [Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять](ch05-triad-of-trust-and-corporate-memory.md)  
 > **Наступна глава:** [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](ch07-knowledge-base-typology.md)  
 > **Зміст книги:** [README.md](README.md)  
@@ -1263,7 +1263,6 @@ X_i=f_i\big(\mathrm{Pa}_i,U_i\big),\qquad i=1,\dots,n
 5. Чи вміє ваша експертна система відрізнити «бракує доказів» від «джерела суперечать одне одному», і чи має експертна система формальне право сказати «не знаю»?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Продукційне правило | *production rule* | Запис «якщо виконано умови, то зробити висновок або дію» |
@@ -1350,7 +1349,6 @@ X_i=f_i\big(\mathrm{Pa}_i,U_i\big),\qquad i=1,\dots,n
 | Калібрування | *calibration* | Відповідність заявленої впевненості фактичній частці правильних висновків |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | AHP | Analytic Hierarchy Process | метод аналізу ієрархій |
@@ -1386,7 +1384,6 @@ X_i=f_i\big(\mathrm{Pa}_i,U_i\big),\qquad i=1,\dots,n
 | ШІ | штучний інтелект | *artificial intelligence*, AI |
 
 ## Джерела
-
 1. <a id="src-1"></a>Alonzo Church. [*A Note on the Entscheidungsproblem*](https://doi.org/10.2307/2269326). *Journal of Symbolic Logic*, 1(1), 40–41, 1936.
 2. <a id="src-2"></a>Alan M. Turing. [*On Computable Numbers, with an Application to the Entscheidungsproblem*](https://doi.org/10.1112/plms/s2-42.1.230). *Proceedings of the London Mathematical Society*, s2-42(1), 230–265, 1937 (подано 1936 року).
 3. <a id="src-3"></a>Stefano Ceri, Georg Gottlob, Letizia Tanca. [*What You Always Wanted to Know About Datalog (and Never Dared to Ask)*](https://doi.org/10.1109/69.43410). *IEEE Transactions on Knowledge and Data Engineering*, 1(1), 146–166, 1989.
@@ -1441,4 +1438,4 @@ X_i=f_i\big(\mathrm{Pa}_i,U_i\big),\qquad i=1,\dots,n
 
 ---
 
-[← Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять](ch05-triad-of-trust-and-corporate-memory.md) | [Зміст книги](README.md) | [Частина II](part-02-knowledge-models.md) | [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори →](ch07-knowledge-base-typology.md)
+[← Глава 5](ch05-triad-of-trust-and-corporate-memory.md) | [Зміст книги](README.md) | [Частина II](part-02-knowledge-models.md) | [Глава 7 →](ch07-knowledge-base-typology.md)

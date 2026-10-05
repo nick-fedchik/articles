@@ -1,6 +1,6 @@
 # Глава 8. Інженерні артефакти як дані експертної системи
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина II: Математичний апарат та моделі знань](part-02-knowledge-models.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина II: Математичні моделі, подання та зберігання знань](part-02-knowledge-models.md)  
 > **Попередня глава:** [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](ch07-knowledge-base-typology.md)  
 > **Наступна глава:** [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](ch09-engineering-knowledge-graph-traceability.md)  
 > **Зміст книги:** [README.md](README.md)  
@@ -788,7 +788,6 @@ graph TB
 5. Коли ви просили модель «підсумуй ці кілька файлів», чи довіряли ви підсумку настільки, щоб передати підсумок далі без перевірки, і що вас зупиняло?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Артефакт | *artifact* | Результат роботи зі стабільним ідентифікатором, зв'язками, статусом і доказами |
@@ -840,7 +839,6 @@ graph TB
 | Можливість аудиту | *auditability* | Здатність показати, хто, коли й на якій підставі змінив артефакт |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ADR | Architecture Decision Record | запис архітектурного рішення |
@@ -874,7 +872,6 @@ graph TB
 | ШІ | штучний інтелект | *artificial intelligence*, AI |
 
 ## Джерела
-
 1. <a id="src-1"></a>ISO, IEC, IEEE. [*ISO/IEC/IEEE 29148:2018 Systems and software engineering: Life cycle processes: Requirements engineering*](https://www.iso.org/standard/72089.html). 2018.
 2. <a id="src-2"></a>Object Management Group. [*Requirements Interchange Format (ReqIF), Version 1.2*](https://www.omg.org/spec/ReqIF/1.2/About-ReqIF). 2016.
 3. <a id="src-3"></a>ISO. [*ISO 14289-1:2014 Document management applications: Electronic document file format enhancement for accessibility: Part 1: Use of ISO 32000-1 (PDF/UA-1)*](https://www.iso.org/standard/64599.html). 2014.
@@ -899,4 +896,4 @@ graph TB
 
 ---
 
-[← Глава 7. Типологія баз знань](ch07-knowledge-base-typology.md) | [Зміст книги](README.md) | [Частина II](part-02-knowledge-models.md) | [Глава 9. Інженерний граф знань →](ch09-engineering-knowledge-graph-traceability.md)
+[← Глава 7](ch07-knowledge-base-typology.md) | [Зміст книги](README.md) | [Частина II](part-02-knowledge-models.md) | [Глава 9 →](ch09-engineering-knowledge-graph-traceability.md)

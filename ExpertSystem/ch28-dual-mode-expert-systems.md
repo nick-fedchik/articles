@@ -1,8 +1,8 @@
-# Глава 28. Дворежимні експертні системи: поєднання строгої дедукції (Fail-Closed) та евристичного дорадчого виведення (CBR)
+# Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Передовий край: регуляторна сертифікація та нейро-символьний ШІ](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 27. Синтез сертифікаційних доказів за Goal Structuring Notation (GSN): від графа EKG до аудиторського звіту](ch27-safety-case-gsn-synthesis.md)  
-> **Наступна глава:** [Глава 29. Нейро-символьна архітектура (Neuro-Symbolic AI): поєднання мовних моделей та детермінованої доказовості на Go та Ollama](ch29-neuro-symbolic-architecture.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні відповіді, гіпотези та прогалини знань](part-06-frontiers-neuro-symbolic.md)  
+> **Попередня глава:** [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](ch30-safety-cybersecurity-co-engineering.md)  
+> **Наступна глава:** [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](ch29-neuro-symbolic-architecture.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: системні архітектори, інженери зі знань, інженери з верифікації, аудитори функційної безпеки  
@@ -468,7 +468,6 @@ print("10. Схвалено цитату першоджерела ->", approve(k
 11. Чому в програмі схвалений запис журналу інциденту стає прецедентом, а схвалена цитата першоджерела стає фактом лише в області застосування?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Закритість при відмові | Fail-closed | Поведінка, за якої нестача знань дає відмову, а не здогадку |
@@ -493,7 +492,6 @@ print("10. Схвалено цитату першоджерела ->", approve(k
 | Набір відповідей | Answer set | Стабільна модель логічної програми; програма може мати кілька альтернативних наборів |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ASP | Answer Set Programming | програмування наборів відповідей |
@@ -504,7 +502,6 @@ print("10. Схвалено цитату першоджерела ->", approve(k
 | TLS | Transport Layer Security | протокол захисту транспортного рівня |
 
 ## Джерела
-
 1. <a id="src-1"></a>Serge Abiteboul, Richard Hull, Victor Vianu. [*Foundations of Databases*](http://webdam.inria.fr/Alice/). Addison-Wesley, 1995. Розділи 12–15: Datalog, обчислення Datalog, рекурсія й заперечення.
 2. <a id="src-2"></a>Georg Henrik von Wright. [*Deontic Logic*](https://doi.org/10.1093/mind/LX.237.1). *Mind*, 60(237), 1–15, 1951.
 3. <a id="src-3"></a>Charles Sanders Peirce. [*Illustrations of the Logic of Science VI: Deduction, Induction, and Hypothesis*](https://en.wikisource.org/wiki/Popular_Science_Monthly/Volume_13/August_1878/Illustrations_of_the_Logic_of_Science_VI). *Popular Science Monthly*, 13, 1878.
@@ -520,4 +517,4 @@ print("10. Схвалено цитату першоджерела ->", approve(k
 
 ---
 
-[← Глава 27. Синтез сертифікаційних доказів](ch27-safety-case-gsn-synthesis.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 29. Нейро-символьна архітектура →](ch29-neuro-symbolic-architecture.md)
+[← Глава 30](ch30-safety-cybersecurity-co-engineering.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 29 →](ch29-neuro-symbolic-architecture.md)

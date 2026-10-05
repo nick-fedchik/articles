@@ -1100,7 +1100,6 @@ flowchart TD
 4. Яка типізована відмова принесла б вашим користувачам найбільше користі: неоднозначність, суперечність, застарілий доказ чи брак права доступу?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Епістемологія | *epistemology* | Розділ філософії про знання, підстави знання й межі знання |
@@ -1135,7 +1134,6 @@ flowchart TD
 | Утримання від відповіді | *abstention* | Типізована відмова відповідати, коли умову відповіді не виконано |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ABAC | Attribute-Based Access Control | керування доступом за атрибутами |
@@ -1160,7 +1158,6 @@ flowchart TD
 | W3C | World Wide Web Consortium | Консорціум Всесвітньої павутини |
 
 ## Джерела
-
 1. <a id="src-1"></a>Jonathan Ichikawa, Matthias Steup. [*The Analysis of Knowledge*](https://plato.stanford.edu/entries/knowledge-analysis/). *Stanford Encyclopedia of Philosophy*, перша публікація 2001, редакція 2026. Тричленний аналіз знання, приклад із «Теетета», приклади Дгармоттари й Рассела.
 2. <a id="src-2"></a>Edmund L. Gettier. [*Is Justified True Belief Knowledge?*](https://doi.org/10.1093/analys/23.6.121). *Analysis*, 23(6), 121–123, 1963.
 3. <a id="src-3"></a>Bertrand Meyer. [*Applying "Design by Contract"*](https://doi.org/10.1109/2.161279). *Computer*, 25(10), 40–51, 1992.
@@ -1195,4 +1192,4 @@ flowchart TD
 
 ---
 
-[← Глава 1. Вступ до експертних систем](ch01-introduction-to-expert-systems.md) | [Зміст книги](README.md) | [Частина I](part-01-foundations.md) | [Глава 3. Чим експертна система відрізняється від інформаційно-довідкової системи →](ch03-beyond-reference-information-systems.md)
+[← Глава 1](ch01-introduction-to-expert-systems.md) | [Зміст книги](README.md) | [Частина I](part-01-foundations.md) | [Глава 3 →](ch03-beyond-reference-information-systems.md)

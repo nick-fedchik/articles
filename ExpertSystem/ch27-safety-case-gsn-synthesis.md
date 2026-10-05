@@ -1,8 +1,8 @@
-# Глава 27. Синтез сертифікаційних доказів за Goal Structuring Notation (GSN): від графа EKG до аудиторського звіту
+# Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Передовий край: регуляторна сертифікація та нейро-символьний ШІ](part-06-frontiers-neuro-symbolic.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)  
 > **Попередня глава:** [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](ch26-continual-learning.md)  
-> **Наступна глава:** [Глава 28. Дворежимні експертні системи: поєднання строгої дедукції (Fail-Closed) та евристичного дорадчого виведення (CBR)](ch28-dual-mode-expert-systems.md)  
+> **Наступна глава:** [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](ch30-safety-cybersecurity-co-engineering.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: системні архітектори, інженери й аудитори функційної безпеки, розробники критичних систем  
@@ -523,7 +523,6 @@ print("   Взаємна атака A5 і A6: прийнято", sorted(accepted
 10. Чому звіт із вердиктом PASS, отриманий на іншій ревізії плати, не може закрити ціль аргументу? Навіщо листам дерева Меркла сіль?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Обґрунтування безпеки | Safety case | Структурований аргумент із доказами, що виріб прийнятно безпечний у визначеному застосуванні |
@@ -550,7 +549,6 @@ print("   Взаємна атака A5 і A6: прийнято", sorted(accepted
 | Журнал прозорості | Transparency log | Журнал лише з дописуванням, для якого можна перевірити включення запису й відсутність перезапису |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ACWG | Assurance Case Working Group | робоча група SCSC з аргументів гарантування |
@@ -571,7 +569,6 @@ print("   Взаємна атака A5 і A6: прийнято", sorted(accepted
 | TARA | Threat Analysis and Risk Assessment | аналіз загроз та оцінювання ризиків |
 
 ## Джерела
-
 1. <a id="src-1"></a>Charles Haddon-Cave. [*The Nimrod Review: An Independent Review into the Broader Issues Surrounding the Loss of the RAF Nimrod MR2 Aircraft XV230 in Afghanistan in 2006*](https://www.gov.uk/government/publications/the-nimrod-review). HC 1025, The Stationery Office, London, 2009.
 2. <a id="src-2"></a>Assurance Case Working Group. [*Goal Structuring Notation Community Standard, Version 3*](https://doi.org/10.65391/r1386). SCSC-141C, Safety-Critical Systems Club, 2021.
 3. <a id="src-3"></a>Assurance Case Working Group, GSN Standard Working Group. [*Goal Structuring Notation Standard: Changes from Version 2 to Version 3*](https://scsc.uk/file/gc-main/GSNv2-to-v3_changes-1092.pdf). Safety-Critical Systems Club, 2021.
@@ -594,4 +591,4 @@ print("   Взаємна атака A5 і A6: прийнято", sorted(accepted
 
 ---
 
-[← Глава 26. Неперервне навчання](ch26-continual-learning.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 28. Дворежимні експертні системи →](ch28-dual-mode-expert-systems.md)
+[← Глава 26](ch26-continual-learning.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 30 →](ch30-safety-cybersecurity-co-engineering.md)

@@ -1,8 +1,8 @@
-# Глава 37. Аналітична оцінка вхідної інформації: розвідувальні методики та алгоритмічний скепсис експертної системи
+# Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 36. Піраміда тестування знань та варіативне калібрування](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
-> **Наступна глава:** [Глава 38. Лікування машинних галюцинацій та епістемічного дефіциту](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Здобуття знань, мовний аналіз та оцінювання входу](part-03-knowledge-engineering-nlp.md)  
+> **Попередня глава:** [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](ch15-knowledge-extraction-and-kb-construction.md)  
+> **Наступна глава:** [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](ch16-expert-systems-architecture.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** поглиблений: інженери знань, аналітики, архітектори периферійних і потокових обчислень  
@@ -595,7 +595,6 @@ func TestAssessment(t *testing.T) {
 На прикладі показано дві перевірювані межі: копії одного спостереження не додають підтримки, а невизначеність параметрів може залишати рішення відкладеним навіть за кількох позитивних свідчень. «Сумнівне», «хибне», «оманливе» й «непридатне» мають різні підстави. Автоматизація прибирає обов'язковий ручний перегляд рутинних повідомлень, але не прибирає дозволів, калібрування, правових обмежень і відповідальності за дію. Огляд не містить незалежного випробування комерційних платформ, польової оцінки розпізнавачів або вимірювання затримки на цільовому периферійному вузлі.
 
 ## Словник
-
 | Термін | Значення в цій главі |
 |---|---|
 | Аналітична впевненість | оцінка міцності та стійкості підстав висновку, окрема від імовірності твердження |
@@ -610,7 +609,6 @@ func TestAssessment(t *testing.T) {
 | Відкладене рішення | явний результат нестачі підстав або бюджету, не твердження про хибність входу |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування |
 |---|---|
 | ЕС | експертна система |
@@ -648,7 +646,6 @@ func TestAssessment(t *testing.T) {
 | LR | Likelihood Ratio, відношення правдоподібностей; LogLR у коді є його логарифмом |
 
 ## Джерела
-
 1. <a id="src-1"></a>Richards J. Heuer, Jr. *Psychology of Intelligence Analysis*. Central Intelligence Agency, Center for the Study of Intelligence, 1999. Особливо глави 3, 5, 8 і 11. [Відкрита публікація](https://www.cia.gov/resources/csi/books-monographs/psychology-of-intelligence-analysis-2/).
 2. <a id="src-2"></a>UK Intelligence Analysis Profession. *Explaining Uncertainty in UK Intelligence Assessment*. 24 March 2025. [PHIA Probability Yardstick та Analytical Confidence Ratings](https://www.gov.uk/government/publications/explaining-uncertainty-in-uk-intelligence-assessment/explaining-uncertainty-in-uk-intelligence-assessment).
 3. <a id="src-3"></a>Benjamin B. Fischer. *A Cold War Conundrum: The 1983 Soviet War Scare*. CIA, Center for the Study of Intelligence. Ретроспективне дослідження програми РЯН. [Відкрита публікація](https://www.cia.gov/resources/csi/books-monographs/a-cold-war-conundrum/).
@@ -689,4 +686,4 @@ func TestAssessment(t *testing.T) {
 
 ---
 
-[← До Глави 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [До Частини VI](part-06-frontiers-neuro-symbolic.md) | [До змісту книги](README.md) | [Глава 38. Лікування машинних галюцинацій та епістемічного дефіциту →](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
+[← Глава 15](ch15-knowledge-extraction-and-kb-construction.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 16 →](ch16-expert-systems-architecture.md)

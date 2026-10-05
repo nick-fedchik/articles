@@ -1,8 +1,8 @@
 # Глава 21. Від рекомендації до дії: контроль повноважень і безпечне виконання у виробничому середовищі
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виконання та механізми висновку](part-04-architecture-and-inference.md)  
-> **Попередня глава:** [Глава 20. Рушій пояснень: як система обґрунтовує рішення, відмову та межі компетентності](ch20-explanation-engine.md)  
-> **Наступна глава:** [Глава 22. Кібернетичний цикл керування XXI століття: від сенсорів на периферії до центру ухвалення рішень](ch22-cybernetics-edge-to-backend.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виведення, пояснення та дія](part-04-architecture-and-inference.md)  
+> **Попередня глава:** [Глава 20. Рушій пояснень: рішення, відмова та межі компетентності](ch20-explanation-engine.md)  
+> **Наступна глава:** [Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил](ch23-knowledge-base-verification.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: архітектори кіберфізичних систем, інженери з надійності, розробники автоматизації  
@@ -497,7 +497,6 @@ flowchart LR
 8. Чому повна регенерація плану після втрати стенда посилює втому від погоджень і як дерево цілей з передумовами обмежує перепланування зачепленим піддеревом?
 
 ## Словник
-
 | Український термін | Англійський відповідник | Коротке пояснення |
 |---|---|---|
 | Рекомендація | Recommendation | Висновок про те, що варто зробити, без зміни зовнішнього світу |
@@ -521,7 +520,6 @@ flowchart LR
 | Транзакційна вихідна черга | Transactional outbox | Запис наміру надіслати подію в тій самій локальній транзакції, що й предметна зміна |
 
 ## Абревіатури
-
 | Скорочення | Розшифрування | Значення |
 |---|---|---|
 | ABAC | Attribute-Based Access Control | керування доступом на основі атрибутів |
@@ -544,7 +542,6 @@ flowchart LR
 | TOCTOU | Time-of-Check to Time-of-Use | проміжок між перевіркою стану й застосуванням зміни |
 
 ## Джерела
-
 1. <a id="src-1"></a>R. Parasuraman, T. B. Sheridan, C. D. Wickens. [*A Model for Types and Levels of Human Interaction with Automation*](https://doi.org/10.1109/3468.844354). *IEEE Transactions on Systems, Man, and Cybernetics, Part A: Systems and Humans*, 30(3), 286–297, 2000.
 2. <a id="src-2"></a>IEC. [*IEC 61508-1:2010. Functional Safety of Electrical/Electronic/Programmable Electronic Safety-Related Systems: Part 1: General Requirements*](https://webstore.iec.ch/en/publication/5515). 2010.
 3. <a id="src-3"></a>Anders Rundgren, Bret Jordan, Samuel Erdtman. [*RFC 8785: JSON Canonicalization Scheme (JCS)*](https://www.rfc-editor.org/rfc/rfc8785). Інформаційний RFC, 2020; схема канонізації, не правило авторизації.
@@ -564,4 +561,4 @@ flowchart LR
 
 ---
 
-[← Глава 20. Рушій пояснень](ch20-explanation-engine.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 22. Кібернетичний цикл керування →](ch22-cybernetics-edge-to-backend.md)
+[← Глава 20](ch20-explanation-engine.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 23 →](ch23-knowledge-base-verification.md)
