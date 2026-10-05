@@ -54,7 +54,7 @@ $$E = \langle \text{id}, \text{topic}, \text{source}, \text{timestamp}, \text{pr
 
 ```mermaid
 flowchart TD
-    subgraph Потоки подій (Event Sources)
+    subgraph "Потоки подій (Event Sources)"
         S1["Телеметрія сенсорів<br/>(IMU, CAN, VIO, Температура)"] -->|telemetry.*| EB["Реактивна шина подій<br/>(EventBus / Ring Buffer)"]
         S2["Зовнішні канали регулятора<br/>(API законодавства, NOTAM)"] -->|normative.*| EB
         S3["Внутрішня діагностика<br/>(Heartbeats, Watchdog)"] -->|diagnostic.*| EB
