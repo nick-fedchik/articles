@@ -12,7 +12,7 @@
 
 ## 1. Методологічний розрив у верифікації систем знань
 
-У класичній інженерії програмного забезпечення гарантія якості спирається на сувору трирівневу піраміду тестування (Майк Кон, Кент Бек, Мартін Фаулер [[1, 2]](#src-1)):
+Для впорядкування перевірок програмного забезпечення використовують піраміду тестування Майка Кона [[1]](#src-1). Розробка через тестування Кента Бека [[2]](#src-2) додає практику явних очікувань для окремого компонента. У цій главі піраміду подано як шлях від ізольованих перевірок до інтеграційних і наскрізних:
 $$\text{Unit Tests} \longrightarrow \text{Integration Tests} \longrightarrow \text{End-to-End / System Tests}$$
 
 Жоден зрілий програмний продукт не допускається до експлуатації лише тому, що компілятор не виявив синтаксичних помилок (статичний аналіз), або тому, що система пройшла кілька ручних демонстраційних сценаріїв. Кожен клас, функція та модуль ізолюються через дублери залежностей (*Test Doubles: Stubs, Mocks, Fakes* [[3]](#src-3)), а граничні умови перевіряються на екстремумах.
@@ -39,7 +39,7 @@ flowchart LR
 
 | Підхід / Школа | Представники та джерела | Фокус і сильні сторони | Обмеження для систем знань |
 |---|---|---|---|
-| **Класичне тестування ПЗ** | K. Beck [[2]](#src-2), M. Fowler [[1]](#src-1), M. Feathers [[3]](#src-3) | Ізоляція компонентів, модульні моки, TDD, регресійні сьюти. | Розраховано на детерміновані процедурні функції; не враховує логічний резолвінг, неповноту CWA та ревізію переконань. |
+| **Класичне тестування ПЗ** | M. Cohn [[1]](#src-1), K. Beck [[2]](#src-2), M. Feathers [[3]](#src-3) | Ізоляція компонентів, модульні моки, TDD, регресійні сьюти. | Розраховано на детерміновані процедурні функції; не враховує логічний резолвінг, неповноту CWA та ревізію переконань. |
 | **Формальна верифікація та SMT** | C. Barrett, L. de Moura, N. Bjørner (Z3) [[4]](#src-4) | Строге доведення теорем, перевірка задовольняваності формул предикатів. | Статичний аналіз бази правил як замкненої системи; не тестує поведінку на емпіричних сенсорних потоках і мовних перефразуваннях. |
 | **Калібрування моделей ШІ (ECE)** | J. Platt [[5]](#src-5), C. Guo et al. (On Calibration of Modern Neural Networks, 2017) [[6]](#src-6) | Узгодження скалярних ймовірностей класифікаторів із реальною частотою помилок (Expected Calibration Error). | Оцінює лише скалярну впевненість на фіксованій вибірці; сліпе до логічної структури доведення та чутливості до збурень. |
 | **Метаморфне тестування та CheckList** | T. Y. Chen et al. [[7]](#src-7), M. T. Ribeiro et al. (CheckList, ACL 2020) [[8]](#src-8) | Тестування поведінкових властивостей NLP без оракула через семантичні інваріанти збурень тексту. | Орієнтоване на «чорну скриньку» нейромереж; відсутній аналіз побайтових доказів і детермінованих решіток правил. |
@@ -117,6 +117,16 @@ flowchart TD
 **Інваріант KUT #1 (Vacuous Implication Prevention Invariant):**  
 Тестовий раннер KUT зобов'язаний примусово відхиляти тест як дефектний (`VacuousTruthTrap = true`), якщо правило заявляє про успішне спрацювання за відсутності або неповноти обов'язкових передумов у мок-оточенні.
 
+Перед запуском правила тест має задавати незалежний очікуваний результат. Прапорець, який саме правило записало як «вакуумна істинність», не є незалежним оракулом: дефектне правило може не встановити власного прапорця помилки. Для правила з обов'язковою передумовою потрібні щонайменше три випадки:
+
+| Контрольований стан передумови | Очікувана поведінка правила | Що є дефектом |
+|---|---|---|
+| Передумову підтверджено | Правило спрацьовує та повертає очікуваний наслідок | Правило не спрацювало або підмінило наслідок |
+| Передумову спростовано | Правило не виводить наслідок; результат має статус «не застосовується» | Наслідок виведено попри хибну передумову |
+| Значення передумови невідоме | Рушій зберігає невідомість і називає потрібне свідчення | Відсутність факту мовчки перетворено на хибу або дозвіл |
+
+Значення булевого факту `false` не означає відсутності факту. Наприклад, правило, яке перевіряє вимкнений режим обслуговування, може потребувати саме підтвердженого значення `false`. Тест має перевіряти умову правила, а не вважати будь-який хибний булевий атрибут відсутньою передумовою. Тризначну логіку розглянуто в [главі 6](ch06-applied-mathematics-for-expert-systems.md).
+
 ### 3.4. 6-точковий спектральний аналіз граничних значень (BVA)
 Нормативні документи (RFC, ISO, закони) містять числові параметри: таймаути, порогові напруги, мінімальні розміри пакетів. Для виявлення помилок типу «строга нерівність замість нестрогої» ($<$ замість $\le$) авторський підхід впроваджує 6-точковий спектральний аналіз граничних значень для кожного параметра діапазону $[v_{\min}, v_{\max}]$:
 
@@ -150,6 +160,8 @@ KIT верифікує:
 * **Збереження простежуваності свідчень:** чи передається ланцюг побайтових цитат крізь усі проміжні вузли без втрати першоджерел;
 * **Відсутність циклів:** виявлення взаємних викликів правил за межами допустимих скінченних автоматів.
 
+Приклад семантичного зсуву: перше правило повертає «таймаут сокета», а друге очікує «таймаут установлення з'єднання». Однакова числова одиниця й схожа назва не встановлюють тотожності величин. Інтеграційний тест спочатку подає значення без правила відповідності й очікує блокування композиції, потім додає схвалену відповідність із потрібним контекстом і перевіряє дозволений перехід. Така пара випадків відрізняє перевірку змісту від політики, яка блокує будь-який ланцюг.
+
 ### 4.2. Інжекція спростовних дефітерів (Defeater Interruption за AGM)
 Згідно з теорією аргументації Джона Поллока [[9]](#src-9) та постулатами ревізії переконань AGM [[11]](#src-11), поява заперечувальної обставини зобов'язана негайно розірвати ланцюг міркувань:
 
@@ -164,11 +176,34 @@ flowchart LR
 **Інваріант KIT #1 (Defeater Dominance Invariant):**  
 При активації перевіреного підривного дефітера ($D$) система зобов'язана детерміновано зупинити виведення на цільовому вузлі, анулювати всі похідні висновки (AGM contraction) та повернути відмову з фіксацією точної причини блокування.
 
+Підрив підстави й спростування наслідку потребують різних очікувань. Повідомлення «датчик не калібрований» підриває використання вимірювання як доказу перегріву, але не доводить відсутності перегріву й не видаляє вимірювання з журналу. Свідчення «температура нижча за поріг», отримане іншим придатним каналом, заперечує сам висновок про перегрів. Інтеграційні тести мають перевіряти збереження первинного запису, причину відкликання й альтернативні підстави, а не лише кінцеву відмову [[9]](#src-9).
+
+### 4.3. Мінімальний конфлікт як перевірюваний результат
+
+Якщо обмеження несумісні, корисно перевірити не лише статус конфлікту, а й пояснення конфлікту. Алгоритм QuickXPlain Ульріха Юнкера знаходить конфлікт, мінімальний за включенням, за визначених передумов перевірки узгодженості [[12]](#src-12). Мінімальність означає, що вилучення будь-якого елемента знайденої підмножини усуває її несумісність; найменшої кількості елементів серед усіх можливих конфліктів алгоритм не обіцяє.
+
+У навчальному випадку одночасно задано три обмеження: температура не нижча за 95 °C, температура не вища за 90 °C і тиск не вищий за 10 бар. За узгодженого фонового опису конфлікт утворюють два температурні обмеження. Обмеження тиску не повинно потрапити до цього пояснення. Незалежна перевірка підтверджує несумісність пари та узгодженість кожного з двох однокомпонентних наборів.
+
+Окремі контрольні випадки потрібні для порожнього набору, сумісного набору та несумісного фонового опису. Помилку передумов алгоритму не можна подавати як мінімальний конфлікт. Реалізацію й перевірки QuickXPlain наведено в [главі 20](ch20-explanation-engine.md), тому тут алгоритм не дублюється.
+
 ---
 
-## 5. Рівні 3 і 4: Варіативне комплексне калібрування — Метрики SIS та Ліпшицева стійкість
+## 5. Рівні 3 і 4: наскрізні перевірки та варіативне калібрування
 
-### 5.1. Метрика семантичної інваріантності (Semantic Invariance Score, SIS)
+### 5.1. Наскрізне тестування експертної системи
+
+Наскрізне тестування експертної системи (*Knowledge System Testing*, KST) перевіряє весь шлях від репліки користувача до рішення та пакета обґрунтування. Успішний модульний тест правила не підтверджує, що пошук вибрав чинне джерело, мовний аналіз зберіг заперечення, а пояснення відтворило фактичний висновок.
+
+| Межа перевірки | Контрольний випадок | Незалежне очікування |
+|---|---|---|
+| Джерело → твердження | правильна цитата, але число стосується іншого об'єкта | збіг байтів не дає права прийняти хибне тлумачення |
+| Передумови → граф доведення | вилучено одну обов'язкову посилку | наслідок не допускається; пакет називає відсутню підставу |
+| Граф → пояснення | до тексту додано число, якого немає в трасі | непідтверджений текст блокується або замінюється перевіреним поданням |
+| Доступ і версія → видача | джерело відкликано після попереднього успішного запиту | нова видача не використовує відкликану підставу |
+
+Для кожного негативного випадку потрібний парний позитивний: чинне джерело, повні передумови, правильне пояснення й дозволений доступ. Інакше постійна відмова виглядатиме успішним проходженням перевірок. Контракти підстав і пояснень докладно розглянуто в главах [19](ch19-from-question-to-evidence.md) та [20](ch20-explanation-engine.md), а керований допуск нової версії в [главі 25](ch25-how-expert-systems-learn.md).
+
+### 5.2. Метрика семантичної інваріантності (Semantic Invariance Score, SIS)
 Класичні екзаменаційні бенчмарки містять одне статичне формулювання питання. Проте в реальній експлуатації інженери та оператори задають одне й те саме питання сотнями різних лінгвістичних способів:
 
 $$\mathcal{Q}_{\text{base}} = \text{«Який мінімальний MTU для IPv6?»}$$
@@ -186,11 +221,15 @@ $$\text{SIS}(\mathcal{Q}) = \alpha \cdot \text{VerdictsMatchRate} + \beta \cdot 
 * $\text{ProofGraphJaccard} = \frac{1}{N} \sum_{i=1}^N \frac{|\mathcal{P}(\mathcal{Q}_i) \cap \mathcal{P}(\mathcal{Q}_{\text{base}})|}{|\mathcal{P}(\mathcal{Q}_i) \cup \mathcal{P}(\mathcal{Q}_{\text{base}})|}$, де $\mathcal{P}(\mathcal{Q})$ — множина вузлів і цитат графа доведення;
 * $\alpha = 0{,}6, \; \beta = 0{,}4$ — калібрувальні ваги довіри.
 
-**Інваріант KCT #1 (Industrial Invariance Gate):**  
-Експертна система допускається до сертифікації для критичних застосувань лише за умови досягнення показника семантичної інваріантності:
+**Умова варіативного тестового допуску:**  
+Для навчального прикладу задано поріг показника семантичної інваріантності:
 $$\text{SIS}(\mathcal{Q}) \ge 0{,}98$$
 
-### 5.2. Критерій Ліпшицевої стійкості знань ($L_{\mathcal{K}} < \infty$)
+Середня оцінка не повинна приховувати зміну критичного вердикту. Додатково перевіряють кожне підтверджено еквівалентне формулювання: вердикт має збігатися з еталонним, а кожна використана підстава має лишатися допустимою. Втрата частини вузлів повинна змінювати оцінку схожості графів навіть тоді, коли решта вузлів не змінилася. Альтернативний правильний доказ не є дефектом сам по собі; політику допустимих змін графа визначають до випробування.
+
+Порожній набір варіацій не дає оцінки стійкості. Два порожні графи теж не підтверджують доказової відповіді: спочатку перевіряють наявність і придатність підстав, а вже потім схожість графів. Поріг 0,98 та ваги 0,6 і 0,4 є параметрами навчального прикладу, не вимогами галузевого стандарту. Успіх на скінченному наборі не доводить інваріантності для всіх можливих запитань і не є сертифікацією.
+
+### 5.3. Критерій Ліпшицевої стійкості знань ($L_{\mathcal{K}} < \infty$)
 У кіберфізичних комплексах (автопілоти, системи керування реакторами, медичні дозатори) вхідні емпіричні змінні зазнають фізичного шуму та мікрозбурень:
 $$x \longrightarrow x + \Delta x, \qquad \|\Delta x\| < 10^{-5}$$
 
@@ -203,7 +242,25 @@ $$L_{\mathcal{K}} = \sup_{x_1 \neq x_2} \frac{\|\mathcal{K}(x_1) - \mathcal{K}(x
 
 ---
 
-## 6. Стигмергічне закриття прогалин знань (`KnowledgeGapSpool`)
+## 6. Тестові контракти для різних способів виведення
+
+Один зелений індикатор не має однакового змісту для правила, статистичного узагальнення й робочої гіпотези. Тестовий контракт визначає, який результат очікується, за якими підставами перевіряється результат і чого успішна перевірка не встановлює.
+
+| Спосіб виведення | Що перевіряє тест | Контрольний дефект | Межа результату |
+|---|---|---|---|
+| Дедукція | застосовність правила, усі потрібні посилки та очікуваний наслідок | висновок після вилучення обов'язкової посилки | перевірено наслідок у заданій моделі, не істинність усіх її посилок |
+| Індукція | якість узагальнення на незалежних випадках, покриття й обмеження вибірки | правило працює лише на навчальних прикладах або не покриває жодного випадку | оцінка стосується перевіреної сукупності й припущень |
+| Абдукція | сумісність гіпотези з відомими фактами, пояснення спостереження та план перевірки | гіпотеза суперечить відомому факту або не має розрізнювальної перевірки | придатна гіпотеза ще не є доведеною причиною |
+| Спростовне міркування | реакцію на підрив підстави, спростування й альтернативне обґрунтування | використано відкликану підставу або приховано нерозв'язаний конфлікт | результат залежить від прийнятої семантики аргументації та чинних свідчень |
+| Міркування за прецедентами | область застосування аналогії, адаптацію рішення та відомі контрприклади | близький випадок перенесено на іншу ревізію без перевірки | схожість допомагає добору, але не доводить придатності рішення |
+
+Теоретичні гарантії індуктивного навчання потребують явних припущень про клас гіпотез, вибірку та допустиму похибку. Модель ймовірнісно приблизно коректного навчання (*Probably Approximately Correct*, PAC) Леслі Валіанта [[13]](#src-13) не дозволяє приписати гарантію довільному правилу лише через кількість прикладів. Міркування за прецедентами (*Case-Based Reasoning*, CBR) також не зводиться до порівняння двох відстаней: релевантний негативний випадок породжує перевірку застосовності, а не універсальну заборону для всіх аналогій. Методи виведення пояснює [глава 6](ch06-applied-mathematics-for-expert-systems.md), а статус гіпотези й прецеденту [глава 28](ch28-dual-mode-expert-systems.md).
+
+Такі контракти дають конкретний результат діагностики тесту: дефект правила, несумісна композиція, непідтверджене пояснення або недостатній набір випадків. Наступний розділ показує, як передати знайдений дефект у керований процес роботи над знаннями.
+
+---
+
+## 7. Стигмергічне закриття прогалин знань (`KnowledgeGapSpool`)
 
 Будь-який провал тесту на рівнях KUT, KIT або SIS фіксує наявність прогалини в базі знань. Традиційні системи обмежуються виведенням звіту в консоль. У системі з кібернетичним регулюванням дефекти спрямовуються у **стигмергічний пул накопичення прогалин (`KnowledgeGapSpool`)**:
 
@@ -219,21 +276,22 @@ flowchart TD
 
 ---
 
-## 7. Програмна реалізація на мові Go
+## 8. Програмна реалізація мовою Go
 
-Нижче наведено повну самодостатню реалізацію фреймворку тестування знань: мокування посилок, запобігання вакуумній істинності, інтеграційні решітки, розрахунок SIS та Ліпшиців верифікатор.
+Нижче наведено навчальну реалізацію: мокування посилок, перевірку спрацювання, послідовну композицію правил, розрахунок SIS та оцінювання обраних збурень. Приклад не реалізує всі контракти розділів 3–6: зокрема, `KUTResult` не має окремого статусу невідомості, а `RunKITLattice` не є повним рушієм підтримання альтернативних підстав. Перевірка кількох числових точок не доводить глобальної Ліпшицевої неперервності.
+
+Приклад і тести потребують Go 1.22 або новішого. Усі залежності належать до стандартної бібліотеки. Граничні перевірки отримують явний базовий контекст, а результат розрахунку SIS окремо показує повноту набору й збіг усіх вердиктів.
+
+<details>
+<summary>Навчальна програма перевірки правил і варіативних відповідей на Go</summary>
 
 ```go
 package main
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"errors"
 	"fmt"
 	"math"
-	"sort"
-	"time"
 )
 
 // --- РІВЕНЬ 1: KUT ТА МОКИ ПЕРЕДУМОВ ---
@@ -275,7 +333,7 @@ func RunKUT(rule KnowledgeRule, mock *PremiseMock, expectedConclusion any) KUTRe
 	missingAntecedents := false
 	for _, ant := range rule.Antecedents {
 		val, ok := mock.Facts[ant]
-		if !ok || val == nil || val == false {
+		if !ok || val == nil {
 			missingAntecedents = true
 			break
 		}
@@ -304,7 +362,7 @@ func RunKUT(rule KnowledgeRule, mock *PremiseMock, expectedConclusion any) KUTRe
 	if expectedConclusion != nil {
 		passed = fired && fmt.Sprintf("%v", conclusion) == fmt.Sprintf("%v", expectedConclusion)
 	} else {
-		passed = true
+		passed = !fired
 	}
 
 	return KUTResult{
@@ -337,7 +395,7 @@ type BVAResult struct {
 	Passed        bool
 }
 
-func RunBVA(rule KnowledgeRule, paramName string, min, nom, max, delta float64) []BVAResult {
+func RunBVA(rule KnowledgeRule, paramName string, min, nom, max, delta float64, baseFacts map[string]any) []BVAResult {
 	points := []struct {
 		point BVAPoint
 		val   float64
@@ -355,19 +413,17 @@ func RunBVA(rule KnowledgeRule, paramName string, min, nom, max, delta float64) 
 	var results []BVAResult
 	for _, p := range points {
 		mock := NewPremiseMock()
-		mock.Set(paramName, p.val)
-		for _, ant := range rule.Antecedents {
-			if ant != paramName {
-				mock.Set(ant, true)
-			}
+		for predicate, value := range baseFacts {
+			mock.Set(predicate, value)
 		}
+		mock.Set(paramName, p.val)
 		res := RunKUT(rule, mock, nil)
 		results = append(results, BVAResult{
 			Point:         p.point,
 			Val:           p.val,
 			ExpectedFired: p.exp,
 			ActualFired:   res.Fired,
-			Passed:        res.Fired == p.exp,
+			Passed:        res.Error == "" && !res.VacuousTruthTrap && res.Fired == p.exp,
 		})
 	}
 	return results
@@ -376,9 +432,9 @@ func RunBVA(rule KnowledgeRule, paramName string, min, nom, max, delta float64) 
 // --- РІВЕНЬ 2: KIT ТА СТРУКТУРИ ДЕФІТЕРІВ ---
 
 type DefeaterCondition struct {
-	ID        string
+	ID         string
 	TargetRule string
-	Condition func(env map[string]any) bool
+	Condition  func(env map[string]any) bool
 }
 
 type KITResult struct {
@@ -420,23 +476,34 @@ type ParaphraseRun struct {
 }
 
 type SISResult struct {
-	Score           float64
-	PassedThreshold bool
+	Score            float64
+	PassedThreshold  bool
+	Complete         bool
+	AllVerdictsMatch bool
 }
 
 func CalculateSIS(baseline ParaphraseRun, variations []ParaphraseRun, alpha, beta, threshold float64) SISResult {
-	if len(variations) == 0 {
-		return SISResult{Score: 1.0, PassedThreshold: true}
+	for _, parameter := range []float64{alpha, beta, threshold} {
+		if math.IsNaN(parameter) || math.IsInf(parameter, 0) || parameter < 0 || parameter > 1 {
+			return SISResult{}
+		}
+	}
+	if len(variations) == 0 || len(baseline.ProofNodes) == 0 || math.Abs(alpha+beta-1) > 1e-12 {
+		return SISResult{}
 	}
 
 	matches := 0
 	jaccardSum := 0.0
+	complete := true
 	bMap := make(map[string]bool)
 	for _, n := range baseline.ProofNodes {
 		bMap[n] = true
 	}
 
 	for _, v := range variations {
+		if len(v.ProofNodes) == 0 {
+			complete = false
+		}
 		if v.Verdict == baseline.Verdict {
 			matches++
 		}
@@ -460,8 +527,14 @@ func CalculateSIS(baseline ParaphraseRun, variations []ParaphraseRun, alpha, bet
 	matchRate := float64(matches) / float64(len(variations))
 	avgJaccard := jaccardSum / float64(len(variations))
 	score := (alpha * matchRate) + (beta * avgJaccard)
+	allVerdictsMatch := matches == len(variations)
 
-	return SISResult{Score: score, PassedThreshold: score >= threshold}
+	return SISResult{
+		Score:            score,
+		PassedThreshold:  complete && allVerdictsMatch && score >= threshold,
+		Complete:         complete,
+		AllVerdictsMatch: allVerdictsMatch,
+	}
 }
 
 type LipschitzResult struct {
@@ -529,7 +602,7 @@ func main() {
 	fmt.Printf("[KUT] Контрфактичний тест: VacuousTrap=%v, Passed=%v\n", resVacuous.VacuousTruthTrap, resVacuous.Passed)
 
 	// 2. Тест BVA
-	bvaResults := RunBVA(batteryRule, "temp_c", 15.0, 30.0, 45.0, 0.1)
+	bvaResults := RunBVA(batteryRule, "temp_c", 15.0, 30.0, 45.0, 0.1, map[string]any{"voltage_v": 24.0})
 	allBVAPassed := true
 	for _, br := range bvaResults {
 		if !br.Passed {
@@ -587,14 +660,126 @@ func main() {
 }
 ```
 
+</details>
+
+`RunBVA` змінює лише перевірюваний параметр; решта передумов надходить із заданого контексту. У прикладі напруга є числом 24,0 В, а не автоматично підставленим булевим `true`. Функція перевіряє шість граничних точок і додаткову номінальну точку. `CalculateSIS` не допускає порожнього набору або порожньої підстави й не маскує одну зміну вердикту високою середньою оцінкою. Поле `Complete` перевіряють до тлумачення поля `Score`.
+
+### 8.1. Незалежні тести тестового інструмента
+
+Зелений звіт не доводить правильності тестового інструмента. Нижче очікування задано незалежно від прапорців правила: тест відхиляє довільне спрацювання, розрізняє відоме `false` й відсутній факт та перевіряє явний контекст граничного тесту. Для SIS потрібні окремі негативні випадки: порожній набір, порожня підстава, втрата вузла й одна зміна вердикту серед ста варіацій.
+
+<details>
+<summary>Модульні тести навчального пакета Go</summary>
+
+```go
+package main
+
+import "testing"
+
+func TestKUTIndependentExpectations(t *testing.T) {
+	alwaysFires := KnowledgeRule{
+		ID:          "defective",
+		Antecedents: []string{"ready"},
+		Evaluate: func(env map[string]any) (bool, any, float64, error) {
+			return true, "ALLOW", 1, nil
+		},
+	}
+	if result := RunKUT(alwaysFires, NewPremiseMock().Set("ready", true), nil); result.Passed {
+		t.Fatal("unexpected firing was accepted without an independent expected conclusion")
+	}
+	if result := RunKUT(alwaysFires, NewPremiseMock(), "ALLOW"); result.Passed || !result.VacuousTruthTrap {
+		t.Fatal("firing without a required fact was accepted")
+	}
+	knownFalse := KnowledgeRule{
+		ID:          "maintenance-disabled",
+		Antecedents: []string{"maintenance"},
+		Evaluate: func(env map[string]any) (bool, any, float64, error) {
+			value, exists := env["maintenance"]
+			return exists && value == false, "ALLOW", 1, nil
+		},
+	}
+	if result := RunKUT(knownFalse, NewPremiseMock().Set("maintenance", false), "ALLOW"); !result.Passed || result.VacuousTruthTrap {
+		t.Fatal("a known false fact was treated as a missing fact")
+	}
+	if result := RunKUT(knownFalse, NewPremiseMock(), "ALLOW"); result.Passed || result.Fired {
+		t.Fatal("a missing fact was treated as a known false fact")
+	}
+}
+
+func TestBVAUsesTypedContext(t *testing.T) {
+	rule := KnowledgeRule{
+		ID:          "temperature-band",
+		Antecedents: []string{"temp_c", "voltage_v"},
+		Evaluate: func(env map[string]any) (bool, any, float64, error) {
+			temperature, hasTemperature := env["temp_c"].(float64)
+			voltage, hasVoltage := env["voltage_v"].(float64)
+			return hasTemperature && hasVoltage && temperature >= 15 && temperature <= 45 && voltage >= 20, "ALLOW", 1, nil
+		},
+	}
+	context := map[string]any{"voltage_v": 24.0}
+	results := RunBVA(rule, "temp_c", 15, 30, 45, 0.1, context)
+	if len(results) != 7 {
+		t.Fatalf("expected six boundary points and one nominal point, got %d", len(results))
+	}
+	for _, result := range results {
+		if !result.Passed {
+			t.Errorf("boundary %s failed at %g", result.Point, result.Val)
+		}
+	}
+	if len(context) != 1 || context["voltage_v"] != 24.0 {
+		t.Fatal("boundary testing mutated the supplied context")
+	}
+}
+
+func TestSISEmptyAndIncompleteEvidence(t *testing.T) {
+	baseline := ParaphraseRun{Verdict: "ALLOW", ProofNodes: []string{"source", "rule"}}
+	if result := CalculateSIS(baseline, nil, 0.6, 0.4, 0.98); result.Complete || result.PassedThreshold {
+		t.Fatal("an empty variation set was accepted")
+	}
+	if result := CalculateSIS(ParaphraseRun{Verdict: "ALLOW"}, []ParaphraseRun{baseline}, 0.6, 0.4, 0.98); result.Complete || result.PassedThreshold {
+		t.Fatal("an empty baseline proof was accepted")
+	}
+	if result := CalculateSIS(baseline, []ParaphraseRun{{Verdict: "ALLOW"}}, 0.6, 0.4, 0); result.Complete || result.PassedThreshold {
+		t.Fatal("an empty variation proof was accepted")
+	}
+	if result := CalculateSIS(baseline, []ParaphraseRun{baseline}, 0.8, 0.4, 0.98); result.Complete || result.PassedThreshold {
+		t.Fatal("unnormalized weights were accepted")
+	}
+	partial := ParaphraseRun{Verdict: "ALLOW", ProofNodes: []string{"source"}}
+	if result := CalculateSIS(baseline, []ParaphraseRun{partial}, 0.6, 0.4, 0.98); !result.Complete || result.Score >= 1 || result.PassedThreshold {
+		t.Fatal("loss of a proof node was not reflected in the score")
+	}
+	if result := CalculateSIS(baseline, []ParaphraseRun{baseline}, 0.6, 0.4, 0.98); !result.Complete || !result.AllVerdictsMatch || !result.PassedThreshold || result.Score != 1 {
+		t.Fatal("a complete matching variation was rejected")
+	}
+}
+
+func TestSISRejectsOneVerdictChangeDespiteHighAverage(t *testing.T) {
+	baseline := ParaphraseRun{Verdict: "ALLOW", ProofNodes: []string{"source", "rule"}}
+	variations := make([]ParaphraseRun, 100)
+	for index := range variations {
+		variations[index] = baseline
+	}
+	variations[99] = ParaphraseRun{Verdict: "DENY", ProofNodes: baseline.ProofNodes}
+	result := CalculateSIS(baseline, variations, 0.6, 0.4, 0.98)
+	if !result.Complete || result.Score < 0.98 || result.AllVerdictsMatch || result.PassedThreshold {
+		t.Fatalf("one changed verdict was hidden by the average: %+v", result)
+	}
+}
+```
+
+</details>
+
+Команда `go test -v` перевіряє інструмент, а не якість реальної бази знань. Наведені варіації є синтетичними записами результатів, не виходами мовного аналізатора. Тести не доводять семантичної еквівалентності запитань, правильності правил або безпеки фізичного регулятора.
+
 ---
 
 ## Висновки
-1. **Подолання історичної прогалини:** Традиційний перехід від статичного синтаксичного аналізу правил до макроскопічних бенчмарків залишав інженерію знань без локальної діагностики. Впроваджена **Піраміда тестування знань (KTP)** забезпечує повний контур забезпечення якості на рівнях KUT, KIT, KST та KCT.
-2. **Ліквідація вакуумної істинності:** Інваріант KUT #1 захищає логічні правила від хибного зарахування матеріальної імплікації при невиконаних антецедентах ($P \equiv \text{False}$).
-3. **Об'єктивізація нормативних границь:** 6-точковий аналіз BVA усуває дефекти строгості числових порівнянь у стандартах і правових нормах.
-4. **Математична сертифікація стійкості:** Метрика семантичної інваріантності ($\text{SIS} \ge 0{,}98$) та Ліпшицева неперервність логічного простору ($L_{\mathcal{K}} \le L_{\max}$) гарантують, що система не зазнає лінгвістичного дрейфу на перефразуваннях користувачів і не впадає в релейний брязкіт при фізичних збуреннях сенсорики.
-5. **Стигмергічне самовдосконалення:** Усі виявлені прогалини онтології концентруються в пулі `KnowledgeGapSpool`, формуючи пріоритезований інженерний беклог за інтенсивністю феромонного сліду.
+Піраміда тестування відповідає на запитання, де виник дефект і яка перевірка може локалізувати дефект. Ізольовані тести перевіряють правило й контрольовані передумови, інтеграційні тести перевіряють композицію та відкликання підстав, наскрізні тести перевіряють пакет рішення, а варіативні тести перевіряють обрані зміни входу.
+
+Очікування задають незалежно від відповіді перевірюваного правила. Хибна передумова не дозволяє вивести наслідок, невідома передумова не стає хибною автоматично, мінімальний конфлікт не обов'язково має найменшу кількість елементів. Критерії для дедукції, індукції, абдукції, спростовних міркувань і прецедентів відрізняються, бо результати цих методів мають різний доказовий статус.
+
+Межі результатів визначає контрольний набір і реалізована модель. Висока середня оцінка не компенсує зміну критичного вердикту, кілька збурень не доводять глобальної стійкості, а демонстраційний прогін не є сертифікацією. Черга прогалин готує матеріал для перевірки й нового випуску знань, але не надає права автоматично змінювати чинні норми.
 
 ---
 
@@ -603,6 +788,8 @@ func main() {
 2. У чому полягає відмінність між тестуванням надійності мовної моделі за методом CheckList та розрахунком метрики семантичної інваріантності $\text{SIS}(\mathcal{Q})$ на графі доведення?
 3. Які фізичні наслідки в кіберфізичній системі (наприклад, автономному дроні) спричинить порушення Ліпшицевої неперервності простору рішень експертної системи?
 4. Як стигмергічний пул накопичення прогалин бази знань пов'язаний із другим законом термодинаміки та експортом ентропії за Іллею Пригожиним?
+5. Як незалежний тест відрізняє відоме значення `false` від відсутнього факту, а підрив свідчення від спростування висновку?
+6. Чому висока середня оцінка SIS не компенсує одну зміну критичного вердикту, а мінімальний конфлікт не обов'язково є найменшим за кількістю обмежень?
 
 ---
 
@@ -622,6 +809,8 @@ func main() {
 | **Premise Mocking** | Premise Mocking | Техніка ізоляції антецедентів правила через підміну бази знань контрольованим контекстом-стабом. |
 | **Пастка вакуумної істинності** | Vacuous Truth Trap | Ситуація, коли матеріальна імплікація formal $P \to Q$ зараховується як істинна через хибність передумови $P$. |
 | **Knowledge Integration Testing (KIT)** | Knowledge Integration Testing | Інтеграційне тестування взаємодії пов'язаних правил, багатоходових решіток та розриву ланцюгів дефітерами. |
+| **Наскрізне тестування експертної системи** | Knowledge System Testing | Перевірка повного шляху від запиту й джерел до рішення та пакета обґрунтування. |
+| **Мінімальний конфлікт** | Minimal conflict | Несумісна підмножина обмежень, яка стає сумісною після вилучення будь-якого елемента за незмінного узгодженого фону. |
 | **Метрика SIS** | Semantic Invariance Score | Числовий показник стійкості логічного вердикту та структури графа доведення до лінгвістичних перефразувань запиту. |
 | **Ліпшицева стійкість знання** | Lipschitz Knowledge Stability | Властивість простору виведення змінювати епістемічний стан пропорційно та обмежено щодо величини вхідного збурення. |
 | **Релейний брязкіт** | Chattering | Небезпечні високочастотні стрибкоподібні перемикання станів системи при нескінченно малих змінах вхідного сигналу. |
@@ -634,6 +823,7 @@ func main() {
 |---|---|---|
 | **AGM** | Alchourrón, Gärdenfors, Makinson | Стандартна парадигма логічної ревізії переконань та усунення суперечностей |
 | **BVA** | Boundary Value Analysis | 6-точковий спектральний аналіз граничних значень параметрів |
+| **CBR** | Case-Based Reasoning | Міркування за прецедентами |
 | **CWA** | Closed World Assumption | Припущення про замкненість світу |
 | **ECE** | Expected Calibration Error | Очікувана похибка калібрування ймовірностей моделей |
 | **GSN** | Goal Structuring Notation | Графічна нотація побудови аргументів безпеки |
@@ -649,19 +839,19 @@ func main() {
 ---
 
 ## Джерела
-1. <a id="src-1"></a>**Fowler, M.** (2018). *Refactoring: Improving the Design of Existing Code* (2nd ed.). Addison-Wesley Professional.
+1. <a id="src-1"></a>**Cohn, M.** (2009). [*Succeeding with Agile: Software Development Using Scrum*](https://www.mountaingoatsoftware.com/books/succeeding-with-agile-software-development-using-scrum). Addison-Wesley Professional.
 2. <a id="src-2"></a>**Beck, K.** (2002). *Test-Driven Development: By Example*. Addison-Wesley Professional.
 3. <a id="src-3"></a>**Feathers, M.** (2004). *Working Effectively with Legacy Code*. Prentice Hall.
 4. <a id="src-4"></a>**De Moura, L., & Bjørner, N.** (2008). Z3: An efficient SMT solver. In *International Conference on Tools and Algorithms for the Construction and Analysis of Systems* (pp. 337–340). Springer.
 5. <a id="src-5"></a>**Platt, J.** (1999). Probabilistic outputs for support vector machines and comparisons to regularized likelihood methods. *Advances in Large Margin Classifiers*, 10(3), 61–74.
 6. <a id="src-6"></a>**Guo, C., Pleiss, G., Sun, Y., & Weinberger, K. Q.** (2017). On calibration of modern neural networks. In *International Conference on Machine Learning* (pp. 1321–1330). PMLR.
 7. <a id="src-7"></a>**Chen, T. Y., Cheung, S. C., & Yiu, S. M.** (2020). Metamorphic testing: a review of challenges and opportunities. *ACM Computing Surveys (CSUR)*, 53(4), 1–27.
-8. <a id="src-8"></a>**Ribeiro, M. T., Wu, T., Guestrin, C., & Singh, S.** (2020). Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models (CheckList). In *Proceedings of ACL 2020* (pp. 5402–5417).
+8. <a id="src-8"></a>**Ribeiro, M. T., Wu, T., Guestrin, C., & Singh, S.** (2020). [*Beyond Accuracy: Behavioral Testing of NLP Models with CheckList*](https://aclanthology.org/2020.acl-main.442/). In *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics* (pp. 4902–4912). DOI: 10.18653/v1/2020.acl-main.442.
 9. <a id="src-9"></a>**Pollock, J. L.** (1987). Defeasible reasoning. *Cognitive Science*, 11(4), 481–518.
 10. <a id="src-10"></a>**Dung, P. M.** (1995). On the acceptability of arguments and its fundamental properties to logic programming, nonmonotonic reasoning and n-person games. *Artificial Intelligence*, 77(2), 321–357.
 11. <a id="src-11"></a>**Alchourrón, C. E., Gärdenfors, P., & Makinson, D.** (1985). On the logic of theory change: Partial meet contraction and revision functions. *Journal of Symbolic Logic*, 50(2), 510–530.
-12. <a id="src-12"></a>**Valiant, L. G.** (1984). A theory of the learnable. *Communications of the ACM*, 27(11), 1134–1142.
-13. <a id="src-13"></a>**Junker, U.** (2004). QUICKXPLAIN: Preferred explanations and relaxations for over-constrained problems. In *AAAI* (Vol. 4, pp. 167–172).
+12. <a id="src-12"></a>**Junker, U.** (2004). QUICKXPLAIN: Preferred explanations and relaxations for over-constrained problems. In *AAAI* (Vol. 4, pp. 167–172).
+13. <a id="src-13"></a>**Valiant, L. G.** (1984). A theory of the learnable. *Communications of the ACM*, 27(11), 1134–1142.
 
 ---
 
