@@ -120,22 +120,22 @@ $$\boldsymbol{\xi}_{\text{order}} \in \{\text{NominalFlight}, \text{HydraulicDeg
 
 ```mermaid
 flowchart TD
-    subgraph Мікроскопічні швидкі змінні (q_fast: 1-10 kHz)
+    subgraph "Мікроскопічні швидкі змінні (q_fast: 1-10 kHz)"
         S1["Вібрація ротора 1"]
         S2["Струм обмотки фази B"]
         S3["Температура мастила"]
         S4["Тиск у контурі охолодження"]
     end
 
-    subgraph Апаратна когерентна редукція (Edge DSP / NPU)
+    subgraph "Апаратна когерентна редукція (Edge DSP / NPU)"
         REDUC["Векторний когерентний синтез<br/>(Haken Slaving Projection)"]
     end
 
-    subgraph Макроскопічний параметр порядку (xi_order)
+    subgraph "Макроскопічний параметр порядку (xi_order)"
         OP["<b>Параметр порядку:</b><br/>BearingPreFailureImminence"]
     end
 
-    subgraph Макродинаміка онтології (L1 Runtime)
+    subgraph "Макродинаміка онтології (L1 Runtime)"
         RULE["Реструктуризація решітки правил:<br/>Survival Dominance Mode"]
     end
 
@@ -143,9 +143,9 @@ flowchart TD
     S2 --> REDUC
     S3 --> REDUC
     S4 --> REDUC
-    REDUC ==>|Підпорядкування| OP
-    OP ==>|Фазовий перехід онтології| RULE
-    RULE -.->|Колова причинність (Circular Causality)| REDUC
+    REDUC ==>|"Підпорядкування"| OP
+    OP ==>|"Фазовий перехід онтології"| RULE
+    RULE -.->|"Колова причинність (Circular Causality)"| REDUC
 ```
 
 #### 3. Обмежена самоорганізація під доказовими атракторами (Constrained Self-Organization under Truth Attractors)
