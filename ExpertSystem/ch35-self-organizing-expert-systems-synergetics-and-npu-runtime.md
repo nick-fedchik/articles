@@ -179,9 +179,9 @@ flowchart TD
     INF --> HALT["АВТОНОМНА ДІЯ:<br/>Негайне аварійне відсікання клапана"]
 ```
 
-Коли сенсорна подія сигналізує про фізичну аномалію (наприклад, розбіжність показників дубльованих датчиків понад $3\sigma$), реактивний рушій генерує **активний дефітер (Active Defeater)**:
+Коли сенсорна подія сигналізує про фізичну аномалію (наприклад, розбіжність показників дубльованих датчиків понад $3\sigma$), реактивний рушій генерує **активний дефітер (Active Defeater)**:  
 
-$$\text{Fault}(\text{Sensor}_A) \implies \text{ActivateDefeater}(\text{Sensor}_A \mathbin{\#} \text{reading})$$
+$$\text{Fault}(\text{Sensor}_A) \implies \text{ActivateDefeater}(\text{SensorReading}_A)$$  
 
 Це миттєво підриває кореневий засновок (*Undercutting Defeater*). Усі похідні висновки графа залежностей автоматично втрачають силу, переводячи систему в режим безпечної зупинки або підключення резервного сенсорного каналу.
 
@@ -193,17 +193,17 @@ $$\text{Fault}(\text{Sensor}_A) \implies \text{ActivateDefeater}(\text{Sensor}_A
 
 ```mermaid
 flowchart LR
-    subgraph Зовнішнє збурення
+    subgraph "Зовнішнє збурення"
         P["Зсув параметра порядку<br/>(xi_order drift)"]
     end
 
-    subgraph Контур самоорганізації (Self-Organization Loop)
+    subgraph "Контур самоорганізації (Self-Organization Loop)"
         RS["<b>1. Re-Search</b><br/>Закон Ешбі: динамічний добір<br/>підграфів та різноманітності"]
         RR["<b>2. Re-Ranking</b><br/>Фазовий перехід: перебудова<br/>решітки домінування норм"]
         RT["<b>3. Re-Thinking</b><br/>Дисипація суперечностей:<br/>AGM-ревізія та QuickXplain"]
     end
 
-    subgraph Результат в онтології L1
+    subgraph "Результат в онтології L1"
         KB["Когерентна адаптована онтологія<br/>без участі оператора"]
     end
 
@@ -211,7 +211,7 @@ flowchart LR
     RS --> RR
     RR --> RT
     RT --> KB
-    KB -.->|Зворотний зв'язок| RS
+    KB -.->|"Зворотний зв'язок"| RS
 ```
 
 ### 5.1. Re-Search: еволюційний добір знань та закон необхідної різноманітності Ешбі
