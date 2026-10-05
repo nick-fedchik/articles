@@ -366,4 +366,4 @@ TRACEABILITY.md        зв'язок питання, експерименту, �
 
 ---
 
-[← Глава 37. Аналітична оцінка вхідної інформації](ch37-input-information-assessment-and-algorithmic-skepticism.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Зміст книги](README.md) | [Додаток Б →](appendix-b-robotics-and-cyber-physical-systems.md)
+[← Глава 38. Лікування машинних галюцинацій та епістемічного дефіциту](ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Зміст книги](README.md) | [Додаток Б →](appendix-b-robotics-and-cyber-physical-systems.md)

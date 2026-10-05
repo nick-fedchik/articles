@@ -2,7 +2,7 @@
 
 > **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI](part-06-frontiers-neuro-symbolic.md)  
 > **Попередня глава:** [Глава 36. Піраміда тестування знань та варіативне калібрування](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
-> **Наступний матеріал:** [Додаток А. Практичний фреймворк доказового дослідження](appendix-a-evidence-governed-framework.md)  
+> **Наступна глава:** [Глава 38. Лікування машинних галюцинацій та епістемічного дефіциту](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** поглиблений: інженери знань, аналітики, архітектори периферійних і потокових обчислень  
@@ -689,4 +689,4 @@ func TestAssessment(t *testing.T) {
 
 ---
 
-[← До Глави 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [До Частини VI](part-06-frontiers-neuro-symbolic.md) | [До змісту книги](README.md) | [До Додатка А →](appendix-a-evidence-governed-framework.md)
+[← До Глави 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [До Частини VI](part-06-frontiers-neuro-symbolic.md) | [До змісту книги](README.md) | [Глава 38. Лікування машинних галюцинацій та епістемічного дефіциту →](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
