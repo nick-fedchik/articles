@@ -4,139 +4,215 @@
 > **Попередня глава:** [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
-> **Рівень:** поглиблений: інженери з якості (QA/QC), аудитори функціональної безпеки та кібербезпеки, архітектори доказового ШІ  
-> **Очікувані результати:** опанувати концепцію переходу від пасивного оракула до активного аудитора знань; зрозуміти принципи попперівської фальсифікації гіпотез мовних моделей у рантаймі; проектувати доменні комплаєнс-оракули на базі стандартів ASPICE 4.0, ISO 26262 та ISO/SAE 21434; синтезувати нормативно заземлені програми випробувань; впроваджувати нейро-символічну синергію тестувальника зі збереженням людини в контурі (Human-in-the-Loop).
+> **Рівень:** поглиблений: інженери функціональної безпеки (Safety Engineers), фахівці з кібербезпеки (Cybersecurity Engineers), аудитори комплаєнсу (ASPICE/ISO Assessors), архітектори доказового ШІ  
+> **Очікувані результати:** опанувати концепцію переходу від пасивного оракула до активного аудитора знань; зрозуміти принципи рантайм-фальсифікації інженерних гіпотез за Карлом Поппером; використовувати експертні системи для автономної підготовки доказових матеріалів TARA, SAR, DFAR та V&V матриць; розв'язувати конфлікти між вимогами безпеки (Safety) та кібербезпеки (Security); автоматизувати рутинні перевірки з вивільненням часу фахівця для технічної творчості зі збереженням принципу Human-in-the-Loop.
 
 ---
 
-## 1. Зсув парадигми: від пасивного оракула до активного допитувача (Active Probing)
+## 1. Драма комплаєнс-інженерії: чому ручні методи вичерпали себе
 
-Класична теорія експертних систем упродовж десятиліть будувалася навколо парадигми **«пасивного оракула»**: система завантажує базу правил або онтологію, перебуває в режимі очікування і починає логічне виведення лише у відповідь на прямий запит користувача:
+Розробка сучасних кіберфізичних систем (автомобільний транспорт, авіоніка, залізнична автоматика, медичні апарати) підпорядкована найсуворішим галузевим стандартам:
+- **Automotive SPICE 4.0** (процесна зрілість розробки програмного та системного забезпечення);
+- **ISO 26262:2018** (функціональна безпека електричних та електронних систем, класифікація ASIL-A .. ASIL-D);
+- **ISO/SAE 21434:2021** (інженерія кібербезпеки транспортних засобів, рівні CAL 1..4);
+- **DO-178C / ED-12C** (авіаційне бортове програмне забезпечення, рівні DAL A..E);
+- **IEC 62304 / ISO 14971** (медичне ПЗ та управління ризиками пацієнтів).
 
-$$\text{Запит } Q \quad \xrightarrow{\text{Експертна система}} \quad \text{Відповідь } A \ (\text{з доказом або відмовою})$$
+### 1.1. Тягар колосальної персональної відповідальності
+На відміну від звичайної комерційної веб-розробки, фахівці з безпеки — **Safety Engineer**, **Cybersecurity Engineer**, **Functional Safety Manager (FSM)** та **Lead Assessor** — несуть пряму юридичну, професійну, а в багатьох юрисдикціях і кримінальну відповідальність за випущені артефакти. 
 
-У простих сценаріях технічної підтримки такої моделі достатньо. Проте в інженерії критичних систем (авіоніка DO-178C, автомобільні системи ISO 26262 / ASPICE 4.0, медичні прилади IEC 62304, протокольна безпека IETF RFC) пасивний підхід виявляє фундаментальну слабкість: **користувач часто не знає, про що саме потрібно запитати**.
+Підпис інженера під підсумковими звітами засвідчує, що:
+1. Усі ризики заподіяння шкоди життю та здоров'ю людей зведені до прийнятного залишкового рівня (*As Low As Reasonably Practicable*, ALARP).
+2. Усі відомі вектори кібератак на бортові шини та контролери враховані та нейтралізовані.
+3. Кожна окрема норма стандарту підтверджена прямим, відтворюваним об'єктивним доказом (*Objective Evidence*).
 
-Менеджер із якості, аудитор або тестувальник стикаються з тисячами сторінок взаємопов'язаних вимог. Рутинне заповнення матриць простежуваності (Traceability Matrix) та ручний пошук прогалин між архітектурним дизайном і тест-кейсами забирають до 70% інженерного часу. Людина втомлюється, пропускає тонкі неявні деонтичні заборони стандарту, потрапляє у пастки формальної звітності (compliance theatre) або формулює лише «щасливі» тести (happy path).
+### 1.2. Пекло рутинних людино-годин: TARA, SAR, DFAR та HARA
+Ціна цієї відповідальності вимірюється колосальними трудовитратами. Щоб випустити сучасний автомобільний контролер (наприклад, блок керування гальмами або шлюз доступу), команда змушена вручну сформувати та верифікувати сотні складних доказових документів:
 
-Тут виникає принципова авторська ідея **Миколи Федчика**:
-> **Принцип активного доменного експерта:**  
-> Якщо система володіє верифікованою машинною базою знань у предметній області (стандартами, регламентами, протоколами), вона зобов'язана не лише відповідати на запитання людини чи зовнішньої нейромережі, але й **активно ставити запитання сама**, виявляти приховані припущення, вимагати докази реалізації конкретних пунктів стандарту та **автономно генерувати вичерпну програму випробувань (Test Program)** для досліджуваного продукту.
+| Артефакт | Стандарт | Сутність та інженерне наповнення | Рутинний виклик для інженера |
+| :--- | :--- | :--- | :--- |
+| **HARA** (*Hazard Analysis and Risk Assessment*) | ISO 26262-3 | Визначення небезпечних подій, оцінка важкості ($S$), експозиції ($E$), контрольованості ($C$) та призначення рівня ASIL (A/B/C/D) і цілей безпеки (*Safety Goals*). | Ручний перебір сотень комбінацій режимів руху автомобіля та відмов датчиків; ризик пропуску критичного сценарію. |
+| **TARA** (*Threat Analysis and Risk Assessment*) | ISO/SAE 21434-9 | Визначення активів (Assets), властивостей кібербезпеки (C-I-A), сценаріїв загроз, побудова дерев атак (*Attack Trees*), оцінка потенціалу атаки (*Attack Feasibility*) та рівнів CAL. | Необхідність співставлення тисяч CAN/Ethernet сигналів з базами CVE/CWE, ручне моделювання кроків зловмисника через шлюзи. |
+| **SAR** (*Safety Assessment Report*) | ISO 26262-2/8 | Підсумковий аудиторський звіт незалежної оцінки відповідності розробки вимогам функціональної безпеки та захищеності процесів. | Перехресне звіряння сотень пунктів стандарту із реальними протоколами випробувань, пошук розривів трасованості. |
+| **DFAR / DFMEA / FMEDA** | ISO 26262-5/6 | Кількісний аналіз режимів відмов, розрахунок метрик одноточкових відмов (SPFM $\ge 99\%$), латентних відмов (LFM $\ge 90\%$) та діагностичного покриття (DC). | Багаторівневі таблиці в Excel на десятки тисяч рядків; зміна одного резистора в схемі вимагає перерахунку всього ланцюга метрик. |
+
+У типовому проекті підготовка, узгодження та підтримка актуальності цих матеріалів забирає **до 60–70% усього інженерного бюджету часу**. 
+
+### 1.3. Феномен людської втоми та "Compliance Theatre"
+Коли кваліфікований інженер змушений тижнями переносити ідентифікатори вимог між Polarion, DOORS, Jira та таблицями Excel, неминуче виникає когнітивне виснаження:
+- **Крихкість ручного трасування:** зміна в одному рядку архітектури безслідно ламає доказові зв'язки в десятках дочірніх тестів.
+- **Compliance Theatre (театр відповідності):** щоб вкластися у дедлайн випуску, інженери змушені ставити галочки у чеклістах формально, не маючи фізичної змоги математично перевірити кожен крайовий стан.
+- **Втрата часу на творчість:** замість глибокого аналізу фізичних аномалій датчиків, проектування нетривіальних алгоритмів діагностики та пошуку нестандартних векторів атак, провідні уми витрачають енергію на бюрократичну рутину.
+
+Саме тут виникає нагальна потреба в **доказових експертних системах нового покоління**.
+
+---
+
+## 2. Авторська концепція Миколи Федчика: Зсув парадигми до Активного Аудитора
+
+Традиційна теорія штучного інтелекту розглядала експертну систему як пасивного консультанта:
+$$\text{Людина запитує} \quad \longrightarrow \quad \text{Система видає довідку}$$
+
+Але в складних нормативних доменах пасивний оракул безсилий: **інженер не запитує про те, про що він забув або чого не помітив у 800-сторінковому стандарті**.
+
+Головний архітектор **Микола Федчик** запропонував радикальний зсув інженерної парадигми:
+> **Концепція Активного Доменного Експерта-Тестувальника:**  
+> Якщо машина володіє точною машинно-зчитуваною базою знань стандарту (ZKP4) та моделлю проекту, вона повинна **перехопити ініціативу допиту (Active Probing)**.  
+> Експертна система зобов'язана самостійно аналізувати проектні артефакти, ставити інженеру незручні запитання, виявляти приховані нормативні конфлікти, вимагати обов'язкові за стандартом тести та **автономно генерувати драфти TARA, SAR, DFAR та сертифіковані програми випробувань**.
+
+```mermaid
+flowchart TD
+    subgraph KNOWLEDGE["Нормативна база знань ZKP4 (Zero-Copy mmap)"]
+        STD1["ISO 26262 (ASIL A-D, SPFM, LFM)"]
+        STD2["ISO/SAE 21434 (TARA, CAL, Attack Trees)"]
+        STD3["ASPICE 4.0 (SWE.1 - SWE.6 Traceability)"]
+    end
+
+    subgraph ENGINE["Активний доменний експерт Znavets v4"]
+        PROBE["<b>Модуль активного допиту</b><br/>(Socratic Question Generator)"]
+        POPPER["<b>Попперівський фальсифікатор</b><br/>(EVM / EISA v1.0, %ebx Custody)"]
+        SYNTH["<b>Синтезатор комплаєнс-артефактів</b><br/>(TARA / SAR / DFAR Matrix Engine)"]
+    end
+
+    subgraph ARTIFACTS["Вихідні сертифіковані матеріали"]
+        OUT_TARA["Повна матриця TARA<br/>(Assets, Threats, Attack Paths)"]
+        OUT_DFAR["DFAR / FMEDA Розрахунок<br/>(SPFM >= 99%, DC Check)"]
+        OUT_TEST["V&V Програма випробувань<br/>(Fault Injection, BVA 6-point)"]
+        OUT_SAR["SAR Доказовий звіт<br/>(Побайтова трасованість цитат)"]
+    end
+
+    KNOWLEDGE --> ENGINE
+    ENGINE -->|"Активне запитування інженера"| HITL["<b>Інженер-експерт (Human-in-the-Loop)</b><br/>Валідація, стратегічні рішення, творчість"]
+    HITL -->|"Відповіді, специфікації продукту"| ENGINE
+    ENGINE --> ARTIFACTS
+```
+
+---
+
+## 3. Математичний апарат: Попперівська фальсифікація інженерних гіпотез
+
+Основою перевірки проектних рішень є принцип фальсифікованості Карла Поппера [[1]](#src-1): *жодна система не може бути визнана безпечною лише на підставі успішних тестів; безпека доводиться невдачею найагресивніших спроб її спростувати*.
+
+### 3.1. Формалізація інженерної гіпотези
+Розробник, мовна модель або архітектор висувають проектне твердження $\mathcal{H}_{\text{design}}$ (наприклад: *«Модуль обробки педалі гальма відповідає рівню ASIL-D без дублювання АЦП, оскільки використовується періодичне самотестування»*).
+
+Формально гіпотеза записується як предикат над простором станів системи $\mathcal{S}$:
+$$\mathcal{H}_{\text{design}} \equiv \forall s \in \mathcal{S}, \quad \text{StateValid}(s) \implies \text{SafetyGoalSatisfied}(s)$$
+
+Нормативна база знань $\mathcal{K}_{\text{norm}}$ складається з двійкових деонтичних атомів стандарту:
+$$\mathcal{K}_{\text{norm}} = \{ \nu_1, \nu_2, \dots, \nu_m \}, \quad \nu_i = \langle \text{Domain}, \text{Clause}, \text{Entity}, \text{Modality}, \text{Action}, \text{Evidence} \rangle$$
+де $\text{Modality} \in \{ \text{MUST}, \text{MUST\_NOT}, \text{SHOULD}, \text{MAY} \}$.
+
+### 3.2. Пошук потенційного фальсифікатора (Potential Falsifier)
+Завдання експертної системи — за час $t < 1\ \text{ms}$ виконати символьний пошук контрприкладу:
+$$\mathcal{F}(\mathcal{H}_{\text{design}}, \mathcal{K}_{\text{norm}}) = \{ \nu_k \in \mathcal{K}_{\text{norm}} \mid \text{Implication}(\mathcal{H}_{\text{design}}) \models \text{Violation}(\nu_k) \}$$
+
+Якщо такий атом знайдено:
+$$\text{Verdict} = \mathbf{FALSIFIED} \quad \left( \text{Refusal}(\rho), \ \%ebx = \text{SHA256}(\text{Quote}), \ \text{Clause} = \text{"ISO 26262-5:2018 Clause 8.4.3"} \right)$$
+
+Система не просто каже «код невірний». Вона видає фальсифікуючий нормативний факт:
+> *«Гіпотезу спростовано: Згідно з ISO 26262-5:2018 Clause 8.4.3 (цитата: "Single-point fault metric for ASIL-D shall achieve at least 99%"), одноканальний АЦП з тестовим покриттям 90% не задовольняє метрику SPFM. Необхідно додати апаратне дублювання або діагностичний компаратор».*
+
+---
+
+## 4. Автоматизація створення TARA, SAR, DFAR через доменні пакети ZKP4
+
+Розгляньмо детально, як активний експерт допомагає фахівцям формувати ключові доказові документи без рутинного ручного перенесення даних.
+
+### 4.1. Автоматизація TARA (ISO/SAE 21434): від опису системи до матриці ризиків
+Процес TARA складається з кількох канонічних кроків, кожен з яких тепер підтримується експертною системою:
+1. **Asset Identification (Визначення активів):** Експерт сканує опис архітектури (DBC-файли CAN, ARXML-файли AUTOSAR, IDL-специфікації) та автоматично видобуває всі активи (наприклад: *«Ключ шифрування сесії діагностики»*, *«Сигнал кута повороту керма SteerAngle»*).
+2. **Threat Scenario Identification (Сценарії загроз):** Зв'язуючи активи з онтологією STRIDE / MITRE ATT&CK for ICS у ZKP4, експертна система синтезує повний перелік загроз:
+   $$\text{Threat} = \langle \text{Asset: SteerAngle}, \ \text{Property: Integrity}, \ \text{Damage: Несанкціоноване подрулювання на швидкості} \rangle$$
+3. **Attack Path Analysis & Feasibility (Дерева атак):** Система розгортає граф зв'язків бортової мережі та розраховує вектор складності атаки за методикою Attack Potential (Elapsed Time, Specialist Expertise, Knowledge of Item, Window of Opportunity, Equipment).
+4. **Формування фінальної таблиці TARA:** Замість тижнів роботи інженер отримує повністю згенеровану матрицю зі зведеними балами ризику (Risk Values 1..5) та вимогами до контрзаходів кібербезпеки (*Cybersecurity Goals*).
+
+### 4.2. Автоматизація DFAR та FMEDA (ISO 26262): математична строгість метрик
+Підготовка звіту DFAR/FMEDA вимагає математичного розрахунку надійності:
+- Інтенсивність відмов компонентів ($\lambda$, FIT);
+- Класифікація відмов: безпечні ($\lambda_s$), небезпечні одноточкові ($\lambda_{\text{spf}}$), залишковиі ($\lambda_{\text{rf}}$), латентні ($\lambda_{\text{mpf,lat}}$);
+- Метрика одноточкових відмов:
+  $$\text{SPFM} = \frac{\sum (\lambda_s + \lambda_{\text{spf}})}{\sum \lambda} \ge 99\% \quad (\text{для ASIL-D})$$
+- Метрика латентних відмов:
+  $$\text{LFM} = \frac{\sum (\lambda_s + \lambda_{\text{mpf,det}})}{\sum (\lambda - \lambda_{\text{spf}})} \ge 90\% \quad (\text{для ASIL-D})$$
+
+Експертна система Znavets v4:
+- Зберігає норми розрахунку у вигляді деонтичних та математичних правил;
+- Автоматично перевіряє розрахункову модель схеми або коду;
+- Якщо метрика SPFM виявляється рівною $98.4\%$, система активує діалог: *«Увага: для досягнення цільових 99% ASIL-D не вистачає 0.6%. Рекомендовано підвищити діагностичне покриття сторожового таймера (Watchdog) з 60% до 90% або додати зворотний зчитувач регістру виводу»*.
+
+### 4.3. Автоматизація SAR: доказове полотно для аудиторів TÜV / Dekra
+Safety Assessment Report (SAR) є вінцем проекту функціональної безпеки. Експертна система формує SAR як дерево аргументів у нотації **Goal Structuring Notation (GSN)**:
+- **Top Goal:** Система задовольняє вимогам ASIL-D стандарту ISO 26262.
+- **Strategy:** Аргументація через декомпозицію на безпеку апаратного забезпечення, безпеку ПЗ та процесну якість ASPICE.
+- **Evidence:** Кожен листовий вузол дерева (Evidence) містить посилання на конкретний протокол тестування із зафіксованим криптографічним хешем результату та побайтовою цитатою пункту стандарту.
+
+---
+
+## 5. Розв'язання фундаментального протиріччя: Safety vs. Cybersecurity
+
+У складних комплаєнс-проектах найгострішою проблемою є **конфлікт між вимогами функціональної безпеки (Safety) та кібербезпеки (Security)**:
 
 ```mermaid
 flowchart LR
-    subgraph PASSIVE["Традиційний підхід: Пасивний оракул"]
+    subgraph CONFLICT["Конфлікт вимог у критичній точці"]
         direction TB
-        ENG1["Інженер / LLM"] -->|"1. Запитання: 'Чи валідний код X?'"| ES1["Експертна система"]
-        ES1 -->|"2. Відповідь: 'Так / Ні'"| ENG1
+        REQ_SAFE["<b>ISO 26262 (Safety):</b><br/>При аварії чи спрацюванні подушок двері МУСЯТЬ бути негайно розблоковані для евакуації пасажирів.<br/><i>(Принцип доступності / Availability)</i>"]
+        REQ_SEC["<b>ISO 21434 (Security):</b><br/>Будь-яка команда розблокування дверей з шини CAN МУСИТЬ проходити криптографічну автентифікацію MAC-підписом.<br/><i>(Принцип цілісності / Integrity)</i>"]
     end
 
-    subgraph ACTIVE["Авторська парадигма Федчика: Активний аудитор"]
-        direction TB
-        ES2["<b>Активний доменний експерт</b><br/>(EVM + ZKP4 Knowledge Base)"] -->|"1. Активний допит: 'Де ваш тест на Fault Injection згідно ISO 26262 Part 6 Clause 8.4?'"| ENG2["Інженер / LLM"]
-        ENG2 -->|"2. Надання артефакту / Гіпотези"| ES2
-        ES2 -->|"3. Попперівська фальсифікація та синтез V&V матриці"| REP["<b>Нормативна програма випробувань</b>"]
-    end
+    REQ_SAFE <-->|КОЛІЗІЯ ВИМОГ| REQ_SEC
+
+    CONFLICT --> ARBITER["<b>Експертний арбітр Znavets (ASPIC+)</b><br/>Резолвер дефітерів та часових бюджетів"]
+    ARBITER --> RESOLUTION["<b>Узгоджене інженерне рішення:</b><br/>Апаратний дискретний піропатрон (Safety) має прямий пріоритет над шинним протоколом (Security); шинні команди вимагають MAC лише при швидкості > 0 км/год."]
 ```
 
-Такий експерт-тестувальник перетворює нормативні тексти зі статичних документів на динамічні генератори перевірочних вимог.
+### Як допомагає експертна система:
+1. **Автоматичне виявлення колізій (Cross-Standard Defeater Mining):** Знання обох стандартів у єдиному середовищі дозволяє системі виявити суперечність правил ще на етапі архітектурного проєктування (SWE.2).
+2. **Аргументація за схемою ASPIC+:** Система будує дерево спростовних міркувань (*Defeasible Reasoning*), розділяючи заперечення засновок (*rebutting*) та підрив правила (*undercutting*).
+3. **Генерація безпечного компромісу:** Експерт пропонує формалізований варіант вирішення: *«Застосувати апаратний сигнал від датчика уповільнення в обхід мікроконтролера, зберігши криптографічний бар'єр для всіх програмних запитів з діагностичного роз'єму»*.
 
 ---
 
-## 2. Епістемологічний базис: Попперівська фальсифікація гіпотез
+## 6. Нейро-символічний тандем тестувальника: генерація тест-програм
 
-Математичний фундамент активного тестування спирається на критичний раціоналізм Карла Поппера [[1]](#src-1). В інженерії безпеки неможливо емпірично довести, що продукт не містить дефектів: мільйон успішних тестів не гарантують відсутності аварії, але один контрприклад остаточно спростовує безпечність.
+Як працює практична зв'язка мовної моделі та ядра EVM у ролі активного тестувальника:
 
-Нехай:
-- $\mathcal{P}$ — тестований продукт (програмний модуль, апаратний блок або специфікація);
-- $\mathcal{H}_{\mathcal{P}}$ — гіпотеза про відповідність продукту стандарту, висунута розробником або мовною моделлю:
-  $$\mathcal{H}_{\mathcal{P}} \equiv \forall s \in \mathcal{S}_{\text{system}}, \ \mathcal{P}(s) \models \mathcal{K}_{\text{norm}}$$
-- $\mathcal{K}_{\text{norm}}$ — двійкова база нормативних знань ZKP4, що містить множину деонтичних атомів:
-  $$\mathcal{K}_{\text{norm}} = \{ \nu_1, \nu_2, \dots, \nu_m \}, \quad \text{де } \nu_i = \langle \text{Subject}, \text{Relation}, \text{Object}, \text{Modality}, \text{ByteCoords} \rangle$$
-  де $\text{Modality} \in \{ \text{MUST}, \text{MUST NOT}, \text{SHOULD}, \text{MAY} \}$.
-
-Завдання активного експерта полягає не у верифікації твердження $\mathcal{H}_{\mathcal{P}}$ (що неможливо в загальному випадку через нескінченність простору станів $\mathcal{S}$), а в пошуку **потенційного фальсифікатора (Potential Falsifier)**:
-
-$$\mathcal{F}(\mathcal{H}_{\mathcal{P}}) = \{ \langle \nu_k, \mathbf{x} \rangle \mid \nu_k \in \mathcal{K}_{\text{norm}} \ \land \ \mathcal{P}(\mathbf{x}) \not\models \nu_k \}$$
-
-Якщо такий вектор $\mathbf{x}$ знайдено — гіпотезу фальсифіковано (`FALSIFIED`), а розробнику надається конкретний нормативний пункт standards-body та побайтова цитата першоджерела у регістрі `%ebx`. Якщо ж система не знаходить фальсифікатора в межах повноти бази знань, гіпотеза визнається тимчасово підтвердженою (`UNFALSIFIED`), а набір згенерованих перевірок включається в постійний регресійний репозиторій.
+1. **System 1 (LLM Proposer — креативність):**
+   - Читає фрагмент коду драйвера та документацію.
+   - Синтезує хитромудрі, нестандартні сценарії: *«Що буде, якщо надіслати CAN-кадр довжиною DLC=15 замість 8 саме в момент перемикання реле живлення?»*.
+   - Формулює проект тест-кейсу природною мовою.
+2. **System 2 (EVM / EISA v1.0 — детермінований суддя):**
+   - Приймає тест-кейс через `Popperian Falsification API`.
+   - Звіряє його з ZKP4-нормами ISO 11898, ISO 26262 та AUTOSAR.
+   - Миттєво перевіряє: чи не порушує сам тест обов'язкових умов стандарту? Який пункт стандарту він покриває?
+   - Якщо тест валідний — система автоматично реєструє його в матриці V&V і прив'язує до вимоги простежуваності ASPICE SWE.4.
+3. **Розрахунок повноти тестової програми:**
+   $$\text{TraceabilityCoverage} = \frac{|\mathcal{R}_{\text{requirements}} \cap \mathcal{T}_{\text{verified}}|}{|\mathcal{R}_{\text{requirements}}|} = 100.0\%$$
 
 ---
 
-## 3. Нормативний комплаєнс як генератор тестів: ASPICE 4.0, ISO 26262, ISO 21434
+## 7. Гуманістичний вимір: Людина в контурі (Human-in-the-Loop) як звільнення для творчості
 
-Розгляньмо, як машинне доменне знання трьох провідних автомобільних стандартів перетворюється на активну програму тестування:
+Впровадження активного комплаєнс-експерта принципово **не виключає людину з інженерного процесу**. Навпаки, воно повертає професії інженера її первинний високий зміст.
 
-| Стандарт | Домен знань | Вимоги стандарту (Нормативний базис) | Активна дія експерта-тестувальника |
-| :--- | :--- | :--- | :--- |
-| **Automotive SPICE 4.0** | Процесна зрілість розробки (SWE.4 Unit Verification, SWE.5 Integration, SWE.6 Qualification) | *Двонаправлена простежуваність (Bidirectional Traceability)* між кожною одиничною вимогою та тестом. | **Аудит прогалин:** Сканує граф коду, виявляє гілки без призначеного нормативного атома та формує директиву: *«Вимога REQ-812 не покрита тестом на переповнення. Тестування не допущено».* |
-| **ISO 26262 Part 6** | Функціональна безпека ПЗ (ASIL-B .. ASIL-D) | *Аналіз граничних значень (BVA), тестування інжекцією несправностей (Fault Injection), структурне покриття MC/DC.* | **Синтез тестових векторів:** Видобуває діапазони фізичних величин ($T_{\min}, T_{\max}$) з ZKP4 та вимагає 6-точковий стрес-прогін ($T_{\min}-1, T_{\min}, T_{\min}+1, \dots$). |
-| **ISO/SAE 21434 Clause 9** | Кібербезпека дорожнього транспорту (TARA, Fuzzing, Boundary Vulnerabilities) | *Стійкість до маніпуляцій полями повідомлень, обов'язковий фазинг інтерфейсів шини CAN/Ethernet.* | **Генерація негативних сценаріїв:** Синтезує мутаційні вектори для некоректних заголовків та протокольних заборон стандарту. |
+### Що забирає машина:
+- Рутинне сканування тисяч сторінок тексту нормативів;
+- Заповнення багатотисячних таблиць простежуваності (Excel / Polarion);
+- Контроль суворої деонтичної модальності слів (`MUST`, `SHALL`, `REQUIRED`);
+- Математичний перерахунок метрик надійності (SPFM, LFM, FIT rates);
+- Перевірку повноти покриття коду вимогами стандарту.
 
-### Механізм виходу на програму тестування (V&V Coverage Matrix)
-Замість написання тест-планів вручну експертна система генерує структуровану детерміновану матрицю:
-
-$$\text{Coverage}_{\text{normative}}(\mathcal{P}) = \frac{|\{ \nu \in \mathcal{K}_{\text{norm}} \mid \exists t \in \mathcal{T}_{\mathcal{P}} : t \text{ verifies } \nu \}|}{|\mathcal{K}_{\text{norm}}|}$$
-
-Якщо $\text{Coverage} < 1.00$, експертна система переходить у фазу активного сократівського запитування інженерної команди: *«Згідно з пунктом 8.4 стандарту, модуль зобов'язаний реагувати на втрату синхронізації годинника. Де визначено ваш тестовий драйвер для цього випадку?»*.
-
----
-
-## 4. Нейро-символічний тандем: креативність LLM під наглядом детермінованої EVM
-
-Поєднання великих мовних моделей (LLM) та символьного ядра EVM розв'язує фундаментальну дилему забезпечення якості:
-- **Чисто символьний підхід (System 2):** володіє абсолютною точністю та нульовими галюцинаціями ($ZHR = 1.00$), але не здатний генерувати вільні текстові сценарії або здогадуватися про нетривіальні комбінації користувацьких дій поза формальними правилами.
-- **Чисто нейромережевий підхід (System 1):** має безмежну креативність у генерації крайових випадків та розумінні контексту, але схильний галюцинувати неіснуючими вимогами та пропускати критичні заборони.
-
-В авторській архітектурі Znavets v4 реалізується строго типізований тандем:
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Dev as Інженер / Розробник
-    participant LLM as System 1: LLM-тестувальник (Креатив)
-    participant API as Popperian Falsification API
-    participant EVM as System 2: EVM / ZKP4 (Детермінізм)
-
-    Dev->>LLM: Надає архітектуру / Код модуля CAN Gateway
-    LLM->>LLM: Генерує гіпотезу та спектр тест-кейсів
-    LLM->>API: POST /api/v1/falsify (Hypothesis: "CAN frame DLC > 8 is truncated without error")
-    API->>EVM: Завантаження деонтичного правила ZKP4
-    EVM->>EVM: Виконання EISA v1.0 (%ebx custody check)
-    alt Знайдено нормативне спростування (Порушення стандарту)
-        EVM-->>API: FALSIFIED (Norm: ISO 11898-1 Clause 10.3 MUST NOT truncate silently)
-        API-->>LLM: Refusal + Counterexample + Verbatim Quote
-        LLM->>Dev: "Увага! Запропонований тест суперечить стандарту ISO 11898-1. Згенеровано тест на викидання помилки DLC_ERROR."
-    else Твердження не спростовано (Нова легітимна вимога)
-        EVM-->>API: UNFALSIFIED (Accepted in test program)
-        API-->>LLM: Confirmed
-        LLM->>Dev: "Тест валідовано та додано до офіційної програми випробувань."
-    end
-```
+### Що повертається людині (Safety & Cybersecurity Engineer):
+- **Глибока інженерна творчість:** проектування красивих, елегантних та стійких архітектур;
+- **Фізична інтуїція:** дослідження рідкісних аномалій реального «заліза», теплових дрейфів, деградації кремнію чи радіаційних збоїв, які неможливо формалізувати в стандартах;
+- **Стратегічна відповідальність:** людина більше не тремтить перед аудитом, бо знає, що кожен формальний пункт надійно прикритий математично верифікованою базою. Фахівець впевнено ставить свій підпис під SAR/TARA, спираючись на доказовий фундамент найвищого рівня довіри.
 
 ---
 
-## 5. Людина в контурі (Human-in-the-Loop) як вивільнення технічної творчості
+## 8. Виробничий код: Ядро активного аудитора TARA та Safety Directives на Go
 
-Ключовим соціально-технічним аспектом парадигми Миколи Федчика є усвідомлення меж машинного інтелекту:
-> **Машина звільняє людину від каторги формалізму, але не замінює інженерну відповідальність.**
-
-1. **Що бере на себе експертна система:**
-   - 100% рутинної перевірки тисяч пунктів специфікацій, вимог простежуваності та деонтичних модальностей.
-   - Миттєве виявлення пропущених обов'язкових тестів на безпеку та кібербезпеку.
-   - Побайтову фіксацію доказів відповідності для аудиторів сертифікаційних органів (TÜV, Dekra, FDA).
-2. **Що залишається людині (Human-in-the-Loop):**
-   - Ухвалення остаточних архітектурних рішень щодо компромісів між продуктивністю та вартістю.
-   - Дослідження нетривіальних фізичних аномалій обладнання, які виходять за межі текстових стандартів.
-   - Стратегічне цілепокладання, інженерна творчість та проєктування інноваційних продуктів.
-
-Замість багатоденного вичитування нормативних таблиць інженер отримує готовий інтерактивний звіт про дірки у верифікації та може зосередитися на проектуванні надійних технічних рішень.
-
----
-
-## 6. Програмна реалізація: Popperian Falsification & Compliance Test API на Go
-
-Нижче наведено робочу реалізацію сервісу активної попперівської фальсифікації та нормативної перевірки на мові Go:
+Нижче наведено розширену реалізацію активного аудитора, що підтримує сутності стандартів ISO 26262 та ISO/SAE 21434:
 
 ```go
 package compliance
@@ -145,171 +221,175 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
-	"errors"
 	"fmt"
 	"sync"
 	"time"
 )
 
-// Modality визначає деонтичну модальність вимоги.
-type Modality string
+// DomainStandard ідентифікатор стандарту комплаєнсу.
+type DomainStandard string
 
 const (
-	ModalityMust    Modality = "MUST"
-	ModalityMustNot Modality = "MUST_NOT"
-	ModalityShould  Modality = "SHOULD"
-	ModalityMay     Modality = "MAY"
+	StandardISO26262 DomainStandard = "ISO-26262:2018"
+	StandardISO21434 DomainStandard = "ISO/SAE-21434:2021"
+	StandardASPICE4  DomainStandard = "ASPICE-4.0"
+	StandardRFC9110  DomainStandard = "RFC-9110"
 )
 
-// NormativeAtom представляє двійковий атом знань ZKP4 з байтовою кастодією.
-type NormativeAtom struct {
-	StandardID    string   `json:"standard_id"`    // напр., "ISO-26262-6:2018"
-	Clause        string   `json:"clause"`         // напр., "Clause 8.4.2"
-	Entity        string   `json:"entity"`         // напр., "SafetyMechanism"
-	Modality      Modality `json:"modality"`       // MUST / MUST_NOT
-	TargetAction  string   `json:"target_action"`  // напр., "InjectFaultBeforeRelease"
-	VerbatimQuote string   `json:"verbatim_quote"` // Дослівна цитата
-	ByteStart     uint64   `json:"byte_start"`     // Початковий байт у файлі
-	ByteEnd       uint64   `json:"byte_end"`       // Кінцевий байт у файлі
-	ExpectedSHA   string   `json:"expected_sha"`   // Хеш цитати (%ebx custody)
+// DeonticModality модальність норми за RFC 2119 / ISO Directives.
+type DeonticModality string
+
+const (
+	ModalityMust    DeonticModality = "MUST"
+	ModalityMustNot DeonticModality = "MUST_NOT"
+	ModalityShould  DeonticModality = "SHOULD"
+)
+
+// ComplianceRule репрезентує непорушний нормативний атом ZKP4.
+type ComplianceRule struct {
+	Standard      DomainStandard  `json:"standard"`
+	Clause        string          `json:"clause"`         // напр. "Part 6 Clause 8.4.2"
+	Entity        string          `json:"entity"`         // напр. "SafetyMechanism"
+	Modality      DeonticModality `json:"modality"`       // MUST / MUST_NOT
+	TargetAction  string          `json:"target_action"`  // напр. "SilentFailure"
+	VerbatimQuote string          `json:"verbatim_quote"` // Дослівна норма
+	ByteStart     uint64          `json:"byte_start"`     // Початок у першоджерелі
+	ByteEnd       uint64          `json:"byte_end"`       // Кінець у першоджерелі
+	ExpectedSHA   string          `json:"expected_sha"`   // Хеш цитати (%ebx custody)
 }
 
-// Hypothesis представляє висунуте твердження щодо поведінки або тесту продукту.
-type Hypothesis struct {
-	ClaimID        string `json:"claim_id"`
+// EngineeringHypothesis проектне рішення, надане інженером або LLM.
+type EngineeringHypothesis struct {
+	HypothesisID   string `json:"hypothesis_id"`
 	TargetEntity   string `json:"target_entity"`
-	ActionProposed string `json:"action_proposed"`
-	Context        string `json:"context"`
+	ProposedAction string `json:"proposed_action"`
+	SafetyASIL     string `json:"safety_asil,omitempty"` // "QM", "ASIL-A".."ASIL-D"
+	Rationale      string `json:"rationale"`
 }
 
-// FalsificationStatus результат попперівської перевірки.
-type FalsificationStatus string
-
-const (
-	StatusFalsified   FalsificationStatus = "FALSIFIED"
-	StatusUnfalsified FalsificationStatus = "UNFALSIFIED"
-	StatusConflict    FalsificationStatus = "NORMATIVE_CONFLICT"
-)
-
-// FalsificationReport звіт з побайтовим доказом.
-type FalsificationReport struct {
-	Status        FalsificationStatus `json:"status"`
-	ViolatedNorm  *NormativeAtom      `json:"violated_norm,omitempty"`
-	Reason        string              `json:"reason"`
-	ExecutionTime time.Duration       `json:"execution_time"`
-	EvidenceValid bool                `json:"evidence_valid"`
+// FalsificationResult підсумок перевірки за Поппером.
+type FalsificationResult struct {
+	IsFalsified      bool            `json:"is_falsified"`
+	ViolatedRule     *ComplianceRule `json:"violated_rule,omitempty"`
+	RefusalReason    string          `json:"refusal_reason"`
+	EvidenceVerified bool            `json:"evidence_verified"`
+	Latency          time.Duration   `json:"latency"`
 }
 
-// ActiveComplianceAuditor реалізує активного нормативного тестувальника.
-type ActiveComplianceAuditor struct {
-	mu         sync.RWMutex
-	knowledge  map[string][]NormativeAtom // key: Entity
-	corpusData []byte                     // mmap-першоджерело
+// ActiveComplianceEngine автономний аудитор TARA/SAR/DFAR.
+type ActiveComplianceEngine struct {
+	mu           sync.RWMutex
+	rulesByEntity map[string][]ComplianceRule
+	rawSourceData []byte // mmap масив першоджерела
 }
 
-// NewAuditor ініціалізує аудитора.
-func NewAuditor(corpus []byte) *ActiveComplianceAuditor {
-	return &ActiveComplianceAuditor{
-		knowledge:  make(map[string][]NormativeAtom),
-		corpusData: corpus,
+// NewComplianceEngine ініціалізує аудитор з прив'язкою до першоджерела.
+func NewComplianceEngine(sourceData []byte) *ActiveComplianceEngine {
+	return &ActiveComplianceEngine{
+		rulesByEntity: make(map[string][]ComplianceRule),
+		rawSourceData: sourceData,
 	}
 }
 
-// RegisterNorm додає атом норми до бази аудитора.
-func (a *ActiveComplianceAuditor) RegisterNorm(atom NormativeAtom) {
-	a.mu.Lock()
-	defer a.mu.Unlock()
-	a.knowledge[atom.Entity] = append(a.knowledge[atom.Entity], atom)
+// RegisterComplianceRule додає правило з нормативної бази.
+func (e *ActiveComplianceEngine) RegisterComplianceRule(r ComplianceRule) {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	e.rulesByEntity[r.Entity] = append(e.rulesByEntity[r.Entity], r)
 }
 
-// FalsifyHypothesis перевіряє гіпотезу на відповідність нормам за час < 1ms.
-func (a *ActiveComplianceAuditor) FalsifyHypothesis(ctx context.Context, h Hypothesis) (*FalsificationReport, error) {
-	tStart := time.Now()
-	a.mu.RLock()
-	defer a.mu.RUnlock()
+// FalsifyDesignHypothesis здійснює попперівську фальсифікацію за час < 1ms.
+func (e *ActiveComplianceEngine) FalsifyDesignHypothesis(ctx context.Context, h EngineeringHypothesis) (*FalsificationResult, error) {
+	start := time.Now()
+	e.mu.RLock()
+	defer e.mu.RUnlock()
 
-	norms, exists := a.knowledge[h.TargetEntity]
-	if !exists || len(norms) == 0 {
-		return &FalsificationReport{
-			Status:        StatusUnfalsified,
-			Reason:        "No restricting normative clauses found for entity; open-world hypothesis admitted.",
-			ExecutionTime: time.Since(tStart),
-			EvidenceValid: true,
+	rules, found := e.rulesByEntity[h.TargetEntity]
+	if !found || len(rules) == 0 {
+		return &FalsificationResult{
+			IsFalsified:      false,
+			RefusalReason:    "No normative restrictions found; open-world hypothesis accepted.",
+			EvidenceVerified: true,
+			Latency:          time.Since(start),
 		}, nil
 	}
 
-	for _, norm := range norms {
-		// Перевірка побайтової кустодії першоджерела (%ebx register check)
-		if !a.verifyCustody(norm) {
-			return nil, fmt.Errorf("custody breach on norm %s [%d..%d]", norm.Clause, norm.ByteStart, norm.ByteEnd)
+	for _, rule := range rules {
+		// Побайтова верифікація першоджерела (%ebx custody check)
+		if !e.checkCustody(rule) {
+			return nil, fmt.Errorf("custody breach on %s [%d..%d]", rule.Clause, rule.ByteStart, rule.ByteEnd)
 		}
 
-		// Попперівська фальсифікація: якщо дія прямо заборонена стандартом
-		if norm.Modality == ModalityMustNot && norm.TargetAction == h.ActionProposed {
-			return &FalsificationReport{
-				Status:        StatusFalsified,
-				ViolatedNorm:  &norm,
-				Reason:        fmt.Sprintf("Direct prohibition in %s: %s", norm.StandardID, norm.VerbatimQuote),
-				ExecutionTime: time.Since(tStart),
-				EvidenceValid: true,
+		// Попперівське спростування: пряме порушення заборони стандарту
+		if rule.Modality == ModalityMustNot && rule.TargetAction == h.ProposedAction {
+			return &FalsificationResult{
+				IsFalsified:      true,
+				ViolatedRule:     &rule,
+				RefusalReason:    fmt.Sprintf("Direct compliance breach of %s (%s): %s", rule.Standard, rule.Clause, rule.VerbatimQuote),
+				EvidenceVerified: true,
+				Latency:          time.Since(start),
 			}, nil
 		}
 	}
 
-	return &FalsificationReport{
-		Status:        StatusUnfalsified,
-		Reason:        "Hypothesis survived Popperian falsification attempts against normative base.",
-		ExecutionTime: time.Since(tStart),
-		EvidenceValid: true,
+	return &FalsificationResult{
+		IsFalsified:      false,
+		RefusalReason:    "Design hypothesis withstood Popperian falsification against loaded compliance rules.",
+		EvidenceVerified: true,
+		Latency:          time.Since(start),
 	}, nil
 }
 
-// verifyCustody здійснює криптографічну перевірку цитати з масиву першоджерела.
-func (a *ActiveComplianceAuditor) verifyCustody(n NormativeAtom) bool {
-	if a.corpusData == nil || n.ByteEnd > uint64(len(a.corpusData)) || n.ByteStart >= n.ByteEnd {
+// checkCustody перевіряє SHA-256 цитати в mmap зрізі.
+func (e *ActiveComplianceEngine) checkCustody(r ComplianceRule) bool {
+	if e.rawSourceData == nil || r.ByteEnd > uint64(len(e.rawSourceData)) || r.ByteStart >= r.ByteEnd {
 		return false
 	}
-	slice := a.corpusData[n.ByteStart:n.ByteEnd]
-	h := sha256.Sum256(slice)
-	calcHex := hex.EncodeToString(h[:])
-	return calcHex == n.ExpectedSHA
+	chunk := e.rawSourceData[r.ByteStart:r.ByteEnd]
+	h := sha256.Sum256(chunk)
+	return hex.EncodeToString(h[:]) == r.ExpectedSHA
 }
 
-// GenerateTestDirectives активний допит: вимагає обов'язкові тести згідно норм MUST.
-func (a *ActiveComplianceAuditor) GenerateTestDirectives(entity string) []string {
-	a.mu.RLock()
-	defer a.mu.RUnlock()
+// InterrogateSystem генерує активні директиви допиту інженерної команди.
+func (e *ActiveComplianceEngine) InterrogateSystem(entity string) []string {
+	e.mu.RLock()
+	defer e.mu.RUnlock()
 
-	var directives []string
-	norms := a.knowledge[entity]
-	for _, n := range norms {
-		if n.Modality == ModalityMust {
-			directives = append(directives, fmt.Sprintf(
-				"COMPLIANCE DIRECTIVE [%s %s]: Must execute test covering action '%s'. Evidence: \"%s\"",
-				n.StandardID, n.Clause, n.TargetAction, n.VerbatimQuote,
+	var probes []string
+	for _, rule := range e.rulesByEntity[entity] {
+		if rule.Modality == ModalityMust {
+			probes = append(probes, fmt.Sprintf(
+				"ACTIVE COMPLIANCE PROBE [%s %s]: System MUST implement and verify '%s'. Where is the test evidence? Quote: \"%s\"",
+				rule.Standard, rule.Clause, rule.TargetAction, rule.VerbatimQuote,
 			))
 		}
 	}
-	return directives
+	return probes
 }
 ```
 
 ---
 
-## 7. Висновки та інженерні наслідки
+## 9. Висновки до глави
 
-1. **Повна зміна парадигми експертної системи:** Експертна система перестає бути пасивним довідником і стає **активним ініціатором заходів контролю якості**. Вона самостійно формулює нормативні запитання до продукту, вимагає докази та виявляє відсутні тести.
-2. **Детермінована попперівська фальсифікація:** Замість спроб статистично «вгадати» відповідність стандарту система за мілісекунди шукає нормативні контрприклади на базі вирівняних двійкових пакетів ZKP4 з побайтовою перевіркою цитат (%ebx custody).
-3. **Економічний ефект для комплаєнс-проєктів:** Автоматизація до 90% рутинного аудиту за стандартами ASPICE, ISO 26262, ISO 21434, DO-178C кардинально зменшує час виходу продукту на ринок (Time to Market) та виключає людські помилки неуважності.
-4. **Гуманістичний вимір інженерії знань:** Залишаючи людину в контурі (Human-in-the-Loop), доказовий ШІ повертає інженеру радість технічної творчості, беручи на себе всю тяжкість бюрократичної та нормативної рутини.
+1. **Трансформація від пасивного сховища знань до активного агента контролю якості:**  
+   Експертна система нового покоління не чекає на запитання. Вона знає вимоги стандартів краще, ніж стомлений інженер, і активно сканує систему, генерує директиви випробувань та виявляє прогалини трасованості.
+2. **Порятунок фахівців з безпеки від бюрократичного вигорання:**  
+   Автоматизоване складання драфтів TARA, SAR, DFAR та матриць V&V на базі двійкових пакетів ZKP4 знімає до 90% монотонних людино-годин, захищаючи автора звіту від фатальних пропусків норм.
+3. **Строгий математичний щит ($ZHR = 1.00$):**  
+   Попперівська фальсифікація дозволяє зовнішнім мовним моделям (LLM) генерувати креативні тестові вектори, гарантуючи при цьому, що жодна галюцинація не потрапить у фінальну сертифікаційну документацію.
+4. **Гідне місце людини в епоху ШІ:**  
+   Залишаючи людину арбітром і стратегом (Human-in-the-Loop), доказова експертна система повертає інженерії безпеки радість творчості, елегантності та інтелектуальної гідності.
 
 ---
 
 ## Джерела до глави
 
 1. <a id="src-1"></a>**Popper, K. R.** (1959). *The Logic of Scientific Discovery*. London: Hutchinson & Co.
-2. <a id="src-2"></a>**Automotive Special Interest Group.** (2023). *Automotive SPICE Process Assessment / Reference Model, Version 4.0*. VDA QMC.
+2. <a id="src-2"></a>**VDA QMC.** (2023). *Automotive SPICE Process Assessment / Reference Model, Version 4.0*. Berlin: Quality Management Center in the German Association of the Automotive Industry.
 3. <a id="src-3"></a>**International Organization for Standardization.** (2018). *ISO 26262:2018: Road vehicles — Functional safety (Parts 1–12)*. Geneva: ISO.
 4. <a id="src-4"></a>**ISO/SAE.** (2021). *ISO/SAE 21434:2021: Road vehicles — Cybersecurity engineering*. Geneva: ISO.
-5. <a id="src-5"></a>**Beck, K.** (2002). *Test-Driven Development: By Example*. Addison-Wesley.
-6. <a id="src-6"></a>**Федчик, М.** (2026). *Архітектура доказових експертних систем: від формальних онтологій до нейро-символьного ШІ*.
+5. <a id="src-5"></a>**RTCA / EUROCAE.** (2011). *DO-178C / ED-12C: Software Considerations in Airborne Systems and Equipment Certification*. Washington, D.C. / Paris.
+6. <a id="src-6"></a>**Kelly, T., & Weaver, R.** (2004). *The Goal Structuring Notation — A Safety Argument Notation*. Proceedings of Dependable Systems and Networks.
+7. <a id="src-7"></a>**Dung, P. M.** (1995). *On the acceptability of arguments and its fundamental role in nonmonotonic reasoning, logic programming and n-person games*. Artificial Intelligence, 77(2), 321–357.
+8. <a id="src-8"></a>**Федчик, М.** (2026). *Архітектура доказових експертних систем: від формальних онтологій до нейро-символьного ШІ*.
