@@ -256,7 +256,7 @@ H(\dots H(H(f_i), h_1) \dots) = R_{\text{Merkle}}
 Кожен експортований факт підписується цифровим підписом системи-джерела за схемою Ed25519 Бернштейна та співавторів [[12]](#src-12). Структура атестованого факту містить канонічні байти твердження, ідентифікатор джерела та криптографічний підпис:
 
 ```math
-\sigma = \text{Ed25519}_{\text{Sign}}(SK_{\text{source}}, \text{SHA-256}(s \parallel p \parallel o \parallel \text{level} \parallel \text{source\_id}))
+\sigma = \text{Ed25519}_{\text{Sign}}(SK_{\text{source}}, \text{SHA-256}(s \parallel p \parallel o \parallel \text{level} \parallel \text{source}\_\text{id}))
 ```
 
 Перевірка підпису гарантує цілісність даних та неспростовність авторства (non-repudiation) згідно з принципами ланцюжків постачання артефактів in-toto Торрес-Аріаса та співавторів [[13]](#src-13).
@@ -268,7 +268,7 @@ H(\dots H(H(f_i), h_1) \dots) = R_{\text{Merkle}}
 1. **Пряма інверсія аксіоми (Axiom Inversion / Overwrite):**  
    Атакуючий вузол (навіть володіючи валідним сертифікатом доступу) надсилає твердження, що прямо суперечить засадничим законам фізики чи нормам безпеки:
    ```math
-\text{Attestation}: (\texttt{emergency\_brake}, \texttt{status\_on\_failure}, \texttt{DISABLED})
+\text{Attestation}: (\texttt{emergency}\_\texttt{brake}, \texttt{status}\_\texttt{on}\_\texttt{failure}, \texttt{DISABLED})
 ```
    Мета: зняття захисних блокувань у критичний момент.
 2. **Прихований семантичний дрейф (Stealth Semantic Drift):**  
