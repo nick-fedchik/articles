@@ -288,6 +288,9 @@ P_1(x) \leftarrow P_2(x), \quad P_2(x) \leftarrow P_3(x), \quad P_3(x) \leftarro
 
 ```mermaid
 flowchart TD
+    accTitle: Шлюз вхідного контролю та карантин фактів
+    accDescr: Перевірка підпису, аксіом та поміщення невідомих предикатів у карантин для офлайн-верифікації.
+
     IN["Вхідний атестований факт<br/>(Attested Fact)"] --> C1{"Криптографічний підпис<br/>(Ed25519 & Trusted Registry)"}
     C1 -->|НЕДІЙСНИЙ| REJ_SIG["Відхилено:<br/>DecisionRejectSignature"]
     C1 -->|ВАЛІДНИЙ| C2{"Сумісність з аксіомами<br/>(Authoritative Axioms)"}
@@ -298,7 +301,7 @@ flowchart TD
     C3 -->|Відомий факт/клас| ADMIT["Прямий допуск:<br/>DecisionAdmit"]
     C3 -->|Новий предикат/зв'язок| QUAR["Карантинний буфер:<br/>DecisionQuarantine"]
     
-    subgraph Карантинне середовище верифікації (Offline/Batch Audit)
+    subgraph Quarantine["<b>Карантинне середовище верифікації (Offline/Batch Audit)</b>"]
         QUAR --> SMT["Формальна перевірка SMT/ASP<br/>(Z3 / Clingo: відсутність циклів)"]
         SMT --> REG["Регресійне тестування<br/>на екзаменаційній матриці"]
         REG --> HITL{"Аудит інженера знань<br/>(Human-in-the-Loop)"}
