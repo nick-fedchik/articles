@@ -48,3 +48,26 @@ Do **NOT** use «контур» for software architectures, cybernetic loops, se
   - Preserve LaTeX equations ($...$ and $$...$$) and ensure all variables are defined immediately below.
   - Always verify with `python3 scripts/inspect_buzzwords.py` after editing.
 
+## 5. Structural Hierarchy, Numbering & Heading Semantics
+- **Strict 4-Level Numbering Hierarchy:**
+  - **Level 1 (H1):** `# Глава N. Назва глави` або `# Додаток X. Назва додатка` (preserves IDs for anchors and cross-references).
+  - **Level 2 (H2) — Розділ:** `## 1. Назва розділу`, `## 2. Назва розділу` (numbered sequentially).
+    - **Structural Exceptions (Unnumbered):** Meta and closing sections MUST remain unnumbered: `## Анотація`, `## Висновки`, `## Глосарій`, `## Абревіатури` (або `## Скорочення та терміни`), `## Джерела` (або `## Література` / `## Посилання`).
+  - **Level 3 (H3) — Підрозділ:** `### 1.1. Назва підрозділу`, `### 1.2. Назва підрозділу`.
+  - **Level 4 (H4) — Пункт:** `#### 1.1.1. Назва пункту`, `#### 1.1.2. Назва пункту`.
+  - No headers deeper than H4; use numbered or bulleted lists inside paragraphs.
+- **Subject Engineering Semantics in Headings:**
+  - Titles must strictly convey engineering and scientific substance (e.g. *«## 1. Історичні межі першого покоління експертних систем та передумови ренесансу»* instead of *«## Хіба вони не померли у 1980-х?»*).
+  - **Relocation of Provocative Questions & Slogans:** Motivational slogans and provocative questions are NEVER used as titles; they MUST be moved into the body text, primarily into the first paragraph where the engineering problem is introduced.
+- **Fatigue-Free Mathematics for Practicing Engineers:**
+  - Every standalone formula must be isolated in `$$...$$` or ````math`.
+  - Immediately below the formula, provide a comprehensive breakdown of every parameter AND its physical/intuitive action, tailored for practicing systems engineers who haven't dealt with pure academic math syntax daily.
+- **Rich Diagrams & Alerts:**
+  - Leverage diverse GitHub-supported Mermaid diagrams (`flowchart`, `sequenceDiagram`, `stateDiagram-v2`, `classDiagram`, `xychart-beta`) with `accTitle` / `accDescr`.
+  - Use GitHub-style callouts (`> [!NOTE]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!TIP]`).
+- **Batch Processing & Quality Gate:**
+  - Process chapters in structured batches by parts (Part 1, Part 2, etc.).
+  - Run `python3 scripts/inspect_buzzwords.py` after editing each batch.
+  - Commit with clear semantic commit messages and push to `origin/main` after each batch.
+
+
