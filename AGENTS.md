@@ -29,3 +29,22 @@ Do **NOT** use «контур» for software architectures, cybernetic loops, se
 - **Zero-context opening:** Every chapter must start with immediate practical grounding — what mission-critical failure occurs if this topic is misunderstood, and how the chapter resolves it.
 - **Fatigue relief:** Mathematical formulas must always be paired with intuitive analogies, Mermaid diagrams, and parameter definitions.
 - **Concrete grounding:** Reference concrete standards (ISO 26262, ISO/SAE 21434, ASPICE, RFC), real hardware (Infineon AURIX, Xilinx FPGA, ARM Cortex), and formal methods (SMT Z3, Datalog, GSN).
+
+## 4. Scientific Editing, Academic Voice & Authorial Balance (The Knuth/Kleppmann Paradigm)
+- **80% Objective Impersonal Exposition:**
+  - The primary narrative mode must be objective and depersonalized, using natural Ukrainian impersonal verbal forms on **-но / -то**: *«досліджено»*, *«запропоновано»*, *«верифіковано»*, *«побудовано»*, *«встановлено»*, *«експериментально виміряно»*.
+  - Use system-driven agents: *«алгоритм гарантує»*, *«архітектура забезпечує»*, *«результати моделювання свідчать»*.
+- **20% Authorial Practical Voice (Findings, Benches, Caveats & Guidelines):**
+  - When presenting experimental test benches, empirical results, mission-critical production caveats, or architectural recommendations, employ a restrained, authoritative practitioner voice:
+    - *«Автором розгорнуто дослідницький стенд...»*
+    - *«Автором запропоновано підхід / доведено, що...»*
+    - *«З інженерного досвіду автора випливає, що...»*
+    - *«Автор рекомендує для прототипів...»*
+  - **Strictly eliminate artificial collective «ми» (Pluralis Auctoris):** Never write *«нами розроблено»*, *«наша група розгортає»* (this is a single-author monograph). Formulas of joint pedagogical reasoning with the reader (*«розглянемо приклад»*, *«звернемо увагу на»*) remain valid.
+  - **Eliminate colloquial «я-стиль»:** Avoid informal blogging phrasing (e.g. *«я написав скриптик»* $\rightarrow$ *«Автором реалізовано програмний модуль...»*).
+- **Zero Breaking Changes to Book Structure & Code:**
+  - Never mechanically rename `# Глава N` to `РОЗДІЛ N` or alter file names / anchors — preserve all cross-references and table-of-contents integrity.
+  - Never tear code out of chapters into separate detached files if it serves a direct pedagogical purpose; format long code listings (> 45 lines) inside collapsible `<details><summary>` blocks.
+  - Preserve LaTeX equations ($...$ and $$...$$) and ensure all variables are defined immediately below.
+  - Always verify with `python3 scripts/inspect_buzzwords.py` after editing.
+
