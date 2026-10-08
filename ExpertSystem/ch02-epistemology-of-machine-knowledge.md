@@ -774,6 +774,49 @@ flowchart LR
 
 Межі формули: правило консервативне, мітки лише зростають, а зниження мітки потребує окремої авторизованої дії. Реальні ґратки бувають частковими, наприклад коли мітка складається з рівня й набору проєктів; тоді верхню межу обчислюють окремо для рівня й для набору [[28]](#src-28).
 
+```mermaid
+flowchart TD
+    accTitle: Спливання міток безпеки в ґратці Деннінг
+    accDescr: Три вхідні документи з різними мітками поєднуються операцією точної верхньої межі, внаслідок чого відповідь успадковує найсуворіший рівень доступу.
+
+    subgraph Inputs["Вхідні артефакти доказу"]
+        D1["<b>Технічний опис (Datasheet)</b><br/>Мітка: «загальнодоступно» (Public)"]
+        D2["<b>Корпоративний стандарт</b><br/>Мітка: «внутрішнє» (Internal)"]
+        D3["<b>Дозвіл на відхилення W-17</b><br/>Мітка: «обмежено: безпека» (SafetyRestricted)"]
+    end
+
+    LatticeOp{"Операція ґратки:<br/>⊔ (найменша спільна<br/>верхня межа)"}
+
+    Inputs --> LatticeOp
+
+    Ans["<b>Синтезована відповідь / висновок</b><br/>Підсумкова мітка: «обмежено: безпека»"]
+
+    LatticeOp --> Ans
+
+    subgraph Delivery["Контроль видачі користувачеві (PEP)"]
+        U1["<b>Інженер-стажер</b><br/>Допуск: «внутрішнє»"] -.->|Запит| PEP1{PEP}
+        Ans -.-> PEP1
+        PEP1 -->|Блокування| DENY["<b>Нейтральна відмова</b><br/>«Дані недоступні» (без розкриття)"]
+
+        U2["<b>Інженер з безпеки</b><br/>Допуск: «обмежено: безпека»"] -.->|Запит| PEP2{PEP}
+        Ans -.-> PEP2
+        PEP2 -->|Дозвіл| PASS["<b>Повний висновок</b><br/>із посиланням на дозвіл W-17"]
+    end
+
+    classDef pub fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef int fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
+    classDef sec fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef op fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef block fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+
+    class D1 pub;
+    class D2,U1 int;
+    class D3,Ans,U2 sec;
+    class LatticeOp,PEP1,PEP2 op;
+    class DENY block;
+    class PASS pub;
+```
+
 <details>
 <summary>Приклад мовою Go: поширення міток доступу</summary>
 
