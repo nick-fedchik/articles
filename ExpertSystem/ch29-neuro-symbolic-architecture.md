@@ -138,7 +138,129 @@ flowchart TD
 | Дорадчі гіпотези | пропонує припущення в дорадчому режимі | ізоляція від строгого блоку, позначка непідтвердженості ([Глава 28](ch28-dual-mode-expert-systems.md)) |
 | Узагальнення правил | пропонує кандидатів на нові правила з прецедентів | статус кандидата, перевірка суперечностей, цикл допуску ([Глава 26](ch26-continual-learning.md)) |
 
-У кожному рядку модель лише пропонує, а останнє слово має детермінована перевірка. Найважливіша з перевірок, шлюз допуску кандидатних фактів, має технічну тонкість, через яку на практиці падає більшість наївних реалізацій.
+У кожному рядку модель лише пропонує, а останнє слово має детермінована перевірка.
+
+## Світовий ландшафт нейро-символьних архітектур: уроки індустрії та академії
+
+Концепція розділення Системи 1 (нейромережева інтуїція й обробка входу) та Системи 2 (символьне міркування й верифікація) у період 2024–2026 років стала головним вектором розвитку провідних світових наукових центрів та індустріальних лабораторій. Проте конкретні способи сполучення цих систем кардинально різняться за рівнем строгості, обчислювальною складністю та придатністю до експлуатації в реальному часі.
+
+### 1. Досвід Alphabet / DeepMind: AlphaProof та інтерактивні доводжувачі Lean
+
+У системі **AlphaProof** дослідники Google DeepMind продемонстрували здатність гібридної системи розв'язувати складні математичні задачі рівня Міжнародної математичної олімпіади (IMO 2024) [[29]](#src-29). Архітектурно AlphaProof поєднує мовну модель Gemini, донавчену на формальних доказах, з детермінованим ядром інтерактивного прувера **Lean 4** [[20]](#src-20). Модель виступає генератором тактик доведення, тоді як компілятор Lean механічно валідує кожен синтаксичний та логічний крок. Якщо тактика моделі хибна, ядро повертає помилку типізації, відкидаючи гілку дерева пошуку.
+
+> **Урок для доказових систем:** Розділення *«LLM формулює гіпотезу $\to$ формальне ядро верифікує її»* є беззаперечним стандартом надійності.
+> 
+> **Межа застосовності:** Lean 4 створювався для інтерактивної роботи математиків, а не для бортових контролерів. Пошук одного доведення вимагає секунд або хвилин потужних серверних процесорів x86. Для вбудованих автомобільних (ISO 26262 ASIL D) чи авіаційних (DO-178C DAL A) систем, де ліміт реакції на подію становить $`< 100\,\mu\text{s}`$, такий підхід непридатний. Експертна система реального часу потребує ультрашвидкого спеціалізованого символьного ядра з детермінованим часом виконання та нульовими динамічними алокаціями пам'яті.
+
+### 2. Досвід OpenAI: процесні винагороди (PRM) та ілюзія прихованого міркування
+
+OpenAI у дослідженнях Хантера Лайтмана та співавторів запропонувала концепцію покрокової перевірки міркувань — **Process-Supervised Reward Models (PRM)**, відому за працею *«Let's Verify Step by Step»* [[25]](#src-25). На відміну від оцінювання лише кінцевого результату (*Outcome Supervision*), PRM навчає модель оцінювати коректність кожного окремого кроку ланцюжка думок (*Chain of Thought, CoT*). Подальший розвиток ця ідея отримала в серії моделей міркування o1/o3 через виділення додаткового бюджету обчислень на етапі інференсу (*Test-Time Compute*).
+
+> **Урок для доказових систем:** Перевірка процесу формування висновку на кожному логічному переході значно ефективніша за перевірку фінальної відповіді.
+> 
+> **Пастка, якої слід уникати:** У моделях o1/o3 внутрішній ланцюжок думок (*Hidden CoT*) залишається послідовністю нейромережевих токенів. Він схильний до витончених софізмів та правдоподібних псевдо-доведень. Перевірка «ШІ перевіряє ШІ» без зовнішнього математичного рушія породжує системну сикофантію та модельний колапс [[3]](#src-3). Ланцюжок міркувань є лише текстом, а не доказовим деревом (*Proof Tree*).
+
+### 3. Досвід Meta FAIR: архітектура агента Cicero
+
+Найбільш показовим інженерним тріумфом практичного нейро-символьного тандему стала розробка дипломатичного агента **Cicero** дослідниками Meta FAIR [[24]](#src-24). Система досягла рівня майстра у стратегічній настільній грі «Diplomacy», де перемога вимагає як координації природною мовою, так і прогнозування зради:
+* **Мовна модель (Система 1):** веде переговори з гравцями-людьми, аналізує наміри партнерів і перетворює діалогові репліки на структуровані повідомлення про можливі альянси;
+* **Символьний планувальник (Система 2):** розраховує оптимальні тактичні ходи на основі алгоритму пошуку за теорією ігор (ітеративне обчислення рівноваги Неша з урахуванням довіри).
+
+Cicero фільтрує пропозиції мовної моделі: якщо модель обіцяє союзнику хід, який суперечить стратегічному плануванню ядра, репліка примусово блокується й переформульовується. Цей принцип повністю відповідає формулі «мовна модель пропонує — символьне ядро затверджує».
+
+### 4. Досвід Stanford HAI: скомпільовані декларативні конвеєри DSPy
+
+Омар Хаттаб та співавтори у Стенфордському університеті створили фреймворк **DSPy** (*Declarative Self-improving Python*) [[26]](#src-26), який замінює крихку ручну промпт-інженерію алгоритмічною компіляцією обмежень. Замість написання довгих текстових підказок інженер описує сигнатуру задачі у вигляді типів входу й виходу, а оптимізатор (телепромптер) автоматично синтезує демонстрації, налаштовує параметри та збирає траси виконання.
+
+> **Урок для доказових систем:** Декларативні специфікації усувають суб'єктивність ручного формулювання запитів і дають змогу автоматично будувати надійні екстрактори знань.
+
+### 5. Академічні школи: MIT NSCL та Imperial College London ASPIC+
+
+Фундаментальні дослідження в MIT CSAIL (Цзяюань Мао, Джош Тененбаум та співавтори) над системою **Neuro-Symbolic Concept Learner (NSCL)** [[27]](#src-27) довели перевагу семантичного заземлення: нейромережа навчається сприймати візуальний або текстовий вхід не шляхом простої апроксимації функцій, а шляхом трансляції сцени у квазісимвольні програмні дерева, які виконуються детермінованим функціональним рушієм.
+
+З іншого боку, школа обчислювальної аргументації Імперського коледжу Лондона (Франческа Тоні та Санджай Модгіл) розробила формалізм **ASPIC+** [[28]](#src-28). Цей апарат дозволяє системі не просто виводити факти за дедукцією, а вирішувати правові та технічні колізії норм через механізм заперечувальних обставин (*rebutting* та *undercutting defeaters*), коли локальна норма стандарту (*Lex Specialis*) або новіша редакція регламенту (*Lex Posterior*) детерміновано переважає базову загальну норму.
+
+### Тимчасовий протокол взаємодії в нейро-символьному тандемі
+
+Діаграма послідовності показує часовий протокол обміну повідомленнями між компонентами під час обробки інженерного запиту.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Інженер-оператор
+    participant SLM as Мовний парсер (Система 1)
+    participant Grammar as Сінтаксичний щит (GBNF)
+    participant Gate as Шлюз допуску (Хост)
+    participant Core as Символьне ядро (Система 2)
+
+    User->>SLM: Запит природною мовою
+    activate SLM
+    SLM->>Grammar: Токени авторегресії
+    activate Grammar
+    Grammar-->>SLM: Бітова маска дозволених логітів AST
+    deactivate Grammar
+    SLM->>Gate: Кандидатний факт {S, R, V, цитата, байтові межі}
+    deactivate SLM
+
+    activate Gate
+    Gate->>Gate: Звірка предикату із закритим словником онтології
+    Gate->>Gate: Побайтове вичитування та звірка SHA-256 цитати
+    Gate->>Gate: Звірка числових одиниць та значень
+
+    alt Порушення цілісності або цитати немає в джерелі
+        Gate-->>User: Типізована відмова Refusal(NO_EVIDENCE)
+    else Побайтова відповідність підтверджена
+        Gate->>Core: Допущений факт із криптографічною кастодією
+        deactivate Gate
+        activate Core
+        Core->>Core: Детерміноване виведення (Datalog / EISA)
+        Core->>Core: Перевірка колізій норм та дефітерів (ASPIC+)
+        Core-->>User: Доказова відповідь із цитатами та байтовими межами
+        deactivate Core
+    end
+```
+
+### Життєвий цикл кандидатного факту
+
+Діаграма станів ілюструє переходи стану знання від сирого неструктурованого тексту до затвердженого факту або безпечної відмови.
+
+```mermaid
+stateDiagram-v2
+    [*] --> UnstructuredText: Сирий корпоративний документ
+
+    UnstructuredText --> Proposed: Локальна SLM виділяє кандидата
+    Proposed --> SyntacticallyMasked: Проходження GBNF-граматики
+
+    state GateInspection {
+        [*] --> VocabularyCheck: Звірка зі словником онтології
+        VocabularyCheck --> ByteCustodyCheck: Предикат у словнику
+        VocabularyCheck --> Rejected_Vocabulary: Предикат поза словником
+
+        ByteCustodyCheck --> NumericCheck: Збіг байтів та хешу SHA-256
+        ByteCustodyCheck --> Rejected_Quote: Спотворення цитати
+
+        NumericCheck --> VerifiedCandidate: Значення є в цитаті
+        NumericCheck --> Rejected_Numeric: Число вигадане моделлю
+    }
+
+    SyntacticallyMasked --> GateInspection: Передача до шлюзу допуску
+
+    Rejected_Vocabulary --> RefusalState: Відмова OUT_OF_VOCABULARY
+    Rejected_Quote --> RefusalState: Відмова HALLUCINATED_QUOTE
+    Rejected_Numeric --> RefusalState: Відмова NUMERIC_DISCREPANCY
+
+    VerifiedCandidate --> AdmittedFact: Допуск хостовою системою
+    AdmittedFact --> InferenceEngine: Детерміноване логічне виведення
+
+    InferenceEngine --> ProvedConclusion: Усі засновки доведено
+    InferenceEngine --> Defeated: Активовано правило-дефітер
+
+    Defeated --> RefusalState: Відмова UNRESOLVED_DEFEATER
+    ProvedConclusion --> [*]: Доказова відповідь інженеру
+    RefusalState --> [*]: Повернення типізованої відмови
+```
+
+Найважливіша з перевірок, шлюз допуску кандидатних фактів, має технічну тонкість, через яку на практиці падає більшість наївних реалізацій.
 
 ## Шлюз допуску: байти, а не символи
 
@@ -583,6 +705,12 @@ func TestAdmissionBoundaries(t *testing.T) {
 21. <a id="src-21"></a>Lucas Bourtoule, Varun Chandrasekaran, Christopher A. Choquette-Choo, Hengrui Jia та ін. [*Machine Unlearning*](https://arxiv.org/abs/1912.03817). IEEE Symposium on Security and Privacy, 2021.
 22. <a id="src-22"></a>Jens Groth. [*On the Size of Pairing-Based Non-interactive Arguments*](https://doi.org/10.1007/978-3-662-49896-5_11). EUROCRYPT 2016, LNCS 9666, 305–326, 2016.
 23. <a id="src-23"></a>Xuezhi Wang et al. [*Self-Consistency Improves Chain of Thought Reasoning in Language Models*](https://research.google/pubs/self-consistency-improves-chain-of-thought-reasoning-in-language-models/). *Proceedings of the 11th International Conference on Learning Representations (ICLR 2023)*, 2023.
+24. <a id="src-24"></a>Anton Bakhtin, Noam Brown, Emily Dinan, Gabriele Farina, Colin Flaherty, Daniel Fried та ін. [*Human-level play in the game of Diplomacy by combining language models with strategic reasoning*](https://doi.org/10.1126/science.ade9097). *Science*, 378(6624), 1067–1074, 2022.
+25. <a id="src-25"></a>Hunter Lightman, Vineet Kosaraju, Yura Burda, Harri Edwards, Bowen Baker, Teddy Lee, Jan Leike, John Schulman, Ilya Sutskever, Karl Cobbe. [*Let's Verify Step by Step*](https://arxiv.org/abs/2305.20050). arXiv:2305.20050, 2023.
+26. <a id="src-26"></a>Omar Khattab, Arnav Singhvi, Paridhi Maheshwari, Zhiyuan Zhang, Keshav Santhanam, Sri Vardhamanan та ін. [*DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines*](https://arxiv.org/abs/2310.03714). arXiv:2310.03714, 2023.
+27. <a id="src-27"></a>Jiayuan Mao, Chuang Gan, Pushmeet Kohli, Joshua B. Tenenbaum, Jiajun Wu. [*The Neuro-Symbolic Concept Learner: Interpreting Scenes, Words, and Sentences From Natural Supervision*](https://openreview.net/forum?id=rJgMlhRctm). *International Conference on Learning Representations (ICLR 2019)*, 2019.
+28. <a id="src-28"></a>Sanjay Modgil, Francesca Toni. [*The ASPIC+ framework for structured argumentation: a tutorial*](https://doi.org/10.1080/19462166.2013.869766). *Argument & Computation*, 5(1), 31–62, 2014.
+29. <a id="src-29"></a>Google DeepMind (AlphaProof & AlphaGeometry Teams). [*AI achieves silver-medal standard solving International Mathematical Olympiad problems*](https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/). Google DeepMind Research, 2024.
 
 ---
 
