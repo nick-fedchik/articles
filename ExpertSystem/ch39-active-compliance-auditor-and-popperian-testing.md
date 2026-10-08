@@ -107,13 +107,13 @@ flowchart TD
 Формально гіпотеза записується як предикат над простором станів системи $\mathcal{S}$:
 
 $$
-\mathcal{H}_{\mathrm{design}} \equiv \forall s \in \mathcal{S}, \quad \mathrm{StateValid}(s) \implies \mathrm{SafetyGoalSatisfied}(s)
+\mathcal{H} \equiv \forall s \in \mathcal{S}, \quad \mathrm{StateValid}(s) \implies \mathrm{SafetyGoalSatisfied}(s)
 $$
 
 Нормативна база знань $\mathcal{K}$ складається з двійкових деонтичних атомів стандарту:
 
 $$
-\mathcal{K}_{\mathrm{norm}} = \lbrace \nu_1, \nu_2, \dots, \nu_m \rbrace, \quad \nu_i = \langle \mathrm{Domain}, \mathrm{Clause}, \mathrm{Entity}, \mathrm{Modality}, \mathrm{Action}, \mathrm{Evidence} \rangle
+\mathcal{K} = \lbrace \nu_1, \nu_2, \dots, \nu_m \rbrace, \quad \nu_i = \langle \mathrm{Domain}, \mathrm{Clause}, \mathrm{Entity}, \mathrm{Modality}, \mathrm{Action}, \mathrm{Evidence} \rangle
 $$
 
 де допустимі значення деонтичної модальності: `MUST`, `MUST_NOT`, `SHOULD`, `MAY`.
@@ -122,7 +122,7 @@ $$
 Завдання експертної системи — за час $t < 1\ \mathrm{ms}$ виконати символьний пошук контрприкладу:
 
 $$
-\mathcal{F}(\mathcal{H}_{\mathrm{design}}, \mathcal{K}_{\mathrm{norm}}) = \lbrace \nu_k \in \mathcal{K}_{\mathrm{norm}} \mid \mathrm{Implication}(\mathcal{H}_{\mathrm{design}}) \models \mathrm{Violation}(\nu_k) \rbrace
+\mathcal{F}(\mathcal{H}, \mathcal{K}) = \lbrace \nu_k \in \mathcal{K} \mid \mathrm{Implication}(\mathcal{H}) \models \mathrm{Violation}(\nu_k) \rbrace
 $$
 
 Якщо такий атом знайдено:
@@ -223,10 +223,10 @@ flowchart LR
 3. **Розрахунок повноти тестової програми:**
 
    $$
-   \mathrm{TraceabilityCoverage} = \frac{|\mathcal{R}_{\mathrm{requirements}} \cap \mathcal{T}_{\mathrm{verified}}|}{|\mathcal{R}_{\mathrm{requirements}}|} = 1{,}00
+   \mathrm{TraceabilityCoverage} = \frac{|\mathcal{R} \cap \mathcal{T}|}{|\mathcal{R}|} = 1{,}00
    $$
 
-   (що відповідає 100% покриття трасованості вимог).
+   де $\mathcal{R}$ — повна множина вимог стандарту (*requirements*), а $\mathcal{T}$ — множина вимог, покритих верифікованими тестами (*test-verified*), що гарантує 100% покриття трасованості.
 
 ---
 
