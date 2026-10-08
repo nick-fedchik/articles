@@ -102,21 +102,34 @@ flowchart TD
 Основою перевірки проектних рішень є принцип фальсифікованості Карла Поппера [[1]](#src-1): *жодна система не може бути визнана безпечною лише на підставі успішних тестів; безпека доводиться невдачею найагресивніших спроб її спростувати*.
 
 ### 3.1. Формалізація інженерної гіпотези
-Розробник, мовна модель або архітектор висувають проектне твердження $\mathcal{H}_{\mathrm{design}}$ (наприклад: *«Модуль обробки педалі гальма відповідає рівню ASIL-D без дублювання АЦП, оскільки використовується періодичне самотестування»*).
+Розробник, мовна модель або архітектор висувають проектне твердження $\mathcal{H}$ (наприклад: *«Модуль обробки педалі гальма відповідає рівню ASIL-D без дублювання АЦП, оскільки використовується періодичне самотестування»*).
 
 Формально гіпотеза записується як предикат над простором станів системи $\mathcal{S}$:
-$$\mathcal{H}_{\mathrm{design}} \equiv \forall s \in \mathcal{S}, \quad \mathrm{StateValid}(s) \implies \mathrm{SafetyGoalSatisfied}(s)$$
 
-Нормативна база знань $\mathcal{K}_{\mathrm{norm}}$ складається з двійкових деонтичних атомів стандарту:
-$$\mathcal{K}_{\mathrm{norm}} = \{ \nu_1, \nu_2, \dots, \nu_m \}, \quad \nu_i = \langle \mathrm{Domain}, \mathrm{Clause}, \mathrm{Entity}, \mathrm{Modality}, \mathrm{Action}, \mathrm{Evidence} \rangle$$
-де $\mathrm{Modality} \in \{ \mathrm{MUST}, \mathrm{MUST\text{-}NOT}, \mathrm{SHOULD}, \mathrm{MAY} \}$ (у програмному коді — константа `MUST_NOT`).
+$$
+\mathcal{H}_{\mathrm{design}} \equiv \forall s \in \mathcal{S}, \quad \mathrm{StateValid}(s) \implies \mathrm{SafetyGoalSatisfied}(s)
+$$
+
+Нормативна база знань $\mathcal{K}$ складається з двійкових деонтичних атомів стандарту:
+
+$$
+\mathcal{K}_{\mathrm{norm}} = \lbrace \nu_1, \nu_2, \dots, \nu_m \rbrace, \quad \nu_i = \langle \mathrm{Domain}, \mathrm{Clause}, \mathrm{Entity}, \mathrm{Modality}, \mathrm{Action}, \mathrm{Evidence} \rangle
+$$
+
+де допустимі значення деонтичної модальності: `MUST`, `MUST_NOT`, `SHOULD`, `MAY`.
 
 ### 3.2. Пошук потенційного фальсифікатора (Potential Falsifier)
 Завдання експертної системи — за час $t < 1\ \mathrm{ms}$ виконати символьний пошук контрприкладу:
-$$\mathcal{F}(\mathcal{H}_{\mathrm{design}}, \mathcal{K}_{\mathrm{norm}}) = \{ \nu_k \in \mathcal{K}_{\mathrm{norm}} \mid \mathrm{Implication}(\mathcal{H}_{\mathrm{design}}) \models \mathrm{Violation}(\nu_k) \}$$
+
+$$
+\mathcal{F}(\mathcal{H}_{\mathrm{design}}, \mathcal{K}_{\mathrm{norm}}) = \lbrace \nu_k \in \mathcal{K}_{\mathrm{norm}} \mid \mathrm{Implication}(\mathcal{H}_{\mathrm{design}}) \models \mathrm{Violation}(\nu_k) \rbrace
+$$
 
 Якщо такий атом знайдено:
-$$\mathrm{Verdict} = \mathbf{FALSIFIED} \quad \bigl( \mathrm{Refusal}(\rho), \quad \mathrm{EBX} = \mathrm{SHA256}(\mathrm{Quote}), \quad \mathrm{Clause} = \text{ISO 26262-5:2018 Clause 8.4.3} \bigr)$$
+
+$$
+\mathrm{Verdict} = \mathbf{FALSIFIED} \quad \bigl( \mathrm{Refusal}(\rho), \quad \mathrm{EBX} = \mathrm{SHA256}(\mathrm{Quote}), \quad \mathrm{Clause} = \text{ISO 26262-5:2018 Clause 8.4.3} \bigr)
+$$
 
 Система не просто каже «код невірний». Вона видає фальсифікуючий нормативний факт:
 > *«Гіпотезу спростовано: Згідно з ISO 26262-5:2018 Clause 8.4.3 (цитата: "Single-point fault metric for ASIL-D shall achieve at least 99%"), одноканальний АЦП з тестовим покриттям 90% не задовольняє метрику SPFM. Необхідно додати апаратне дублювання або діагностичний компаратор».*
@@ -131,7 +144,11 @@ $$\mathrm{Verdict} = \mathbf{FALSIFIED} \quad \bigl( \mathrm{Refusal}(\rho), \qu
 Процес TARA складається з кількох канонічних кроків, кожен з яких тепер підтримується експертною системою:
 1. **Asset Identification (Визначення активів):** Експерт сканує опис архітектури (DBC-файли CAN, ARXML-файли AUTOSAR, IDL-специфікації) та автоматично видобуває всі активи (наприклад: *«Ключ шифрування сесії діагностики»*, *«Сигнал кута повороту керма SteerAngle»*).
 2. **Threat Scenario Identification (Сценарії загроз):** Зв'язуючи активи з онтологією STRIDE / MITRE ATT&CK for ICS у ZKP4, експертна система синтезує повний перелік загроз:
-   $$\mathrm{Threat} = \langle \mathrm{Asset}, \ \mathrm{Property}, \ \mathrm{Damage} \rangle$$
+
+   $$
+   \mathrm{Threat} = \langle \mathrm{Asset}, \ \mathrm{Property}, \ \mathrm{Damage} \rangle
+   $$
+
    де $\mathrm{Asset} = \text{SteerAngle}$, $\mathrm{Property} = \text{Integrity}$, а $\mathrm{Damage}$ — несанкціоноване подрулювання на швидкості.
 3. **Attack Path Analysis & Feasibility (Дерева атак):** Система розгортає граф зв'язків бортової мережі та розраховує вектор складності атаки за методикою Attack Potential (Elapsed Time, Specialist Expertise, Knowledge of Item, Window of Opportunity, Equipment).
 4. **Формування фінальної таблиці TARA:** Замість тижнів роботи інженер отримує повністю згенеровану матрицю зі зведеними балами ризику (Risk Values 1..5) та вимогами до контрзаходів кібербезпеки (*Cybersecurity Goals*).
@@ -141,9 +158,16 @@ $$\mathrm{Verdict} = \mathbf{FALSIFIED} \quad \bigl( \mathrm{Refusal}(\rho), \qu
 - Інтенсивність відмов компонентів ($\lambda$, FIT);
 - Класифікація відмов: безпечні ($\lambda_s$), небезпечні одноточкові ($\lambda_{\mathrm{spf}}$), залишкові ($\lambda_{\mathrm{rf}}$), латентні ($\lambda_{\mathrm{mpf,lat}}$);
 - Метрика одноточкових відмов (для ASIL-D норма вимагає $\ge 99\%$):
-  $$\mathrm{SPFM} = \frac{\sum (\lambda_s + \lambda_{\mathrm{spf}})}{\sum \lambda} \ge 0{,}99$$
+
+  $$
+  \mathrm{SPFM} = \frac{\sum (\lambda_s + \lambda_{\mathrm{spf}})}{\sum \lambda} \ge 0{,}99
+  $$
+
 - Метрика латентних відмов (для ASIL-D норма вимагає $\ge 90\%$):
-  $$\mathrm{LFM} = \frac{\sum (\lambda_s + \lambda_{\mathrm{mpf,det}})}{\sum (\lambda - \lambda_{\mathrm{spf}})} \ge 0{,}90$$
+
+  $$
+  \mathrm{LFM} = \frac{\sum (\lambda_s + \lambda_{\mathrm{mpf,det}})}{\sum (\lambda - \lambda_{\mathrm{spf}})} \ge 0{,}90
+  $$
 
 Експертна система Znavets v4:
 - Зберігає норми розрахунку у вигляді деонтичних та математичних правил;
@@ -197,7 +221,11 @@ flowchart LR
    - Миттєво перевіряє: чи не порушує сам тест обов'язкових умов стандарту? Який пункт стандарту він покриває?
    - Якщо тест валідний — система автоматично реєструє його в матриці V&V і прив'язує до вимоги простежуваності ASPICE SWE.4.
 3. **Розрахунок повноти тестової програми:**
-   $$\mathrm{TraceabilityCoverage} = \frac{|\mathcal{R}_{\mathrm{requirements}} \cap \mathcal{T}_{\mathrm{verified}}|}{|\mathcal{R}_{\mathrm{requirements}}|} = 1{,}00$$
+
+   $$
+   \mathrm{TraceabilityCoverage} = \frac{|\mathcal{R}_{\mathrm{requirements}} \cap \mathcal{T}_{\mathrm{verified}}|}{|\mathcal{R}_{\mathrm{requirements}}|} = 1{,}00
+   $$
+
    (що відповідає 100% покриття трасованості вимог).
 
 ---
