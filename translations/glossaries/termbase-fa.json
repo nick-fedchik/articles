@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "fa",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "سامانه خبره (expert system)",
+    "доказова експертна система": "سامانه خبره مبتنی بر شواهد (evidence-governed expert system)",
+    "база знань": "پایگاه دانش (knowledge base)",
+    "рушій виведення": "موتور استنتاج (inference engine)",
+    "шлюз допуску": "دروازه پذیرش و اعتبارسنجی (admission gateway)",
+    "периметр безпеки": "حریم ایمنی (safety perimeter)",
+    "цикл керування": "حلقه کنترل (control loop)",
+    "виконавчий механізм": "عملگر / محرک (actuator)",
+    "тракт сприйняття": "خط لوله ادراک (perception pipeline)",
+    "виконавчий тракт": "خط لوله عملگری (actuation pipeline)",
+    "вакуумна істинність": "صدق تهی (vacuous truth)",
+    "дефітер": "باطل‌کننده / شکست‌دهنده (defeater)",
+    "спростовні міркування": "استدلال ابطال‌پذیر (defeasible reasoning)",
+    "незмінний пакет знань": "بسته دانش تغییرناپذیر (immutable knowledge pack)",
+    "інженерний граф знань": "گراف دانش مهندسی (EKG)",
+    "апаратний шлюз безпеки": "قفل ایمنی سخت‌افزاری (hardware safety interlock)",
+    "діалог Сократа": "گفت‌وگوی شفاف‌سازی سقراطی (Socratic dialogue)",
+    "кустодія доказів": "زنجیره حفاظت از شواهد / منشأ (provenance)",
+    "побайтова цитата": "نقل‌قول دقیق در سطح بایت (byte-level citation)",
+    "сторожовий таймер": "تایمر نگهبان (watchdog timer)",
+    "функціональна безпека": "ایمنی عملکردی (ISO 26262 / DO-178C)",
+    "перехоплення керування": "توقف اضطراری fail-closed (fail-closed override)"
+  }
+}

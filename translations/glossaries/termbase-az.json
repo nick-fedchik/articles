@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "az",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "ekspert sistemi (expert system)",
+    "доказова експертна система": "sübut əsaslı ekspert sistemi (evidence-governed expert system)",
+    "база знань": "bilik bazası (knowledge base)",
+    "рушій виведення": "mühakimə mühərriki (inference engine)",
+    "шлюз допуску": "qəbul / yoxlama qapısı (admission gateway)",
+    "периметр безпеки": "təhlükəsizlik perimetri (safety perimeter)",
+    "цикл керування": "idarəetmə dövrəsi (control loop)",
+    "виконавчий механізм": "icra mexanizmi / aktuator (actuator)",
+    "тракт сприйняття": "qavrama xətti (perception pipeline)",
+    "виконавчий тракт": "fəaliyyət xətti (actuation pipeline)",
+    "вакуумна істинність": "boş həqiqət (vacuous truth)",
+    "дефітер": "təkzibedici amil / defeater (defeater)",
+    "спростовні міркування": "təkzib edilə bilən mühakimə (defeasible reasoning)",
+    "незмінний пакет знань": "dəyişməz bilik paketi (immutable knowledge pack)",
+    "інженерний граф знань": "mühəndislik bilik qrafı (EKG)",
+    "апаратний шлюз безпеки": "aparat təhlükəsizlik kilidi (hardware safety interlock)",
+    "діалог Сократа": "Sokrat dəqiqləşdirmə dialoqu (Socratic dialogue)",
+    "кустодія доказів": "sübutların mühafizə zənciri / mənşəyi (provenance)",
+    "побайтова цитата": "bayt səviyyəsində dəqiq sitat (byte-level citation)",
+    "сторожовий таймер": "nəzarət taymeri (watchdog timer)",
+    "функціональна безпека": "funksional təhlükəsizlik (ISO 26262 / DO-178C)",
+    "перехоплення керування": "qəza zamanı təhlükəsiz dayandırma (fail-closed override)"
+  }
+}

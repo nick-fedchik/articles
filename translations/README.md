@@ -69,6 +69,12 @@
 | **hi** | **हिन्दी** | **Verified** | Індійський технологічний субрегіон, космічні програми (ISRO), Software R&D |
 | **vi** | **Tiếng Việt** | **Verified** | Південно-Східна Азія: Високотехнологічне виробництво та електроніка |
 | **id** | **Bahasa Indonesia** | **Verified** | Цифрова економіка АСЕАН, розумна інфраструктура |
+| **kk** | **Қазақша** | **Verified** | Центральна Азія: GovTech, цифровізація, суверенні AI-моделі (KazLLM) |
+| **az** | **Azərbaycan** | **Verified** | Південний Кавказ: Енергетичний хаб, MilTech та аерокосмічні системи |
+| **uz** | **Oʻzbekcha** | **Verified** | Найбільший молодий ринок Центральної Азії, IT Park Uzbekistan |
+| **ms** | **Bahasa Melayu** | **Verified** | АСЕАН: Глобальний хаб напівпровідникового тестування та упаковки чипів |
+| **th** | **ไทย** | **Verified** | Східна Азія: Автомобільна електроніка, накопичувачі даних та робототехніка |
+| **fa** | **فارسی** | **Verified** | Близький Схід: Алгоритмічна та математична школа, апаратне моделювання |
 
 ---
 
@@ -114,6 +120,12 @@
 - `termbase-hi.json` (Hindi)
 - `termbase-vi.json` (Vietnamese)
 - `termbase-id.json` (Indonesian)
+- `termbase-kk.json` (Kazakh)
+- `termbase-az.json` (Azerbaijani)
+- `termbase-uz.json` (Uzbek)
+- `termbase-ms.json` (Malay)
+- `termbase-th.json` (Thai)
+- `termbase-fa.json` (Persian)
 
 ---
 
