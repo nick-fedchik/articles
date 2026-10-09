@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "fr",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "système expert (expert system)",
+    "доказова експертна система": "système expert fondé sur des preuves (evidence-governed expert system)",
+    "база знань": "base de connaissances (knowledge base)",
+    "рушій виведення": "moteur d'inférence (inference engine)",
+    "шлюз допуску": "passerelle d'admission / de contrôle (admission gateway)",
+    "периметр безпеки": "périmètre de sécurité (safety perimeter)",
+    "цикл керування": "boucle de contrôle (control loop)",
+    "виконавчий механізм": "actionneur / mécanisme d'exécution (actuator)",
+    "тракт сприйняття": "pipeline de perception (perception pipeline)",
+    "виконавчий тракт": "pipeline d'actionnement (actuation pipeline)",
+    "вакуумна істинність": "vérité vacueuse (vacuous truth)",
+    "дефітер": "déflecteur / élément réfutant (defeater)",
+    "спростовні міркування": "raisonnement défaisable (defeasible reasoning)",
+    "незмінний пакет знань": "paquet de connaissances immuable (immutable knowledge pack)",
+    "інженерний граф знань": "graphe de connaissances d'ingénierie (EKG)",
+    "апаратний шлюз безпеки": "verrouillage de sécurité matériel (hardware safety interlock)",
+    "діалог Сократа": "dialogue socratique de clarification (Socratic dialogue)",
+    "кустодія доказів": "chaîne de traçabilité des preuves (provenance)",
+    "побайтова цитата": "citation textuelle au niveau de l'octet (byte-level citation)",
+    "сторожовий таймер": "temporisateur de surveillance (watchdog timer)",
+    "функціональна безпека": "sécurité fonctionnelle (ISO 26262 / DO-178C)",
+    "перехоплення керування": "coupure de sécurité / repli sécurisé (fail-closed override)"
+  }
+}
