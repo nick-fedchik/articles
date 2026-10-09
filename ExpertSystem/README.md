@@ -121,7 +121,7 @@
 
 **Перевірка й безпека:** [23](ch23-knowledge-base-verification.md) → [36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) → [25](ch25-how-expert-systems-learn.md) → [26](ch26-continual-learning.md) → [27](ch27-safety-case-gsn-synthesis.md) → [30](ch30-safety-cybersecurity-co-engineering.md). Діагностика зовнішнього об'єкта має окремий вхід через [главу 24](ch24-system-diagnosis.md).
 
-**Гібридні відповіді й експлуатація:** [Частина VI](part-06-frontiers-neuro-symbolic.md) → [Частина VII](part-07-runtime-and-knowledge-exchange.md) та потрібні додатки. Мета: інтегрувати мовну модель, керувати прогалинами, перевірити розгортання та міжсистемний обмін. Глави [2](ch02-epistemology-of-machine-knowledge.md), [4](ch04-evolution-from-bayes-to-evidence-ai.md) і [6](ch06-applied-mathematics-for-expert-systems.md) можна читати за питанням як контракт, історію й математичний довідник.
+**Гібридні відповіді й експлуатація:** [Частина VI](part-06-frontiers-neuro-symbolic.md) → [Частина VII](part-07-runtime-and-knowledge-exchange.md) → [40](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) та потрібні додатки. Мета: інтегрувати мовну модель, керувати прогалинами, побудувати референсну розподілену архітектуру сервісів знань і перевірити міжсистемний обмін. Глави [2](ch02-epistemology-of-machine-knowledge.md), [4](ch04-evolution-from-bayes-to-evidence-ai.md) і [6](ch06-applied-mathematics-for-expert-systems.md) можна читати за питанням як контракт, історію й математичний довідник.
 
 ---
 
@@ -137,7 +137,7 @@
 
 ## Структура книги
 
-Книга складається із семи тематичних частин, 38 глав і п'яти додатків. Кожна глава має одну основну частину. Попередня й наступна глава в навігації відповідають тематичному порядку нижче; номери глав і назви файлів збережено.
+Книга складається із семи тематичних частин, 40 глав і п'яти додатків. Кожна глава має одну основну частину. Попередня й наступна глава в навігації відповідають тематичному порядку нижче; номери глав і назви файлів збережено.
 
 ```mermaid
 flowchart TD
@@ -253,6 +253,7 @@ flowchart TD
 * [Глава 22. Кібернетичний цикл керування: сенсори, периферія та зворотний зв'язок](ch22-cybernetics-edge-to-backend.md)
 * [Глава 35. Реактивна експертна система: події, відкликання й адаптація знань](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](ch33-inter-system-knowledge-exchange-and-model-teaching.md)
+* [Глава 40. Розподілена архітектура доказової експертної системи: епістемічна SOA, семантична маршрутизація, ієрархія пам'яті та багатоджерельний дефезитивний арбітраж](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)
 
 ---
 

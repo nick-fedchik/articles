@@ -2,7 +2,7 @@
 
 > **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VII: Реалізація, розгортання та обмін знаннями](part-07-runtime-and-knowledge-exchange.md)  
 > **Попередня глава:** [Глава 35. Реактивна експертна система: події, відкликання й адаптація знань](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
-> **Наступна глава:** [Додаток А](appendix-a-evidence-governed-framework.md)  
+> **Наступна глава:** [Глава 40. Розподілена архітектура доказової експертної системи: епістемічна SOA, семантична маршрутизація, ієрархія пам'яті та багатоджерельний дефезитивний арбітраж](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні архітектори, інженери знань, розробники розподілених систем і вбудованих обчислювачів: просунутий  
@@ -868,4 +868,4 @@ func TestFeedbackCollectorThreshold(t *testing.T) {
 
 ---
 
-[← Глава 35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md) | [Зміст книги](README.md) | [Частина VII](part-07-runtime-and-knowledge-exchange.md) | [До додатків →](appendix-a-evidence-governed-framework.md)
+[← Глава 35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md) | [Зміст книги](README.md) | [Частина VII](part-07-runtime-and-knowledge-exchange.md) | [Глава 40 →](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)
