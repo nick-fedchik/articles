@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this monograph or referenced software in your research or engineering designs, please cite it as below."
+title: "Architecture of Evidence-Governed Expert Systems: From Formal Ontologies to Neuro-Symbolic AI"
+authors:
+  - family-names: Fedchyk
+    given-names: Mykola
+    website: "https://www.linkedin.com/in/nickfedchik/"
+date-released: 2026-10-09
+version: 1.0.0
+repository-code: "https://github.com/nick-fedchik/articles"
+url: "https://github.com/nick-fedchik/articles"
+keywords:
+  - "expert-systems"
+  - "neuro-symbolic-ai"
+  - "functional-safety"
+  - "iso-26262"
+  - "do-178c"
+  - "formal-verification"
+  - "evidence-grounded"
+  - "knowledge-graphs"
+  - "cyber-physical-systems"
+abstract: >-
+  A monograph and engineering handbook on the design, mathematical foundations, architecture,
+  and verification of high-integrity intelligent systems (Safety-Critical & Evidence-Grounded AI).
+  Introduces the Evidence-Grounded Invariant (EGI), Four-Level Knowledge Testing Pyramid (KTP),
+  byte-level admission gateways, synergetic complexity reduction, and formal co-engineering of
+  functional safety and cybersecurity (ISO 26262 ASIL D / DO-178C DAL A).

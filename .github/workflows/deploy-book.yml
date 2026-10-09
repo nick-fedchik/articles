@@ -1,0 +1,144 @@
+name: Deploy Multilingual Book to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Inspect Quality Gate Buzzwords
+        run: |
+          python3 scripts/inspect_buzzwords.py
+
+      - name: Verify English Master Translation Invariants
+        run: |
+          python3 scripts/verify_translation.py ExpertSystem/README.md translations/en/ExpertSystem/README.md
+          python3 scripts/verify_translation.py ExpertSystem/ch29-neuro-symbolic-architecture.md translations/en/ExpertSystem/ch29-neuro-symbolic-architecture.md
+
+      - name: Set up Go and Run Embedded Code Tests
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Test Go Implementation in Chapter 29
+        run: |
+          mkdir -p /tmp/ch29test
+          python3 -c '
+          import re
+          txt = open("translations/en/ExpertSystem/ch29-neuro-symbolic-architecture.md").read()
+          blocks = re.findall(r"```go\n(.*?)\n```", txt, re.DOTALL)
+          with open("/tmp/ch29test/main.go", "w") as f:
+              f.write(blocks[0])
+          with open("/tmp/ch29test/main_test.go", "w") as f:
+              f.write(blocks[1])
+          '
+          cd /tmp/ch29test
+          go mod init ch29gate
+          go test -v .
+
+  build-and-deploy:
+    needs: quality-gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Build Web Artifacts
+        run: |
+          mkdir -p _site
+          # Create root landing index with language switcher
+          cat << 'EOF' > _site/index.html
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Architecture of Evidence-Governed Expert Systems — Mykola Fedchyk</title>
+            <style>
+              body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #1a1a1a; background: #fafafa; }
+              h1 { color: #0d47a1; border-bottom: 2px solid #e0e0e0; padding-bottom: 12px; }
+              .card { background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+              .badge { display: inline-block; background: #e3f2fd; color: #1565c0; padding: 4px 10px; border-radius: 4px; font-size: 0.85em; font-weight: 600; margin-right: 8px; }
+              ul { list-style: none; padding-left: 0; }
+              li { margin: 12px 0; }
+              a { color: #1565c0; text-decoration: none; font-weight: 500; font-size: 1.1em; }
+              a:hover { text-decoration: underline; }
+              .desc { color: #616161; font-size: 0.95em; }
+              footer { margin-top: 40px; font-size: 0.9em; color: #757575; border-top: 1px solid #e0e0e0; padding-top: 16px; }
+            </style>
+          </head>
+          <body>
+            <h1>Architecture of Evidence-Governed Expert Systems</h1>
+            <p><strong>From Formal Ontologies to Neuro-Symbolic AI</strong> — Engineering Monograph by <a href="https://www.linkedin.com/in/nickfedchik/" target="_blank">Mykola Fedchyk</a> (2026)</p>
+            
+            <div class="card">
+              <h2>Select Edition / Оберіть видання</h2>
+              <ul>
+                <li>
+                  <span class="badge">Master (Original)</span>
+                  <a href="https://github.com/nick-fedchik/articles/tree/main/ExpertSystem">🇺🇦 Українська версія (Master Edition)</a>
+                  <div class="desc">Повний оригінал: 7 частин, 40 глав, 5 додатків. Моделі доказовості, піраміда тестування знань, функціональна безпека.</div>
+                </li>
+                <li>
+                  <span class="badge">Global Reference</span>
+                  <a href="https://github.com/nick-fedchik/articles/tree/main/translations/en/ExpertSystem">🇬🇧 English Edition (Global Reference)</a>
+                  <div class="desc">Standardized for IEEE, ACM, NATO, and Silicon Valley engineering ecosystems.</div>
+                </li>
+                <li>
+                  <span class="badge">DACH Hub</span>
+                  <a href="https://github.com/nick-fedchik/articles/tree/main/translations/de/ExpertSystem">🇩🇪 Deutsche Ausgabe (In Progress)</a>
+                  <div class="desc">ISO 26262 ASIL D, AUTOSAR, ASPICE, Siemens, Bosch, Infineon.</div>
+                </li>
+                <li>
+                  <span class="badge">Eastern Flank</span>
+                  <a href="https://github.com/nick-fedchik/articles/tree/main/translations/pl/ExpertSystem">🇵🇱 Wydanie Polskie (In Progress)</a>
+                  <div class="desc">Sektor obronny (PGZ, WB Group), automatyka i systemy wbudowane.</div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>Scientific & Engineering Credentials</h3>
+              <p>Registered for automated DOI indexing under CERN / Zenodo. Formally verifiable against ISO 26262 ASIL D and DO-178C DAL A.</p>
+              <p><a href="https://github.com/nick-fedchik/articles" target="_blank">View GitHub Repository & Source Code →</a></p>
+            </div>
+
+            <footer>
+              © 2026 Mykola Fedchyk. Licensed under CC-BY-4.0. Published with GitHub Actions.
+            </footer>
+          </body>
+          </html>
+          EOF
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

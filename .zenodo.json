@@ -1,0 +1,28 @@
+{
+  "title": "Architecture of Evidence-Governed Expert Systems: From Formal Ontologies to Neuro-Symbolic AI",
+  "description": "Monograph and comprehensive engineering guide on the design, mathematical foundations, architecture, and verification of high-integrity intelligent systems (Safety-Critical & Evidence-Grounded AI) across ISO 26262 ASIL D, DO-178C DAL A, IEC 61508, and ISO/SAE 21434.",
+  "creators": [
+    {
+      "name": "Fedchyk, Mykola",
+      "affiliation": "Systems Engineering & Mission-Critical Architecture"
+    }
+  ],
+  "access_right": "open",
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "expert systems",
+    "neuro-symbolic AI",
+    "functional safety",
+    "ISO 26262",
+    "DO-178C",
+    "formal verification",
+    "evidence-grounded AI",
+    "knowledge engineering",
+    "ASPIC+",
+    "Datalog",
+    "synergetics"
+  ],
+  "upload_type": "publication",
+  "publication_type": "book",
+  "language": "eng"
+}
