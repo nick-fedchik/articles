@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "pl",
+  "domain": "Systemy eksperckie oparte na dowodach, bezpieczeństwo funkcjonalne",
+  "terms": {
+    "експертна система": "system ekspercki",
+    "доказова експертна система": "system ekspercki oparty na dowodach",
+    "база знань": "baza wiedzy",
+    "рушій виведення": "silnik wnioskowania",
+    "шлюз допуску": "bramka dopuszczenia faktów",
+    "периметр безпеки": "obwód bezpieczeństwa",
+    "цикл керування": "pętla sterowania",
+    "виконавчий механізм": "mechanizm wykonawczy",
+    "тракт сприйняття": "tor percepcji",
+    "виконавчий тракт": "tor wykonawczy",
+    "вакуумна істинність": "prawda próżna (vacuous truth)",
+    "дефітер": "okoliczność uchylająca (defeater)",
+    "спростовні міркування": "wnioskowanie domniemane (defeasible reasoning)",
+    "незмінний пакет знань": "niezmienny pakiet wiedzy (ZKP)",
+    "інженерний граф знань": "inżynieryjny graf wiedzy (EKG)",
+    "апаратний шлюз безпеки": "sprzętowa blokada bezpieczeństwa (Safety Shield)",
+    "діалог Сократа": "dialog sokratyczny",
+    "кустодія доказів": "ciągłość dowodowa (provenance)",
+    "побайтова цитата": "dokładny cytat bajtowy",
+    "сторожовий таймер": "zegar nadzorczy (watchdog)",
+    "функціональна безпека": "bezpieczeństwo funkcjonalne (ISO 26262 / DO-178C)"
+  }
+}

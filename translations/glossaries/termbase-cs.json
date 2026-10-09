@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "cs",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "expertní systém",
+    "доказова експертна система": "důkazně řízený expertní systém",
+    "база знань": "báze znalostí",
+    "рушій виведення": "inferenční stroj",
+    "шлюз допуску": "vstupní brána / schvalovací brána",
+    "периметр безпеки": "bezpečnostní perimetr",
+    "цикл керування": "řídicí smyčka",
+    "виконавчий механізм": "akční člen / prováděcí mechanismus",
+    "тракт сприйняття": "vjemový trakt",
+    "виконавчий тракт": "akční trakt",
+    "вакуумна істинність": "vakuová pravdivost",
+    "дефітер": "defeater (vyvracející okolnost)",
+    "спростовні міркування": "vyvratitelné usuzování (defeasible reasoning)",
+    "незмінний пакет знань": "neměnný znalostní balíček",
+    "інженерний граф знань": "inženýrský graf znalostí",
+    "апаратний шлюз безпеки": "hardwarový bezpečnostní štít",
+    "діалог Сократа": "sokratovský vyjasňující dialog",
+    "кустодія доказів": "správa důkazního řetězce (provenience)",
+    "побайтова цитата": "doslovná bajtová citace",
+    "сторожовий таймер": "hlídací časovač (watchdog)",
+    "функціональна безпека": "funkční bezpečnost (ISO 26262 / DO-178C)",
+    "перехоплення керування": "havarijní převzetí řízení (fail-closed)"
+  }
+}

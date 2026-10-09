@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "lv",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "ekspertsistēma",
+    "доказова експертна система": "pierādījumos balstīta ekspertsistēma",
+    "база знань": "zināšanu bāze",
+    "рушій виведення": "secināšanas dzinējs",
+    "шлюз допуску": "piekļuves vārteja",
+    "периметр безпеки": "drošības perimetrs",
+    "цикл керування": "vadības cikls",
+    "виконавчий механізм": "izpildmehānisms",
+    "тракт сприйняття": "uztveres trakts",
+    "виконавчий тракт": "izpildes trakts",
+    "вакуумна істинність": "vakuumu patiesums",
+    "дефітер": "atspēkotājs (defeater)",
+    "спростовні міркування": "atspēkojama spriešana (defeasible reasoning)",
+    "незмінний пакет знань": "nemaināma zināšanu pakotne",
+    "інженерний граф знань": "inženiertehniskais zināšanu grafs",
+    "апаратний шлюз безпеки": "aparatūras drošības vairogs",
+    "діалог Сократа": "sokrātisks precizējošs dialogs",
+    "кустодія доказів": "pierādījumu pārvaldības ķēde (izcelsme)",
+    "побайтова цитата": "baitu līmeņa citēšana",
+    "сторожовий таймер": "sargsuņa taimeris (watchdog)",
+    "функціональна безпека": "funkcionālā drošība (ISO 26262 / DO-178C)",
+    "перехоплення керування": "atteices droša pārņemšana (fail-closed)"
+  }
+}
