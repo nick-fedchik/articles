@@ -122,7 +122,7 @@ flowchart TD
     OUT_ACCEPT -->|"Пряма кремнієва лінія (0 тактів)"| ACTUATORS
     OUT_REFUSE -->|"Пряма кремнієва лінія (0 тактів)"| SAFE_STOP
     INTERLOCK_LOGIC ==>|Статус виконання та код відмови| BUS_CTRL
-    BUS_CTRL ==>|Аудиторський пакет доказів (Proof Bundle)| HOST_APP
+    BUS_CTRL ==>|"Аудиторський пакет доказів (Proof Bundle)"| HOST_APP
 ```
 
 #### Таблиця розмежування потоків команд і потоків даних в EPU
