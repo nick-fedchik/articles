@@ -108,7 +108,10 @@ flowchart TD
 ### 2.2. Збереження інваріанта $ZHR = 1.00$ на клієнті
 
 Критично важливо, що тонкий клієнт не має права інтерпретувати чи самостійно узагальнювати отриману відповідь. Він виконує суто репрезентативну функцію:
-$$\text{Display}(\text{Response}) = \text{Render}(\text{Verdict}, \text{EvidenceMap}, \text{Signature})$$
+
+$$
+\text{Display}(\text{Response}) = \text{Render}(\text{Verdict}, \text{EvidenceMap}, \text{Signature})
+$$
 
 де:
 - $\text{Verdict} \in \{\text{ACCEPT}, \text{REFUSAL}, \text{QUALIFIED}\}$ — формальний логічний статус виведення, сформований сервером;
@@ -240,7 +243,10 @@ flowchart TD
 ### 4.1. Концепція Активного робочого набору (Active Working Set — AWS)
 
 Замість переміщення всього корпусу знань, семантичний диспетчер формує **Активний робочий набір (AWS)**:
-$$\mathrm{AWS} = \mathrm{Closure}(\mathcal{R}_{\mathrm{target}}) = \mathcal{R}_{\mathrm{target}} \cup \mathrm{Prerequisites}(\mathcal{R}_{\mathrm{target}}) \cup \mathrm{Defeaters}(\mathcal{R}_{\mathrm{target}})$$
+
+$$
+\mathrm{AWS} = \mathrm{Closure}(\mathcal{R}_{\mathrm{target}}) = \mathcal{R}_{\mathrm{target}} \cup \mathrm{Prerequisites}(\mathcal{R}_{\mathrm{target}}) \cup \mathrm{Defeaters}(\mathcal{R}_{\mathrm{target}})
+$$
 
 де:
 - $\mathcal{R}_{\mathrm{target}}$ — множина цільових правил, активована онтологічною сигнатурою запиту;
@@ -257,15 +263,25 @@ AWS містить лише математичний скелет правил: 
 - $V_{\mathrm{bank}}$ — місткість одного банку швидкої пам'яті (наприклад, $256\,\text{КБ}$);
 - $B_{\mathrm{bus}}$ — пропускна здатність внутрішньої шини підкачування (наприклад, $1.2\,\text{ГБ/с}$);
 - $T_{\mathrm{refill}}$ — час заповнення банку даними з локального ОЗП:
-  $$T_{\mathrm{refill}} = \frac{V_{\mathrm{bank}}}{B_{\mathrm{bus}}}$$
+
+  $$
+  T_{\mathrm{refill}} = \frac{V_{\mathrm{bank}}}{B_{\mathrm{bus}}}
+  $$
+
 - $T_{\mathrm{execute}}$ — час, необхідний процесору правил для повного обчислення блоку знань місткістю $V_{\mathrm{bank}}$.
 
 **Теорема приховування затримок (Latency Hiding Invariant):**
 Конвеєр виведення функціонує з максимальним коефіцієнтом використання обчислювальних ресурсів ($\eta = 1.00$) без жодного такту простою процесора тоді й тільки тоді, коли час фонового наповнення не перевищує часу виконання правил:
-$$T_{\mathrm{refill}} \le T_{\mathrm{execute}}$$
+
+$$
+T_{\mathrm{refill}} \le T_{\mathrm{execute}}
+$$
 
 Оскільки для блоку у $256\,\text{КБ}$ час підкачування становить $T_{\mathrm{refill}} \approx 218\,\mu\text{с}$, а повноцінне систолічне зіставлення пакета складних інженерних вимог проти цих правил займає $T_{\mathrm{execute}} \approx 1.5\text{--}5.0\,\text{мс}$, умова приховування виконується із запасом у кілька разів:
-$$T_{\mathrm{refill}} \ll T_{\mathrm{execute}}$$
+
+$$
+T_{\mathrm{refill}} \ll T_{\mathrm{execute}}
+$$
 У момент, коли процесор завершує обчислення в Банку A, апаратний комутатор за **1 такт** перемикає його на вже заповнений Банк B, а каналу підкачування надається команда на заповнення Банку A. Система досягає теоретичної верхньої межі продуктивності.
 
 ### 4.3. Систолічний пакетний аудит (Batch Compliance Sweeps)
@@ -321,7 +337,11 @@ flowchart TD
 ```
 
 1. **Короборація свідчень (Corroboration):** Якщо кілька незалежних джерел дійшли одного висновку, впевненість інтегрованого аргументу математично зростає:
-   $$\mathrm{Conf}(A_1 \cup A_2) = 1 - (1 - \mathrm{Cred}(A_1)) \cdot (1 - \mathrm{Cred}(A_2))$$
+
+   $$
+   \mathrm{Conf}(A_1 \cup A_2) = 1 - (1 - \mathrm{Cred}(A_1)) \cdot (1 - \mathrm{Cred}(A_2))
+   $$
+
    де:
    - $\mathrm{Cred}(A_i) \in [0, 1)$ — дискретний рівень достовірності свідчення, наданого доменним сервісом $i$;
    - $\mathrm{Conf}(A_1 \cup A_2) \in [0, 1)$ — сукупна ймовірнісна довіра до скороборованого висновку (незалежні підтвердження підсилюють доказову базу за теоремою про об'єднання незалежних подій).
