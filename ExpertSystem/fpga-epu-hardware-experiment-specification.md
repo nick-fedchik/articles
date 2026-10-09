@@ -102,7 +102,7 @@ flowchart TD
             
             FLAGS_REG ==>|Вектор прапорців EFLAGS| INTERLOCK_LOGIC
             EXEC_FSM -.->|Строб завершення OP_HALT| INTERLOCK_LOGIC
-            INTERLOCK_LOGIC -->|Доказ повний (ZHR = 1.00)| OUT_ACCEPT
+            INTERLOCK_LOGIC -->|"Доказ повний (ZHR = 1.00)"| OUT_ACCEPT
             INTERLOCK_LOGIC -->|Виявлено дефітер / підробку| OUT_REFUSE
         end
     end
