@@ -46,7 +46,9 @@ flowchart LR
 
 Традиційна реактивна архітектура (Event-Driven Architecture) здатна сприймати зовнішні сигнали через обробники подій:
 
-$$\text{Event} \longrightarrow \text{Action}$$
+```math
+\text{Event} \longrightarrow \text{Action}
+```
 
 Проте жорстка зв'язка «подія $\to$ дія» є лише рефлекторною автоматизацією першого роду. Вона не здатна адаптувати власну внутрішню модель світу при зіткненні з непередбаченими комбінаціями факторів.
 
@@ -62,7 +64,9 @@ $$\text{Event} \longrightarrow \text{Action}$$
 
 Для подолання статичної замкненості експертної системи обчислювальна архітектура трансформується у подійно-орієнтований конвеєр, де зовнішні спостереження та внутрішні зміни трактуються як неперервні епістемічні імпульси. У такому реактивному рантаймі будь-яка зміна зовнішнього або внутрішнього світу представляється як типізована **подія (Event)**, що транслюється крізь неблокуючу шину повідомлень:
 
-$$E = \langle \text{id}, \text{topic}, \text{source}, \text{timestamp}, \text{priority}, \text{payload}, \sigma_{\text{digest}} \rangle$$
+```math
+E = \langle \text{id}, \text{topic}, \text{source}, \text{timestamp}, \text{priority}, \text{payload}, \sigma_{\text{digest}} \rangle
+```
 
 ```mermaid
 flowchart TD
@@ -87,7 +91,9 @@ flowchart TD
 
 Для збереження непорушного інваріанта побайтової доказовості (Evidence-Grounded Invariant) система розділяє знання на два строго ізольовані шари:
 
-$$\mathcal{KB}_{\text{runtime}} = \mathcal{KB}_{L0} \oplus \Delta\mathcal{KB}_{L1}$$
+```math
+\mathcal{KB}_{\text{runtime}} = \mathcal{KB}_{L0} \oplus \Delta\mathcal{KB}_{L1}
+```
 
 | Шар пам'яті | Носій та формат | Змінність | Зміст знань | Затримка доступу |
 |---|---|---|---|---|
@@ -109,7 +115,9 @@ $$\mathcal{KB}_{\text{runtime}} = \mathcal{KB}_{L0} \oplus \Delta\mathcal{KB}_{L
 
 У пасивній системі такий потік неминуче спричиняє **ентропійний колапс (знаннєве отруєння)**: накопичення застарілих фактів, циклічні суперечності, деградацію швидкодії та розрив логічного виведення. Щоб база знань зберігала високу впорядкованість та субмікросекундну швидкодію, вона повинна функціонувати як **дисипативна структура**, експортуючи ентропію назовні:
 
-$$\frac{dS_{\text{sys}}}{dt} = \frac{dS_{\text{int}}}{dt} + \frac{dS_{\text{ext}}}{dt}, \qquad \frac{dS_{\text{int}}}{dt} \ge 0, \qquad \frac{dS_{\text{sys}}}{dt} \le 0 \iff \frac{dS_{\text{ext}}}{dt} \le -\frac{dS_{\text{int}}}{dt}$$
+```math
+\frac{dS_{\text{sys}}}{dt} = \frac{dS_{\text{int}}}{dt} + \frac{dS_{\text{ext}}}{dt}, \qquad \frac{dS_{\text{int}}}{dt} \ge 0, \qquad \frac{dS_{\text{sys}}}{dt} \le 0 \iff \frac{dS_{\text{ext}}}{dt} \le -\frac{dS_{\text{int}}}{dt}
+```
 
 Тут $S_{\text{sys}}$ є ентропією самої системи, $dS_{\text{int}}/dt \ge 0$ є внутрішнім виробництвом ентропії в необоротних процесах (за другим законом термодинаміки воно не буває від'ємним), а $dS_{\text{ext}}/dt$ є обміном із середовищем. Впорядкованість зберігається, коли експорт ентропії ($dS_{\text{ext}}/dt < 0$) за модулем не менший за її внутрішнє виробництво. Для бази знань це аналогія: «ентропією» названо міру безладу фактів (суперечності, застарілі записи), а не термодинамічну величину.
 
@@ -123,10 +131,15 @@ $$\frac{dS_{\text{sys}}}{dt} = \frac{dS_{\text{int}}}{dt} + \frac{dS_{\text{ext}
 
 Згідно з **принципом підпорядкування Германа Хакена (Slaving Principle)**, поведінка складних багатовимірних систем визначається не окремими мікроскопічними змінними, а кількома повільними колективними змінними: **параметрами порядку (Order Parameters)** $\boldsymbol{\xi}_{\text{order}}$:
 
-$$\mathbf{q}_{\text{fast}}(t) = \mathbf{f}\bigl(\boldsymbol{\xi}_{\text{order}}(t), \text{noise}\bigr)$$
+```math
+\mathbf{q}_{\text{fast}}(t) = \mathbf{f}\bigl(\boldsymbol{\xi}_{\text{order}}(t), \text{noise}\bigr)
+```
 
 У самоорганізованій експертній системі параметрами порядку виступають інтегральні семантичні макростани онтології:
-$$\boldsymbol{\xi}_{\text{order}} \in \{\text{NominalFlight}, \text{HydraulicDegradation}, \text{SevereIcingRisk}, \text{AirspaceRestricted}\}$$
+
+```math
+\boldsymbol{\xi}_{\text{order}} \in \{\text{NominalFlight}, \text{HydraulicDegradation}, \text{SevereIcingRisk}, \text{AirspaceRestricted}\}
+```
 
 Швидкі сенсорні змінні агрегуються периферійними процесорами (DSP/NPU) і «підпорядковуються» поточному параметру порядку. Коли сенсорний потік демонструє колективну когерентну зміну, виникає **фазовий перехід онтології**: параметр порядку змінює своє значення, що миттєво перебудовує конфігурацію всього простору активних правил без необхідності поодинокої диспетчеризації мільйонів сирих відліків.
 
@@ -175,7 +188,9 @@ flowchart TD
 
 У класичній системі збереження істинності Дойла (Justification-Based Truth Maintenance System, JTMS) кожне твердження спирається на множину підстав:
 
-$$\text{Node} = \langle \text{Datum}, \text{IN-List}, \text{OUT-List} \rangle$$
+```math
+\text{Node} = \langle \text{Datum}, \text{IN-List}, \text{OUT-List} \rangle
+```
 
 де $\text{IN-List}$ містить факти, які мають бути істинними, а $\text{OUT-List}$ містить заперечувальні обставини, які мають бути хибними (відсутніми) для визнання висновку валідним.
 
@@ -193,7 +208,9 @@ flowchart TD
 
 Коли сенсорна подія сигналізує про фізичну аномалію (наприклад, розбіжність показників дубльованих датчиків понад $3\sigma$), реактивний рушій генерує **активний дефітер (Active Defeater)**:  
 
-$$\text{Fault}(\text{Sensor}_A) \implies \text{ActivateDefeater}(\text{SensorReading}_A)$$  
+```math
+\text{Fault}(\text{Sensor}_A) \implies \text{ActivateDefeater}(\text{SensorReading}_A)
+```  
 
 Це миттєво підриває кореневий засновок (*Undercutting Defeater*). Усі похідні висновки графа залежностей автоматично втрачають силу, переводячи систему в режим безпечної зупинки або підключення резервного сенсорного каналу.
 

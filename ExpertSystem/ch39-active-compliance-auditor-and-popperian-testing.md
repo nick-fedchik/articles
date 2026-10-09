@@ -143,15 +143,15 @@ flowchart TD
 
 Формально гіпотеза записується як предикат над простором станів системи $\mathcal{S}$:
 
-$$
+```math
 \mathcal{H} \equiv \forall s \in \mathcal{S}, \quad \mathrm{StateValid}(s) \implies \mathrm{SafetyGoalSatisfied}(s)
-$$
+```
 
 Нормативна база знань $\mathcal{K}$ складається з двійкових деонтичних атомів стандарту:
 
-$$
+```math
 \mathcal{K} = \lbrace \nu_1, \nu_2, \dots, \nu_m \rbrace, \quad \nu_i = \langle \mathrm{Domain}, \mathrm{Clause}, \mathrm{Entity}, \mathrm{Modality}, \mathrm{Action}, \mathrm{Evidence} \rangle
-$$
+```
 
 де допустимі значення деонтичної модальності: `MUST`, `MUST_NOT`, `SHOULD`, `MAY`.
 
