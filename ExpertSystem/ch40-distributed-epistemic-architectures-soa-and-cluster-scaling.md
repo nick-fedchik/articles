@@ -134,15 +134,15 @@ flowchart TD
     accTitle: Конвеєр синтаксично-лексичного розбору дискурсу в Семантичному Брокері
     accDescr: Поетапна трансформація природномовного запиту інженера у структуровану онтологічну сигнатуру для маршрутизації доменних правил.
 
-    IN["<b>Вхідний інженерний запит:</b><br><i>«Чи дозволено використовувати динамічне виділення пам'яті для модуля ASIL-D згідно з ISO 26262-6?»</i>"]
+    IN["&emsp;&emsp;&emsp;&emsp; <b>ВХІДНИЙ ІНЖЕНЕРНИЙ ЗАПИТ НА АУДИТ ВІДПОВІДНОСТІ (Natural Language Query)</b> &emsp;&emsp;&emsp;&emsp;<br><i>«Чи дозволено використовувати динамічне виділення пам'яті для модуля ASIL-D згідно з ISO 26262-6?»</i><br><i>Джерело надходження: робоча станція інженера / конвеєр неперервної інтеграції (CI/CD Quality Gate)</i>"]
 
-    STEP1["<b>1. КЛАСИФІКАЦІЯ ДИСКУРСУ (Discourse Qualification)</b><br>• Прагматичний тип: <code>NORMATIVE_COMPLIANCE_QUERY</code><br>• Цільова модальність: <code>DEONTIC_PROHIBITION_OR_PERMISSION</code><br><i>Визначення наміру інженера та очікуваного типу вердикту</i>"]
+    STEP1["&emsp;&emsp;&emsp;&emsp; <b>1. КЛАСИФІКАЦІЯ ДИСКУРСУ (Discourse Qualification)</b> &emsp;&emsp;&emsp;&emsp;<br>• Прагматичний тип: <code>NORMATIVE_COMPLIANCE_QUERY</code> &emsp;·&emsp; • Цільова модальність: <code>DEONTIC_PROHIBITION_OR_PERMISSION</code><br><i>Семантичний намір: формальна верифікація допустимості архітектурного рішення проти сертифікаційного стандарту</i>"]
 
-    STEP2["<b>2. СИНТАКСИЧНО-ФРЕЙМОВИЙ РОЗБІР (Syntactic Frame Parsing)</b><br>• Актор: <i>«модуль програмного забезпечення»</i><br>• Дія: <i>«динамічне виділення пам'яті» (Dynamic Memory Allocation)</i><br>• Обмеження / Атрибут: <code>ASIL_Level = 'D'</code><br><i>Вилучення предикатно-аргументної структури інженерного твердження</i>"]
+    STEP2["&emsp;&emsp;&emsp;&emsp; <b>2. СИНТАКСИЧНО-ФРЕЙМОВИЙ РОЗБІР (Syntactic Frame Parsing)</b> &emsp;&emsp;&emsp;&emsp;<br>• Актор: <i>«модуль програмного забезпечення»</i> &emsp;·&emsp; • Дія: <i>«динамічне виділення пам'яті» (Dynamic Allocation)</i> &emsp;·&emsp; • Атрибут: <code>ASIL_Level = 'D'</code><br><i>Вилучення предикатно-аргументної структури вимоги для детермінованого зіставлення з онтологічними аксіомами</i>"]
 
-    STEP3["<b>3. ЕКСТРАКЦІЯ ОНТОЛОГІЧНОЇ СИГНАТУРИ (Domain Signature)</b><br>• Доменні маркери: <code>{ISO-26262, ASIL-D, Software-Architecture, Memory-Management}</code><br>• Профіль запиту: <code>TargetDomain = 'Automotive-Safety', Standard = 'ISO-26262-6:2018'</code><br><i>Формування вектора сигнатури для реєстру доменних сервісів</i>"]
+    STEP3["&emsp;&emsp;&emsp;&emsp; <b>3. ЕКСТРАКЦІЯ ОНТОЛОГІЧНОЇ СИГНАТУРИ (Domain Signature Extraction)</b> &emsp;&emsp;&emsp;&emsp;<br>• Доменні маркери: <code>{ISO-26262, ASIL-D, Software-Architecture, Memory-Management}</code><br>• Профіль запиту: <code>TargetDomain = 'Automotive-Safety'</code> &emsp;·&emsp; • Норматив: <code>Standard = 'ISO-26262-6:2018'</code><br><i>Формування сигнатурного вектора запиту для обчислення коефіцієнтів спорідненості в динамічному реєстрі сервісів</i>"]
 
-    OUT["<b>Маршрутизація до цільового сервісу:</b><br>Доменний сервіс безпеки <code>ISO-26262:2018</code> з максимальним <code>Affinity(S, P) = 1.00</code>"]
+    OUT["&emsp;&emsp;&emsp;&emsp; <b>ПРИЗНАЧЕННЯ ГОЛОВНОГО ВИКОНАВЦЯ (Primary Evaluator Dispatching)</b> &emsp;&emsp;&emsp;&emsp;<br>Призначено сервіс: <b>Доменний сервіс безпеки автомобільної електроніки (ISO 26262-6:2018)</b> &emsp;·&emsp; <code>Affinity(S, P) = 1.00</code><br><i>Пакет активного набору (AWS) передається до систолічного детермінованого ядра правил через високошвидкісну локальну шину</i>"]
 
     IN ==> STEP1
     STEP1 ==> STEP2
