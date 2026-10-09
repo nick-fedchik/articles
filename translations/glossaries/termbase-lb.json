@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "lb",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "Expertensystem (expert system)",
+    "доказова експертна система": "beweisbaséiert Expertensystem (evidence-governed expert system)",
+    "база знань": "Wëssensbasis (knowledge base)",
+    "рушій виведення": "Inferenzmotor (inference engine)",
+    "шлюз допуску": "Zougangspaart / Validéierungspaart (admission gateway)",
+    "периметр безпеки": "Sécherheetsperimeter (safety perimeter)",
+    "цикл керування": "Reegelungskrees / Kontrollschläif (control loop)",
+    "виконавчий механізм": "Aktuator / Ausféierungsmechanismus (actuator)",
+    "тракт сприйняття": "Perzeptiounspipeline (perception pipeline)",
+    "виконавчий тракт": "Aktuatiounspipeline (actuation pipeline)",
+    "вакуумна істинність": "vakuum Wourecht (vacuous truth)",
+    "дефітер": "Widderleeungselement / Defeater (defeater)",
+    "спростовні міркування": "widderleeft Schléissen (defeasible reasoning)",
+    "незмінний пакет знань": "onverännerleche Wëssenspak (immutable knowledge pack)",
+    "інженерний граф знань": "Ingenieurs-Wëssensgrap (EKG)",
+    "апаратний шлюз безпеки": "Hardware-Sécherheetsverrigelung (hardware safety interlock)",
+    "діалог Сократа": "sokratesche Klärungsdialog (Socratic dialogue)",
+    "кустодія доказів": "Beweisketten / Hierkonft (provenance)",
+    "побайтова цитата": "wiertlecht Zitat um Byte-Niveau (byte-level citation)",
+    "сторожовий таймер": "Iwwerwaachungszäituhr / Watchdog (watchdog timer)",
+    "функціональна безпека": "funktionell Sécherheet (ISO 26262 / DO-178C)",
+    "перехоплення керування": "Fail-Closed Noutausschaltung (fail-closed override)"
+  }
+}

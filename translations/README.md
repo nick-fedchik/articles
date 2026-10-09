@@ -56,6 +56,12 @@
 | **hy** | **Հայերեն** | **Verified** | Математична школа, апаратні розробки, мікроелектроніка, DeepTech |
 | **he** | **עברית** | **Verified** | Кібербезпека, аерокосмічні системи, Silicon Wadi, високонадійні чіпи |
 | **ar** | **العربية** | **Verified** | MENA: Розумні міста майбутнього, енергетика, передові AI-ініціативи |
+| **sk** | **Slovenčina** | **Verified** | Центральноєвропейський автомобільний кластер, промислова робототехніка |
+| **sl** | **Slovenščina** | **Verified** | Високотехнологічний альпійський хаб, передові матеріали та мехатроніка |
+| **ga** | **Gaeilge** | **Verified** | Європейська штаб-квартира глобальних технологічних гігантів, суверенний захист мови |
+| **mt** | **Malti** | **Verified** | Середземноморський хаб морської логістики, фінтех та кібербезпека |
+| **lb** | **Lëtzebuergesch** | **Verified** | Європейський фінансовий хаб, супутниковий зв'язок (SES) та суперкомп'ютери |
+| **ca** | **Català** | **Verified** | Барселонський суперкомп'ютерний центр (BSC), мікроелектроніка та біотех |
 | **ja** | **日本語** | **Verified** | Робототехніка, функціональна безпека, мікроконтролери та вбудовані системи |
 | **zh / zh-TW** | **繁體中文** | **Verified** | Напівпровідникова столиця світу (TSMC), апаратні архітектури, електроніка |
 | **ko** | **한국어** | **Verified** | Пам'ять, напівпровідники, автономний транспорт, авангард оборонної індустрії |
@@ -84,6 +90,8 @@
 - `termbase-hu.json` (Hungarian)
 - `termbase-bg.json` (Bulgarian)
 - `termbase-hr.json` (Croatian)
+- `termbase-sk.json` (Slovak)
+- `termbase-sl.json` (Slovenian)
 - `termbase-sv.json` (Swedish)
 - `termbase-fi.json` (Finnish)
 - `termbase-no.json` (Norwegian)
@@ -91,6 +99,10 @@
 - `termbase-et.json` (Estonian)
 - `termbase-lt.json` (Lithuanian)
 - `termbase-lv.json` (Latvian)
+- `termbase-ga.json` (Irish)
+- `termbase-mt.json` (Maltese)
+- `termbase-lb.json` (Luxembourgish)
+- `termbase-ca.json` (Catalan)
 - `termbase-ka.json` (Georgian)
 - `termbase-hy.json` (Armenian)
 - `termbase-he.json` (Hebrew)

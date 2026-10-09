@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "ca",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "sistema expert (expert system)",
+    "доказова експертна система": "sistema expert basat en evidències (evidence-governed expert system)",
+    "база знань": "base de coneixement (knowledge base)",
+    "рушій виведення": "motor d'inferència (inference engine)",
+    "шлюз допуску": "passarel·la d'admissió (admission gateway)",
+    "периметр безпеки": "perímetre de seguretat (safety perimeter)",
+    "цикл керування": "bucle de control (control loop)",
+    "виконавчий механізм": "actuador / mecanisme d'execució (actuator)",
+    "тракт сприйняття": "canal de percepció (perception pipeline)",
+    "виконавчий тракт": "canal d'actuació (actuation pipeline)",
+    "вакуумна істинність": "veritat vàcua (vacuous truth)",
+    "дефітер": "derrotador / element refutador (defeater)",
+    "спростовні міркування": "raonament derrotable (defeasible reasoning)",
+    "незмінний пакет знань": "paquet de coneixement immutable (immutable knowledge pack)",
+    "інженерний граф знань": "graf de coneixement d'enginyeria (EKG)",
+    "апаратний шлюз безпеки": "enclavament de seguretat de maquinari (hardware safety interlock)",
+    "діалог Сократа": "diàleg socràtic de clarificació (Socratic dialogue)",
+    "кустодія доказів": "cadena de custòdia de proves / procedència (provenance)",
+    "побайтова цитата": "citació textual a nivell de byte (byte-level citation)",
+    "сторожовий таймер": "temporitzador de vigilància (watchdog timer)",
+    "функціональна безпека": "seguretat funcional (ISO 26262 / DO-178C)",
+    "перехоплення керування": "desconnexió segura fail-closed (fail-closed override)"
+  }
+}
