@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "tr",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "uzman sistem (expert system)",
+    "доказова експертна система": "kanıt temelli uzman sistem (evidence-governed expert system)",
+    "база знань": "bilgi tabanı (knowledge base)",
+    "рушій виведення": "çıkarım motoru (inference engine)",
+    "шлюз допуску": "kabul ağ geçidi (admission gateway)",
+    "периметр безпеки": "güvenlik perimetresi (safety perimeter)",
+    "цикл керування": "kontrol döngüsü (control loop)",
+    "виконавчий механізм": "eyleyici / aktüatör (actuator)",
+    "тракт сприйняття": "algılama hattı (perception pipeline)",
+    "виконавчий тракт": "eyleme hattı (actuation pipeline)",
+    "вакуумна істинність": "boş küme doğruluğu (vacuous truth)",
+    "дефітер": "çürütücü (defeater)",
+    "спростовні міркування": "çürütülebilir akıl yürütme (defeasible reasoning)",
+    "незмінний пакет знань": "değiştirilemez bilgi paketi (immutable knowledge pack)",
+    "інженерний граф знань": "mühendislik bilgi grafiği (EKG)",
+    "апаратний шлюз безпеки": "donanımsal güvenlik kilidi (hardware safety interlock)",
+    "діалог Сократа": "Sokratik netleştirme diyaloğu (Socratic dialogue)",
+    "кустодія доказів": "kanıt gözetim zinciri / menşei (evidence custody / provenance)",
+    "побайтова цитата": "bayt düzeyinde harfi harfine alıntı",
+    "сторожовий таймер": "bekçi zamanlayıcı (watchdog timer)",
+    "функціональна безпека": "fonksiyonel güvenlik (ISO 26262 / DO-178C)",
+    "перехоплення керування": "güvenli kapanma kesintisi (fail-closed override)"
+  }
+}

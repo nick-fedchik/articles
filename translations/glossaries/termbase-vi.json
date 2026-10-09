@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "vi",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "hệ chuyên gia (expert system)",
+    "доказова експертна система": "hệ chuyên gia dựa trên bằng chứng (evidence-governed expert system)",
+    "база знань": "cơ sở tri thức (knowledge base)",
+    "рушій виведення": "công cụ suy diễn (inference engine)",
+    "шлюз допуску": "cổng kiểm soát chấp thuận (admission gateway)",
+    "периметр безпеки": "vành đai an toàn (safety perimeter)",
+    "цикл керування": "vòng điều khiển (control loop)",
+    "виконавчий механізм": "cơ cấu chấp hành / bộ truyền động (actuator)",
+    "тракт сприйняття": "chuỗi nhận thức (perception pipeline)",
+    "виконавчий тракт": "chuỗi chấp hành (actuation pipeline)",
+    "вакуумна істинність": "chân lý chân không (vacuous truth)",
+    "дефітер": "yếu tố bác bỏ (defeater)",
+    "спростовні міркування": "suy luận có thể bác bỏ (defeasible reasoning)",
+    "незмінний пакет знань": "gói tri thức bất biến (immutable knowledge pack)",
+    "інженерний граф знань": "đồ thị tri thức kỹ thuật (EKG)",
+    "апаратний шлюз безпеки": "khóa liên động an toàn phần cứng (hardware safety interlock)",
+    "діалог Сократа": "đối thoại làm rõ kiểu Socrates (Socratic dialogue)",
+    "кустодія доказів": "chuỗi hành trình bằng chứng (evidence custody / provenance)",
+    "побайтова цитата": "trích dẫn nguyên văn theo từng byte (byte-level citation)",
+    "сторожовий таймер": "bộ định thời giám sát (watchdog timer)",
+    "функціональна безпека": "an toàn chức năng (ISO 26262 / DO-178C)",
+    "перехоплення керування": "ngắt an toàn khi sự cố (fail-closed override)"
+  }
+}

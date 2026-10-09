@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "id",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "sistem pakar (expert system)",
+    "доказова експертна система": "sistem pakar berbasis bukti (evidence-governed expert system)",
+    "база знань": "basis pengetahuan (knowledge base)",
+    "рушій виведення": "mesin inferensi (inference engine)",
+    "шлюз допуску": "gerbang penerimaan / verifikasi (admission gateway)",
+    "периметр безпеки": "perimeter keselamatan (safety perimeter)",
+    "цикл керування": "siklus kendali (control loop)",
+    "виконавчий механізм": "aktuator / mekanisme eksekusi (actuator)",
+    "тракт сприйняття": "jalur persepsi (perception pipeline)",
+    "виконавчий тракт": "jalur eksekusi (actuation pipeline)",
+    "вакуумна істинність": "kebenaran hampa (vacuous truth)",
+    "дефітер": "pembatal / pendebat (defeater)",
+    "спростовні міркування": "penalaran yang dapat dibantah (defeasible reasoning)",
+    "незмінний пакет знань": "paket pengetahuan tak-ubah (immutable knowledge pack)",
+    "інженерний граф знань": "grafik pengetahuan rekayasa (EKG)",
+    "апаратний шлюз безпеки": "interlock keselamatan perangkat keras (hardware safety interlock)",
+    "діалог Сократа": "dialog klarifikasi Sokrates (Socratic dialogue)",
+    "кустодія доказів": "rantai lacak bukti (provenance)",
+    "побайтова цитата": "kutipan harfiah tingkat bita (byte-level citation)",
+    "сторожовий таймер": "pewaktu pengawas (watchdog timer)",
+    "функціональна безпека": "keselamatan fungsional (ISO 26262 / DO-178C)",
+    "перехоплення керування": "pemutusan darurat aman (fail-closed override)"
+  }
+}
