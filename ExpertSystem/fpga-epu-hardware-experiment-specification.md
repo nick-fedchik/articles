@@ -59,7 +59,7 @@ flowchart TD
         
         SENSORS ==>|Телеметрія та спостереження| HOST_APP
         HOST_APP ==>|Вхідний інженерний запит| LLM_SYS1
-        LLM_SYS1 -.->|Гіпотеза F+ та контрприклад F- (AST)| HOST_APP
+        LLM_SYS1 -.->|"Гіпотеза F+ та контрприклад F- (AST)"| HOST_APP
     end
 
     subgraph HARDWARE_EPU["АПАРАТНИЙ ПРОЦЕСОР ЗНАНЬ (EPU у кремнії FPGA / System 2)"]
