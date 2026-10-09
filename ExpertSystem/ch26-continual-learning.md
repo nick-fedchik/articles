@@ -1,8 +1,8 @@
 # Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні моделі, когнітивні фронтири та неперервне навчання](part-06-frontiers-neuro-symbolic.md)  
 > **Попередня глава:** [Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій](ch25-how-expert-systems-learn.md)  
-> **Наступна глава:** [Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів](ch27-safety-case-gsn-synthesis.md)  
+> **Наступна глава:** [Глава 35. Реактивна експертна система: події, відкликання й адаптація знань](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: інженери зі знань, інженери машинного навчання, дослідники  
@@ -962,4 +962,4 @@ Open Bandit Pipeline Юти Сайто та співавторів дає син
 
 ---
 
-[← Глава 25](ch25-how-expert-systems-learn.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 27 →](ch27-safety-case-gsn-synthesis.md)
+[← Глава 25](ch25-how-expert-systems-learn.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 35 →](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
