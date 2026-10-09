@@ -1,7 +1,7 @@
 # Глава 19. Від запитання до доказу: пошук, прив'язка та перевірка твердження
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, виведення, пояснення та дія](part-04-architecture-and-inference.md)  
-> **Попередня глава:** [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](ch16-expert-systems-architecture.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, технологічний стек, виведення та дія](part-04-architecture-and-inference.md)  
+> **Попередня глава:** [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](ch18-execution-infrastructure.md)  
 > **Наступна глава:** [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](ch31-syllogistic-reasoning-and-relation-lattices.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
@@ -761,4 +761,4 @@ stateDiagram-v2
 
 ---
 
-[← Глава 16](ch16-expert-systems-architecture.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 31 →](ch31-syllogistic-reasoning-and-relation-lattices.md)
+[← Глава 18](ch18-execution-infrastructure.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 31 →](ch31-syllogistic-reasoning-and-relation-lattices.md)
