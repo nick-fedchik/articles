@@ -71,7 +71,7 @@ flowchart TD
             KB_MEM["UltraRAM / Block RAM / HBM2<br/>(Незмінний Knowledge Pack ZKP4.1)"]
         end
 
-        subgraph INSTRUCTION_ENGINE["КОНТУР КОМАНД (Instruction Flow)"]
+        subgraph INSTRUCTION_ENGINE["ТРАКТ КОМАНД (Instruction Flow)"]
             PROOF_DISP["Апаратний диспетчер дерева доведення<br/>(Proof-Tree Branching Dispatcher)"]
             INST_DEC["Декодер мікрокоманд EISA v1.1<br/>(OP_LOAD, OP_ASSERT, OP_CHECK, OP_EVAL)"]
             EXEC_FSM["Потактовий автомат керування (FSM)<br/>(Fetch -> Decode -> Eval -> Commit)"]
@@ -80,7 +80,7 @@ flowchart TD
             INST_DEC -.->|Керуючі строби операцій| EXEC_FSM
         end
 
-        subgraph DATA_PATH["КОНТУР ДАНИХ (Data Flow)"]
+        subgraph DATA_PATH["ТРАКТ ДАНИХ (Data Path / Data Flow)"]
             REG_FILE["Регістровий файл ядра EPU<br/>(%er0..%er7: Аргументи та предикати)"]
             ALU_CORE["Апаратні компаратори та АЛП<br/>(Діапазони Min-Max, Одиниці СІ, Предикати)"]
             SHA_CUSTODY["64-стадійний конвеєр SHA-256<br/>(Побайтова звірка цитати першоджерела)"]
