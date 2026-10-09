@@ -1,8 +1,8 @@
 # Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)  
-> **Попередня глава:** [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
-> **Наступна глава:** [Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій](ch25-how-expert-systems-learn.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, тестування, діагностика та обґрунтування безпеки](part-05-verification-and-learning.md)  
+> **Попередня глава:** [Глава 39. Активний експерт-тестувальник: попперівська фальсифікація, нормативний комплаєнс (ASPICE/ISO 26262/ISO 21434) та автономне проєктування випробувань](ch39-active-compliance-auditor-and-popperian-testing.md)  
+> **Наступна глава:** [Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів](ch27-safety-case-gsn-synthesis.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: інженери з надійності й діагностики, системні архітектори  
@@ -936,4 +936,4 @@ J(\pi) = \mathbb{E}_{\pi}\left[\sum_{t=1}^{\tau} \left(c_{\text{test},t} + c_{\t
 
 ---
 
-[← Глава 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 25 →](ch25-how-expert-systems-learn.md)
+[← Глава 39](ch39-active-compliance-auditor-and-popperian-testing.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 27 →](ch27-safety-case-gsn-synthesis.md)

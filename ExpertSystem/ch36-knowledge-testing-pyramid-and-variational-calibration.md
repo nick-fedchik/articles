@@ -1,8 +1,8 @@
 # Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, тестування, діагностика та обґрунтування безпеки](part-05-verification-and-learning.md)  
 > **Попередня глава:** [Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил](ch23-knowledge-base-verification.md)  
-> **Наступна глава:** [Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти](ch24-system-diagnosis.md)  
+> **Наступна глава:** [Глава 39. Активний експерт-тестувальник: попперівська фальсифікація, нормативний комплаєнс (ASPICE/ISO 26262/ISO 21434) та автономне проєктування випробувань](ch39-active-compliance-auditor-and-popperian-testing.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні архітектори, інженери знань, інженери верифікації (QA/QE), математики: поглиблений  
@@ -957,4 +957,4 @@ func TestSISRejectsOneVerdictChangeDespiteHighAverage(t *testing.T) {
 
 ---
 
-[← Глава 23](ch23-knowledge-base-verification.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 24 →](ch24-system-diagnosis.md)
+[← Глава 23](ch23-knowledge-base-verification.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 39 →](ch39-active-compliance-auditor-and-popperian-testing.md)

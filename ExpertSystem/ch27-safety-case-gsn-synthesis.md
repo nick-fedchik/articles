@@ -1,7 +1,7 @@
 # Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, діагностика, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)  
-> **Попередня глава:** [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](ch26-continual-learning.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, тестування, діагностика та обґрунтування безпеки](part-05-verification-and-learning.md)  
+> **Попередня глава:** [Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти](ch24-system-diagnosis.md)  
 > **Наступна глава:** [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](ch30-safety-cybersecurity-co-engineering.md)  
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
@@ -603,4 +603,4 @@ print("   Взаємна атака A5 і A6: прийнято", sorted(accepted
 
 ---
 
-[← Глава 26](ch26-continual-learning.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 30 →](ch30-safety-cybersecurity-co-engineering.md)
+[← Глава 24](ch24-system-diagnosis.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 30 →](ch30-safety-cybersecurity-co-engineering.md)
