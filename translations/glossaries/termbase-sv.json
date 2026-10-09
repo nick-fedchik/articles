@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source_language": "uk",
+  "target_language": "sv",
+  "domain": "Mission-critical expert systems, functional safety, formal methods",
+  "terms": {
+    "експертна система": "expertsystem",
+    "доказова експертна система": "evidensstyrt expertsystem (evidence-governed)",
+    "база знань": "kunskapsbas",
+    "рушій виведення": "inferensmotor",
+    "шлюз допуску": "behörighetsgrind / valideringsgrind (admission gateway)",
+    "периметр безпеки": "säkerhetsperimeter",
+    "цикл керування": "styrslinga / reglerkrets",
+    "виконавчий механізм": "ställdon / aktuator",
+    "тракт сприйняття": "perceptionskanal",
+    "виконавчий тракт": "aktiveringskanal",
+    "вакуумна істинність": "tom sanning (vacuous truth)",
+    "дефітер": "vederläggare (defeater)",
+    "спростовні міркування": "omprövbara resonemang (defeasible reasoning)",
+    "незмінний пакет знань": "oföränderligt kunskapspaket",
+    "інженерний граф знань": "teknisk kunskapsgraf (EKG)",
+    "апаратний шлюз безпеки": "hårdvarubaserad säkerhetsspärr",
+    "діалог Сократа": "sokratisk förtydligandedialog",
+    "кустодія доказів": "beviskedjehantering (proveniens)",
+    "побайтова цитата": "exakt bytecitat",
+    "сторожовий таймер": "vakthundstimer (watchdog timer)",
+    "функціональна безпека": "funktionell säkerhet (ISO 26262 / DO-178C)",
+    "перехоплення керування": "felsäkert övertagande (fail-closed)"
+  }
+}
