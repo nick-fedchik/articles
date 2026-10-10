@@ -708,28 +708,40 @@ Die analysierten Mechanismen verdichten sich zu sieben fundamentalen Architektur
 6. **Die Änderungshistorie darf nicht durch aktuellen Zustand überschrieben werden.** Jede Modifikation oder Ungültigkeitserklärung erzeugt einen neuen Eintrag mit Autor, Zeitstempel und Begründung. Inhalte werden strikt im Rahmen von Berechtigungen und Aufbewahrungsfristen gespeichert; das Audit-Log setzt gesetzliche Löschpflichten (z. B. für geschützte oder personenbezogene Daten) nicht außer Kraft.
 7. **Inferenzregeln besitzen keinen gemeinsamen veränderlichen Zustand.** Eine Regel ist eine deterministische Funktion über Eingangsfakten und dem eigenen Kontext; implizite globale Variablen zerstören die Reproduzierbarkeit und invalidieren den formalen Beweis.
 
-## 14. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+## 14. Pro et Contra — Virtueller Dialog
 
-Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit RISC-Pionieren über die Zweckmäßigkeit einer spezialisierten Hardware-Beweismaschine.
+> **Epistemische Präambel und akademischer Disclaimer:**  
+> Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur systematischen wissenschaftlichen Überprüfung der vom Autor entworfenen Architekturmuster, der Mechanismen zur Wahrheitserhaltung (JTMS) sowie der strikten Trennung von Ingestions- und Inferenzpfaden. Zu diesem Fachdialog laden wir international herausragende Pioniere der Softwarearchitektur und künstlichen Intelligenz ein: den renommierten Forscher für nichtmonotones Schließen und Schöpfer der annahmebasierten Wahrheitserhaltung (ATMS) **Johan de Kleer** (Xerox PARC / AAAI Fellow), sowie den maßgeblichen Vordenker moderner Unternehmensarchitekturen, Chief Scientist bei Thoughtworks und Pionier des CQRS-Musters **Martin Fowler**.  
+> *Disclaimer:* Diese Diskussion ist eine simulierte heuristische Synthese, die ausschließlich im wissenschaftlich-pädagogischen Rahmen dieser Monografie auf Basis der veröffentlichten Werke, Monografien und Vorträge der eingeladenen Forscher generiert wurde. Sie stellt weder ein wörtliches Zitat noch eine reale Äußerung lebender Personen dar, sondern dient als Instrument des kritischen Rationalismus zur Falsifikation der Hypothesen des Autors. Jeder Gesprächspartner debattiert direkt und ausschließlich mit dem Autor der Monografie (Mykola Fedchyk).
 
-**These des Autors (Pro):**
-Die EVM implementiert eine Harvard-Registerarchitektur mit dediziertem Verwahrungsregister `%ebx`, Modalregister `%emr` und formalen Beweisstatus-Flags EFLAGS.
+**These des Kapitels (Mykola Fedchyk):**  
+Die Architektur beweisgestützter Expertensysteme basiert auf der kompromisslosen Trennung von Ingestions- und Lese-Inferenzpfaden (epistemisches CQRS), linearer abhängigkeitsgesteuerter Wahrheitserhaltung (JTMS) ohne kombinatorische Explosion und unveränderlichen Wissens-Snapshots zur kryptografischen Absicherung reproduzierbarer Beweiskontexte (PROV-O).
 
-**Antithese und Zitat des zynischen Kritikers (Contra — John Hennessy, Stanford Univ. / Turing Award):**
-> *„Eigene virtuelle Maschinen für Logik zu entwerfen, ist ein Rückschritt. Universelle RISC-Architekturen führen kompilierten Logikcode ohne dedizierte Sonderregister hochgradig effizient aus.“*
+**Runde 1: Komplexität von Truth Maintenance Systems (TMS/ATMS) versus harte Echtzeit-Latenzbudgets**
 
-**Argumentative Diskussion (Socratic & Dialectical Debate):**
+- **Johan de Kleer:**  
+  *„Mykola Fedchyk, in unseren grundlegenden Arbeiten über Truth Maintenance Systems haben wir sowohl Doyles klassisches JTMS als auch mein annahmebasiertes ATMS eingehend analysiert. Jedes System, das explizite Begründungsnetzwerke (Justifications) zur Verfolgung logischer Abhängigkeiten und für Backtracking pflegt, sieht sich beim Kontextwechsel oder bei der Widerspruchsauflösung unweigerlich mit einer exponentiellen kombinatorischen Explosion ($O(2^n)$ im Worst Case) konfrontiert. Von einem industriellen Expertensystem zu verlangen, im operativen Betrieb vollständige JTMS-Graphen für jedes Urteil mitzuführen, bedeutet, eine unberechenbare Latenzbombe zu zünden und Speichererschöpfung zu riskieren.“*
 
-- **Hennessy:** Universalregister in RISC-V erlauben es, Verwahrung softwareseitig ohne Hardware-Verkomplizierung abzubilden.
+- **Mykola Fedchyk:**  
+  *„Herr Dr. Johan de Kleer, Ihre Kritik ist bei monolithischen, unbeschränkten ATMS-Systemen völlig berechtigt, die versuchen, alle denkbaren hypothetischen Welten im Speicher zu halten. In unserer Architektur ist die operative Laufzeit jedoch vollständig von kombinatorischer Suche befreit!  
+  Erstens erzwingen wir einen strikt stratifizierten, azyklischen Begründungs-DAG: Die Zyklenfreiheit wird bereits während der Wissenskompilierung statisch bewiesen.  
+  Zweitens führt unsere Go-JTMS-Engine die Abhängigkeitsinvalidierung in deterministischer linearer Zeit $O(V + E)$ durch gerichtete Graph-Traversierung aus: Wird ein Primärfakt (wie das Testergebnis TC-89) widerrufen, deaktiviert der Algorithmus ausschließlich jene abhängigen Urteile, die über keine alternativen verifizierten Begründungen verfügen.  
+  Der Arbeitsspeicher operiert über schlanke 64-Bit-Zeiger auf speicherabgebildete (mmap) unveränderliche Daten. Wir explorieren keine hypothetischen Kontexte zur Laufzeit — wir garantieren die deterministische Eliminierung ungültig gewordener Schlüsse ohne kombinatorische Explosion.“*
 
-- **Autor (Fedchyk):** Herr Professor Hennessy, das Spezialregister `%ebx` vergleicht in einem einzigen Takt 256-Bit-Hashes und Zitatlängen ohne Belastung des Hauptdatenbusses, was Latenzspitzen eliminiert und den FPGA-Ressourcenverbrauch auf unter 9.000 Logikgatter drückt.
+**Runde 2: Epistemisches CQRS und Schnittstellenverträge versus Risiken asynchroner Konsistenz (Eventual Consistency)**
 
-- **Hennessy:** Aber wie steht es um die Flexibilität des Befehlssatzes?
+- **Martin Fowler:**  
+  *„Mykola Fedchyk, Command Query Responsibility Segregation (CQRS) und vertragsbasiertes Testen verteilter Subsysteme (Pact) sind bewährte Architekturmuster im Enterprise-Bereich. In verteilten Systemen stützt sich klassisches CQRS jedoch auf asynchrone Ereignisverarbeitung und letztliche Konsistenz (Eventual Consistency). Wenn Ihre Ingestions-Pipeline Graphdatenbanken, Vektoreinbettungen und SMT-Invarianten asynchron aktualisiert, lesen parallele Nutzersitzungen unweigerlich inkonsistente Zwischenzustände. Was für einen Webshop mit wenigen Sekunden Replikationsverzögerung tolerierbar ist, führt in sicherheitskritischen industriellen Expertensystemen zu widersprüchlichen und rechtlich nicht haltbaren Fehlentscheidungen.“*
 
-- **Autor (Fedchyk):** EISA nutzt ein festes 32-Bit-Format, das für eine schnelle Pipelining-Verifikation ohne komplexes Präfix-Decoding optimiert ist.
+- **Mykola Fedchyk:**  
+  *„Herr Martin Fowler, in der beweisorientierten Systemtechnik ist Eventual Consistency absolut inakzeptabel und wird durch die sechste und siebte Architekturinvariante unserer Monografie explizit verboten!  
+  Wir erzwingen eine epistemische Snapshot-Isolation (Epistemic Snapshot Isolation):  
+  Die Ingestions-Pipeline modifiziert niemals produktive Lesestrukturen im laufenden Betrieb. Jeder Batch neu zugelassener Regeln und Fakten wird in ein isoliertes, unveränderliches Wissensartefakt mit Merkle-Root-Hash kompiliert.  
+  Die Veröffentlichung auf dem Lesepfad erfolgt über einen atomaren Zeigertausch (analog zu RCU).  
+  Jede Benutzeranfrage bindet sich an eine unveränderliche Epoche: Inferenzmaschine, Vektorindizes und Vertragsprüfer lesen garantiert denselben synchronisierten Snapshot. Eine heute gefällte ingenieurtechnische Entscheidung bleibt selbst in zwanzig Jahren bitgenau reproduzierbar.“*
 
-**Synthese und wissenschaftliches Urteil des Kapitels:**
-Die Harvard-Registerspezialisierung der EVM minimiert Hardwarekosten und garantiert Nanosekunden-Beweisausführungen.
+**Synthese und wissenschaftliches Urteil des Kapitels:**  
+Der architektonische Determinismus beweisgestützter Expertensysteme wird durch das Zusammenspiel von epistemischem CQRS und linearem JTMS gesichert: Snapshot-Isolation verhindert Race Conditions und Datenasynchronität, lineare Wahrheitserhaltung garantiert das sofortige Bereinigen widerrufener Fakten, und die W3C PROV-O-Modellierung gewährleistet lückenlose forensische Nachvollziehbarkeit.
 
 ## Fazit
 

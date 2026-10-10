@@ -428,28 +428,38 @@ Comparative benchmarking operationalizes the third core principle detailed in th
 2. **Frameworks cannot compensate for the absence of a canonical domain model.** No orchestration framework, such as LangChain or LlamaIndex, can transform an ad-hoc system into an evidence-governed expert system if source documents lack revision statuses, admission labels, and verified knowledge graph edges. Connecting generative neural networks to unstructured document repositories merely accelerates the production of plausible errors.
 3. **Evaluate technologies primarily by their behavior under failure modes.** The defining inquiry when evaluating a candidate library is not "how elegant is the demo?", but rather: "what happens upon network partition, silent schema drift, or model weight quantization shifts?". If a model update silently invalidates the auditability of an issued regulatory certificate, the toolchain is unfit for mission-critical deployment.
 
-## 12. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 12. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with LLVM compiler infrastructure architects regarding the EISA instruction set and the knowledge compilation ecosystem.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously examine the author's proposed technology stack for evidence-governed expert systems, the paradigm of specialized datastores, and the knowledge rule compilation infrastructure. For this scholarly inquiry, we invite globally distinguished titans of computer systems engineering: creator of the LLVM compiler infrastructure, Swift programming language, and the MLIR framework **Chris Lattner** (CEO of Modular), alongside Turing Award laureate, pioneer of Ingres and PostgreSQL, and author of the foundational "One Size Does Not Fit All" database paradigm **Michael Stonebraker**.  
+> *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
-**Author's Thesis (Pro):**
-EISA v1.1 instructions translate into compact microprograms governed by a deterministic lifecycle: fact loading (`LOAD_A`), custody verification (`ANCHOR_E`), bound checking (`CHECK_Q`), and exit (`HALT`).
+**Chapter Thesis (Mykola Fedchyk):**  
+The technology stack of a mission-critical expert system must not be assembled around monolithic framework abstractions, but through rigorous functional segregation based on operational semantics and failure modes: coupling compiled systems languages (Go/Rust), stratified Datalog for transitive reachability, SMT solvers for invariants, and zero-copy mmap key-value stores guarantees determinism and qualification under DO-178C / ISO 26262.
 
-**Antithesis and Cynic-Critic Citation (Contra — Chris Lattner, Modular / LLVM creator):**
-> *“Without compiler infrastructure at the scale of LLVM/MLIR, your 32-bit instruction set remains a toy architecture that cannot be optimized or integrated with modern high-level languages.”*
+**Round 1: Unified compiler infrastructure (MLIR) versus isolated domain micro-engines**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Chris Lattner:**  
+  *“Mykola Fedchyk, in our work creating LLVM and MLIR, we proved that constructing fragmented, bespoke compilers without a unified multi-level intermediate representation is an architectural dead end. You propose a bespoke collection of point tools: a lexical scanner, a Datalog interpreter, an AST compiler in Zvodar, and a custom virtual machine. Why invent custom micro-engines instead of defining a unified MLIR dialect for engineering rules that leverages existing compiler passes for polyhedral optimization, operator fusion, and automatic hardware lowering to CPUs, GPUs, and accelerators?”*
 
-- **Lattner:** Who will build compiler optimizations for your custom EISA?
+- **Mykola Fedchyk:**  
+  *“Mr. Chris Lattner, MLIR represents the state of the art for high-performance computing and machine learning compilation, but in functional safety certification under DO-178C Level A or ISO 26262 ASIL D, the massive LLVM/MLIR C++ codebase represents an intractable qualification barrier!  
+  Tool Qualification Level 1 (TQL-1) demands formal mathematical evidence that optimization passes never introduce undefined behavior or alter program semantics. Qualifying thousands of heuristic optimization passes across LLVM is virtually impossible for embedded avionics.  
+  This is why our runtime execution kernel is implemented in a minimal, memory-safe subset of Go/Rust executing verified predicates without speculative dynamic JIT compilation. We embrace MLIR as an offline target for global rule synthesis and analysis, but the execution engine residing inside the safety perimeter must remain radically compact, auditable, and mathematically deterministic.”*
 
-- **Author (Fedchyk):** EISA is engineered specifically as a compilation target for formal predicates: we have built an intermediate AST compiler within Zvodar, and our roadmap specifies an open MLIR dialect (epistemic-dialect) for global microcode optimization.
+**Round 2: "One Size Does Not Fit All" versus the operational fragility of polyglot persistence**
 
-- **Lattner:** That is the correct architectural path: without MLIR, broad ecosystem adoption is unattainable.
+- **Michael Stonebraker:**  
+  *“Mykola Fedchyk, my thesis that 'One Size Does Not Fit All' is standard doctrine in modern database systems. However, you push this principle to an operational extreme: you advocate deploying relational tables, graph stores for traceability, Datalog engines for transitive closure, vector databases for similarity, and RocksDB/LMDB for serialized rules. Scattering knowledge across four or five distinct storage engines introduces a maintenance nightmare of distributed transactions, network latency hops, and schema drift. Modern extensible relational databases like PostgreSQL, equipped with recursive CTEs and `pgvector`, solve all these requirements within a single ACID transaction boundary. Why incur catastrophic operational fragility?”*
 
-- **Author (Fedchyk):** That is precisely why MLIR compatibility is an explicit architectural milestone in our roadmap.
+- **Mykola Fedchyk:**  
+  *“Dr. Michael Stonebraker, your foundational thesis on specialized database architectures is the very bedrock of our design, but attempting to turn a general-purpose relational DBMS into a Swiss Army knife within safety-critical real-time environments causes fatal resource contention!  
+  Computing transitive closures over deep requirement trees via recursive SQL CTEs induces massive buffer pool churning, evicting transactional tables from memory. Furthermore, `pgvector` indexing competes directly for disk I/O against critical audit logging.  
+  Crucially, our architecture incurs zero distributed transactions or network synchronization latency! We have eliminated online transactional updates from the read path.  
+  The offline compilation pipeline compiles all admitted facts and rules into immutable, memory-mapped (mmap) binary artifacts and read-only LMDB/RocksDB databases. The inference engine accesses these structures directly from memory with zero network overhead and zero lock contention. We achieve your specialized engine performance without transactional overhead.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-The EISA instruction set is designed as a standardized hardware back-end for formal knowledge compilers.
+**Synthesis and Scientific Verdict of the Chapter:**  
+The technology stack of an evidence-governed system is dictated by reliability theorems and certification standards, not industry fashion: isolating compiled systems languages protects the safety perimeter from undefined behavior, formal solvers guarantee mathematical consistency, and immutable specialized stores eliminate the compromises of monolithic databases.
 
 ## Conclusions
 

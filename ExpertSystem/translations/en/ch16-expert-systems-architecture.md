@@ -707,28 +707,40 @@ The architectural principles established throughout this chapter are distilled i
 6. **Historical audit records must never be overwritten with current state.** Every modification or retraction appends a new immutable entry recording the author, timestamp, and justification. Records are retained strictly within authorized retention policies; auditability does not override legal mandates for data redaction.
 7. **Inference rules must not share mutable state.** A rule must be a deterministic function over input facts and explicit context; implicit global variables destroy reproducibility and invalidate formal proofs.
 
-## 14. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 14. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with RISC architecture pioneers regarding the necessity of a dedicated hardware virtual machine for epistemic proofs.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously examine the author's architecture regarding core system patterns, Truth Maintenance Systems (JTMS), and the strict decoupling of knowledge ingestion from read inference. For this inquiry, we invite internationally renowned pioneers in software architecture and artificial intelligence: eminent non-monotonic reasoning researcher and inventor of the Assumption-based Truth Maintenance System (ATMS) **Johan de Kleer** (Xerox PARC / AAAI Fellow), alongside legendary distributed systems architect, Chief Scientist at Thoughtworks, and pioneer of the CQRS pattern **Martin Fowler**.  
+> *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
-**Author's Thesis (Pro):**
-The EVM implements a Harvard register architecture featuring a dedicated custody register `%ebx`, a modal register `%emr`, and formal proof status flags EFLAGS.
+**Chapter Thesis (Mykola Fedchyk):**  
+The architecture of an evidence-governed expert system rests upon absolute segregation of ingestion and query paths (epistemic CQRS), linear dependency-directed truth maintenance (JTMS) immune to combinatorial explosion, and immutable knowledge snapshots enforcing reproducible, cryptographically audited proof contexts (PROV-O).
 
-**Antithesis and Cynic-Critic Citation (Contra — John Hennessy, Stanford Univ. / Turing Award):**
-> *“Creating bespoke virtual machines for logic evaluation is a step backward. General-purpose RISC architectures execute compiled logic efficiently without dedicated specialized registers.”*
+**Round 1: Truth Maintenance System (TMS/ATMS) tractability versus hard real-time latency budgets**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Johan de Kleer:**  
+  *“Mykola Fedchyk, in our foundational work on Truth Maintenance Systems, we conducted comprehensive analyses of both Doyle's original JTMS and my Assumption-based ATMS. Any reasoning system maintaining explicit justification networks to track dependencies and execute dependency-directed backtracking inevitably confronts worst-case exponential combinatorial explosion ($O(2^n)$) during context switching or contradiction resolution. Demanding that an industrial expert system construct full JTMS networks for every engineering verdict in real time plants an unpredictable latency bomb and risks catastrophic memory exhaustion.”*
 
-- **Hennessy:** General-purpose registers in RISC-V allow implementing custody in software without increasing hardware complexity.
+- **Mykola Fedchyk:**  
+  *“Dr. Johan de Kleer, your critique is entirely justified when applied to monolithic, unconstrained ATMS implementations attempting to maintain all conceivable hypothetical universes in memory. However, in our architecture, the runtime execution engine is completely emancipated from combinatorial search!  
+  First, we enforce a strictly stratified, acyclic justification DAG: acyclicity is formally verified ahead-of-time during knowledge compilation.  
+  Second, our Go JTMS engine executes dependency invalidation in strictly deterministic $O(V + E)$ linear time via directed graph traversal: when a primary fact (such as test result TC-89) is retracted, the algorithm invalidates only those downstream lemmas lacking alternative verified justifications.  
+  Runtime working memory operates over lightweight 64-bit pointers referencing immutable, memory-mapped fact structures. We do not evaluate hypothetical environments dynamically—we guarantee deterministic eviction of invalidated conclusions without combinatorial explosion.”*
 
-- **Author (Fedchyk):** Professor Hennessy, the dedicated `%ebx` register performs single-cycle byte comparisons of 256-bit hashes and citation spans without loading the general ALU data bus, eliminating latency spikes and reducing FPGA footprint to under 9,000 logic gates.
+**Round 2: Epistemic CQRS and subsystem contracts versus eventual consistency hazards**
 
-- **Hennessy:** But what about instruction set flexibility?
+- **Martin Fowler:**  
+  *“Mykola Fedchyk, Command Query Responsibility Segregation (CQRS) and contract-driven distributed architectures (Pact) are battle-tested patterns in enterprise application engineering. However, in distributed topologies, classical CQRS relies on asynchronous messaging and eventual consistency. If your ingestion pipeline asynchronously updates property graphs, vector embeddings, and SMT constraints across independent datastores, concurrent read sessions will inevitably execute inference over desynchronized state snapshots. While a few seconds of replication lag is tolerable in an e-commerce catalog, in safety-critical industrial decision systems it leads to contradictory, legally indefensible verdicts.”*
 
-- **Author (Fedchyk):** EISA features a fixed 32-bit format optimized for pipelined verification without complex prefix decoding overhead.
+- **Mykola Fedchyk:**  
+  *“Mr. Martin Fowler, in evidence-governed engineering architectures, eventual consistency is strictly prohibited and explicitly forbidden by the sixth and seventh architectural invariants of this monograph!  
+  We enforce Epistemic Snapshot Isolation (ESI):  
+  The ingestion pipeline never updates live inference structures in place. Every batch of newly admitted rules, ontologies, and SMT invariants is compiled into an isolated, immutable knowledge artifact cryptographically sealed with a Merkle root hash.  
+  Publishing an update to the read path occurs as an atomic pointer swap (analogous to RCU).  
+  Every client session pins an immutable epoch context: the deductive engine, vector indices, and contract validators are mathematically guaranteed to query the identical snapshot. An engineering verdict emitted today retains 100% bitwise reproducibility decades into the future.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-EVM Harvard register specialization minimizes hardware resource consumption while guaranteeing nanosecond-scale proof execution.
+**Synthesis and Scientific Verdict of the Chapter:**  
+Architectural determinism in evidence-governed expert systems is achieved through the synergy of epistemic CQRS and linear JTMS: immutable snapshot isolation eliminates race conditions and state desynchronization, linear truth maintenance guarantees instantaneous retraction of invalidated lemmas, and W3C PROV-O modeling ensures comprehensive auditability.
 
 ## Conclusions
 

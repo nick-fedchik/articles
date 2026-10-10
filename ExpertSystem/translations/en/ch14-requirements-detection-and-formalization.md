@@ -813,28 +813,37 @@ Z3 checks the formal mathematical model, not raw text. For targeted verification
 
 The synthesized intermediate representation constitutes a verifiable candidate formula with bounded semantics. This artifact, backed by cryptographic source provenance and human sign-off, serves as the authoritative input for downstream knowledge base construction.
 
-## 8. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 8. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with legal argumentation theorists regarding deontic arbitration formalization and social value hierarchies.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously examine the author's architecture for automated detection, semantic linting, and formalization of normative engineering requirements. For this scholarly inquiry, we invite internationally renowned leaders in requirements engineering and formal specifications: **Alistair Mavin**, originator of the EARS (Easy Approach to Requirements Syntax) methodology, whose structural patterns have become standard practice across aerospace and automotive industries, alongside distinguished computer scientist, ACM Fellow, and Formal Methods pioneer **Pamela Zave**, co-creator of the foundational Four-Variable Model for requirements formalization in embedded systems.  
+> *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
-**Author's Thesis (Pro):**
-Automated contradiction arbitration relies on the canonical legal triad (Lex Superior / Specialis / Posterior) encoded within hardware priority selectors.
+**Chapter Thesis (Mykola Fedchyk):**  
+Transforming unstructured technical standards into verifiable mathematical invariants is achieved through syntactic channelization of natural language via EARS templates, semantic linting of qualitative adjectives mandating physical SI tolerances, and grammatically guided compilation into closed SMT-LIB formulas to detect latent deadlocks using Z3.
 
-**Antithesis and Cynic-Critic Citation (Contra — Trevor Bench-Capon, Univ. of Liverpool — *Value-based Argumentation*):**
-> *“Legal arbitration cannot be reduced to mechanical jurisdiction indexes: it rests upon the teleology of societal values. Without a value model, the machine will issue formally lawful yet absurd decisions.”*
+**Round 1: Can rigid syntactic EARS templates capture the true operational complexity of normative systems?**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Alistair Mavin:**  
+  *“Mykola Fedchyk, when we developed the EARS methodology at Rolls-Royce, our primary goal was to rescue engineering requirements from natural language ambiguity through several intuitive structural patterns (Ubiquitous, Event-driven, State-driven, etc.). However, EARS was conceived as a practical communicative bridge between humans—specification authors and systems engineers. Attempting to fully automate requirement extraction from arbitrary standards and forcing complex, multifaceted functional safety processes into rigid syntactic cages risks severing vital contextual assumptions that engineers hold in their minds but rarely transcribe into explicit template slots.”*
 
-- **Bench-Capon:** If a safety rule conflicts with a data privacy statute, sterile Lex Superior cannot adjudicate which value is paramount.
+- **Mykola Fedchyk:**  
+  *“Mr. Alistair Mavin, your contribution to requirements standardization is monumental, but in mission-critical ASIL D and DO-178C systems, implicit engineer assumptions represent the single most lethal root cause of catastrophic failures!  
+  If an engineering requirement cannot be articulated within a disciplined EARS template with explicit triggers, physical deadlines (`within X ms`), and exhaustive alternative branches—it is not a requirement; it is toxic ambiguity.  
+  In my architecture, the Go audit pipeline does not merely classify deontic modality (`SHALL`, `MUST NOT`); it enforces rigorous structural completeness under EARS. If a standard states that 'the system shall promptly respond', our semantic linter immediately issues a blocking `MISSING_TIME_BOUND` violation. We do not discard engineering context—we compel domain experts to quantify it into verifiable physical invariants.”*
 
-- **Author (Fedchyk):** In industrial engineering systems, values are codified within functional safety hierarchies: life protection requirements (Safety / ISO 26262) hold absolute lexicographical priority over performance or power efficiency, hardcoded directly into the 4-bit priority selector of EISA registers.
+**Round 2: SMT predicate formalization versus domain theory completeness (The Four-Variable Model)**
 
-- **Bench-Capon:** And what if contradictory norms share the identical safety level?
+- **Pamela Zave:**  
+  *“Mykola Fedchyk, compiling EARS requirements into SMT-LIB predicates and querying satisfiability via the Z3 solver is an alluring paradigm, but it falls into a classical formal methods pitfall. In our Four-Variable Model (Jackson & Zave), proving correctness requires establishing $S, W \vdash R$: the specification behaviors $S$ in conjunction with environmental assumptions $W$ must satisfy requirements $R$. If you formalize the requirement text $R$ in isolation without a complete mathematical domain theory of the physical environment $W$ (such as electrochemical dynamics within a lithium-ion cell), an SMT `sat` result provides a hollow, hazardous illusion of safety.”*
 
-- **Author (Fedchyk):** The core detects a symmetric deadlock and activates conservative fail-closed suspension instead of hazardous speculative autonomy.
+- **Mykola Fedchyk:**  
+  *“Dr. Pamela Zave, I wholeheartedly endorse your foundational insight regarding the paramount importance of the environment model $W$. This is precisely why our intermediate Requirements IR never evaluates predicates in a vacuum, but as bounded constraints over closed system state vectors.  
+  First, our compilation pipeline formalizes environmental assumptions $W$ via explicit physical SI intervals (e.g., $T \in [-40, +85]^\circ\text{C}$, $V \in [2.5, 4.2]\,\text{V}$).  
+  Second, SMT verification is not conducted to obtain a complacent `sat`, but to expose unsatisfiable cores (`unsat core`): if valid environmental states $W$ force a contradiction between two system specifications (such as the chapter's case study where simultaneous emergency cooling and contactor isolation collide), compilation is aborted via Fail-Closed before any hardware or code is generated. SMT is not deployed to replace physics, but as an evidentiary barrier against logical inconsistency and specification deadlocks.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-Hardware arbitration of deontic preferences eliminates human subjectivity while upholding life-safety priorities.
+**Synthesis and Scientific Verdict of the Chapter:**  
+Deterministic detection and formalization of normative requirements establishes end-to-end traceability from standard byte offsets to execution logic: EARS templates eliminate conversational ambiguity, semantic linting forbids ungrounded descriptors without physical SI units, and translation to SMT-LIB guarantees the mathematical consistency of engineering specifications prior to implementation.
 
 ## Conclusions
 

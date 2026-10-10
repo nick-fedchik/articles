@@ -1315,28 +1315,37 @@ The table below contrasts the architectural properties of an evidence-governed e
 
 This table contrasts formally verifiable deductive inference against baseline generative retrieval architectures, rather than exhaustively categorizing all conceivable RAG variants. Generative pipelines can be augmented with source byte addressing, revision filtering, formal grammars, and external provers. The demarcation is defined by the verification contract governing the output, not by marketing nomenclature. In the pipeline presented in this chapter, search indices and language models propose candidate structures, while knowledge admission and package release are governed exclusively by deterministic verification and human engineering sign-offs.
 
-## 15. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 15. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with constrained learning researchers regarding knowledge extraction fidelity and model hallucination validation.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously examine the author's architecture for end-to-end engineering knowledge extraction and verifiable knowledge base construction. For this scholarly inquiry, we invite globally distinguished authorities in automated information extraction and probabilistic text modeling: pioneer of Open Information Extraction (Open IE), former CEO of the Allen Institute for AI (AI2), and University of Washington Professor **Oren Etzioni**, alongside Columbia University Professor and creator of Latent Dirichlet Allocation (LDA) **David Blei**.  
+> *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
-**Author's Thesis (Pro):**
-Converting unstructured texts into production rules proceeds across two stages: neural structural hypothesis generation via SLM followed by deterministic linter validation filtering out hallucinations.
+**Chapter Thesis (Mykola Fedchyk):**  
+Constructing a verifiable engineering knowledge base demands abandoning naive fixed-size chunking in favor of Floating-size Annotation Units (FAU) governed by Ashby's law, byte-exact fact grounding via the tuple $`\mathcal{G}`$, multi-model storage, and a multi-stage Popperian admission gate with SMT verification to counter epistemic knowledge poisoning (MITRE ATLAS).
 
-**Antithesis and Cynic-Critic Citation (Contra — Dan Roth, UPenn / AWS — *Learning with Constraints*):**
-> *“An extraction model inevitably hallucinates across intricate logical dependencies. If quantifiers are bound incorrectly, a formal linter cannot detect the underlying semantic error.”*
+**Round 1: Planetary-scale Open Information Extraction (Open IE) versus Floating-size Annotation Units (FAU)**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Oren Etzioni:**  
+  *“Mykola Fedchyk, in our foundational work on Open Information Extraction (Open IE and TextRunner), we demonstrated that scaling knowledge bases to planetary dimensions is achievable only when extraction algorithms operate unburdened by rigid predefined schemas or brittle ontological constraints. You propose tethering every extracted assertion to physical source byte coordinates, mandating complex extraction of Floating-size Annotation Units (FAU) and proof certificates sealed with Ed25519 cryptographic signatures. Such excessive bureaucracy and computational friction cripple ingestion throughput: you will never be able to ingest even a fraction of the industrial standards and technical documentation that modern open extractors absorb effortlessly.”*
 
-- **Roth:** A symbolic linter verifies syntactic structure, but remains blind to distorted semantic content.
+- **Mykola Fedchyk:**  
+  *“Professor Oren Etzioni, Open IE is an outstanding paradigm for web-scale search engines where an 80% precision threshold is acceptable. However, in nuclear reactor safety, railway interlocking, or aerospace avionics, a single hallucinated or severed semantic relation induces catastrophic failures with direct loss of human life!  
+  According to W. Ross Ashby's cybernetic Law of Requisite Variety, the control capacity of the extraction pipeline must match the structural variety of the normative source document. This is why we discarded fixed chunking and engineered Floating-size Annotation Units (FAU) that preserve the topological layout of technical tables, graphs, and clauses.  
+  Every admitted fact is indelibly bound by the tuple $`\mathcal{G} = \langle \mathrm{DocID}, \mathrm{SHA256}, \mathrm{StartByte}, \mathrm{EndByte}, \mathrm{Predicate} \rangle`$. If a candidate assertion lacks byte-level physical verification in the authoritative primary text, it is immediately discarded. We deliberately sacrifice speculative throughput to achieve uncompromising evidentiary certainty.”*
 
-- **Author (Fedchyk):** Our linter verifies not merely form, but byte-level projection (%ebx): every entity must possess a verified span in the source text with non-zero lexical overlap, and an unbound subject immediately routes the rule into a Quarantine Gate requiring human-in-the-loop qualification.
+**Round 2: Probabilistic topic models (LDA) versus the Popperian admission gate and knowledge poisoning defense (MITRE ATLAS)**
 
-- **Roth:** Doesn't that slow down the knowledge engineering pipeline?
+- **David Blei:**  
+  *“Mykola Fedchyk, real-world technical corpora and engineering documentation harbor deep, latent semantic structures. Probabilistic Bayesian models, such as Latent Dirichlet Allocation (LDA) and deep variational autoencoders, naturally capture textual noise, uncertainty, and thematic mixtures without imposing artificial crisp boundaries. In contrast, your 'Popperian admission gate' aggressively discards any knowledge candidate that fails strict first-order SMT checks or exhibits numerical parameter divergence. This symbolic rigidity ignores the statistical evolution of engineering terminology and renders your knowledge base brittle when encountering legitimate editorial updates.”*
 
-- **Author (Fedchyk):** It slows down ingestion, yet guarantees zero unverified rules in the certified ZKP4 repository.
+- **Mykola Fedchyk:**  
+  *“Professor David Blei, probabilistic models are indispensable for exploratory data mining, but in safety-critical expert systems, latent probability distributions become a wide-open vector for hostile subversion!  
+  Under the MITRE ATLAS adversarial matrix (techniques AML.T0020 and AML.T0043), an adversary or compromised supplier can subtly manipulate safety-critical thresholds (for example, shifting battery emergency cutoff voltage from 400 V to 435 V). A probabilistic model smoothly assimilates this toxic injection into its latent distribution as acceptable variance.  
+  Our Popperian admission gate operates under zero-trust: the Z3 SMT solver executes symbolic threshold sensitivity audits ($\Delta \theta \le \epsilon_{\mathrm{safety}}$) and polarity inversion checks. If a candidate fact breaches established safety invariants, it is never smoothed away; it is instantly quarantined for mandatory Human-in-the-Loop qualification. An authoritative engineering knowledge base cannot be probabilistic—it must be mathematically falsifiable.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-A two-stage extraction pipeline combines model productivity with uncompromising filtering of fabricated assertions.
+**Synthesis and Scientific Verdict of the Chapter:**  
+The construction of a verifiable engineering knowledge base is a rigorously authenticated process: Floating-size Annotation Units (FAU) preserve the topological coherence of source specifications, byte-level grounding $`\mathcal{G}`$ enforces an unbroken chain of custody, and the Popperian admission gate with SMT verification provides mathematical immunity against hallucinations and adversarial epistemic poisoning.
 
 ## Conclusions
 

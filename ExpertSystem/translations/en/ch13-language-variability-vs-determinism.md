@@ -660,28 +660,39 @@ Consider an incomplete query: "What is the minimum header length?" lacking a pro
 
 Session working memory stores conversational context and never functions as an epistemic source of authoritative claims. Injected parameters undergo identical validation against the ontology, and emitted citations ground directly in primary normative text, never in conversational dialogue logs.
 
-## 8. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 8. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with automata-theoretic verification theorists regarding proof completeness, prohibition of backtracking, and WCET guarantees.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously stress-test the author's architecture for overcoming natural language variability and semantic query compilation. For this inquiry, we invite globally recognized computer scientists at the intersection of computational linguistics and machine learning whose works investigate the boundaries of formalizing linguistic variability: University of Pennsylvania Professor **Dan Roth**—pioneer of Constrained Conditional Models (CCM) and declarative learning in NLP, alongside Stanford University Professor **Christopher Potts**—distinguished authority on formal semantics, pragmatics, and linguistic implicatures.  
+> *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
-**Author's Thesis (Pro):**
-The inference engine is architected as a deterministic finite-state machine without recursion, dynamic memory allocation, and with guaranteed termination (Forward-Only Execution).
+**Chapter Thesis (Mykola Fedchyk):**  
+Overcoming linguistic variability in engineering queries mandates semantic compilation: synthesizing Constrained Conditional Models (CCM) and finite-state GBNF grammars with deterministic GroupPass metric governance, collapsing infinite colloquial surface phrasing into unambiguous AST predicates without sacrificing negation polarity or quantifier bounds.
 
-**Antithesis and Cynic-Critic Citation (Contra — Moshe Vardi, Rice Univ. — *Automata-Theoretic Verification*):**
-> *“Banning recursion and backward transitions strips the inference engine of first-order logic completeness. You have constructed a primitive automaton incapable of deep mathematical deductions.”*
+**Round 1: Can statistical classifiers reliably enforce logical constraints without polarity inversion?**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Dan Roth:**  
+  *“Mykola Fedchyk, in our foundational work on Constrained Conditional Models (CCM), we integrated statistical learning with Integer Linear Programming (ILP) to impose global declarative constraints onto machine learning outputs. However, you attempt to deploy this paradigm across unconstrained engineering user queries exhibiting extreme syntactic volatility. Statistical language classifiers intrinsically struggle with negation scope or confuse fine-grained quantifier distinctions (`at least one` versus `all`) when an engineer employs colloquial technical jargon or passive grammatical constructions. If the neural front-end errs during intent or slot extraction, no downstream semantic compiler can prevent the system from executing an invalid, hazardous logical query.”*
 
-- **Vardi:** Without backward search, you cannot even prove elementary geometric theorems.
+- **Mykola Fedchyk:**  
+  *“Professor Dan Roth, you have precisely diagnosed the structural vulnerability of classical NLP: leaving a statistical classifier unconstrained over free-form prose inevitably induces catastrophic errors across subtle negation boundaries. This is why in my architecture, the semantic compilation pipeline is completely stripped of the authority to 'guess' negations or quantifiers via unconstrained embeddings.  
+  First, a deterministic primary syntax scanner isolates constants, protocol identifiers, and negation operators before the query is ever passed to the compact SLM.  
+  Second, the model's token decoding is strictly confined within a finite-state GBNF grammar lattice, admitting only valid slots declared in the certified domain ontology.  
+  Third, we enforce an uncompromising release invariant—the GroupPass metric: if an equivalence cluster of semantically identical rephrasings generates even a single diverging AST logical form, the release gate fails the model. Whenever ambiguity cannot be eliminated deterministically, the host verifier refuses to fabricate a slot and initiates a deterministic clarification protocol.”*
 
-- **Author (Fedchyk):** Professor Vardi, we are designing the core not for abstract theorem proving, but for hard real-time embedded controllers. Avionics standards such as DO-178C Level A explicitly forbid non-linear backtracking because it precludes calculating Worst-Case Execution Time (WCET). Our automaton guarantees termination in $O(N)$ cycles.
+**Round 2: Contextual pragmatics and conversational implicatures versus rigid ontological canonization**
 
-- **Vardi:** What about complex compositional rules?
+- **Christopher Potts:**  
+  *“Mykola Fedchyk, human language cannot be reduced to sterile slot-filling or abstract predicate calculus. It is fundamentally driven by Gricean pragmatic implicatures, presuppositions, and context-dependent speaker intentions. When an engineer asks, 'Can I restart this controller now?', they are not merely calling an API status check—they rely on an implicit shared conversational history and expect nuanced situational awareness. By forcing this rich pragmatic spectrum into a rigid canonical ontology and refusing to answer whenever an utterance deviates from your formal grammar, you build an infuriatingly brittle, uncooperative system that forces humans to communicate in pseudocode rather than natural language.”*
 
-- **Author (Fedchyk):** Complex rules are flattened during compilation by Zvodar into linear graph-chains, offloading the combinatorial burden entirely from the runtime processor.
+- **Mykola Fedchyk:**  
+  *“Professor Christopher Potts, your profound pragmatic theory brilliantly explains daily human discourse, but in safety-critical cyber-physical engineering, ungrounded conversational implicatures cause fatal disasters!  
+  When an operator in a nuclear control room or an avionics maintenance bay asks 'can I restart this controller?', the functional safety system possesses zero legal or ethical right to 'infer what the user probably meant.'  
+  If the query harbors polysemy or lacks an explicit `scope` parameter (such as a specific safety standard or controller hardware revision), attempting to guess the user's intent via statistical inference is criminal negligence.  
+  Our architecture transforms implicit presuppositions into explicit engineering facts: working memory retains session context strictly as an unverified candidate, while the host verifier requires explicit confirmation before execution. We do not design an AI to be a pleasing conversational companion; we construct an uncompromising semantic interface where every word carries measurable liability.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-Deterministic Forward-Only inference provides the sole mathematical guarantee for strictly complying with mission-critical WCET budgets.
+**Synthesis and Scientific Verdict of the Chapter:**  
+Overcoming linguistic variability in evidence-governed expert systems is achieved not by expanding probabilistic associations, but through rigorous semantic compilation: coupling Constrained Conditional Models, GBNF grammar-guided decoding, and GroupPass invariance guarantees ensures that unbounded phrasing variations safely collapse into deterministic inference predicates.
 
 ## Conclusions
 
