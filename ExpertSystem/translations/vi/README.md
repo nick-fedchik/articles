@@ -2,7 +2,7 @@
 
 **Chuyên khảo kỹ thuật và cẩm nang thiết kế, mô hình toán học, kiến trúc và kiểm chứng hình thức cho các hệ thống thông minh độ tin cậy cao (Safety-Critical & Evidence-Grounded AI)**
 
-**Tác giả:** [Mykola Fedchyk](about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
+**Tác giả:** [Mykola Fedchyk](../en/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
 **Định dạng:** Chuyên khảo kỹ thuật / Cẩm nang kiến trúc sư AI  
 **Năm:** 2026  
 
@@ -18,7 +18,7 @@ Tác giả đề xuất và thiết lập một mô hình mới: **AI Thần kin
 
 Các yêu cầu hệ thống, mã nguồn, nhật ký thử nghiệm, tiêu chuẩn quy định và quyết định kỹ thuật đã tồn tại trong môi trường sản xuất hiện đại, nhưng phần lớn hoạt động như những hiện vật biệt lập thiếu ngữ nghĩa hình thức, thiếu ranh giới hiệu lực nghiêm ngặt và thiếu khả năng truy xuất chéo. Một báo cáo thử nghiệm đạt chuẩn có thể đang tham chiếu đến phiên bản phần cứng cũ; một trích dẫn tiêu chuẩn an toàn chức năng có thể bị tách rời khỏi ngữ cảnh; một thao tác khôi phục cấu hình khẩn cấp có thể vô tình tái kích hoạt một thành phần đã bị hủy bỏ.
 
-Chuyên khảo vạch ra một quy trình kỹ thuật xuyên suốt: từ việc hình thức hóa các hiện vật kỹ thuật thành dữ liệu định kiểu và các gói tri thức được ký mật mã – đến suy diễn ký hiệu, phân rã kế hoạch từng bước, giải thích phản thực tế và kiểm toán ranh giới năng lực. Nội dung thực hành được hỗ trợ bởi các triển khai cấp công nghiệp bằng ngôn ngữ Go với bộ kiểm thử toàn diện ([Chương 1](ch01-introduction-to-expert-systems.md)), các hợp đồng toán học nghiêm ngặt ([Phần II](part-02-knowledge-models.md)), và các giao thức học tập liên tục đã được chứng minh ngăn ngừa hoàn toàn tình trạng suy thoái tri thức ([Chương 25](ch25-how-expert-systems-learn.md)).
+Chuyên khảo vạch ra một quy trình kỹ thuật xuyên suốt: từ việc hình thức hóa các hiện vật kỹ thuật thành dữ liệu định kiểu và các gói tri thức được ký mật mã – đến suy diễn ký hiệu, phân rã kế hoạch từng bước, giải thích phản thực tế và kiểm toán ranh giới năng lực. Nội dung thực hành được hỗ trợ bởi các triển khai cấp công nghiệp bằng ngôn ngữ Go với bộ kiểm thử toàn diện ([Chương 1](../en/ch01-introduction-to-expert-systems.md)), các hợp đồng toán học nghiêm ngặt ([Phần II](../en/part-02-knowledge-models.md)), và các giao thức học tập liên tục đã được chứng minh ngăn ngừa hoàn toàn tình trạng suy thoái tri thức ([Chương 25](../en/ch25-how-expert-systems-learn.md)).
 
 ### Đối tượng độc giả
 
@@ -32,14 +32,14 @@ Chuyên khảo tiếp cận các hệ chuyên gia không phải như tàn dư c�
 
 | Hướng khoa học | Công trình tiêu biểu và tác giả quốc tế | Cầu nối khái niệm trong sách |
 |---|---|---|
-| **AI Thần kinh - Ký hiệu Làn sóng thứ ba (NeSy)** | Artur d'Avila Garcez, Luis C. Lamb (*Neurosymbolic AI: The 3rd Wave*, 2023; *Neural-Symbolic Cognitive Reasoning*, Springer, 2009); Henry Kautz (*The Third AI Summer*, AAAI 2022) | Phân định trách nhiệm: Mô hình thống kê (SLM/LLM) tạo giả thuyết truy vấn, lõi ký hiệu tất định thực hiện kiểm chứng hình thức và phê duyệt sự thật ([Chương 29](ch29-neuro-symbolic-architecture.md)). |
-| **Ràng buộc ngữ nghĩa và học an toàn** | Guy Van den Broeck và cộng sự (*A Semantic Loss Function for Deep Learning with Symbolic Knowledge*, ICML 2018); Luc De Raedt và cộng sự (*DeepProbLog*, IJCAI 2020) | Cổng kiểm soát đầu vào và đầu ra, lọc ngữ nghĩa tất định đối với các đề xuất của mạng nơ-ron theo lược đồ hình thức ([Chương 28](ch28-dual-mode-expert-systems.md), [Chương 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md)). |
-| **Suy luận có thể bác bỏ và lý thuyết biện luận** | John L. Pollock (*Defeasible Reasoning*, 1987; *Cognitive Carpentry*, MIT Press, 1995); Phan Minh Dung (*Abstract Argumentation Frameworks*, AIJ 1995); Douglas Walton (*Argumentation Schemes*, Cambridge, 2008) | Phân tách tri thức thành khẳng định, nguồn gốc và yếu tố bác bỏ (*rebutting* và *undercutting defeaters*); giải quyết xung đột trong cơ sở quy tắc định chuẩn bằng khung biện luận Dung ([Chương 2](ch02-epistemology-of-machine-knowledge.md), [Chương 27](ch27-safety-case-gsn-synthesis.md)). |
-| **Khai phá quy tắc kết hợp tự trị (KBC)** | Luis Galárraga, Fabian M. Suchanek và cộng sự (*AMIE: Association Rule Mining under Incomplete Evidence*, WWW 2013, VLDBJ 2015); Stephen Muggleton (*Inductive Logic Programming*, 1994) | Tự động quy nạp quy tắc từ cơ sở tri thức dưới giả định hoàn chỉnh một phần (PCA) mà không tạo ra các phản ví dụ sai lầm của thế giới mở ([Chương 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)). |
-| **Lá chắn an toàn hình thức và chứng nhận (Safe AI)** | Bettina Könighofer, Roderick Bloem và cộng sự (*Shield Synthesis*, 2017); Tim Kelly, Rob Weaver (*Goal Structuring Notation*, York, 2004); André Platzer (*Logical Foundations of CPS*, Springer, 2018) | Tổng hợp hồ sơ an toàn theo ký hiệu GSN cho các tiêu chuẩn ISO 26262/21434; lá chắn hình thức và phong bì hợp lệ số học cho bộ truyền động ngoại vi ([Chương 27](ch27-safety-case-gsn-synthesis.md), [Chương 30](ch30-safety-cybersecurity-co-engineering.md), [Chương 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md)). |
-| **Logic nhận thức và ký hiệu học tri thức** | John F. Sowa (*Knowledge Representation: Logical, Philosophical, and Computational Foundations*, 2000); Frank van Harmelen và cộng sự (*Handbook of Knowledge Representation*, Elsevier, 2008) | Bộ ba nhận thức luận của Charles Sanders Peirce (Khái niệm → Phán đoán → Suy luận); suy đoán giả thuyết (abduction) dưới sự kiểm soát diễn dịch nghiêm ngặt ([Chương 6](ch06-applied-mathematics-for-expert-systems.md), [Chương 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)). |
-| **Điều khiển học và hiệp đồng học hệ thống phức tạp** | Norbert Wiener (*Cybernetics*, 1948); W. Ross Ashby (*An Introduction to Cybernetics*, 1956); Hermann Haken (*Synergetics: An Introduction*, 1977; *Advanced Synergetics*, 1983); Ilya Prigogine (*Order out of Chaos*, 1984) | Định luật đa dạng cần thiết của Ashby, vòng điều khiển kín L0–L4, rút gọn không gian trạng thái thành tham số trật tự theo nguyên lý nô dịch Haken, cảnh báo sớm chuyển pha qua hiện tượng chậm lại tới hạn (CSD) và ổn định cấu trúc tiêu tán của cơ sở tri thức ([Chương 6](ch06-applied-mathematics-for-expert-systems.md), [Chương 22](ch22-cybernetics-edge-to-backend.md), [Chương 35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)). |
-| **Kiểm thử tri thức, bất biến ngôn ngữ và hiệu chuẩn Lipschitz** | Kent Beck (*TDD*, 2002); Martin Fowler (*Refactoring*, 2018); Clark Barrett, Leonardo de Moura (*Z3 SMT Solver*, 2008); Chuan Guo và cộng sự (*On Calibration of Modern Neural Networks*, ICML 2017); Marco Tulio Ribeiro và cộng sự (*CheckList*, ACL 2020); John L. Pollock (*Defeasible Reasoning*, 1987) | Kim tự tháp kiểm thử tri thức 4 tầng (KTP): Kiểm thử đơn vị quy tắc biệt lập (KUT) với giả lập tiền đề (`PremiseMock`), loại bỏ bẫy chân lý chân không, phân tích giá trị biên quang phổ 6 điểm (BVA), lưới quy tắc và yếu tố bác bỏ (KIT), điểm bất biến ngữ nghĩa ($\text{SIS} \ge 0.98$) trước biến thể ngôn ngữ, ràng buộc liên tục Lipschitz ($L_{\mathcal{K}} \le L_{\max}$) chống rung relay, và tích lũy vết khuyết thiếu tri thức ([Chương 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md)). |
+| **AI Thần kinh - Ký hiệu Làn sóng thứ ba (NeSy)** | Artur d'Avila Garcez, Luis C. Lamb (*Neurosymbolic AI: The 3rd Wave*, 2023; *Neural-Symbolic Cognitive Reasoning*, Springer, 2009); Henry Kautz (*The Third AI Summer*, AAAI 2022) | Phân định trách nhiệm: Mô hình thống kê (SLM/LLM) tạo giả thuyết truy vấn, lõi ký hiệu tất định thực hiện kiểm chứng hình thức và phê duyệt sự thật ([Chương 29](../en/ch29-neuro-symbolic-architecture.md)). |
+| **Ràng buộc ngữ nghĩa và học an toàn** | Guy Van den Broeck và cộng sự (*A Semantic Loss Function for Deep Learning with Symbolic Knowledge*, ICML 2018); Luc De Raedt và cộng sự (*DeepProbLog*, IJCAI 2020) | Cổng kiểm soát đầu vào và đầu ra, lọc ngữ nghĩa tất định đối với các đề xuất của mạng nơ-ron theo lược đồ hình thức ([Chương 28](../en/ch28-dual-mode-expert-systems.md), [Chương 33](../en/ch33-inter-system-knowledge-exchange-and-model-teaching.md)). |
+| **Suy luận có thể bác bỏ và lý thuyết biện luận** | John L. Pollock (*Defeasible Reasoning*, 1987; *Cognitive Carpentry*, MIT Press, 1995); Phan Minh Dung (*Abstract Argumentation Frameworks*, AIJ 1995); Douglas Walton (*Argumentation Schemes*, Cambridge, 2008) | Phân tách tri thức thành khẳng định, nguồn gốc và yếu tố bác bỏ (*rebutting* và *undercutting defeaters*); giải quyết xung đột trong cơ sở quy tắc định chuẩn bằng khung biện luận Dung ([Chương 2](../en/ch02-epistemology-of-machine-knowledge.md), [Chương 27](../en/ch27-safety-case-gsn-synthesis.md)). |
+| **Khai phá quy tắc kết hợp tự trị (KBC)** | Luis Galárraga, Fabian M. Suchanek và cộng sự (*AMIE: Association Rule Mining under Incomplete Evidence*, WWW 2013, VLDBJ 2015); Stephen Muggleton (*Inductive Logic Programming*, 1994) | Tự động quy nạp quy tắc từ cơ sở tri thức dưới giả định hoàn chỉnh một phần (PCA) mà không tạo ra các phản ví dụ sai lầm của thế giới mở ([Chương 34](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)). |
+| **Lá chắn an toàn hình thức và chứng nhận (Safe AI)** | Bettina Könighofer, Roderick Bloem và cộng sự (*Shield Synthesis*, 2017); Tim Kelly, Rob Weaver (*Goal Structuring Notation*, York, 2004); André Platzer (*Logical Foundations of CPS*, Springer, 2018) | Tổng hợp hồ sơ an toàn theo ký hiệu GSN cho các tiêu chuẩn ISO 26262/21434; lá chắn hình thức và phong bì hợp lệ số học cho bộ truyền động ngoại vi ([Chương 27](../en/ch27-safety-case-gsn-synthesis.md), [Chương 30](../en/ch30-safety-cybersecurity-co-engineering.md), [Chương 33](../en/ch33-inter-system-knowledge-exchange-and-model-teaching.md)). |
+| **Logic nhận thức và ký hiệu học tri thức** | John F. Sowa (*Knowledge Representation: Logical, Philosophical, and Computational Foundations*, 2000); Frank van Harmelen và cộng sự (*Handbook of Knowledge Representation*, Elsevier, 2008) | Bộ ba nhận thức luận của Charles Sanders Peirce (Khái niệm → Phán đoán → Suy luận); suy đoán giả thuyết (abduction) dưới sự kiểm soát diễn dịch nghiêm ngặt ([Chương 6](../en/ch06-applied-mathematics-for-expert-systems.md), [Chương 34](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)). |
+| **Điều khiển học và hiệp đồng học hệ thống phức tạp** | Norbert Wiener (*Cybernetics*, 1948); W. Ross Ashby (*An Introduction to Cybernetics*, 1956); Hermann Haken (*Synergetics: An Introduction*, 1977; *Advanced Synergetics*, 1983); Ilya Prigogine (*Order out of Chaos*, 1984) | Định luật đa dạng cần thiết của Ashby, vòng điều khiển kín L0–L4, rút gọn không gian trạng thái thành tham số trật tự theo nguyên lý nô dịch Haken, cảnh báo sớm chuyển pha qua hiện tượng chậm lại tới hạn (CSD) và ổn định cấu trúc tiêu tán của cơ sở tri thức ([Chương 6](../en/ch06-applied-mathematics-for-expert-systems.md), [Chương 22](../en/ch22-cybernetics-edge-to-backend.md), [Chương 35](../en/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)). |
+| **Kiểm thử tri thức, bất biến ngôn ngữ và hiệu chuẩn Lipschitz** | Kent Beck (*TDD*, 2002); Martin Fowler (*Refactoring*, 2018); Clark Barrett, Leonardo de Moura (*Z3 SMT Solver*, 2008); Chuan Guo và cộng sự (*On Calibration of Modern Neural Networks*, ICML 2017); Marco Tulio Ribeiro và cộng sự (*CheckList*, ACL 2020); John L. Pollock (*Defeasible Reasoning*, 1987) | Kim tự tháp kiểm thử tri thức 4 tầng (KTP): Kiểm thử đơn vị quy tắc biệt lập (KUT) với giả lập tiền đề (`PremiseMock`), loại bỏ bẫy chân lý chân không, phân tích giá trị biên quang phổ 6 điểm (BVA), lưới quy tắc và yếu tố bác bỏ (KIT), điểm bất biến ngữ nghĩa ($\text{SIS} \ge 0.98$) trước biến thể ngôn ngữ, ràng buộc liên tục Lipschitz ($L_{\mathcal{K}} \le L_{\max}$) chống rung relay, và tích lũy vết khuyết thiếu tri thức ([Chương 36](../en/ch36-knowledge-testing-pyramid-and-variational-calibration.md)). |
 
 ---
 
@@ -49,25 +49,25 @@ Chuyên khảo đúc kết các nghiên cứu nền tảng và đóng góp kỹ 
 
 ### 1. Phát triển lý thuyết nền tảng và hình thức hóa toán học
 
-1. **Bất biến Căn cứ Bằng chứng (EGI) và Cổng Tiếp nhận Sự thật ([Chương 2](ch02-epistemology-of-machine-knowledge.md), [19](ch19-from-question-to-evidence.md), [28](ch28-dual-mode-expert-systems.md), [29](ch29-neuro-symbolic-architecture.md)):**
+1. **Bất biến Căn cứ Bằng chứng (EGI) và Cổng Tiếp nhận Sự thật ([Chương 2](../en/ch02-epistemology-of-machine-knowledge.md), [19](../en/ch19-from-question-to-evidence.md), [28](../en/ch28-dual-mode-expert-systems.md), [29](../en/ch29-neuro-symbolic-architecture.md)):**
    * *Khái niệm lý thuyết:* Tác giả xây dựng và hình thức hóa bất biến đầy đủ căn cứ $\mathrm{Comp}(C) = 1.00$, khẳng định rằng trong hệ thống dựa trên bằng chứng, không một tuyên bố nào có thể đạt tư cách sự thật được công nhận nếu thiếu phép chiếu tất định vào các nguồn tri thức ban đầu. Mỗi phần tử trong cơ sở sự thật được bảo đảm bằng bộ dữ liệu mật mã: độ lệch byte bất biến `[byte_start, byte_end]`, mã băm đoạn chuẩn `quote_sha256`, và định danh chứng chỉ nguồn gốc PROV-O.
    * *Ý nghĩa kỹ thuật:* Cơ chế cổng kiểm soát ở cấp độ byte ở cả tầng phần cứng và phần mềm ngăn chặn hoàn toàn ảo giác của mạng nơ-ron xâm nhập vào cơ sở tri thức có quản lý phiên bản, đảm bảo mức độ không khoan nhượng đối với dữ liệu không được xác nhận ($ZHR = 1.00$).
-2. **Kim tự tháp kiểm thử tri thức 4 tầng (KTP) và độ ổn định Lipschitz của không gian suy luận ([Chương 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md)):**
+2. **Kim tự tháp kiểm thử tri thức 4 tầng (KTP) và độ ổn định Lipschitz của không gian suy luận ([Chương 36](../en/ch36-knowledge-testing-pyramid-and-variational-calibration.md)):**
    * *Khái niệm lý thuyết:* Lần đầu tiên tác giả đề xuất Kim tự tháp kiểm thử tri thức (KTP) có hệ thống, áp dụng kỷ luật kiểm thử phần mềm của Martin Fowler vào các hệ tri thức: kiểm thử đơn vị quy tắc cô lập tiền đề (`PremiseMock`) (KUT), kiểm thử tích hợp tương tác quy tắc và yếu tố bác bỏ (KIT), và hiệu chuẩn biến phân trên đa tạp câu hỏi (KVT).
    * *Bộ máy toán học:* Đưa vào bất biến ngăn chặn bẫy chân lý chân không ($P \to Q$ khi $P \equiv \text{False}$), chỉ số bất biến ngữ nghĩa ($\mathrm{SIS} \ge 0.98$) trước biến thiên ngôn ngữ, và ràng buộc liên tục Lipschitz của không gian suy luận ($L_{\mathcal{K}} \le L_{\max}$), loại trừ hoàn toàn tình trạng rung relay thảm khốc trước các nhiễu loạn nhỏ ở đầu vào.
-3. **Lý thuyết bác bỏ quy chuẩn kiểu Popper và kiểm toán viên tuân thủ chủ động ([Chương 39](ch39-active-compliance-auditor-and-popperian-testing.md)):**
+3. **Lý thuyết bác bỏ quy chuẩn kiểu Popper và kiểm toán viên tuân thủ chủ động ([Chương 39](../en/ch39-active-compliance-auditor-and-popperian-testing.md)):**
    * *Khái niệm lý thuyết:* Chuyển đổi từ mô hình "nhà tiên tri thụ động" truyền thống (chỉ trả lời câu hỏi) sang mô hình kiểm toán tri thức chủ động thực hiện nguyên lý bác bỏ của Karl Popper. Hệ thống tự động thăm dò không gian yêu cầu (ASPICE 4.0, ISO 26262, ISO/SAE 21434), tổng hợp các phản ví dụ, phát hiện đặc tả chưa đầy đủ và tự chủ thiết kế chương trình kiểm thử sản phẩm toàn diện.
    * *Giá trị thực tiễn:* Kết hợp khả năng tạo tình huống biên sáng tạo của mạng nơ-ron (Hệ thống 1) với kiểm chứng quy chuẩn tất định của lõi ký hiệu (Hệ thống 2), bảo vệ con người trong vòng điều khiển (Human-in-the-Loop) khỏi tình trạng mệt mỏi vì phê duyệt.
-4. **Rút gọn hiệp đồng số chiều cơ sở tri thức và chẩn đoán sớm hiện tượng chậm lại tới hạn CSD ([Chương 6](ch06-applied-mathematics-for-expert-systems.md), [22](ch22-cybernetics-edge-to-backend.md), [35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)):**
+4. **Rút gọn hiệp đồng số chiều cơ sở tri thức và chẩn đoán sớm hiện tượng chậm lại tới hạn CSD ([Chương 6](../en/ch06-applied-mathematics-for-expert-systems.md), [22](../en/ch22-cybernetics-edge-to-backend.md), [35](../en/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)):**
    * *Khái niệm lý thuyết:* Ứng dụng công cụ toán học của hiệp đồng học Hermann Haken (tham số trật tự và nguyên lý nô dịch) cùng lý thuyết cấu trúc tiêu tán của Ilya Prigogine vào sự tiến hóa của các cơ sở tri thức phức tạp.
    * *Kết quả khoa học:* Phát triển phương pháp thu gọn không gian trạng thái đa chiều của dữ liệu đo từ xa thành các tham số trật tự, tích hợp bộ phát hiện hiện tượng chậm lại tới hạn (*Critical Slowing Down*, CSD) dựa trên tự tương quan và phương sai, cho phép cảnh báo nguy cơ sụp đổ động của hệ thống thực-ảo từ rất sớm trước khi cảm biến ngưỡng khẩn cấp kích hoạt.
-5. **Mô hình cấp độ tự trị hành động (A0–A4), cổng cấp quyền và các saga lũy đẳng ([Chương 21](ch21-from-recommendation-to-action.md)):**
+5. **Mô hình cấp độ tự trị hành động (A0–A4), cổng cấp quyền và các saga lũy đẳng ([Chương 21](../en/ch21-from-recommendation-to-action.md)):**
    * *Khái niệm lý thuyết:* Thiết lập thang đo thẩm quyền hành động rời rạc (A0: Phân tích thụ động, A1: Chuẩn bị bản thảo, A2: Hành động có chữ ký con người, A3: Tự trị có giám sát, A4: Ngắt khẩn cấp an toàn), được gán không phải cho toàn bộ hệ thống mà cho bộ ba "hành động, môi trường, mức rủi ro".
    * *Bộ máy toán học:* Giới thiệu bất biến lũy đẳng đại số $f(f(x, k), k) \equiv f(x, k)$ dựa trên khóa mật mã $k$, thực thi vòng lặp kín từng bước và giao thức saga bù trừ phân tán với trạng thái `OutcomeUnknown` và kiểm chứng hậu điều kiện độc lập.
-6. **Kỹ thuật đồng thời hình thức giữa an toàn chức năng và an ninh mạng theo ký hiệu GSN ([Chương 27](ch27-safety-case-gsn-synthesis.md), [30](ch30-safety-cybersecurity-co-engineering.md)):**
+6. **Kỹ thuật đồng thời hình thức giữa an toàn chức năng và an ninh mạng theo ký hiệu GSN ([Chương 27](../en/ch27-safety-case-gsn-synthesis.md), [30](../en/ch30-safety-cybersecurity-co-engineering.md)):**
    * *Khái niệm lý thuyết:* Xây dựng mô hình tổng hợp điều phối các cây lập luận GSN (Goal Structuring Notation) để đáp ứng đồng thời các tiêu chuẩn ISO 26262 (an toàn chức năng) và ISO/SAE 21434 (an ninh mạng).
    * *Đột phá kỹ thuật:* Hình thức hóa cơ chế trọng tài toán học giữa các mục tiêu mâu thuẫn (quỹ thời gian phản ứng khẩn cấp so với độ sâu xác thực mật mã) và giao thức tiết lộ bằng chứng có chọn lọc cho kiểm toán viên bên ngoài thông qua cây Merkle có thêm muối.
-7. **Giao thức kiểm chứng độ trung thực và tính nhất quán ngữ nghĩa của lời giải thích ([Chương 20](ch20-explanation-engine.md)):**
+7. **Giao thức kiểm chứng độ trung thực và tính nhất quán ngữ nghĩa của lời giải thích ([Chương 20](../en/ch20-explanation-engine.md)):**
    * *Khái niệm lý thuyết:* Lời giải thích không được coi là văn bản tự do của mô hình tạo sinh, mà là một hiện vật tất định độc lập được dẫn xuất duy nhất từ đồ thị chứng minh, phiên bản quy tắc và ảnh chụp nhanh sự thật cố định.
    * *Bộ máy toán học:* Hình thức hóa cổng chỉ số đánh giá độ trung thực ($C_{\text{facts}} = 1.00, H_{\text{free}} = 1.00$) với khả năng tự động quay lui an toàn (fail-safe fallback) về mẫu khuôn cứng nhắc khi có bất kỳ sai lệch nào giữa kết luận ký hiệu và lời diễn đạt bằng văn bản cho người vận hành.
 
@@ -75,19 +75,19 @@ Chuyên khảo đúc kết các nghiên cứu nền tảng và đóng góp kỹ 
 
 ### 2. Nghiên cứu thực nghiệm, dàn thử nghiệm của tác giả và kỹ thuật hệ thống
 
-1. **Gói tri thức nhị phân bất biến với `mmap` và không tốn chi phí giải tuần tự hóa ([Chương 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)):**
+1. **Gói tri thức nhị phân bất biến với `mmap` và không tốn chi phí giải tuần tự hóa ([Chương 32](../en/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)):**
    * *Sáng tạo của tác giả:* Kiến trúc gói tri thức hai tầng (tầng chuẩn của nguồn sơ cấp + tầng cụ thể hóa phái sinh của chỉ mục).
    * *Kết quả thực nghiệm:* Ánh xạ trực tiếp chỉ mục vào không gian địa chỉ ảo thông qua lời gọi hệ thống `mmap`, loại bỏ hoàn toàn chi phí cấp phát bộ nhớ động (zero-allocation) và khởi động công cụ trong thời gian dưới tuyến tính bất kể dung lượng bản thể học lên tới hàng gigabyte.
-2. **Khu vực hiệu chuẩn thực nghiệm trên các tập quy chuẩn IETF RFC-1000 và W3C-150 ([Chương 2](ch02-epistemology-of-machine-knowledge.md), [4](ch04-evolution-from-bayes-to-evidence-ai.md), [14](ch14-requirements-detection-and-formalization.md), [25](ch25-how-expert-systems-learn.md)):**
+2. **Khu vực hiệu chuẩn thực nghiệm trên các tập quy chuẩn IETF RFC-1000 và W3C-150 ([Chương 2](../en/ch02-epistemology-of-machine-knowledge.md), [4](../en/ch04-evolution-from-bayes-to-evidence-ai.md), [14](../en/ch14-requirements-detection-and-formalization.md), [25](../en/ch25-how-expert-systems-learn.md)):**
    * *Thử nghiệm của tác giả:* Triển khai môi trường nghiên cứu quy mô lớn trên 1.000 đặc tả IETF RFC hợp lệ (phân bố qua 5 kỷ nguyên phát triển Internet) và 150 truy vấn chẩn đoán phức tạp từ tập dữ liệu W3C (bao gồm cả việc cố ý đưa vào các mâu thuẫn logic và chứng bịa đặt).
    * *Kết quả thực tiễn:* Xây dựng ma trận kiểm tra tri thức khách quan, phát hiện mâu thuẫn quy chuẩn và chứng minh bằng toán học khả năng ngăn ngừa suy thoái tri thức khi cập nhật cơ sở tri thức.
-3. **Phân tích quan hệ nhiều bước, suy đoán ký hiệu và đối thoại kiểu Socrates ([Chương 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)):**
+3. **Phân tích quan hệ nhiều bước, suy đoán ký hiệu và đối thoại kiểu Socrates ([Chương 34](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)):**
    * *Phát triển của tác giả:* Thuật toán tìm kiếm theo chiều rộng có giới hạn hai chiều (Bidirectional Bounded BFS, $k \le 6$) với cơ chế chống lặp và xây dựng chuỗi bằng chứng byte phức hợp cho các thực thể liên kết tùy ý.
    * *Ưu thế kỹ thuật:* Hiện thực hóa suy đoán ký hiệu của Peirce dưới sự kiểm soát diễn dịch nghiêm ngặt và các khung làm rõ kiểu Socrates có định kiểu (*Clarification Frames*), đưa hệ thống vào chế độ đối thoại hiệu quả với con người thay vì từ chối mù quáng theo giả định thế giới đóng (CWA).
-4. **Lá chắn hình thức và phong bì hợp lệ số học cho hệ thống điều khiển ngoại vi ([Chương 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md), [Phụ lục B](appendix-b-robotics-and-cyber-physical-systems.md), [Phụ lục C](appendix-c-autonomous-navigation-and-geosearch.md), [Phụ lục E](appendix-e-mixed-signal-neuromorphic-expert-systems.md)):**
+4. **Lá chắn hình thức và phong bì hợp lệ số học cho hệ thống điều khiển ngoại vi ([Chương 33](../en/ch33-inter-system-knowledge-exchange-and-model-teaching.md), [Phụ lục B](../en/appendix-b-robotics-and-cyber-physical-systems.md), [Phụ lục C](../en/appendix-c-autonomous-navigation-and-geosearch.md), [Phụ lục E](../en/appendix-e-mixed-signal-neuromorphic-expert-systems.md)):**
    * *Sáng tạo của tác giả:* Phương pháp luận chuyển đổi các bất biến logic rời rạc thành các hành lang an toàn số học liên tục cho bộ xử lý tín hiệu số (DSP) và hệ thống điều hướng tự hành không GNSS (TRN/DSMAC/VIO).
    * *Độ tin cậy vận hành:* Trao đổi quy tắc có chữ ký dựa trên mật mã Ed25519, cách ly an toàn tri thức ứng viên mới và ngắt các tín hiệu điều khiển nguy hiểm ở tầng phần cứng.
-5. **Chống rò rỉ thông tin bí mật qua lời giải thích và kiểm toán vi phân ([Chương 20](ch20-explanation-engine.md)):**
+5. **Chống rò rỉ thông tin bí mật qua lời giải thích và kiểm toán vi phân ([Chương 20](../en/ch20-explanation-engine.md)):**
    * *Phát triển của tác giả:* Giao thức rút gọn biểu diễn trung gian của giải thích ($\mathrm{EIR}_{\text{redacted}}$) với kiểm tra ACL cho từng nút và cạnh của đồ thị chứng minh, ngăn chặn các cuộc tấn công kênh phụ nhằm tái tạo mô hình thông qua chuỗi truy vấn tương phản WHY NOT.
 
 ---
@@ -109,19 +109,19 @@ Tiêu đề các mục trong chương thuộc về các lớp rõ ràng và cầ
 
 Quốc gia, ngành công nghiệp hoặc sản phẩm thương mại chỉ là ngữ cảnh ứng dụng, không phải là một cấp độ độc lập của hệ thống phân loại này. Bảng thuật ngữ, từ viết tắt, tài liệu tham khảo và điều hướng tạo thành bộ máy tham chiếu, không phải chủ đề độc lập của chương.
 
-Bản đồ [đánh giá biên tập](editorial-structure-review.md) đầy đủ chứa đựng đánh giá về chủ đề chính của từng chương, ranh giới giữa các nội dung kế cận cùng các nhận xét về bố cục và kết luận. Phần tóm tắt mới không có nghĩa là mọi rủi ro nội dung bên trong các chương đã được xóa bỏ hoàn toàn.
+Bản đồ đánh giá biên tập đầy đủ chứa đựng đánh giá về chủ đề chính của từng chương, ranh giới giữa các nội dung kế cận cùng các nhận xét về bố cục và kết luận. Phần tóm tắt mới không có nghĩa là mọi rủi ro nội dung bên trong các chương đã được xóa bỏ hoàn toàn.
 
 ## Lộ trình đọc khuyến nghị
 
-**Kiểm chứng phần mềm bước đầu:** [1](ch01-introduction-to-expert-systems.md) → [7](ch07-knowledge-base-typology.md) → [8](ch08-engineering-artifacts-as-data.md) → [17](ch17-implementation-stack.md) → [23](ch23-knowledge-base-verification.md) → [25](ch25-how-expert-systems-learn.md). Mục tiêu: Đưa ra phán quyết có thể tái lập với căn cứ bằng chứng, kiểm thử phủ định và thay đổi tri thức có kiểm soát. Sử dụng mô hình ngôn ngữ là không bắt buộc.
+**Kiểm chứng phần mềm bước đầu:** [1](../en/ch01-introduction-to-expert-systems.md) → [7](../en/ch07-knowledge-base-typology.md) → [8](../en/ch08-engineering-artifacts-as-data.md) → [17](../en/ch17-implementation-stack.md) → [23](../en/ch23-knowledge-base-verification.md) → [25](../en/ch25-how-expert-systems-learn.md). Mục tiêu: Đưa ra phán quyết có thể tái lập với căn cứ bằng chứng, kiểm thử phủ định và thay đổi tri thức có kiểm soát. Sử dụng mô hình ngôn ngữ là không bắt buộc.
 
-**Kỹ nghệ tri thức:** [Phần II](part-02-knowledge-models.md) → [Phần III](part-03-knowledge-engineering-nlp.md) → [19](ch19-from-question-to-evidence.md) → [20](ch20-explanation-engine.md) → [26](ch26-continual-learning.md). Mục tiêu: Điều phối ngữ nghĩa, nguồn gốc, thu nhận tri thức và xác thực các ứng viên mới. Phần II lưu giữ chương trình thử nghiệm khoa học xuyên suốt của các chương 7–11.
+**Kỹ nghệ tri thức:** [Phần II](../en/part-02-knowledge-models.md) → [Phần III](../en/part-03-knowledge-engineering-nlp.md) → [19](../en/ch19-from-question-to-evidence.md) → [20](../en/ch20-explanation-engine.md) → [26](../en/ch26-continual-learning.md). Mục tiêu: Điều phối ngữ nghĩa, nguồn gốc, thu nhận tri thức và xác thực các ứng viên mới. Phần II lưu giữ chương trình thử nghiệm khoa học xuyên suốt của các chương 7–11.
 
-**Kiến trúc giải pháp:** [16](ch16-expert-systems-architecture.md) → [19](ch19-from-question-to-evidence.md) → [31](ch31-syllogistic-reasoning-and-relation-lattices.md) → [20](ch20-explanation-engine.md) → [21](ch21-from-recommendation-to-action.md). Mục tiêu: Tách bạch việc kiểm tra căn cứ bằng chứng, áp dụng chuẩn mực, giải thích và thẩm quyền hành động.
+**Kiến trúc giải pháp:** [16](../en/ch16-expert-systems-architecture.md) → [19](../en/ch19-from-question-to-evidence.md) → [31](../en/ch31-syllogistic-reasoning-and-relation-lattices.md) → [20](../en/ch20-explanation-engine.md) → [21](../en/ch21-from-recommendation-to-action.md). Mục tiêu: Tách bạch việc kiểm tra căn cứ bằng chứng, áp dụng chuẩn mực, giải thích và thẩm quyền hành động.
 
-**Kiểm chứng và an toàn:** [23](ch23-knowledge-base-verification.md) → [36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) → [25](ch25-how-expert-systems-learn.md) → [26](ch26-continual-learning.md) → [27](ch27-safety-case-gsn-synthesis.md) → [30](ch30-safety-cybersecurity-co-engineering.md). Chẩn đoán hệ thống bên ngoài được xử lý riêng tại [Chương 24](ch24-system-diagnosis.md).
+**Kiểm chứng và an toàn:** [23](../en/ch23-knowledge-base-verification.md) → [36](../en/ch36-knowledge-testing-pyramid-and-variational-calibration.md) → [25](../en/ch25-how-expert-systems-learn.md) → [26](../en/ch26-continual-learning.md) → [27](../en/ch27-safety-case-gsn-synthesis.md) → [30](../en/ch30-safety-cybersecurity-co-engineering.md). Chẩn đoán hệ thống bên ngoài được xử lý riêng tại [Chương 24](../en/ch24-system-diagnosis.md).
 
-**Phản hồi lai và vận hành:** [Phần VI](part-06-frontiers-neuro-symbolic.md) → [Phần VII](part-07-runtime-and-knowledge-exchange.md) → [40](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) và các phụ lục liên quan. Mục tiêu: Tích hợp mô hình ngôn ngữ, quản lý lỗ hổng tri thức, xây dựng kiến trúc dịch vụ tri thức phân tán và kiểm chứng trao đổi liên hệ thống. Các chương [2](ch02-epistemology-of-machine-knowledge.md), [4](ch04-evolution-from-bayes-to-evidence-ai.md) và [6](ch06-applied-mathematics-for-expert-systems.md) có thể đọc như hợp đồng, lịch sử và tài liệu tham khảo toán học.
+**Phản hồi lai và vận hành:** [Phần VI](../en/part-06-frontiers-neuro-symbolic.md) → [Phần VII](../en/part-07-runtime-and-knowledge-exchange.md) → [40](../en/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) và các phụ lục liên quan. Mục tiêu: Tích hợp mô hình ngôn ngữ, quản lý lỗ hổng tri thức, xây dựng kiến trúc dịch vụ tri thức phân tán và kiểm chứng trao đổi liên hệ thống. Các chương [2](../en/ch02-epistemology-of-machine-knowledge.md), [4](../en/ch04-evolution-from-bayes-to-evidence-ai.md) và [6](../en/ch06-applied-mathematics-for-expert-systems.md) có thể đọc như hợp đồng, lịch sử và tài liệu tham khảo toán học.
 
 ---
 
@@ -168,103 +168,103 @@ flowchart TD
 
 ---
 
-### [Phần I. Nền tảng khái niệm và nhận thức luận](part-01-foundations.md)
+### [Phần I. Nền tảng khái niệm và nhận thức luận](../en/part-01-foundations.md)
 
 *Khi nào cần hệ chuyên gia, điều gì được coi là tri thức và làm thế nào để bảo toàn căn cứ của quyết định tổ chức.*
 
-* [Chương 1. Giới thiệu về Hệ Chuyên gia: Từ hỗn loạn đến tri thức được kiểm soát](ch01-introduction-to-expert-systems.md)
-* [Chương 2. Triết học cho Kỹ sư: Cỗ máy có quyền gọi điều gì là tri thức](ch02-epistemology-of-machine-knowledge.md)
-* [Chương 3. Hệ chuyên gia khác biệt căn bản như thế nào với hệ thống tra cứu thông tin](ch03-beyond-reference-information-systems.md)
-* [Chương 4. Sự tiến hóa của các hệ chuyên gia: Từ định lý Bayes đến các giải pháp AI dựa trên bằng chứng](ch04-evolution-from-bayes-to-evidence-ai.md)
-* [Chương 5. Bộ ba tin cậy: Hệ chuyên gia, khuyến nghị dựa trên bằng chứng và ký ức doanh nghiệp](ch05-triad-of-trust-and-corporate-memory.md)
+* [Chương 1. Giới thiệu về Hệ Chuyên gia: Từ hỗn loạn đến tri thức được kiểm soát](../en/ch01-introduction-to-expert-systems.md)
+* [Chương 2. Triết học cho Kỹ sư: Cỗ máy có quyền gọi điều gì là tri thức](../en/ch02-epistemology-of-machine-knowledge.md)
+* [Chương 3. Hệ chuyên gia khác biệt căn bản như thế nào với hệ thống tra cứu thông tin](../en/ch03-beyond-reference-information-systems.md)
+* [Chương 4. Sự tiến hóa của các hệ chuyên gia: Từ định lý Bayes đến các giải pháp AI dựa trên bằng chứng](../en/ch04-evolution-from-bayes-to-evidence-ai.md)
+* [Chương 5. Bộ ba tin cậy: Hệ chuyên gia, khuyến nghị dựa trên bằng chứng và ký ức doanh nghiệp](../en/ch05-triad-of-trust-and-corporate-memory.md)
 
 ---
 
-### [Phần II. Mô hình toán học, biểu diễn và lưu trữ tri thức](part-02-knowledge-models.md)
+### [Phần II. Mô hình toán học, biểu diễn và lưu trữ tri thức](../en/part-02-knowledge-models.md)
 
 *Lựa chọn các phép toán và dạng biểu diễn, hiện vật định kiểu, đồ thị truy xuất nguồn gốc và gói tri thức bất biến.*
 
-* [Chương 6. Toán ứng dụng cho các hệ chuyên gia: Quy tắc, xác suất, đồ thị và quan hệ nhân quả](ch06-applied-mathematics-for-expert-systems.md)
-* [Chương 7. Phân loại cơ sở tri thức: Quy tắc, bản thể học, án lệ và vector](ch07-knowledge-base-typology.md)
-* [Chương 8. Hiện vật kỹ thuật dưới dạng dữ liệu của hệ chuyên gia](ch08-engineering-artifacts-as-data.md)
-* [Chương 9. Đồ thị tri thức kỹ thuật: Truy xuất nguồn gốc từ yêu cầu đến phần cứng](ch09-engineering-knowledge-graph-traceability.md)
-* [Chương 32. Gói tri thức bất biến: Tiếp nhận cấp độ byte, chỉ mục và ánh xạ bộ nhớ](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)
+* [Chương 6. Toán ứng dụng cho các hệ chuyên gia: Quy tắc, xác suất, đồ thị và quan hệ nhân quả](../en/ch06-applied-mathematics-for-expert-systems.md)
+* [Chương 7. Phân loại cơ sở tri thức: Quy tắc, bản thể học, án lệ và vector](../en/ch07-knowledge-base-typology.md)
+* [Chương 8. Hiện vật kỹ thuật dưới dạng dữ liệu của hệ chuyên gia](../en/ch08-engineering-artifacts-as-data.md)
+* [Chương 9. Đồ thị tri thức kỹ thuật: Truy xuất nguồn gốc từ yêu cầu đến phần cứng](../en/ch09-engineering-knowledge-graph-traceability.md)
+* [Chương 32. Gói tri thức bất biến: Tiếp nhận cấp độ byte, chỉ mục và ánh xạ bộ nhớ](../en/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)
 
 ---
 
-### [Phần III. Thu nhận tri thức, phân tích ngôn ngữ và đánh giá đầu vào](part-03-knowledge-engineering-nlp.md)
+### [Phần III. Thu nhận tri thức, phân tích ngôn ngữ và đánh giá đầu vào](../en/part-03-knowledge-engineering-nlp.md)
 
 *Tài liệu, kinh nghiệm chuyên gia và quan sát: Trích xuất ứng viên, phân tích ngôn ngữ, hình thức hóa và đánh giá bằng chứng.*
 
-* [Chương 10. Hệ thống thu nhận tri thức: Nguồn gốc, phê duyệt và vòng đời](ch10-knowledge-acquisition-systems.md)
-* [Chương 11. Khai thác tri thức từ chuyên gia: Phỏng vấn, bản đồ nhận thức và hình thức hóa kinh nghiệm](ch11-knowledge-elicitation-from-experts.md)
-* [Chương 12. Phân tích ngôn ngữ và mô hình cục bộ: Bảo toàn ngữ nghĩa và nguồn gốc](ch12-linguistic-analysis-and-local-models.md)
-* [Chương 13. Tính biến thiên của ngôn ngữ tự nhiên đối đầu với tính tất định: Biên dịch ý nghĩa câu hỏi](ch13-language-variability-vs-determinism.md)
-* [Chương 14. Phát hiện yêu cầu và phương thái: Từ văn bản quy chuẩn đến các bất biến](ch14-requirements-detection-and-formalization.md)
-* [Chương 15. Trích xuất tri thức và xây dựng cơ sở tri thức: Sự thật, ngữ pháp và máy tự động](ch15-knowledge-extraction-and-kb-construction.md)
-* [Chương 37. Đánh giá thông tin đầu vào: Nguồn gốc, bằng chứng và sự không chắc chắn](ch37-input-information-assessment-and-algorithmic-skepticism.md)
+* [Chương 10. Hệ thống thu nhận tri thức: Nguồn gốc, phê duyệt và vòng đời](../en/ch10-knowledge-acquisition-systems.md)
+* [Chương 11. Khai thác tri thức từ chuyên gia: Phỏng vấn, bản đồ nhận thức và hình thức hóa kinh nghiệm](../en/ch11-knowledge-elicitation-from-experts.md)
+* [Chương 12. Phân tích ngôn ngữ và mô hình cục bộ: Bảo toàn ngữ nghĩa và nguồn gốc](../en/ch12-linguistic-analysis-and-local-models.md)
+* [Chương 13. Tính biến thiên của ngôn ngữ tự nhiên đối đầu với tính tất định: Biên dịch ý nghĩa câu hỏi](../en/ch13-language-variability-vs-determinism.md)
+* [Chương 14. Phát hiện yêu cầu và phương thái: Từ văn bản quy chuẩn đến các bất biến](../en/ch14-requirements-detection-and-formalization.md)
+* [Chương 15. Trích xuất tri thức và xây dựng cơ sở tri thức: Sự thật, ngữ pháp và máy tự động](../en/ch15-knowledge-extraction-and-kb-construction.md)
+* [Chương 37. Đánh giá thông tin đầu vào: Nguồn gốc, bằng chứng và sự không chắc chắn](../en/ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
-### [Phần IV. Kiến trúc, ngăn xếp công nghệ, suy diễn và hành động](part-04-architecture-and-inference.md)
+### [Phần IV. Kiến trúc, ngăn xếp công nghệ, suy diễn và hành động](../en/part-04-architecture-and-inference.md)
 
 *Hợp đồng kiến trúc, ngăn xếp công nghệ, thực thi phần cứng, kiểm tra khẳng định, suy diễn theo quy chuẩn, giải thích và vòng điều khiển điều khiển học.*
 
-* [Chương 16. Kiến trúc hệ chuyên gia: Từ tri thức hình thức đến quyết định dựa trên bằng chứng](ch16-expert-systems-architecture.md)
-* [Chương 17. Ngăn xếp công nghệ: Tiêu chí lựa chọn công cụ, ngôn ngữ lập trình và công cụ quy tắc](ch17-implementation-stack.md)
-* [Chương 18. Hạ tầng thực thi: Mô hình cục bộ, bộ tăng tốc phần cứng, Edge và On-Premise](ch18-execution-infrastructure.md)
-* [Chương 19. Từ câu hỏi đến bằng chứng: Tìm kiếm, neo giữ và kiểm tra khẳng định](ch19-from-question-to-evidence.md)
-* [Chương 31. Suy luận theo quy chuẩn: Phân cấp vị từ, ngoại lệ và hiệu lực](ch31-syllogistic-reasoning-and-relation-lattices.md)
-* [Chương 20. Công cụ giải thích: Quyết định, từ chối và giới hạn năng lực](ch20-explanation-engine.md)
-* [Chương 21. Từ khuyến nghị đến hành động: Kiểm soát thẩm quyền và thực thi an toàn trong môi trường sản xuất](ch21-from-recommendation-to-action.md)
-* [Chương 22. Vòng điều khiển điều khiển học: Cảm biến, thiết bị ngoại vi và phản hồi](ch22-cybernetics-edge-to-backend.md)
+* [Chương 16. Kiến trúc hệ chuyên gia: Từ tri thức hình thức đến quyết định dựa trên bằng chứng](../en/ch16-expert-systems-architecture.md)
+* [Chương 17. Ngăn xếp công nghệ: Tiêu chí lựa chọn công cụ, ngôn ngữ lập trình và công cụ quy tắc](../en/ch17-implementation-stack.md)
+* [Chương 18. Hạ tầng thực thi: Mô hình cục bộ, bộ tăng tốc phần cứng, Edge và On-Premise](../en/ch18-execution-infrastructure.md)
+* [Chương 19. Từ câu hỏi đến bằng chứng: Tìm kiếm, neo giữ và kiểm tra khẳng định](../en/ch19-from-question-to-evidence.md)
+* [Chương 31. Suy luận theo quy chuẩn: Phân cấp vị từ, ngoại lệ và hiệu lực](../en/ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Chương 20. Công cụ giải thích: Quyết định, từ chối và giới hạn năng lực](../en/ch20-explanation-engine.md)
+* [Chương 21. Từ khuyến nghị đến hành động: Kiểm soát thẩm quyền và thực thi an toàn trong môi trường sản xuất](../en/ch21-from-recommendation-to-action.md)
+* [Chương 22. Vòng điều khiển điều khiển học: Cảm biến, thiết bị ngoại vi và phản hồi](../en/ch22-cybernetics-edge-to-backend.md)
 
 ---
 
-### [Phần V. Kiểm chứng, thử nghiệm, chẩn đoán và biện minh an toàn](part-05-verification-and-learning.md)
+### [Phần V. Kiểm chứng, thử nghiệm, chẩn đoán và biện minh an toàn](../en/part-05-verification-and-learning.md)
 
 *Kiểm chứng hình thức các quy tắc, kim tự tháp kiểm thử tri thức, bác bỏ kiểu Popper, chẩn đoán kỹ thuật cùng lập luận an toàn chức năng và an ninh mạng.*
 
-* [Chương 23. Kiểm chứng cơ sở tri thức: Cách kiểm tra tính nhất quán, tính đầy đủ và độ tin cậy của quy tắc](ch23-knowledge-base-verification.md)
-* [Chương 36. Kim tự tháp kiểm thử tri thức: Quy tắc, tương tác và độ ổn định của câu trả lời](ch36-knowledge-testing-pyramid-and-variational-calibration.md)
-* [Chương 39. Người kiểm thử chuyên gia chủ động: Bác bỏ kiểu Popper, tuân thủ tiêu chuẩn (ASPICE/ISO 26262/ISO 21434) và tự chủ thiết kế thử nghiệm](ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Chương 24. Chẩn đoán kỹ thuật: Cách tránh nhầm lẫn giữa triệu chứng và nguyên nhân gốc trong điều kiện thiếu thông tin](ch24-system-diagnosis.md)
-* [Chương 27. Biện minh an toàn: Tổng hợp và xác thực các luận điểm](ch27-safety-case-gsn-synthesis.md)
-* [Chương 30. Kỹ nghệ đồng thời giữa an toàn chức năng và an ninh mạng](ch30-safety-cybersecurity-co-engineering.md)
+* [Chương 23. Kiểm chứng cơ sở tri thức: Cách kiểm tra tính nhất quán, tính đầy đủ và độ tin cậy của quy tắc](../en/ch23-knowledge-base-verification.md)
+* [Chương 36. Kim tự tháp kiểm thử tri thức: Quy tắc, tương tác và độ ổn định của câu trả lời](../en/ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Chương 39. Người kiểm thử chuyên gia chủ động: Bác bỏ kiểu Popper, tuân thủ tiêu chuẩn (ASPICE/ISO 26262/ISO 21434) và tự chủ thiết kế thử nghiệm](../en/ch39-active-compliance-auditor-and-popperian-testing.md)
+* [Chương 24. Chẩn đoán kỹ thuật: Cách tránh nhầm lẫn giữa triệu chứng và nguyên nhân gốc trong điều kiện thiếu thông tin](../en/ch24-system-diagnosis.md)
+* [Chương 27. Biện minh an toàn: Tổng hợp và xác thực các luận điểm](../en/ch27-safety-case-gsn-synthesis.md)
+* [Chương 30. Kỹ nghệ đồng thời giữa an toàn chức năng và an ninh mạng](../en/ch30-safety-cybersecurity-co-engineering.md)
 
 ---
 
-### [Phần VI. Mô hình thần kinh - ký hiệu, tiền tuyến nhận thức và học tập liên tục](part-06-frontiers-neuro-symbolic.md)
+### [Phần VI. Mô hình thần kinh - ký hiệu, tiền tuyến nhận thức và học tập liên tục](../en/part-06-frontiers-neuro-symbolic.md)
 
 *Suy luận chặt chẽ và giả thuyết tư vấn, tích hợp mô hình ngôn ngữ, lỗ hổng tri thức, kiểm soát phản hồi vô căn cứ, ma trận khảo hạch và học tập liên tục từ thực tế.*
 
-* [Chương 28. Hệ chuyên gia chế độ kép: Suy luận nghiêm ngặt và giả thuyết tư vấn](ch28-dual-mode-expert-systems.md)
-* [Chương 29. Kiến trúc thần kinh - ký hiệu: Mô hình ngôn ngữ và kiểm tra căn cứ bằng chứng](ch29-neuro-symbolic-architecture.md)
-* [Chương 34. Lỗ hổng tri thức: Tìm kiếm quan hệ, suy đoán và đối thoại làm rõ](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
-* [Chương 38. Ảo giác máy móc và thiếu hụt tri thức: Kiểm soát phản hồi dựa trên bằng chứng](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Chương 25. Cách huấn luyện hệ chuyên gia: Ma trận khảo hạch, kiểm toán tri thức và kiểm soát suy thoái](ch25-how-expert-systems-learn.md)
-* [Chương 26. Học tập liên tục (Continual Learning) từ kinh nghiệm và vượt qua hiện tượng trôi dạt nhật ký hệ thống](ch26-continual-learning.md)
+* [Chương 28. Hệ chuyên gia chế độ kép: Suy luận nghiêm ngặt và giả thuyết tư vấn](../en/ch28-dual-mode-expert-systems.md)
+* [Chương 29. Kiến trúc thần kinh - ký hiệu: Mô hình ngôn ngữ và kiểm tra căn cứ bằng chứng](../en/ch29-neuro-symbolic-architecture.md)
+* [Chương 34. Lỗ hổng tri thức: Tìm kiếm quan hệ, suy đoán và đối thoại làm rõ](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Chương 38. Ảo giác máy móc và thiếu hụt tri thức: Kiểm soát phản hồi dựa trên bằng chứng](../en/ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
+* [Chương 25. Cách huấn luyện hệ chuyên gia: Ma trận khảo hạch, kiểm toán tri thức và kiểm soát suy thoái](../en/ch25-how-expert-systems-learn.md)
+* [Chương 26. Học tập liên tục (Continual Learning) từ kinh nghiệm và vượt qua hiện tượng trôi dạt nhật ký hệ thống](../en/ch26-continual-learning.md)
 
 ---
 
-### [Phần VII. Thực thi phản ứng, chia sẻ tri thức liên hệ thống và SOA phân tán](part-07-runtime-and-knowledge-exchange.md)
+### [Phần VII. Thực thi phản ứng, chia sẻ tri thức liên hệ thống và SOA phân tán](../en/part-07-runtime-and-knowledge-exchange.md)
 
 *Thực thi quy tắc phản ứng, hiệp đồng học và chuyển pha tri thức, trao đổi liên hệ thống và kiến trúc nhận thức phân tán quy mô doanh nghiệp.*
 
-* [Chương 35. Hệ chuyên gia phản ứng: Sự kiện, thu hồi và thích ứng tri thức](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
-* [Chương 33. Trao đổi tri thức liên hệ thống: Phân phối quy tắc cho hệ thống bên ngoài, huấn luyện mô hình và phản hồi an toàn](ch33-inter-system-knowledge-exchange-and-model-teaching.md)
-* [Chương 40. Kiến trúc phân tán của hệ chuyên gia dựa trên bằng chứng: SOA nhận thức, định tuyến ngữ nghĩa, phân cấp bộ nhớ và trọng tài đa nguồn](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)
+* [Chương 35. Hệ chuyên gia phản ứng: Sự kiện, thu hồi và thích ứng tri thức](../en/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
+* [Chương 33. Trao đổi tri thức liên hệ thống: Phân phối quy tắc cho hệ thống bên ngoài, huấn luyện mô hình và phản hồi an toàn](../en/ch33-inter-system-knowledge-exchange-and-model-teaching.md)
+* [Chương 40. Kiến trúc phân tán của hệ chuyên gia dựa trên bằng chứng: SOA nhận thức, định tuyến ngữ nghĩa, phân cấp bộ nhớ và trọng tài đa nguồn](../en/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)
 
 ---
 
 ### Phụ lục
 
-* [Phụ lục A. Khung thực hành cho nghiên cứu dựa trên bằng chứng trong các dự án kỹ thuật phức tạp](appendix-a-evidence-governed-framework.md)
-* [Phụ lục B. Hệ chuyên gia dựa trên bằng chứng trong robot tự hành và phức hợp mạng - vật lý](appendix-b-robotics-and-cyber-physical-systems.md)
-* [Phụ lục C. Điều hướng tự hành không GNSS: Khớp không gian địa lý (TRN/DSMAC), đo cự ly thị giác (VIO) và trọng tài chuyên gia trong hợp nhất cảm biến](appendix-c-autonomous-navigation-and-geosearch.md)
-* [Phụ lục D. Hệ chuyên gia tương tự, tính toán neuromorphic và suy luận logic phần cứng](appendix-d-analog-expert-systems-and-neuromorphic-computing.md)
-* [Phụ lục E. Hệ chuyên gia tín hiệu hỗn hợp tương tự - số: Tính toán neuromorphic, tương tự và phi truyền thống dưới sự giám sát của bằng chứng](appendix-e-mixed-signal-neuromorphic-expert-systems.md)
-* [Về tác giả: Mykola Fedchyk (Nick Fedchik)](about-the-author.md)
+* [Phụ lục A. Khung thực hành cho nghiên cứu dựa trên bằng chứng trong các dự án kỹ thuật phức tạp](../en/appendix-a-evidence-governed-framework.md)
+* [Phụ lục B. Hệ chuyên gia dựa trên bằng chứng trong robot tự hành và phức hợp mạng - vật lý](../en/appendix-b-robotics-and-cyber-physical-systems.md)
+* [Phụ lục C. Điều hướng tự hành không GNSS: Khớp không gian địa lý (TRN/DSMAC), đo cự ly thị giác (VIO) và trọng tài chuyên gia trong hợp nhất cảm biến](../en/appendix-c-autonomous-navigation-and-geosearch.md)
+* [Phụ lục D. Hệ chuyên gia tương tự, tính toán neuromorphic và suy luận logic phần cứng](../en/appendix-d-analog-expert-systems-and-neuromorphic-computing.md)
+* [Phụ lục E. Hệ chuyên gia tín hiệu hỗn hợp tương tự - số: Tính toán neuromorphic, tương tự và phi truyền thống dưới sự giám sát của bằng chứng](../en/appendix-e-mixed-signal-neuromorphic-expert-systems.md)
+* [Về tác giả: Mykola Fedchyk (Nick Fedchik)](../en/about-the-author.md)
 
 ---
 
@@ -272,4 +272,4 @@ flowchart TD
 
 Các định hướng nghiên cứu tương lai không phải là những bảo đảm có sẵn: Việc đóng gói tri thức có thể tái lập; kiểm chứng các dạng biểu diễn hình thức giới hạn; quản trị các tác tử thông qua quyền hạn rõ ràng; kiểm tra bảo mật các khẳng định hình thức cụ thể; thu hồi có kiểm soát và nghiên cứu xóa bỏ dữ liệu học máy (machine unlearning). Việc chứng minh một đặc tính của mô hình không tự động chứng nhận sự phù hợp của sản phẩm vật lý, và việc xóa bỏ một quy tắc không đồng nghĩa với việc xóa sạch ảnh hưởng của dữ liệu khỏi mô hình đã huấn luyện.
 
-Đối với các bộ tăng tốc phần cứng và kiến trúc tính toán phi truyền thống, trước hết cần đo đạc chính xác tỷ lệ sai số, độ trễ, mức tiêu thụ năng lượng và hành vi khi xảy ra sự cố. Các vấn đề liên quan được xem xét tại [Chương 29](ch29-neuro-symbolic-architecture.md), [Chương 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) cùng [Phụ lục D](appendix-d-analog-expert-systems-and-neuromorphic-computing.md) và [Phụ lục E](appendix-e-mixed-signal-neuromorphic-expert-systems.md). Chương trình nghiên cứu thực hành cho các chương 7–11 được trình bày tại [Phần II](part-02-knowledge-models.md): Mỗi đề xuất đều có giả thuyết, đối chứng so sánh và điều kiện bác bỏ rõ ràng.
+Đối với các bộ tăng tốc phần cứng và kiến trúc tính toán phi truyền thống, trước hết cần đo đạc chính xác tỷ lệ sai số, độ trễ, mức tiêu thụ năng lượng và hành vi khi xảy ra sự cố. Các vấn đề liên quan được xem xét tại [Chương 29](../en/ch29-neuro-symbolic-architecture.md), [Chương 32](../en/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) cùng [Phụ lục D](../en/appendix-d-analog-expert-systems-and-neuromorphic-computing.md) và [Phụ lục E](../en/appendix-e-mixed-signal-neuromorphic-expert-systems.md). Chương trình nghiên cứu thực hành cho các chương 7–11 được trình bày tại [Phần II](../en/part-02-knowledge-models.md): Mỗi đề xuất đều có giả thuyết, đối chứng so sánh và điều kiện bác bỏ rõ ràng.

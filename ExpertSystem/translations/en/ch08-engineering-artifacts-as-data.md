@@ -242,7 +242,7 @@ for each line in file:
     if line starts with '#'       -> node "heading", level = count of '#'
     if line matches '| ... |'     -> node "table_row"
     if line starts with '- '      -> node "list_item"
-    if line contains '[text](target)' -> edge (text, target)
+    if line contains '[text](https://...)' -> edge (text, target)
 assemble nodes into a tree based on heading hierarchy
 ```
 

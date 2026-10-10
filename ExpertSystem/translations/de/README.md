@@ -105,7 +105,7 @@ Die Teile des Werkes sind nach ingenieurtechnischen Aufgaben strukturiert, nicht
 | Prüfung & Benchmark | Wie werden Fehler systematisch aufgedeckt? | Ergebnis gegen unabhängige Kriterien messen |
 | Fazit & Grenzen | Was ist bewiesen und was bleibt offen? | Kernfrage ohne Übertreibungen beantworten |
 
-Der redaktionelle Prüfbericht ([editorial-structure-review.md](editorial-structure-review.md)) enthält die thematische Bewertung aller Kapitel.
+Der redaktionelle Prüfbericht zur Monografiestruktur enthält die thematische Bewertung aller Kapitel.
 
 ## Lesepfade
 

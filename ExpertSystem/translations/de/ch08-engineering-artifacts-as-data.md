@@ -242,7 +242,7 @@ Für jede Zeile:
     Wenn Zeile mit '#' beginnt       -> Knoten «Überschrift», Ebene = Anzahl der '#'
     Wenn Zeile Muster '| ... |' hat -> Tabellenzeile
     Wenn Zeile mit '- ' beginnt      -> Listenelement
-    Wenn Zeile '[Text](Ziel)' enthält -> Relation (Text, Ziel)
+    Wenn Zeile '[Text](https://...)' enthält -> Relation (Text, Ziel)
 Füge Knoten entsprechend den Überschriftenebenen zu einem Baum zusammen
 ```
 

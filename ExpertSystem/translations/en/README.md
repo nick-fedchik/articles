@@ -109,7 +109,7 @@ Section classes within chapters establish a structured argument rather than a ca
 
 Geography, specific industrial sectors, and proprietary commercial platforms serve as application contexts rather than distinct tiers in this taxonomy. Glossaries, abbreviations, bibliographies, and index navigation form reference apparatuses rather than standalone chapter themes.
 
-The complete [editorial review](editorial-structure-review.md) provides an evaluation of each chapter's core theme, boundaries between adjacent topics, and compositional notes. Updating an abstract does not imply that all internal compositional risks within chapters have been resolved.
+The editorial structure review provides an evaluation of each chapter's core theme, boundaries between adjacent topics, and compositional notes. Updating an abstract does not imply that all internal compositional risks within chapters have been resolved.
 
 ## Reading Roadmaps
 

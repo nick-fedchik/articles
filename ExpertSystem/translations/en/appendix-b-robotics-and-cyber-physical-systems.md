@@ -566,7 +566,7 @@ Consider an operational scenario where, during joint rotation, an independent cu
 
 ## 7. Autonomy Under Loss of Communication and in Electronic Warfare Environments
 
-In field robotics and defense deployments ([Military Expert Systems](../MilTech/Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md)), communication channels to base stations are routinely jammed, intercepted, or completely severed. The onboard control architecture must therefore implement a deterministic degradation state machine aligned with [Chapter 22](ch22-cybernetics-edge-to-backend.md).
+In field robotics and defense deployments ([Military Expert Systems](../../../MilTech/Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md)), communication channels to base stations are routinely jammed, intercepted, or completely severed. The onboard control architecture must therefore implement a deterministic degradation state machine aligned with [Chapter 22](ch22-cybernetics-edge-to-backend.md).
 
 ```mermaid
 stateDiagram-v2
@@ -658,7 +658,7 @@ The witness-integrity implementation codifies an evidentiary sensor contract bui
 3. **Physically Impossible Payloads Are Rejected at the Source:** Consistency checks execute prior to signature generation: a frame claiming more confirmed detections than processed time samples is physically invalid; the secure element aborts signing rather than endorsing corrupt data.
 4. **Receivers Recompute Verdicts Independently:** The receiving controller verifies the signature and recomputes the logical verdict against identical evidentiary rules; any discrepancy between the claimed status and recomputed verdict immediately collapses epistemic trust.
 
-For an onboard expert system, this design ensures that facts supplied by external sensors enter the reasoning base only when accompanied by signed feature records and successful independent recomputation. Hardware roots of trust and anti-spoofing architectures are analyzed in detail in the author's dedicated treatise [Hardware Root of Trust and Anti-Spoofing in Military IoT Systems](../MilTech/Hardware-Root-Of-Trust-And-Anti-Spoofing-Military-IoT-UA.md).
+For an onboard expert system, this design ensures that facts supplied by external sensors enter the reasoning base only when accompanied by signed feature records and successful independent recomputation. Hardware roots of trust and anti-spoofing architectures are analyzed in detail in the author's dedicated treatise [Hardware Root of Trust and Anti-Spoofing in Military IoT Systems](../../../MilTech/Hardware-Root-Of-Trust-And-Anti-Spoofing-Military-IoT-UA.md).
 
 ## 9. Non-Functional Interfaces and Assumption Boundaries Prior to Integration
 

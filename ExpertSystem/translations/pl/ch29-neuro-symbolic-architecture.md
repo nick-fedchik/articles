@@ -1,10 +1,10 @@
 # Rozdział 29. Architektura neuro-symboliczna: modele językowe i dowodowa weryfikacja faktów
 
-> **Książka:** [Architektura dowodowych systemów eksperckich](README.md) · [Część VI: Modele neuro-symboliczne, granice poznawcze i uczenie ciągłe](part-06-frontiers-neuro-symbolic.md)  
-> **Poprzedni rozdział:** [Rozdział 28. Dwutrybowe systemy eksperckie: ścisła dedukcja i hipoteza doradcza](ch28-dual-mode-expert-systems.md)  
-> **Następny rozdział:** [Rozdział 34. Luki w wiedzy: wyszukiwanie relacyjne, abdukcja i dialog doprecyzowujący](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
+> **Książka:** [Architektura dowodowych systemów eksperckich](README.md) · [Część VI: Modele neuro-symboliczne, granice poznawcze i uczenie ciągłe](../en/part-06-frontiers-neuro-symbolic.md)  
+> **Poprzedni rozdział:** [Rozdział 28. Dwutrybowe systemy eksperckie: ścisła dedukcja i hipoteza doradcza](../en/ch28-dual-mode-expert-systems.md)  
+> **Następny rozdział:** [Rozdział 34. Luki w wiedzy: wyszukiwanie relacyjne, abdukcja i dialog doprecyzowujący](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
 > **Spis treści:** [README.md](README.md)  
-> **Autor:** [Mykola Fedchyk](about-the-author.md)  
+> **Autor:** [Mykola Fedchyk](../en/about-the-author.md)  
 > **Poziom:** Zaawansowany: architekci systemowi, inżynierowie uczenia maszynowego, programiści systemów o znaczeniu krytycznym  
 > **Oczekiwane rezultaty:** Wyjaśnienie, dlaczego prawdopodobieństwo tekstu nie stanowi dowodu; rozdzielenie zadań między model językowy proponujący fakty a symboliczny rdzeń je zatwierdzający; budowa bajtowej bramy dopuszczenia z rejestrem wersji, zamkniętym słownikiem relacji, weryfikacją cytatów i kontrolą wartości; ograniczanie wyjścia modeli lokalnych schematem JSON w Ollama; audyt wyjaśnień pod kątem niezweryfikowanych liczb; odróżnianie modelu zaadaptowanego od bazowego na przypadkach brzegowych.
 
@@ -12,7 +12,7 @@
 
 Rozdział analizuje architekturę neuro-symboliczną systemów eksperckich trzeciej fali sztucznej inteligencji (NeSy), łączącą elastyczność przetwarzania języka naturalnego przez duże i małe modele językowe (LLM/SLM) ze ścisłą weryfikowalnością deterministycznego rdzenia symbolicznego. Zbadano fundamentalną lukę epistemiczną dzielącą statystyczne prawdopodobieństwo tekstu autoregresyjnego od prawdy formalnej w domenach o krytycznym znaczeniu dla bezpieczeństwa (ISO 26262 ASIL D, DO-178C DAL A). Sformułowano zasadę architektoniczną: „Model proponuje, rdzeń symboliczny zatwierdza”. Przeanalizowano doświadczenia wiodących ośrodków badawczych i przemysłowych (AlphaProof z DeepMind, Process Reward Models z OpenAI, Cicero z Meta FAIR, potoki DSPy z Uniwersytetu Stanforda, szkoły MIT CSAIL i Imperial College London). Szczegółowo opisano konstrukcję bajtowej bramy dopuszczenia weryfikującej współrzędne cytatów, schematy JSON, słowniki zamknięte oraz blokującej halucynacje liczbowe. Przedstawiono pełną, produkcyjną implementację potoku w języku Go z lokalnym modelem uruchamianym przez środowisko Ollama.
 
-Gdy inżynier projektujący wbudowany sterownik hamulcowy lub awionikę zapyta asystenta generatywnego: „Jaki jest maksymalny czas reakcji watchdoga bezpieczeństwa?”, model natychmiast i przekonująco odpowie: „100 milisekund”. Jednak w specyfikacji normatywnej dla poziomu ASIL D (ISO 26262) lub DAL A (DO-178C) zapisano bezwzględne 10 milisekund: pozostałe 90 ms to statystyczna halucynacja zaczerpnięta z opisów mikrokontrolerów konsumenckich. Zaufanie autorytatywnie brzmiącej odpowiedzi doprowadzi do awarii i spóźnionego restartu kontrolera w warunkach krytycznych. Z kolei klasyczny silnik reguł z [Rozdziału 28](ch28-dual-mode-expert-systems.md) zna poprawną odpowiedź z cytatem z normy, lecz odmówi odpowiedzi, jeśli zapytanie sformułowano językiem potocznym („watchdog procesora”), podczas gdy w bazie zarejestrowano „sprzętowy timer bezpieczeństwa WDOG-1”. Pierwszy system jest niebezpieczny z powodu halucynacji; drugi jest bezużyteczny w codziennej pracy przez nadmierną sztywność.
+Gdy inżynier projektujący wbudowany sterownik hamulcowy lub awionikę zapyta asystenta generatywnego: „Jaki jest maksymalny czas reakcji watchdoga bezpieczeństwa?”, model natychmiast i przekonująco odpowie: „100 milisekund”. Jednak w specyfikacji normatywnej dla poziomu ASIL D (ISO 26262) lub DAL A (DO-178C) zapisano bezwzględne 10 milisekund: pozostałe 90 ms to statystyczna halucynacja zaczerpnięta z opisów mikrokontrolerów konsumenckich. Zaufanie autorytatywnie brzmiącej odpowiedzi doprowadzi do awarii i spóźnionego restartu kontrolera w warunkach krytycznych. Z kolei klasyczny silnik reguł z [Rozdziału 28](../en/ch28-dual-mode-expert-systems.md) zna poprawną odpowiedź z cytatem z normy, lecz odmówi odpowiedzi, jeśli zapytanie sformułowano językiem potocznym („watchdog procesora”), podczas gdy w bazie zarejestrowano „sprzętowy timer bezpieczeństwa WDOG-1”. Pierwszy system jest niebezpieczny z powodu halucynacji; drugi jest bezużyteczny w codziennej pracy przez nadmierną sztywność.
 
 Rozdział odpowiada na pytanie: **jak połączyć elastyczność modelu językowego ze ścisłością rdzenia symbolicznego, aby żadne niezweryfikowane twierdzenie nie trafiło do odpowiedzi?** Główna teza: **model językowy proponuje, rdzeń symboliczny zatwierdza. Model interpretuje zapytanie, proponuje fakty kandydackie z dosłownymi cytatami i formułuje wyjaśnienia. Brama dopuszczenia weryfikuje każdego kandydata według rejestru wersji dokumentów, zamkniętego słownika relacji, bajtów cytatu i wartości. Wnioski wyprowadzają wyłącznie deterministyczne reguły nad dopuszczonymi faktami, a wszystko, co nie przeszło weryfikacji, staje się odmową lub oznaczoną hipotezą.** Rozdział ilustruje tę architekturę działającym programem w języku Go z modelem lokalnym przez Ollama.
 
@@ -41,7 +41,7 @@ Model wyznacza maksimum wiarygodności statystycznej wśród kandydatów, a nie 
 
 Najbardziej prawdopodobna sekwencja nie musi być poprawna. Adam Kalai i współpracownicy wykazali, że halucynacje wynikają bezpośrednio z presji statystycznej uczenia: gdy model nie potrafi odróżnić prawdy od fałszu, mechanizmy oceny nagradzają zgadywanie zamiast przyznania się do niewiedzy [[1]](#src-1). Wniosek inżynierski: brama dopuszczenia musi nagradzać odmowę, a nie pewne siebie zgadywanie.
 
-Wysoka dokładność modelu na testach benchmarkowych nie wystarcza w systemach krytycznych. Ricky Butler i George Finelli udowodnili, że ilościowe potwierdzenie ultrawysokiej niezawodności oprogramowania metodami statystycznymi jest niemożliwe z powodu zaporowej liczby wymaganych testów [[2]](#src-2). Skoro niezawodności nie da się dowieść testowaniem kodu deterministycznego, tym bardziej nie da się jej dowieść testowaniem modeli stochastycznych. Zaufanie należy budować na strukturze weryfikowalnej: cytacie, regule i formalnym argumencie z [Rozdziału 27](ch27-safety-case-gsn-synthesis.md).
+Wysoka dokładność modelu na testach benchmarkowych nie wystarcza w systemach krytycznych. Ricky Butler i George Finelli udowodnili, że ilościowe potwierdzenie ultrawysokiej niezawodności oprogramowania metodami statystycznymi jest niemożliwe z powodu zaporowej liczby wymaganych testów [[2]](#src-2). Skoro niezawodności nie da się dowieść testowaniem kodu deterministycznego, tym bardziej nie da się jej dowieść testowaniem modeli stochastycznych. Zaufanie należy budować na strukturze weryfikowalnej: cytacie, regule i formalnym argumencie z [Rozdziału 27](../en/ch27-safety-case-gsn-synthesis.md).
 
 Rozumowanie krok po kroku generowane przez model nie zastępuje weryfikacji. Jason Wei i współpracownicy wykazali, że technika łańcucha myśli (*Chain of Thought, CoT*) podnosi trafność odpowiedzi [[3]](#src-3). Jednak Miles Turpin i współpracownicy odkryli, że takie wyjaśnienia systematycznie zniekształcają rzeczywistą przyczynę odpowiedzi: gdy model nakierowano na błędną odpowiedź ukrytą cechą w prompcie, generował on przekonujące uzasadnienie błędu bez wzmianki o tej cesze, a dokładność spadała do 36% [[4]](#src-4). Łańcuch myśli jest tekstem, a nie formalnym dowodem.
 
@@ -144,8 +144,8 @@ Część symboliczna zabezpiecza trzy niezmienniki:
 | Planowanie struktury | Dzieli zapytanie na encję, relację i zakres | Przynależność relacji do zamkniętego słownika ontologii |
 | Ekstrakcja kandydatów | Proponuje krotki faktów z dosłownymi cytatami | Hash rewizji, granice bajtów i dosłowność wartości |
 | Formułowanie wyjaśnień | Generuje spójny tekst na bazie drzewa dowodu | Każda liczba i identyfikator musi występować w faktach |
-| Hipotezy doradcze | Proponuje przypuszczenia w trybie doradczym | Izolacja od faktów pewnych, oznaczenie hipotezy ([Rozdział 28](ch28-dual-mode-expert-systems.md)) |
-| Generalizacja reguł | Proponuje nowe reguły na podstawie precedensów | Kwarantanna kandydatów, testy sprzeczności ([Rozdział 26](ch26-continual-learning.md)) |
+| Hipotezy doradcze | Proponuje przypuszczenia w trybie doradczym | Izolacja od faktów pewnych, oznaczenie hipotezy ([Rozdział 28](../en/ch28-dual-mode-expert-systems.md)) |
+| Generalizacja reguł | Proponuje nowe reguły na podstawie precedensów | Kwarantanna kandydatów, testy sprzeczności ([Rozdział 26](../en/ch26-continual-learning.md)) |
 
 Model pozostaje doradcą; ostateczna decyzja należy do deterministycznej weryfikacji.
 
@@ -275,7 +275,7 @@ Cytaty muszą być sprawdzane na poziomie bajtów, ponieważ pliki przechowywane
 
 Brama wykonuje pięć kontroli w stałej kolejności:
 
-1. **Rejestr wersji:** Suma SHA-256 dokumentu musi zgadzać się z wersją zatwierdzoną w rejestrze źródeł ([Rozdział 15](ch15-knowledge-extraction-and-kb-construction.md)).
+1. **Rejestr wersji:** Suma SHA-256 dokumentu musi zgadzać się z wersją zatwierdzoną w rejestrze źródeł ([Rozdział 15](../en/ch15-knowledge-extraction-and-kb-construction.md)).
 2. **Odmowa modelu:** Gdy model sygnalizuje brak odpowiedzi w passusie, rejestruje się to jako wynik poprawny.
 3. **Zamknięty słownik:** Relacja musi należeć do zbioru relacji obsługiwanych przez rdzeń reguł.
 4. **Dosłowność cytatu:** Bajty dokumentu w zadanym przedziale muszą dokładnie odpowiadać cytatowi.
@@ -285,7 +285,7 @@ Ta sama rygorystyczna kontrola obejmuje generowane wyjaśnienia: każda liczba w
 
 ## 6. Lokalne małe modele językowe (SLM) jako deterministyczne generatory kandydatów
 
-Uruchamianie modeli SLM (1–8 mld parametrów) w środowisku lokalnym gwarantuje poufność dokumentacji technicznej ([Rozdział 25](ch25-how-expert-systems-learn.md)). Zadanie ekstrakcji nie wymaga potężnego modelu ogólnego, lecz żelaznej dyscypliny formatu.
+Uruchamianie modeli SLM (1–8 mld parametrów) w środowisku lokalnym gwarantuje poufność dokumentacji technicznej ([Rozdział 25](../en/ch25-how-expert-systems-learn.md)). Zadanie ekstrakcji nie wymaga potężnego modelu ogólnego, lecz żelaznej dyscypliny formatu.
 
 **Dekodowanie z ograniczeniami gramatycznymi:** Zastosowanie gramatyk wymusza ustrukturyzowany format wyjściowy bez konieczności dostrajania wag [[13]](#src-13), [[14]](#src-14). W praktyce `llama.cpp` stosuje gramatyki GBNF [[15]](#src-15), a Ollama wymusza schematy JSON przez parametr `format` [[16]](#src-16). Schemat gwarantuje strukturę, lecz nie prawdziwość danych.
 
@@ -312,7 +312,7 @@ If the passage states no such fact, return an empty array []."""
 
 Temperatura zero eliminuje stochastyczność doboru tokenów, lecz nie gwarantuje poprawności logicznej.
 
-**Adaptacja modelu:** Gdy model bazowy narusza kontrakt, stosuje się adaptery LoRA ([Rozdział 25](ch25-how-expert-systems-learn.md)). Zbiór treningowy musi zawierać przykłady negatywne (puste tablice `[]`), aby zapobiec zgadywaniu. Rozdzielenie adapterów dziedzinowych zapobiega interferencji katastrofalnej [[18]](#src-18).
+**Adaptacja modelu:** Gdy model bazowy narusza kontrakt, stosuje się adaptery LoRA ([Rozdział 25](../en/ch25-how-expert-systems-learn.md)). Zbiór treningowy musi zawierać przykłady negatywne (puste tablice `[]`), aby zapobiec zgadywaniu. Rozdzielenie adapterów dziedzinowych zapobiega interferencji katastrofalnej [[18]](#src-18).
 
 | Przypadek testowy | Zachowanie modelu bazowego | Zachowanie modelu zaadaptowanego |
 |---|---|---|
@@ -577,7 +577,7 @@ Kandydat 1 spełnia wszystkie kryteria (przedział $[55, 143)$, hash `5fc027f3d3
 
 ## 8. Wykonanie dwutrybowe i routing semantyczny
 
-Brama integruje się z modelem dwutrybowym z [Rozdziału 28](ch28-dual-mode-expert-systems.md). W trybie ścisłym odpowiedź tworzą wyłącznie dopuszczone fakty i reguły; niepewność skutkuje odmową. W trybie doradczym zweryfikowany rdzeń pozostaje nienaruszony, a odrzucone propozycje modelu i heurystyki dołączane są jako oznaczone hipotezy z warunkami walidacji.
+Brama integruje się z modelem dwutrybowym z [Rozdziału 28](../en/ch28-dual-mode-expert-systems.md). W trybie ścisłym odpowiedź tworzą wyłącznie dopuszczone fakty i reguły; niepewność skutkuje odmową. W trybie doradczym zweryfikowany rdzeń pozostaje nienaruszony, a odrzucone propozycje modelu i heurystyki dołączane są jako oznaczone hipotezy z warunkami walidacji.
 
 ### 8.1. Rekonstrukcja struktury zapytania z izolowaną weryfikacją hosta
 
@@ -594,13 +594,13 @@ Gdy parser deterministyczny zawodzi na skutek zmienności języka, trzystopniowa
 | Ollama Structured Outputs [[16]](#src-16) | Wymuszanie składni JSON schematem | Nie gwarantuje poprawności merytorycznej |
 | Gramatyki GBNF w `llama.cpp` [[15]](#src-15) | Ograniczanie wyjścia do gramatyk i słowników | Gramatyka nie zna treści dokumentu |
 | Weryfikacja NLI | Prawdopodobieństwo implikacji semantycznej | Filtr probabilistyczny; nie zastępuje cytatu dosłownego |
-| Datalog & Answer Set Programming ([Rozdział 28](ch28-dual-mode-expert-systems.md)) | Deterministyczna inferencja nad faktami | Poprawność względna wobec przesłanek i reguł |
+| Datalog & Answer Set Programming ([Rozdział 28](../en/ch28-dual-mode-expert-systems.md)) | Deterministyczna inferencja nad faktami | Poprawność względna wobec przesłanek i reguł |
 
 Rejestrowanie przyczyn odrzuceń kandydatów (błędy słownika, cytatu, wartości) stanowi kluczową telemetrię do monitorowania jakości modeli.
 
 ## 10. Perspektywiczne kierunki badawcze integracji neuro-symbolicznej
 
-**Systemy wieloagentowe sterowane wiedzą:** Uprawnienia sprawcze spoczywają w deterministycznym rdzeniu reguł ([Rozdział 21](ch21-from-recommendation-to-action.md)); agenci jedynie odpytują bazę i realizują autoryzowane zadania.
+**Systemy wieloagentowe sterowane wiedzą:** Uprawnienia sprawcze spoczywają w deterministycznym rdzeniu reguł ([Rozdział 21](../en/ch21-from-recommendation-to-action.md)); agenci jedynie odpytują bazę i realizują autoryzowane zadania.
 
 **Trwała baza wiedzy zamiast doraźnego RAG:** Ciągłe budowanie ustrukturyzowanej bazy Markdown według wzorca Andreja Karpathy'ego [[19]](#src-19) jako zoptymalizowanego archiwum pod kontrolą bramy.
 
@@ -608,13 +608,13 @@ Rejestrowanie przyczyn odrzuceń kandydatów (błędy słownika, cytatu, wartoś
 
 **Formalna weryfikacja baz reguł:** Zastosowanie Lean 4 [[20]](#src-20) do dowodzenia niesprzeczności ontologii przed wdrożeniem produkcyjnym.
 
-**Wycofywanie wiedzy i machine unlearning:** Kaskadowe odwoływanie w grafie wiedzy ([Rozdział 9](ch09-engineering-knowledge-graph-traceability.md)) kontra złożone oduczanie w wagach sieci neuronowej [[21]](#src-21).
+**Wycofywanie wiedzy i machine unlearning:** Kaskadowe odwoływanie w grafie wiedzy ([Rozdział 9](../en/ch09-engineering-knowledge-graph-traceability.md)) kontra złożone oduczanie w wagach sieci neuronowej [[21]](#src-21).
 
 **Poufny audyt z dowodami z wiedzą zerową:** Weryfikacja zgodności z normami bez ujawniania danych zastrzeżonych za pomocą zk-SNARKs [[22]](#src-22).
 
 **Self-Consistency w ekstrakcji:** Próbkowanie wielu ścieżek wnioskowania według Wanga i współpracowników [[23]](#src-23) przed przekazaniem faktów do bramy.
 
-Zastosowania fizyczne omawiają dodatki: robotykę w [Dodatku B](appendix-b-robotics-and-cyber-physical-systems.md), nawigację w [Dodatku C](appendix-c-autonomous-navigation-and-geosearch.md), a systemy neuromorficzne w [Dodatkach D](appendix-d-analog-expert-systems-and-neuromorphic-computing.md) i [E](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
+Zastosowania fizyczne omawiają dodatki: robotykę w [Dodatku B](../en/appendix-b-robotics-and-cyber-physical-systems.md), nawigację w [Dodatku C](../en/appendix-c-autonomous-navigation-and-geosearch.md), a systemy neuromorficzne w [Dodatkach D](../en/appendix-d-analog-expert-systems-and-neuromorphic-computing.md) i [E](../en/appendix-e-mixed-signal-neuromorphic-expert-systems.md).
 
 ## Wnioski
 
@@ -624,7 +624,7 @@ Prawdopodobieństwo nie jest prawdą; łańcuch myśli może maskować błędy; 
 
 Brama bada oparcie twierdzenia w dokumencie, a nie prawdę samego dokumentu. Zamknięte słowniki celowo ograniczają ekspresję. Schematy wymuszają formę, lecz nie gwarantują prawdy.
 
-[Rozdział 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) analizuje domykanie luk w wiedzy i dialog sokratejski. [Rozdział 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md) systematyzuje walkę z halucynacjami. [Dodatek A](appendix-a-evidence-governed-framework.md) scala metodykę w ramy inżynierskie.
+[Rozdział 34](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) analizuje domykanie luk w wiedzy i dialog sokratejski. [Rozdział 38](../en/ch38-curing-machine-hallucinations-and-knowledge-deficits.md) systematyzuje walkę z halucynacjami. [Dodatek A](../en/appendix-a-evidence-governed-framework.md) scala metodykę w ramy inżynierskie.
 
 ## Pytania do samokontroli
 
@@ -712,4 +712,4 @@ Brama bada oparcie twierdzenia w dokumencie, a nie prawdę samego dokumentu. Zam
 
 ---
 
-[← Rozdział 28](ch28-dual-mode-expert-systems.md) | [Spis treści](README.md) | [Część VI](part-06-frontiers-neuro-symbolic.md) | [Rozdział 34 →](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+[← Rozdział 28](../en/ch28-dual-mode-expert-systems.md) | [Spis treści](README.md) | [Część VI](../en/part-06-frontiers-neuro-symbolic.md) | [Rozdział 34 →](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)

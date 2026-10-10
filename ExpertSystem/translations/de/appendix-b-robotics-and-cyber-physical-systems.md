@@ -566,7 +566,7 @@ Registriert beispielsweise während einer Rotationsbewegung der Stromsensor eine
 
 ## 7. Autonomie bei Verbindungsverlust und unter Bedingungen der elektronischen Kampfführung
 
-In der feldtauglichen Robotik und bei militärischen Einsätzen ([Militärische Expertensysteme](../MilTech/Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md)) kann die Funkverbindung zur Kontrollstation gezielt gestört, manipuliert oder vollständig unterbrochen werden. Das On-Board-System implementiert daher einen Zustandsautomaten zur schrittweisen Betriebsdegradation, der mit den Konzepten aus [Kapitel 22](ch22-cybernetics-edge-to-backend.md) harmonisiert ist.
+In der feldtauglichen Robotik und bei militärischen Einsätzen ([Militärische Expertensysteme](../../../MilTech/Military-Expert-Systems-UAS-AD-ELINT-EW-UA.md)) kann die Funkverbindung zur Kontrollstation gezielt gestört, manipuliert oder vollständig unterbrochen werden. Das On-Board-System implementiert daher einen Zustandsautomaten zur schrittweisen Betriebsdegradation, der mit den Konzepten aus [Kapitel 22](ch22-cybernetics-edge-to-backend.md) harmonisiert ist.
 
 ```mermaid
 stateDiagram-v2
@@ -658,7 +658,7 @@ Die Architektur im Repository *witness-integrity* definiert einen Kontrakt für 
 3. **Physikalisch unmögliche Datensätze werden nicht signiert.** Konsistenzprüfungen erfolgen vor dem Signiervorgang: Ein Datensatz, in dem die Anzahl bestätigter Frames die Gesamtanzahl der Messzyklen übersteigt, ist physikalisch unmöglich; die Signierung wird hardwareseitig verweigert.
 4. **Die Empfängerseite berechnet das Urteil unabhängig neu.** Der Empfänger validiert die Signatur und vollzieht die Inferenz anhand identischer Regeln nach. Eine Diskrepanz zwischen übermitteltem und neuberechnetem Urteil wird als Evidenzkonflikt gewertet und führt zum Vertrauensentzug.
 
-Für ein On-Board-Expertensystem bedeutet dieses Muster, dass Messfakten externer Sensoren nur dann in die Faktenbasis übernommen werden, wenn sie mit signierten Merkmalen und einem positiven Neuberechnungsbefund verknüpft sind. Weiterführende Aspekte des hardwarebasierten Vertrauensankers werden in der Arbeit [Hardware-Root-of-Trust und Anti-Spoofing](../MilTech/Hardware-Root-Of-Trust-And-Anti-Spoofing-Military-IoT-UA.md) analysiert.
+Für ein On-Board-Expertensystem bedeutet dieses Muster, dass Messfakten externer Sensoren nur dann in die Faktenbasis übernommen werden, wenn sie mit signierten Merkmalen und einem positiven Neuberechnungsbefund verknüpft sind. Weiterführende Aspekte des hardwarebasierten Vertrauensankers werden in der Arbeit [Hardware-Root-of-Trust und Anti-Spoofing](../../../MilTech/Hardware-Root-Of-Trust-And-Anti-Spoofing-Military-IoT-UA.md) analysiert.
 
 ## 9. Nicht-funktionale Schnittstellen und Grenzen von Annahmen vor der Integration
 
