@@ -14,9 +14,9 @@
 
 This chapter investigates the methodology of multi-tier rule verification and calibration in evidence-governed expert systems grounded in the author's Knowledge Testing Pyramid (*Knowledge Testing Pyramid, KTP*). It formalizes mathematical and architectural instruments that guarantee inference stability against sensor noise and prevent knowledge base degradation in mission-critical deployments.
 
-In mission-critical cyber-physical systems (ISO 26262 ASIL D, EN 50128 SIL 4, DO-178C Level A), the absence of isolated rule verification and boundary inference testing induces two catastrophic failure modes: the vacuous truth trap (*The Vacuous Truth Trap*, where a false or uninitialized antecedent in material implication $A \to B$ automatically renders the rule true, spuriously triggering emergency actuators) and high-frequency relay chattering (*Chattering*, where minor sensor channel noise near predicate thresholds causes abrupt step-like decision oscillations, destroying electromechanical actuators).
+In mission-critical cyber-physical systems (ISO 26262 ASIL D, EN 50128 SIL 4, DO-178C Level A), the absence of isolated rule verification and boundary inference testing induces two catastrophic failure modes: the vacuous truth trap (*The Vacuous Truth Trap*, where a false or uninitialized antecedent in material implication $`A \to B`$ automatically renders the rule true, spuriously triggering emergency actuators) and high-frequency relay chattering (*Chattering*, where minor sensor channel noise near predicate thresholds causes abrupt step-like decision oscillations, destroying electromechanical actuators). Additionally, it exposes the hazards of pseudoscientific metric inflation in generative AI, where assertions of zero hallucinations ($`\mathrm{ZHR} = 1.000000`$) on small sample sets violate foundational principles of mathematical statistics.
 
-This chapter resolves these vulnerabilities by constructing the four-tier Knowledge Testing Pyramid (*Knowledge Testing Pyramid, KTP*): progressing from isolated Knowledge Unit Testing (*KUT*) with premise mocking (`PremiseMock`) and six-point spectral Boundary Value Analysis (*BVA*), through Knowledge Integration Testing (*KIT*) of defeasible inference chains, to system-level evaluation of the Semantic Invariance Score ($`\text{SIS} \ge 0.98`$) and variational calibration of Lipschitz knowledge stability ($`L_{\mathcal{K}} \le L_{\max}`$) across the logical conclusion space.
+This chapter resolves these vulnerabilities by constructing the four-tier Knowledge Testing Pyramid (*Knowledge Testing Pyramid, KTP*): progressing from isolated Knowledge Unit Testing (*KUT*) with premise mocking (`PremiseMock`), the mathematical Non-Vacuity Invariant (*Non-Vacuity Invariant*), and six-point spectral Boundary Value Analysis (*BVA*), through Knowledge Integration Testing (*KIT*) of defeasible inference chains, to system-level evaluation of the Semantic Invariance Score ($`\mathrm{SIS} \ge 0.98`$), variational calibration of Lipschitz knowledge stability ($`L_{\mathcal{K}} \le L_{\max}`$), Clopper-Pearson exact confidence intervals, the Rule of Three, and the Held-Out Sealed Gate (*Held-Out Sealed Gate*) backed by raw binary custody without lossy re-encoding.
 
 ---
 
@@ -91,6 +91,12 @@ flowchart TD
     class L4 l4;
 ```
 
+The KTP architecture spans the full spectrum of verification challenges in knowledge engineering:
+1. **Tier L1 (Atomic Syntax and Semantics in KUT):** verification of closed condition vocabularies, data type consistency, absence of typographical errors in predicate identifiers, and rigorous validation of SI physical unit dimensions;
+2. **Tier L2 (Predicate Non-Vacuity and BVA):** mandatory activation of each rule via counterexamples; generation of test vectors proving the rule's capability to actively alter system state ($`A = \mathrm{True}`$ and $`\mathrm{StateChanged}`$);
+3. **Tier L3 (Integrity of Deductive Theories and ASPIC+ in KIT):** detection of cyclic attacks, verification of correct binding of defeasible defeaters, and elimination of orphaned rules across multi-hop inference lattices;
+4. **Tier L4 (Cross-Platform Hardware-Software Parity and KCT):** parity verification between high-level software simulation and hardware FPGA RTL inference cores (EPU) under adversarial workloads, variational calibration of Lipschitz stability, and semantic invariance audits.
+
 ---
 
 ## 3. Tier 1: Knowledge Unit Testing (KUT) — Testing Knowledge Atoms
@@ -120,9 +126,9 @@ res := knowledgetest.RunKUT(coolingRule, mock, "COOLING_HIGH")
 ```
 
 ### 3.3. The Vacuous Truth Trap
-In classical mathematical logic, material implication $P \to Q$ is logically equivalent to disjunction $\neg P \lor Q$. If antecedent $P$ is false, the implication evaluates to true ($P \equiv \text{False} \implies (P \to Q) \equiv \text{True}$) regardless of the validity or substance of conclusion $Q$.
+In classical mathematical logic, material implication $`P \to Q`$ is logically equivalent to disjunction $`\neg P \lor Q`$. If antecedent $`P`$ is false, the implication evaluates to true ($`P \equiv \text{False} \implies (P \to Q) \equiv \text{True}`$) regardless of the validity or substance of conclusion $`Q`$.
 
-In engineering expert systems, this dynamic exposes a catastrophic vulnerability: an improperly formulated rule or test runner scores an assertion as "passed" merely because the formal implication condition is satisfied, even though none of the real physical preconditions were ever triggered.
+In engineering expert systems, this dynamic exposes a catastrophic vulnerability: an improperly formulated rule or test runner scores an assertion as "passed" merely because the formal implication condition is satisfied, even though none of the real physical preconditions were ever triggered. For example, due to a typographical error in a variable identifier or incorrect range boundaries, antecedent $`P`$ never evaluates to `TRUE`, turning a critical emergency protection algorithm into "dead code" that formally passes all static SMT checks.
 
 ```mermaid
 flowchart TD
@@ -135,6 +141,29 @@ flowchart TD
         IMPL --> GATE["<b>KUT Invariant #1 (Vacuous Implication Gate)</b><br/>Forced test rejection:<br/>VacuousTruthTrap = true, Passed = false"]
     end
 ```
+
+A knowledge base is certified as verified at Tier L2 if and only if it satisfies the mathematical non-vacuity criterion (**Non-Vacuity Invariant**):
+
+```math
+\forall \mathcal{R} = (A \implies C) \in \mathcal{KB}, \quad \exists \mathbf{x} \in \mathcal{X}_{\mathrm{test}} : A(\mathbf{x}) = \mathrm{True} \land \mathrm{StateChanged}(\mathbf{x}, C)
+```
+
+where:
+- $`\mathcal{R}`$ is a normative or engineering rule with antecedent $`A`$ and consequent $`C`$;
+- $`\mathcal{KB}`$ is the verified knowledge base of the expert system;
+- $`\mathcal{X}_{\mathrm{test}}`$ is the space of synthesized or empirical test vectors;
+- $`\mathbf{x}`$ is a specific input observation vector (environmental parameter values);
+- $`A(\mathbf{x}) = \mathrm{True}`$ denotes satisfaction of the antecedent condition without triggering a safety fault or exceeding valid operating boundaries;
+- $`\mathrm{StateChanged}(\mathbf{x}, C)`$ is a predicate confirming an alteration of operational system state or the derivation of a new conclusion under the influence of consequent $`C`$.
+
+#### 3.3.1. Actionable Closed Loop of Non-Vacuity Verification
+
+1. **Control Flow & Runtime Decisions:**  
+   If the KUT test runner fails to identify any vector $`\mathbf{x} \in \mathcal{X}_{\mathrm{test}}`$ that transitions antecedent $`A(\mathbf{x})`$ to $`\mathrm{True}`$ for rule $`\mathcal{R}_i`$, the rule is flagged as potentially dead code (`VACUOUS_RULE_STALL`). A counterexample finder (SMT solver Z3) is instantiated. If the SMT analyzer proves that the antecedent is identically false ($`\neg \exists \mathbf{x}: A(\mathbf{x})`$) due to logical contradictions in preconditions or data type mismatches, the CI/CD pipeline issues a `CRITICAL_REJECT` verdict, blocking release packaging of the knowledge base.
+2. **Hardware Dimensioning:**  
+   Auditing for non-vacuity imposes strict dimensional constraints on the test suite: the minimum size of the test suite is $`\lvert \mathcal{X}_{\mathrm{test}} \rvert \ge 2 \cdot \lvert \mathcal{KB} \rvert`$ (at least one vector for targeted antecedent activation and one for deactivation per rule). For a knowledge base comprising $`10\,000`$ rules, this requires $`20\,000`$ specialized vectors. Given an inference emulator clock frequency of $`200\,\text{MHz}`$ and a single-test execution latency of $`15\,\mu\text{s}`$, a full non-vacuity audit executes in $`300\,\text{ms}`$, making it viable for integration into pre-commit git hooks prior to merging knowledge branches.
+3. **Worked Numerical Example:**  
+   Consider emergency steam turbine trip rule $`\mathcal{R}_{704}`$: "IF $`\mathtt{rpm} > 12000`$ AND $`\mathtt{coolant\_flow} < 5.0\,\text{L/min}`$, THEN $`\mathtt{trip\_solenoid} = \mathtt{ACTIVE}`$". Due to a typographical error in the ontological mapping, the sensor is registered as `coolant_flw` (omitting the letter `o`). Because fact `coolant_flow` never manifests in the runtime environment, the antecedent remains permanently false ($`A \equiv \text{False}`$), and material implication $`A \to C`$ evaluates vacuously to true ($`\text{True}`$). The KUT test runner detects defect `VACUOUS_RULE_ERROR`, halts qualification, and pinpoints the broken ontological binding, safeguarding a $2.4M turbine unit from physical destruction under actual overheating conditions.
 
 **KUT Invariant #1 (Vacuous Implication Prevention Invariant):**  
 The KUT test runner must unconditionally reject a test execution as defective (`VacuousTruthTrap = true`) whenever a rule reports successful firing in the absence or incompleteness of mandatory antecedents within the mock environment.
@@ -365,6 +394,106 @@ flowchart TD
 This dual-tier architecture establishes a two-speed calibration loop:
 - **High-Throughput Matrix Stress-Testing:** Fast algorithmic generators produce hundreds of thousands of test cases ($> 250{,}000\ \text{tests/s}$) to audit throughput, memory leaks, and register state transition integrity.
 - **Neuro-Symbolic Golden Calibrator:** A parallel pool of local models (SLM Workers) synthesizes high-entropy, authentic linguistic perturbations ($1{,}000$ to $10{,}000$ cases) for certification calculations requiring $\text{SIS} \ge 0.98$. Throughout this process, the reference oracle (System 2 EVM) remains completely shielded against data leakage and subjective bias.
+
+### 5.5. Zero-Hallucination Rate (ZHR) Metrology: Clopper-Pearson Exact Confidence Intervals and the Rule of Three
+
+In contemporary AI research and commercial presentations, a widespread and perilous practice is declaring absolute infallibility in the form of $`\mathrm{ZHR} = 1.000000`$ (Zero-Hallucination Rate). Formatting this metric with six decimal places formally asserts that the upper bound of the error rate is strictly constrained to:
+
+```math
+p_{\mathrm{error}} \le 10^{-6}
+```
+
+However, if an empirical benchmark contains merely $`N = 30`$, $`N = 100`$, or $`N = 1\,309`$ evaluation queries, observing zero errors ($`k = 0`$) **provides no mathematical warrant** to assert an error rate of $`10^{-6}`$. From the perspective of mathematical statistics and measurement theory, zero failures in a small sample set indicate only that the error rate does not exceed fractions of a percent or tenths of a percent at the chosen confidence level.
+
+For a binomial distribution of Bernoulli trials with $`k = 0`$ failures across a sample of size $`N`$, the upper bound of failure probability $`p_U`$ at confidence level $`1 - \alpha`$ is derived analytically via **Clopper-Pearson Exact Confidence Intervals**:
+
+```math
+p_U = 1 - \alpha^{1/N}, \qquad \mathrm{ZHR}_{\mathrm{guaranteed}} = \alpha^{1/N} = (0.05)^{1/N}
+```
+
+where:
+- $`N \in \mathbb{N}^+`$ is the sample size of independent, representative benchmark queries;
+- $`\alpha`$ is the significance level (under the engineering standard of a $`95\%`$ confidence level, $`\alpha = 0.05`$);
+- $`p_U \in [0, 1]`$ is the upper confidence bound of the system failure (hallucination) rate;
+- $`\mathrm{ZHR}_{\mathrm{guaranteed}} \in [0, 1]`$ is the guaranteed lower bound of the zero-hallucination rate.
+
+As $`N \to \infty`$, the Taylor expansion of the exponential function yields the classical engineering **Rule of Three**:
+
+```math
+\ln(0.05) \approx -2.9957 \implies p_U \approx 1 - e^{-2.9957/N} \approx \frac{2.9957}{N} \approx \frac{3}{N}
+```
+
+In accordance with metrological and functional safety standards (ISO 26262 ASIL D, IEC 61508 SIL 4), expert systems are classified across four $`\mathrm{ZHR}`$ maturity levels:
+
+| Reliability Class | Required Sample Size $N$ ($k=0$) | Guaranteed Upper Failure Bound ($p_{95\%}$) | Permissible Public Designation of $\mathrm{ZHR}$ |
+|---|:---:|:---:|:---|
+| **Empirical Prototype (L1)** | $N < 300$ | $p \le 1.0 \times 10^{-2}$ | $\mathrm{ZHR} \ge 99.0\%$ (L1 Empirical) |
+| **Industrial Grade (L2)** | $300 \le N < 30\,000$ | $p \le 1.0 \times 10^{-4}$ | $\mathrm{ZHR} \ge 99.7\% \dots 99.99\%$ (L2 Industrial) |
+| **Critical ASIL-D (L3)** | $30\,000 \le N < 3\,000\,000$ | $p \le 1.0 \times 10^{-6}$ | $\mathrm{ZHR} \ge 99.9999\%$ (L3 Critical) |
+| **Formally Proven (L4)** | Mathematical proof / SAT | $p = 0$ (under closed theory) | $\mathrm{ZHR} = 1.0$ (Formal Closed-World Proof) |
+
+Any public declaration regarding $`\mathrm{ZHR}`$ must state the sample size $`N`$, the confidence level ($`95\%`$), corpus closed-world specifications, and provide an open, reproducible test harness. It is strictly forbidden to report decimal precision exceeding the exponential order of magnitude warranted by sample size ($`D \le \lfloor\log_{10}(N/3)\rfloor`$).
+
+#### 5.5.1. Actionable Closed Loop of ZHR Metrology Calculation
+
+1. **Control Flow & Runtime Decisions:**  
+   When a system undergoes certification for ASIL D / SIL 4 compliance, the automated validation arbiter examines benchmark sample size. Under an empirical statistical testing regime, if sample size $`N < 3 \times 10^6`$, the system automatically denies certification at class `CERT_LEVEL_3`, downgrading the admission profile to `L2_INDUSTRIAL`, or mandates engagement of a discrete SMT/SAT solver to establish a formal proof at class L4 (`FORMAL_CLOSED_WORLD_PROOF`), where failure probability $`p \equiv 0`$ within axiomatic bounds.
+2. **Hardware Dimensioning:**  
+   Executing Tier L2 qualification testing ($`N = 30\,000`$ queries) on a server cluster with throughput of $`500`$ calls/s requires $`60\,\text{s}`$. For Tier L3 qualification ($`N = 3\,000\,000`$) across a 64-node cluster with aggregate throughput of $`25\,000`$ calls/s, the benchmark run executes in $`120\,\text{s}`$. With an average cryptographic proof size of $`4\,\text{KB}`$ per query, NVMe SSD verification audit log storage requires $`12\,\text{GB}`$ of sustained buffer capacity with write throughput $`\ge 100\,\text{MB/s}`$.
+3. **Worked Numerical Example:**  
+   The RFC 9110 normative test suite comprises $`N = 1\,309`$ atomic HTTP semantics checks. If an expert system successfully passes all evaluations without a single failure ($`k = 0`$), the auditor calculates the upper failure bound via the Rule of Three:
+
+```math
+p_{95\%} \approx \frac{3}{1309} \approx 0.002292 \implies \mathrm{ZHR}_{95\%} \ge 99.771\%
+```
+
+   The marketing claim "the system achieves $`\mathrm{ZHR} = 1.000000`$" is unconditionally rejected by the auditor as pseudoscientific falsification. The legally permissible certification statement is formulated strictly as: "$`\mathrm{ZHR} \ge 99.77\%`$ (L2 Industrial, $`N=1309`$, $`\alpha=0.05`$)".
+
+### 5.6. Held-Out Sealed Gate and Raw Binary Custody
+
+Claims of reliability frequently prove fictitious due to the prevalence of "Potemkin Arbiters" (*Potemkin Arbiters*) and validation data leakage into knowledge preparation pipelines (*Data Contamination*). Test harnesses often bypass rigorous proof verification in favor of hardcoded scalar assertions in test scripts, inspecting superficial boolean flags rather than conducting full byte-level cryptographic audits.
+
+To eliminate this vulnerability, the architecture establishes a **Held-Out Sealed Gate** operating on cryptographically sealed test suites:
+
+```mermaid
+flowchart TD
+    accTitle: Architecture of the Held-Out Sealed Gate
+    accDescr: Cryptographically sealed validation enclave audits byte-level proofs without data contamination.
+
+    subgraph SECURE_STORE["Sealed Cryptographic Storage (Held-Out Benchmark)"]
+        TEST_ENC["Encrypted Test Suite<br/>(AES-256-GCM / Ed25519)"]
+        MERKLE["Ground-Truth Citation Merkle Tree<br/>Root: 0x7f4a...e12"]
+    end
+
+    subgraph ENCLAVE["Isolated Secure Enclave (TEE / Secure Enclave)"]
+        DECRYPT["Decrypt Benchmark in Protected RAM<br/>(Keys revoked post-round)"]
+        EXEC["Execute Knowledge Model Inference"]
+        RAW_CHECK["<b>Binary Custody Gate</b><br/>Byte-level SHA-256 citation audit<br/>Prohibit errors=replace re-encoding"]
+        VERIFY_TREE["Verify Merkle Root against Standard"]
+    end
+
+    TEST_ENC --> DECRYPT
+    MERKLE --> VERIFY_TREE
+    DECRYPT --> EXEC
+    EXEC --> RAW_CHECK
+    RAW_CHECK --> VERIFY_TREE
+
+    VERIFY_TREE -->|Exact Match| VERDICT_PASS["<b>Qualification Admitted (PASS)</b><br/>Issue cryptographic attestation"]
+    VERIFY_TREE -->|Discrepancy| VERDICT_FAIL["<b>Fail-Closed Lockout (LOCKOUT)</b><br/>Revoke session, zero ephemeral keys"]
+```
+
+The foundational operational principle of this gate is **Raw Binary Custody**. Many software platforms employ library-level text decoders that substitute corrupted or unmapped byte sequences (e.g., Python's `errors="replace"` in UTF-8 decoding, which silently replaces invalid sequences with the Unicode replacement character `\uFFFD`). Any such substitution alters the raw bytes of primary source documents, irrevocably invalidating the cryptographic hash chain and reducing evidence citations to a legal fiction.
+
+In the author's architecture, an absolute invariant is enforced: citation verification is executed exclusively over raw byte slices of the original document corpus, tracking absolute offsets `[byte_start, byte_end]` and computing SHA-256 hashes directly without intermediary text normalization.
+
+#### 5.6.1. Actionable Closed Loop of Held-Out Sealed Gate Admission
+
+1. **Control Flow & Runtime Decisions:**  
+   At the onset of a qualification round, the isolated enclave loads the sealed benchmark and verifies its integrity against the reference Merkle tree root. If byte-level matching reveals a hash discrepancy across even a single byte of a cited excerpt, or if an invocation of invalid character replacement routines (`\uFFFD`) is intercepted, the gate controller immediately triggers a hardware `FAIL_CLOSED_LOCKOUT`. The evaluation session is terminated, ephemeral decryption keys residing in secure RAM are zeroized, and the security event is immutably committed to the audit log.
+2. **Hardware Dimensioning:**  
+   Operating the sealed gate requires a hardware security enclave (ARM TrustZone, AMD SEV-SNP, or Intel SGX) with a minimum dedicated secure memory footprint of $`256\,\text{MB}`$ governed by a strict no-swap policy, preventing exposure of reference answers to host memory attacks during decryption. Cryptographic SHA-256 verification throughput must reach at least $`1.2\,\text{GB/s}`$ to sustain continuous validation without throughput degradation.
+3. **Worked Numerical Example:**  
+   A sealed benchmark corpus containing $500$ specifications with an aggregate footprint of $`64\,\text{MB}`$ maintains a reference Merkle root of `0x7f4a8b...e12`. During parsing of a damaged text block, an external module applied character normalization, replacing byte `0xFF` with the three-byte UTF-8 sequence `0xEF 0xBF 0xBD` (replacement character). The binary custody gate computed the block hash, detected a divergence between the byte slice and the reference Merkle leaf, and within $`12\,\mu\text{s}`$ locked out the test run under error code `EVIDENCE_TAMPERING_DETECTED`, blocking evidence base falsification.
 
 ---
 
@@ -922,12 +1051,14 @@ Having mastered the full cycle of knowledge testing and calibration, the reader 
 
 ## Questions for Self-Examination
 
-1. Why does classical material implication $P \to Q$ in boolean logic pose severe hazards for unit testing engineering rules, and how does the `PremiseMock` method detect the vacuous truth trap?
-2. What distinguishes the behavioral robustness testing of language models via the CheckList methodology from calculating the Semantic Invariance Score $`\text{SIS}(\mathcal{Q})`$ across a proof graph?
+1. Why does classical material implication $`P \to Q`$ in boolean logic pose severe hazards for unit testing engineering rules, and how does the `PremiseMock` method detect the vacuous truth trap?
+2. What distinguishes the behavioral robustness testing of language models via the CheckList methodology from calculating the Semantic Invariance Score $`\mathrm{SIS}(\mathcal{Q})`$ across a proof graph?
 3. What physical consequences manifest in a cyber-physical system (e.g., an autonomous drone) if the Lipschitz continuity of the expert system's decision space is violated?
 4. How is the stigmergic knowledge gap spool related to the second law of thermodynamics and Ilya Prigogine's concept of entropy export?
 5. How does an independent test distinguish a known boolean `false` value from an absent fact, and undercutting evidential grounding from rebutting a conclusion?
 6. Why does a high aggregate SIS score fail to compensate for a single critical verdict flip, and why is an inclusion-minimal conflict not necessarily minimal in constraint count?
+7. Why is publishing a claim of $`\mathrm{ZHR} = 1.000000`$ on a sample of $`N = 1309`$ queries a metrological error, and what upper failure bound is guaranteed by the Rule of Three?
+8. What risks to cryptographic auditability are introduced by the `errors="replace"` flag in UTF-8 parsers, and how does the Held-Out Sealed Gate prevent validation data contamination?
 
 ---
 
@@ -937,7 +1068,8 @@ Having mastered the full cycle of knowledge testing and calibration, the reader 
 |---|---|---|
 | **Knowledge Unit Testing (KUT)** | Knowledge Unit Testing | Unit testing of an isolated knowledge atom (rule, frame, predicate) with premise mocking. |
 | **Premise Mocking** | Premise Mocking | A technique for isolating rule antecedents by substituting the knowledge base with a controlled stub context. |
-| **Vacuous Truth Trap** | Vacuous Truth Trap | A pathological condition where formal material implication $P \to Q$ evaluates to true solely due to the falsehood of premise $P$. |
+| **Vacuous Truth Trap** | Vacuous Truth Trap | A pathological condition where formal material implication $`P \to Q`$ evaluates to true solely due to the falsehood of premise $`P`$. |
+| **Non-Vacuity Invariant** | Non-Vacuity Invariant | The mandatory requirement for at least one test vector that evaluates the rule antecedent to `True` and alters operational system state. |
 | **Knowledge Integration Testing (KIT)** | Knowledge Integration Testing | Integration testing of interacting rules, multi-hop lattices, and rule chain rupture via defeaters. |
 | **Knowledge System Testing (KST)** | Knowledge System Testing | Verification of the complete pipeline from user query and sources to synthesized decision and justification package. |
 | **Minimal Conflict** | Minimal Conflict | An inconsistent subset of constraints that becomes consistent upon removing any single element under an invariant consistent background. |
@@ -945,6 +1077,11 @@ Having mastered the full cycle of knowledge testing and calibration, the reader 
 | **Lipschitz Knowledge Stability** | Lipschitz Knowledge Stability | The property of an inference space wherein epistemic states evolve proportionally and boundedly relative to input perturbation magnitude. |
 | **Relay Chattering** | Chattering | Hazardous high-frequency, step-like system state oscillations induced by infinitesimal variations in an input signal. |
 | **Stigmergic Gap Spool** | Stigmergic Gap Spool | An indirect coordination mechanism for knowledge engineers based on accumulating and pheromone-weighting logged CWA failures. |
+| **Clopper-Pearson Interval** | Clopper-Pearson Interval | Exact binomial confidence interval based on the beta distribution for evaluating error rates under zero observed failures. |
+| **Rule of Three** | Rule of Three | An asymptotic estimate of the upper bound of the $`95\%`$ confidence interval for failure probability ($`p \approx 3/N`$) given zero failures across sample size $`N`$. |
+| **Held-Out Sealed Gate** | Held-Out Sealed Gate | A cryptographically sealed validation enclave with Merkle-tree integrity auditing, isolated from training and fine-tuning pipelines. |
+| **Potemkin Arbiter** | Potemkin Arbiter | A test validator that substitutes rigorous formal proof verification with simplified hardcoded scalar assertions. |
+| **Raw Binary Custody** | Raw Binary Custody | The principle of auditing citations strictly via raw byte offsets of primary sources without lossy text re-encoding. |
 
 ---
 
@@ -966,6 +1103,7 @@ Having mastered the full cycle of knowledge testing and calibration, the reader 
 | **PAC** | Probably Approximately Correct | Probably approximately correct machine learning framework after Leslie Valiant |
 | **SIS** | Semantic Invariance Score | Semantic invariance metric for verdicts and proof graphs |
 | **TDD** | Test-Driven Development | Test-driven development methodology |
+| **ZHR** | Zero-Hallucination Rate | Zero-hallucination rate (frequency of producing strictly verified claims) |
 
 ---
 
@@ -984,6 +1122,8 @@ Having mastered the full cycle of knowledge testing and calibration, the reader 
 11. <a id="src-11"></a>**Alchourrón, C. E., Gärdenfors, P., & Makinson, D.** (1985). On the logic of theory change: Partial meet contraction and revision functions. *Journal of Symbolic Logic*, 50(2), 510–530.
 12. <a id="src-12"></a>**Junker, U.** (2004). QUICKXPLAIN: Preferred explanations and relaxations for over-constrained problems. In *AAAI* (Vol. 4, pp. 167–172).
 13. <a id="src-13"></a>**Valiant, L. G.** (1984). A theory of the learnable. *Communications of the ACM*, 27(11), 1134–1142.
+14. <a id="src-14"></a>**Clopper, C. J., & Pearson, E. S.** (1934). The use of confidence or fiducial limits illustrated in the case of the binomial. *Biometrika*, 26(4), 404–413.
+15. <a id="src-15"></a>**Hanley, J. A., & Lippman-Hand, A.** (1983). If nothing goes wrong, is everything all right? Interpreting zero numerators. *JAMA*, 249(13), 1743–1745.
 
 ---
 

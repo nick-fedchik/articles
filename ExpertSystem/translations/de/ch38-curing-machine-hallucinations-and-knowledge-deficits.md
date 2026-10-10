@@ -12,9 +12,9 @@
 
 ## Abstract
 
-In sicherheitskritischen Industrieanlagen, der Kernenergie und der Avionik (IEC 61508 SIL 3, ISO 26262 ASIL D, DO-178C DAL A) führt die direkte Einbindung generativer Sprachmodelle in Entscheidungsprozesse unausweichlich zu katastrophalen Havarien. Aufgrund der autoregressiven Natur der Kreuzentropie-Minimierung besitzen neuronale Netze kein internes Kriterium für physikalische Wahrheit: Bei unvollständiger Datenlage füllen sie Informationslücken mit plausiblen Erfindungen (maschinellen Halluzinationen oder Konfabulationen). So kann ein Modell beispielsweise mit hoher statistischer Konfidenz die Blockierung eines Sicherheits-Überströmventils empfehlen oder frei erfundene Festigkeitstoleranzen ausgeben, was zum Bersten von Rohrleitungen und zu Personenschäden führt. Rekursive Selbstüberprüfungen des Modells verschärfen das Problem lediglich und treiben das Modell in den Modellkollaps (*Model Collapse*).
+In sicherheitskritischen Industrieanlagen, der Kernenergie und der Avionik (IEC 61508 SIL 3, ISO 26262 ASIL D, DO-178C DAL A) führt die direkte Einbindung generativer Sprachmodelle in Entscheidungsprozesse unausweichlich zu katastrophalen Havarien. Aufgrund der autoregressiven Natur der Kreuzentropie-Minimierung besitzen neuronale Netze kein internes Kriterium für physikalische Wahrheit: Bei unvollständiger Datenlage füllen sie Informationslücken mit plausiblen Erfindungen (maschinellen Halluzinationen oder Konfabulationen). So kann ein Modell beispielsweise mit hoher statistischer Konfidenz die Blockierung eines Sicherheits-Überströmventils empfehlen oder frei erfundene Festigkeitstoleranzen ausgeben, was zum Bersten von Rohrleitungen und zu Personenschäden führt. Rekursive Selbstüberprüfungen des Modells verschärfen das Problem lediglich, und das in Unternehmen populäre Entwurfsmuster „LLM-as-a-Judge“ erzeugt durch Ausfälle gemeinsamer Ursache (Common-Mode Failures) und kognitive Verzerrungen des Modellschiedsrichters eine trügerische Kontrollillusion.
 
-Dieses Kapitel löst das Halluzinationsproblem, indem es dem Sprachmodell den Status einer Wissensquelle entzieht und es einem deterministischen Expertensystem unterordnet. Untersucht werden die Architektur eines zweistufigen Verifikations-Gateways (grammatikgesteuertes AST-Decoding und bytegenaue SHA-256-Hash-Prüfung von Zitaten mit einer Zielmetrik von $`\mathrm{ZHR} = 1{,}00`$), die mathematische Formalisierung des epistemischen Wissensdefizits, eine garantierte Fail-Closed-Verweigerungspolitik (`Fail-Closed Gate`), die symbolische Abduktion nach Charles Sanders Peirce zur sokratischen Klärung sowie prädikative Echtzeit-Schilde (Safety Shields) zur hardwarenahen Abschirmung neuronaler Netze.
+Dieses Kapitel löst das Halluzinationsproblem durch die mathematische Widerlegung des neuronalen Schiedsrichtermusters, die Aberkennung des Status einer Wissensquelle für das Sprachmodell und dessen strikte Unterordnung unter ein deterministisches Expertensystem. Untersucht werden die Architektur eines zweistufigen Verifikations-Gateways (grammatikgesteuertes AST-Decoding und bytegenaue SHA-256-Hash-Prüfung von Zitaten mit einer Zielmetrik von $`\mathrm{ZHR} = 1{,}00`$), die mathematische Formalisierung des epistemischen Wissensdefizits, eine garantierte Fail-Closed-Verweigerungspolitik (`Fail-Closed Gate`), die symbolische Abduktion nach Charles Sanders Peirce zur sokratischen Klärung sowie prädikative Echtzeit-Schilde (Safety Shields) zur hardwarenahen Abschirmung neuronaler Netze.
 
 ---
 
@@ -39,6 +39,37 @@ Die weit verbreitete Annahme, dass Retrieval-Augmented Generation (*RAG*) das Ha
 Der Versuch, das Sprachmodell durch rekursive Prompts zur Selbstkontrolle zu bewegen („Prüfe, ob du einen Fehler gemacht hast“), scheitert an systemischen Grenzen: Besitzt das Modell kein internes Wahrheitskriterium, ist der Prüflauf lediglich eine weitere Textgenerierung. Shumailov et al. wiesen in *Nature* das Phänomen des Modellkollapses (*Model Collapse*) nach: Das rekursive Training von Modellen auf synthetischen Daten führt zur irreversiblen Degeneration des Wissens und zum Auslöschen seltener Ereignisse an den Verteilungsrändern [[3]](#src-3).
 
 Eine maschinelle Halluzination lässt sich innerhalb des neuronalen Netzes prinzipbedingt nicht kurieren: Hierfür bedarf es einer externen mathematischen und logischen Instanz. Diese Aufgabe übernimmt das evidenzbasierte Expertensystem.
+
+### 1.1. Mathematische Widerlegung des „LLM-as-a-Judge“-Musters und Ausfälle gemeinsamer Ursache (Common-Mode Failures)
+
+In der Industrie der korporativen generativen KI hat sich das Entwurfsmuster **„LLM-as-a-Judge“** massenhaft verbreitet — der Einsatz eines sekundären (oft parameterstärkeren) Sprachmodells zur Auditierung, Faktenprüfung oder Rangordnung der Antworten des primären Generator-Modells [[16]](#src-16). Dieser Ansatz erzeugt eine gefährliche epistemische Illusion von Zuverlässigkeit: Entwickler nehmen fälschlicherweise an, dass das Hinzuziehen eines „Richter“-Modells oder der Aufbau von Multi-Agenten-Pipelines gegenseitiger Begutachtung das Problem der Halluzinationen eliminieren und ingenieurtechnische Präzision gewährleisten könne.
+
+Aus Sicht der Zuverlässigkeitstheorie kritischer Systeme (ISO 26262 ASIL D, IEC 61508 SIL 3) ist eine solche Redundanz jedoch rein fiktiv, da **Ausfälle gemeinsamer Ursache (Common-Mode Failures)** auftreten. Beide Modelle — Generator und Schiedsrichter — teilen dieselbe mathematische Natur: die Minimierung der Kreuzentropie-Verlustfunktion bei der autoregressiven Vorhersage des nächsten Tokens. Die Wahrscheinlichkeit des gemeinsamen Übersehens einer Halluzination durch zwei Modelle entspricht keineswegs dem Produkt unabhängiger Wahrscheinlichkeiten:
+
+```math
+P(E_1 \cap E_2) \neq P(E_1) \cdot P(E_2)
+```
+
+wobei:
+- $`E_1`$ — das Ereignis des Auftretens einer Halluzination (Konfabulation) im Generator-Modell;
+- $`E_2`$ — das Ereignis der Billigung dieser Halluzination durch das Schiedsrichter-Modell;
+- $`P(E_1 \cap E_2)`$ — die Gesamtwahrscheinlichkeit des Eindringens eines ungeprüften Defekts in die operative Entscheidungsumgebung.
+
+Da beide Modelle auf ähnlichen natürlichsprachlichen Korpora trainiert wurden, weisen sie stark korrelierte kognitive Verzerrungen auf ($`P(E_2 \mid E_1) \gg P(E_2)`$):
+1. **Stilverzerrung (Style Bias):** Das Schiedsrichter-Modell bewertet vordergründig geschliffene Formulierungen, akademischen Satzbau und das Fehlen lexikalischer Wiederholungen fälschlich als Indikator für Wahrheit und billigt erfundene Aussagen allein deshalb, weil sie in makelloser Sprache verfasst sind.
+2. **Weitschweifigkeitsverzerrung (Verbosity Bias):** Umfangreiche, weitschweifige Konfabulationen voller pseudowissenschaftlicher Terminologie und verschachtelter Nebensätze erhalten vom Schiedsrichter-Modell systematisch höhere Bewertungen als prägnante, aber exakte Antworten.
+3. **Autoritätsverzerrung (Authority Bias):** Selbstbewusst vorgetragene Unwahrheiten (beispielsweise das apodiktische „gemäß Abschnitt 4.2 der Norm beträgt der Wert 25 bar“) führen beim Schiedsrichter-Modell zu einer falschen Übereinstimmung, während die ehrliche und metrologisch korrekte Antwort „die Information ist im bereitgestellten Fragment nicht enthalten“ als unzureichend hilfreich abgestraft wird.
+
+Das Schiedsrichter-Modell bewertet lediglich die statistische Plausibilität des Textes, nicht jedoch dessen physikalische Wahrheit. Es besitzt keinen Zugang zur objektiven Realität oder zu einem geschlossenen logischen Resolver und leidet daher unter denselben autoregressiven Defekten.
+
+#### 1.1.1. Geschlossener Kreis der ingenieurtechnischen Widerlegung des neuronalen Schiedsrichters
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**  
+   Das Architekturreglement evidenzbasierter Systeme entzieht generativen Modellen kategorisch das Recht, faktische Korrektheit autonom zu bewerten. Die Ausgabe jedes Modells wird ausnahmslos auf den Status einer bloßen „Kandidatenaussage“ (*Candidate Assertion*) herabgestuft, die zwingend ein bytegenaues Primärquellenzitat, einen Dokumentbezeichner und ein typisiertes Prädikat enthalten muss. Erkennt eine CI/CD-Pipeline eine Konfiguration, in der ein LLM als Wahrheitsschiedsrichter für kritische Entscheidungen eingesetzt wird, vergibt der Validator das Verdikt `ARCHITECTURE_NON_COMPLIANT`, stoppt das Deployment und fordert den Ersatz des neuronalen Schiedsrichters durch ein deterministisches bytegenaues Zulassungsgate.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**  
+   Der Ersatz eines sekundären Schiedsrichtermodells der 70B-Klasse (das 2 NVIDIA A100/H100 80GB-Beschleuniger mit einer Leistungsaufnahme von $`700\,\text{Watt}`$ bindet und $`800\dots 1500\,\text{ms}`$ Inferenzlatenz hinzufügt) durch einen deterministischen bytegenauen SHA-256-Validator und AST-Parser auf dem Host-Prozessor senkt die Leistungsaufnahme des Verifikationsknotens um das 50-Fache und verkürzt die Prüflatenz von $`1200\,\text{ms}`$ auf $`18\,\mu\text{s}`$ (eine Beschleunigung um fünf Größenordnungen).
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**  
+   Im Entwurfssystem für Kabeltrassen einer Umspannstation erzeugte das primäre 14B-Modell eine gefährliche Halluzination: *„der zulässige Biegeradius für VPE-isolierte Kabel beträgt 5 Außendurchmesser“* (gemäß Norm IEC 60502 sind mindestens 15 Durchmesser vorgeschrieben), versehen mit einem plausiblen Verweis auf einen erfundenen Normabschnitt. Das sekundäre 70B-Schiedsrichtermodell bewertete diese Antwort mit `9/10` und vermerkte im Prüfbericht: *„Die Antwort ist präzise, strukturiert und belegt den Sachverhalt durch Normverweise“*. Das deterministische Gateway hingegen las die Originalbytes der Norm am angegebenen Offset aus, berechnete den SHA-256-Hash und blockierte den Release innerhalb von $`15\,\mu\text{s}`$ mit dem Fehlercode `DROP_UNGROUNDED`. Damit wurde die Verlegung eines Kabels mit unzulässigem Biegeradius verhindert, die unweigerlich zur Zerstörung des Mantels und zu einem Erdschluss geführt hätte.
 
 ## 2. Deterministische Evidenztherapie: Das zweistufige Gateway für Null-Halluzinationen
 
@@ -660,6 +691,7 @@ Auf diese Weise wandelt sich generative KI von einer unberechenbaren Gefahrenque
 8. Wie arbeitet ein prädikativer Sicherheits-Schild (Safety Shield) zum Schutz physischer Aktoren, und welche Restriktion erzwingt das FTTI?
 9. Wie erzeugt das Expertensystem Trainingspaare $`(x, y_w, y_l)`$ für die Direct Preference Optimization (DPO) eines Sprachmodells?
 10. Warum ist zielgerichtetes Vergessen (*Machine Unlearning*) nach der SISA-Architektur effizienter als das vollständige Nachtrainieren eines Modells bei Zurückziehung einer Norm?
+11. Warum erweist sich das Muster „LLM-as-a-Judge“ zur Eliminierung von Halluzinationen in missionskritischen Systemen als untauglich, und warum sind die Fehlerwahrscheinlichkeiten der Modelle nicht voneinander unabhängig ($`P(E_1 \cap E_2) \neq P(E_1) \cdot P(E_2)`$)?
 
 ## Glossar
 
@@ -675,6 +707,8 @@ Auf diese Weise wandelt sich generative KI von einer unberechenbaren Gefahrenque
 | Prädikativer Schild (Safety Shield) | Deterministisches Sicherheitsüberwachungsmodul, das unzulässige Aktionen blockiert oder Logits zur Laufzeit korrigiert |
 | Maschinelles Vergessen (Machine Unlearning) | Verfahren zur gezielten Entfernung veralteter oder kompromittierter Fakten aus Modellparametern ohne vollständiges Retraining |
 | Grammatikgesteuertes Decoding | Abfangen und Maskieren von Token-Logits bei jedem Generierungsschritt zur Gewährleistung formaler Schemakonformität |
+| Common-Mode-Fehler (Ausfall gemeinsamer Ursache) | Zustand, bei dem redundante Systemkomponenten aufgrund gemeinsamer Architekturdefekte oder korrelierter Fehler simultan versagen |
+| „LLM-as-a-Judge“-Muster | Architekturansatz zur Bewertung der Antworten eines primären Modells durch ein sekundäres Sprachmodell, hochgradig anfällig für Stil- und Autoritätsverzerrungen |
 
 ## Abkürzungen
 
@@ -715,6 +749,7 @@ Auf diese Weise wandelt sich generative KI von einer unberechenbaren Gefahrenque
 13. <a id="src-13"></a>Kelvin Guu, Kenton Lee, Zora Tung, Panupong Pasupat, Ming-Wei Chang. *REALM: Retrieval-Augmented Language Model Pre-Training*. In *Proceedings of the 37th International Conference on Machine Learning (ICML 2020)*, PMLR 119, 2020, S. 3929–3938. [research.google](https://research.google/pubs/realm-retrieval-augmented-language-model-pre-training/).
 14. <a id="src-14"></a>Karl R. Popper. *The Logic of Scientific Discovery*. Hutchinson & Co., London, 1959.
 15. <a id="src-15"></a>Mykola Fedchyk. *Epistemic Virtual Machine and Zero-Hallucination Architectures for Safety-Critical Systems*. Technical Report, 2026.
+16. <a id="src-16"></a>Lianmin Zheng, Hao Zhang, Wei-Lin Chiang et al. *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*. In *Advances in Neural Information Processing Systems (NeurIPS 2023)*, 36, 2023.
 
 ---
 

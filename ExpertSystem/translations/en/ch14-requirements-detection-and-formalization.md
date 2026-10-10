@@ -917,6 +917,4 @@ The synthesized intermediate representation constitutes a verifiable candidate f
 
 ---
 
----
-
 [← Chapter 13](ch13-language-variability-vs-determinism.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 15 →](ch15-knowledge-extraction-and-kb-construction.md)

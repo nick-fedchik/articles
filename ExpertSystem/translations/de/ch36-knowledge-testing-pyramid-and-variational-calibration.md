@@ -14,9 +14,9 @@
 
 Dieses Kapitel untersucht die Methodik der mehrstufigen Verifikation und Kalibrierung von Regeln in evidenzbasierten Expertensystemen auf Basis der vom Autor entwickelten Wissenstestpyramide (*Knowledge Testing Pyramid, KTP*). Es definiert die mathematischen und architektonischen Werkzeuge, die Inferenzstabilität gegenüber Sensorrauschen garantieren und eine Degradation der Wissensbasis in missionskritischen Anwendungen verhindern.
 
-In sicherheitskritischen cyber-physikalischen Systemen (ISO 26262 ASIL D, EN 50128 SIL 4, DO-178C Level A) führt das Fehlen einer isolierten Regelverifikation und Grenzwertprüfung zu zwei verheerenden Ausfallarten: der Falle der vakuumhaften Wahrheit (*The Vacuous Truth Trap*, bei der ein falscher oder uninitialisierter Antezedens einer materiellen Implikation $A \to B$ die Regel formal wahr macht und Notfallaktoren fälschlich ansteuert) sowie hochfrequentem Rattern (*Chattering*, bei dem geringfügiges Rauschen auf Sensorkanälen an Prädikatsgrenzen sprunghafte Entscheidungssprünge auslöst und elektromechanische Antriebe zerstört).
+In sicherheitskritischen cyber-physikalischen Systemen (ISO 26262 ASIL D, EN 50128 SIL 4, DO-178C Level A) führt das Fehlen einer isolierten Regelverifikation und Inferenzgrenzenprüfung zu zwei katastrophalen Ausfallarten: der Falle der vakuumhaften Wahrheit (*The Vacuous Truth Trap*, bei der ein falscher oder uninitialisierter Antezedens einer materiellen Implikation $`A \to B`$ die Regel automatisch wahr macht und fälschlicherweise Notfall-Aktuatoren ansteuert) sowie hochfrequentem Prellen (*Chattering*, bei dem geringfügiges Rauschen auf Sensorkanälen an Prädikatsgrenzen sprunghafte Entscheidungsumschaltungen auslöst und elektromechanische Antriebe zerstört). Zusätzlich wird die Gefahr des pseudowissenschaftlichen Metriken-Inflationismus in der generativen KI aufgedeckt, wo Behauptungen über null Halluzinationen ($`\mathrm{ZHR} = 1{,}000000`$) bei kleinen Stichproben den Grundlagen der mathematischen Statistik widersprechen.
 
-Dieses Kapitel löst dieses Problem durch den Aufbau einer vierstufigen Wissenstestpyramide (*Knowledge Testing Pyramid, KTP*): vom isolierten Modultesten von Regeln (*KUT*) mit Prämissen-Mocking (`PremiseMock`) und 6-Punkt-Spektralanalysen von Grenzwerten (*BVA*) über das Integrationstesten anfechtbarer Inferenzketten (*KIT*) bis hin zur systemischen Evaluierung der semantischen Invarianz ($\text{SIS} \ge 0{,}98$) und der variationellen Kalibrierung der Lipschitz-Stabilität ($L_{\mathcal{K}} \le L_{\max}$) des logischen Schlussfolgerungsraums.
+Dieses Kapitel löst dieses Problem durch den Aufbau einer vierstufigen Wissenstestpyramide (*Knowledge Testing Pyramid, KTP*): von isolierten Komponententests von Regeln (*KUT*) mit Prämissen-Mocking (`PremiseMock`), dem mathematischen Nicht-Vakuitäts-Kriterium (*Non-Vacuity Invariant*) und 6-Punkt-Spektralanalysen von Grenzwerten (*BVA*) über das Integrationstesten anfechtbarer Inferenzketten (*KIT*) bis hin zur systemischen Evaluierung der semantischen Invarianz ($`\mathrm{SIS} \ge 0{,}98`$), der variationellen Kalibrierung der Lipschitz-Stabilität ($`L_{\mathcal{K}} \le L_{\max}`$), exakten Clopper-Pearson-Konfidenzintervallen, der Dreierregel und dem isolierten Kontrollgate (*Held-Out Sealed Gate*) mit unverfälschter binärer Verwahrung ohne verlustbehaftete Neukodierung.
 
 ---
 
@@ -91,6 +91,12 @@ flowchart TD
     class L4 l4;
 ```
 
+Die KTP-Struktur deckt das gesamte Spektrum der Verifikationsaufgaben des Knowledge Engineering ab:
+1. **Ebene L1 (Atomsyntax und Semantik in KUT):** Verifikation geschlossener Bedingungsvokabulare, Konsistenz von Datentypen, Ausschluss von Tippfehlern in Prädikatbezeichnern sowie strikte Validierung von SI-Einheiten;
+2. **Ebene L2 (Nicht-Vakuität der Prädikate und BVA):** obligatorische Aktivierung jeder Regel durch Gegenbeispiele; Generierung von Testvektoren, die nachweisen, dass die Regel den Systemzustand tatsächlich verändern kann ($`A = \mathrm{True}`$ und $`\mathrm{StateChanged}`$);
+3. **Ebene L3 (Integrität deduktiver Theorien und ASPIC+ in KIT):** Erkennung zyklischer Angriffe, Prüfung der korrekten Bindung anfechtbarer Einwände (Defeaters) und Eliminierung verwaister Regeln in mehrstufigen Gittern;
+4. **Ebene L4 (Kreuzarchitektonische Hard- und Software-Parität sowie KCT):** Gegenüberstellung der Inferenzresultate des High-Level-Softwaresimulators und des FPGA-RTL-Hardwarekerns (EPU) unter antagonistischen Szenarien, variationelle Kalibrierung der Lipschitz-Stabilität und Auditierung der semantischen Invarianz.
+
 ---
 
 ## 3. Stufe 1: Knowledge Unit Testing (KUT) – Testen von Wissensatomen
@@ -120,18 +126,44 @@ res := knowledgetest.RunKUT(coolingRule, mock, "COOLING_HIGH")
 ```
 
 ### 3.3. Die Falle der vakuumhaften Wahrheit (The Vacuous Truth Trap)
-In der klassischen mathematischen Logik ist die materielle Implikation $P \to Q$ äquivalent zur Disjunktion $\neg P \lor Q$. Ist der Antezedens $P$ falsch, ist der Ausdruck formal wahr ($P \equiv \text{False} \implies (P \to Q) \equiv \text{True}$), unabhängig vom Inhalt der Konklusion $Q$.
+In der klassischen mathematischen Logik ist die materielle Implikation $`P \to Q`$ äquivalent zur Disjunktion $`\neg P \lor Q`$. Ist der Antezedens $`P`$ falsch, ist der Ausdruck formal wahr ($`P \equiv \text{False} \implies (P \to Q) \equiv \text{True}`$), unabhängig vom Inhalt der Konklusion $`Q`$.
 
-In technischen Expertensystemen erzeugt dies eine fatale Schwachstelle: Eine fehlerhaft entworfene Regel oder ein naiver Testrunner wertet eine Prüfung als „erfolgreich bestanden“, weil die formale Implikationsbedingung erfüllt ist – obgleich in der Praxis keine einzige der erforderlichen technischen Vorbedingungen je aktiv war.
+In technischen Expertensystemen erzeugt dies eine fatale Schwachstelle: Eine fehlerhaft entworfene Regel oder ein naiver Testrunner wertet eine Prüfung als „erfolgreich bestanden“, weil die formale Implikationsbedingung erfüllt ist – obgleich in der Praxis keine einzige der erforderlichen technischen Vorbedingungen je aktiv war. Beispielsweise nimmt das Antezedens $`P`$ infolge eines Tippfehlers im Variablenbezeichner oder fehlerhafter Bereichsgrenzen niemals den Wert `TRUE` an, wodurch ein kritischer Notfallschutz-Algorithmus zu „totem Code“ wird, der formal sämtliche statischen SMT-Prüfungen besteht.
 
 ```mermaid
 flowchart TD
+    accTitle: Falle der vakuumhaften Wahrheit (Vacuous Truth Trap)
+    accDescr: Schema der Blockierung der vakuumhaften Wahrheit durch obligatorische Generierung aktivierender Gegenbeispiele.
+
     subgraph "Falle der vakuumhaften Wahrheit (Vacuous Truth Trap)"
         COND["Prämissen im PremiseMock fehlen oder sind falsch (P = False)"] --> IMPL["Materielle Implikation: False &rarr; Q &equiv; True"]
         IMPL --> VULN["<b>KATASTROPHALER DEFEKT</b><br/>Regel gilt als valide,<br/>feuert jedoch im Flug/Betrieb niemals!"]
-        IMPL --> GATE["<b>KUT-Invariante #1 (Vacuous Implication Gate)</b><br/>Erzwungene Testblockade:<br/>VacuousTruthTrap = true, Passed = false"]
+        VULN --> SOL["<b>LÖSUNG: Non-Vacuous Invariant</b><br/>Obligatorische Generierung eines aktivierenden Gegenbeispiels<br/>und Überprüfung der Ausgangsänderung"]
     end
 ```
+
+Eine Wissensbasis gilt genau dann auf Ebene L2 als verifiziert, wenn das mathematische Nicht-Vakuitäts-Kriterium (**Non-Vacuity Invariant**) erfüllt ist:
+
+```math
+\forall \mathcal{R} = (A \implies C) \in \mathcal{KB}, \quad \exists \mathbf{x} \in \mathcal{X}_{\mathrm{test}} : A(\mathbf{x}) = \mathrm{True} \land \mathrm{StateChanged}(\mathbf{x}, C)
+```
+
+wobei:
+- $`\mathcal{R}`$ — normative oder ingenieurtechnische Regel mit Antezedens $`A`$ und Konsequens $`C`$;
+- $`\mathcal{KB}`$ — verifizierte Wissensbasis des Expertensystems;
+- $`\mathcal{X}_{\mathrm{test}}`$ — Raum synthetisierter oder empirischer Testvektoren;
+- $`\mathbf{x}`$ — konkreter Eingangsbeobachtungsvektor (Werte der Umgebungsparameter);
+- $`A(\mathbf{x}) = \mathrm{True}`$ — Erfüllung der Antezedensbedingung ohne Auslösung eines Schutzfehlers oder Überschreitung der Bereichsgrenzen;
+- $`\mathrm{StateChanged}(\mathbf{x}, C)`$ — Prädikat der Zustandsänderung oder Bildung einer neuen Schlussfolgerung unter Einwirkung des Konsequens $`C`$.
+
+#### 3.3.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der Nicht-Vakuitätsverifikation
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**  
+   Findet der KUT-Testrunner für eine Regel $`\mathcal{R}_i`$ keinen einzigen Vektor $`\mathbf{x} \in \mathcal{X}_{\mathrm{test}}`$, der $`A(\mathbf{x})`$ in den Zustand $`\mathrm{True}`$ überführt, wird die Regel als potenziell tot markiert (`VACUOUS_RULE_STALL`). Ein Gegenbeispiel-Finder (SMT-Solver Z3) wird initiiert. Beweist die SMT-Analyse, dass das Antezedens aufgrund eines logischen Widerspruchs in den Vorbedingungen oder einer Typenfehlanpassung identisch falsch ist ($`\neg \exists \mathbf{x}: A(\mathbf{x})`$), fällt die CI/CD-Pipeline das Urteil `CRITICAL_REJECT` und blockiert die Bereitstellung des Release-Pakets der Wissensbasis.
+2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**  
+   Das Nicht-Vakuitäts-Audit stellt strenge Anforderungen an die Dimensionierung des Testraums: Der minimale Umfang der Testsuite beträgt $`|\mathcal{X}_{\mathrm{test}}| \ge 2 \cdot |\mathcal{KB}|`$ (mindestens ein Vektor für die gezielte Aktivierung der Vorbedingung und einer für deren Deaktivierung). Für eine Wissensbasis mit $`10\,000`$ Regeln erfordert dies $`20\,000`$ dedizierte Vektoren. Bei einer Taktfrequenz des Inferenz-Emulators von $`200\,\text{MHz}`$ und einer Latenz von $`15\,\mu\text{s}`$ pro Test dauert der vollständige Zyklus des Nicht-Vakuitäts-Audits $`300\,\text{ms}`$, was eine nahtlose Integration in Git-Hooks vor jedem Branch-Merge ermöglicht.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**  
+   Betrachten wir die Notabschaltregel einer Dampfturbine $`\mathcal{R}_{704}`$: «WENN $`\mathtt{rpm} > 12000`$ UND $`\mathtt{coolant\_flow} < 5{,}0\,\text{l/min}`$, DANN $`\mathtt{trip\_solenoid} = \mathtt{ACTIVE}`$». Infolge eines Tippfehlers im ontologischen Mapping wurde der Sensor als `coolant_flw` registriert (der Buchstabe `o` fehlt). Da der Fakt `coolant_flow` in der Laufzeitumgebung niemals erzeugt wird, bleibt das Antezedens permanent falsch ($`A \equiv \text{False}`$), wodurch die materielle Implikation $`A \to C`$ formal wahr ist ($`\text{True}`$). Der KUT-Testrunner detektiert den Defekt `VACUOUS_RULE_ERROR`, bricht das Qualifizierungsverfahren ab und lokalisiert den Bruch der ontologischen Bindung, wodurch ein Turbosatz im Wert von 2,4 Mio. USD vor der physischen Zerstörung bei einer realen Überhitzung bewahrt wird.
 
 **KUT-Invariante #1 (Vacuous Implication Prevention Invariant):**  
 Der KUT-Testrunner ist verpflichtet, einen Test zwingend als fehlerhaft zurückzuweisen (`VacuousTruthTrap = true`), wenn die Regel ein erfolgreiches Feuern reklamiert, obwohl obligatorische Prämissen in der Mock-Umgebung fehlen oder unvollständig sind.
@@ -189,6 +221,9 @@ Gemäß der Argumentationstheorie von John Pollock [[9]](#src-9) und den AGM-Pos
 
 ```mermaid
 flowchart LR
+    accTitle: Unterbrechung der Inferenzkette durch einen Defeater
+    accDescr: Ein aktiver Defeater blockiert die Ableitung und widerruft die nachgelagerte Schlussfolgerung.
+
     A["Eingangspaket valide (A)"] -->|Regel R1| B["Paket akzeptiert (B)"]
     B -->|Regel R2| C["Übergabe an FSM-Zustandsautomat (C)"]
 
@@ -358,7 +393,107 @@ flowchart TD
 
 Dieser Ansatz ermöglicht einen dualen Kalibrierungszyklus:
 - **Massiver Matrix-Stresstest:** Schnelle algorithmische Generatoren erzeugen hunderttausende Testfälle ($> 250\,000$ Tests/s) zur Überprüfung von Durchsatz, Speicherlecks und korrekten Registerübergängen.
-- **Neuro-symbolischer Referenzkalibrator:** Ein paralleler Pool lokaler Modelle (SLM-Worker) erzeugt hochenthaltige, authentische sprachliche Perturbationen ($1\,000$ bis $10\,000$ Fälle) für die zertifizierungsrelevante Berechnung von $\text{SIS} \ge 0{,}98$. Dabei bleibt das deterministische Referenzorakel (System 2 EVM) zu 100 % vor Datenlecks und subjektiven Verzerrungen geschützt.
+- **Neuro-symbolischer Referenzkalibrator:** Ein paralleler Pool lokaler Modelle (SLM-Worker) erzeugt hochenthaltige, authentische sprachliche Perturbationen ($1\,000$ bis $10\,000$ Fälle) für die zertifizierungsrelevante Berechnung von $`\mathrm{SIS} \ge 0{,}98`$. Dabei bleibt das deterministische Referenzorakel (System 2 EVM) zu 100 % vor Datenlecks und subjektiven Verzerrungen geschützt.
+
+### 5.5. Metrologie der Null-Halluzinationen (ZHR): Exakte Clopper-Pearson-Konfidenzintervalle und die Dreierregel
+
+In aktuellen Forschungsarbeiten und Marketingpräsentationen von Systemen künstlicher Intelligenz ist die gefährliche Praxis verbreitet, absolute Fehlerfreiheit in Form von $`\mathrm{ZHR} = 1{,}000000`$ (Zero-Hallucination Rate) zu deklarieren. Die Angabe einer Metrik mit sechs Nachkommastellen bedeutet formal, dass die Obergrenze der Fehlerrate wie folgt beschränkt ist:
+
+```math
+p_{\mathrm{error}} \le 10^{-6}
+```
+
+Besteht ein empirischer Benchmark jedoch lediglich aus $`N = 30`$, $`N = 100`$ oder $`N = 1\,309`$ Kontrollanfragen, berechtigt eine beobachtete Fehleranzahl von null ($`k = 0`$) **mathematisch keineswegs** dazu, eine Ausfallrate von $`10^{-6}`$ zu behaupten. Aus Sicht der mathematischen Statistik und Messtechnik belegt das Ausbleiben von Fehlern in einer kleinen Stichprobe lediglich, dass die Fehlerrate für das gewählte Konfidenzniveau im Prozent- oder Promillebereich liegt.
+
+Für die Binomialverteilung von Bernoulli-Versuchen bei Beobachtung von $`k = 0`$ Fehlern in einer Stichprobe des Umfangs $`N`$ wird die obere Schranke der Ausfallwahrscheinlichkeit $`p_U`$ auf dem Konfidenzniveau $`1 - \alpha`$ analytisch über **exakte Clopper-Pearson-Konfidenzintervalle (Clopper-Pearson Exact Confidence Intervals)** berechnet:
+
+```math
+p_U = 1 - \alpha^{1/N}, \qquad \mathrm{ZHR}_{\mathrm{guaranteed}} = \alpha^{1/N} = (0{,}05)^{1/N}
+```
+
+wobei:
+- $`N \in \mathbb{N}^+`$ — Umfang der repräsentativen Stichprobe unabhängiger Kontrollanfragen;
+- $`\alpha`$ — Signifikanzniveau (beim im Ingenieurwesen standardmäßigen Konfidenzniveau von $`95\%`$ gilt $`\alpha = 0{,}05`$);
+- $`p_U \in [0, 1]`$ — obere Konfidenzgrenze der Fehlerhäufigkeit (Halluzinationen) des Systems;
+- $`\mathrm{ZHR}_{\mathrm{guaranteed}} \in [0, 1]`$ — garantierte Untergrenze der Null-Halluzinations-Rate.
+
+Für $`N \to \infty`$ liefert die Taylor-Entwicklung der Exponentialfunktion die klassische ingenieurtechnische **Dreierregel (The Rule of Three)**:
+
+```math
+\ln(0{,}05) \approx -2{,}9957 \implies p_U \approx 1 - e^{-2{,}9957/N} \approx \frac{2{,}9957}{N} \approx \frac{3}{N}
+```
+
+Gemäß den Anforderungen der Metrologie und funktionalen Sicherheit (ISO 26262 ASIL D, IEC 61508 SIL 4) werden Expertensysteme in vier $`\mathrm{ZHR}`$-Reifegrade eingestuft:
+
+| Zuverlässigkeitsklasse | Erforderliche Stichprobe $N$ ($k=0$) | Garantierte obere Ausfallgrenze ($p_{95\%}$) | Zulässige öffentliche Bezeichnung $\mathrm{ZHR}$ |
+|---|:---:|:---:|:---|
+| **Empirischer Prototyp (L1)** | $N < 300$ | $p \le 1{,}0 \times 10^{-2}$ | $\mathrm{ZHR} \ge 99{,}0\%$ (L1 Empirical) |
+| **Industrielles Niveau (L2)** | $300 \le N < 30\,000$ | $p \le 1{,}0 \times 10^{-4}$ | $\mathrm{ZHR} \ge 99{,}7\% \dots 99{,}99\%$ (L2 Industrial) |
+| **Kritisches ASIL-D (L3)** | $30\,000 \le N < 3\,000\,000$ | $p \le 1{,}0 \times 10^{-6}$ | $\mathrm{ZHR} \ge 99{,}9999\%$ (L3 Critical) |
+| **Formal bewiesener Closed-World-Beweis (L4)** | Mathematischer Beweis / SAT | $p = 0$ (auf geschlossener Theorie) | $\mathrm{ZHR} = 1{,}0$ (Formal Closed-World Proof) |
+
+Jede öffentliche Angabe zur $`\mathrm{ZHR}`$ muss zwingend den Stichprobenumfang $`N`$, das Konfidenzniveau ($`95\%`$), die Korpus-Geschlossenheitsspezifikation sowie ein offenes, reproduzierbares Testpaket umfassen. Es ist untersagt, in Nachkommastellen mehr Nullen anzugeben, als es der exponentiellen Größenordnung der Stichprobe entspricht ($`D \le \lfloor\log_{10}(N/3)\rfloor`$).
+
+#### 5.5.1. Geschlossener Kreis der ingenieurtechnischen ZHR-Metrologieberechnung
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**  
+   Wird ein System für ASIL-D / SIL 4 qualifiziert, analysiert der automatisierte Validierungs-Arbiter den Umfang des Testkorpus. Weist der statistische Ansatz einen Stichprobenumfang von $`N < 3 \times 10^6`$ auf, blockiert das System automatisch die Erteilung eines Zertifikats der Klasse `CERT_LEVEL_3` und stuft das Profil auf `L2_INDUSTRIAL` herab oder verlangt die Hinzunahme eines diskreten SMT/SAT-Solvers für einen formalen Beweis der Klasse L4 (`FORMAL_CLOSED_WORLD_PROOF`), bei dem die Fehlerwahrscheinlichkeit innerhalb der Axiomatik $`p \equiv 0`$ beträgt.
+2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**  
+   Die Durchführung von Tests der Klasse L2 ($`N = 30\,000`$ Anfragen) auf einem Servercluster mit einem Durchsatz von $`500`$ Abfragen/s erfordert $`60\,\text{s}`$. Für die L3-Qualifizierung ($`N = 3\,000\,000`$) auf einem 64-Knoten-Cluster mit einer Gesamtleistung von $`25\,000`$ Abfragen/s beträgt der Testzyklus $`120\,\text{s}`$. Bei einer durchschnittlichen kryptografischen Beweisgröße von $`4\,\text{KB}`$ pro Anfrage belaufen sich die NVMe-SSD-Speicheranforderungen zur Erfassung des Verifikationsprotokolls auf einen kontinuierlichen Puffer von $`12\,\text{GB}`$ bei einer Schreibbandbreite von $`\ge 100\,\text{MB/s}`$.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**  
+   Die Testsuite für das normative Protokoll RFC 9110 umfasst $`N = 1\,309`$ atomare Prüfungen der HTTP-Semantik. Durchläuft das System alle Prüfungen fehlerfrei ($`k = 0`$), berechnet der Auditor die obere Grenze der Fehlerrate nach der Dreierregel:
+
+```math
+p_{95\%} \approx \frac{3}{1309} \approx 0{,}002292 \implies \mathrm{ZHR}_{95\%} \ge 99{,}771\%
+```
+
+   Die Marketingbehauptung «Das System erzielt $`\mathrm{ZHR} = 1{,}000000`$» wird vom Auditor als pseudowissenschaftliche Verfälschung kategorisch zurückgewiesen. Der einzig zertifizierungsfähige Eintrag lautet streng: «$`\mathrm{ZHR} \ge 99{,}77\%`$ (L2 Industrial, $`N=1309`$, $`\alpha=0{,}05`$)».
+
+### 5.6. Isolierter Kontrollgate (Held-Out Sealed Gate) und unverfälschte binäre Verwahrung
+
+Zuverlässigkeitsdeklarationen erweisen sich häufig aufgrund des Phänomens der «Potemkinschen Schiedsrichter» (*Potemkin Arbiters*) und des Abflusses von Validierungsdaten in den Wissensaufbereitungsprozess (*Data Contamination*) als fiktiv. Prüfstände enthalten anstelle einer vollständigen Beweisprüfung nicht selten fest im Code verdrahtete skalare Bedingungen in Testskripten und prüfen oberflächliche boolesche Flags statt einer lückenlosen byteweisen Verifikation.
+
+Um diesen Mangel zu beheben, wird in der Architektur ein **isolierter Kontrollgate (Held-Out Sealed Gate)** auf Basis kryptografisch versiegelter Teststichproben implementiert:
+
+```mermaid
+flowchart TD
+    accTitle: Architektur des isolierten Kontrollgates Held-Out Sealed Gate
+    accDescr: Kryptografisch versiegelte Kontrollenklave verifiziert byteweise Nachweise ohne Datenabfluss.
+
+    subgraph SECURE_STORE["Versiegelter kryptografischer Speicher (Held-Out Benchmark)"]
+        TEST_ENC["Verschlüsselter Testdatensatz<br/>(AES-256-GCM / Ed25519)"]
+        MERKLE["Merkle-Baum der Referenzzitate<br/>Root: 0x7f4a...e12"]
+    end
+
+    subgraph ENCLAVE["Isolierte sichere Enklave (TEE / Secure Enclave)"]
+        DECRYPT["Entschlüsselung der Stichprobe im sicheren RAM<br/>(Schlüssel werden nach Durchlauf widerrufen)"]
+        EXEC["Ausführung der Inferenz durch das Wissensmodell"]
+        RAW_CHECK["<b>Gate der unverfälschten Verwahrung</b><br/>Byteweiser SHA-256-Abgleich der Zitate<br/>Verbot der Neukodierung errors=replace"]
+        VERIFY_TREE["Abgleich der Merkle-Wurzel mit der Referenz"]
+    end
+
+    TEST_ENC --> DECRYPT
+    MERKLE --> VERIFY_TREE
+    DECRYPT --> EXEC
+    EXEC --> RAW_CHECK
+    RAW_CHECK --> VERIFY_TREE
+
+    VERIFY_TREE -->|Vollständige Übereinstimmung| VERDICT_PASS["<b>Zulassungsgenehmigung (PASS)</b><br/>Generierung des kryptografischen Attestats"]
+    VERIFY_TREE -->|Abweichung| VERDICT_FAIL["<b>Fail-Closed-Sperre (LOCKOUT)</b><br/>Annullierung der Sitzung, Löschung der Schlüssel"]
+```
+
+Ein zentrales Funktionsprinzip dieses Gates ist die **unverfälschte binäre Verwahrung von Beweisen (Raw Binary Custody)**. In vielen Softwaresystemen wird ein Standard-Bibliotheksdecodieren mit Ersetzung fehlerhafter Bytes praktiziert (z. B. `errors="replace"` bei UTF-8, wodurch ungültige Sequenzen durch das Zeichen `\uFFFD` ersetzt werden). Jede derartige Modifikation verändert die Originalbytes der Quelldokumente, was die kryptografische Hashkette unwiderruflich zerstört und Zitate zu einer juristischen Illusion macht.
+
+In der Autorenarchitektur gilt eine absolute Verbotsinvariante: Der Zitatabgleich erfolgt ausschließlich auf den unberührten Byte-Slices des Originaldokumentenbestands unter Kontrolle absoluter Offsets `[byte_start, byte_end]` und SHA-256-Hashberechnung ohne zwischengeschaltete Textnormalisierung.
+
+#### 5.6.1. Geschlossener Kreis der ingenieurtechnischen Berechnung des isolierten Zulassungsgates
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**  
+   Beim Start einer Qualifikationsrunde lädt die isolierte Enklave den versiegelten Korpus und verifiziert dessen Integrität über die Wurzel des Merkle-Baums. Wird beim byteweisen Abgleich eine Hash-Abweichung auch nur eines einzigen Bytes eines Zitats festgestellt oder der Aufruf von Bibliotheken zur Zeichenersetzung (`\uFFFD`) registriert, löst der Gate-Controller unverzüglich den Hardwaremodus `FAIL_CLOSED_LOCKOUT` aus. Die Testsitzung wird abgebrochen, ephemere Entschlüsselungsschlüssel im sicheren RAM werden mit Nullen überschrieben und der Vorfall wird im Sicherheitsüberwachungsprotokoll erfasst.
+2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**  
+   Der Betrieb des isolierten Gates erfordert eine Hardware-Sicherheitsdomäne (ARM TrustZone, AMD SEV-SNP oder Intel SGX) mit einem dedizierten geschützten Speicher von mindestens $`256\,\text{MB}`$ ohne Auslagerungsdatei (No-Swap-Policy), was den Schutz von Referenzantworten gegen Host-Speicherangriffe während der Entschlüsselung garantiert. Die Durchsatzrate des kryptografischen SHA-256-Verifikationskanals muss mindestens $`1{,}2\,\text{GB/s}`$ betragen, um Engpässe bei der Testausführung zu vermeiden.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**  
+   Ein versiegelter Benchmark-Korpus aus $500$ Spezifikationen mit einem Gesamtvolumen von $`64\,\text{MB}`$ besitzt die Merkle-Wurzel `0x7f4a8b...e12`. Beim Parsen eines beschädigten Fragments wandte ein Fremdmodul eine Normalisierung an, indem das Byte `0xFF` durch die 3-Byte-Sequenz `0xEF 0xBF 0xBD` (UTF-8 Replacement Character) ersetzt wurde. Der Gate der unverfälschten Verwahrung berechnete den Kontrollhash des Blocks, detektierte die Diskrepanz des Byte-Slices zum Referenzblatt des Merkle-Baums und blockierte den Testlauf innerhalb von $`12\,\mu\text{s}`$ mit dem Fehlercode `EVIDENCE_TAMPERING_DETECTED`, was eine Verfälschung der Beweisbasis verhinderte.
 
 ---
 
@@ -386,6 +521,9 @@ Jedes Fehlschlagen eines Tests auf den Stufen KUT, KIT oder SIS dokumentiert ein
 
 ```mermaid
 flowchart TD
+    accTitle: Stigmergische Wissenslücken-Warteschlange (KnowledgeGapSpool)
+    accDescr: Rückmeldung von Verifikationsfehlern in den Priorisierungspool zur Schließung von Wissenslücken.
+
     FAIL["KUT- / KIT-Defekt / CWA-Ablehnung erkannt"] --> SPOOL["Stigmergischer Pool KnowledgeGapSpool"]
     SPOOL --> BOOST["Pheromongewicht erhöhen (Pheromone Weight += 1.0)"]
     BOOST --> BACKLOG["Automatischer Export des Wissensingenieur-Backlogs<br/>(Sortierung nach absteigender Spurintensität)"]
@@ -917,6 +1055,8 @@ Nach der Beherrschung der Methodik des vollständigen Test- und Kalibrierungszyk
 4. Wie ist der stigmergische Akkumulationspool für Wissenslücken mit dem zweiten Hauptsatz der Thermodynamik und dem Entropie-Export nach Ilya Prigogine verknüpft?
 5. Wie unterscheidet ein unabhängiger Test einen bekannten Wert `false` von einem fehlenden Faktum, und wie differenziert er die Unterminierung einer Evidenz von der Widerlegung einer Konklusion?
 6. Warum kompensiert ein hoher durchschnittlicher SIS-Score nicht die Änderung eines einzelnen kritischen Urteils, und warum ist ein minimaler Konflikt nicht zwingend der kleinste bezüglich der Anzahl der Bedingungen?
+7. Warum stellt die Veröffentlichung einer Behauptung über $`\mathrm{ZHR} = 1{,}000000`$ bei einer Stichprobe von $`N = 1309`$ Anfragen einen metrologischen Fehler dar, und welche obere Ausfallgrenze garantiert die Dreierregel?
+8. Welche Risiken birgt das Flag `errors="replace"` in UTF-8-Parsern für die kryptografische Nachweisbarkeit, und wie verhindert der Held-Out Sealed Gate den Abfluss von Validierungsdaten?
 
 ---
 
@@ -925,7 +1065,8 @@ Nach der Beherrschung der Methodik des vollständigen Test- und Kalibrierungszyk
 |---|---|---|
 | **Knowledge Unit Testing (KUT)** | Knowledge Unit Testing | Modultesten eines isolierten Wissensatoms (Regel, Frame, Prädikat) mit Prämissen-Mocking. |
 | **Premise Mocking** | Premise Mocking | Technik zur Isolation der Antezedenzien einer Regel durch Substitution der Wissensbasis durch einen kontrollierten Stub-Kontext. |
-| **Falle der vakuumhaften Wahrheit** | Vacuous Truth Trap | Situation, in der eine formale materielle Implikation $P \to Q$ aufgrund der Falschheit der Prämisse $P$ als wahr gewertet wird. |
+| **Falle der vakuumhaften Wahrheit** | Vacuous Truth Trap | Situation, in der eine formale materielle Implikation $`P \to Q`$ aufgrund der Falschheit der Prämisse $`P`$ als wahr gewertet wird. |
+| **Nicht-Vakuitäts-Kriterium** | Non-Vacuity Invariant | Anforderung der zwingenden Existenz mindestens eines Testvektors, der das Antezedens einer Regel in den Zustand `True` versetzt und den operativen Zustand des Systems verändert. |
 | **Knowledge Integration Testing (KIT)** | Knowledge Integration Testing | Integrationstesten der Interaktion verknüpfter Regeln, mehrstufiger Verbände und der Kettentrennung durch Defeater. |
 | **Durchgängiges Systemtesten des Expertensystems** | Knowledge System Testing | Überprüfung des vollständigen Pfads von der Anfrage und den Quellen bis zur Entscheidung und dem Begründungspaket. |
 | **Minimaler Konflikt** | Minimal conflict | Unvereinbare Teilmenge von Bedingungen, die nach Entfernen eines beliebigen Elements vor unverändert konsistentem Hintergrund konsistent wird. |
@@ -933,6 +1074,11 @@ Nach der Beherrschung der Methodik des vollständigen Test- und Kalibrierungszyk
 | **Lipschitz-Stabilität von Wissen** | Lipschitz Knowledge Stability | Eigenschaft des Inferenzraums, seinen epistemischen Zustand proportional und beschränkt relativ zur Größe einer Eingangsstörung zu verändern. |
 | **Relais-Chattering** | Chattering | Gefährliche, hochfrequente sprunghafte Zustandswechsel des Systems bei infinitesimal kleinen Änderungen des Eingangssignals. |
 | **Stigmergischer Lücken-Pool** | Stigmergic Gap Spool | Mechanismus zur indirekten Koordination von Wissensingenieuren durch Akkumulation und Pheromon-Priorisierung registrierter CWA-Ablehnungen. |
+| **Clopper-Pearson-Konfidenzintervall** | Clopper-Pearson Interval | Exaktes binomiales Konfidenzintervall auf Basis der Beta-Verteilung zur Schätzung der Fehlerrate bei null beobachteten Ausfällen. |
+| **Dreierregel** | Rule of Three | Asymptotische Abschätzung der oberen Grenze des $`95\%`$-Konfidenzintervalls der Ausfallwahrscheinlichkeit ($`p \approx 3/N`$) bei Ausbleiben von Fehlern in einer Stichprobe des Umfangs $`N`$. |
+| **Isolierter Kontrollgate** | Held-Out Sealed Gate | Kryptografisch versiegelte Validierungsenklave mit Integritätskontrolle über einen Merkle-Baum, unzugänglich für Trainings- und Nachtrainings-Pipelines. |
+| **Potemkinscher Schiedsrichter** | Potemkin Arbiter | Testvalidator, der die Prüfung formaler Beweise durch vereinfachte, festverdrahtete skalare Bedingungen ersetzt. |
+| **Unverfälschte binäre Verwahrung** | Raw Binary Custody | Prinzip des Zitatabgleichs ausschließlich anhand der unberührten Byte-Offsets der Primärquelle ohne verlustbehaftete Neukodierung des Textes. |
 
 ---
 
@@ -953,6 +1099,7 @@ Nach der Beherrschung der Methodik des vollständigen Test- und Kalibrierungszyk
 | **PAC** | Probably Approximately Correct | Wahrscheinlich approximativ korrektes maschinelles Lernen nach Leslie Valiant |
 | **SIS** | Semantic Invariance Score | Metrik der semantischen Invarianz von Urteil und Beweisgraph |
 | **TDD** | Test-Driven Development | Testgetriebene Entwicklung |
+| **ZHR** | Zero-Hallucination Rate | Null-Halluzinations-Rate (Häufigkeit der Generierung rein verifizierter Aussagen) |
 
 ---
 
@@ -970,6 +1117,8 @@ Nach der Beherrschung der Methodik des vollständigen Test- und Kalibrierungszyk
 11. <a id="src-11"></a>**Alchourrón, C. E., Gärdenfors, P., & Makinson, D.** (1985). On the logic of theory change: Partial meet contraction and revision functions. *Journal of Symbolic Logic*, 50(2), 510–530.
 12. <a id="src-12"></a>**Junker, U.** (2004). QUICKXPLAIN: Preferred explanations and relaxations for over-constrained problems. In *AAAI* (Vol. 4, pp. 167–172).
 13. <a id="src-13"></a>**Valiant, L. G.** (1984). A theory of the learnable. *Communications of the ACM*, 27(11), 1134–1142.
+14. <a id="src-14"></a>**Clopper, C. J., & Pearson, E. S.** (1934). The use of confidence or fiducial limits illustrated in the case of the binomial. *Biometrika*, 26(4), 404–413.
+15. <a id="src-15"></a>**Hanley, J. A., & Lippman-Hand, A.** (1983). If nothing goes wrong, is everything all right? Interpreting zero numerators. *JAMA*, 249(13), 1743–1745.
 
 ---
 
