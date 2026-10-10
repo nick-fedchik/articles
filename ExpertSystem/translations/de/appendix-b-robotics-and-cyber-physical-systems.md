@@ -1,9 +1,9 @@
 # Anhang B. Evidenzbasierte Expertensysteme in der autonomen Robotik und in cyber-physischen Komplexen
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · Anhänge  
-> **Inhaltsverzeichnis:** [README.md](README.md)  
-> **Autor:** [Mykola Fedchyk](about-the-author.md)  
-> **Niveau:** Architekten autonomer Plattformen, Embedded-Systems-Ingenieure, Robotik-Spezialisten (ROS 2, Zephyr RTOS), Entwickler geschäftskritischer Echtzeitsysteme  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · Anhänge
+> **Inhaltsverzeichnis:** [README.md](README.md)
+> **Autor:** [Mykola Fedchyk](about-the-author.md)
+> **Niveau:** Architekten autonomer Plattformen, Embedded-Systems-Ingenieure, Robotik-Spezialisten (ROS 2, Zephyr RTOS), Entwickler geschäftskritischer Echtzeitsysteme
 > **Lernziele:** Strikte Trennung probabilistischer Wahrnehmung von deterministischer Aktionszulassung; Aufbau einer On-Board-Wissensbasis ohne dynamischen Speicher; Modellierung physischer Aktionen als formale Kontrakte mit Vor- und Nachbedingungsprüfung; Validierung von Subsystemschnittstellen und physikalischen Modellen vor Feldtests auf dem Testgelände.
 
 ---
@@ -12,7 +12,9 @@
 
 In geschäftskritischen autonomen Systemen und in der mobilen Robotik (ISO 26262 ASIL D, IEC 61508 SIL 3, DO-178C DAL A) führt die direkte Kopplung neuronaler Wahrnehmungsmodelle oder multimodaler KI an ausführende Aktuatoren unweigerlich zu katastrophalen Havarien. Physische Konsequenzen robotischer Aktionen (Notbremsung, Lastabwurf, abrupter Rudereinschlag) sind irreversibel und verbrauchen reale kinetische Energie. Bei einer Regelfrequenz von $f = 50\ \text{Hz}$ garantiert bereits eine marginale Klassifikations- oder Erkennungsfehlerrate von $p = 10^{-3}$ einen gefährlichen Steuerbefehl im statistischen Mittel bereits nach $`T_{\text{err}} = 1/(p \cdot f) = 20\ \text{Sekunden}`$ Flug- oder Fahrzeit.
 
-Dieser Anhang löst dieses Problem durch die Einführung eines fundamentalen Prinzips der cyber-physischen Sicherheit: der strikten Trennung probabilistischer Sensorintelligenz von deterministischer Aktionszulassung. Der Autor schlägt eine heterogene dreistufige On-Board-Architektur vor und analysiert diese im Detail: ein SoC/NPU für Computer Vision, ein fehlertoleranter Sicherheits-Mikrocontroller unter Zephyr RTOS mit vorkompilierten Datalog-Regeln im statischen Speicher (ohne dynamische Allokation über `malloc`) sowie ein Hardware-Veto-Arbiter auf einem FPGA mit einer Inferenzzeit P99 $< 100\ \text{ns}$ und hardwarebasierter Aktuatortrennung $< 5\ \text{ns}$), einen Forschungsprüfstand für synchrone Präzisionsspektroskopie des physikalischen Zustands auf Basis von Infineon TLE90xx und AURIX TC49x (isoUART 2.0), den hard- und softwarebasierten Schutz des Sensor-Frontends gegen Fail-Open-Anomalien (Filterung nicht-rechteckiger Matrizen, IEEE 754 NaN/Inf-Anomalien und EMV-Rauschgrenzen) sowie formale Aktionskontrakte mit Verifikation von Vor- und Nachbedingungen und Methoden zur Erkennung von Schnittstellendefekten vor den eigentlichen Feldversuchen auf dem Testgelände.
+Dieser Anhang löst dieses Problem durch die Einführung eines fundamentalen Prinzips der cyber-physischen Sicherheit: der strikten Trennung probabilistischer Sensorintelligenz von deterministischer Aktionszulassung. Der Autor widerlegt die ingenieurtechnische Illusion des Konzepts «Mensch über dem Regelkreis» (*Human-on-the-loop*, HOTL) anhand der physikalischen Latenzen des Funkübertragungspfads und der menschlichen Neurophysiologie ($`T_{\Sigma} = 390 - 780\,\text{ms}`$, $`S_{\mathrm{react}} \approx 19{,}5 - 39{,}0\,\text{m}`$), was den zwingenden Übergang zu einer rein bordseitigen Safe-State-Ontologie und Notfall-Sagas erfordert (Ballistic Jettison, Dead Reckoning RTB, Safe Zeroize).
+
+Vorgeschlagen und detailliert analysiert wird eine dreistufige Architektur mit einem **epistemischen Governor** (*Epistemic Governor*), bei dem die Aktionszulassung als deduktiver Beweis nach Datalog-Regeln im statischen Speicher ohne dynamische Allokation über `malloc` mit Schutz gegen GNSS-Spoofing formalisiert wird; ein Forschungsprüfstand für synchrone Präzisionsspektroskopie des physikalischen Zustands auf Basis von Infineon TLE90xx und AURIX TC49x (isoUART 2.0); ein autonomer Popperscher Stresstester (*Popperian Red Teamer*) auf dem Seeed Studio reServer Industrial J501 (NVIDIA Jetson AGX Orin 64GB) und Xilinx Virtex FPGA mit einem Hardware-Dispositionsgatter ($`T_{\mathrm{disp}} < 100\,\text{ns}`$, $`\mathrm{ZHR} = 1{,}00`$); der hard- und softwarebasierte Schutz des Sensor-Frontends gegen Fail-Open-Anomalien (Filterung nicht-rechteckiger Matrizen, IEEE 754 NaN/Inf-Anomalien und EMV-Rauschgrenzen) sowie formale Aktionskontrakte mit Verifikation von Vor- und Nachbedingungen und Methoden zur Erkennung von Schnittstellendefekten vor den eigentlichen Feldversuchen auf dem Testgelände.
 
 ---
 
@@ -77,7 +79,99 @@ Die Normen der funktionalen Sicherheit höchster Integritätsstufen (ISO 26262 A
 
 Kein gegenwärtiges neuronales Netz ist in der Lage, einen mathematischen Beweis für die Einhaltung dieses Kriteriums zu erbringen. Ein empirischer Testbetrieb über $10^9$ Stunden (über 114.000 Jahre kontinuierlicher Betrieb) ohne einen einzigen sicherheitskritischen Ausfall für jede modifizierte Modellgewichtsmatrix ist physisch und ökonomisch unmöglich.
 
-### 1.4. Architektonische Roadmap: Das deterministische Zulassungsgate
+### 1.4. Physische und kognitive Unhaltbarkeit des «Human-on-the-loop»-Ansatzes in der Endphase der Mission
+
+In aktuellen Diskussionen über autonome unbemannte Systeme, mobile Robotik und kritische cyber-physische Komplexe wird häufig das Kompromisskonzept «Mensch über dem Regelkreis» (*Human-on-the-loop*, HOTL) ins Feld geführt. Diesem Konzept zufolge darf sich die Plattform auf Basis stochastischer neuronaler Modelle autonom fortbewegen, manövrieren und Ziele erfassen, während ein abgesetzter Operator die Überwachungskontrolle über einen Telemetriefunkkanal beibehält und im Falle eines Modellfehlers in der Lage sein soll, die Aktion durch Drücken einer Notfall-Abbruchtaste (*Abort/Cancel Button*) zu stoppen.
+
+Aus der Perspektive der fundamentalen Physik, Kinematik und Neurophysiologie erweist sich diese Erwartung jedoch als gefährliche ingenieurtechnische Illusion. In der Endphase der Bewegung (Sturzflug einer Drohne, Hochgeschwindigkeits-Annäherung an ein Hindernis, Ausweichmanöver eines Roboters bei hoher Geschwindigkeit) führen die Verzögerungen der Bildcodierung, der Funkdatenübertragung und die kognitive Latenz des Menschen dazu, dass ein externes Eingreifen physikalisch zu spät kommt.
+
+Die Gesamtreaktionszeit des Systems $`T_{\Sigma}`$ mit einem Menschen über dem Regelkreis setzt sich aus fünf sequentiellen Verzögerungen des physikalischen Signalpfads zusammen:
+
+```math
+T_{\Sigma} = t_{\mathrm{cam\_encode}} + t_{\mathrm{link\_down}} + t_{\mathrm{cogn}} + t_{\mathrm{link\_up}} + t_{\mathrm{actuator}}
+```
+
+wobei:
+- $`T_{\Sigma}`$ die Gesamtreaktionszeit des Systems mit dem Menschen über dem Regelkreis vom visuellen Auftreten einer gefährlichen Anomalie bis zur mechanischen Auslenkung der Ruderflächen oder Aktivierung der Bremsen in Sekunden ($\text{s}$) ist;
+- $`t_{\mathrm{cam\_encode}}`$ die Zeit für Bilderfassung, Belichtung und Hardware-Kompression des Videoframes (H.264/H.265/AV1) bezeichnet, typischerweise $`20 - 40\,\text{ms}`$;
+- $`t_{\mathrm{link\_down}}`$ die Latenz der Übertragung des Videostreams über den digitalen Funkkanal (unter Berücksichtigung von Paketpufferung, Relaisknoten und EW-Störsendern) darstellt, typischerweise $`60 - 150\,\text{ms}`$;
+- $`t_{\mathrm{cogn}}`$ die kognitive Reaktionszeit des menschlichen Operators zur visuellen Erkennung der KI-Halluzination und Betätigung der Abbruchtaste bezeichnet, typischerweise $`250 - 450\,\text{ms}`$;
+- $`t_{\mathrm{link\_up}}`$ die Laufzeit des Abbruch-Steuersignals über den Uplink-Funkkanal durch elektromagnetische Störungen darstellt, typischerweise $`40 - 100\,\text{ms}`$;
+- $`t_{\mathrm{actuator}}`$ die Ansprechzeit der Servomotoren und den mechanischen Stellvorgang der Ruder oder Aktivierung der Bremsventile bezeichnet, typischerweise $`20 - 40\,\text{ms}`$.
+
+Aus der Summe dieser Komponenten ergibt sich ein typischer Bereich der Gesamtlatenz:
+
+```math
+T_{\Sigma} \in [390\,\text{ms}, \ 780\,\text{ms}].
+```
+
+Die kinematische Konsequenz dieser Latenz bestimmt die Distanz der ungesteuerten Bewegung der Plattform $`S_{\mathrm{react}}`$ im Endanflug:
+
+```math
+S_{\mathrm{react}} = v \cdot T_{\Sigma}
+```
+
+wobei $`v`$ die Annäherungsgeschwindigkeit der Plattform an das Objekt oder die Oberfläche in Metern pro Sekunde ($\text{m/s}$) bezeichnet. Bei einer typischen Sturzflug- oder Manövergeschwindigkeit von $`v = 180\,\text{km/h} = 50\,\text{m/s}`$:
+
+```math
+S_{\mathrm{react}} = 50\,\text{m/s} \times [0{,}39 \dots 0{,}78]\,\text{s} \approx 19{,}5 \dots 39{,}0\,\text{Meter}.
+```
+
+Daraus folgt die zwingende ingenieurtechnische Schlussfolgerung: Wenn ein neuronales Computer-Vision-Netz 30 Meter vor dem Aufprall ein ziviles Objekt oder die eigene Infrastruktur fälschlicherweise als Ziel klassifiziert, ist ein abgesetzter Operator **physisch nicht in der Lage, die Kollision zu verhindern**. Sicherheitsgarantien können ausschließlich als autonomes, bordseitiges und deterministisches Zulassungsgate (*Onboard Deterministic Safety Gate*) realisiert werden.
+
+#### 1.4.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der Überwachungsverzögerung
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Der bordseitige Flugleiter im Sicherheits-Mikrocontroller gleicht die aktuelle Distanz zum Zielpunkt $`d_{\mathrm{target}}`$ kontinuierlich mit einer dynamischen Autonomieschwelle ab:
+   $`d_{\mathrm{crit}} = v \cdot T_{\Sigma}^{\max} + \delta_{\mathrm{margin}}`$. Sobald $`d_{\mathrm{target}} \le d_{\mathrm{crit}}`$, deaktiviert das System bedingungslos die Abhängigkeit vom Funkkanal und schaltet in den reinen autonomen Vetomodus (`AUTONOMOUS_VETO_ONLY`). Befehle des abgesetzten Operators können nicht länger als Sicherheitsmechanismus herangezogen werden: Der bordseitige Logikkern blockiert die Aktion eigenständig bei Fehlen eines kryptografischen Zielnachweises oder bei Verletzung deontischer Verbote.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Der bordseitige deterministische Verifikator auf dem Sicherheits-Mikrocontroller (Zephyr RTOS) oder FPGA muss Entscheidungen mit einer Latenz von $`T_{\mathrm{onboard}} \le 2\,\text{ms}`$ treffen, was zwei Größenordnungen schneller als der Funkkanal ist. Dies erfordert eine garantierte Abtastrate von Sensorsignalen mit $`f_{\mathrm{sensor}} \ge 100\,\text{Hz}`$, die Bereitstellung eines mikrosekundengenauen Hardware-Timers sowie die lokale Ablage der Raumzonen-Ontologie direkt im On-Chip-SRAM mit einer Kapazität von mindestens $`128\,\text{KB}`$.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Ein unbemanntes Hochgeschwindigkeits-Fluggerät bewegt sich mit $`v = 50\,\text{m/s}`$. Unter Bedingungen elektronischer Kampfführung (EW) beträgt die Video-Downlink-Verzögerung $`t_{\mathrm{link\_down}} = 110\,\text{ms}`$, die Kamerakompression $`t_{\mathrm{cam\_encode}} = 25\,\text{ms}`$, die Operator-Reaktionszeit $`t_{\mathrm{cogn}} = 300\,\text{ms}`$, der Befehls-Uplink $`t_{\mathrm{link\_up}} = 65\,\text{ms}`$ und die Stellzeit der Ruder $`t_{\mathrm{actuator}} = 25\,\text{ms}`$. Die Gesamtlatenz beläuft sich auf:
+   $`T_{\Sigma} = 25 + 110 + 300 + 65 + 25 = 525\,\text{ms} = 0{,}525\,\text{s}`$. Die ungesteuerte Reaktionsdistanz beträgt: $`S_{\mathrm{react}} = 50 \cdot 0{,}525 = 26{,}25\,\text{m}`$. Tritt die Halluzination in einer Höhe von $`h = 24\,\text{m} < 26{,}25\,\text{m}`$ auf, betätigt der Operator den Abbruchknopf physisch erst nach dem Aufprall auf den Boden. Demgegenüber detektiert der bordseitige Datalog-Kern das Manöververbot in $`45\,\mu\text{s}`$, ein Hardware-Gatter verwirft den Steuerbefehl in $`5\,\text{ns}`$ und leitet in einer Höhe von $`23{,}8\,\text{m}`$ das Durchstarten bzw. den Abfangflug ein, wodurch die Katastrophe vollständig abgewendet wird.
+
+### 1.5. Deterministische Safe-State-Ontologie und Entscheidungsbaum der Notfall-Sagas
+
+In der Fahrzeugtechnik (ISO 26262 ASIL D) besitzt der Übergang in den sicheren Zustand (*Safe State*) eine deterministische physikalische Ausprägung: kontrolliertes Abbremsen und Anhalten auf dem Seitenstreifen (*Safe Stop*). Für fliegende, maritime oder hochdynamische Feldsysteme führt das bloße Abschalten der Motoren in der Luft oder auf dem Wasser dagegen zum sofortigen unkontrollierten Absturz oder zum Kentern.
+
+Das bordseitige Expertensystem verwendet daher eine formale Safe-State-Ontologie, welche die Art des Systemfehlers und den raumzeitlichen Kontext deterministisch in die Auswahl einer transaktionalen Notfall-Saga überführt:
+
+```mermaid
+flowchart TD
+    accTitle: Entscheidungsbaum zur logischen Auswahl der Notfall-Saga fuer den sicheren Zustand
+    accDescr: Deterministische Deduktion des Expertenkerns fuer den Uebergang in den sicheren Zustand abhaengig von Kartenontologie und Bedrohungsgrad.
+
+    FAIL["<b>Invariantenverletzung / Fehler erkannt</b><br/>(Sensorverlust, Tracking-Abriss, Wissensdefizit)"] --> D1{"Plattformposition<br/>gemaess Kartenontologie?"}
+
+    D1 -->|"Eigene Zone<br/>(Friendly Zone)"| S1["<b>Saga 1: Ballistischer Missionsabbruch (Ballistic Jettison)</b><br/>1. Hardwaremaessige Zuender-Deaktivierung (Disarm)<br/>2. Gleitflug in sicheren Notlandesektor (Safe Ditch)<br/>3. Aktivierung des Notfall-Funkfeuers"]
+
+    D1 -->|"Feindzone<br/>(Hostile Zone)"| D2{"Gefahr der Kaperung<br/>durch den Gegner?"}
+
+    D2 -->|"Geringe Bedrohung / Hoehe h >= h_safe"| S2["<b>Saga 2: Koppelnavigations-Rueckkehr (Dead Reckoning RTB)</b><br/>1. Trennung kompromittierter Sensoren<br/>2. Rueckflug nach Kreiselkompass zum Evakuierungspunkt"]
+
+    D2 -->|"Hohe Bedrohung / Hoehe h < h_safe"| S3["<b>Saga 3: Kontrollierte Zerstoerung (Safe Zeroize)</b><br/>1. Loeschung kryptografischer Schluessel (Zeroize)<br/>2. Ueberschreiben des MCU-Flash-Speichers<br/>3. Kontrollierter Bodeneinschlag abseits ziviler Objekte"]
+
+    classDef err fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+    classDef dec fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef safe fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    class FAIL err;
+    class D1,D2 dec;
+    class S1,S2,S3 safe;
+```
+
+Die Auswahl einer Sicherheits-Saga ist eine logische Deduktion des Expertenkerns, bei der jeder Schritt als atomare Transaktion mit strenger Nachbedingungsprüfung ausgeführt wird (Aktivierung der Zündersperrleitung, Prüfung der Kondensatorentladung, Durchbrennen von eFuses).
+
+#### 1.5.1. Geschlossener Kreis der ingenieurtechnischen Auswahl der Notfall-Saga
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Das Expertensystem evaluiert das räumliche Prädikat `current_zone(ZoneID, HostilityLevel)` und die verbleibende Energiereserve $`E_{\mathrm{rem}}`$. Entsteht ein unüberwindbares Wissensdefizit (beispielsweise widersprüchliche GPS- und optische Odometriedaten), aktiviert die Datalog-Logikmaschine die Transaktion der entsprechenden Saga. Jeder Schritt der Saga ist ein unverletzlicher Kontrakt mit Nachbedingungsprüfung: Vor dem Übergang zu Saga 3 verifiziert der Controller den logischen Zustand des Pins `ZEROIZE_DONE`, bevor die Lagestabilisierung hardwareseitig abgeschaltet wird.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Kryptografische Schlüssel und kritische Ontologien werden in einem geschützten Speicherbereich (Secure Storage mit hardwarebeschleunigtem AES-GCM in einer Secure Enclave) verwaltet, der an eine Hardware-Schnelllöschleitung mit $`T_{\mathrm{zeroize}} \le 50\,\mu\text{s}`$ gekoppelt ist. Die Stromversorgung erfolgt über einen Notfall-Stützkondensator mit einer Kapazität von $`100\,\mu\text{F}`$.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Ein UAV registriert eine vollständige Blendung der Kamera und den Abriss der optischen Odometrie in einer Höhe von $`h = 45\,\text{m}`$. Die Kartenontologie identifiziert den Sektor als `HostileZone` mit unmittelbarer Nähe zur Kontaktlinie ($`d_{\mathrm{front}} = 1200\,\text{m}`$, Sicherheitshöhenschwelle $`h_{\mathrm{safe}} = 80\,\text{m}`$). Da $`h < h_{\mathrm{safe}}`$, entscheidet der Logikbaum auf Aktivierung von Saga 3: Steuerimpuls auf die `DISARM`-Leitung, Löschung der Routingtabellen im EEPROM in $`18\,\mu\text{s}`$, Durchbrennen der eFuses in $`40\,\mu\text{s}`$ und Ruderausschlag auf $`-15^\circ`$ für einen kontrollierten Abstieg auf unbewohntem Ödland ohne jedes Risiko des Abflusses von Missionscode oder Geheimschlüsseln.
+
+### 1.6. Architektonische Roadmap: Das deterministische Zulassungsgate
 
 Aus diesen Gegebenheiten folgt eine fundamentale ingenieurtechnische Schlussfolgerung, die das Fundament für das gesamte theoretische und praktische Modell dieses Werks bildet:
 
@@ -162,6 +256,109 @@ flowchart LR
 ```
 
 Dieses Entwurfsmuster zeichnet sich durch drei Merkmale aus: Videoframes werden über den V4L2-Treiber direkt in DMA-Puffer ohne Speicherkopien (*zero-copy*) eingelesen. Das neuronale Netz wird auf der NPU über herstellerspezifische Bibliotheken ausgeführt, die direkt aus Go via Cgo aufgerufen werden. Die Goroutinen kommunizieren über gepufferte Channels mit einer Drop-Oldest-Strategie, sodass sich bei Lastspitzen keine Verarbeitungsrückstände in der Warteschlange akkumulieren. Latenzprofile und CPU-Auslastung werden direkt unter realer Last auf der Zielhardware ermittelt, anstatt synthetische Werte aus Datenblättern zu übernehmen.
+
+### 2.2. Epistemischer Governor und formaler Beweis physischer Aktionen (Proof of Physical Action)
+
+In sicherheitskritischen cyber-physischen Komplexen und unbemannten Fluggeräten besteht der verhängnisvollste Architekturfehler in der unzulässigen Vermischung von Kontrollebenen: Der hardwarenahe Autopilot (PID-Regler zur Lagestabilisierung von Roll-, Nick- und Gierwinkeln auf Mikrocontrollern mit PX4- oder ArduPilot-Firmware) und die neuronale Bildverarbeitung (YOLO, CNN, VLM) werden fälschlicherweise mit Entscheidungskompetenzen über Zielauswahl und Manöverentscheidungen betraut.
+
+Ein klassischer Flugregler kontrolliert ausschließlich die räumliche Bewegungsdynamik und bleibt vollkommen «blind» gegenüber normativen Einsatzregeln (*Rules of Engagement*, RoE), raumzeitlichen Verbotszonen, der Anwesenheit befreundeter Einheiten und der Integrität von Sensorsignalen. Auf der anderen Seite generiert ein neuronales Netz eine stochastische Hypothese (beispielsweise «pixelbasiertes Begrenzungsrechteck mit 86 % Wahrscheinlichkeit als Ziel klassifiziert»), verfügt jedoch über keinerlei kausal-logischen Apparat und kann prinzipbedingt keine rechtliche oder physikalische Verantwortung für die Konsequenzen einer irreversiblen Handlung tragen.
+
+Um diese Lücke zu schließen, schlägt der Autor die Einführung eines **epistemischen Governors** (*Epistemic Governor*) vor – eines deterministischen bordseitigen Expertensystems, das als oberster Schiedsrichter über die Zulassung jedweder physischen Aktion fungiert.
+
+```mermaid
+flowchart TD
+    accTitle: Architektur des epistemischen Governors eines cyber-physischen Komplexes
+    accDescr: Dreistufige Topologie mit strikter Isolation stochastischer Wahrnehmung, deterministischem Datalog-Expertensystem und mechanischer Aktuatordynamik.
+
+    subgraph S1["<b>Ebene 1. Stochastische Wahrnehmung (ML / NPU)</b>"]
+        CV["<b>Neuronale Netze fuer Vision und Peilung</b><br/>Probabilistische Kandidatenhypothesen<br/>Stochastische Bounding Boxes"]
+    end
+
+    subgraph S2["<b>Ebene 2. Epistemischer Governor (Expertensystem)</b>"]
+        KB["<b>Bord-Wissensbasis ZKP4</b><br/>Missionsontologie, RoE-Normen, physikalische Invarianten"]
+        EVM["<b>Deterministische Inferenzmaschine (EVM)</b><br/>Synthese des Beweisbaums (Proof Tree)<br/>Datalog im statischen Speicher ohne malloc"]
+        KB <--> EVM
+    end
+
+    subgraph S3["<b>Ebene 3. Mechanische Dynamik (RTOS / Aktuatoren)</b>"]
+        FC["<b>PID-Regler und Hardware-Sicherheitsgatter</b><br/>Physische Aktion NUR bei gueltigem Proof Token erlaubt"]
+    end
+
+    S1 -->|"Kandidatenfakten (Candidate Facts)"| S2
+    S2 -->|"Deterministische Zulassung (Eligibility & Token)"| S3
+
+    classDef s1 fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef s2 fill:#e8f5e9,stroke:#2e7d32,stroke-width:3px,color:#1b5e20;
+    classDef s3 fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+
+    class S1,CV s1;
+    class S2,KB,EVM s2;
+    class S3,FC s3;
+```
+
+#### 2.2.1. Mathematischer Formalismus des Beweises physischer Aktionen (Proof of Physical Action)
+
+Eine physische Aktion $`A`$ (Einleiten eines Sturzflugs, Aktivierung des Lastabwurfmechanismus, Zündstrombeaufschlagung oder abrupter Rudereinschlag) wird **genau dann und nur dann** freigegeben, wenn das Expertensystem erfolgreich einen formalen deduktiven Beweis über der aktiven Faktenbasis synthetisiert hat:
+
+```math
+\mathrm{PermitAction}(A) \iff \mathrm{KB} \cup \mathrm{ObservedFacts} \vdash_{\mathrm{Datalog}} \mathrm{Eligible}(A) \wedge \neg\mathrm{Conflict}(A)
+```
+
+wobei:
+- $`\mathrm{PermitAction}(A)`$ das boolesche Prädikat der Freigabe der Aktion $`A`$ zur physischen Ausführung ist;
+- $`\mathrm{KB}`$ die normative Wissensbasis der Mission darstellt, welche geospatiale Restriktionen, Einsatzregeln (RoE) und funktionale Sicherheitsanforderungen enthält;
+- $`\mathrm{ObservedFacts}`$ die Menge validierter Sensorfakten bezeichnet, die ein hardwarebasiertes Plausibilitätsaudit bestanden haben;
+- $`\vdash_{\mathrm{Datalog}}`$ den deduktiven Ableitungsoperator in Datalog ohne Negation in Rekursionsschleifen darstellt;
+- $`\mathrm{Eligible}(A)`$ das Prädikat der Übereinstimmung mit sämtlichen positiven Zulassungskriterien bezeichnet;
+- $`\neg\mathrm{Conflict}(A)`$ die Invariante des Fehlens aktiver Defeater (Ausnahmen oder Verbote) garantiert.
+
+Die deduktive Zulassungsregel für eine kinetische oder kraftschlüssige Aktion wird als geschlossene Horn-Klausel in Datalog-Syntax formalisiert:
+
+```prolog
+permit_kinetic_engagement(TargetID) :-
+    target_candidate(TargetID, Class),
+    target_hostile(Class),
+    inside_geofence(TargetID, AuthorizedZone),
+    not friendly_unit_in_radius(TargetID, SafeRadius),
+    sensor_consistency(Verified),
+    altitude_above_ground(Alt), Alt >= MinSafeAlt,
+    mission_rules_valid(Token), token_active(Token).
+```
+
+* **Fail-Closed-Invariante:** Kann auch nur ein einziges atomares Prädikat im Regelrumpf nicht bewiesen werden oder enthält es Widersprüche (Unvollständigkeit des Wissens), gibt das System das unumstößliche Verdikt `DENY / REFUSAL` aus. Das Hardware-Sicherheitsgatter auf FPGA-Logikebene unterbricht unmittelbar die Versorgungsspannung der Leistungsantriebe oder der Zündstufe.
+
+#### 2.2.2. Deterministisches Sensor-Audit gegen GNSS-Spoofing (Epistemic Consistency)
+
+Führt die gegnerische elektronische Kampfführung eine gezielte Täuschung von Satellitensignalen durch (GPS-Spoofing), gerät ein herkömmlicher Autopilot in eine Havariesituation, da er versucht, eine nicht existierende Positionsabweichung auszuregeln.
+
+Das Expertensystem führt einen kontinuierlichen logischen Abgleich der Sensorfakten anhand fundamentaler kinematischer Axiome durch:
+
+```math
+\left\lVert \Delta \vec{r}_{\mathrm{GPS}} - \int_{t}^{t+\Delta t} \vec{v}_{\mathrm{IMU}} \, dt \right\rVert \le \epsilon_{\mathrm{drift}} + \kappa \cdot \Delta t
+```
+
+wobei:
+- $`\Delta \vec{r}_{\mathrm{GPS}}`$ der räumliche Verschiebungsvektor gemäß Satellitenempfänger über das Intervall $\Delta t$ in Metern ($\text{m}$) ist;
+- $`\vec{v}_{\mathrm{IMU}}`$ der Vektor der wahren Eigengeschwindigkeit der Plattform darstellt, integriert aus den Messwerten der inertialen Messeinheit (IMU) in Metern pro Sekunde ($\text{m/s}$);
+- $`\epsilon_{\mathrm{drift}}`$ die zulässige statische Sensortoleranz bezeichnet, typischerweise $`1{,}5 - 3{,}0\,\text{m}`$;
+- $`\kappa`$ den Koeffizienten der integralen Koppelnavigationsdrift in Metern pro Sekunde ($\text{m/s}$) quantifiziert.
+
+Übersteigt die berechnete Diskrepanz die kinematische Konsistenzschwelle, leitet der epistemische Governor folgende transaktionale Maßnahmen ein:
+1. Er leitet deterministisch das Faktum `sensor_status(gps, falsified)` ab und tilgt die GPS-Koordinaten aus dem aktiven Arbeitsspeicher.
+2. Er aktiviert deduktiv die Rückfall-Navigationsregeln: Koppelnavigation (*Dead Reckoning*) und visuelle Odometrie über optischen Fluss.
+
+#### 2.2.3. Geschlossener Kreis der ingenieurtechnischen Berechnung der epistemischen Aktionszulassung
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Wird eine Verletzung der kinematischen Ungleichung detektiert, setzt der Datalog-Kern in einem einzigen Resolutionsschritt das Signal `GPS_INVALID`. Das Leistungsgate blockiert die Ausgabe des Zulassungstokens `ProofToken`. Der Flugregler wird in den Modus der Orientierung nach Kreiselkompass und optischem Fluss überführt, ohne stochastische Sturzflugbefehle zuzulassen.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Die deterministische logische Deduktion nach Datalog-Regeln im statischen RAM des Mikrocontrollers (ohne dynamische Heap-Aufrufe via `malloc`) erfordert $`T_{\mathrm{infer}} \le 50\,\mu\text{s}`$ für eine Faktenbasis von 150 Regeln und 500 Fakten. Dies ist um drei Größenordnungen schneller als die neuronale NPU-Inferenz ($`15 - 30\,\text{ms}`$) und garantiert eine Reaktion innerhalb eines einzigen Takts des harten Echtzeit-Timers.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Ein UAV fliegt mit einer Geschwindigkeit von $`v = 40\,\text{m/s}`$. Über ein Messintervall von $`\Delta t = 0{,}1\,\text{s}`$ registriert der GNSS-Empfänger einen Koordinatensprung von $`\Delta \vec{r}_{\mathrm{GPS}} = (18{,}0; \ 0{,}0; \ 0{,}0)\,\text{m}`$ (entsprechend einer fingierten Geschwindigkeit von $`180\,\text{m/s}`$ infolge von Spoofing). Das IMU-Integral ergibt eine tatsächliche Verschiebung von $`\int \vec{v}_{\mathrm{IMU}} dt = (4{,}02; \ 0{,}01; \ -0{,}05)\,\text{m}`$.
+   Die Diskrepanz berechnet sich zu:
+   $`\left\lVert \Delta \vec{r}_{\mathrm{GPS}} - \int \vec{v}_{\mathrm{IMU}} dt \right\rVert = \sqrt{(18{,}0 - 4{,}02)^2 + (0{,}0 - 0{,}01)^2 + (0{,}0 + 0{,}05)^2} \approx 13{,}98\,\text{m}`$.
+   Bei einer zulässigen Toleranzschwelle von $`\epsilon_{\mathrm{drift}} + \kappa \cdot \Delta t = 2{,}0 + 5{,}0 \cdot 0{,}1 = 2{,}5\,\text{m}`$ gilt $`13{,}98\,\text{m} \gg 2{,}5\,\text{m}`$.
+   Der epistemische Governor generiert in $`18\,\mu\text{s}`$ den Status `sensor_status(gps, falsified)`, annulliert die GPS-Trajektorie und sperrt den Nutzlastabwurf, wodurch ein Treffer auf gefälschten Zielkoordinaten zuverlässig verhindert wird.
 
 ## 3. Experimentelle Hardware-Plattformen: Prüfstände auf Basis von NVIDIA Jetson AGX Orin und Xilinx Virtex FPGA
 
@@ -251,15 +448,15 @@ Auf dem Versuchsstand kommt die moderne Bausteinfamilie **AMD / Xilinx UltraScal
 
 Die Entscheidung für diese Halbleiterfamilie basiert auf strengen Kriterien:
 
-1. **Ausschluss veralteter Architekturen (Virtex-7):**  
+1. **Ausschluss veralteter Architekturen (Virtex-7):**
    Die Virtex-7-Familie (28 nm) ist technologisch überholt und für harte Echtzeitanforderungen ungeeignet: Sie unterstützt lediglich PCIe Gen3 (was an der PCIe-Gen4-Schnittstelle des Jetson Orin einen Flaschenhals bildet), verfügt über keinerlei UltraRAM (URAM) und erzwingt Zugriffe auf externen DDR3/DDR4-Speicher, was stochastischen Jitter verursacht.
-2. **Logikkapazität (LUTs und Flip-Flops):**  
+2. **Logikkapazität (LUTs und Flip-Flops):**
    * Ein deterministischer symbolischer Inferenzkern (Datalog-Unifikations-Engine / deontischer Invariantenprüfer) belegt durchschnittlich **2.500 bis 4.500 LUTs** und **3.000 bis 5.000 Flip-Flops (FF)**.
    * Ein Versuchs-Array aus 16 bis 64 parallelen Kernen zur simultanen Verifikation von Beweisbäumen erfordert **80.000 bis 280.000 LUTs**.
    * On-Chip-Systeminfrastruktur: Der integrierte PCIe Gen4 DMA-Controller (XDMA/QDMA-Subsystem) benötigt ~25.000 LUTs; die AXI4-Crossbar-Matrix ~15.000 bis 20.000 LUTs; ein 64-stufiger, voll gepipelinter SHA-256-Hash-Verifikator ~12.000 bis 15.000 LUTs nebst DSP48E2-Blöcken; das kombinatorische Sicherheitsgatter (*Safety Gate*) samt Hardware-Watchdog ~2.000 LUTs.
    * Der Gesamtresourcenbedarf liegt bei **150.000 bis 350.000 LUTs**.
    * Der Einsatz von Bausteinen wie Kintex UltraScale+ (KU15P: 523.000 LUTs) oder Virtex UltraScale+ (VU9P: 1.182.000 LUTs; VU13P: 1.728.000 LUTs) ist somit **notwendig und hinreichend**: Er gewährleistet einen Auslastungsgrad (*logic utilization*) von 30 bis 55 %. Dies verhindert Routing-Engpässe (*routing congestion*), sichert das Timing-Closure bei einer Zielfrequenz von **300 bis 400 MHz** ($`T_{\text{clk}} = 2{,}5\text{ bis }3{,}3\ \text{ns}`$) und belässt Reserven für Forschungsmodifikationen.
-3. **Interne Speicherarchitektur (UltraRAM und BRAM versus externes DRAM):**  
+3. **Interne Speicherarchitektur (UltraRAM und BRAM versus externes DRAM):**
    * Die Nutzung von externem dynamischem Arbeitsspeicher (DDR4/DDR5) zur Verifikation von Sicherheitsinvarianten in harter Echtzeit ist unzulässig: Zugriffslatenzen von 50 bis 100 ns, periodische Refresh-Zyklen ($`t_{\text{RFC}}`$) und Buskonflikte erzeugen stochastischen Jitter.
    * UltraScale+-Matrizen verfügen über **UltraRAM (URAM)** – synchrone Dual-Port-SRAM-Blöcke mit einer Kapazität von je 288 kbit (Organisation 4K × 72 Bit), die sich kaskadieren lassen. Der VU9P-Baustein stellt beispielsweise 36 MB (270 Mbit) URAM sowie 75,9 Mbit Block-RAM (BRAM 36K) bereit.
    * Diese Speicherkapazität reicht aus, um **die gesamte kompilierte Wissensbasis, ontologische Verbände, Defeater-Tabellen und Aktionsinvarianten direkt im On-Chip-Speicher des FPGA vorzuhalten**. Jeder Regelabruf und jeder Termabgleich erfolgt in **1 bis 2 Taktzyklen ($2{,}5\text{ bis }5{,}7\ \text{ns}$)** mit absolut deterministischer Zugriffszeit (*Zero Wait-States*) ohne Cache-Misses.
@@ -330,7 +527,7 @@ sequenceDiagram
 2. **Hardware-Sicherheits-Watchdog (Hardware Safety Watchdog):**
    * Der FPGA-Arbiter enthält einen unabhängigen Zähler mit der Periode $`T_{\text{wdg}}`$ (z. B. 10 bis 20 ms).
    * Reagiert System 1 (NPU/GPU/Linux) nicht rechtzeitig, blockiert es durch Speicher-Jitter oder liefert es unvollständige Daten, löst der Hardware-Watchdog aus: Er setzt das Signal `disp_accept = 0` zurück und schaltet die Aktuatoren stromlos – vollkommen unabhängig vom Zustand des Betriebssystems.
-3. **End-to-End-Latenz des Zulassungszyklus ($`T_{\mathrm{loop}}`$):**  
+3. **End-to-End-Latenz des Zulassungszyklus ($`T_{\mathrm{loop}}`$):**
    Gemessen wird die Gesamtzeit von der Erfassung eines Sensorframes bis zur Ausgabe des physikalischen Signals `disp_accept` an den FPGA-Pins:
 
 ```math
@@ -341,15 +538,15 @@ T_{\mathrm{loop}} = T_{\mathrm{infer}} + T_{\mathrm{dma}} + T_{\mathrm{fpga}}
    * $`T_{\mathrm{infer}}`$ die Zeit für Prädikatsextraktion und Aktionsgenerierung auf der NPU/GPU darstellt ($10–30\ \text{ms}$);
    * $`T_{\mathrm{dma}}`$ die Latenz des DMA-Transfers über PCIe Gen4 repräsentiert ($1{,}0–1{,}5\ \mu\text{s}$);
    * $`T_{\mathrm{fpga}}`$ die Verifikationsdauer im FPGA-Kern-Array beziffert ($40–100\ \text{ns}$).
-4. **Falsifikationskriterium der Sicherheitshypothese (Falsification Gate):**  
+4. **Falsifikationskriterium der Sicherheitshypothese (Falsification Gate):**
    Gemäß den Anforderungen an funktionale Sicherheit (ISO 26262 ASIL D, IEC 61508 SIL 3) gilt die Hypothese über die funktionale Sicherheit und Praxistauglichkeit der heterogenen Architektur als **falsifiziert** (verworfen), wenn:
 
 ```math
 \max(T_{\mathrm{loop}}) > T_{\mathrm{FTTI}}
 ```
 
-   wobei $`T_{\mathrm{FTTI}}`$ das für die geregelte Plattform spezifizierte fehlertolerante Zeitintervall (*Fault Tolerant Time Interval*) bezeichnet,  
-   oder wenn die Wahrscheinlichkeit eines Verifikationsausfalls innerhalb des Watchdog-Intervalls $`P(T_{\mathrm{loop}} > T_{\mathrm{wdg}}) > 10^{-9}\ \text{pro Betriebsstunde}`$ beträgt,  
+   wobei $`T_{\mathrm{FTTI}}`$ das für die geregelte Plattform spezifizierte fehlertolerante Zeitintervall (*Fault Tolerant Time Interval*) bezeichnet,
+   oder wenn die Wahrscheinlichkeit eines Verifikationsausfalls innerhalb des Watchdog-Intervalls $`P(T_{\mathrm{loop}} > T_{\mathrm{wdg}}) > 10^{-9}\ \text{pro Betriebsstunde}`$ beträgt,
    oder wenn ein einziger Fall registriert wird, in dem `disp_accept = 1` signalisiert wurde, obwohl ein aktiver Defeater vorlag oder eine formale Sicherheitsinvariante verletzt war.
 
 > [!NOTE]
@@ -361,7 +558,45 @@ T_{\mathrm{loop}} = T_{\mathrm{infer}} + T_{\mathrm{dma}} + T_{\mathrm{fpga}}
 
 Dieses heterogene Tandem löst den fundamentalen Widerspruch zwischen der hohen Rechenleistung stochastischer Netze und den strikten Anforderungen funktionaler Sicherheit auf und transformiert probabilistische KI in ein beherrschbares Werkzeug cyber-physischer Steuerung.
 
-### 3.4. Forschungsprüfstand „Generalized Synchronous Measurement Platform“ auf Basis von Infineon TLE90xx und AURIX TC49x
+### 3.4. Paradigma des autonomen Popperschen Red Teamers und Hardware-Dispositionsgatter
+
+Der Übergang von akademischen Software-Simulationen neuro-symbolischer künstlicher Intelligenz zu realen cyber-physischen Komplexen erfordert einen verlässlichen Schutz gegen den Abfluss geistigen Eigentums (*IP Leakage*). Die Nutzung kommerzieller öffentlicher Cloud-APIs zur Analyse von Entwurfsdokumenten, Avionik-Quellcode oder ASIC-Schaltplänen unterliegt strengen Geheimhaltungsvereinbarungen (NDAs) und ist in sicherheitskritischen Domänen kategorisch unzulässig. Forschung und Stresstests erfordern eine vollständig autonome, isolierte Hardwareumgebung (*Air-Gapped R&D*), in der stochastische Verzögerungen der KI durch eine physische Sicherheitsbarriere (*Safety Interlock*) beherrscht werden.
+
+Zur Lösung dieser Aufgabe hat der Autor einen autonomen Prüfstand für adversarielle Tests auf Basis einer heterogenen Zweikanal-Topologie aufgebaut:
+
+1. **Heuristischer Pfad (System 1 / Advisory Node):**
+   * Basiert auf dem industriellen Embedded-Rechner **Seeed Studio reServer Industrial J501** mit dem Modul **NVIDIA Jetson AGX Orin 64GB** (einheitlicher LPDDR5-Speicher, 275 TOPS Tensor-Rechenleistung).
+   * Gewährleistet die kontinuierliche Ausführung lokaler kompakter Modelle (Domain SLM) zur semantischen Projekterkundung (Project Knowledge Reconnaissance, PKR), multimodalen Analyse von Schaltplänen und Handbüchern (VLM) sowie gesteuerten Inferenz nach formalen Grammatiken (GBNF).
+2. **Deterministisches Zulassungstor (System 2 / Epistemic Processor):**
+   * Realisiert auf einer rekonfigurierbaren FPGA-Logikmatrix (Xilinx Virtex UltraScale+) oder einem dedizierten Sicherheits-Mikrocontroller.
+   * Führt einen streng deterministischen Mikrocode zur byteweisen Übereinstimmungsprüfung von Zitaten, Intervallüberwachung numerischer Parameter und Konflikterkennung in Regelsystemen (ASPIC+) aus.
+3. **Hardware-Dispositionsgatter (Hardware Disposition Gate):**
+   * Die Kopplung zwischen System 1 und System 2 erfolgt nicht nur über digitale Netzwerkpakete des PCIe-Busses, sondern über **isolierte diskrete Ein-/Ausgangsleitungen (DI/DO)** und einen geschützten industriellen **CAN FD**-Bus.
+   * Bei Erkennung der geringsten Abweichung oder eines Sophismus schaltet die Veto-Leitung hardwareseitig innerhalb von $`T_{\mathrm{disp}} < 100\,\text{ns}`$ ein Sperrsignal auf den Eingang des Host-Controllers und kappt die gefährliche Aktion ohne Beteiligung des Host-Betriebssystems.
+
+Auf dieser Hardwarebasis wird die Methodik des autonomen Popperschen Red Teamers (*Popperian Red Teamer*) implementiert. Der lokale Tensor-Rechner System 1 generiert Millionen tückischer Gegenbeispiele, gefälschter Vorbedingungen und Grenzwertmutationen (Boundary Value Analysis, BVA). Der Hardware-Verifikator System 2 filtert jede Anfrage mathematisch und verifiziert die Einhaltung der Invariante einer Null-Halluzinationsrate (*Zero Hallucination Rate*):
+
+```math
+\mathrm{ZHR} = 1 - \frac{N_{\mathrm{leak}}}{N_{\mathrm{adversarial}}} = 1{,}00
+```
+
+wobei:
+- $`\mathrm{ZHR}`$ die Null-Halluzinationsrate (*Zero Hallucination Rate*) ist;
+- $`N_{\mathrm{leak}}`$ die Anzahl stochastischer Fehler oder Halluzinationen bezeichnet, die das Zulassungstor passiert haben (ingenieurtechnische Invariante $`N_{\mathrm{leak}} \equiv 0`$);
+- $`N_{\mathrm{adversarial}}`$ die Gesamtzahl der generierten adversariellen Gegenbeispiele und Grenzwertmutationen darstellt ($`N_{\mathrm{adversarial}} \ge 10^7`$).
+
+Jedes Durchbrechen einer Halluzination durch die symbolischen Filter wird automatisch als kritischer Defekt der Wissensbasis oder des Linters protokolliert.
+
+#### 3.4.1. Geschlossener Kreis der ingenieurtechnischen Berechnung des autonomen Wissens-Stresstests
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Erzeugt der adversarielle Generator System 1 einen Grenzfall, bei dem der Datalog-Kern ein Signal `CONFLICT` oder `DEFIEVER_ACTIVE` ausgibt, quittiert das Hardware-Dispositionsgatter das Abfangen des Signals unverzüglich über das Flag `REDTEAM_CAUGHT`. Verursacht eine stochastische Hypothese eine Verzögerung von $`T > T_{\mathrm{wdg}}`$, setzt der Hardware-Timer die Leitung `TEST_FAIL` zurück und trägt den Mutationsvektor in das Quarantäne-Fehlerprotokoll des Linters ein.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Der Mutationsgenerator auf Basis von Jetson Orin gewährleistet eine Generierungsrate adversarieller Deskriptoren von $`R_{\mathrm{fuzz}} \ge 5\,000\,\text{Pakete/s}`$. Das Hardware-Dispositionsgatter auf dem FPGA mit einer Taktfrequenz von $`350\,\text{MHz}`$ kann bis zu $`10^7`$ Prüfungen pro Sekunde abarbeiten, belegt dabei weniger als 4 % der CAN-FD-Busbandbreite und garantiert eine physische Signalkappungszeit von $`T_{\mathrm{disp}} \le 85\,\text{ns}`$.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Während eines nächtlichen autonomen Testzyklus generierte System 1 $`N_{\mathrm{adversarial}} = 20\,000\,000`$ Grenzwertvektoren von Winkelgeschwindigkeiten und Täuschzielen. Das Zulassungstor System 2 blockierte $`19\,999\,998`$ Abweichungen über deontische Regeln und 2 Abweichungen infolge einer Watchdog-Zeitüberschreitung ($`T > 10\,\text{ms}`$). Die Anzahl der Lecks betrug $`N_{\mathrm{leak}} = 0`$, was exakt $`\mathrm{ZHR} = 1{,}00`$ sicherstellte. Die Ansprechzeit des Hardware-Dispositionsgatters lag bei $`72\,\text{ns}`$, was die strikte Konformität mit ISO 26262 ASIL D nachwies.
+
+### 3.5. Forschungsprüfstand „Generalized Synchronous Measurement Platform“ auf Basis von Infineon TLE90xx und AURIX TC49x
 
 In Expertensystemen zur Diagnose cyber-physischer Komplexe, autonomer Plattformen und der Leistungselektronik stellt der Phasenjitter (*phase jitter*) sowie die kanalübergreifende zeitliche Desynchronisation das gravierendste Problem der primären Sensorschicht dar. Bei der sequentiellen Abtastung von Messsensoren über herkömmliche Standard-A/D-Wandler von Mikrocontrollern entsteht ein zeitlicher Versatz zwischen den Abtastwerten von Spannungen, Strömen und mechanischen Schwingungen. Dieser Versatz verzerrt die Ergebnisse der Spektralanalyse irreversibel und verunmöglicht eine präzise Frühdiagnose der physikalischen Degradation von Materialien und Baugruppen.
 
@@ -412,17 +647,17 @@ flowchart TD
     class INTERLOCK act;
 ```
 
-#### 3.4.1. Hardware-Dekomposition und Spektroskopie des physikalischen Zustands
+#### 3.5.1. Hardware-Dekomposition und Spektroskopie des physikalischen Zustands
 
 Der architektonische Ansatz basiert auf der Zweckentfremdung und Neuausrichtung hochspezialisierter Batteriemanagement-ICs (BMS-ICs) als universelles Präzisions-Messfrontend:
 
-1. **Simultanes Hardware-Strobing der Kanäle:**  
+1. **Simultanes Hardware-Strobing der Kanäle:**
    Ein mehrkanaliges 16-Bit-Delta-Sigma-A/D-Wandler-Array führt eine vollkommen synchrone Messung an sämtlichen differenziellen Eingängen über ein einziges Hardware-Strobesignal aus. Dies eliminiert jegliche Phasendrift zwischen den Abtastwerten von Spannung $`U_k`$ und Strom $`I_k`$.
-2. **Galvanisch getrennte Schnittstelle isoUART 2.0:**  
+2. **Galvanisch getrennte Schnittstelle isoUART 2.0:**
    Die Übertragung der digitalisierten Messpakete an den zentralen Mikrocontroller erfolgt über eine kapazitive oder induktive Differenzialübertragung mit bis zu 2 Mbit/s. Dies garantiert Immunität gegenüber Gleichtaktstörungen hoher Spannung (bis 1500 V), wie sie für robotergestützte Hochleistungsantriebe typisch sind.
-3. **Sekundärer Messpfad (*Secondary Measurement Path*):**  
+3. **Sekundärer Messpfad (*Secondary Measurement Path*):**
    Zur Erfüllung der Anforderungen nach ISO 26262 ASIL D integriert der TLE90xx-Siliziumbaustein einen vollständig unabhängigen zweiten A/D-Wandler, der redundante Spannungs- und Temperaturmessungen durchführt. Eine Abweichung zwischen Primär- und Sekundärpfad von mehr als $`\epsilon_{\mathrm{diag}} = 3\,\text{mV}`$ löst hardwareseitig einen Sensorfehlerbefund aus.
-4. **Elektrochemische Impedanzspektroskopie (*EIS*):**  
+4. **Elektrochemische Impedanzspektroskopie (*EIS*):**
    Mithilfe eines variablen Prüfsignals im Frequenzbereich $\omega \in [10\,\text{Hz}, 1\,\text{kHz}]$ wird die komplexe Übertragungsfunktion der Impedanz von Stromschienen und Kontaktverbindungen bestimmt:
 
 ```math
@@ -436,7 +671,7 @@ wobei:
 - $`R_{\mathrm{real}}(\omega)`$ den Wirkwiderstand des Leiters quantifiziert, dessen Anstieg auf mechanische Degradation, Oxidation oder Mikrofrakturen hinweist;
 - $`X_{\mathrm{imag}}(\omega)`$ den Blindwiderstand repräsentiert, der empfindlich auf Änderungen der parasitären Kapazität und Induktivität reagiert.
 
-#### 3.4.2. Geschlossener Kreis der ingenieurtechnischen Berechnung der synchronen Spektroskopie TLE90xx/AURIX
+#### 3.5.2. Geschlossener Kreis der ingenieurtechnischen Berechnung der synchronen Spektroskopie TLE90xx/AURIX
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
    Der AURIX-TC49x-Kern berechnet den spektralen Impedanzvektor in harter Echtzeit. Übersteigt der Wirkwiderstand der Stromschiene $`R_{\mathrm{real}}`$ den zulässigen Degradationsschwellenwert $`R_{\mathrm{degrade}} = R_0 \cdot (1 + \delta_{\mathrm{crit}})`$, generiert die Datalog-Engine das symbolische Faktum `busbar_degraded(bus_id, r_current)`. Eine deontische Verbotsregel blockiert unverzüglich die Freigabe maximaler Traktionsleistung und versetzt den Leistungskonverter in einen geschützten Notbetrieb mit Strombegrenzung auf maximal 40 % der Nennlast (*Fail-Closed*).
@@ -765,7 +1000,7 @@ Für ein On-Board-Expertensystem bedeutet dieses Muster, dass Messfakten externe
 
 In automobilen und luftfahrttechnischen cyber-physischen Komplexen höchster Sicherheitsintegrität (ISO 26262 ASIL D / DO-178C DAL A) erhält der epistemische Kern rohe Beobachtungsvektoren von Sensormatrizen (unter anderem TLE90xx, induktiven Rotorlagegebern, Radarmatrizen, CAN-FD-Bussen). Unter realen Einsatzbedingungen unterliegen physische Übertragungskanäle Degradationseffekten und Signalstörungen, die einen katastrophalen Zustand des stillschweigenden Durchlassens (*Fail-Open*) provozieren können:
 
-1. **Fataler Fail-Open bei Gleitkomma-Anomalien (`NaN` / `Inf` Noise Floor):**  
+1. **Fataler Fail-Open bei Gleitkomma-Anomalien (`NaN` / `Inf` Noise Floor):**
    Enthält der eingehende Sensorblock anstelle eines gültigen elektrischen Signals nicht-numerische Anomalien nach IEEE 754 (`math.NaN` oder `math.Inf`), verhalten sich standardmäßige Vergleichsoperatoren von Programmiersprachen (darunter Go, C++, Verilog) kontraintuitiv:
 
 ```math
@@ -774,10 +1009,10 @@ In automobilen und luftfahrttechnischen cyber-physischen Komplexen höchster Sic
 
    Wird der Schutzcode naiv implementiert (wird beispielsweise nur die Bedingung `if noise > max_allowed { reject() }` geprüft), schlägt die Ablehnungsbedingung beim Auftreten von `NaN` fehl. Das System interpretiert das Rauschen fälschlicherweise als zulässig und trifft eine fatale Zulassungsentscheidung (`ACCEPT`), wodurch die Bewegung der autonomen Plattform mit einem defekten Sensor freigegeben wird.
 
-2. **Kernel-Panik durch asynchrone nicht-rechteckige („gezackte“) Matrizen:**  
+2. **Kernel-Panik durch asynchrone nicht-rechteckige („gezackte“) Matrizen:**
    Beim Streaming-Einlesen von Sensorzeilen über direkten Speicherzugriff (DMA) können Hardwarestörungen zu einer unvollständigen Übertragung einzelner Zeilen der Beobachtungsmatrix führen (*Jagged Matrix*). Versucht der Verarbeitungsalgorithmus, über einen festen Spaltenindex $`M[i][j]`$ zuzugreifen, führt dies zum unmittelbaren Programmabsturz (`panic: index out of range`) und legt die Regelung vollständig still.
 
-3. **Blindheit gegenüber Sensor-Totzuständen (*Dead-Sensor Blindness*):**  
+3. **Blindheit gegenüber Sensor-Totzuständen (*Dead-Sensor Blindness*):**
    Ein vollständiger Leitungsbruch zum Sensor oder das Festfrieren des A/D-Wandlers auf Nullpegel führt dazu, dass der Messvektor ausschließlich aus Nullen besteht ($`V = [0{,}0, 0{,}0, \dots, 0{,}0]`$). Liegt der Wert Null innerhalb des nominalen Betriebsbereichs des Sensors, interpretiert die logische Inferenz-Engine den katastrophalen Ausfall fälschlicherweise als vollkommen ruhigen Systemzustand.
 
 Zur Abwehr dieser Gefahren wird an der Nahtstelle zwischen Eingabetreibern und Hardwarebeschleuniger ein **Sensor-Frontline Fail-Closed Gate** etabliert.
@@ -833,7 +1068,7 @@ Vor jeglicher numerischen Weiterverarbeitung muss der Eingangs-Adapter eine stri
 \forall x \in M: \quad (\mathrm{math.IsNaN}(x) \lor \mathrm{math.IsInf}(x, 0)) \implies \mathrm{TRAP\_INVALID\_ARITHMETIC}
 ```
 
-3. **Energetische Aktivitätsschwelle (*Activity Energy Gate*):**  
+3. **Energetische Aktivitätsschwelle (*Activity Energy Gate*):**
    Zur Verhinderung von Blindheit gegenüber ausgefallenen oder eingefrorenen Sensoren wird die Signalvarianz im Beobachtungsfenster berechnet:
 
 ```math
@@ -841,7 +1076,7 @@ Vor jeglicher numerischen Weiterverarbeitung muss der Eingangs-Adapter eine stri
 ```
 
    Unterschreitet die Varianz den Schwellenwert $`\sigma^2(V) < \epsilon_{\mathrm{dead}}`$, wird der Sicherheitsstatus «Sensor stromlos oder eingefroren» aktiviert und der Übergang in die Betriebsbereitschaft blockiert.
-4. **Begrenzung des Rauschteppichs (*EMC Floor Clamp*):**  
+4. **Begrenzung des Rauschteppichs (*EMC Floor Clamp*):**
    Der Pegel des thermischen und elektromagnetischen Sensorrauschens wird durch ein zweiseitiges Intervall eingegrenzt:
 
 ```math
@@ -1074,6 +1309,12 @@ Die Grenzen des Ansatzes sind klar umrissen: Zahlenwerte in den Beispielen (Schw
 | Sekundärer Messpfad | *secondary measurement path* | Unabhängiger, redundanter Messpfad auf demselben Siliziumchip zur gegenseitigen Plausibilisierung |
 | Sensor-Frontline Fail-Closed Gate | *sensor-frontline fail-closed gate* | Vierstufiger Filter der primären Sensorik gegen IEEE-754-Anomalien, nicht-rechteckige Matrizen und Sensorhänger |
 | Thermisches Johnson-Nyquist-Rauschen | *Johnson-Nyquist noise* | Physikalisches thermisches Rauschen elektronischer Leiter, welches das minimale Rauschband gültiger Sensorsignale definiert |
+| Epistemischer Governor | *epistemic governor* | Deterministisches bordseitiges Expertensystem, das als oberster Schiedsrichter über die Zulassung jedweder physischen Aktion fungiert |
+| Mensch über dem Regelkreis | *human-on-the-loop* | Konzept der passiven externen Überwachung eines autonomen Systems mit Notfall-Abbruchbefugnis |
+| Safe-State-Ontologie | *safe state ontology* | Formales Modell zur deterministischen Auswahl einer Notfall-Saga in Abhängigkeit von raumzeitlichem Kontext und Ausfallarten |
+| Hardware-Dispositionsgatter | *hardware disposition gate* | Hardwarebasierte kombinatorische Schutzleitung zur verzögerungsfreien Aktuatorblockierung (Latenz $< 100\,\text{ns}$) auf Basis von DI/DO und CAN FD |
+| Autonomer Popperscher Red Teamer | *Popperian red teamer* | Adversarielles Modul zur Generierung von Grenzwertvektoren und Falsifikation von Sicherheitshypothesen mit Zielwert $`\mathrm{ZHR} = 1{,}00`$ |
+| Ballistischer Missionsabbruch | *ballistic jettison* | Notfall-Saga zur Zünderdeaktivierung und zum kontrollierten Gleitflug der Plattform in einen zugewiesenen Sicherheitssektor |
 
 ## Abkürzungen
 
@@ -1082,6 +1323,7 @@ Die Grenzen des Ansatzes sind klar umrissen: Zahlenwerte in den Beispielen (Schw
 | ADC (A/D-Wandler) | Analog-to-Digital Converter (Analog-Digital-Wandler) | Baustein zur Umwandlung analoger Sensorsignale in digitale Werte |
 | ASIL | Automotive Safety Integrity Level | Sicherheitsanforderungsstufe für Straßenfahrzeuge nach ISO 26262 |
 | BGA | Ball Grid Array | Gehäuseform integrierter Schaltkreise mit kugelförmigen Lötanschlüssen |
+| BVA | Boundary Value Analysis | Grenzwertanalyse beim Software- und Wissenstest |
 | CAE | Computer-Aided Engineering | Rechnerunterstützte Ingenieur- und Simulationsverfahren |
 | CAN FD | Controller Area Network Flexible Data-Rate | CAN-Busprotokoll mit erweiterter Nutzdatenlänge und höherer Datenrate |
 | CHT | Conjugate Heat Transfer | Gekoppelte Wärmeübertragung zwischen Festkörpern und Fluiden |
@@ -1097,10 +1339,12 @@ Die Grenzen des Ansatzes sind klar umrissen: Zahlenwerte in den Beispielen (Schw
 | GMSL | Gigabit Multimedia Serial Link | Hochgeschwindigkeits-Serialschnittstelle für Fahrzeugkameras |
 | GNSS | Global Navigation Satellite System | Globales Navigationssatellitensystem (z. B. GPS, Galileo) |
 | HIL | Hardware-in-the-Loop | Testverfahren mit realer Hardware im geschlossenen Simulationskreis |
+| HOTL | Human-on-the-Loop | Mensch über dem Regelkreis (abgesetzte passive Überwachung) |
 | IMU | Inertial Measurement Unit | Inertiale Messeinheit (Drehraten- und Beschleunigungssensoren) |
 | isoUART | Isolated Universal Asynchronous Receiver-Transmitter | Protokoll für galvanisch getrennte serielle Kommunikation |
 | MCU | Microcontroller Unit | Mikrocontroller |
 | NPU | Neural Processing Unit | Neuronaler Netzwerkprozessor |
+| RoE | Rules of Engagement | Einsatzregeln und Verhaltensnormen für die Mission |
 | RPM | Revolutions Per Minute | Umdrehungen pro Minute |
 | RTOS | Real-Time Operating System | Echtzeitbetriebssystem |
 | SIL | Safety Integrity Level | Sicherheitsintegritätslevel nach IEC 61508 |
@@ -1110,6 +1354,7 @@ Die Grenzen des Ansatzes sind klar umrissen: Zahlenwerte in den Beispielen (Schw
 | URAM | UltraRAM | Hochdichter synchroner On-Chip-SRAM in Xilinx UltraScale+ FPGAs mit 1 Takt Latenz |
 | WCET | Worst-Case Execution Time | Maximal anzunehmende Ausführungszeit eines Softwarepfads |
 | PWM | Pulsweitenmodulation | Modulationsverfahren zur elektrischen Leistungs- und Motoransteuerung |
+| ZHR | Zero Hallucination Rate | Null-Halluzinationsrate ($`\mathrm{ZHR} \equiv 1{,}00`$) |
 
 ## Quellen
 
@@ -1129,6 +1374,8 @@ Die Grenzen des Ansatzes sind klar umrissen: Zahlenwerte in den Beispielen (Schw
 14. <a id="src-14"></a>P. J. Roache. [*Perspective: A Method for Uniform Reporting of Grid Refinement Studies*](https://doi.org/10.1115/1.2910291). *Journal of Fluids Engineering*, 116(3), 405–413, 1994.
 15. <a id="src-15"></a>Infineon Technologies. [*TLE9012DQU / TLE9015DQU: Multi-Channel Battery Monitoring & UART Transceiver ICs*](https://www.infineon.com/). User Manual, Rev 1.2, 2023.
 16. <a id="src-16"></a>J. B. Johnson. [*Thermal Agitation of Electricity in Conductors*](https://doi.org/10.1103/PhysRev.32.97). *Physical Review*, 32(1), 97–109, 1928; H. Nyquist. [*Thermal Agitation of Electric Charge in Conductors*](https://doi.org/10.1103/PhysRev.32.110). *Physical Review*, 32(1), 110–113, 1928.
+17. <a id="src-17"></a>Karl R. Popper. [*The Logic of Scientific Discovery*](https://doi.org/10.4324/9780203994627). Routledge, 1959 / 2002.
+18. <a id="src-18"></a>Defense Advanced Research Projects Agency (DARPA). [*Assurance Solutions for Operational Resilience (ASOR)*](https://www.darpa.mil/). Technical Report, 2023.
 
 ---
 
