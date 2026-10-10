@@ -96,4 +96,25 @@ Do **NOT** use «контур» for software architectures, cybernetic loops, se
   - Run `python3 scripts/inspect_buzzwords.py` after editing each batch.
   - Commit with clear semantic commit messages and push to `origin/main` after each batch.
 
+## 6. Backlog Task Implementation & Push-Pull Validation Protocol
+
+Кожне покращення глави з беклогу завдань (`~/vida/docs/book/`) підпорядковується обов'язковому регламенту багатокрокової верифікації:
+
+1. **Імплементація в оригіналі (Ukrainian Master):**
+   - Зміни вносяться до цільової глави в `ExpertSystem/` із дотриманням усіх вимог до математики (Actionable Closed Loop, колонка 0, $`...`$), структури (4 рівні), відсутності кліше «контур» та обов'язкового запуску `python3 scripts/inspect_buzzwords.py`.
+2. **Пуш до віддаленого репозиторію (Push to GitHub):**
+   - Змінені глави комітяться з чітким семантичним повідомленням і пушаться до GitHub (`git push origin main`).
+3. **Зворотне витягування та інспекція рендерингу (Pull / Remote Render Inspection):**
+   - Після пушу глави повторно перевіряються (fetch/inspect) для аналізу коректності відображення в середовищі GitHub:
+     - відсутність синтаксичних збоїв у діаграмах Mermaid (`flowchart`, `sequenceDiagram`, `stateDiagram-v2`);
+     - відсутність пошкоджень у формулах MathJax (перевірка ізоляції блоків `$$...$$`, усунення конфліктів із Markdown-курсивом `<em>`, коректність `` $`...`$ ``).
+4. **Ітеративний цикл виправлення (до 5 спроб):**
+   - У разі виявлення дефектів рендерингу діаграм чи формул виконується до 5 послідовних спроб виправлення, повторного пушу та контрольної перевірки.
+5. **Шлюз синхронізації повних перекладів (Multilingual Translation Gate):**
+   - Лише після повного підтвердження якості українського оригіналу оновлення синхронно переносяться до повністю перекладених книг (наразі це **англійська** `translations/en/` та **німецька** `translations/de/` версії).
+   - Обов'язкова валідація перекладів за допомогою:
+     `python3 scripts/verify_translation.py ExpertSystem/chXX-...md ExpertSystem/translations/<lang>/chXX-...md`
+   - Переклад комітиться та пушиться лише за статусу `[PASS]`.
+
+
 

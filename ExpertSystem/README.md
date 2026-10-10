@@ -8,6 +8,12 @@
 
 ---
 
+> [!NOTE]
+> **Multilingual Editions & Translations:**  
+> The original master edition of this monograph is written in Ukrainian. Executive summaries and chapter abstracts are available across 46 languages:  
+> [ar](translations/ar/) · [az](translations/az/) · [bg](translations/bg/) · [ca](translations/ca/) · [cs](translations/cs/) · [da](translations/da/) · [de](translations/de/) · [el](translations/el/) · [en](translations/en/) · [es](translations/es/) · [et](translations/et/) · [fa](translations/fa/) · [fi](translations/fi/) · [fr](translations/fr/) · [ga](translations/ga/) · [he](translations/he/) · [hi](translations/hi/) · [hr](translations/hr/) · [hu](translations/hu/) · [hy](translations/hy/) · [id](translations/id/) · [it](translations/it/) · [ja](translations/ja/) · [ka](translations/ka/) · [kk](translations/kk/) · [ko](translations/ko/) · [lb](translations/lb/) · [lt](translations/lt/) · [lv](translations/lv/) · [ms](translations/ms/) · [mt](translations/mt/) · [nl](translations/nl/) · [no](translations/no/) · [pl](translations/pl/) · [pt](translations/pt/) · [ro](translations/ro/) · [sk](translations/sk/) · [sl](translations/sl/) · [sr](translations/sr/) · [sv](translations/sv/) · [th](translations/th/) · [tr](translations/tr/) · [uz](translations/uz/) · [vi](translations/vi/) · [zh](translations/zh/) · [zh-TW](translations/zh-TW/).  
+> Full translations of the monograph are available in **[English](translations/en/)** and **[German](translations/de/)** (coverage is being actively supplemented and expanded). See the [Multilingual Architecture Guide](translations/README.md) for architectural and translation standards.
+
 ## Про книгу
 
 Книга є фундаментальним монографічним дослідженням та інженерним керівництвом, присвяченим подоланню ключової кризи сучасного штучного інтелекту — епістемічного розриву між ймовірнісною правдоподібністю нейромережевих генерацій та детермінованою істинністю формальних доведень. У центрі дослідження стоїть питання: **як спроєктувати експертну систему, кожен висновок якої є неспростовним, повністю простежуваним до першоджерел та придатним для сертифікації у критичних інженерних доменах (ISO 26262, IEC 61508, DO-178C, ISO/SAE 21434)?**
