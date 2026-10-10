@@ -10,7 +10,7 @@
 
 ## Abstract
 
-This chapter presents a methodology for compiling technical and normative documentation (RFCs, ISO standards, silicon datasheets) into a verified expert system knowledge base. A five-phase extraction pipeline is proposed: structural decomposition, syntactic sentence parsing, specialized extractors (parameters, EARS requirements, ABNF formal grammars, finite-state machines), byte-level primary source addressing (Byte Anchoring with SHA-256 cryptographic hashes), and a deterministic admission gate. Document versioning and obsolescence mechanisms, a two-pass semantic compiler for symbols and anaphora, storage architectures (multi-model RDF/Property Graph, in-memory CSR), and an Ed25519-signed cryptographic proof certificate protocol for auditing operational decisions are systematically examined.
+This chapter presents a methodology for compiling technical and normative documentation (RFCs, ISO standards, silicon datasheets) into a verified expert system knowledge base. A five-phase extraction pipeline is proposed: structural decomposition, syntactic sentence parsing, specialized extractors (parameters, EARS requirements, ABNF formal grammars, finite-state machines), byte-level primary source addressing (Byte Anchoring with SHA-256 cryptographic hashes), and a deterministic admission gate. The theory of Floating-Size Annotation Units (FAU) grounded in W. Ross Ashby's cybernetic Law of Requisite Variety is established in contrast to naive fixed chunking. Furthermore, a three-tier R&D pipeline defense against epistemic knowledge poisoning is developed based on the MITRE ATLAS matrix (techniques AML.T0020 and AML.T0043), incorporating cryptographic source authentication, symbolic SMT perturbation analysis, and a mandatory Human-in-the-Loop qualification gate. Document versioning and obsolescence mechanisms, a two-pass semantic compiler for symbols and anaphora, storage architectures (multi-model RDF/Property Graph, in-memory CSR), and an Ed25519-signed cryptographic proof certificate protocol for auditing operational decisions are systematically examined.
 
 An engineer developing a network controller, a real-time operating system (RTOS), or an actuator control module operates within a constellation of hundreds of interrelated documents: international standards, industry directives, customer technical requirements, and component datasheets. The knowledge embodied in these artifacts is no less critical to an organization than source code; however, three fundamental obstacles impede its practical exploitation:
 
@@ -438,29 +438,74 @@ During Pass 2, full syntactic and semantic parsing proceeds, parameterized by th
 - **Invariance of evidence grounding:** Subject normalization to a canonical ontology symbol occurs exclusively within the semantic layer ($`\mathrm{Subject} = \text{"Client"}`$), whereas the grounding tuple $`\mathcal{E} = \langle \mathrm{DocID}, \mathrm{ByteStart}, \mathrm{ByteEnd}, \dots \rangle`$ and cryptographic hash $`H_{\mathrm{quote}}`$ strictly preserve the literal raw bytes of the source document containing the original token *"It"*.
 - **Materialization of ground atoms:** Pass 2 culminates in a verified set of ground knowledge atoms, completely liberated from ambiguous pronouns and strictly bound to canonical ontology symbols.
 
-### 3.5. Structural Chunking for Retrieval
+### 3.5. Theory of Floating Semantic Windows versus Naive Fixed Chunking
 
-Beyond formal extraction, an expert system requires robust retrieval capabilities: both to surface candidate passages for extraction and to answer exploratory engineering queries. The prevalent industry heuristic of partitioning documents into fixed-size windows (e.g., chunks of 500 tokens) damages normative cohesion: a chunk boundary running through the middle of a clause severs the antecedent trigger from its consequent obligation.
+Knowledge extraction and information retrieval across technical documentation are critically governed by the method used to partition continuous text streams into operational segments. The prevalent heuristic across generic RAG pipelines—mechanically slicing text into fixed-size windows (e.g., 512 or 1024 tokens with arbitrary overlap)—is categorically destructive for evidence-governed engineering:
+- it mechanically fractures deontic norms, severing the normative precondition (`IF...`) from its predicate and legal or technical consequence (`THEN MUST...`);
+- it fragments complex electrical parameter tables, bus timing diagrams, and hardware configuration register maps;
+- it obliterates the context of anaphoric references ("the aforementioned voltage threshold", "this configuration register"), preventing downstream formal verification of the assertion.
 
-Structural chunking utilizes the document tree produced in Phase 1. Retrieval chunks map directly to structural boundaries: clauses, sub-clauses, or tables. Every chunk retains its fully qualified path from the document root (*breadcrumbs*). A sub-clause stating "must actuate within 15 ms" is meaningless in isolation; prefixed with its breadcrumbs—"Braking System Requirements → Emergency Braking Subsystem → Clause 4.2"—its semantics become unambiguous to both automated retrievers and human auditors.
+To overcome this systemic degradation, the author proposes replacing static chunking with the concept of **Floating-Size Annotation Units (FAU)**, grounded in two foundational scientific principles: W. Ross Ashby's cybernetic law and the network sliding window protocol.
 
-Retrieval execution is best architected as a hybrid pipeline. Sparse lexical retrieval via BM25 excels at matching exact alphanumeric identifiers: clause numbers, error codes, command mnemonics [[9]](#src-9). Dense vector retrieval retrieves paraphrased queries; for low-latency nearest-neighbor search, Hierarchical Navigable Small World (HNSW) graph indexing [[10]](#src-10)—such as implemented in PostgreSQL's pgvector extension [[11]](#src-11)—is utilized. The ranked candidate lists are unified via Reciprocal Rank Fusion (RRF) [[12]](#src-12):
+#### 1. W. Ross Ashby's Cybernetic Law of Requisite Variety
+
+In classical cybernetics, Ashby's Law of Requisite Variety establishes that *only variety in the regulator can destroy (compensate for) variety in the disturbances of the system* (*only variety can destroy variety*) [[26]](#src-26). In the context of decomposing complex regulatory specifications, this law takes the form of a mathematical inequality:
+
+```math
+V_R \ge V_D - V_C
+```
+
+Parameters and mathematical components of the formula:
+- $`V_R \in \mathbb{R}_{\ge 0}`$ is the entropic variety of regulator states (the internal capacity of the segmentation mechanism to dynamically adapt the boundary, size, and semantic capacity of the FAU window);
+- $`V_D \in \mathbb{R}_{> 0}`$ is the entropic variety and structural variability of the input normative text (syntactic sentence complexity, presence of nested conditional structures, exceptions, footnotes, and specification tables);
+- $`V_C \in \mathbb{R}_{\ge 0}`$ is the allowable residual entropy (the permissible semantic ambiguity at the segmenter output under which the extractor deterministically types facts without losing predicative cohesion; for mission-critical systems, $`V_C \to 0`$ is strictly mandated).
+
+A fixed window of length $`N = 512`$ tokens is completely rigid: its spatial boundaries are constant, and consequently its regulatory variety with respect to detecting semantic ruptures is identically zero ($`V_R = 0`$). Because the syntactic complexity of engineering discourse is high ($`V_D \gg 0`$), Ashby's condition $`0 \ge V_D - V_C`$ is violated. The inevitable outcome is semantic collapse: severed predicates and generative hallucinations during model extraction.
+
+#### 2. Sliding Window Protocol of Semantic Annotation
+
+Unlike a static token counter, the boundaries of a Floating-Size Annotation Unit (FAU) are dynamically delineated via syntactic and semantic monitoring of the document stream:
+- **Window Open:** Triggered by the arrival of a new numbered structural standard heading, a normative subject declaration, or a transition to an adjacent specification section;
+- **Window Hold/Expand:** Dynamic absorption of all subordinate conditions (`IF... THEN`, `WHEN`, `WHERE`), deontic exceptions (`UNLESS`, `EXCEPT`), numerical tolerances, and anaphoric pronouns;
+- **Window Close:** Triggered upon detecting a syntactically closed assertion, an alteration of the normative actor, or the beginning of a subsequent logical section.
+
+Each synthesized FAU preserves its fully qualified hierarchical path from the document root (*breadcrumbs*), e.g., "Braking System Requirements → Emergency Braking Subsystem → Clause 4.2".
+
+#### 3. Hybrid Retrieval Based on Reciprocal Rank Fusion (RRF)
+
+To retrieve candidate FAUs during knowledge extraction or in response to engineering queries, the pipeline deploys a two-tier hybrid retrieval engine. The sparse lexical index BM25 matches exact standard clause numbers, error codes, and register mnemonics [[9]](#src-9). The dense vector index HNSW captures paraphrased and conceptual correspondences [[10]](#src-10), exposed via the pgvector utility [[11]](#src-11). Candidate lists are merged using Reciprocal Rank Fusion (RRF) [[12]](#src-12):
 
 ```math
 \mathrm{RRF}(d) = \sum_{m \in \{\mathrm{BM25}, \mathrm{Dense}\}} \frac{1}{k + \mathrm{rank}_m(d)}
 ```
 
-Parameters and mathematical components:
-
-- $`d \in \mathcal{D}_{\mathrm{chunks}}`$ represents a structural unit of the normative document (clause, sub-clause, table);
-- $`m \in \{\mathrm{BM25}, \mathrm{Dense}\}`$ designates the retrieval channels (sparse lexical matching vs. dense HNSW vector search);
-- $`\mathrm{rank}_m(d) \in \mathbb{N}_{\ge 1}`$ is the ordinal rank of candidate $`d`$ in channel $`m`$ ($`1`$ denotes top rank; if a document is absent from a channel's top results, $`\mathrm{rank}_m(d) = \infty`$, yielding a zero term);
-- $`k \in \mathbb{N}_{> 0}`$ is the smoothing hyperparameter (canonically $`k = 60`$), dampening the influence of outlier ranks in individual channels;
+Parameters and mathematical components of the formula:
+- $`d \in \mathcal{D}_{\mathrm{FAU}}`$ represents a structural FAU (normative clause, article, or table);
+- $`m \in \{\mathrm{BM25}, \mathrm{Dense}\}`$ designates the heterogeneous retrieval channels (sparse lexical matching vs. dense HNSW vector search);
+- $`\mathrm{rank}_m(d) \in \mathbb{N}_{\ge 1}`$ is the ordinal rank of candidate $`d`$ in channel $`m`$ ($`1`$ denotes top rank; if a document is absent from a channel's top candidates, $`\mathrm{rank}_m(d) = \infty`$, yielding a zero term);
+- $`k \in \mathbb{N}_{> 0}`$ is the empirical smoothing hyperparameter (canonically $`k = 60`$), dampening the influence of rank outliers within any single channel;
 - $`\mathrm{RRF}(d) \in (0, \frac{2}{k+1}]`$ is the consolidated consensus score.
 
-Practical implementation and engineering conclusions:
-- **Candidate pool truncation:** In safety-critical pipelines, candidates passed to specialized extractors are filtered via a compound criterion: retaining at most $`K_{\mathrm{pool}} = 20`$ chunks satisfying $`\mathrm{RRF}(d) \ge 0.025`$ (guaranteeing high concurrent rank across both channels).
-- **Fail-safe noise suppression:** If $`\max_{d} \mathrm{RRF}(d) < \tau_{\mathrm{min}}`$, the pipeline refrains from feeding noisy context to extractors, logs event `E_NO_CONFIDENT_RETRIEVAL`, and triggers metadata verification.
+#### 3.5.1. Actionable Closed Loop of FAU Semantic Window Dimensioning
+
+1. **Control Flow & Runtime Decisions:**
+   - The segmenter runtime tracks an unresolved anaphora counter $`B_{\mathrm{anaphora}}`$ and a deontic incompleteness flag $`F_{\mathrm{deontic}}`$. As long as $`B_{\mathrm{anaphora}} > 0`$ or $`F_{\mathrm{deontic}} = \mathrm{true}`$, the sliding window remains in the `EXPAND` state, blocking chunk emissions to the indexing queue.
+   - Committing a block to the index (`FLUSH_FAU`) is strictly authorized only when $`B_{\mathrm{anaphora}} = 0 \land F_{\mathrm{deontic}} = \mathrm{false}`$.
+   - If, due to excessively convoluted authorial phrasing, the window reaches the hard hardware limit $`L_{\mathrm{max}} = 2048`$ tokens without satisfying closure conditions, the runtime enters the protective `DEGRADED_SPLIT` state. A boundary split is executed at the final sentence delimiter, an audit event `WARN_ANAPHORA_DISRUPTED` is dispatched, and the terminating sentence is prepended as a context prefix to the succeeding window.
+   - During candidate pool selection for extractors, a compound filtering threshold is applied: at most $`K_{\mathrm{pool}} = 20`$ chunks satisfying $`\mathrm{RRF}(d) \ge 0.025`$ are retained. If $`\max_{d} \mathrm{RRF}(d) < \tau_{\mathrm{min}}`$, execution halts with error `E_NO_CONFIDENT_RETRIEVAL`, preventing the transmission of ungrounded or noisy context.
+2. **Hardware Dimensioning:**
+   - For an execution pool of $`N_{\mathrm{workers}} = 16`$ parallel extractors, each FAU window is allocated a circular ring buffer sized at $`L_{\mathrm{max}} \times S_{\mathrm{token}} = 2048 \times 64\,\text{bytes} = 128\,\text{KB}`$.
+   - The aggregate RAM footprint across all concurrent windows equals $`16 \times 128\,\text{KB} = 2\,\text{MB}`$, fitting entirely within the ultra-fast L3 cache of modern x86_64 or ARM Cortex processors ($`16\text{--}64\,\text{MB}`$). This eliminates DRAM latency bottlenecks, sustaining sustained processing throughput exceeding $`1.4\,\text{GB/s}`$.
+3. **Worked Numerical Example:**
+   - Consider the ingestion of Clause 4.2 of an ISO 26262 electric vehicle traction inverter specification spanning 610 tokens.
+   - A naive fixed chunking scheme of 512 tokens bisects the clause at token 512: the first chunk contains the mandate "the inverter MUST de-energize within 10 ms", while the second chunk contains the safety exception "except during emergency dynamic braking when stator winding temperature remains below 120 °C". Given only the first chunk, the inference engine deduces an unconditional de-energization obligation, provoking catastrophic steering loss during HIL test benches.
+   - The FAU sliding window detects the unclosed deontic exception ($`F_{\mathrm{deontic}} = \mathrm{true}`$) and holds the window open until token 610 ($`L = 610 \le L_{\mathrm{max}}`$). During retrieval on an engineer's query, this intact unit ranks 2nd in BM25 ($`\mathrm{rank}_{\mathrm{BM25}} = 2`$) and 3rd in HNSW ($`\mathrm{rank}_{\mathrm{Dense}} = 3`$). Applying the RRF formula with $`k = 60`$:
+
+```math
+\mathrm{RRF}(d) = \frac{1}{60 + 2} + \frac{1}{60 + 3} = \frac{1}{62} + \frac{1}{63} \approx 0{,}01613 + 0{,}01587 = 0{,}03200 \ge 0{,}025.
+```
+
+   - Because $`0.03200 \ge 0.025`$, the chunk clears the admission threshold and is forwarded to the extractor as an unbroken deontic requirement preserving all conditions and defeaters.
 
 Embedding model selection must be validated against proprietary domain data. As established by the Massive Text Embedding Benchmark (MTEB), no single embedding model dominates across all retrieval tasks [[13]](#src-13). General leaderboards provide zero guarantee of efficacy on narrow-domain technical corpora; models must be benchmarked on curated golden datasets with known ground-truth targets.
 
@@ -1046,7 +1091,92 @@ To ensure completeness during acquisition and eliminate blind spots, the pipelin
 
 For massive regulatory libraries spanning thousands of RFC, W3C, and ISO standards, the pipeline operates continuously in a background batch processing mode. The corpus is partitioned by structural sections, extractors execute across a concurrent worker pool, and every candidate traverses the identical admission gate. Admitted facts are committed incrementally, while conflicting candidates are routed to the contradiction audit log. No bypass around the admission gate exists: batch execution accelerates throughput without relaxing admission standards.
 
-While candidates undergo gate checks, ontologies also evolve: knowledge engineers modify the concepts and axioms through which facts are interpreted. Prior to deploying an ontology, the candidate model must be validated as an independent artifact.
+### 10.3. R&D Pipeline Protection Against Epistemic Knowledge Poisoning via the MITRE ATLAS Matrix
+
+During research, design, and lifecycle maintenance of evidence-governed expert systems, knowledge engineers routinely automate the ingestion of massive engineering corpora from external repositories: silicon datasheets, industry standards, public repositories, and errata bulletins. However, unvetted ingestion creates a severe systemic security vulnerability. According to the **MITRE ATLAS** (*Adversarial Threat Landscape for Artificial-Intelligence Systems*) threat matrix [[27]](#src-27), specifically tactics and techniques **AML.T0020 (Poison Training Data)** and **AML.T0043 (Craft Adversarial Data)**, this pipeline represents a primary target for **epistemic knowledge poisoning** attacks.
+
+The threat manifests when an adversary deliberately injects microscopic corruptions into public technical specifications or compromised repository mirrors—altering numerical tolerances, inverting safety predicates, or silently loosening emergency cutoff thresholds (e.g., expanding permissible operating temperature ranges or flipping the polarity of an interlocking bit). Upon automated extraction, this malicious artifact compiles into a valid knowledge base rule (*Backdoor Rule*). In operational mission-critical deployment, this precipitates protective subsystem shutdown or catastrophic hardware destruction, entirely bypassing conventional signature-based anti-malware scanners and static code analyzers.
+
+```mermaid
+flowchart TD
+    accTitle: Epistemic knowledge poisoning defense gate
+    accDescr: Multi-tier verification of ingested normative artifacts per MITRE ATLAS AML.T0020 and AML.T0043 via cryptographic authentication, symbolic SMT perturbation analysis, and a Human-in-the-Loop qualification gate.
+
+    Artifact["<b>Ingested Technical Artifact</b><br/>specification, datasheet, errata"] --> V_Cert{"<b>Cryptographic Gate</b><br/>Valid X.509/Ed25519 cert?"}
+    V_Cert -- Unsigned or invalid signature --> Quarantine["<b>Quarantine Isolation</b><br/>UNTRUSTED_INGEST"]
+    V_Cert -- Signature validated --> SMT_Pre{"<b>Symbolic SMT Check</b><br/>Boundary perturbation: Δθ ≤ ε_safety?"}
+    SMT_Pre -- Threshold drift exceeded --> Poison1["<b>Rejected: POISON_DETECTED</b><br/>anomalous parameter perturbation"]
+    SMT_Pre -- Boundaries nominal --> SMT_Inv{"<b>Axiomatic Core Check</b><br/>Inversion check: A_core ∪ {R} ⊬ ⊥?"}
+    SMT_Inv -- Contradiction detected --> Poison2["<b>Rejected: POISON_DETECTED</b><br/>safety core axiom inversion"]
+    SMT_Inv -- No contradiction --> Check_ASIL{"<b>Norm Criticality</b><br/>Affects ASIL C/D or emergency actuators?"}
+    Check_ASIL -- Yes --> HITL_Gate{"<b>Human-in-the-Loop Gate</b><br/>Safety engineer signature present?"}
+    HITL_Gate -- Unconfirmed --> Hold["<b>QUALIFIED_HOLD</b><br/>pending manual verification"]
+    HITL_Gate -- Signature verified --> Release["<b>ACCEPT: Admitted to KB</b><br/>rule activation in release"]
+    Check_ASIL -- No: non-critical norm --> Release
+
+    classDef src fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef check fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef poison fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+    classDef hold fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c;
+    classDef ok fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
+
+    class Artifact src;
+    class V_Cert,SMT_Pre,SMT_Inv,Check_ASIL,HITL_Gate check;
+    class Quarantine,Poison1,Poison2 poison;
+    class Hold hold;
+    class Release ok;
+```
+
+To neutralize this class of adversarial threats, the author proposes a three-tier algorithmic skepticism architecture:
+
+#### 1. Cryptographic Source Authentication
+
+The ingestion of engineering specifications is restricted exclusively to repositories and registries verified by active digital certificates (X.509 or Ed25519) issued by accredited component manufacturers or standards bodies. Any document lacking a valid cryptographic signature is immediately routed to an isolated quarantine store (`UNTRUSTED_INGEST`) and barred from the extraction pipeline pending manual audit.
+
+#### 2. Symbolic Verification of Semantic Poisoning via SMT Solver
+
+All extracted rules and parameters are subjected to automated perturbation analysis using a formal SMT solver (Z3):
+- **Threshold Sensitivity Check:** The algorithm compares the newly extracted operational threshold $`\theta_{\mathrm{new}}`$ against the baseline normative standard $`\theta_{\mathrm{std}}`$, validating compliance with the safety tolerance invariant:
+
+```math
+\Delta \theta = \lvert \theta_{\mathrm{new}} - \theta_{\mathrm{std}} \rvert \le \epsilon_{\mathrm{safety}}
+```
+
+Parameters and mathematical components of the formula:
+- $`\theta_{\mathrm{new}} \in \mathbb{R}`$ is the numerical value of the physical or system parameter extracted from the candidate specification artifact;
+- $`\theta_{\mathrm{std}} \in \mathbb{R}`$ is the baseline parameter value codified in the system's certified standard specification;
+- $`\epsilon_{\mathrm{safety}} \in \mathbb{R}_{\ge 0}`$ is the maximum allowable engineering drift tolerance permitted by the functional safety profile;
+- $`\Delta \theta \in \mathbb{R}_{\ge 0}`$ is the absolute parameter deviation of the proposed modification.
+
+- **Axiomatic Inversion Detection:** The SMT solver asserts the joint satisfiability of the candidate rule $`R_{\mathrm{candidate}}`$ against the immutable axiomatic safety core of the system $`\mathcal{A}_{\mathrm{core}}`$. If a contradiction is formally derived ($`\mathcal{A}_{\mathrm{core}} \cup \{ R_{\mathrm{candidate}} \} \vdash \bot`$), the candidate is diagnosed as an adversarial subversion attempt.
+
+#### 3. Mandatory Human-in-the-Loop Qualification Gate
+
+No rule governing emergency actuators or modifying functional safety integrity levels under ASIL/SIL (ISO 26262) may be activated in the knowledge base autonomously. Such rules are placed into `QUALIFIED_HOLD` status and take effect solely after being authenticated with the digital signature of a certified functional safety engineer.
+
+#### 10.3.1. Actionable Closed Loop of Knowledge Poisoning Defense
+
+1. **Control Flow & Runtime Decisions:**
+   - Upon violation of the inequality $`\Delta \theta \le \epsilon_{\mathrm{safety}}`$ or detection of an inconsistency with the axiomatic core $`\mathcal{A}_{\mathrm{core}}`$, the gate halts package ingestion, marks the rule with verdict `POISON_DETECTED` (Fail-Closed), quarantines the source artifact, and dispatches a `CRITICAL_SECURITY_ALERT` notification to the enterprise Security Information and Event Management (SIEM) system.
+   - If the rule clears SMT verification and pertains to general non-critical parameters (e.g., text message formatting or informational timeout thresholds), it receives verdict `ACCEPT` and is integrated into the candidate release.
+   - If the rule affects critical functional safety systems (ASIL C/D, SIL 3/4), the runtime enforces a `QUALIFIED_HOLD` lock, awaiting cryptographic authorization from a certified engineer in the loop (Human-in-the-Loop).
+2. **Hardware Dimensioning:**
+   - To defend against denial-of-service (DoS) attacks exploiting intentionally crafted exponential SMT hardness instances, the Z3 solver process is isolated inside a restricted Linux sandbox (cgroups v2 and seccomp-bpf) with a rigid execution timeout $`T_{\mathrm{smt\_timeout}} = 500\,\text{ms}`$ per rule and virtual memory ceiling $`M_{\mathrm{smt}} = 512\,\text{MB}`$.
+   - Breaching either threshold triggers an immediate resource exhaustion error (`E_SMT_RESOURCE_EXHAUSTION`), precipitating forceful process termination (`SIGKILL`) and transitioning the candidate rule to rejected status.
+3. **Worked Numerical Example:**
+   - Input scenario: Ingesting an automated knowledge update for an electric vehicle traction inverter controller under ISO 26262 (ASIL D).
+   - The certified baseline standard mandates a protective cutoff threshold on the high-voltage bus at $`\theta_{\mathrm{std}} = 400\,\text{V}`$ with a safety tolerance $`\epsilon_{\mathrm{safety}} = 5\,\text{V}`$ (valid operating range $`395\text{--}405\,\text{V}`$).
+   - An adversary compromises an unofficial errata mirror and introduces a malicious amendment, elevating the cutoff voltage to $`\theta_{\mathrm{new}} = 435\,\text{V}`$ to induce protection failure and thermal breakdown of the inverter power transistors.
+   - The SMT solver evaluates the parameter drift:
+
+```math
+\Delta \theta = \lvert 435 - 400 \rvert = 35\,\mathrm{V}.
+```
+
+   - Because $`35\,\mathrm{V} > 5\,\mathrm{V}`$, the invariant $`\Delta \theta \le \epsilon_{\mathrm{safety}}`$ is severely violated. The solver outputs an unsatisfiability proof (`UNSAT`) for the safe operating invariant.
+   - The admission gate assigns verdict `POISON_DETECTED`, blocks rule ingestion—protecting $`45,000\,\text{EUR}`$ of physical power electronics from catastrophic destruction—and generates a cryptographically signed poisoning incident report for the cybersecurity operations center.
+
+Candidates have satisfied admission rules and traversed the epistemic poisoning defense barriers; however, knowledge bases evolve beyond mere facts: knowledge engineers also alter the concepts and axioms through which facts are interpreted. Prior to deploying an ontology, the candidate model must be validated as an independent artifact.
 
 ## 11. Practical Ontology Engineering Lifecycle: Protégé and ROBOT
 
@@ -1224,6 +1354,8 @@ Once knowledge content is extracted, the epistemic quality of its underlying war
 6. Which four verification checks are executed by an independent proof certificate verifier, and what claims does the certificate refrain from asserting?
 7. Why must inferred axioms never be edited as an independent source of truth? What tooling versions and dependencies must be pinned to guarantee build reproducibility?
 8. How does description logic reasoning (`reason`) differ from SPARQL competency verification (`verify`)? Why does a zero-row query result not supersede domain engineering sign-off?
+9. How does W. Ross Ashby's Law of Requisite Variety prove the failure of naive fixed-size chunking in engineering corpora, and how does the FAU sliding window protocol maintain deontic norm integrity?
+10. What threats under the MITRE ATLAS taxonomy (AML.T0020, AML.T0043) emerge during automated specification ingestion, and how does a three-tier system (cryptography, SMT perturbation analysis, Human-in-the-Loop) prevent backdoor rule infiltration?
 
 ## Glossary
 
@@ -1247,6 +1379,7 @@ Once knowledge content is extracted, the epistemic quality of its underlying war
 | Re-grounding | Re-grounding | Mapping historical quotes and facts to corresponding sections within a newly released revision |
 | Errata | Errata | Formally published corrections amending specific errors in an active standard |
 | Structural chunking | Structural chunking | Partitioning documents for retrieval along structural clause boundaries preserved with full breadcrumbs |
+| Floating-size annotation unit (FAU) | Floating-size annotation unit | Normative text block with dynamic boundaries governed by syntactic and semantic closure of assertions rather than token counts |
 | Reciprocal rank fusion | Reciprocal rank fusion | An algorithm combining heterogeneous ranked candidate lists via reciprocal rank summation |
 | Embedding | Embedding | A dense continuous vector encoding the semantic properties of a text block |
 | Memory mapping | Memory mapping | Mapping file contents directly into the process virtual address space (`mmap`) without copying |
@@ -1256,6 +1389,9 @@ Once knowledge content is extracted, the epistemic quality of its underlying war
 | Inferred axioms | Inferred axioms | Logical entailments derived from asserted axioms by a description logic reasoner |
 | Process mining | Process mining | Discovering, monitoring, and verifying operational workflow models from event logs |
 | Association rule mining | Association rule mining | Discovering frequent itemset correlations across datasets without asserting causality or normative status |
+| Knowledge poisoning | Knowledge poisoning | Deliberate adversarial corruption of technical norms or numerical boundaries in knowledge sources to introduce latent defects into the knowledge base |
+| MITRE ATLAS framework | MITRE ATLAS framework | Knowledge base of adversary tactics, techniques, and case studies targeting artificial intelligence and machine learning systems |
+| Threshold sensitivity | Threshold sensitivity | Maximum allowable deviation of a safety-critical numerical parameter during rule verification via an SMT solver |
 
 ## Abbreviations
 
@@ -1270,6 +1406,7 @@ Once knowledge content is extracted, the epistemic quality of its underlying war
 | BM25 | Best Matching 25 | Probabilistic term-matching ranking function for lexical search |
 | CSR | Compressed Sparse Row | Compressed Sparse Row format for memory-efficient graph representation |
 | EARS | Easy Approach to Requirements Syntax | Constrained natural language templates for requirements syntax |
+| FAU | Floating-size Annotation Unit | Dynamic semantic unit for normative text segmentation |
 | FIPS | Federal Information Processing Standards | US Federal Information Processing Standards |
 | HNSW | Hierarchical Navigable Small World | Hierarchical Navigable Small World graph index for vector search |
 | IDL | Interface Definition Language | Interface Definition Language for service contracts |
@@ -1280,6 +1417,7 @@ Once knowledge content is extracted, the epistemic quality of its underlying war
 | ITU-T | International Telecommunication Union, Telecommunication Standardization Sector | ITU Telecommunication Standardization Sector |
 | JSON | JavaScript Object Notation | Lightweight text-based data interchange format |
 | LLM | Large Language Model | Large Language Model |
+| MITRE ATLAS | Adversarial Threat Landscape for Artificial-Intelligence Systems | Threat matrix for artificial intelligence systems security |
 | MTEB | Massive Text Embedding Benchmark | Massive Text Embedding Benchmark for vector representations |
 | OMG | Object Management Group | Standards consortium for enterprise integration and modeling |
 | OBO | Open Biomedical Ontologies | Open Biomedical Ontologies consortium |
@@ -1293,6 +1431,8 @@ Once knowledge content is extracted, the epistemic quality of its underlying war
 | ROBOT | ROBOT is an OBO Tool | Command-line tool for automating ontology build and verification workflows |
 | RRF | Reciprocal Rank Fusion | Rank aggregation algorithm for combining multiple retrieval channels |
 | SHA-256 | Secure Hash Algorithm, 256 bits | Cryptographic hash function specified in FIPS PUB 180-4 |
+| SIEM | Security Information and Event Management | Security information and event management platform |
+| SMT | Satisfiability Modulo Theories | Computational logic framework for checking formula satisfiability against theories |
 | SMTP | Simple Mail Transfer Protocol | Simple Mail Transfer Protocol for electronic mail transmission |
 | SPARQL | SPARQL Protocol and RDF Query Language | Declarative query language for RDF graph databases |
 | SRS | Software Requirements Specification | Software Requirements Specification artifact |
@@ -1325,6 +1465,8 @@ Once knowledge content is extracted, the epistemic quality of its underlying war
 23. <a id="src-23"></a>S. Josefsson, I. Liusvaara. [*RFC 8032: Edwards-Curve Digital Signature Algorithm (EdDSA)*](https://www.rfc-editor.org/rfc/rfc8032). IRTF, 2017.
 24. <a id="src-24"></a>Alessandro Berti, Sebastiaan van Zelst, Daniel Schuster. [*PM4Py: A Process Mining Library for Python*](https://doi.org/10.1016/j.simpa.2023.100556). *Software Impacts*, 17, 100556, 2023. [Official repository and licensing terms](https://github.com/process-intelligence-solutions/pm4py).
 25. <a id="src-25"></a>Sebastian Raschka and mlxtend contributors. [*Association Rules: Metrics and Examples*](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/). Documentation of metrics and association rule generation.
+26. <a id="src-26"></a>W. Ross Ashby. [*An Introduction to Cybernetics*](https://openlibrary.org/works/OL3307771W). Chapman & Hall, 1956.
+27. <a id="src-27"></a>MITRE Corporation. [*MITRE ATLAS™: Adversarial Threat Landscape for Artificial-Intelligence Systems*](https://atlas.mitre.org/). 2024.
 
 ---
 
