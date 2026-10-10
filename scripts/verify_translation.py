@@ -10,7 +10,7 @@ Verifies that a translated Markdown chapter preserves:
 5. All embedded URLs and relative anchors.
 
 Usage:
-  python3 scripts/verify_translation.py ExpertSystem/ch29-neuro-symbolic-architecture.md translations/en/ExpertSystem/ch29-neuro-symbolic-architecture.md
+  python3 scripts/verify_translation.py ExpertSystem/ch29-neuro-symbolic-architecture.md ExpertSystem/translations/en/ch29-neuro-symbolic-architecture.md
 """
 
 import sys

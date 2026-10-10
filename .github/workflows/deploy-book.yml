@@ -33,8 +33,8 @@ jobs:
 
       - name: Verify English Master Translation Invariants
         run: |
-          python3 scripts/verify_translation.py ExpertSystem/README.md translations/en/ExpertSystem/README.md
-          python3 scripts/verify_translation.py ExpertSystem/ch29-neuro-symbolic-architecture.md translations/en/ExpertSystem/ch29-neuro-symbolic-architecture.md
+          python3 scripts/verify_translation.py ExpertSystem/README.md ExpertSystem/translations/en/README.md
+          python3 scripts/verify_translation.py ExpertSystem/ch29-neuro-symbolic-architecture.md ExpertSystem/translations/en/ch29-neuro-symbolic-architecture.md
 
       - name: Set up Go and Run Embedded Code Tests
         uses: actions/setup-go@v5
@@ -46,7 +46,7 @@ jobs:
           mkdir -p /tmp/ch29test
           python3 -c '
           import re
-          txt = open("translations/en/ExpertSystem/ch29-neuro-symbolic-architecture.md").read()
+          txt = open("ExpertSystem/translations/en/ch29-neuro-symbolic-architecture.md").read()
           blocks = re.findall(r"```go\n(.*?)\n```", txt, re.DOTALL)
           with open("/tmp/ch29test/main.go", "w") as f:
               f.write(blocks[0])
@@ -105,17 +105,17 @@ jobs:
                 </li>
                 <li>
                   <span class="badge">Global Reference</span>
-                  <a href="https://github.com/nick-fedchik/articles/tree/main/translations/en/ExpertSystem">🇬🇧 English Edition (Global Reference)</a>
+                  <a href="https://github.com/nick-fedchik/articles/tree/main/ExpertSystem/translations/en">🇬🇧 English Edition (Global Reference)</a>
                   <div class="desc">Standardized for IEEE, ACM, NATO, and Silicon Valley engineering ecosystems.</div>
                 </li>
                 <li>
                   <span class="badge">DACH Hub</span>
-                  <a href="https://github.com/nick-fedchik/articles/tree/main/translations/de/ExpertSystem">🇩🇪 Deutsche Ausgabe (In Progress)</a>
+                  <a href="https://github.com/nick-fedchik/articles/tree/main/ExpertSystem/translations/de">🇩🇪 Deutsche Ausgabe (In Progress)</a>
                   <div class="desc">ISO 26262 ASIL D, AUTOSAR, ASPICE, Siemens, Bosch, Infineon.</div>
                 </li>
                 <li>
                   <span class="badge">Eastern Flank</span>
-                  <a href="https://github.com/nick-fedchik/articles/tree/main/translations/pl/ExpertSystem">🇵🇱 Wydanie Polskie (In Progress)</a>
+                  <a href="https://github.com/nick-fedchik/articles/tree/main/ExpertSystem/translations/pl">🇵🇱 Wydanie Polskie (In Progress)</a>
                   <div class="desc">Sektor obronny (PGZ, WB Group), automatyka i systemy wbudowane.</div>
                 </li>
               </ul>

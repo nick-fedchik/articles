@@ -80,7 +80,7 @@
 
 ## 3. Онтологічні глосарії (Glossaries & Termbases)
 
-Усі переклади суворо спираються на стандартизовані глосарії в каталозі `translations/glossaries/`:
+Усі переклади суворо спираються на стандартизовані глосарії в каталозі `ExpertSystem/translations/glossaries/`:
 - `termbase-en.json` (English)
 - `termbase-de.json` (German)
 - `termbase-pl.json` (Polish)

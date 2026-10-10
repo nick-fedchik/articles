@@ -14,7 +14,7 @@ This repository contains books and articles by **Mykola Fedchyk** (Ukrainian: М
 
 1. **[Architecture of Evidence-Based Expert Systems: From Formal Ontologies to Neuro-Symbolic AI](ExpertSystem/README.md)**  
    Knowledge models and representation, knowledge acquisition, inference and explanation, knowledge base verification, safety cases, integration of language models, runtime execution and knowledge exchange between systems.  
-   Structure: 7 parts, 38 chapters, 5 appendices.
+   Structure: 7 parts, 40 chapters, 5 appendices. [Multilingual editions (45 languages)](ExpertSystem/translations/README.md).
 2. **[Managing Complex Engineering Projects and Programmes: From Work Breakdown Structure to Digital Thread and Evidence-Based Release](Project_Management/book/README.md)**  
    Work breakdown structure (WBS) and hybrid planning for hardware and software, baselines and change control, event-driven management and metrics, earned value and Monte Carlo schedule forecasting, continuous compliance, release evidence, product, programme and portfolio management, the project management office (PMO) and AI assistants.  
    Structure: 6 parts, 18 chapters, 3 appendices.
@@ -95,7 +95,7 @@ Copyright © 2026 Mykola Fedchyk.
 
 1. **[Архітектура доказових експертних систем: від формальних онтологій до нейро-символьного ШІ](ExpertSystem/README.md)**  
    Моделі й подання знань, здобуття знань, виведення та пояснення, верифікація бази знань, обґрунтування безпеки, інтеграція мовних моделей, виконання експертної системи та обмін знаннями між системами.  
-   Структура: 7 частин, 38 глав, 5 додатків.
+   Структура: 7 частин, 40 глав, 5 додатків. [Багатомовні видання (45 мов світу)](ExpertSystem/translations/README.md).
 2. **[Керування складними інженерними проєктами та програмами: від структури робіт до цифрової нитки й доказового релізу](Project_Management/book/README.md)**  
    Структура декомпозиції робіт (WBS) і гібридне планування апаратної та програмної розробки, базові версії та контроль змін, подійно-орієнтоване управління й метрики, освоєний обсяг і прогноз строків методом Монте-Карло, безперервний комплаєнс, докази релізу, продуктовий, програмний і портфельний менеджмент, проєктний офіс (PMO) та ШІ-асистенти.  
    Структура: 6 частин, 18 глав, 3 додатки.

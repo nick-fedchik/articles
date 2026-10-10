@@ -96,7 +96,10 @@ def main():
     if len(sys.argv) > 1:
         target_dir = Path(sys.argv[1])
 
-    files = sorted(target_dir.glob("**/*.md")) if target_dir.is_dir() else [target_dir]
+    if target_dir.is_dir():
+        files = [p for p in sorted(target_dir.glob("**/*.md")) if "translations" not in p.parts or target_dir.name == "translations"]
+    else:
+        files = [target_dir]
     total_issues = 0
 
     print(f"=== Inspecting {len(files)} files in {target_dir} for 'контур' AI markers ===")
