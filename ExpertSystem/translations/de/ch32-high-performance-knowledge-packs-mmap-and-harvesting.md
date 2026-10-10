@@ -2225,6 +2225,24 @@ Die Messwerte belegen den in Kapitel 7 formalisierten Zielkonflikt: Eine gröber
 
 ---
 
+## 11. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Lösungen der Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit den Begründern zeitgesteuerter Architekturen (Time-Triggered Architecture) über die Hardware-Erdung von Sensorfakten, Grenzsignal-Jitter und redundante Konsensprotokolle von Messwertgebern.
+
+**These des Autors (Pro):**
+Jedes Faktum über die physikalische Welt muss in einem evidenzbasierten System eine ununterbrochene Beweiskette von der physikalischen Messung bis zur logischen Schlussfolgerung aufweisen (Hardware Grounding). Sensordaten (CAN FD, FlexRay, ARINC 429, Ethernet TSN) müssen in feste Datenstrukturen mit digitaler Signatur eines Hardware-Sicherheitschips (HSM / Secure Element) und Bindung an einen monotonen Zeitstempel gekapselt werden. Der analoge Rohdatenstrom wird über deterministische Intervallregeln in diskrete propositionale Atome quantisiert, was Phantomfakten ausschließt.
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Prof. Hermann Kopetz, TU Wien, Schöpfer der Time-Triggered Architecture (TTA)):**
+> *«Die physikalische Realität ist inhärent kontinuierlich, verrauscht und anfällig für byzantinische Sensor-Teilausfälle. Der Versuch, verrauschte analoge Messwerte in binäre propositionale Atome mit kryptografischen Signaturen abzubilden, führt zu tödlichen Phasensprüngen an den Intervallgrenzen. Ein Messwert, der um 0,001 V um eine Schwellengrenze oszilliert, löst chaotisches Zustandsprellen in der Inferenz-Engine aus. Wenn sich auch nur ein einziger signierter Zeitstempel verzögert oder ein redundanter Sensor abweicht, führt Ihr starres Fail-Closed-Tor zu unnötigen Systemabschaltungen in kritischen Flugphasen»* (Physical reality is inherently continuous, noisy, and prone to partial Byzantine sensor faults... your rigid fail-closed gate will trigger unnecessary system shutdowns in critical flight regimes).
+
+**Argumentative Diskussion (Sokratische & dialektische Debatte):**
+- **Autor (Fedchyk):** Professor Kopetz, Ihr Time-Triggered Protocol (TTP) schuf das Fundament moderner Luftfahrtzuverlässigkeit. Die Architektur berücksichtigt Signal-Jitter und Grenzwertschwankungen vollumfänglich. Deshalb basiert die Faktenerdung in Znavets auf *Hysterese-Zeitfenstern und dreifacher modularer Redundanz (TMR — Triple Modular Redundancy)*. Ein Messwert wird nicht bei einmaligem Überschreiten eines Schwellenwerts zum propositionalen Atom; er quantisiert sich erst dann in ein Zustandsatom, wenn die Messung über eine definierte Anzahl von Takten des Time-Triggered-Ethernet-Busses (TTEthernet) stabil im gültigen Intervall verbleibt.
+- **Kopetz:** Doch was geschieht, wenn einer von drei Sensoren ausfällt und Datenmüll liefert? Ihre strikte Widerspruchsfreiheit wird die Inferenz aufgrund widersprüchlicher Prämissen blockieren!
+- **Autor (Fedchyk):** Hier greift die nicht-monotone Argumentation nach ASPIC+ (Kapitel 14). Widersprüchliche Sensordaten lösen keinen Systemabsturz (Panic) aus. Sie bilden sich gegenseitig angreifende Argumente: Sensor A attackiert Sensor B. Da jeder Sensor einen dynamischen Vertrauensfaktor trägt (Health/Degradation Metric aus dem Register des AURIX-Controllers), verwirft die Vorzugsregel das kompromittierte Argument und bewahrt das von intakten Sensoren gestützte Faktum.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Die Hardware-Erdung von Fakten verbindet zeitgesteuerte Prinzipien mit deterministischer Quantisierung physikalischer Signale und nicht-monotoner Sensorkonfliktlösung. Dies verhindert chaotisches Zustandsprellen und sichert die physikalische Validität der Systemeingaben.
+
 ## Fazit
 
 1. **Das Wissenspaket als Release-Artefakt:** Das Format trennt die kanonische Schicht (Quellregister, Aussagen, Zitate, Verband) von deterministisch abgeleiteten Schichten und dem kryptographischen Manifest. Sechs Invarianten (Unveränderlichkeit, Inhaltsadressierung, Bit-für-Bit-Reproduzierbarkeit, Selbstbeschreibung, Zustandstrennung, Vertraulichkeitsgrenzen) binden jede Inferenzentscheidung unumstößlich an einen fixierten epistemischen Zustand und ermöglichen Indexformat-Upgrades ohne wiederholte Faktenextraktion.
