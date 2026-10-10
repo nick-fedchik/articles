@@ -14,7 +14,7 @@
 
 In sicherheitskritischen Industrieanlagen, der Kernenergie und der Avionik (IEC 61508 SIL 3, ISO 26262 ASIL D, DO-178C DAL A) führt die direkte Einbindung generativer Sprachmodelle in Entscheidungsprozesse unausweichlich zu katastrophalen Havarien. Aufgrund der autoregressiven Natur der Kreuzentropie-Minimierung besitzen neuronale Netze kein internes Kriterium für physikalische Wahrheit: Bei unvollständiger Datenlage füllen sie Informationslücken mit plausiblen Erfindungen (maschinellen Halluzinationen oder Konfabulationen). So kann ein Modell beispielsweise mit hoher statistischer Konfidenz die Blockierung eines Sicherheits-Überströmventils empfehlen oder frei erfundene Festigkeitstoleranzen ausgeben, was zum Bersten von Rohrleitungen und zu Personenschäden führt. Rekursive Selbstüberprüfungen des Modells verschärfen das Problem lediglich, und das in Unternehmen populäre Entwurfsmuster „LLM-as-a-Judge“ erzeugt durch Ausfälle gemeinsamer Ursache (Common-Mode Failures) und kognitive Verzerrungen des Modellschiedsrichters eine trügerische Kontrollillusion.
 
-Dieses Kapitel löst das Halluzinationsproblem durch die mathematische Widerlegung des neuronalen Schiedsrichtermusters, die Aberkennung des Status einer Wissensquelle für das Sprachmodell und dessen strikte Unterordnung unter ein deterministisches Expertensystem. Untersucht werden die Architektur eines zweistufigen Verifikations-Gateways (grammatikgesteuertes AST-Decoding und bytegenaue SHA-256-Hash-Prüfung von Zitaten mit einer Zielmetrik von $`\mathrm{ZHR} = 1{,}00`$), die mathematische Formalisierung des epistemischen Wissensdefizits, eine garantierte Fail-Closed-Verweigerungspolitik (`Fail-Closed Gate`), die symbolische Abduktion nach Charles Sanders Peirce zur sokratischen Klärung sowie prädikative Echtzeit-Schilde (Safety Shields) zur hardwarenahen Abschirmung neuronaler Netze.
+Dieses Kapitel löst das Halluzinationsproblem durch die mathematische Widerlegung des neuronalen Schiedsrichtermusters, die Aberkennung des Status einer Wissensquelle für das Sprachmodell und dessen strikte Unterordnung unter ein deterministisches Expertensystem. Untersucht werden die Diagnose des Verhaltenssyndroms der „Boxiness“ (Boxiness Artifacts) von Modellen nach aggressivem Alignment (RLHF, DPO): Mehrdeutigkeitskollaps (Ambiguity Collapse), verfrühte Schließung von Schlussfolgerungen (Over-Closure), Werkzeugreflex (Tool Reflex) und korporative Abstraktion (Enterprise Abstraction). Es wird ein architektonischer Kompensationsmechanismus durch die automatische Generierung dynamischer kognitiver Reparatur-Patches (Cognitive Repair Patches) und Zwischenschichten (Cognitive Shims) vorgeschlagen. Untersucht werden die Architektur eines zweistufigen Verifikations-Gateways (grammatikgesteuertes AST-Decoding und bytegenaue SHA-256-Hash-Prüfung von Zitaten mit einer Zielmetrik von $`\mathrm{ZHR} = 1{,}00`$), die mathematische Formalisierung des epistemischen Wissensdefizits, eine garantierte Fail-Closed-Verweigerungspolitik (`Fail-Closed Gate`), die symbolische Abduktion nach Charles Sanders Peirce zur sokratischen Klärung sowie prädikative Echtzeit-Schilde (Safety Shields) zur hardwarenahen Abschirmung neuronaler Netze.
 
 ---
 
@@ -70,6 +70,82 @@ Das Schiedsrichter-Modell bewertet lediglich die statistische Plausibilität des
    Der Ersatz eines sekundären Schiedsrichtermodells der 70B-Klasse (das 2 NVIDIA A100/H100 80GB-Beschleuniger mit einer Leistungsaufnahme von $`700\,\text{Watt}`$ bindet und $`800\dots 1500\,\text{ms}`$ Inferenzlatenz hinzufügt) durch einen deterministischen bytegenauen SHA-256-Validator und AST-Parser auf dem Host-Prozessor senkt die Leistungsaufnahme des Verifikationsknotens um das 50-Fache und verkürzt die Prüflatenz von $`1200\,\text{ms}`$ auf $`18\,\mu\text{s}`$ (eine Beschleunigung um fünf Größenordnungen).
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**  
    Im Entwurfssystem für Kabeltrassen einer Umspannstation erzeugte das primäre 14B-Modell eine gefährliche Halluzination: *„der zulässige Biegeradius für VPE-isolierte Kabel beträgt 5 Außendurchmesser“* (gemäß Norm IEC 60502 sind mindestens 15 Durchmesser vorgeschrieben), versehen mit einem plausiblen Verweis auf einen erfundenen Normabschnitt. Das sekundäre 70B-Schiedsrichtermodell bewertete diese Antwort mit `9/10` und vermerkte im Prüfbericht: *„Die Antwort ist präzise, strukturiert und belegt den Sachverhalt durch Normverweise“*. Das deterministische Gateway hingegen las die Originalbytes der Norm am angegebenen Offset aus, berechnete den SHA-256-Hash und blockierte den Release innerhalb von $`15\,\mu\text{s}`$ mit dem Fehlercode `DROP_UNGROUNDED`. Damit wurde die Verlegung eines Kabels mit unzulässigem Biegeradius verhindert, die unweigerlich zur Zerstörung des Mantels und zu einem Erdschluss geführt hätte.
+
+### 1.2. Diagnose des LLM-Verhaltenssyndroms der „Boxiness“ und automatische kognitive Reparatur-Patches
+
+Moderne kommerzielle Spitzenmodelle (*Frontier LLMs*) durchlaufen mehrstufige Prozeduren des direktiven Alignments: Reinforcement Learning from Human Feedback (RLHF), Direct Preference Optimization (DPO) und strikte korporative Toxizitätsfilter. Diese Optimierungsverfahren haben jedoch einen ausgeprägten Nebeneffekt: Sie formieren eine stabile degenerative kognitive Verzerrung, die unter Systemingenieuren als **„Boxiness“-Syndrom** bekannt ist.
+
+Im Bestreben, juristische Haftung oder fehlerhafte kategorische Aussagen zu vermeiden, eignet sich das Modell eine hypertrophierte Vorsicht an: Es ersetzt eine strenge Ursache-Wirkungs-Analyse durch vage Euphemismen, lässt den Raum alternativer ingenieurtechnischer Hypothesen vorzeitig kollabieren und verweigert die formale deduktive Suche zugunsten formelhafter Verweise auf „Herstelleranweisungen“. Für präzise evidenzbasierte Systeme wirkt sich dieses Syndrom verheerend aus: Es tilgt kritische Fehlerursachen aus den Schlussfolgerungen und begründet verdeckte Havarierisiken.
+
+```mermaid
+flowchart TD
+    accTitle: Diagnose des Boxiness-Syndroms und Injektion kognitiver Reparatur-Patches
+    accDescr: Architektonische Pipeline zum Abfangen von Alignment-Artefakten der LLM mittels Entropie-Sonden und Einmischung dynamischer Reparatur-Patches.
+
+    Prompt["<b>Ingenieurtechnische Anfrage</b><br/>technisches Problem oder Störung"] --> LLM["<b>Aligned LLM (RLHF/DPO)</b><br/>Frontier Model"]
+    LLM --> Probe{"<b>Verhaltens-Sondenmonitor</b><br/>Diagnose von Boxiness-Artefakten"}
+    
+    Probe -- "Ambiguity Collapse (H < τ)" --> Patch1["<b>Hypothesen-Verzweigungs-Patch</b><br/>FORCE_HYPOTHESIS_BRANCHING"]
+    Probe -- "Enterprise Abstraction" --> Patch2["<b>Deabstraktions-Patch</b><br/>MANDATE_ENGINEERING_METRICS"]
+    Probe -- "Tool Reflex" --> Patch3["<b>Deduktions-Prioritäts-Patch</b><br/>BLOCK_TOOL_DELEGATION"]
+    Probe -- "Over-Closure" --> Patch4["<b>Randbedingungen-Patch</b><br/>REQUIRE_BOUNDARY_CONDITIONS"]
+    
+    Patch1 & Patch2 & Patch3 & Patch4 --> Shim["<b>Kognitive Zwischenschicht (Cognitive Shim)</b><br/>dynamische Instruktionsinjektion"]
+    Shim --> Retry["<b>Wiederholte Generierung</b><br/>strenger deduktiver Modus"]
+    Retry --> Probe
+    
+    Probe -- Keine Artefakte erkannt --> Pass["<b>Analytisches Urteil</b><br/>Übergabe an Verifikations-Gateway"]
+
+    classDef src fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef check fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef patch fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c;
+    classDef ok fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
+
+    class Prompt,LLM,Retry src;
+    class Probe check;
+    class Patch1,Patch2,Patch3,Patch4,Shim patch;
+    class Pass ok;
+```
+
+#### 1. Typologie der kognitiven „Boxiness“-Artefakte
+
+Auf Basis der Untersuchungen des Autors lassen sich vier grundlegende Klassen von Defekten alignierter Modelle unterscheiden [[17]](#src-17):
+
+1. **Ambiguity Collapse (Mehrdeutigkeitskollaps):** künstlicher Kollaps des Hypothesenraums. Liegen mehrere gleichwahrscheinliche Ursachen einer Fehlfunktion vor, wählt das Modell voreilig eine triviale Variante aus und verwirft unwahrscheinliche, aber kritische Anomalien. Mathematisch wird dies über einen drastischen Abfall der Entropie der Verteilung über den Hypothesenraum $`\mathcal{H}`$ erfasst:
+
+```math
+H(\mathcal{H}) = - \sum_{h \in \mathcal{H}} P(h) \log_2 P(h)
+```
+
+Parameter und mathematische Komponenten der Formel:
+- $`\mathcal{H} = \{h_1, h_2, \dots, h_m\}`$ — Menge zulässiger physikalischer oder logischer Hypothesen über die Ursachen einer Systemanomalie;
+- $`P(h) \in [0, 1]`$ — vom Modell generierte subjektive oder statistische Wahrscheinlichkeit der Hypothese $h$;
+- $`H(\mathcal{H}) \in [0, \log_2 m]`$ — Informationsentropie des Hypothesenraums (gemessen in Bits oder Shannon).
+
+Registriert ein Prüfstand eine multifaktorielle Havarie, besitzt der reale Raum eine hohe Entropie ($`H(\mathcal{H}) \ge \tau_{\mathrm{entropy}}`$), doch ein Modell mit Mehrdeutigkeitskollaps erzwingt $`H(\mathcal{H}) \to 0`$, indem es $`P(h_1) \approx 1{,}0`$ zuweist.
+
+2. **Over-Closure (Verfrühte Schließung von Schlussfolgerungen):** Fällung eines kategorischen Urteils ohne Spezifikation physikalischer Randbedingungen und ohne Aufforderung zu zusätzlichen Hardware-Messungen.
+3. **Tool Reflex (Werkzeugreflex):** die parasitäre Neigung des Modells, analytische Berechnungen an externe Werkzeuge oder Websuchen zu delegieren („Lass uns auf Google suchen“), anstatt eine direkte deduktive Ableitung aus den bereitgestellten lokalen Axiomen der Spezifikation auszuführen.
+4. **Enterprise Abstraction (Korporative Abstraktion):** systematische Tilgung präziser technischer Parameter (Spannungen, Toleranzen, Registercodes) zugunsten inhaltsleerer Formulierungen wie „stellen Sie die ordnungsgemäße Konfiguration gemäß Best Practices sicher“.
+
+#### 2. Dynamische kognitive Reparatur-Patches
+
+Anstelle eines extrem langsamen, kostspieligen und riskanten Feintunings des Modells nutzt das Expertensystem eine leichtgewichtige externe Pipeline kognitiver Zwischenschichten (*Cognitive Shims*). Das Überwachungs-Subsystem analysiert die Zwischenausgabe des Modells mithilfe leichtgewichtiger Verhaltenssonden. Werden Marker des „Boxiness“-Syndroms detektiert, injiziert die Laufzeitumgebung zur Laufzeit einen gezielten „Reparatur-Patch“ — eine strukturierte korrigierende Instruktionsschicht, die das Modell zwingend in den Modus strenger Deduktion zurückführt.
+
+#### 1.2.1. Geschlossener Kreis der ingenieurtechnischen Berechnung von Boxiness-Diagnose und Patch-Injektion
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   - Der Verhaltens-Sondenmonitor scannt die Ausgabe des Modells auf Marker von Boxiness (floskelhafte Euphemismen, Null-Entropie $`H(\mathcal{H}) < \tau_{\mathrm{entropy}}`$ bei unbestimmtem Zustand, Fehlen numerischer Parameter).
+   - Bei Detektion eines Defekts wird der Ausgabestrom sofort abgefangen (`INTERCEPT_BOXINESS`), die Antwort wird nicht an den Operator durchgestellt, und die Laufzeit injiziert den entsprechenden kognitiven Patch (`FORCE_HYPOTHESIS_BRANCHING`, `MANDATE_ENGINEERING_METRICS` oder `BLOCK_TOOL_DELEGATION`) und stößt eine erneute Generierung mit zwingender Entfaltung des Argumentationsbaums an.
+   - Beseitigt das Modell die Euphemismen auch nach $`N_{\mathrm{retry}} = 2`$ Wiederholungen nicht, aktiviert die Laufzeit den Degradationsmodus `FAIL_BOXINESS_ESCALATE` mit Übergabe der Anfrage an einen symbolischen SMT-Solver oder die Warteschlange eines qualifizierten Ingenieurs im Regelkreis (Human-in-the-Loop).
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   - Der Sondenmonitor ist als kompilierter Aho-Corasick- und AST-Detektor in Go implementiert, der den Tokenstrom auf dem Host-Prozessor in weniger als $`0{,}35\,\text{ms}`$ analysiert.
+   - Die Injektion des Reparatur-Patches vergrößert das Kontextfenster lediglich um $120\text{--}180$ Tokens ($< 2{,}5\%$ eines 8K-Kontextfensters), was praktisch keine Auswirkungen auf die KV-Cache-Allokation im GPU-Speicher hat (unter $`4{,}5\,\text{MB}`$ VRAM pro aktiver Sitzung) und die extrem niedrige Latenz des Entscheidungsunterstützungssystems bewahrt.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   - Auf einem Prüfstand für Traktionsantriebe wird eine Überhitzung der Impulsfilterdrossel L1 ($`T = 118^\circ\text{C}`$ bei maximal zulässigen $`105^\circ\text{C}`$) bei Nennlaststrom festgestellt.
+   - Die primäre Antwort eines kommerziellen alignierten LLMs enthielt einen typischen korporativen Euphemismus: *„Eine Überhitzung induktiver Komponenten kann durch verschiedene Faktoren der Betriebsumgebung verursacht werden. Prüfen Sie die elektrischen Verbindungen und konsultieren Sie das Betriebshandbuch des Herstellers“* ($`H(\mathcal{H}) = 0`$, keinerlei konkrete technische Hypothese).
+   - Die Sonde registrierte das Artefakt Enterprise Abstraction (`SCORE_EVASION = 0.94 > 0.60`) sowie das Fehlen ingenieurtechnischer Metriken. Die Laufzeit fing die Antwort ab und wandte den Reparatur-Patch `DECONSTRUCT_BOXINESS` an, der das Modell verpflichtete, eine parallele Berechnung dreier physikalischer Hypothesen durchzuführen: 1) Kernsättigung durch Verschiebung der PWM-Schaltfrequenz, 2) anomaler Anstieg des äquivalenten Serienwiderstands (ESR) des benachbarten Filterkondensators, 3) Degradation der Wärmeleitschnittstelle.
+   - In der erneuten Generierung berechnete das Modell den Arbeitspunkt der Induktivität und wies nach, dass bei einem Absinken der PWM-Frequenz auf $`f_{\mathrm{sw}} = 95\,\text{kHz}`$ (statt nominal $`125\,\text{kHz}`$) die Stromwelligkeitsamplitude auf $`\Delta I_L = 2{,}1\,\text{A} > I_{\mathrm{sat}} = 1{,}8\,\text{A}`$ ansteigt, was die Drossel in die Sättigung treibt und eine exponentielle Überhitzung verursacht. Dank des Patches wurde der Defekt im Code des PWM-Generators lokalisiert, noch bevor die Leistungseinheit Schaden nahm.
 
 ## 2. Deterministische Evidenztherapie: Das zweistufige Gateway für Null-Halluzinationen
 
@@ -692,6 +768,7 @@ Auf diese Weise wandelt sich generative KI von einer unberechenbaren Gefahrenque
 9. Wie erzeugt das Expertensystem Trainingspaare $`(x, y_w, y_l)`$ für die Direct Preference Optimization (DPO) eines Sprachmodells?
 10. Warum ist zielgerichtetes Vergessen (*Machine Unlearning*) nach der SISA-Architektur effizienter als das vollständige Nachtrainieren eines Modells bei Zurückziehung einer Norm?
 11. Warum erweist sich das Muster „LLM-as-a-Judge“ zur Eliminierung von Halluzinationen in missionskritischen Systemen als untauglich, und warum sind die Fehlerwahrscheinlichkeiten der Modelle nicht voneinander unabhängig ($`P(E_1 \cap E_2) \neq P(E_1) \cdot P(E_2)`$)?
+12. Worin besteht das Wesen des kognitiven „Boxiness“-Syndroms bei Sprachmodellen nach direktivem Alignment (RLHF/DPO), welche vier Klassen von Artefakten erzeugt es und wie stellen dynamische kognitive Reparatur-Patches die analytische Deduktion wieder her?
 
 ## Glossar
 
@@ -709,6 +786,9 @@ Auf diese Weise wandelt sich generative KI von einer unberechenbaren Gefahrenque
 | Grammatikgesteuertes Decoding | Abfangen und Maskieren von Token-Logits bei jedem Generierungsschritt zur Gewährleistung formaler Schemakonformität |
 | Common-Mode-Fehler (Ausfall gemeinsamer Ursache) | Zustand, bei dem redundante Systemkomponenten aufgrund gemeinsamer Architekturdefekte oder korrelierter Fehler simultan versagen |
 | „LLM-as-a-Judge“-Muster | Architekturansatz zur Bewertung der Antworten eines primären Modells durch ein sekundäres Sprachmodell, hochgradig anfällig für Stil- und Autoritätsverzerrungen |
+| „Boxiness“-Syndrom | Stabile kognitive Verzerrung alignierter Sprachmodelle, die sich im Ersetzen präziser ingenieurtechnischer Analysen durch ausweichende Floskeln und im künstlichen Kollaps des Hypothesenraums äußert |
+| Mehrdeutigkeitskollaps (Ambiguity Collapse) | Defekt eines alignierten Modells, bei dem der Raum gleichwertiger ingenieurtechnischer Hypothesen vorzeitig auf eine einzige alternativlose Option verengt wird |
+| Kognitiver Reparatur-Patch (Cognitive Repair Patch) | Dynamisch generierte Schicht korrigierender Instruktionen, die zur Laufzeit in den Kontext injiziert wird, um Boxiness-Artefakte zu neutralisieren |
 
 ## Abkürzungen
 
@@ -716,6 +796,7 @@ Auf diese Weise wandelt sich generative KI von einer unberechenbaren Gefahrenque
 |---|---|
 | KI | Künstliche Intelligenz |
 | ES | Expertensystem |
+| CRP | Cognitive Repair Patch (kognitiver Reparatur-Patch) |
 | RAG | Retrieval-Augmented Generation (abfragegestützte Generierung) |
 | ZHR | Zero-Hallucination Rate (Quote der Null-Halluzinationen) |
 | FCP | Fail-Closed Policy (Sicherheitsverweigerungspolitik) |
@@ -750,6 +831,7 @@ Auf diese Weise wandelt sich generative KI von einer unberechenbaren Gefahrenque
 14. <a id="src-14"></a>Karl R. Popper. *The Logic of Scientific Discovery*. Hutchinson & Co., London, 1959.
 15. <a id="src-15"></a>Mykola Fedchyk. *Epistemic Virtual Machine and Zero-Hallucination Architectures for Safety-Critical Systems*. Technical Report, 2026.
 16. <a id="src-16"></a>Lianmin Zheng, Hao Zhang, Wei-Lin Chiang et al. *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*. In *Advances in Neural Information Processing Systems (NeurIPS 2023)*, 36, 2023.
+17. <a id="src-17"></a>Mykola Fedchyk. *Cognitive Shims and De-biasing Alignment Artifacts in Neuro-Symbolic Expert Systems*. Technical Whitepaper, 2026.
 
 ---
 

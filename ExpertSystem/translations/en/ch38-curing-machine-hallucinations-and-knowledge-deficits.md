@@ -14,7 +14,7 @@
 
 In mission-critical industrial facilities, nuclear power generation, and avionics (governed by IEC 61508 SIL 3, ISO 26262 ASIL D, and DO-178C Level A), directly integrating generative language models into autonomous decision-making loops inevitably precipitates catastrophic accidents. Due to the autoregressive nature of cross-entropy minimization, neural networks possess no internal criterion of physical truth: under conditions of informational deficit, they populate knowledge voids with plausible confabulations (machine hallucinations). For instance, an unconstrained model may authoritatively instruct an operator to lock down an emergency pressure relief valve or invent fictitious mechanical stress tolerances, resulting in pipeline ruptures, process destruction, and loss of life. Recursive self-verification by the model merely compounds the systemic defect, while the pervasive enterprise "LLM-as-a-Judge" pattern creates an illusion of control through Common-Mode Failures and cognitive biases of the judge model.
 
-This chapter resolves the problem of eradicating hallucinations by mathematically refuting neural arbitration, stripping the language model of its status as an authoritative knowledge source, and subordinating it to a deterministic expert system. We investigate the architecture of a dual-tier verification gate (combining grammar-guided Abstract Syntax Tree decoding and byte-level SHA-256 cryptographic citation validation achieving a metric of $`\mathrm{ZHR} = 1.00`$), the mathematical formalization of epistemic knowledge deficit, the fail-closed gate policy (`Fail-Closed Gate`), Peircean symbolic abduction for Socratic clarification dialogues, and real-time predicate safety shields for hardware-level neural network screening.
+This chapter resolves the problem of eradicating hallucinations by mathematically refuting neural arbitration, stripping the language model of its status as an authoritative knowledge source, and subordinating it to a deterministic expert system. We investigate the diagnosis of the behavioral "Boxiness" syndrome (Boxiness Artifacts) in models subjected to aggressive alignment (RLHF, DPO): Ambiguity Collapse, Over-Closure, Tool Reflex, and Enterprise Abstraction. An architectural mitigation mechanism is proposed via automated dynamic Cognitive Repair Patches and Cognitive Shims. We investigate the architecture of a dual-tier verification gate (combining grammar-guided Abstract Syntax Tree decoding and byte-level SHA-256 cryptographic citation validation achieving a metric of $`\mathrm{ZHR} = 1.00`$), the mathematical formalization of epistemic knowledge deficit, the fail-closed gate policy (`Fail-Closed Gate`), Peircean symbolic abduction for Socratic clarification dialogues, and real-time predicate safety shields for hardware-level neural network screening.
 
 ---
 
@@ -70,6 +70,82 @@ The judge model evaluates statistical plausibility rather than physical truth. L
    Replacing a secondary 70B-class judge model (which requires two NVIDIA A100/H100 80GB accelerators consuming $`700\,\text{W}`$ and adds $`800\dots 1500\,\text{ms}`$ of inference latency) with a deterministic SHA-256 byte validator and AST parser executing on the host CPU reduces verification node power consumption by a factor of 50, and verification latency from $`1200\,\text{ms}`$ down to $`18\,\mu\text{s}`$ (a five orders of magnitude acceleration).
 3. **Worked Numerical Example:**  
    In a substation cable routing design system, a primary 14B model produced a hazardous hallucination: *"the permissible bending radius for XLPE-insulated cable is 5 outer diameters"* (IEC 60502 mandates a minimum of 15 diameters), appending a convincing reference to an invented clause of the standard. A secondary 70B judge model evaluated the answer as `9/10`, noting in its evaluation: *"The response is precise, structured, and cites the standard."* In contrast, the deterministic admission gate fetched the authentic bytes of the standard at the specified offset, computed the SHA-256 digest, and within $`15\,\mu\text{s}`$ blocked the release under error code `DROP_UNGROUNDED`—precluding the installation of cable with an inadmissible bending radius that would cause sheath rupture and catastrophic phase-to-ground short circuits.
+
+### 1.2. Diagnosis of LLM "Boxiness" Behavioral Syndrome and Automated Cognitive Repair Patches
+
+Modern commercial frontier language models (*frontier LLMs*) undergo multi-stage alignment pipelines: Reinforcement Learning from Human Feedback (RLHF), Direct Preference Optimization (DPO), and stringent corporate safety filtering. However, these optimization regimes induce a pronounced cognitive side-effect: they establish a persistent degenerative cognitive bias known among systems engineers as the **"Boxiness" behavioral syndrome**.
+
+In an attempt to evade liability or unhedged categorical assertions, the model adopts a hypertrophied defensive posture: it substitutes rigorous causal deduction with evasive corporate euphemisms, prematurely collapses the space of alternative engineering hypotheses, and defaults to boilerplate disclaimers recommending consultation of "vendor manuals." In evidence-governed mission-critical systems, this syndrome is categorically destructive: it systematically expunges critical failure modes from analytical outputs, introducing latent operational risks.
+
+```mermaid
+flowchart TD
+    accTitle: Boxiness diagnosis and cognitive patch injection
+    accDescr: Architectural pipeline for intercepting aligned LLM artifacts using entropy probes and dynamically injecting cognitive repair patches.
+
+    Prompt["<b>Engineering Query</b><br/>technical problem or failure"] --> LLM["<b>Aligned LLM (RLHF/DPO)</b><br/>Frontier Model"]
+    LLM --> Probe{"<b>Behavioral Probe Monitor</b><br/>Boxiness artifact diagnosis"}
+
+    Probe -- "Ambiguity Collapse (H < τ)" --> Patch1["<b>Hypothesis Branching Patch</b><br/>FORCE_HYPOTHESIS_BRANCHING"]
+    Probe -- "Enterprise Abstraction" --> Patch2["<b>De-abstraction Patch</b><br/>MANDATE_ENGINEERING_METRICS"]
+    Probe -- "Tool Reflex" --> Patch3["<b>Deductive Priority Patch</b><br/>BLOCK_TOOL_DELEGATION"]
+    Probe -- "Over-Closure" --> Patch4["<b>Boundary Conditions Patch</b><br/>REQUIRE_BOUNDARY_CONDITIONS"]
+
+    Patch1 & Patch2 & Patch3 & Patch4 --> Shim["<b>Cognitive Shim Layer</b><br/>dynamic instruction injection"]
+    Shim --> Retry["<b>Re-generation</b><br/>strict deductive mode"]
+    Retry --> Probe
+
+    Probe -- No artifacts detected --> Pass["<b>Analytical Assertion</b><br/>forwarded to verification gate"]
+
+    classDef src fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef check fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef patch fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c;
+    classDef ok fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
+
+    class Prompt,LLM,Retry src;
+    class Probe check;
+    class Patch1,Patch2,Patch3,Patch4,Shim patch;
+    class Pass ok;
+```
+
+#### 1. Typology of "Boxiness" Cognitive Artifacts
+
+Based on the author's investigations, four fundamental classes of alignment-induced defects are delineated:
+
+1. **Ambiguity Collapse:** Artificial truncation of the hypothesis space. When confronted with multiple equiprobable root causes of an anomaly, the model prematurely converges on a single trivial explanation, discarding low-probability yet safety-critical failure modes. Mathematically, this manifests as an abrupt collapse in the entropy of the hypothesis distribution $`\mathcal{H}`$:
+
+```math
+H(\mathcal{H}) = - \sum_{h \in \mathcal{H}} P(h) \log_2 P(h)
+```
+
+Parameters and mathematical components of the formula:
+- $`\mathcal{H} = \{h_1, h_2, \dots, h_m\}`$ is the set of admissible physical or logical hypotheses regarding the root cause of a system anomaly;
+- $`P(h) \in [0, 1]`$ is the subjective or statistical likelihood assigned to hypothesis $`h`$ generated by the model;
+- $`H(\mathcal{H}) \in [0, \log_2 m]`$ is the informational entropy of the hypothesis space (measured in bits or shannons).
+
+When an engineering test bench records a multi-factor incident, the true hypothesis space exhibits high entropy ($`H(\mathcal{H}) \ge \tau_{\mathrm{entropy}}`$); however, a model exhibiting Ambiguity Collapse artificially drives $`H(\mathcal{H}) \to 0`$, assigning $`P(h_1) \approx 1.0`$.
+
+2. **Over-Closure:** Delivering a categorical diagnosis without declaring physical boundary conditions or specifying prerequisites for supplementary hardware telemetry.
+3. **Tool Reflex:** The parasitic tendency of the model to delegate analytical deduction to external search engines or generic APIs ("let's search Google") instead of executing direct deductive derivation over the localized axiomatic specifications provided in context.
+4. **Enterprise Abstraction:** The systematic purging of concrete physical parameters (voltages, tolerances, register offsets) in favor of vacuous boilerplate such as "ensure proper configuration according to industry best practices."
+
+#### 2. Dynamic Cognitive Repair Patches
+
+Rather than undertaking prohibitively slow, costly, and destabilizing model fine-tuning, the expert system deploys an external runtime layer of **Cognitive Shims**. The monitoring subsystem uses lightweight behavioral probes to audit intermediate token streams. Upon detecting Boxiness markers, the runtime dynamically injects a targeted **Cognitive Repair Patch (CRP)**—a structured corrective prompt layer that forces the model back into rigorous deductive reasoning.
+
+#### 1.2.1. Actionable Closed Loop of Boxiness Diagnosis and Repair Patch Injection
+
+1. **Control Flow & Runtime Decisions:**
+   - The behavioral probe monitor inspects model outputs for Boxiness markers (canned euphemisms, collapsed entropy $`H(\mathcal{H}) < \tau_{\mathrm{entropy}}`$ under an underdetermined state, and absence of numerical engineering tolerances).
+   - Upon detecting a defect, the output stream is intercepted (`INTERCEPT_BOXINESS`), suppressing delivery to the operator. The runtime injects the corresponding Cognitive Repair Patch (`FORCE_HYPOTHESIS_BRANCHING`, `MANDATE_ENGINEERING_METRICS`, or `BLOCK_TOOL_DELEGATION`) and initiates re-generation with mandatory expansion of the reasoning tree.
+   - If after $`N_{\mathrm{retry}} = 2`$ retries the model fails to eliminate corporate evasions, the runtime triggers fail-safe escalation `FAIL_BOXINESS_ESCALATE`, routing the query to a symbolic SMT solver or the queue of a certified engineer in the loop (Human-in-the-Loop).
+2. **Hardware Dimensioning:**
+   - The probe monitor is implemented as a compiled Go Aho-Corasick automaton and AST detector executing on the host CPU in under $`0.35\,\text{ms}`$.
+   - Injecting a repair patch adds merely $`120\text{--}180`$ tokens to the context ($`< 2.5\%`$ of an 8K window), requiring negligible GPU memory for KV caching (less than $`4.5\,\text{MB}`$ VRAM per active session) and preserving sub-millisecond response latency.
+3. **Worked Numerical Example:**
+   - On a traction drive test bench, an overtemperature event is registered on pulse filter choke L1 ($`T = 118^\circ\text{C}`$ against an allowable limit of $`105^\circ\text{C}`$) under rated load current.
+   - The baseline output of a commercial aligned LLM returned a typical corporate euphemism: *"Overheating in inductive components can stem from diverse operating environment factors. Verify electrical connections and consult vendor operating manuals"* ($`H(\mathcal{H}) = 0`$, offering zero concrete engineering hypotheses).
+   - The probe flagged Enterprise Abstraction (`SCORE_EVASION = 0.94 > 0.60`) and total absence of engineering metrics. The runtime intercepted the response and injected patch `DECONSTRUCT_BOXINESS`, compelling the model to evaluate three distinct physical hypotheses in parallel: 1) core saturation due to PWM switching frequency drift, 2) anomalous rise in equivalent series resistance (ESR) of the adjacent filter capacitor, 3) degradation of the thermal interface material.
+   - In the re-generation pass, the model calculated the inductor operating point, demonstrating that dropping PWM frequency to $`f_{\mathrm{sw}} = 95\,\text{kHz}`$ (against nominal $`125\,\text{kHz}`$) increased ripple amplitude to $`\Delta I_L = 2.1\,\text{A} > I_{\mathrm{sat}} = 1.8\,\text{A}`$, driving the choke into core saturation and exponential thermal runaway. Through the patch, the defect was isolated to the PWM generator firmware prior to physical hardware failure.
 
 ## 2. Deterministic Evidence-Governed Therapy: Dual-Tier Zero-Hallucination Gate
 
@@ -690,6 +766,7 @@ Under this paradigm, artificial intelligence transforms from an unpredictable li
 9. How does an expert system synthesize training triplets $`(x, y_w, y_l)`$ for Direct Preference Optimization (DPO)?
 10. Why is modular machine unlearning under the SISA architecture vastly superior to full model retraining when repealing an invalidated regulatory standard?
 11. Why is the "LLM-as-a-Judge" pattern fundamentally flawed for eliminating hallucinations in mission-critical systems, and why are error probabilities between models non-independent ($`P(E_1 \cap E_2) \neq P(E_1) \cdot P(E_2)`$)?
+12. What is the nature of the cognitive "Boxiness" syndrome in language models following directive alignment (RLHF/DPO), which four artifact classes does it generate, and how do dynamic Cognitive Repair Patches restore analytical deduction?
 
 ## Glossary
 | Term | Operational Definition in this Chapter |
@@ -706,12 +783,16 @@ Under this paradigm, artificial intelligence transforms from an unpredictable li
 | Grammar-Guided Decoding | The dynamic masking of token logits at each generation step to guarantee strict compliance with an AST schema |
 | Common-Mode Failure | A scenario where redundant system components fail simultaneously due to shared architectural defects or correlated error distributions |
 | "LLM-as-a-Judge" Pattern | An architectural pattern deploying a secondary language model to evaluate outputs of a primary model, vulnerable to stylistic and authority cognitive biases |
+| "Boxiness" Syndrome | Persistent cognitive distortion in aligned language models characterized by substituting precise engineering deduction with evasive corporate euphemisms and artificial hypothesis space collapse |
+| Ambiguity Collapse | Alignment defect whereby an equiprobable engineering hypothesis space is prematurely truncated into a single unhedged alternative |
+| Cognitive Repair Patch | Dynamically generated corrective prompt layer injected on the fly to neutralize Boxiness artifacts and enforce deductive rigor |
 
 ## Abbreviations
 | Abbreviation | Expansion |
 |---|---|
 | AI | Artificial Intelligence |
 | ES | Expert System |
+| CRP | Cognitive Repair Patch |
 | RAG | Retrieval-Augmented Generation |
 | ZHR | Zero-Hallucination Rate |
 | FCP | Fail-Closed Policy |
@@ -745,6 +826,7 @@ Under this paradigm, artificial intelligence transforms from an unpredictable li
 14. <a id="src-14"></a>Karl R. Popper. *The Logic of Scientific Discovery*. Hutchinson & Co., London, 1959.
 15. <a id="src-15"></a>Mykola Fedchyk. *Epistemic Virtual Machine and Zero-Hallucination Architectures for Safety-Critical Systems*. Technical Report, 2026.
 16. <a id="src-16"></a>Lianmin Zheng, Hao Zhang, Wei-Lin Chiang et al. *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*. In *Advances in Neural Information Processing Systems (NeurIPS 2023)*, 36, 2023.
+17. <a id="src-17"></a>Mykola Fedchyk. *Cognitive Shims and De-biasing Alignment Artifacts in Neuro-Symbolic Expert Systems*. Technical Whitepaper, 2026.
 
 ---
 
