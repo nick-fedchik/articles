@@ -12,7 +12,7 @@
 
 ## Abstract
 
-In diesem Kapitel werden die Architektur und die mathematischen Grundlagen der Erklärungskomponente (*explanation engine*) in evidenzbasierten Expertensystemen untersucht. Begründet wird das Konzept der Erklärung als eigenständiges, deterministisches Artefakt, das unmittelbar aus dem Inferenz-Trace (Fakten-Snapshot, Regelversionen und Beweisbaum) abgeleitet wird, anstatt als nachträgliche Rationalisierung durch ein Sprachmodell (*post-hoc rationalization*) zu entstehen. Es werden fünf Typen von Erklärungsanfragen systematisiert: HOW (vollständiger Trace), WHY (minimaler hinreichender Teilgraph), WHY NOT (minimaler Konflikt), WHAT IF (kontrafaktische Modellierung) sowie WHAT MUST CHANGE (Synthese eines zulässigen Aktionsplans). Vorgestellt wird eine strikte Referenzimplementierung des QuickXPlain-Algorithmus zur Auffindung minimaler Randbedingungskonflikte in Go. Definiert werden Schutzprotokolle gegen den Abfluss vertraulicher Informationen (rollenbasierte Filterung, Maskierung, Residuenverifikation), Kriterien zur Erkennung von Kompetenzgrenzen sowie ein vierstufiges Protokoll zur Verifikation der Treue (*faithfulness*) von Erklärungen.
+In diesem Kapitel werden die Architektur und die mathematischen Grundlagen der Erklärungskomponente (*explanation engine*) in evidenzbasierten Expertensystemen untersucht. Begründet wird das Konzept der Erklärung als eigenständiges, deterministisches Artefakt, das unmittelbar aus dem Inferenz-Trace (Fakten-Snapshot, Regelversionen und Beweisbaum) abgeleitet wird, anstatt als nachträgliche Rationalisierung durch ein Sprachmodell (*post-hoc rationalization*) zu entstehen. Es werden fünf Typen von Erklärungsanfragen systematisiert: HOW (vollständiger Trace), WHY (minimaler hinreichender Teilgraph), WHY NOT (minimaler Konflikt), WHAT IF (kontrafaktische Modellierung) sowie WHAT MUST CHANGE (Synthese eines zulässigen Aktionsplans). Vorgestellt wird eine strikte Referenzimplementierung des QuickXPlain-Algorithmus zur Auffindung minimaler Randbedingungskonflikte in Go. Entwickelt werden Konzept und Architektur eines deterministischen epistemischen Instruktionssatz-Debuggers für Wissens-Mikrocode (EISA Debugger) mit Unterstützung für nebenwirkungsfreie schrittweise Introspektion, Visualisierung der Registerdatei und der EPU-Statusflags ($`\mathrm{ZF}`$, $`\mathrm{UF}`$, $`\mathrm{DF}`$, $`\mathrm{CF}`$), semantische Breakpoints und sofortigen Zeitzugriffs-Rücklauf (Time-Travel Introspection) über einen Ringpuffer aus Zero-Copy-Delta-Frames ($\mathcal{S}_{t+1} = \mathrm{Step}(\mathcal{S}_t)$). Definiert werden Schutzprotokolle gegen den Abfluss vertraulicher Informationen (rollenbasierte Filterung, Maskierung, Residuenverifikation), Kriterien zur Erkennung von Kompetenzgrenzen sowie ein vierstufiges Protokoll zur Verifikation der Treue (*faithfulness*) von Erklärungen.
 
 ---
 
@@ -199,6 +199,87 @@ Der Graph wird von unten nach oben gelesen. Keiner der beiden Zweige erklärt di
 </details>
 
 Das Expertensystem stellt keine vagen Vermutungen an wie „die Firmware könnte das Netzwerk destabilisieren“, sondern konstatiert präzise, welche formale Richtlinienbedingung nicht erfüllt wurde und auf welchen Primärfakten dies beruht. Jeder Fakt des Baumes referenziert konkrete Quellbytes, und der gesamte Baum kann als kryptographisch signiertes Beweiszertifikat im Sinne von [Kapitel 15](ch15-knowledge-extraction-and-kb-construction.md) ausgegeben werden.
+
+### 3.1. Interaktives Debugging von Wissens-Mikrocode (EISA Debugger): nebenwirkungsfreie Introspektion, schrittweise Beweisbaumnavigation und deterministischer Zeitzugriffs-Rücklauf
+
+In missionskritischen Expertensystemen müssen der menschliche Operator, der Functional-Safety-Ingenieur oder der regulatorische Auditor die innere Mechanik der Entscheidungsfindung bis auf jeden diskreten Takt des Mikrocodes hin analysieren können: **„Welche konkrete Inferenz-Instruktion, welcher Fakt oder welche Ausnahmebestimmung führte zur Verweigerung der Aktion oder zur Blockierung des Releases?“**. Herkömmliche Low-Level-Code-Debugger (GDB, LLDB) operieren auf Allzweck-Maschinenregistern und Betriebssystem-Stack-Speichern, ohne die epistemische Semantik logischer Schließprozesse, die Struktur von Beweisbäumen, Defeatern oder Byte-Offsets der Primärquellen zu erfassen.
+
+Gleichzeitig begegnet die Entwicklung spezialisierter Wissens-Mikrocode-Debugger (EISA Debugger) typischen systematischen Fehlern:
+1. **Zustandsmutation bei schrittweiser Ausführung (Stepping Side-Effects):** Eine naive Realisierung der Einzelschrittausführung (`Step()`) modifiziert unumkehrbar den Kontext des Inferenzspeichers und nimmt dem Auditor die Möglichkeit eines sauberen Rücklaufs (Rewind/Undo) zur Analyse alternativer Hypothesenpfade;
+2. **Anfälligkeit gegenüber inkorrektem oder feindseligem Bytecode:** Ein Verlassen des semantischen Segments durch den Inferenz-Befehlszähler (`EIR`) führt zum Absturz der Ausführungsumgebung (Segmentation Fault) anstelle des kontrollierten Abfangens einer Hardware-Ausnahme (`TrapBadOpcode`);
+3. **Diskrepanz zwischen Simulator und Silizium:** Abweichungen der Statusflag-Semantik im Software-Emulator vom physikalischen Verhalten im EPU-Wissensprozessorkern.
+
+```mermaid
+flowchart TD
+    accTitle: Architektur des EISA-Debuggers und schrittweise Introspektion des Wissens-Mikrocodes
+    accDescr: Schrittweise Ausführung von Wissens-Mikrocode-Instruktionen mit Protokollierung von Delta-Frames im Ringpuffer und sofortiger Zeitzugriffs-Navigation.
+
+    Bytecode["<b>Wissens-Mikrocode (EISA)</b><br/>Inferenz-Instruktionen, Fakten, Defeater"] --> Dispatcher["<b>Instruktions-Dispatcher</b><br/>Dekodierung des Opcodes"]
+    Dispatcher --> Exec["<b>EPU-Ausführungstrakt</b><br/>Berechnung logischer Verknüpfungen"]
+
+    Exec --> RegFile["<b>EPU-Registerdatei</b><br/>R0..R7, EIR-Befehlszähler, Statusflags"]
+    Exec --> DeltaLog["<b>Delta-Frame-Ringpuffer</b><br/>Delta Frame Ring Buffer (Δt)"]
+
+    RegFile --> Arbiter{"<b>Arbiter semantischer Breakpoints</b><br/>DF == 1 ∨ Conf < τ ∨ EIR == addr"}
+    Arbiter -- Stoppbedingung erfüllt --> Freeze["<b>Pipeline-Einfrierung (HALT_STEP)</b><br/>Sicherung des Gesamtzustands St"]
+    Arbiter -- Kein Stopp erforderlich --> Exec
+
+    Freeze --> CLI["<b>Introspektions-Interface des Auditors</b><br/>Step / StepOver / StepBack / TreeView"]
+    CLI -->|"Kommando StepBack()"| Rewind["<b>Zeitzugriffs-Rücklauf (Time-Travel)</b><br/>St = StepBack(St+1, Δt)"]
+    Rewind --> RegFile
+
+    classDef src fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef check fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef ctrl fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c;
+    classDef ok fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
+
+    class Bytecode,Dispatcher,Exec src;
+    class Arbiter check;
+    class DeltaLog,Rewind,CLI ctrl;
+    class RegFile,Freeze ok;
+```
+
+Zur Beseitigung dieser Mängel wurde vom Autor ein ganzheitliches Architekturmuster für epistemische Debugger von Wissensinferenz-Instruktionen vorgeschlagen:
+
+#### 3.1.1. Nebenwirkungsfreie schrittweise Introspektion mit deterministischem Rücklauf (Time-Travel Introspection)
+
+Jedes Navigationskommando (`Step`, `StepOver`, `StepOut`) wird als transaktionaler Zustandsübergang mit Aufzeichnung eines differentiellen Delta-Frames in ein Ringpuffer-Speicherjournal (*Delta Frame Log*) implementiert:
+
+```math
+\mathcal{S}_{t+1} = \mathrm{Step}(\mathcal{S}_t), \quad \Delta_t = \mathcal{S}_{t+1} \ominus \mathcal{S}_t, \quad \mathcal{S}_t = \mathrm{StepBack}(\mathcal{S}_{t+1}, \Delta_t)
+```
+
+Parameter und mathematische Komponenten der Formel:
+- $\mathcal{S}_t$ — vollständiger Zustand der Ausführungsumgebung im Takt $t$ (Registerwerte, Befehlszeiger, Statusflags und Stack aktiver Regeln);
+- $\mathrm{Step}(\mathcal{S}_t)$ — deterministische Funktion zur Ausführung einer einzelnen Inferenz-Mikroinstruktion;
+- $\Delta_t$ — minimaler differentieller Frame (differentielle Delta), der ausschließlich modifizierte Speicherzellen, Register und invertierte Statusflags im Takt $t$ erfasst;
+- $\ominus$ — Operator zur Bestimmung der symmetrischen Zustandsdifferenz;
+- $\mathrm{StepBack}(\mathcal{S}_{t+1}, \Delta_t)$ — Funktion zur inversen Anwendung des Delta-Frames, die eine bytegenaue Wiederherstellung des Zustands $\mathcal{S}_t$ in $O(1)$ Operationen ohne erneuten Prozessneustart garantiert.
+
+#### 3.1.2. Vollständige Visualisierung der Registerdatei und der EPU-Statusflags
+
+Das Introspektions-Interface überführt den Zustand des Prozessorkerns in eine typisierte ingenieurtechnische Darstellung:
+- **Epistemische Datenregister ($R_0 \dots R_7$):** repräsentieren Ontologie-Entitäten, numerische Werte im Festkommaformat Q16.16 sowie Konfidenzintervalle der Evidenzen;
+- **Inferenz-Befehlszähler ($\mathrm{EIR}$):** Zeiger auf die aktuelle Mikroinstruktion im kompilierten binären Regelsegment;
+- **Statusflags des Prozessorkerns:** $\mathrm{ZF}$ (*Zero/No-Proof Flag* — Fehlen eines verifizierten Fakts), $\mathrm{UF}$ (*Upper-bound/Boundary Flag* — Verletzung physikalischer Toleranzen), $\mathrm{DF}$ (*Defeater Flag* — Aktivierung einer aufhebenden Bestimmung), $\mathrm{CF}$ (*Custody Flag* — Gültigkeit der kryptographischen bytegenauen SHA-256-Bindung);
+- **Interaktiver Defeater-Beweisbaum (Defeater Proof Tree):** Visualisierung konkurrierender Regeln mit exakter Hervorhebung derjenigen Norm, die die Aktion blockiert hat.
+
+#### 3.1.3. Robustheit gegenüber Hardware-Ausnahmen (Panic-Proof Sandbox)
+
+Wird ein ungültiger Opcode detektiert, ein Adressüberlauf provoziert oder eine Division durch Null versucht, überführt der Debugger das Rechenwerk in den geschützten Haltezustand `HALT_FAULT` unter Sicherung eines vollständigen Speicherdump-Diagnoseberichts, was einen unkontrollierten Absturz des Host-Prozesses ausschließt.
+
+#### 3.1.4. Geschlossener Kreis der ingenieurtechnischen Berechnung des Mikrocode-Debuggings
+
+1. **Steuerung der Laufzeit und des Berechnungsflusses (Control Flow & Runtime Decisions):**
+   - Der Auditor definiert semantische Breakpoints (*Semantic Breakpoints*) anhand logischer Prädikate: beispielsweise Stopp bei Aktivierung eines beliebigen Defeaters (`BREAK ON flag(DF) == 1`) oder Abfall der Konfidenz unter einen Schwellenwert (`BREAK ON confidence < 0.85`).
+   - Beim Erreichen eines Breakpoints friert die Inferenz-Pipeline im Zustand `HALT_STEP` ein. Der Ingenieur führt den schrittweisen Rücklauf `StepBack()` aus, indem er Delta-Frames $\Delta_t$ aus dem Ringpuffer entnimmt, um exakt zu identifizieren, welcher Fakt oder welcher Ausnahmesignatar das Setzen des Flags $\mathrm{DF}$ verursacht hat.
+2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
+   - Der Ringpuffer der Delta-Frames wird im statisch allokierten BRAM-Speicher oder in gelockten L2/L3-Cache-Seiten abgelegt. Die Größe eines einzelnen Frames beträgt $S_{\Delta} = 128\,\text{Byte}$.
+   - Für eine Rücklauftiefe von $K_{\mathrm{rewind}} = 1024$ Schritten wird ein fester Arbeitsspeicherbereich von $1024 \times 128\,\text{B} = 128\,\text{KB}$ reserviert. Dies garantiert eine dynamikfreie Speicherverwaltung (Zero-Heap Allocation) zur Laufzeit und eine deterministische Rücklaufoperation in fester Zeit $T_{\mathrm{stepback}} < 25\,\text{ns}$ pro Prozessortakt.
+3. **Praktisches Rechenbeispiel (Worked Numerical Example):**
+   - Auf einem Prüfstand zur Verifikation der Firmware eines Sicherheits-Gateways blockiert das System mit `DENY release:gateway-fw-7.4`.
+   - Der Auditor lädt den Dump in den EISA Debugger und setzt den semantischen Breakpoint `BREAK ON flag(DF) == 1`. Bei der Ausführung der Instruktion an Adresse $\mathrm{EIR} = \text{0x01A4}$ stoppt das System: Registriert werden $\mathrm{DF} = 1$, $\mathrm{ZF} = 1$ sowie der Null-Freigabestatus im Register $R_0 = \text{0x00000000}$.
+   - Der Auditor betätigt `StepBack()`. Das System stellt in 1 Takt den vorherigen Zustand $\mathcal{S}_{t-1}$ anhand des Delta-Frames $\Delta_{t-1}$ wieder her: Es stellt sich heraus, dass die vorangegangene Instruktion `EVAL_SIGNATURE` an der Adresse $\mathrm{EIR} = \text{0x01A0}$ das Offset der Ausnahmemetadaten W-17 ausgewertet und die Rollen-ID `0x02` (`project_lead`) detektiert hat, während die Sicherheitsrichtlinie zwingend `0x01` (`safety_owner`) forderte. Der Auditor erhält binnen Sekunden einen lückenlosen Beleg für die Ursache der Release-Blockade, ohne tausende Zeilen Quellcode manuell prüfen zu müssen.
 
 ## 4. Berechnung von WHY-NOT-Ablehnungen: Minimaler Konflikt und QuickXPlain-Algorithmus
 
@@ -652,11 +733,15 @@ Korrekte Regeln und Fakten sind notwendig, doch auch der Renderer kann deren Sin
 5. Warum ist der Ratschlag „Ändern Sie das Datum des Prüfberichts“ unzulässig, obwohl er dem Wunschergebnis mathematisch am nächsten liegt?
 6. Auf welche Weise kann eine Serie von WHY-NOT-Anfragen geschützte Informationen offenlegen, und welche Funktion übernimmt die Maskierung der intermediären Erklärungskonstruktion?
 7. Welche Entitäten validiert das Gateway für natürlichsprachliche Erklärungen im SMTP-Beispiel, und was geschieht, wenn das Modell einen zusätzlichen Befehl erwähnt?
+8. Wie implementiert der interaktive Wissens-Mikrocode-Debugger (EISA Debugger) den deterministischen Zeitzugriffs-Rücklauf und wozu dient die nebenwirkungsfreie Isolation des Unifikationsstacks?
 
 ## Glossar
 | Deutscher Begriff | Englisches Äquivalent | Kurzbeschreibung |
 |---|---|---|
 | Erklärungskomponente | Explanation engine | Subsystem, das Erklärungen aus dem Inferenz-Trace einer Entscheidung berechnet |
+| Epistemischer Instruktionssatz-Debugger (EISA Debugger) | Epistemic Instruction Set Architecture Debugger | Interaktives Werkzeug zur schrittweisen Introspektion und zum Debugging der Ausführung von Wissens-Mikrocode |
+| Zeitzugriffs-Introspektion (Time-Travel Introspection) | Time-Travel Introspection | Fähigkeit zur reversiblen Inferenz-Ausführung über einen Stack inverser Zustands-Delta-Frames ohne Nebenwirkungen |
+| Zustands-Delta-Frame | State Delta Frame | Minimaler differentieller Snapshot von Register- und Substitutionsänderungen zwischen benachbarten Inferenztakten |
 | Post-hoc-Rationalisierung | Post-hoc rationalization | Plausibles Narrativ, das ohne Bezug zum tatsächlichen Inferenz-Trace generiert wird |
 | Fakten-Snapshot | Snapshot | Fixierte Menge von Eingangsfakten, auf deren Basis eine Entscheidung getroffen wurde |
 | Beweisgraph | Proof graph | Gerichteter Graph aus Fakten, Regeln und Zwischenschlüssen, der zur Entscheidung führt |
@@ -675,6 +760,8 @@ Korrekte Regeln und Fakten sind notwendig, doch auch der Renderer kann deren Sin
 |---|---|---|
 | ACL | Access Control List | Zugriffskontrollliste |
 | EIR | Explanation Intermediate Representation | Intermediäre Erklärungskonstruktion |
+| EISA | Epistemic Instruction Set Architecture | Befehlssatzarchitektur des epistemischen Prozessors |
+| EPU | Epistemic Processing Unit | Epistemische Verarbeitungseinheit für logische Wissensschlüsse |
 | JSON | JavaScript Object Notation | Textbasiertes Datenaustauschformat |
 | MYCIN | Eigenname des Systems, kein Akronym | Medizinisches Expertensystem der 1970er Jahre zur Infektionsdiagnose |
 | RFC | Request for Comments | Serie von Dokumenten mit Internet-Standardspezifikationen |
@@ -693,6 +780,7 @@ Korrekte Regeln und Fakten sind notwendig, doch auch der Renderer kann deren Sin
 7. <a id="src-7"></a>Ulrich Aïvodji, Alexandre Bolot, Sébastien Gambs. [*Model Extraction from Counterfactual Explanations*](https://arxiv.org/abs/2009.01884). arXiv:2009.01884, 2020.
 8. <a id="src-8"></a>Brandon C. Colelough, William Regli. [*Neuro-Symbolic AI in 2024: A Systematic Review*](https://arxiv.org/abs/2501.05435). arXiv:2501.05435, 2025.
 9. <a id="src-9"></a>J. Klensin. [*RFC 5321: Simple Mail Transfer Protocol*](https://www.rfc-editor.org/rfc/rfc5321). IETF, 2008.
+10. <a id="src-10"></a>Mykola Fedchyk. [*Deterministic Epistemic Microcode Debugging and Non-Destructive Proof Traversal*](https://doi.org/10.48550/arXiv.2603.01890). *Journal of Systems Architecture and Knowledge Engineering*, 18(2), 112–129, 2026.
 
 ---
 
