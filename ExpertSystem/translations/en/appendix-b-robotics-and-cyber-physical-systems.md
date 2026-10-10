@@ -12,7 +12,7 @@
 
 In safety-critical autonomous systems and mobile robotics (ISO 26262 ASIL D, IEC 61508 SIL 3, DO-178C DAL A), directly coupling neural network perception models or multimodal AI to physical actuators inevitably leads to catastrophic accidents. The physical consequences of a robot's actions (emergency braking, payload release, sharp rudder deflection) are irreversible and expend real kinetic energy. At a control loop frequency of $f = 50\ \text{Hz}$, even a negligible classification or detection error probability of $p = 10^{-3}$ guarantees a hazardous command within an average of $T_{\text{err}} = 1/(p \cdot f) = 20\ \text{seconds}$ of flight or motion.
 
-This appendix resolves this dilemma by introducing a fundamental principle of cyber-physical safety: the strict separation of probabilistic sensory intelligence from deterministic action admission. The author proposes and examines in detail a three-tier heterogeneous onboard architecture (SoC/NPU for computer vision, a safety microcontroller running Zephyr RTOS with compiled Datalog rules in static memory without dynamic `malloc` allocation, and a hardware FPGA veto arbiter with an interlock cutoff time of $< 100\ \text{ns}$), formal action contracts with precondition and postcondition verification, and methodologies for detecting interface defects prior to field trials at the proving ground.
+This appendix resolves this dilemma by introducing a fundamental principle of cyber-physical safety: the strict separation of probabilistic sensory intelligence from deterministic action admission. The author proposes and examines in detail a three-tier heterogeneous onboard architecture (SoC/NPU for computer vision, a safety microcontroller running Zephyr RTOS with compiled Datalog rules in static memory without dynamic `malloc` allocation, and a hardware FPGA veto arbiter with a P99 inference latency of $< 100\ \text{ns}$ and hardware actuator cutoff in $< 5\ \text{ns}$), a research testbed for synchronous precision physical state spectroscopy based on Infineon TLE90xx and AURIX TC49x (isoUART 2.0), hardware and software protection of the sensor front-end against Fail-Open anomalies (filtering jagged matrices, IEEE 754 NaN/Inf anomalies, and EMC noise floor bounds), formal action contracts with precondition and postcondition verification, and methodologies for detecting interface defects prior to field trials at the proving ground.
 
 ---
 
@@ -297,20 +297,20 @@ The primary research objective centers on integrating both platforms into a unif
 
 ```mermaid
 sequenceDiagram
-    accTitle: Heterogeneous Tandem Interaction Protocol Between Jetson Orin and Xilinx Virtex
-    accDescr: Sequence of sensor acquisition, DMA transfer, FPGA EPU evaluation, and actuator interlock signaling.
+    accTitle: Interaction Protocol Between Jetson AGX Orin and Xilinx Virtex UltraScale+ via PCIe
+    accDescr: Sequence of action descriptor transmission from NPU to EPU with hardware actuator cutoff in 5 ns.
     autonumber
     participant Sensor as Sensors (GMSL2 Cameras / LiDAR)
     participant Orin as Jetson AGX Orin (System 1: NPU/GPU)
     participant PCIe as PCIe Gen4 x8 (DMA Ring Buffer)
     participant Virtex as Xilinx Virtex EPU (System 2)
-    participant Actuator as Hardware Actuator Relay
+    participant Actuator as Hardware Actuator Interlock Relay
 
     Sensor->>Orin: Raw frame stream (GMSL2 DMA, 60 fps)
     Note over Orin: TensorRT / VLM: object detection, trajectory proposal U_adv
     Orin->>PCIe: Write fact descriptor to host DMA ring buffer
     PCIe->>Virtex: Dispatch descriptor to AXI4 mailbox registers (< 1.5 μs)
-    Note over Virtex: EPU array: evaluate deontic rules, verify invariants in URAM (40–80 ns)
+    Note over Virtex: EPU array: evaluate deontic rules, verify invariants in URAM (40–100 ns)
     alt Invariant satisfied (Valid Action)
         Virtex-->>Actuator: disp_accept = 1 (PWM / actuators enabled)
         Virtex->>PCIe: Write acknowledgment status to response buffer
@@ -330,18 +330,26 @@ sequenceDiagram
 2. **Hardware Safety Watchdog:**
    * The FPGA arbiter incorporates an independent hardware timer counting down an unalterable period $T_{\text{wdg}}$ (e.g., 10 to 20 ms).
    * Should System 1 (NPU/GPU/Linux) freeze, suffer memory bus starvation, or fail to transmit a valid fact descriptor within $T_{\text{wdg}}$, the FPGA watchdog asserts an emergency fault, drops `disp_accept = 0`, and de-energizes actuators without waiting for software recovery.
-3. **End-to-End Admission Loop Latency ($T_{\text{loop}}$):**  
+3. **End-to-End Admission Loop Latency ($`T_{\mathrm{loop}}`$):**  
    The aggregate elapsed time from raw sensor frame arrival to assertion of the physical `disp_accept` signal at the FPGA pin is characterized by:
-   $$T_{\text{loop}} = T_{\text{infer}} + T_{\text{dma}} + T_{\text{fpga}}$$
-   Where:
-   * $T_{\text{infer}}$ is the time required for predicate extraction and candidate action synthesis on the NPU/GPU ($10–30\ \text{ms}$);
-   * $T_{\text{dma}}$ is the descriptor transmission latency across PCIe Gen4 ($1.0–1.5\ \mu\text{s}$);
-   * $T_{\text{fpga}}$ is the formal verification latency across the FPGA core array ($40–100\ \text{ns}$).
+
+```math
+T_{\mathrm{loop}} = T_{\mathrm{infer}} + T_{\mathrm{dma}} + T_{\mathrm{fpga}}
+```
+
+   where:
+   * $`T_{\mathrm{infer}}`$ is the time required for predicate extraction and candidate action synthesis on the NPU/GPU ($10–30\ \text{ms}$);
+   * $`T_{\mathrm{dma}}`$ is the descriptor transmission latency across PCIe Gen4 ($1.0–1.5\ \mu\text{s}$);
+   * $`T_{\mathrm{fpga}}`$ is the formal verification latency across the FPGA core array ($40–100\ \text{ns}$).
 4. **Falsification Gate Criterion:**  
    In compliance with functional safety mandates (ISO 26262 ASIL D, IEC 61508 SIL 3), the hypothesis affirming the safety and viability of the heterogeneous architecture is **falsified** (rejected) if:
-   $$\max(T_{\text{loop}}) > T_{\text{FTTI}}$$
-   Where $T_{\text{FTTI}}$ is the Fault Tolerant Time Interval defined for the target physical platform,  
-   or if the probability of missing a hardware verdict within the watchdog deadline satisfies $P(T_{\text{loop}} > T_{\text{wdg}}) > 10^{-9}\ \text{failures per operational hour}$,  
+
+```math
+\max(T_{\mathrm{loop}}) > T_{\mathrm{FTTI}}
+```
+
+   where $`T_{\mathrm{FTTI}}`$ is the Fault Tolerant Time Interval defined for the target physical platform,  
+   or if the probability of missing a hardware verdict within the watchdog deadline satisfies $`P(T_{\mathrm{loop}} > T_{\mathrm{wdg}}) > 10^{-9}\ \text{failures per operational hour}`$,  
    or if a single occurrence of `disp_accept = 1` is recorded when an active defeater exists or a formal safety invariant is violated.
 
 > [!NOTE]
@@ -352,6 +360,96 @@ sequenceDiagram
 > - [Chapter 39. Active Compliance Auditor: Popperian Falsification, Regulatory Compliance (ASPICE/ISO 26262/ISO 21434), and Autonomous Test Generation](ch39-active-compliance-auditor-and-popperian-testing.md) — Formal Popperian falsification frameworks and automated ASPICE V-model traceability across safety requirements and physical hardware tests.
 
 This heterogeneous tandem resolves the structural conflict between the raw computational throughput of neural models and the strict determinism demanded by functional safety standards, transforming stochastic AI into a dependable instrument of cyber-physical control.
+
+### 3.4. Research Testbed "Generalized Synchronous Measurement Platform" Based on Infineon TLE90xx and AURIX TC49x
+
+In expert systems designed for the diagnostics of cyber-physical complexes, autonomous platforms, and power electronics, the most acute vulnerability of the primary sensory layer stems from phase jitter and inter-channel temporal desynchronization. During sequential sensor polling by standard microcontroller ADCs, a time skew inevitably emerges between sampling instances of voltages, currents, and mechanical vibrations. This skew irreversibly corrupts spectral analysis, precluding precision early-stage detection of physical degradation in materials and load-bearing structures.
+
+To overcome this limitation, the author deployed a Generalized Synchronous Measurement Platform research testbed based on a tandem of specialized **Infineon TLE90xx** sensing integrated circuits and an **Infineon AURIX TC49x** automotive safety microcontroller (a hexacore TriCore running at 1.6 GHz with three pairs of ISO 26262 ASIL D lockstep cores).
+
+```mermaid
+flowchart TD
+    accTitle: Multi-Channel Synchronous Measurement Platform TLE90xx and AURIX TC49x
+    accDescr: Architecture of synchronous sampling, isoUART 2.0 galvanic isolation, and translation into Datalog facts on the AURIX TC49x core.
+
+    subgraph HardwareSensors["<b>Physical Object Under Observation</b>"]
+        CELLS["Power Busbars / Battery Cells / Strain Gauges"]
+    end
+
+    subgraph FrontEnd["<b>Infineon TLE90xx (Synchronous Measurement Front-End)</b>"]
+        ADC_ARRAY["16-bit Delta-Sigma ADCs<br/>Simultaneous strobe across all channels U_n+1 - U_n"]
+        SEC_PATH["Secondary Measurement Path<br/>(Secondary Path for ASIL D)"]
+        ISO_TX["Isolated isoUART 2.0 Transceiver<br/>(Galvanic isolation up to 2 Mbps)"]
+        ADC_ARRAY --> ISO_TX
+        SEC_PATH --> ISO_TX
+    end
+
+    subgraph HostMCU["<b>Infineon AURIX TC49x (Safety Lockstep MCU)</b>"]
+        ISO_RX["isoUART Controller / DMA"]
+        CALC_CORE["Digital Signal Processing Core<br/>Impedance Calculation Z(ω)"]
+        DATALOG_ENGINE["Onboard Datalog Engine (Zephyr RTOS)<br/>Fact generation: busbar_degraded(ID, Z)"]
+        ISO_RX --> CALC_CORE
+        CALC_CORE --> DATALOG_ENGINE
+    end
+
+    subgraph Actions["<b>Admission Gate and Protection</b>"]
+        INTERLOCK["Hardware Emergency Interlock Circuit (Fail-Closed)"]
+        DATALOG_ENGINE --> INTERLOCK
+    end
+
+    CELLS --> ADC_ARRAY
+    CELLS --> SEC_PATH
+    ISO_TX ==>|"isoUART differential pair"| ISO_RX
+
+    classDef phys fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef fe fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef mcu fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef act fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
+
+    class CELLS phys;
+    class ADC_ARRAY,SEC_PATH,ISO_TX fe;
+    class ISO_RX,CALC_CORE,DATALOG_ENGINE mcu;
+    class INTERLOCK act;
+```
+
+#### 3.4.1. Hardware Decomposition and Physical Condition Spectroscopy
+
+The architectural approach reinterprets specialized battery management integrated circuits (BMS ICs) as a universal high-precision measurement front-end:
+
+1. **Simultaneous Hardware Channel Strobing:**  
+   A multi-channel 16-bit delta-sigma ADC executes fully synchronous sampling across all differential inputs driven by a single hardware strobe. This eliminates phase drift between instantaneous voltage $`U_k`$ and current $`I_k`$ measurements.
+2. **Galvanically Isolated isoUART 2.0 Interface:**  
+   Digitized telemetry frames are transmitted to the host microcontroller across a differential capacitive or transformer isolation barrier at up to 2 Mbps. This provides the measurement pipeline with robust immunity against high-voltage common-mode electromagnetic transients (up to 1500 V) typical of robotic high-power drives.
+3. **Secondary Measurement Path:**  
+   To fulfill ISO 26262 ASIL D mandates, the TLE90xx die integrates an independent second ADC that redundantly monitors voltages and temperatures in parallel. Any discrepancy between primary and secondary measurements exceeding $`\epsilon_{\mathrm{diag}} = 3\,\text{mV}`$ triggers a hardware fault detection.
+4. **Electrochemical Impedance Spectroscopy (EIS):**  
+   Employing a variable-frequency excitation probe signal $\omega \in [10\,\text{Hz}, 1\,\text{kHz}]$, the system computes the complex transfer impedance function of high-voltage busbars and contact junctions:
+
+```math
+Z(\omega) = \frac{V(\omega)}{I(\omega)} = R_{\mathrm{real}}(\omega) + j\,X_{\mathrm{imag}}(\omega)
+```
+
+where:
+- $`Z(\omega)`$ is the complex impedance of the electrical joint or electrochemical cell at angular frequency $\omega$, in ohms ($\Omega$);
+- $`V(\omega)`$ is the amplitude-phase spectrum of the AC voltage ripple across the contacts, in volts ($\text{V}$);
+- $`I(\omega)`$ is the spectrum of the excitation probe current through the conductor, in amperes ($\text{A}$);
+- $`R_{\mathrm{real}}(\omega)`$ is the real ohmic resistance of the conductor, indicating mechanical degradation, oxidation, and micro-cracking of terminals;
+- $`X_{\mathrm{imag}}(\omega)`$ is the reactive impedance component, sensitive to structural shifts in internal capacitance and inductance.
+
+#### 3.4.2. Actionable Closed Loop of Synchronous Spectroscopy TLE90xx/AURIX
+
+1. **Control Flow & Runtime Decisions:**  
+   The AURIX TC49x core computes the impedance spectral vector in real time. If the real resistance of a power busbar $`R_{\mathrm{real}}`$ exceeds the calibrated degradation threshold $`R_{\mathrm{degrade}} = R_0 \cdot (1 + \delta_{\mathrm{crit}})`$, the Datalog engine asserts the symbolic fact `busbar_degraded(bus_id, r_current)`. A deontic prohibition rule immediately halts peak current draw across the traction motors, forcing the power inverter into a degraded fail-safe state with current clamped to 40% of nominal (*Fail-Closed*).
+2. **Hardware Dimensioning:**  
+   The ADC sampling rate is set to $`f_s = 10\,\text{kHz}`$ per channel. Across 16 measurement channels, the raw telemetry bandwidth amounts to $`16 \times 16\,\text{bits} \times 10\,\text{kHz} = 2.56\,\text{Mbps}`$. Applying hardware differential delta compression compresses the stream to $`1.28\,\text{Mbps}`$, safely within the $`2.0\,\text{Mbps}`$ throughput limit of the isoUART 2.0 interface with over 35% bus bandwidth headroom. The DMA ring buffer is allocated in the AURIX core's local static DLMU memory ($`4\,\text{KB}`$), avoiding traffic contention on the global SRI crossbar bus.
+3. **Worked Numerical Example:**  
+   Consider monitoring a traction inverter power busbar with a nominal resistance $`R_0 = 0.250\,\text{m}\Omega`$ ($`250\,\mu\Omega`$). The critical degradation threshold is specified as $`\delta_{\mathrm{crit}} = 0.20`$ ($`+20\%`$), yielding $`R_{\mathrm{degrade}} = 0.300\,\text{m}\Omega`$.  
+   At an interrogation frequency of $`f = 100\,\text{Hz}`$, the synchronous TLE90xx ADC measures an AC voltage ripple $`V = 48.0\,\text{mV}`$ at an alternating current of $`I = 120.0\,\text{A}`$ with a phase angle $\phi = 12.0^\circ$.  
+   Complex impedance:  
+   $`|Z| = \frac{48.0 \cdot 10^{-3}}{120.0} = 0.400\,\text{m}\Omega`$.  
+   $`R_{\mathrm{real}} = |Z| \cdot \cos(12.0^\circ) = 0.400 \cdot 0.9781 = 0.391\,\text{m}\Omega`$.  
+   $`X_{\mathrm{imag}} = |Z| \cdot \sin(12.0^\circ) = 0.400 \cdot 0.2079 = 0.083\,\text{m}\Omega`$.  
+   Because $`R_{\mathrm{real}} = 0.391\,\text{m}\Omega > 0.300\,\text{m}\Omega`$, the system identifies contact degradation exceeding nominal baseline by $`+56.4\%`$. Within $`42\,\mu\text{s}`$, the Datalog engine derives the failure predicate, and the AURIX controller throttles contactor current, averting thermal runaway of the power junction.
 
 ---
 
@@ -618,7 +716,9 @@ If the GNSS receiver indicates a velocity of 80 km/h while integrated wheel odom
 
 **Safe Reaction.** Compromised GNSS coordinates are stripped from the active Kalman filter [[10]](#src-10), the platform transitions to dead-reckoning inertial-optical navigation, and the last verified origin waypoint is preserved in non-volatile memory. Denied-environment navigation architectures are explored in depth in [Appendix C](appendix-c-autonomous-navigation-and-geosearch.md).
 
-## 8. Evidentiary Layer of Sensor Measurements: Signing Features Instead of Verdicts
+## 8. Evidentiary Layer of Sensory Measurements: Feature Signing and Sensor Frontend Protection
+
+### 8.1. Signing Features Instead of Verdicts and Hardware Root of Trust
 
 Distributed sensor networks (acoustic direction finders, RF scanners, seismic arrays) face a subtle architectural vulnerability: **a cryptographically signed packet proves the authenticity of the sender, but does not prove the truth of its verdict**. Sidliarchuk articulates this principle in the witness-integrity architecture: digital signatures prove authorship, not empirical truth [[11]](#src-11).
 
@@ -659,6 +759,107 @@ The witness-integrity implementation codifies an evidentiary sensor contract bui
 4. **Receivers Recompute Verdicts Independently:** The receiving controller verifies the signature and recomputes the logical verdict against identical evidentiary rules; any discrepancy between the claimed status and recomputed verdict immediately collapses epistemic trust.
 
 For an onboard expert system, this design ensures that facts supplied by external sensors enter the reasoning base only when accompanied by signed feature records and successful independent recomputation. Hardware roots of trust and anti-spoofing architectures are analyzed in detail in the author's dedicated treatise [Hardware Root of Trust and Anti-Spoofing in Military IoT Systems](../../../MilTech/Hardware-Root-Of-Trust-And-Anti-Spoofing-Military-IoT-UA.md).
+
+### 8.2. Hardware and Software Protection of Sensor Front-End Against Fail-Open Anomalies: Filtration of Jagged Matrices, Floating Noise, and Sensor Failures
+
+In automotive and aerospace cyber-physical systems requiring the highest integrity levels (ISO 26262 ASIL D / DO-178C DAL A), the epistemic core receives raw observation vectors from sensor matrices (specifically TLE90xx, inductive rotor position sensors, radar front-ends, and CAN FD buses). Under real operational environments, physical transmission channels are vulnerable to degradation and signal anomalies capable of triggering a catastrophic silent admission failure (*Fail-Open*):
+
+1. **Fatal Fail-Open on Floating-Point Anomalies (`NaN` / `Inf` Noise Floor):**  
+   If the sensory input pipeline yields non-numeric IEEE 754 anomalies (`math.NaN` or `math.Inf`) instead of valid electrical telemetry, standard programming language comparison operators (across Go, C++, Verilog) exhibit non-trivial semantics:
+
+```math
+(\mathrm{NaN} \le \mathrm{Threshold}) \equiv \mathrm{False}, \qquad (\mathrm{NaN} > \mathrm{Threshold}) \equiv \mathrm{False}
+```
+
+   If defensive validation logic is naively structured (for example, checking merely `if noise > max_allowed { reject() }`), the presence of `NaN` bypasses the rejection condition. The system mistakenly treats corrupted noise as acceptable and issues an unsafe admission decision (`ACCEPT`), permitting autonomous platform motion with a failed sensor.
+
+2. **Core Panic on Asynchronous Non-Rectangular ("Jagged") Matrices:**  
+   During streamed sensor reads across Direct Memory Access (DMA), hardware packet drops can truncate individual rows of the observation matrix (*Jagged Matrix*). An algorithm's subsequent attempt to access a fixed column index $`M[i][j]`$ triggers an unhandled runtime fault (`panic: index out of range`), instantly freezing the control loop.
+
+3. **Dead-Sensor Blindness:**  
+   A complete line severance or ADC lockup at zero ground potential causes the measurement vector to collapse to all zeros ($`V = [0.0, 0.0, \dots, 0.0]`$). If zero falls within the sensor's nominal operational range, the logical reasoning core naively interprets this catastrophic open circuit as a quiescent, perfectly stable platform state.
+
+To neutralize these vulnerabilities at the interface between low-level device drivers and hardware accelerators, a **sensor-frontline fail-closed gate** (*Sensor-Frontline Fail-Closed Gate*) is integrated into the data ingestion pipeline.
+
+```mermaid
+flowchart TD
+    accTitle: Sensor-Frontline Fail-Closed Gate
+    accDescr: Four-tier deterministic filtration of raw sensor streams prior to admission into the logical reasoning core.
+
+    RAW["<b>Raw Sensor / ADC Stream</b><br/>Observation DMA Buffers"] --> G1
+
+    subgraph Gate1["<b>1. Geometric Rectangularity Check</b>"]
+        G1{"∀ i, len(Row[i]) == ExpectedCols?"}
+    end
+    G1 -->|"No"| TRAP1["<b>HALT_REFUSE (0x422)</b><br/>Hardware interlock on Jagged Matrix"]
+    G1 -->|"Yes"| G2
+
+    subgraph Gate2["<b>2. Physical Bounds and IEEE 754 Validation</b>"]
+        G2{"!IsNaN(v) && !IsInf(v)<br/>&& v >= NoiseFloor_min?"}
+    end
+    G2 -->|"No"| TRAP2["<b>HALT_REFUSE (0x400)</b><br/>Trap NaN / Inf anomaly"]
+    G2 -->|"Yes"| G3
+
+    subgraph Gate3["<b>3. Dead Sensor Detector (L2-norm / variance)</b>"]
+        G3{"σ²(V) >= ε_dead?"}
+    end
+    G3 -->|"No"| TRAP3["<b>HALT_REFUSE (0x404)</b><br/>Sensor open circuit or lockup"]
+    G3 -->|"Yes"| G4
+
+    subgraph Gate4["<b>4. Epistemic Datalog / EVM Core</b>"]
+        G4["<b>Safe Deterministic Inference</b><br/>Evidentiary fact generation"]
+    end
+
+    classDef raw fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef chk fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef trap fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+    classDef ok fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    class RAW raw;
+    class G1,G2,G3 chk;
+    class TRAP1,TRAP2,TRAP3 trap;
+    class G4 ok;
+```
+
+#### 8.2.1. Algorithm for Deterministic Structural Validation and Noise Filtering
+
+Before executing any numerical computation, the adapter must enforce a strict four-stage pipeline:
+
+1. **Geometric Invariance:** Every row length is compared against the expected dimension in $`O(R)`$ time. Any discrepancy triggers immediate rejection prior to indexed element dereferencing.
+2. **IEEE 754 Anomaly Filter:**
+
+```math
+\forall x \in M: \quad (\mathrm{math.IsNaN}(x) \lor \mathrm{math.IsInf}(x, 0)) \implies \mathrm{TRAP\_INVALID\_ARITHMETIC}
+```
+
+3. **Activity Energy Gate:**  
+   To prevent blindness to disconnected or locked-up sensors, the signal variance is evaluated across the observation window:
+
+```math
+\sigma^2(V) = \frac{1}{N}\sum_{i=1}^N (v_i - \bar{v})^2
+```
+
+   If $\sigma^2(V) < \epsilon_{\mathrm{dead}}$, the protective status "Sensor de-energized or locked" is triggered, inhibiting transition to the armed operational state.
+4. **Electromagnetic Noise Floor Bounds (EMC Floor Clamp):**  
+   The thermal and electromagnetic noise floor of the sensor is bounded bilaterally:
+
+```math
+\mathrm{NoiseFloor}_{\mathrm{min}} \le \eta \le \mathrm{NoiseFloor}_{\mathrm{max}}
+```
+
+   If observed noise collapses to absolute zero (which is physically impossible in an operational analog circuit subject to Johnson-Nyquist thermal noise $`v_n = \sqrt{4 k_B T R \Delta f}`$), this signals an artificial replay simulation (spoofing) or physical disconnection of the analog front-end.
+
+#### 8.2.2. Actionable Closed Loop of Sensor Front-End Protection
+
+1. **Control Flow & Runtime Decisions:**  
+   Upon detecting any structural or arithmetic anomaly, the sensor admission gate halts fact synthesis, sets operational status to `HALT_REFUSE`, asserts the hardware flag `FLAG_SENSOR_FAULT`, and commands the actuator subsystem into safe degraded mode. No element of an anomalous frame is ever passed to the inference engine.
+2. **Hardware Dimensioning:**  
+   Array structure validation is executed directly in the controller's DMA pipeline within $`T_{\mathrm{val}} < 15\,\mu\text{s}`$ for matrices up to $`64 \times 64`$. The lower thermal noise limit $`\mathrm{NoiseFloor}_{\mathrm{min}}`$ is calculated from analog physical parameters: for a resistive divider $`R = 10\,\text{k}\Omega`$ at $`T = 300\,\text{K}`$ and bandwidth $\Delta f = 10\,\text{kHz}$, the minimum thermal noise voltage is $`v_n \approx 1.28\,\mu\text{V}`$.
+3. **Worked Numerical Example:**  
+   A $`16 \times 32`$ tactile pressure sensor matrix streams an observation buffer. Geometric verification validates a row width of 32 for all 16 rows ($`O(R) = 16`$ checks, $`0.4\,\mu\text{s}`$).  
+   Evaluating array elements reveals cell $`M[4][12]`$ contains $`\mathrm{0x7FF8000000000000}`$ (quiet `NaN`), induced by a transient brownout on the SPI transceiver power rail.  
+   A naive comparator would pass this corrupted sample, since $`(\mathrm{NaN} > 50.0) \equiv \mathrm{False}`$.  
+   The specialized filter traps `math.IsNaN(x) == True` within $`12\,\text{ns}`$, aborts ingestion, asserts error code `0x400`, and halts platform maneuvers, preventing uncontrolled acceleration.
 
 ## 9. Non-Functional Interfaces and Assumption Boundaries Prior to Integration
 
@@ -865,11 +1066,17 @@ The boundaries of these techniques are clearly defined. Numerical parameters in 
 | Non-Functional Interface | *non-functional interface* | Unintended physical coupling between subsystems via power lines, EMI, heat, or vibration |
 | Mesh Convergence | *mesh convergence* | Demonstration that numerical FEA solutions stabilize asymptotically under grid refinement |
 | Hardware-in-the-Loop Simulation | *hardware-in-the-loop* | Testing physical embedded controllers against real-time simulated physical environments |
+| Synchronous Measurement Front-End | *synchronous measurement front-end* | Hardware subsystem for synchronous ADC channel strobing dedicated to spectral state analysis |
+| Electrochemical Impedance Spectroscopy | *electrochemical impedance spectroscopy (EIS)* | Method for diagnosing conductor and battery cell degradation via complex frequency response |
+| Secondary Measurement Path | *secondary measurement path* | Independent redundant on-chip measurement path enabling hardware plausibility cross-checks |
+| Sensor-Frontline Fail-Closed Gate | *sensor-frontline fail-closed gate* | Four-tier frontline filter shielding reasoning engines from IEEE 754 anomalies, jagged matrices, and sensor lockup |
+| Johnson-Nyquist Noise | *Johnson-Nyquist noise* | Inherent thermodynamic electronic conductor noise establishing the physical lower bound of valid sensory signals |
 
 ## Abbreviations
 
 | Abbreviation | Expansion | Meaning |
 |---|---|---|
+| ADC | Analog-to-Digital Converter | Device converting continuous analog physical signals into discrete digital representations |
 | ASIL | Automotive Safety Integrity Level | Risk classification scheme defined by ISO 26262 for automotive systems |
 | BGA | Ball Grid Array | Surface-mount packaging for integrated circuits utilizing solder spheres |
 | CAE | Computer-Aided Engineering | Software tools utilized for analyzing and simulating engineering designs |
@@ -880,12 +1087,15 @@ The boundaries of these techniques are clearly defined. Numerical parameters in 
 | CRC32 | Cyclic Redundancy Check, 32 bits | Error-detecting code algorithm producing a 32-bit checksum |
 | DLA | Deep Learning Accelerator | Dedicated hardware block for accelerating neural network inference (NVDLA) |
 | DMA | Direct Memory Access | Feature allowing hardware subsystems to access system memory without CPU intervention |
+| EIS | Electrochemical Impedance Spectroscopy | Diagnostic method evaluating material impedance spectra across varying frequencies |
 | EPU | Epistemic Processing Unit | Dedicated hardware coprocessor for deterministic rule evaluation and fact verification |
+| FIT | Failures in Time | Standard unit of failure rate ($`10^{-9}`$ component failures per operating hour) |
 | FPGA | Field-Programmable Gate Array | Semiconductor device based around a matrix of configurable logic blocks |
 | GMSL | Gigabit Multimedia Serial Link | High-speed serial interconnect protocol for automotive cameras and sensors |
 | GNSS | Global Navigation Satellite System | Satellite-based radio navigation systems (GPS, GLONASS, Galileo, BeiDou) |
 | HIL | Hardware-in-the-Loop | Test architecture connecting physical electronic controllers to a virtual plant model |
 | IMU | Inertial Measurement Unit | Sensor package combining accelerometers and gyroscopes to measure movement |
+| isoUART | Isolated Universal Asynchronous Receiver-Transmitter | Galvanically isolated asynchronous serial communication protocol |
 | MCU | Microcontroller Unit | Compact integrated circuit designed to govern an embedded system |
 | NPU | Neural Processing Unit | Specialized microprocessor tailored for accelerating machine learning algorithms |
 | RPM | Revolutions Per Minute | Measure of the frequency of rotation around an axis |
@@ -914,7 +1124,10 @@ The boundaries of these techniques are clearly defined. Numerical parameters in 
 12. <a id="src-12"></a>NASA. [*NASA Systems Engineering Handbook*](https://www.nasa.gov/reference/systems-engineering-handbook/). NASA SP-2016-6105 Rev2.
 13. <a id="src-13"></a>William L. Oberkampf, Christopher J. Roy. [*Verification and Validation in Scientific Computing*](https://doi.org/10.1017/CBO9780511760396). Cambridge University Press, 2010.
 14. <a id="src-14"></a>P. J. Roache. [*Perspective: A Method for Uniform Reporting of Grid Refinement Studies*](https://doi.org/10.1115/1.2910291). *Journal of Fluids Engineering*, 116(3), 405–413, 1994.
+15. <a id="src-15"></a>Infineon Technologies. [*TLE9012DQU / TLE9015DQU: Multi-Channel Battery Monitoring & UART Transceiver ICs*](https://www.infineon.com/). User Manual, Rev 1.2, 2023.
+16. <a id="src-16"></a>J. B. Johnson. [*Thermal Agitation of Electricity in Conductors*](https://doi.org/10.1103/PhysRev.32.97). *Physical Review*, 32(1), 97–109, 1928; H. Nyquist. [*Thermal Agitation of Electric Charge in Conductors*](https://doi.org/10.1103/PhysRev.32.110). *Physical Review*, 32(1), 110–113, 1928.
 
 ---
 
 [← Appendix A](appendix-a-evidence-governed-framework.md) | [Table of Contents](README.md) | [Appendix C →](appendix-c-autonomous-navigation-and-geosearch.md)
+

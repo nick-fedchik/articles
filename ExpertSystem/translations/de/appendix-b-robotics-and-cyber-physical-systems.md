@@ -12,7 +12,7 @@
 
 In geschäftskritischen autonomen Systemen und in der mobilen Robotik (ISO 26262 ASIL D, IEC 61508 SIL 3, DO-178C DAL A) führt die direkte Kopplung neuronaler Wahrnehmungsmodelle oder multimodaler KI an ausführende Aktuatoren unweigerlich zu katastrophalen Havarien. Physische Konsequenzen robotischer Aktionen (Notbremsung, Lastabwurf, abrupter Rudereinschlag) sind irreversibel und verbrauchen reale kinetische Energie. Bei einer Regelfrequenz von $f = 50\ \text{Hz}$ garantiert bereits eine marginale Klassifikations- oder Erkennungsfehlerrate von $p = 10^{-3}$ einen gefährlichen Steuerbefehl im statistischen Mittel bereits nach $`T_{\text{err}} = 1/(p \cdot f) = 20\ \text{Sekunden}`$ Flug- oder Fahrzeit.
 
-Dieser Anhang löst dieses Problem durch die Einführung eines fundamentalen Prinzips der cyber-physischen Sicherheit: der strikten Trennung probabilistischer Sensorintelligenz von deterministischer Aktionszulassung. Der Autor schlägt eine heterogene dreistufige On-Board-Architektur vor und analysiert diese im Detail: ein SoC/NPU für Computer Vision, ein fehlertoleranter Sicherheits-Mikrocontroller unter Zephyr RTOS mit vorkompilierten Datalog-Regeln im statischen Speicher (ohne dynamische Allokation über `malloc`) sowie ein Hardware-Veto-Arbiter auf einem FPGA mit einer Abschaltlatenz von $< 100\ \text{ns}$. Ergänzt wird die Architektur durch formale Aktionskontrakte mit Verifikation von Vor- und Nachbedingungen sowie durch Methoden zur Erkennung von Schnittstellendefekten vor den eigentlichen Feldversuchen auf dem Testgelände.
+Dieser Anhang löst dieses Problem durch die Einführung eines fundamentalen Prinzips der cyber-physischen Sicherheit: der strikten Trennung probabilistischer Sensorintelligenz von deterministischer Aktionszulassung. Der Autor schlägt eine heterogene dreistufige On-Board-Architektur vor und analysiert diese im Detail: ein SoC/NPU für Computer Vision, ein fehlertoleranter Sicherheits-Mikrocontroller unter Zephyr RTOS mit vorkompilierten Datalog-Regeln im statischen Speicher (ohne dynamische Allokation über `malloc`) sowie ein Hardware-Veto-Arbiter auf einem FPGA mit einer Inferenzzeit P99 $< 100\ \text{ns}$ und hardwarebasierter Aktuatortrennung $< 5\ \text{ns}$), einen Forschungsprüfstand für synchrone Präzisionsspektroskopie des physikalischen Zustands auf Basis von Infineon TLE90xx und AURIX TC49x (isoUART 2.0), den hard- und softwarebasierten Schutz des Sensor-Frontends gegen Fail-Open-Anomalien (Filterung nicht-rechteckiger Matrizen, IEEE 754 NaN/Inf-Anomalien und EMV-Rauschgrenzen) sowie formale Aktionskontrakte mit Verifikation von Vor- und Nachbedingungen und Methoden zur Erkennung von Schnittstellendefekten vor den eigentlichen Feldversuchen auf dem Testgelände.
 
 ---
 
@@ -330,18 +330,26 @@ sequenceDiagram
 2. **Hardware-Sicherheits-Watchdog (Hardware Safety Watchdog):**
    * Der FPGA-Arbiter enthält einen unabhängigen Zähler mit der Periode $`T_{\text{wdg}}`$ (z. B. 10 bis 20 ms).
    * Reagiert System 1 (NPU/GPU/Linux) nicht rechtzeitig, blockiert es durch Speicher-Jitter oder liefert es unvollständige Daten, löst der Hardware-Watchdog aus: Er setzt das Signal `disp_accept = 0` zurück und schaltet die Aktuatoren stromlos – vollkommen unabhängig vom Zustand des Betriebssystems.
-3. **End-to-End-Latenz des Zulassungszyklus ($`T_{\text{loop}}`$):**  
+3. **End-to-End-Latenz des Zulassungszyklus ($`T_{\mathrm{loop}}`$):**  
    Gemessen wird die Gesamtzeit von der Erfassung eines Sensorframes bis zur Ausgabe des physikalischen Signals `disp_accept` an den FPGA-Pins:
-   $$T_{\text{loop}} = T_{\text{infer}} + T_{\text{dma}} + T_{\text{fpga}}$$
+
+```math
+T_{\mathrm{loop}} = T_{\mathrm{infer}} + T_{\mathrm{dma}} + T_{\mathrm{fpga}}
+```
+
    wobei:
-   * $`T_{\text{infer}}`$ die Zeit für Prädikatsextraktion und Aktionsgenerierung auf der NPU/GPU darstellt ($10\text{ bis }30\ \text{ms}$);
-   * $`T_{\text{dma}}`$ die Latenz des DMA-Transfers über PCIe Gen4 repräsentiert ($1{,}0\text{ bis }1{,}5\ \mu\text{s}$);
-   * $`T_{\text{fpga}}`$ die Verifikationsdauer im FPGA-Kern-Array beziffert ($40\text{ bis }100\ \text{ns}$).
+   * $`T_{\mathrm{infer}}`$ die Zeit für Prädikatsextraktion und Aktionsgenerierung auf der NPU/GPU darstellt ($10–30\ \text{ms}$);
+   * $`T_{\mathrm{dma}}`$ die Latenz des DMA-Transfers über PCIe Gen4 repräsentiert ($1{,}0–1{,}5\ \mu\text{s}$);
+   * $`T_{\mathrm{fpga}}`$ die Verifikationsdauer im FPGA-Kern-Array beziffert ($40–100\ \text{ns}$).
 4. **Falsifikationskriterium der Sicherheitshypothese (Falsification Gate):**  
    Gemäß den Anforderungen an funktionale Sicherheit (ISO 26262 ASIL D, IEC 61508 SIL 3) gilt die Hypothese über die funktionale Sicherheit und Praxistauglichkeit der heterogenen Architektur als **falsifiziert** (verworfen), wenn:
-   $$\max(T_{\text{loop}}) > T_{\text{FTTI}}$$
-   wobei $`T_{\text{FTTI}}`$ das für die geregelte Plattform spezifizierte fehlertolerante Zeitintervall (*Fault Tolerant Time Interval*) bezeichnet,  
-   oder wenn die Wahrscheinlichkeit eines Verifikationsausfalls innerhalb des Watchdog-Intervalls $`P(T_{\text{loop}} > T_{\text{wdg}}) > 10^{-9}\ \text{pro Betriebsstunde}`$ beträgt,  
+
+```math
+\max(T_{\mathrm{loop}}) > T_{\mathrm{FTTI}}
+```
+
+   wobei $`T_{\mathrm{FTTI}}`$ das für die geregelte Plattform spezifizierte fehlertolerante Zeitintervall (*Fault Tolerant Time Interval*) bezeichnet,  
+   oder wenn die Wahrscheinlichkeit eines Verifikationsausfalls innerhalb des Watchdog-Intervalls $`P(T_{\mathrm{loop}} > T_{\mathrm{wdg}}) > 10^{-9}\ \text{pro Betriebsstunde}`$ beträgt,  
    oder wenn ein einziger Fall registriert wird, in dem `disp_accept = 1` signalisiert wurde, obwohl ein aktiver Defeater vorlag oder eine formale Sicherheitsinvariante verletzt war.
 
 > [!NOTE]
@@ -353,7 +361,98 @@ sequenceDiagram
 
 Dieses heterogene Tandem löst den fundamentalen Widerspruch zwischen der hohen Rechenleistung stochastischer Netze und den strikten Anforderungen funktionaler Sicherheit auf und transformiert probabilistische KI in ein beherrschbares Werkzeug cyber-physischer Steuerung.
 
+### 3.4. Forschungsprüfstand „Generalized Synchronous Measurement Platform“ auf Basis von Infineon TLE90xx und AURIX TC49x
+
+In Expertensystemen zur Diagnose cyber-physischer Komplexe, autonomer Plattformen und der Leistungselektronik stellt der Phasenjitter (*phase jitter*) sowie die kanalübergreifende zeitliche Desynchronisation das gravierendste Problem der primären Sensorschicht dar. Bei der sequentiellen Abtastung von Messsensoren über herkömmliche Standard-A/D-Wandler von Mikrocontrollern entsteht ein zeitlicher Versatz zwischen den Abtastwerten von Spannungen, Strömen und mechanischen Schwingungen. Dieser Versatz verzerrt die Ergebnisse der Spektralanalyse irreversibel und verunmöglicht eine präzise Frühdiagnose der physikalischen Degradation von Materialien und Baugruppen.
+
+Zur Überwindung dieser Beschränkung hat der Autor eine modulare Forschungsplattform für verallgemeinerte synchrone Messungen (*Generalized Synchronous Measurement Platform*) auf Basis eines Tandems aus spezialisierten Überwachungs-ICs der Produktfamilie **Infineon TLE90xx** und dem automobilen Sicherheits-Mikrocontroller **Infineon AURIX TC49x** (Hexa-Core TriCore mit 1,6 GHz und drei Lockstep-Rechenkernpaaren gemäß ISO 26262 ASIL D) aufgebaut.
+
+```mermaid
+flowchart TD
+    accTitle: Plattform fuer mehrkanalige synchrone Messungen mit TLE90xx und AURIX TC49x
+    accDescr: Architektur zur synchronen Erfassung von Abtastwerten, galvanischen Entkopplung ueber isoUART 2.0 und Uebersetzung in Datalog-Fakten auf dem AURIX TC49x-Kern.
+
+    subgraph HardwareSensors["<b>Physikalisches Beobachtungsobjekt</b>"]
+        CELLS["Leistungsschienen / Batteriezellen / Dehnungsmessstreifen"]
+    end
+
+    subgraph FrontEnd["<b>Infineon TLE90xx (Synchrones Mess-Frontend)</b>"]
+        ADC_ARRAY["16-Bit-Delta-Sigma-A/D-Wandler<br/>Simultaner Abtaststrobe aller Kanaele U_n+1 - U_n"]
+        SEC_PATH["Sekundaerer Messpfad<br/>(Secondary Path fuer ASIL D)"]
+        ISO_TX["Isolierter Transceiver isoUART 2.0<br/>(Galvanische Trennung bis 2 Mbit/s)"]
+        ADC_ARRAY --> ISO_TX
+        SEC_PATH --> ISO_TX
+    end
+
+    subgraph HostMCU["<b>Infineon AURIX TC49x (Safety Lockstep MCU)</b>"]
+        ISO_RX["isoUART-Controller / DMA"]
+        CALC_CORE["DSP-Rechenkern<br/>Berechnung der Impedanz Z(ω)"]
+        DATALOG_ENGINE["On-Board-Datalog-Engine (Zephyr RTOS)<br/>Faktengenerierung: busbar_degraded(ID, Z)"]
+        ISO_RX --> CALC_CORE
+        CALC_CORE --> DATALOG_ENGINE
+    end
+
+    subgraph Actions["<b>Zulassungsgate und Schutz</b>"]
+        INTERLOCK["Hardware-Sicherheitsverriegelung (Fail-Closed)"]
+        DATALOG_ENGINE --> INTERLOCK
+    end
+
+    CELLS --> ADC_ARRAY
+    CELLS --> SEC_PATH
+    ISO_TX ==>|"Differentielles Adernpaar isoUART"| ISO_RX
+
+    classDef phys fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef fe fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef mcu fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef act fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
+
+    class CELLS phys;
+    class ADC_ARRAY,SEC_PATH,ISO_TX fe;
+    class ISO_RX,CALC_CORE,DATALOG_ENGINE mcu;
+    class INTERLOCK act;
+```
+
+#### 3.4.1. Hardware-Dekomposition und Spektroskopie des physikalischen Zustands
+
+Der architektonische Ansatz basiert auf der Zweckentfremdung und Neuausrichtung hochspezialisierter Batteriemanagement-ICs (BMS-ICs) als universelles Präzisions-Messfrontend:
+
+1. **Simultanes Hardware-Strobing der Kanäle:**  
+   Ein mehrkanaliges 16-Bit-Delta-Sigma-A/D-Wandler-Array führt eine vollkommen synchrone Messung an sämtlichen differenziellen Eingängen über ein einziges Hardware-Strobesignal aus. Dies eliminiert jegliche Phasendrift zwischen den Abtastwerten von Spannung $`U_k`$ und Strom $`I_k`$.
+2. **Galvanisch getrennte Schnittstelle isoUART 2.0:**  
+   Die Übertragung der digitalisierten Messpakete an den zentralen Mikrocontroller erfolgt über eine kapazitive oder induktive Differenzialübertragung mit bis zu 2 Mbit/s. Dies garantiert Immunität gegenüber Gleichtaktstörungen hoher Spannung (bis 1500 V), wie sie für robotergestützte Hochleistungsantriebe typisch sind.
+3. **Sekundärer Messpfad (*Secondary Measurement Path*):**  
+   Zur Erfüllung der Anforderungen nach ISO 26262 ASIL D integriert der TLE90xx-Siliziumbaustein einen vollständig unabhängigen zweiten A/D-Wandler, der redundante Spannungs- und Temperaturmessungen durchführt. Eine Abweichung zwischen Primär- und Sekundärpfad von mehr als $`\epsilon_{\mathrm{diag}} = 3\,\text{mV}`$ löst hardwareseitig einen Sensorfehlerbefund aus.
+4. **Elektrochemische Impedanzspektroskopie (*EIS*):**  
+   Mithilfe eines variablen Prüfsignals im Frequenzbereich $\omega \in [10\,\text{Hz}, 1\,\text{kHz}]$ wird die komplexe Übertragungsfunktion der Impedanz von Stromschienen und Kontaktverbindungen bestimmt:
+
+```math
+Z(\omega) = \frac{V(\omega)}{I(\omega)} = R_{\mathrm{real}}(\omega) + j\,X_{\mathrm{imag}}(\omega)
+```
+
+wobei:
+- $`Z(\omega)`$ die komplexe Impedanz der Leistungsverbindung oder chemischen Quelle bei der Kreisfrequenz $\omega$ in Ohm ($\Omega$) bezeichnet;
+- $`V(\omega)`$ das Amplituden- und Phasenspektrum des Wechselspannungsanteils an den Kontakten in Volt ($\text{V}$) darstellt;
+- $`I(\omega)`$ das Spektrum des Teststroms durch den Leiter in Ampere ($\text{A}$) angibt;
+- $`R_{\mathrm{real}}(\omega)`$ den Wirkwiderstand des Leiters quantifiziert, dessen Anstieg auf mechanische Degradation, Oxidation oder Mikrofrakturen hinweist;
+- $`X_{\mathrm{imag}}(\omega)`$ den Blindwiderstand repräsentiert, der empfindlich auf Änderungen der parasitären Kapazität und Induktivität reagiert.
+
+#### 3.4.2. Geschlossener Kreis der ingenieurtechnischen Berechnung der synchronen Spektroskopie TLE90xx/AURIX
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Der AURIX-TC49x-Kern berechnet den spektralen Impedanzvektor in harter Echtzeit. Übersteigt der Wirkwiderstand der Stromschiene $`R_{\mathrm{real}}`$ den zulässigen Degradationsschwellenwert $`R_{\mathrm{degrade}} = R_0 \cdot (1 + \delta_{\mathrm{crit}})`$, generiert die Datalog-Engine das symbolische Faktum `busbar_degraded(bus_id, r_current)`. Eine deontische Verbotsregel blockiert unverzüglich die Freigabe maximaler Traktionsleistung und versetzt den Leistungskonverter in einen geschützten Notbetrieb mit Strombegrenzung auf maximal 40 % der Nennlast (*Fail-Closed*).
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Die Abtastrate der A/D-Wandler wird auf $`f_s = 10\,\text{kHz}`$ pro Kanal parametriert. Bei 16 aktiven Messkanälen beläuft sich das Rohdatenaufkommen auf $`16 \times 16\,\text{Bit} \times 10\,\text{kHz} = 2{,}56\,\text{Mbit/s}`$. Durch hardwarebasierte Deltakompression wird die Nettodatenrate auf $`1{,}28\,\text{Mbit/s}`$ halbiert, was die verfügbare Bandbreite der isoUART-2.0-Schnittstelle ($`2{,}0\,\text{Mbit/s}`$) mit einer Sicherheitsreserve von über 35 % einhält. Der DMA-Ringpuffer wird im statischen lokalen DLMU-Speicher des AURIX-Kerns mit einer Größe von $`4\,\text{KB}`$ allokiert, wodurch Zugriffe über den globalen SRI-Bus vermieden werden.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Überwacht wird die massive Kupferschiene eines Traktionswechselrichters mit dem Nennwiderstand $`R_0 = 0{,}250\,\text{m}\Omega`$ ($`250\,\mu\Omega`$). Der kritische Degradationsgrenzwert ist auf $`\delta_{\mathrm{crit}} = 0{,}20`$ ($`+20\%`$) festgesetzt, was $`R_{\mathrm{degrade}} = 0{,}300\,\text{m}\Omega`$ entspricht.
+   Bei einer Prüffrequenz von $`f = 100\,\text{Hz}`$ erfasst der synchrone A/D-Wandler des TLE90xx eine Wechselspannung von $`V = 48{,}0\,\text{mV}`$ bei einem Teststrom von $`I = 120{,}0\,\text{A}`$ mit einer Phasenverschiebung von $`\phi = 12{,}0^\circ`$.
+   Die komplexe Impedanz ergibt sich zu:
+   $`|Z| = \frac{48{,}0 \cdot 10^{-3}}{120{,}0} = 0{,}400\,\text{m}\Omega`$.
+   $`R_{\mathrm{real}} = |Z| \cdot \cos(12{,}0^\circ) = 0{,}400 \cdot 0{,}9781 = 0{,}391\,\text{m}\Omega`$.
+   $`X_{\mathrm{imag}} = |Z| \cdot \sin(12{,}0^\circ) = 0{,}400 \cdot 0{,}2079 = 0{,}083\,\text{m}\Omega`$.
+   Da $`R_{\mathrm{real}} = 0{,}391\,\text{m}\Omega > 0{,}300\,\text{m}\Omega`$ gilt, wird eine Kontaktschädigung um $`+56{,}4\%`$ über Normalwert detektiert. Die Datalog-Engine leitet innerhalb von $`42\,\mu\text{s}`$ das Fehlerprädikat ab; der AURIX-Controller verriegelt die Schaltschütze und verhindert die thermische Zerstörung des Anschlusses.
+
 ---
+
 
 ## 4. Die Simplex-Architektur: Komplexer Regler unter der Aufsicht eines einfachen Reglers
 
@@ -618,7 +717,9 @@ Meldet der GNSS-Empfänger beispielsweise eine Geschwindigkeit von 80 km/h, wäh
 
 **Reaktion.** Die GNSS-Koordinaten werden aus dem Kalman-Filter entfernt [[10]](#src-10), und die Plattform schaltet auf optisch-inertielle Odometrie um, während der letzte verifizierte Basispunkt im nichtflüchtigen Speicher gesichert wird. Detaillierte Verfahren zur satellitenunabhängigen Navigation werden in [Anhang C](appendix-c-autonomous-navigation-and-geosearch.md) behandelt.
 
-## 8. Evidenzschicht für Sensormessungen: Signierung von Merkmalen statt Urteilen
+## 8. Beweisebene von Sensormessungen: Signieren von Merkmalen und Schutz des Sensor-Frontends
+
+### 8.1. Signieren von Merkmalen statt Urteilen und Hardware-Vertrauensanker (Root of Trust)
 
 In verteilten Sensornetzen (akustische Peiler, HF-Scanner, seismische Sensoren) existiert eine häufig unterschätzte Sicherheitslücke: **Eine digital signierte Nachricht belegt die Authentizität des Absenders, jedoch keineswegs die Richtigkeit seines inhaltlichen Urteils**. Petro Sidliarchuk bringt dies im Projekt *witness-integrity* auf den Punkt: Die Signatur beweist die Urheberschaft, nicht die Wahrheit [[11]](#src-11).
 
@@ -659,6 +760,109 @@ Die Architektur im Repository *witness-integrity* definiert einen Kontrakt für 
 4. **Die Empfängerseite berechnet das Urteil unabhängig neu.** Der Empfänger validiert die Signatur und vollzieht die Inferenz anhand identischer Regeln nach. Eine Diskrepanz zwischen übermitteltem und neuberechnetem Urteil wird als Evidenzkonflikt gewertet und führt zum Vertrauensentzug.
 
 Für ein On-Board-Expertensystem bedeutet dieses Muster, dass Messfakten externer Sensoren nur dann in die Faktenbasis übernommen werden, wenn sie mit signierten Merkmalen und einem positiven Neuberechnungsbefund verknüpft sind. Weiterführende Aspekte des hardwarebasierten Vertrauensankers werden in der Arbeit [Hardware-Root-of-Trust und Anti-Spoofing](../../../MilTech/Hardware-Root-Of-Trust-And-Anti-Spoofing-Military-IoT-UA.md) analysiert.
+
+### 8.2. Hardware- und Softwareschutz des Sensor-Frontends gegen Fail-Open-Anomalien: Filterung nicht-rechteckiger Matrizen, gleitendem Rauschen und Sensorausfällen
+
+In automobilen und luftfahrttechnischen cyber-physischen Komplexen höchster Sicherheitsintegrität (ISO 26262 ASIL D / DO-178C DAL A) erhält der epistemische Kern rohe Beobachtungsvektoren von Sensormatrizen (unter anderem TLE90xx, induktiven Rotorlagegebern, Radarmatrizen, CAN-FD-Bussen). Unter realen Einsatzbedingungen unterliegen physische Übertragungskanäle Degradationseffekten und Signalstörungen, die einen katastrophalen Zustand des stillschweigenden Durchlassens (*Fail-Open*) provozieren können:
+
+1. **Fataler Fail-Open bei Gleitkomma-Anomalien (`NaN` / `Inf` Noise Floor):**  
+   Enthält der eingehende Sensorblock anstelle eines gültigen elektrischen Signals nicht-numerische Anomalien nach IEEE 754 (`math.NaN` oder `math.Inf`), verhalten sich standardmäßige Vergleichsoperatoren von Programmiersprachen (darunter Go, C++, Verilog) kontraintuitiv:
+
+```math
+(\mathrm{NaN} \le \mathrm{Threshold}) \equiv \mathrm{False}, \qquad (\mathrm{NaN} > \mathrm{Threshold}) \equiv \mathrm{False}
+```
+
+   Wird der Schutzcode naiv implementiert (wird beispielsweise nur die Bedingung `if noise > max_allowed { reject() }` geprüft), schlägt die Ablehnungsbedingung beim Auftreten von `NaN` fehl. Das System interpretiert das Rauschen fälschlicherweise als zulässig und trifft eine fatale Zulassungsentscheidung (`ACCEPT`), wodurch die Bewegung der autonomen Plattform mit einem defekten Sensor freigegeben wird.
+
+2. **Kernel-Panik durch asynchrone nicht-rechteckige („gezackte“) Matrizen:**  
+   Beim Streaming-Einlesen von Sensorzeilen über direkten Speicherzugriff (DMA) können Hardwarestörungen zu einer unvollständigen Übertragung einzelner Zeilen der Beobachtungsmatrix führen (*Jagged Matrix*). Versucht der Verarbeitungsalgorithmus, über einen festen Spaltenindex $`M[i][j]`$ zuzugreifen, führt dies zum unmittelbaren Programmabsturz (`panic: index out of range`) und legt die Regelung vollständig still.
+
+3. **Blindheit gegenüber Sensor-Totzuständen (*Dead-Sensor Blindness*):**  
+   Ein vollständiger Leitungsbruch zum Sensor oder das Festfrieren des A/D-Wandlers auf Nullpegel führt dazu, dass der Messvektor ausschließlich aus Nullen besteht ($`V = [0{,}0, 0{,}0, \dots, 0{,}0]`$). Liegt der Wert Null innerhalb des nominalen Betriebsbereichs des Sensors, interpretiert die logische Inferenz-Engine den katastrophalen Ausfall fälschlicherweise als vollkommen ruhigen Systemzustand.
+
+Zur Abwehr dieser Gefahren wird an der Nahtstelle zwischen Eingabetreibern und Hardwarebeschleuniger ein **Sensor-Frontline Fail-Closed Gate** etabliert.
+
+```mermaid
+flowchart TD
+    accTitle: Sensor-Frontline Fail-Closed Gate fuer Sensor-Eingaenge
+    accDescr: Vierstufige deterministische Filterung von Sensor-Rohdaten vor der Uebergabe an den logischen Inferenzkern.
+
+    RAW["<b>Rohdatenstrom von Sensoren / A/D-Wandlern</b><br/>DMA-Beobachtungspuffer"] --> G1
+
+    subgraph Gate1["<b>1. Geometrische Rechteckpruefung</b>"]
+        G1{"∀ i, len(Row[i]) == ExpectedCols?"}
+    end
+    G1 -->|"Nein"| TRAP1["<b>HALT_REFUSE (0x422)</b><br/>Hardware-Blockade bei Jagged Matrix"]
+    G1 -->|"Ja"| G2
+
+    subgraph Gate2["<b>2. Validierung physischer Grenzen und IEEE 754</b>"]
+        G2{"!IsNaN(v) && !IsInf(v)<br/>&& v >= NoiseFloor_min?"}
+    end
+    G2 -->|"Nein"| TRAP2["<b>HALT_REFUSE (0x400)</b><br/>Abfangen von NaN / Inf-Anomalien"]
+    G2 -->|"Ja"| G3
+
+    subgraph Gate3["<b>3. Detektor fuer ausgefallene Sensoren (L2-Norm / Varianz)</b>"]
+        G3{"σ²(V) >= ε_dead?"}
+    end
+    G3 -->|"Nein"| TRAP3["<b>HALT_REFUSE (0x404)</b><br/>Leitungsbruch oder Sensorhaenger"]
+    G3 -->|"Ja"| G4
+
+    subgraph Gate4["<b>4. Epistemischer Datalog / EVM-Kern</b>"]
+        G4["<b>Sichere deterministische Inferenz</b><br/>Generierung beweisbarer Fakten"]
+    end
+
+    classDef raw fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef chk fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef trap fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+    classDef ok fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    class RAW raw;
+    class G1,G2,G3 chk;
+    class TRAP1,TRAP2,TRAP3 trap;
+    class G4 ok;
+```
+
+#### 8.2.1. Algorithmus deterministischer Strukturvalidierung und Rauschfilterung
+
+Vor jeglicher numerischen Weiterverarbeitung muss der Eingangs-Adapter eine strikte vierstufige Prüfung vollziehen:
+
+1. **Geometrische Invarianz:** Die Länge jeder einzelnen Zeile wird in $`O(R)`$-Zeit gegen die Solllänge geprüft. Jede Diskrepanz führt zum sofortigen Verwerfen des Blocks, noch bevor ein indexierter Zugriff auf Elemente erfolgt.
+2. **IEEE-754-Anomaliefilter:**
+
+```math
+\forall x \in M: \quad (\mathrm{math.IsNaN}(x) \lor \mathrm{math.IsInf}(x, 0)) \implies \mathrm{TRAP\_INVALID\_ARITHMETIC}
+```
+
+3. **Energetische Aktivitätsschwelle (*Activity Energy Gate*):**  
+   Zur Verhinderung von Blindheit gegenüber ausgefallenen oder eingefrorenen Sensoren wird die Signalvarianz im Beobachtungsfenster berechnet:
+
+```math
+\sigma^2(V) = \frac{1}{N}\sum_{i=1}^N (v_i - \bar{v})^2
+```
+
+   Unterschreitet die Varianz den Schwellenwert $`\sigma^2(V) < \epsilon_{\mathrm{dead}}`$, wird der Sicherheitsstatus «Sensor stromlos oder eingefroren» aktiviert und der Übergang in die Betriebsbereitschaft blockiert.
+4. **Begrenzung des Rauschteppichs (*EMC Floor Clamp*):**  
+   Der Pegel des thermischen und elektromagnetischen Sensorrauschens wird durch ein zweiseitiges Intervall eingegrenzt:
+
+```math
+\mathrm{NoiseFloor}_{\mathrm{min}} \le \eta \le \mathrm{NoiseFloor}_{\mathrm{max}}
+```
+
+   Beträgt das beobachtete Rauschen exakt null (was in einer realen elektronischen Schaltung angesichts des thermischen Johnson-Nyquist-Rauschens $`v_n = \sqrt{4 k_B T R \Delta f}`$ physikalisch unmöglich ist), deutet dies unweigerlich auf eine künstliche Simulation (Spoofing) oder einen physischen Leitungsabriss des Sensortrakts hin.
+
+#### 8.2.2. Geschlossener Kreis der ingenieurtechnischen Berechnung des Sensor-Frontend-Schutzes
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Bei Erkennung jedweder Anomalie blockiert das Sensor-Gate die Faktengenerierung, setzt den Bereitschaftsstatus auf `HALT_REFUSE`, aktiviert das Hardware-Flag `FLAG_SENSOR_FAULT` und versetzt das ausführende Subsystem in den sicheren Zustand (*Fail-Closed*). Kein Element des anomalen Feldes gelangt in die Inferenzmaschine.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Die Strukturvalidierung des Arrays erfolgt direkt in der DMA-Pipeline des Controllers mit einer Latenz von $`T_{\mathrm{val}} < 15\,\mu\text{s}`$ für Matrizen bis zu einer Dimension von $`64 \times 64`$. Die minimale Rauschgrenze $`\mathrm{NoiseFloor}_{\mathrm{min}}`$ wird aus den physikalischen Parametern der Schaltung berechnet: Für einen Spannungsteiler mit $`R = 10\,\text{k}\Omega`$ bei $`T = 300\,\text{K}`$ und einer Bandbreite von $\Delta f = 10\,\text{kHz}$ beträgt die minimale Rauschspannung $`v_n \approx 1{,}28\,\mu\text{V}`$.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Von einer Drucksensormatrix der Dimension $`16 \times 32`$ trifft ein Messpuffer ein. Die Rechteckprüfung bestätigt die Länge von 32 Werten für alle 16 Zeilen ($`O(R) = 16`$ Operationen, $`0{,}4\,\mu\text{s}`$).
+   Bei der Werteprüfung wird in Zelle $`M[4][12]`$ der Bitwert $`\mathrm{0x7FF8000000000000}`$ (stilles `NaN`) festgestellt, hervorgerufen durch einen kurzzeitigen Spannungseinbruch am SPI-Transceiver.
+   Ein naiver Komparator hätte diesen Wert ignoriert, da $`(\mathrm{NaN} > 50{,}0) \equiv \mathrm{False}`$ evaluiert.
+   Der spezialisierte Filter erkennt `math.IsNaN(x) == True` in $`12\,\text{ns}`$, bricht die Validierung ab, emittiert den Fehlercode `0x400` und verriegelt die Aktuatoren der Plattform, wodurch eine unkontrollierte Beschleunigung zuverlässig verhindert wird.
+
+
 
 ## 9. Nicht-funktionale Schnittstellen und Grenzen von Annahmen vor der Integration
 
@@ -865,11 +1069,17 @@ Die Grenzen des Ansatzes sind klar umrissen: Zahlenwerte in den Beispielen (Schw
 | Nicht-funktionale Schnittstelle | *non-functional interface* | Unbeabsichtigte physikalische Kopplung zwischen Subsystemen über Strompfade, EMV, Wärme oder Vibration |
 | Gitterkonvergenz | *mesh convergence* | Stabilität numerischer Simulationsergebnisse gegenüber einer fortlaufenden Verfeinerung des Berechnungsnetzes |
 | Hardware-in-the-Loop | *hardware-in-the-loop* | Testverfahren, bei dem reale Steuergeräte an simulierte physikalische Umgebungsmodelle gekoppelt werden |
+| Synchrones Mess-Frontend | *synchronous measurement front-end* | Hardware-Subsystem zur synchronen Abtastung von A/D-Wandler-Kanalgruppen für die Spektralanalyse des Systemzustands |
+| Elektrochemische Impedanzspektroskopie | *electrochemical impedance spectroscopy (EIS)* | Verfahren zur Erkennung der Degradation von Leitern und elektrochemischen Quellen anhand des komplexen Frequenzgangs |
+| Sekundärer Messpfad | *secondary measurement path* | Unabhängiger, redundanter Messpfad auf demselben Siliziumchip zur gegenseitigen Plausibilisierung |
+| Sensor-Frontline Fail-Closed Gate | *sensor-frontline fail-closed gate* | Vierstufiger Filter der primären Sensorik gegen IEEE-754-Anomalien, nicht-rechteckige Matrizen und Sensorhänger |
+| Thermisches Johnson-Nyquist-Rauschen | *Johnson-Nyquist noise* | Physikalisches thermisches Rauschen elektronischer Leiter, welches das minimale Rauschband gültiger Sensorsignale definiert |
 
 ## Abkürzungen
 
 | Abkürzung | Vollständige Bezeichnung | Bedeutung / Kontext |
 |---|---|---|
+| ADC (A/D-Wandler) | Analog-to-Digital Converter (Analog-Digital-Wandler) | Baustein zur Umwandlung analoger Sensorsignale in digitale Werte |
 | ASIL | Automotive Safety Integrity Level | Sicherheitsanforderungsstufe für Straßenfahrzeuge nach ISO 26262 |
 | BGA | Ball Grid Array | Gehäuseform integrierter Schaltkreise mit kugelförmigen Lötanschlüssen |
 | CAE | Computer-Aided Engineering | Rechnerunterstützte Ingenieur- und Simulationsverfahren |
@@ -880,12 +1090,15 @@ Die Grenzen des Ansatzes sind klar umrissen: Zahlenwerte in den Beispielen (Schw
 | CRC32 | Cyclic Redundancy Check, 32 bits | 32-Bit-Prüfsummenverfahren zur Fehlererkennung |
 | DLA | Deep Learning Accelerator | Hardwarebeschleuniger für neuronale Netze (z. B. NVDLA) |
 | DMA | Direct Memory Access | Direkter Speicherzugriff ohne Prozessorbeteiligung |
+| EIS | Electrochemical Impedance Spectroscopy | Elektrochemische Impedanzspektroskopie |
 | EPU | Epistemic Processing Unit | Hardware-Inferenzprozessor für deterministische Regel- und Normenauswertung |
+| FIT | Failures in Time | Ausfallrate ($`10^{-9}`$ Ausfälle pro Betriebsstunde) |
 | FPGA | Field-Programmable Gate Array | Im Feld programmierbare Logikgatter-Anordnung |
 | GMSL | Gigabit Multimedia Serial Link | Hochgeschwindigkeits-Serialschnittstelle für Fahrzeugkameras |
 | GNSS | Global Navigation Satellite System | Globales Navigationssatellitensystem (z. B. GPS, Galileo) |
 | HIL | Hardware-in-the-Loop | Testverfahren mit realer Hardware im geschlossenen Simulationskreis |
 | IMU | Inertial Measurement Unit | Inertiale Messeinheit (Drehraten- und Beschleunigungssensoren) |
+| isoUART | Isolated Universal Asynchronous Receiver-Transmitter | Protokoll für galvanisch getrennte serielle Kommunikation |
 | MCU | Microcontroller Unit | Mikrocontroller |
 | NPU | Neural Processing Unit | Neuronaler Netzwerkprozessor |
 | RPM | Revolutions Per Minute | Umdrehungen pro Minute |
@@ -914,6 +1127,8 @@ Die Grenzen des Ansatzes sind klar umrissen: Zahlenwerte in den Beispielen (Schw
 12. <a id="src-12"></a>NASA. [*NASA Systems Engineering Handbook*](https://www.nasa.gov/reference/systems-engineering-handbook/). NASA SP-2016-6105 Rev2.
 13. <a id="src-13"></a>William L. Oberkampf, Christopher J. Roy. [*Verification and Validation in Scientific Computing*](https://doi.org/10.1017/CBO9780511760396). Cambridge University Press, 2010.
 14. <a id="src-14"></a>P. J. Roache. [*Perspective: A Method for Uniform Reporting of Grid Refinement Studies*](https://doi.org/10.1115/1.2910291). *Journal of Fluids Engineering*, 116(3), 405–413, 1994.
+15. <a id="src-15"></a>Infineon Technologies. [*TLE9012DQU / TLE9015DQU: Multi-Channel Battery Monitoring & UART Transceiver ICs*](https://www.infineon.com/). User Manual, Rev 1.2, 2023.
+16. <a id="src-16"></a>J. B. Johnson. [*Thermal Agitation of Electricity in Conductors*](https://doi.org/10.1103/PhysRev.32.97). *Physical Review*, 32(1), 97–109, 1928; H. Nyquist. [*Thermal Agitation of Electric Charge in Conductors*](https://doi.org/10.1103/PhysRev.32.110). *Physical Review*, 32(1), 110–113, 1928.
 
 ---
 

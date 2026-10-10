@@ -10,7 +10,7 @@
 
 ## Abstract
 
-Dieses Kapitel untersucht die architektonischen Prinzipien beim Entwurf von Dual-Mode-Expertensystemen, die simultan als strikte Evidenzquelle (für regulatorische Audits und Zertifizierungen nach ISO 26262 oder DO-178C) sowie als flexibler beratender Assistent (für die operative Fehlerdiagnose und Ursachenanalyse an Testständen) agieren. Es wird die unverletzliche epistemische Basisinvariante formuliert: Beratende Hypothesen werden ausnahmslos als unbestätigt gekennzeichnet, besitzen eine explizite Ableitungsmethode sowie formalisierte Prüfkriterien und bleiben prinzipiell von der strikten Inferenz und der Sicherheitsbegründung (*Safety Case*) ausgeschlossen. Der mathematische Apparat des deterministischen symbolischen Kerns wird auf Basis von Horn-Klauseln, der Berechnung des kleinsten Fixpunkts (*least fixed point*) sowie stratifizierter Negation formalisiert. Das Kapitel verortet die epistemische Triade von Charles Sanders Peirce (Deduktion, Induktion, Abduktion) sowie die kausale Ursachenreduktion innerhalb der Gesamtarchitektur. Es wird ein geschlossener Zyklus beschrieben, der typisierte Verweigerungen (*Refusal*) in Kandidaten für neues Domänenwissen überführt, Anfragen bei unzureichender Evidenz an autorisierte Fachexperten eskaliert und deren Rückmeldungen in die Präzedenzfallbasis integriert. Eine vollständige Python-Referenzimplementierung demonstriert das Zusammenspiel beider Modi.
+Dieses Kapitel untersucht die architektonischen Prinzipien beim Entwurf von Dual-Mode-Expertensystemen, die simultan als strikte Evidenzquelle (für regulatorische Audits und Zertifizierungen nach ISO 26262 oder DO-178C) sowie als flexibler beratender Assistent (für die operative Fehlerdiagnose und Ursachenanalyse an Testständen) agieren. Es wird die unverletzliche epistemische Basisinvariante formuliert: Beratende Hypothesen werden ausnahmslos als unbestätigt gekennzeichnet, besitzen eine explizite Ableitungsmethode sowie formalisierte Prüfkriterien und bleiben prinzipiell von der strikten Inferenz und der Sicherheitsbegründung (*Safety Case*) ausgeschlossen. Der mathematische Apparat des deterministischen symbolischen Kerns wird auf Basis von Horn-Klauseln, der Berechnung des kleinsten Fixpunkts (*least fixed point*) sowie stratifizierter Negation formalisiert. Das Kapitel verortet die epistemische Triade von Charles Sanders Peirce (Deduktion, Induktion, Abduktion) sowie die kausale Ursachenreduktion innerhalb der Gesamtarchitektur. Es wird ein geschlossener Zyklus beschrieben, der typisierte Verweigerungen (*Refusal*) in Kandidaten für neues Domänenwissen überführt, Anfragen bei unzureichender Evidenz an autorisierte Fachexperten eskaliert und deren Rückmeldungen in die Präzedenzfallbasis integriert. Eine vollständige Python-Referenzimplementierung demonstriert das Zusammenspiel beider Modi, und die heterogene Simplex-Architektur (*Simplex Architecture*) begründet den sicheren Einsatz von stochastischer Edge AI unter der Aufsicht eines deterministischen Basis-Sicherheitscontrollers und eines Hardware-Schiedsrichters (Arbiter) mit Berechnung der dynamischen Zeitreserve $`t_{\mathrm{margin}}`$.
 
 Man vergegenwärtige sich ein Zertifizierungsaudit für das Steuerungssystem eines autonomen Fahrwerks (ISO 26262 ASIL D) oder der Bordavionik (DO-178C): Gelangt ein ungeprüfter Diagnosehinweis oder eine empirische Heuristik des Prüfstands („Lenkwinkelsensorfehler bei Spannungseinbruch unter 11 V ignorieren“) fälschlicherweise als verifizierter Fakt in die Sicherheitsbegründung aus [Kapitel 27](ch27-safety-case-gsn-synthesis.md), erhält das System eine Betriebszulassung mit einem latenten Fehler, was bei einem Fahrmanöver unter hoher Geschwindigkeit zu einem fatalen Ausbrechen des Fahrzeugs führen kann. Das Verhalten eines Expertensystems in derartigen Domänen muss ausnahmslos fehlersicher geschlossen (*fail-closed*) sein: Reichen die formalen normativen Kenntnisse nicht aus, darf das System unter keinen Umständen plausible Annahmen erdichten oder Lücken willkürlich schließen.
 
@@ -455,6 +455,114 @@ Die nachfolgende Matrix fasst die fundamentalen Differenzen zwischen dem strikte
 
 Diese Gegenüberstellung impliziert keineswegs die Nutzlosigkeit generativer Sprachmodelle. [Kapitel 29](ch29-neuro-symbolic-architecture.md) demonstriert, wie Sprachmodelle sicher in diese Architektur integriert werden: als semantische Übersetzungskomponente, die natürlichsprachliche Anfragen in formale Strukturen für den strikten Kern überführt und Erklärungen generiert, ohne jemals die deterministischen Deduktionsergebnisse der Regeln manipulieren zu können.
 
+## 9. Heterogene Simplex-Architektur für den sicheren Einsatz von Edge AI
+
+In der Industrie autonomer Fahrzeuge, der Robotik und cyber-physischer Systeme besteht die bedenkliche Tendenz, die Aktoriksteuerung ausschließlich End-to-End-Tiefenlernmodellen (*End-to-End Deep Learning*) anzuvertrauen. Tiefe autoregressive Modelle und neuronale Pfadplaner agieren jedoch prinzipbedingt stochastisch und nichtdeterministisch: Sie können infolge von Adversarial-Angriffen, Sensorrauschen oder Daten außerhalb der Trainingsverteilung (*Out-of-Distribution*) katastrophal fehlerhafte Steuerbefehle generieren. Versuche, ein solches Modell rein softwarebasiert auf einem Standard-Universalrechner (beispielsweise innerhalb eines Linux-Betriebssystems) zu isolieren, scheitern bei Kernel-Panics, Garbage-Collection-Latenzen oder Abstürzen des Grafiktreibers, wodurch die strikten Vorgaben der Normen ISO 26262 ASIL D und DO-178C DAL A unweigerlich verletzt werden.
+
+Zur Beherrschung dieses Risikos erfährt die epistemische Dual-Mode-Dichotomie „strikte Deduktion – beratende Hypothese“ ihre direkte hard- und softwaretechnische Manifestation in der Adaption der klassischen Simplex-Architektur (*Simplex Architecture*) nach Lui Sha für moderne heterogene neuro-symbolische Gesamtsysteme [[13]](#src-13).
+
+```mermaid
+flowchart TD
+    accTitle: Heterogene Simplex-Architektur für den sicheren Einsatz von Edge AI
+    accDescr: Dreiseitige funktionale Aufgabenteilung in optimierenden AI-Knoten, Basis-Sicherheitscontroller und Hardware-Schiedsrichter (Arbiter) mit Aktor-Umschaltung.
+
+    subgraph Sensory["<b>Echtzeit-Sensorstrom</b>"]
+        SENS["Sensoren / Radare / Kameras / IMU"]
+    end
+
+    subgraph Simplex["<b>Heterogener Simplex-Komplex</b>"]
+        subgraph AdvancedNode["<b>1. Optimierender AI-Controller (System 1)</b>"]
+            AI_PROC["GPU / NPU (Linux PREEMPT_RT)<br/>• Stochastische Perzeption<br/>• Komplexe Trajektorienplanung"]
+            AI_CMD["Beratende Aktion U_adv"]
+            AI_PROC --> AI_CMD
+        end
+
+        subgraph BaselineNode["<b>2. Basis-Sicherheitscontroller (System 2)</b>"]
+            SAFE_MCU["Zertifizierter MCU / FPGA (Zephyr RTOS)<br/>• Verifizierte physikalische Regelgesetze<br/>• Kompilierte Horn-Klauseln"]
+            SAFE_CMD["Sichere Aktion U_safe (Fail-Closed)"]
+            SAFE_MCU --> SAFE_CMD
+        end
+
+        subgraph ArbiterNode["<b>3. Hardware-Schiedsrichter / Interlock-Gate</b>"]
+            ENV_MON["Schutzbereichs-Monitor (Safety Envelope)<br/>Bewertung der Zeitreserve t_margin"]
+            SWITCH{"t_margin >= Δt_threshold<br/>und Heartbeat gültig?"}
+            ENV_MON --> SWITCH
+        end
+    end
+
+    subgraph Actuation["<b>Aktoren (Stellglieder)</b>"]
+        ACT["Leistungsinverter / Servos / Bremsen"]
+    end
+
+    SENS --> AI_PROC
+    SENS --> SAFE_MCU
+    SENS --> ENV_MON
+
+    AI_CMD --> SWITCH
+    SAFE_CMD --> SWITCH
+
+    SWITCH -->|"Ja: AI-Trajektorie gültig"| ACT
+    SWITCH -->|"Nein: Hardware-Umschaltung (Trip)"| ACT
+
+    classDef sens fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef ai fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef safe fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef arb fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef act fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
+
+    class SENS sens;
+    class AI_PROC,AI_CMD ai;
+    class SAFE_MCU,SAFE_CMD safe;
+    class ENV_MON,SWITCH arb;
+    class ACT act;
+```
+
+### 9.1. Dreiseitige funktionale Aufgabenteilung und Hardware-Schiedsrichter (Arbiter)
+
+Die Simplex-Architektur stützt sich auf eine strikte dreiseitige funktionale Aufgabenteilung zwischen den Rechenknoten:
+
+1. **Optimierender Controller höherer Ordnung (*Advanced/AI Node*):** Ein hochperformanter Rechner (NPU/GPU unter Linux PREEMPT_RT), der die stochastische Verarbeitung komplexer Sensorik (Computer Vision, semantische Szenenanalyse, LiDAR-Punktwolken) übernimmt und optimierende Trajektorien sowie Steuerbefehle $`U_{\mathrm{adv}}`$ generiert. Dieser Knoten operiert im Beratungsmodus: Seine Befehle werden vom Gesamtsystem strikt als unverifizierte Kandidatenvorschläge ohne Beweisstatus eingestuft.
+2. **Basis-Sicherheitscontroller (*Baseline Safety Controller*):** Ein nach IEC 61508 / ISO 26262 zertifizierter Sicherheitsmikrocontroller (beispielsweise Infineon AURIX oder ARM Cortex-R) bzw. eine FPGA-Hardwarelogik unter einem deterministischen Echtzeitbetriebssystem (Zephyr RTOS). Er operiert auf einer formal verifizierten Horn-Klausel-Basis im statischen Speicher, implementiert einfache, mathematisch bewiesene physikalische Regelgesetze und erzeugt eine garantiert sichere Steuertrajektorie $`U_{\mathrm{safe}}`$, die das System in den sicheren Zustand (*Fail-Closed*) überführt.
+3. **Hardware-Schiedsrichter / Sicherheitsverriegelung (*Safety Decision / Interlock Gate*):** Ein unabhängiges Logikmodul auf Basis kombinatorischer Logik oder eines fehlersicheren Mikrocontrollers, das in harter Echtzeit überwacht, ob die Kandidatentrajektorie $`U_{\mathrm{adv}}`$ die Grenzen des zulässigen Schutzbereichs (*Safety Envelope*) verletzt, und gleichzeitig das periodische Heartbeat-Taktsignal des AI-Knotens verifiziert.
+
+### 9.2. Mathematische Invariante des sicheren Übergangs
+
+Der Schiedsrichter (Arbiter) evaluiert kontinuierlich den aktuellen dynamischen Zustand des Systems und berechnet die verbleibende zeitliche Sicherheitsreserve bis zum Erreichen der physikalischen Gefahrengrenze:
+
+```math
+t_{\mathrm{margin}} = t_{\mathrm{hazard}} - t_{\mathrm{recovery}}
+```
+
+wobei:
+- $`t_{\mathrm{margin}}`$ — die dynamische zeitliche Sicherheitsreserve des Gesamtsystems ist, gemessen in Sekunden oder Millisekunden ($`\text{ms}`$);
+- $`t_{\mathrm{hazard}}`$ — die berechnete Zeitspanne bis zum unausweichlichen Überschreiten der physikalischen Sicherheitsgrenze (Kollision, Umkippen, thermische oder mechanische Zerstörung) unter Beibehaltung der aktuellen Trajektorie ist, in $`\text{ms}`$;
+- $`t_{\mathrm{recovery}}`$ — die garantierte Worst-Case-Ausführungs- und Reaktionszeit (*Worst-Case Execution & Dynamic Recovery Time*) ist, die der Basis-Sicherheitscontroller benötigt, um das Objekt deterministisch in den sicheren Zustand zu überführen, in $`\text{ms}`$.
+
+Die Auslösebedingung für die hardwareseitige Umschaltung auf den Basis-Sicherheitscontroller wird als striktes logisches Prädikat formuliert:
+
+```math
+t_{\mathrm{margin}} < \Delta t_{\mathrm{threshold}} \quad \lor \quad \neg \mathrm{HeartbeatValid}(\mathrm{AINode}) \implies \mathrm{TripToBaseline}(\mathrm{FailClosed})
+```
+
+wobei $`\Delta t_{\mathrm{threshold}}`$ die ingenieurtechnische Schaltschwelle des Arbiters darstellt, welche die Umschaltlatenz der Hardware-Weiche $`\tau_{\mathrm{switch}}`$ sowie Messunsicherheiten der Sensorik berücksichtigt. Fällt die Zeitreserve unter diesen kritischen Schwellenwert oder bleibt das Heartbeat-Signal des AI-Knotens aus, sperrt der Arbiter unverzüglich auf Hardwareebene den Ausgang des AI-Controllers und schaltet den Steuerkreis auf den Basis-Sicherheitscontroller um.
+
+#### 9.2.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der dynamischen Simplex-Umschaltung
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Der berechnete Wert $`t_{\mathrm{margin}}`$ bestimmt die Weiterleitung der Stellsignale in jedem Arbitrierungszyklus. Solange $`t_{\mathrm{margin}} \ge \Delta t_{\mathrm{threshold}}`$ gilt und der Heartbeat valide ist, verbleibt das Statusflag `Interlock_State` im Zustand `ARMED_AI`, und die Steuerkommandos $`U_{\mathrm{adv}}`$ werden an die digitalen Eingänge der Leistungstreiber durchgeschaltet. Sobald die Bedingung verletzt wird, setzt die Hardwareverriegelung die Freigabeleitung `ENABLE_AI` innerhalb von $`\tau_{\mathrm{switch}} < 50\,\mu\text{s}`$ auf logisch Null, aktiviert `TRIP_SAFE_BASELINE`, setzt das nicht-flüchtige Diagnoseflag `FLAG_SIMPLEX_TRIP` und schreibt den kryptografischen Hashwert des Umschaltereignisses in das unveränderliche Merkle-Audit-Log.
+2. **Hardware-Dimensionierung (Hardware Dimensioning):**
+   Das gesamte Schaltzeitbudget muss die normative Fehlertoleranzzeit (*Fault Tolerant Time Interval, FTTI*) strikt einhalten:
+   $`T_{\mathrm{sense}} + T_{\mathrm{arbiter}} + \tau_{\mathrm{switch}} + t_{\mathrm{recovery}} \le T_{\mathrm{FTTI}}`$.
+   Der Hardware-Watchdog des AI-Knotens wird auf $`T_{\mathrm{wdg}} \le \Delta t_{\mathrm{threshold}} - \tau_{\mathrm{switch}}`$ begrenzt. Die physikalische Schnittstelle zwischen AI-Knoten und Arbiter wird über einen dedizierten, isolierten Bus (SPI oder PCIe MSI-X) ohne Speicherbuskollisionen realisiert, wodurch ein Blockieren des Arbiters infolge von Systemüberlastungen des Host-Betriebssystems physikalisch ausgeschlossen ist.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Ein autonomer mobiler Transportroboter mit einer Masse von $`m = 350\,\text{kg}`$ bewegt sich in einem Fabrikkorridor mit einer Geschwindigkeit von $`v = 2{,}0\,\text{m/s}`$. Der neuronale Trajektorienplaner schlägt ein Ausweichmanöver für ein plötzlich in einer Entfernung von $`d = 0{,}44\,\text{m}`$ detektiertes Hindernis vor.
+   Die verbleibende Zeit bis zur Kollision beträgt: $`t_{\mathrm{hazard}} = \frac{d}{v} = \frac{0{,}44\,\text{m}}{2{,}0\,\text{m/s}} = 220\,\text{ms}`$.
+   Der Basis-Sicherheitscontroller unter Zephyr RTOS führt im Aktivierungsfall ein Notbrems- und Stabilisierungsmanöver mit einer garantierten Wiederherstellungszeit von $`t_{\mathrm{recovery}} = 170\,\text{ms}`$ aus.
+   Daraus ergibt sich die dynamische zeitliche Sicherheitsreserve:
+   $`t_{\mathrm{margin}} = 220\,\text{ms} - 170\,\text{ms} = 50\,\text{ms}`$.
+   Die systemspezifische Sicherheitsschwelle ist auf $`\Delta t_{\mathrm{threshold}} = 60\,\text{ms}`$ kalibriert.
+   Da $`t_{\mathrm{margin}} = 50\,\text{ms} < 60\,\text{ms}`$ gilt, registriert der Schiedsrichter ein kritisches Zeitreservendefizit ($`50 < 60`$) und trennt den AI-Planer innerhalb von $`\tau_{\mathrm{switch}} = 14\,\mu\text{s}`$ hardwareseitig ab. Die Kontrolle wird an den Basiscontroller übergeben, welcher das Fahrwerk deterministisch zum Stillstand bringt und die Kollision zuverlässig abwendet.
+
 ## Fazit
 
 Die Antwort auf die zentrale Fragestellung dieses Kapitels lautet: Ein Expertensystem kann simultan als strikte Evidenzquelle und als beratender Assistent fungieren, wenn jede Antwortausgabe aus zwei Komponenten mit strikt getrenntem epistemischem Status aufgebaut ist und eine Basisinvariante garantiert, dass keine Hypothese ohne vorherige formale Verifikation in den strikten Kern oder die Sicherheitsbegründung einfließen kann. Der strikte Inferenzteil basiert auf Horn-Klauseln mit Berechnung des kleinsten Fixpunkts, stratifizierter Negation, quantifizierten Gegenbeispielen und deontischer Konflikterkennung. Der beratende Teil stützt sich auf Induktion, Abduktion und fallbasiertes Schließen; jede generierte Hypothese führt ihre Herkunftsmethode und ihr Validierungskriterium explizit mit. Können weder der strikte Kern noch historische Präzedenzfälle eine Antwort liefern, überführt der Router die Verweigerung in eine strukturierte Anfrage an einen autorisierten Fachexperten, dessen Urteil als validierter Präzedenzfall und bei Vorliegen von Primärquellenevidenzen als Faktenkandidat in das System integriert wird.
@@ -476,6 +584,7 @@ Die Grenzen der vorgestellten Methodik sind präzise zu beachten: Der strikte Mo
 9. Welche drei Fehlertypen analysiert die formale Konsistenzprüfung vor der Zulassung eines neuen Faktenkandidaten?
 10. Warum verbleibt die Auskunft aus einem expertenvalidierten Präzedenzfall bei einer neuen, ähnlichen Anfrage zwingend im Status einer Hypothese? Welche Attribute muss eine automatisierte Expertenanfrage enthalten?
 11. Warum transformiert die Freigabe eines Vorfallsprotokolls dieses lediglich in einen Präzedenzfall, während ein freigegebenes Primärquellenzitat einen strikten Fakt begründet, der an einen Geltungsbereich gebunden ist?
+12. Welche drei funktionalen Knoten bilden die heterogene Simplex-Architektur und wie berechnet sich die zeitliche Invariante des sicheren Umschaltens $`t_{\mathrm{margin}}`$? Nach welchen Kriterien trennt der Hardware-Schiedsrichter den AI-Controller ab?
 
 ## Glossar
 
@@ -501,6 +610,10 @@ Die Grenzen der vorgestellten Methodik sind präzise zu beachten: Der strikte Mo
 | Experteneskalation | Expert escalation | Weiterleitung einer nicht ableitbaren Anfrage an autorisierte Spezialisten inklusive synthetisiertem Entwurf |
 | Validierter Präzedenzfall | Validated case | Historischer Problemfall, dessen Lösung von einem autorisierten Fachexperten für einen Kontext freigegeben wurde |
 | Antwortmenge (*Answer Set*) | Answer set | Stabiles Modell eines Logikprogramms im Answer Set Programming; ein Programm kann alternative Modelle besitzen |
+| Simplex-Architektur | Simplex architecture | Überwachungsarchitektur, bei der ein einfacher, formal verifizierter Sicherheitskern einen komplexen stochastischen AI-Controller absichert |
+| Optimierender AI-Knoten | Advanced/AI node | Hochperformanter stochastischer Rechenknoten (GPU/NPU) zur Erzeugung beratender Aktionen und Trajektorien |
+| Basis-Sicherheitscontroller | Baseline safety controller | Deterministischer verifizierter Controller, der bewiesene Regelgesetze zur Überführung in den sicheren Zustand implementiert |
+| Hardware-Sicherheitsverriegelung / Schiedsrichter (Safety Interlock Gate) | Safety interlock gate | Logisches Echtzeitmodul, das den Schutzbereich überwacht und die Steuerung hardwareseitig umschaltet |
 
 ## Abkürzungen
 
@@ -508,6 +621,7 @@ Die Grenzen der vorgestellten Methodik sind präzise zu beachten: Der strikte Mo
 |---|---|---|
 | ASP | Answer Set Programming | Paradigma der deklarativen Logikprogrammierung für NP-schwere Suchprobleme und stabile Modelle |
 | CBR | Case-Based Reasoning | Fallbasiertes Schließen durch Auffinden und Adaptieren historischer Problemlösungen |
+| FTTI | Fault Tolerant Time Interval | Zeitintervall für fehlertoleranten Betrieb: maximal zulässige Zeitspanne vom Auftreten eines Fehlers bis zum Erreichen des sicheren Zustands |
 | GSN | Goal Structuring Notation | Standardisierte grafische Notation zur Modellierung von Sicherheitsbegründungen |
 | RFC | Request for Comments | Dokumentenreihe der IETF zur technischen Spezifikation von Internetprotokollen |
 | SMTP | Simple Mail Transfer Protocol | Standardisiertes Netzwerkprotokoll zur Übertragung elektronischer Post |
@@ -527,7 +641,9 @@ Die Grenzen der vorgestellten Methodik sind präzise zu beachten: Der strikte Mo
 10. <a id="src-10"></a>Keltoum Benlaharche, Zakaria Laboudi, Nabila Nouaouria, Djamel Eddine Zegour. [*An ontology driven question answering system for fatawa retrieval*](https://doi.org/10.11591/ijeecs.v23.i2.pp980-992). *Indonesian Journal of Electrical Engineering and Computer Science*, 23(2), 980–992, 2021.
 11. <a id="src-11"></a>Soufflé-Entwicklergemeinschaft. [*Soufflé Documentation*](https://souffle-lang.github.io/docs.html). Dokumentation der logischen Programmiersprache im Datalog-Stil.
 12. <a id="src-12"></a>Martin Gebser, Roland Kaminski, Benjamin Kaufmann, Torsten Schaub. [*Multi-shot ASP Solving with clingo*](https://potassco.org/clingo/). *Theory and Practice of Logic Programming*, 19(1), 27–82, 2019.
+13. <a id="src-13"></a>Lui Sha. [*Using Simplicity to Control Complexity*](https://doi.org/10.1109/52.936213). *IEEE Software*, 18(4), 20–28, 2001.
 
 ---
 
 [← Kapitel 30](ch30-safety-cybersecurity-co-engineering.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 29 →](ch29-neuro-symbolic-architecture.md)
+

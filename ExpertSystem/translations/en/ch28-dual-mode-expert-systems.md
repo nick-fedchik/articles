@@ -10,7 +10,7 @@
 
 ## Abstract
 
-This chapter investigates the architectural principles of dual-mode expert systems capable of concurrently serving as a rigorous source of evidence (for regulatory auditing and certification under ISO 26262 / DO-178C) and a flexible advisory assistant (for operational diagnostics and incident troubleshooting). The foundational invariant of evidence grounding is formulated: advisory hypotheses are explicitly tagged as ungrounded, possess an immutable derivation method and verification criteria, and are strictly excluded from deterministic inference and formal safety argumentation (*Safety Cases*). The mathematical apparatus of the deterministic symbolic core based on Horn clauses, least fixed point computation, and stratified negation is analyzed. The role of Peirce's epistemic triad (deduction, induction, abduction) and causal reduction is formalized. A mechanism for transforming typed refusals (*Refusal*) into learning material, an expert escalation protocol, and the integration of validated findings into the case base are detailed. A reference Python implementation of the dual-mode engine is provided.
+This chapter investigates the architectural principles of dual-mode expert systems capable of concurrently serving as a rigorous source of evidence (for regulatory auditing and certification under ISO 26262 / DO-178C) and a flexible advisory assistant (for operational diagnostics and incident troubleshooting). The foundational invariant of evidence grounding is formulated: advisory hypotheses are explicitly tagged as ungrounded, possess an immutable derivation method and verification criteria, and are strictly excluded from deterministic inference and formal safety argumentation (*Safety Cases*). The mathematical apparatus of the deterministic symbolic core based on Horn clauses, least fixed point computation, and stratified negation is analyzed. The role of Peirce's epistemic triad (deduction, induction, abduction) and causal reduction is formalized. A mechanism for transforming typed refusals (*Refusal*) into learning material, an expert escalation protocol, and the integration of validated findings into the case base are detailed. A reference Python implementation of the dual-mode engine is provided, and the heterogeneous Simplex architecture (*Simplex Architecture*) is substantiated for the safe deployment of stochastic Edge AI under the supervision of a deterministic baseline controller and a hardware arbiter with dynamic time margin calculation $`t_{\mathrm{margin}}`$.
 
 Consider a certification audit of an autonomous vehicle chassis control system (ISO 26262 ASIL D) or airborne avionics (DO-178C). If an unverified diagnostic heuristic or empirical bench workaround ("ignore steering angle sensor faults when voltage drops below 11 V") inadvertently enters the formal safety argument from [Chapter 27](ch27-safety-case-gsn-synthesis.md) as a verified fact, the system receives operational approval with a latent defect, precipitating a fatal skid during a high-speed maneuver. The behavior of an expert system in such domains must be strictly fail-closed: when authoritative normative knowledge is lacking, the system is prohibited from fabricating or interpolating claims.
 
@@ -453,6 +453,114 @@ The table contrasts the operational properties of strict mode, advisory mode, an
 
 This comparison does not imply that language models lack utility. [Chapter 29](ch29-neuro-symbolic-architecture.md) illustrates how a language model operates safely within this architecture: translating unstructured natural language queries into formal relational structures evaluated by the strict core, and synthesizing human-readable explanations without possessing the authority to alter underlying rule deductions.
 
+## 9. Heterogeneous Simplex Architecture for Safe Edge AI Deployment
+
+In the autonomous vehicle, robotics, and cyber-physical systems industries, a hazardous tendency exists to entrust actuator control exclusively to end-to-end deep learning models (*End-to-End Deep Learning*). However, deep autoregressive models and neural motion planners are fundamentally stochastic and non-deterministic: they can emit catastrophically anomalous trajectory commands under adversarial perturbations, sensor noise, or out-of-distribution inputs (*Out-of-Distribution*). Attempts to isolate such models purely via software mechanisms on a single general-purpose compute platform (for instance, within a commodity Linux kernel) fail during kernel panics, garbage collection pauses, or GPU driver hangs, making it impossible to satisfy the stringent requirements of ISO 26262 ASIL D and DO-178C DAL A.
+
+To resolve this challenge, the dual-mode dichotomy of "strict deduction vs. advisory hypothesis" achieves direct hardware-software realization through the adaptation of Lui Sha's classical Simplex architecture (*Simplex Architecture*) to modern heterogeneous neuro-symbolic complexes [[13]](#src-13).
+
+```mermaid
+flowchart TD
+    accTitle: Heterogeneous Simplex Architecture for Safe Edge AI Deployment
+    accDescr: Tripartite separation into an advanced AI optimization node, a baseline safety controller, and a hardware switching arbiter with actuator disengagement.
+
+    subgraph Sensory["<b>Real-Time Sensor Stream</b>"]
+        SENS["Sensors / Radars / Cameras / IMUs"]
+    end
+
+    subgraph Simplex["<b>Heterogeneous Simplex Complex</b>"]
+        subgraph AdvancedNode["<b>1. Advanced AI Controller (System 1)</b>"]
+            AI_PROC["GPU / NPU (Linux PREEMPT_RT)<br/>• Stochastic perception<br/>• Complex trajectory planning"]
+            AI_CMD["Advisory action U_adv"]
+            AI_PROC --> AI_CMD
+        end
+
+        subgraph BaselineNode["<b>2. Baseline Safety Controller (System 2)</b>"]
+            SAFE_MCU["Certified MCU / FPGA (Zephyr RTOS)<br/>• Proven physical control laws<br/>• Compiled Horn clauses"]
+            SAFE_CMD["Safe action U_safe (Fail-Closed)"]
+            SAFE_MCU --> SAFE_CMD
+        end
+
+        subgraph ArbiterNode["<b>3. Hardware Switching Arbiter (Interlock Gate)</b>"]
+            ENV_MON["Safety envelope monitor<br/>Time margin evaluation t_margin"]
+            SWITCH{"t_margin >= Δt_threshold<br/>and Heartbeat valid?"}
+            ENV_MON --> SWITCH
+        end
+    end
+
+    subgraph Actuation["<b>Actuators</b>"]
+        ACT["Power inverters / Servos / Brakes"]
+    end
+
+    SENS --> AI_PROC
+    SENS --> SAFE_MCU
+    SENS --> ENV_MON
+
+    AI_CMD --> SWITCH
+    SAFE_CMD --> SWITCH
+
+    SWITCH -->|"Yes: AI trajectory valid"| ACT
+    SWITCH -->|"No: Hardware trip to baseline"| ACT
+
+    classDef sens fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef ai fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef safe fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef arb fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef act fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
+
+    class SENS sens;
+    class AI_PROC,AI_CMD ai;
+    class SAFE_MCU,SAFE_CMD safe;
+    class ENV_MON,SWITCH arb;
+    class ACT act;
+```
+
+### 9.1. Tripartite Functional Separation and Hardware Arbiter
+
+The Simplex architecture is grounded in a tripartite separation of responsibilities across computing nodes:
+
+1. **High-Level Optimization Controller (*Advanced/AI Node*):** A high-performance compute platform (NPU/GPU running Linux) executing stochastic processing of complex sensory streams (computer vision, spatial trajectory planning, LiDAR point clouds) and generating candidate trajectory commands and actions $`U_{\mathrm{adv}}`$. This node operates strictly in advisory mode: its commands are treated by the system purely as candidate proposals lacking evidentiary authority.
+2. **Baseline Safety Controller (*Baseline Safety Controller*):** A certified functional safety microcontroller (such as Infineon AURIX or ARM Cortex-R) or FPGA hardware logic governed by a deterministic RTOS (Zephyr). It executes a verified Horn-clause rule base hosted in static memory, enforces simple, formally proven physical control laws, and synthesizes a certified safe trajectory $`U_{\mathrm{safe}}`$ that deterministically steers the physical plant into a safe fallback state (*Fail-Closed*).
+3. **Hardware Switching Arbiter (*Safety Decision / Interlock Gate*):** An independent logic block realized via combinational logic or a dedicated safety microcontroller that verifies in real time whether the candidate trajectory $`U_{\mathrm{adv}}`$ remains strictly within the admissible safety envelope (*Safety Envelope*), while continuously monitoring the periodic liveness heartbeat (*Heartbeat*) from the AI node.
+
+### 9.2. Mathematical Invariant of Safe Transition
+
+The arbiter continuously evaluates the dynamic state of the physical plant and calculates the dynamic safety time margin prior to violating the physical boundary of a hazardous state:
+
+```math
+t_{\mathrm{margin}} = t_{\mathrm{hazard}} - t_{\mathrm{recovery}}
+```
+
+where:
+- $`t_{\mathrm{margin}}`$ is the dynamic safety time margin of the system, measured in seconds or milliseconds ($`\text{ms}`$);
+- $`t_{\mathrm{hazard}}`$ is the calculated time remaining until unavoidable violation of the physical safety envelope (collision, rollover, thermal or structural failure) assuming the current trajectory is maintained, in $`\text{ms}`$;
+- $`t_{\mathrm{recovery}}`$ is the guaranteed worst-case execution and dynamic recovery time (*Worst-Case Execution & Dynamic Recovery Time*) required by the baseline safety controller to deterministically restore the plant to a certified safe state, in $`\text{ms}`$.
+
+The condition for hardware disengagement and immediate trip to the baseline safety controller is formulated as a strict logical predicate:
+
+```math
+t_{\mathrm{margin}} < \Delta t_{\mathrm{threshold}} \quad \lor \quad \neg \mathrm{HeartbeatValid}(\mathrm{AINode}) \implies \mathrm{TripToBaseline}(\mathrm{FailClosed})
+```
+
+where $`\Delta t_{\mathrm{threshold}}`$ is the calibrated engineering threshold of the arbiter, accounting for switch hardware transfer latency $`\tau_{\mathrm{switch}}`$ and sensor measurement uncertainty. If the dynamic time margin drops below this critical threshold or the AI node misses a heartbeat epoch, the arbiter asserts hardware interlocks, decoupling the AI controller output and transferring actuator authority to the baseline safety controller.
+
+#### 9.2.1. Actionable Closed Loop of Dynamic Simplex Switching
+
+1. **Control Flow & Runtime Decisions:**
+   The computed value of $`t_{\mathrm{margin}}`$ governs control authority routing during every arbitration cycle. Provided $`t_{\mathrm{margin}} \ge \Delta t_{\mathrm{threshold}}`$ and the heartbeat signal is valid, the hardware interlock flag `Interlock_State` remains in state `ARMED_AI`, streaming trajectory commands $`U_{\mathrm{adv}}`$ directly to actuator power stages. The instant this invariant is violated, the hardware gate pulls the `ENABLE_AI` line to zero within $`\tau_{\mathrm{switch}} < 50\,\mu\text{s}`$, asserts `TRIP_SAFE_BASELINE`, latches the non-volatile status register `FLAG_SIMPLEX_TRIP`, and commits a cryptographic hash of the transition event into the tamper-evident Merkle log.
+2. **Hardware Dimensioning:**
+   The cumulative trip and recovery budget must satisfy the regulatory Fault Tolerant Time Interval (*FTTI*):
+   $`T_{\mathrm{sense}} + T_{\mathrm{arbiter}} + \tau_{\mathrm{switch}} + t_{\mathrm{recovery}} \le T_{\mathrm{FTTI}}`$.
+   The hardware watchdog timer of the AI node is bounded by $`T_{\mathrm{wdg}} \le \Delta t_{\mathrm{threshold}} - \tau_{\mathrm{switch}}`$. The physical interconnect between the AI node and the arbiter is mapped to an isolated bus (SPI or PCIe MSI-X) with zero memory contention, preventing arbiter starvation caused by host OS memory pressure or driver stalls.
+3. **Worked Numerical Example:**
+   An automated guided vehicle (AGV) with total mass $`m = 350\,\text{kg}`$ traverses an industrial corridor at velocity $`v = 2.0\,\text{m/s}`$. The neural path planner proposes an evasive steering maneuver around an unexpected obstacle detected at distance $`d = 0.44\,\text{m}`$.
+   Time to hazard impact: $`t_{\mathrm{hazard}} = \frac{d}{v} = \frac{0.44\,\text{m}}{2.0\,\text{m/s}} = 220\,\text{ms}`$.
+   Upon activation, the baseline safety controller running on Zephyr RTOS executes an emergency braking and stabilization maneuver with guaranteed worst-case recovery time $`t_{\mathrm{recovery}} = 170\,\text{ms}`$.
+   The dynamic time margin is therefore:
+   $`t_{\mathrm{margin}} = 220\,\text{ms} - 170\,\text{ms} = 50\,\text{ms}`$.
+   The calibrated safety threshold is configured to $`\Delta t_{\mathrm{threshold}} = 60\,\text{ms}`$.
+   Because $`t_{\mathrm{margin}} = 50\,\text{ms} < 60\,\text{ms}`$, the arbiter detects a critical margin deficit ($`50 < 60`$) and, within hardware switching time $`\tau_{\mathrm{switch}} = 14\,\mu\text{s}`$, cuts off the AI planner, transferring actuator control to the baseline controller, which deterministically halts the platform and prevents the collision.
+
 ## Conclusions
 
 The central question of this chapter is resolved: an expert system can concurrently serve as an authoritative source of verifiable evidence and a practical advisor if and only if its response is decoupled into two components of distinct epistemic status, bound by an immutable invariant prohibiting hypotheses from entering strict inference or safety cases without passing peer review. The strict component relies on Horn clauses evaluated via least fixed point computation, stratified negation, finite-domain quantifiers with counterexample generation, and deontic collision auditing. The advisory component leverages induction, abduction, and case-based analogy, ensuring every hypothesis encapsulates its derivation method and testbed promotion criteria. When neither the strict core nor validated precedents resolve an inquiry, the router transforms the refusal into a structured escalation packet for an authorized human expert; the expert's response yields a validated precedent and, when normative grounding exists, a fact candidate.
@@ -474,6 +582,7 @@ The architectural limitations of this chapter must be recognized. Strict mode gu
 9. What three structural defects are intercepted by pre-admission consistency auditing prior to committing a new fact candidate?
 10. Why does a precedent validated by an expert remain an advisory hypothesis when applied to a novel query? What payload fields must an automated expert escalation packet contain?
 11. Why does an approved post-mortem log record become a validated precedent in the reference program, whereas an approved specification quotation becomes an axiomatic fact strictly within its declared operational scope?
+12. What three functional nodes constitute the heterogeneous Simplex architecture, and how is the safe switching time invariant $`t_{\mathrm{margin}}`$ calculated? Under what criteria does the hardware arbiter disengage the AI controller?
 
 ## Glossary
 
@@ -499,6 +608,10 @@ The architectural limitations of this chapter must be recognized. Strict mode gu
 | Expert escalation | Expert escalation | Dispatching a query unresolved by the strict core or validated cases to an authorized human expert alongside a structured draft response |
 | Validated case | Validated case | An empirical case whose resolution is confirmed by an authorized expert, complete with timestamp and defined operational scope |
 | Answer set | Answer set | A stable model of a logic program; a program may admit multiple alternative answer sets |
+| Simplex architecture | Simplex architecture | Supervisory architecture where a simple, formally verified safety core guarantees stability over a complex stochastic AI controller |
+| Advanced/AI node | Advanced/AI node | High-performance stochastic compute engine (GPU/NPU) generating advisory actions and optimization trajectories |
+| Baseline safety controller | Baseline safety controller | Deterministic verified controller implementing proven physical control laws for safe-state recovery |
+| Safety interlock gate | Safety interlock gate | Real-time hardware logic module that validates safety envelopes and executes deterministic hardware switching |
 
 ## Abbreviations
 
@@ -506,6 +619,7 @@ The architectural limitations of this chapter must be recognized. Strict mode gu
 |---|---|---|
 | ASP | Answer Set Programming | Declarative logic programming paradigm based on stable model semantics |
 | CBR | Case-Based Reasoning | Problem solving methodology based on retrieval and adaptation of past cases |
+| FTTI | Fault Tolerant Time Interval | Fault-tolerant time interval prior to hazardous transition |
 | GSN | Goal Structuring Notation | Graphical notation for explicitly structuring and assuring safety arguments |
 | RFC | Request for Comments | Publication series containing technical specifications and standards for the Internet |
 | SMTP | Simple Mail Transfer Protocol | Standard network protocol for electronic mail transmission |
@@ -525,6 +639,7 @@ The architectural limitations of this chapter must be recognized. Strict mode gu
 10. <a id="src-10"></a>Keltoum Benlaharche, Zakaria Laboudi, Nabila Nouaouria, Djamel Eddine Zegour. [*An ontology driven question answering system for fatawa retrieval*](https://doi.org/10.11591/ijeecs.v23.i2.pp980-992). *Indonesian Journal of Electrical Engineering and Computer Science*, 23(2), 980–992, 2021.
 11. <a id="src-11"></a>Soufflé Developers. [*Soufflé Documentation*](https://souffle-lang.github.io/docs.html). Documentation for the Datalog-style logic programming language.
 12. <a id="src-12"></a>Martin Gebser, Roland Kaminski, Benjamin Kaufmann, Torsten Schaub. [*Multi-shot ASP Solving with clingo*](https://potassco.org/clingo/). *Theory and Practice of Logic Programming*, 19(1), 27–82, 2019.
+13. <a id="src-13"></a>Lui Sha. [*Using Simplicity to Control Complexity*](https://doi.org/10.1109/52.936213). *IEEE Software*, 18(4), 20–28, 2001.
 
 ---
 
