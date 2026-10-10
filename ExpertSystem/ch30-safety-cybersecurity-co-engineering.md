@@ -840,7 +840,7 @@ func TestEvidenceBinding(t *testing.T) {
 3. валідація програмного інструмента;
 4. розроблення інструмента відповідно до стандарту безпеки.
 
-Для експертної системи найпрактичніший метод є валідацією: еталонний набір випадків із відомими правильними відповідями, метаморфні й порівняльні перевірки ([Глава 23](ch23-knowledge-base-verification.md)), виміряні частоти хибних відповідей і відмов. Особливість експертної системи полягає в тому, що поведінку інструмента визначає не лише версія механізму виведення, а й покоління пакета знань ([Глава 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)). Тому версією кваліфікованого інструмента є пара «версія механізму виведення і ідентифікатор покоління пакета знань», і кожне нове покоління пакета потребує повторного прогону валідаційного набору. Метод досвіду використання для експертної системи слабкий з тієї самої причини: історія використання накопичується для конкретної пари версій, а знання оновлюються швидше, ніж накопичується статистика.
+Для експертної системи найпрактичніший метод є валідацією: еталонний набір випадків із відомими правильними відповідями, метаморфні й порівняльні перевірки ([Глава 23](ch23-knowledge-base-verification.md)), виміряні частоти хибних відповідей і відмов. Особливість експертної системи полягає в тому, що поведінку інструмента визначає не лише версія механізму виведення, а й покоління пакета знань ([Глава 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)). Тому версією кваліфікованого інструмента є пара «версія механізму виведення та ідентифікатор покоління пакета знань», і кожне нове покоління пакета потребує повторного прогону валідаційного набору. Метод досвіду використання для експертної системи слабкий з тієї самої причини: історія використання накопичується для конкретної пари версій, а знання оновлюються швидше, ніж накопичується статистика.
 
 Авіаційні проєкти розв'язують ту саму задачу за розділом 12.2 DO-178C [[10]](#src-10) і документом DO-330 [[11]](#src-11). Рівень кваліфікації інструмента (*Tool Qualification Level*, TQL, від TQL-1 до TQL-5) визначають за трьома критеріями й рівнем бортового ПЗ: чи може вихід інструмента внести помилку в бортове ПЗ, чи автоматизує інструмент перевірку, якою замінюють інші перевірки, чи інструмент може лише не виявити помилку. Логіка збігається з ISO 26262-8: оцінюють наслідок помилки інструмента й незалежність її виявлення.
 
@@ -925,7 +925,7 @@ func TestEvidenceBinding(t *testing.T) {
 |---|---|---|
 | Функціональна безпека | Functional Safety | Властивість системи усувати невиправданий ризик фізичної шкоди, викликаної збоями в роботі апаратури чи ПЗ |
 | Кібербезпека | Cybersecurity | Захист систем, мереж та програм від навмисних цифрових атак, несанкціонованого доступу та спотворення даних |
-| Ко-інженерія | Co-Engineering | Одночасне та узгоджене проектування кількох системних дисциплін у спільному інженерному просторі |
+| Ко-інженерія | Co-Engineering | Одночасне та узгоджене проєктування кількох системних дисциплін у спільному інженерному просторі |
 | Аналіз небезпек та оцінка ризиків | HARA (Hazard Analysis and Risk Assessment) | Систематичний метод виявлення небезпечних подій та призначення рівнів повноти безпеки (ASIL) за ISO 26262 |
 | Аналіз загроз та оцінка ризиків | TARA (Threat Analysis and Risk Assessment) | Метод виявлення сценаріїв кібератак, векторів загроз та оцінки їх критичності за ISO/SAE 21434 |
 | Рівень повноти безпеки автомобіля | ASIL (Automotive Safety Integrity Level) | Клас критичності за ISO 26262 від A (найнижчий) до D (найсуворіший) |
@@ -955,7 +955,7 @@ func TestEvidenceBinding(t *testing.T) {
 | ATDI | Attack Detection Time Interval | час розпізнавання атаки в навчальній моделі глави |
 | ATRI | Attack Reaction Time Interval | час активації захисних заходів у навчальній моделі глави |
 | ASIL | Automotive Safety Integrity Level | рівень повноти безпеки автомобіля за стандартом ISO 26262 |
-| ASPICE | Automotive Software Process Improvement and Capability Determination | стандарт оцінки та вдосконалення процесів розробки ПЗ для автопрому |
+| ASPICE | Automotive Software Process Improvement and Capability Determination | стандарт оцінки та вдосконалення процесів розроблення ПЗ для автопрому |
 | CAL | Cybersecurity Assurance Level | рівень гарантії кібербезпеки за стандартом ISO/SAE 21434 |
 | CAN-FD | Controller Area Network Flexible Data-Rate | промисловий стандарт бортової мережі зв'язку з підвищеною швидкістю передачі даних |
 | CMAC | Cipher-based Message Authentication Code | блочний алгоритм обчислення коду автентифікації повідомлень на базі симетричного шифрування (AES) |
@@ -970,7 +970,7 @@ func TestEvidenceBinding(t *testing.T) {
 | HSM | Hardware Security Module | апаратний модуль безпеки |
 | MC/DC | Modified Condition / Decision Coverage | покриття коду за модифікованою умовою та рішенням |
 | MPU | Memory Protection Unit | апаратний блок захисту пам'яті процесора |
-| ODD | Operational Design Domain | експлуатаційний домен проектування автономної системи |
+| ODD | Operational Design Domain | експлуатаційний домен проєктування автономної системи |
 | OTA | Over-The-Air | технологія бездротового дистанційного оновлення прошивки |
 | ReqIF | Requirements Interchange Format | відкритий формат обміну вимогами консорціуму OMG |
 | SBOM | Software Bill of Materials | перелік складу програмного забезпечення |
@@ -995,7 +995,7 @@ func TestEvidenceBinding(t *testing.T) {
 6. <a id="src-6"></a>VDA Working Group 13. [*Automotive SPICE Process Assessment / Reference Model, Version 4.0*](https://vda-qmc.de/wp-content/uploads/2023/12/Automotive-SPICE-PAM-v40.pdf). VDA QMC, 2023-11-29.
 7. <a id="src-7"></a>Assurance Case Working Group. [*Goal Structuring Notation Community Standard, Version 3*](https://doi.org/10.65391/r1386). SCSC-141C, Safety-Critical Systems Club, 2021.
 8. <a id="src-8"></a>John Rushby. [*Formalism in Safety Cases*](https://www.csl.sri.com/users/rushby/abstracts/sss10). *Making Systems Safer: Proceedings of the Eighteenth Safety-Critical Systems Symposium*, Springer, 3–17, 2010.
-9. <a id="src-9"></a>ISO. [*ISO 26262-8:2018. Road vehicles: Functional safety: Part 8: Supporting processes*](https://www.iso.org/standard/68390.html). ISO, Geneva, Switzerland, 2018. Розділ 11: Confidence in the use of software tools.
+9. <a id="src-9"></a>ISO. [*ISO 26262-8:2018. Road vehicles: Functional safety: Part 8: Supporting processes*](https://www.iso.org/standard/68390.html). ISO, Geneva, Switzerland, 2018. Clause 11: Confidence in the use of software tools.
 10. <a id="src-10"></a>RTCA / EUROCAE. [*DO-178C / ED-12C: Software Considerations in Airborne Systems and Equipment Certification*](https://www.rtca.org/). RTCA, Washington, D.C., 2011.
 11. <a id="src-11"></a>RTCA. [*DO-330: Software Tool Qualification Considerations*](https://www.rtca.org/). RTCA, Washington, D.C., 2011.
 12. <a id="src-12"></a>William Young, Nancy G. Leveson. [*An Integrated Approach to Safety and Security Based on Systems Theory*](https://doi.org/10.1145/2556938). *Communications of the ACM*, 57(2), 31–35, 2014.
