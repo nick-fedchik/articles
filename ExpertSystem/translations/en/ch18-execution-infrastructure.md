@@ -13,7 +13,7 @@
 
 Previous chapters established the logical architecture and technology stack of an expert system. However, software abstractions execute physically: in random-access memory, across system buses, and on Central Processing Units (CPUs), Graphics Processing Units (GPUs), and Neural Processing Units (NPUs). They execute within cloud clusters, on on-premise enterprise servers within a secure organizational perimeter, or on compact edge controllers positioned immediately adjacent to physical sensors.
 
-This chapter answers the fundamental engineering question: **how can hardware platforms and execution topologies be formally justified for given target thresholds of inference quality, latency, and operational autonomy?** The computational profile provides the initial architectural hypothesis: branch-heavy symbolic rules naturally belong on CPUs, whereas dense linear algebra benefits substantially from GPUs or NPUs. However, the final design decision depends critically on operator support within the runtime compiler, query batch sizes, bus transfer overheads, memory subsystem limits, and acceptable failure modes. Merely labeling a chip an "accelerator" guarantees neither execution determinism nor process isolation. The review of specific hardware platforms is benchmarked as of October 8, 2026, based on manufacturer technical documentation; announced pre-production products are explicitly distinguished from commercially shipping silicon.
+This chapter answers the fundamental engineering question: **how can hardware platforms and execution topologies be formally justified for given target thresholds of inference quality, latency, and operational autonomy?** The computational profile provides the initial architectural hypothesis: branch-heavy symbolic rules naturally belong on CPUs, whereas dense linear algebra benefits substantially from GPUs or NPUs. However, the final design decision depends critically on operator support within the runtime compiler, query batch sizes, bus transfer overheads, memory subsystem limits, and acceptable failure modes. Merely labeling a chip an "accelerator" guarantees neither execution determinism nor process isolation. Special attention is dedicated to secure research infrastructure (Air-Gapped R&D), hardware cache and memory resource partitioning (Intel RDT / ARM MPAM) to eliminate covert leakage channels, and topological guarantees of worst-case execution time (WCET) determinism via forward-only jumps. The review of specific hardware platforms is benchmarked as of October 8, 2026, based on manufacturer technical documentation; announced pre-production products are explicitly distinguished from commercially shipping silicon.
 
 The diagram below illustrates the baseline allocation of expert system components across three primary compute zones.
 
@@ -265,6 +265,116 @@ flowchart LR
 The first tier — a compact index table of normalized entities and byte offsets — resides permanently in RAM, enabling near-instantaneous verification of whether a queried entity exists within the knowledge base. The second tier contains full attribute records and normative citations; the kernel reads these bytes from disk only for entities actively participating in the current chain of proof. Fixed-format binary records are traversed directly from mapped memory without intermediate string parsing or heap allocations. A similar immutable, content-addressed knowledge pack format is detailed in [Chapter 15](ch15-knowledge-extraction-and-kb-construction.md); its key virtue in execution infrastructure is shifting startup cost from "read everything" to "fault in only what is needed."
 
 A single memory-mapped index file must fit within the virtual address space and addressable storage limits of a single host. When an enterprise index exceeds single-node capacity, two strategies emerge: explicit buffered chunk streaming, or partitioning the knowledge pack into shards, each mapped by an independent process or cluster node. Sharding preserves the internal two-level index layout within each shard, but requires a front-end semantic router and explicit handling of unresponsive shards. The operational boundaries of `mmap` are elaborated in Section 3.2 of [Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md), and knowledge partitioning rules are established in [Chapter 7](ch07-knowledge-base-typology.md).
+
+### 3.2. Secure R&D Perimeter: Air-Gapped Execution and Intellectual Property Protection (IP Protection)
+
+The development and validation of mission-critical expert systems require uncompromising intellectual property protection during applied research and development (R&D). In projects spanning avionics engineering (DO-178C), processor microarchitecture (IEEE 1685 IP-XACT, ARM CMSIS-SVD), and safety-critical automotive automation (ISO 26262 ASIL D), engineering artifacts contain proprietary algorithms, microcontroller register maps, and deterministic rule bases whose leakage threatens not only trade secrets, but also direct violations of export control regimes and international sanctions. The naive practice of relying on public or commercial cloud APIs for rule generation, log analysis, or proof chain synthesis opens an uncontrolled exfiltration conduit: sensitive IP fragments are ingested into external training buffers, introducing risks of reverse extraction and prompt-injected hallucinations directly into the verification corpus.
+
+Development lifecycle security standards, including ISO/IEC 27001 (Controls A.8.25–A.8.31) [[44]](#src-44) and IEC 62443-4-1, mandate the deployment of a fully autonomous, physically and logically isolated research environment (*Air-Gapped R&D*). All processing of engineering artifacts executes strictly on on-premise compute infrastructure using specialized domain small language and vision models (Domain SLM/VLM) alongside deterministic symbolic compilers hosted within hardware-enforced confidential memory enclaves (AMD SEV-SNP, Intel SGX/TDX).
+
+```mermaid
+flowchart TD
+    accTitle: Architecture of Air-Gapped R&D Secure Research Perimeter
+    accDescr: External artifacts pass through a unidirectional data diode and cryptographic verification into a hardware-isolated memory enclave where a researcher authenticated via hardware key executes local inference.
+
+    subgraph External["External Untrusted World"]
+        EXT_DOC["<b>Engineering Documentation</b><br/>PDF, specifications, SVD"]
+    end
+
+    subgraph IngressGateway["Ingress Inspection Gateway"]
+        DATA_DIODE["<b>Unidirectional Gateway (Data Diode)</b><br/>physical TX/RX separation"]
+        AV_SCAN["<b>Cryptographic Validation</b><br/>Ed25519 signature checks & scanning"]
+    end
+
+    subgraph SecurePerimeter["Isolated R&D Perimeter (Air-Gapped)"]
+        direction TB
+        SEC_MEM["<b>Hardware Secure Enclave</b><br/>AMD SEV-SNP / Intel TDX<br/>encrypted UMA memory"]
+        LOCAL_ENG["<b>Local Expert System Engine</b><br/>Domain SLM + EISA Engine"]
+        SEC_REG["<b>Immutable Local Ledger</b><br/>Append-Only Merkle Ledger"]
+        HSM["<b>Researcher Hardware Token</b><br/>FIDO2 / HSM custody"]
+    end
+
+    EXT_DOC -->|"unidirectional transfer"| DATA_DIODE
+    DATA_DIODE --> AV_SCAN
+    AV_SCAN -->|"verified knowledge pack"| SEC_MEM
+    SEC_MEM <--> LOCAL_ENG
+    HSM -->|"action authorization & signing"| LOCAL_ENG
+    LOCAL_ENG -->|"deterministic audit"| SEC_REG
+
+    classDef ext fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+    classDef gate fill:#fff8e1,stroke:#f57f17,stroke-width:2px,color:#e65100;
+    classDef sec fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    class EXT_DOC ext;
+    class DATA_DIODE,AV_SCAN gate;
+    class SEC_MEM,LOCAL_ENG,SEC_REG,HSM sec;
+```
+
+To quantitatively evaluate the resilience of the research infrastructure against unauthorized asset exfiltration, systems engineers compute the expected residual risk of intellectual property leakage:
+
+```math
+R_{\mathrm{exfil}} = V_{\mathrm{asset}} \times P_{\mathrm{leak}} = V_{\mathrm{asset}} \times \bigl(1 - \eta_{\mathrm{airgap}}\bigr) \cdot \bigl(1 - \eta_{\mathrm{enc}}\bigr) \cdot \bigl(1 - \eta_{\mathrm{auth}}\bigr)
+```
+
+where:
+- $`R_{\mathrm{exfil}}`$ is the aggregate residual exfiltration risk of intellectual property, quantified in monetary loss units or normalized risk index scores (from $`0`$ to $`V_{\mathrm{asset}}`$);
+- $`V_{\mathrm{asset}}`$ is the baseline economic valuation of the protected R&D asset (knowledge base, ontology, processor microcode), incorporating potential regulatory fines and sunk engineering costs ($`V_{\mathrm{asset}} > 0`$);
+- $`P_{\mathrm{leak}} \in [0, 1]`$ is the calculated probability of a successful asset leak penetrating all defensive tiers;
+- $`\eta_{\mathrm{airgap}} \in [0, 1]`$ is the physical network isolation efficacy ($`\eta_{\mathrm{airgap}} = 0.70`$ for a shared corporate VLAN, $`\eta_{\mathrm{airgap}} = 0.92`$ for a managed firewall perimeter, and $`\eta_{\mathrm{airgap}} = 0.9999`$ for a physically severed network cable with an optical unidirectional *Data Diode*);
+- $`\eta_{\mathrm{enc}} \in [0, 1]`$ is the cryptographic encryption efficacy covering volatile memory and persistent storage ($`\eta_{\mathrm{enc}} = 0.85`$ for standard host-level disk encryption, and $`\eta_{\mathrm{enc}} = 0.995`$ for hardware-enforced AMD SEV-SNP / Intel TDX memory enclaves);
+- $`\eta_{\mathrm{auth}} \in [0, 1]`$ is the authentication efficacy for engineering operations ($`\eta_{\mathrm{auth}} = 0.60`$ for password authentication, and $`\eta_{\mathrm{auth}} = 0.999`$ for physical FIDO2 / cryptographic HSM tokens requiring non-delegable Ed25519 session signing).
+
+#### 3.2.1. Actionable Closed Loop of R&D Asset Exfiltration Risk Calculation
+
+1. **Control Flow and Runtime Decisions:**
+   - If the evaluated leak probability exceeds $`P_{\mathrm{leak}} > 10^{-4}`$, the infrastructure orchestrator engages `Strict Isolation Lock`: all physical USB mass storage interfaces are disabled at the kernel level, unencrypted memory core dumps are forbidden, and the ingestion of updated model weights or rule sets is blocked pending physical data diode integrity verification;
+   - If $`P_{\mathrm{leak}} \le 10^{-4}`$ and $`R_{\mathrm{exfil}} < \tau_{\mathrm{risk\_accept}}`$, the execution runtime permits mounting the target knowledge volume in read-only mode inside the encrypted memory enclave (`SEV_SNP_INIT_OK`).
+2. **Hardware Dimensioning:**
+   - The R&D testbed is equipped with a hardware optical data diode rated for a sustained unidirectional transfer rate of no less than $`10\,\text{Gbps}`$ for inbound dataset ingestion;
+   - The encrypted enclave memory pool must accommodate the quantized SLM ($`16\,\text{GB}`$ in FP8) plus the memory-mapped fact base ($`8\,\text{GB}`$) with a $`1.5\times`$ safety headroom factor, mandating a minimum of $`48\,\text{GB}`$ of hardware-encrypted DDR5 ECC system memory per CPU socket.
+3. **Worked Numerical Example:**
+   - The baseline valuation of a flight-control software R&D knowledge pack is $`V_{\mathrm{asset}} = \$5{,}000{,}000`$.
+   - Under a naive baseline design (VLAN without physical air-gap, standard server lacking encrypted memory enclaves, and password-based developer logins), the exfiltration probability evaluates to $`P_{\mathrm{leak}} = (1 - 0.70) \cdot (1 - 0.85) \cdot (1 - 0.60) = 0.018`$. Residual risk equals $`R_{\mathrm{exfil}} = \$5{,}000{,}000 \times 0.018 = \$90{,}000`$, exceeding the corporate risk acceptance threshold $\tau_{\mathrm{risk\_accept}} = \$500$ by a factor of 180 (an unacceptable posture for defense and aerospace programs).
+   - Migrating to an *Air-Gapped R&D* architecture (optical Data Diode $`\eta_{\mathrm{airgap}} = 0.9999`$, AMD SEV-SNP enclave $`\eta_{\mathrm{enc}} = 0.995`$, and FIDO2 HSM tokens $`\eta_{\mathrm{auth}} = 0.999`$) reduces the exfiltration probability to $`P_{\mathrm{leak}} = (1 - 0.9999) \cdot (1 - 0.995) \cdot (1 - 0.999) = 10^{-4} \cdot 5 \cdot 10^{-3} \cdot 10^{-3} = 5 \cdot 10^{-10}`$. Residual risk plummets to $`R_{\mathrm{exfil}} = \$5{,}000{,}000 \times 5 \cdot 10^{-10} = \$0.0025`$ ($`0.25`$ cents). The architecture provides definitive formal clearance for processing classified and safety-critical IP.
+
+### 3.3. Covert Channel Protection and Hardware Cache Partitioning (Intel RDT / ARM MPAM)
+
+Physically severing the network uplink (a naive air-gap) fails to secure an expert system if its deterministic evidence kernel coexists on shared host hardware or edge nodes alongside third-party untrusted software (such as community plugins, third-party language model containers, or vision processing drivers). In multi-tenant and heterogeneous compute stacks, covert physical and microarchitectural side channels (*Covert Channels / TEMPEST*) threaten both confidential data and deterministic latency [[45]](#src-45):
+1. **L2/L3 Cache Microarchitectural Timing Attacks:** Techniques such as *Flush+Reload*, *Prime+Probe*, and *Evict+Time* allow an unprivileged co-located process to measure cache line access latencies, reconstructing private cryptographic keys, traversal trajectories through Rete rule decision trees, or confidential index lookup patterns;
+2. **Memory Bandwidth Starvation:** An adversarial or misbehaved co-tenant can saturate DDR memory controller command queues, causing multi-fold tail latency spikes when the deterministic expert system kernel faults in pages from memory-mapped knowledge bases (`mmap`);
+3. **Physical Side-Channel Radiations (TEMPEST):** GPU cooling fan speed modulation (acoustic channels), high-frequency GPIO activity LED blinking (optical channels), or power-rail current spikes during systolic tensor contractions (electromagnetic leakage).
+
+To neutralize microarchitectural covert channels, contemporary enterprise and automotive processors incorporate hardware-enforced cache and memory bus partitioning: **Intel RDT** (*Resource Director Technology*) and **ARM MPAM** (*Memory System Resource Partitioning and Monitoring*). Rather than sharing the unified L3 cache under an unconstrained LRU replacement policy, the memory controller rigidly partitions cache way bitmasks (**Cache Allocation Technology, CAT**) and enforces memory bus bandwidth throttles (**Memory Bandwidth Allocation, MBA**) reserved exclusively for the deterministic safety kernel.
+
+To mathematically prove non-interference and bounded memory access latency, architects enforce a hardware invariant for guaranteed memory throughput:
+
+```math
+\mathrm{BW}_{\mathrm{guaranteed}}(\mathrm{SafetyCore}) = \mathrm{BW}_{\mathrm{bus\_peak}} \times \frac{M_{\mathrm{ways}}}{M_{\mathrm{total\_ways}}} \times \Bigl(1 - \delta_{\mathrm{mba\_penalty}}\Bigr) \ge \mathrm{BW}_{\min\_req}
+```
+
+where:
+- $`\mathrm{BW}_{\mathrm{guaranteed}}(\mathrm{SafetyCore})`$ is the guaranteed hardware memory bus throughput dedicated to the real-time expert system core, expressed in gigabytes per second ($`\text{GB/s}`$);
+- $`\mathrm{BW}_{\mathrm{bus\_peak}}`$ is the theoretical peak memory bus bandwidth of the host memory controller ($`\text{GB/s}`$, e.g., $`204.8\,\text{GB/s}`$ across an 8-channel DDR5-6400 interface);
+- $`M_{\mathrm{ways}}`$ is the number of L3 cache ways allocated exclusively via the CAT bitmask (e.g., `0x000F` representing 4 dedicated ways out of 16);
+- $`M_{\mathrm{total\_ways}}`$ is the total cache associativity of the L3 cache ($`M_{\mathrm{total\_ways}} \ge M_{\mathrm{ways}}`$);
+- $`\delta_{\mathrm{mba\_penalty}} \in [0, 1]`$ is the artificial throttling coefficient imposed by MBA on background or untrusted processes ($`\delta_{\mathrm{mba\_penalty}} = 0`$ for the safety core, $`\delta_{\mathrm{mba\_penalty}} \ge 0.60`$ for untrusted guest containers);
+- $`\mathrm{BW}_{\min\_req}`$ is the minimum required bandwidth necessary to ingest and evaluate streaming fact assertions without queuing latency ($`\text{GB/s}`$).
+
+#### 3.3.1. Actionable Closed Loop of Covert Channel Bandwidth Calculation
+
+1. **Control Flow and Runtime Decisions:**
+   - During platform boot, the operating system resource manager (or bare-metal hypervisor such as KVM or Xen) configures processor model-specific registers (MSRs in x86, or MPAM system registers in ARMv8.4-A): the real-time safety core is assigned Class of Service `CLOS0` with dedicated cache ways non-overlapping with untrusted workload class `CLOS1`;
+   - If hardware memory bandwidth monitors (Intel MBM / ARM MPAM Mon) detect a co-located container attempting bus saturation beyond its allocated MBA ceiling, a hypervisor interrupt immediately throttles the rogue container's bandwidth allocation to 10% or issues a `SIGSTOP` pause;
+   - To counteract physical TEMPEST acoustic emissions, cooling fan pulse-width modulation (PWM) controllers are injected with randomized pseudorandom frequency jitter ($`\pm 15\%`$), masking acoustic carrier signals, while unused chassis GPIO status LEDs are disabled via UEFI firmware configuration.
+2. **Hardware Dimensioning:**
+   - Workstation and edge server CPUs must provide an L3 cache associativity of no less than $`16\,\text{ways}`$ with comprehensive silicon support for Intel RDT CAT/MBA (Xeon Scalable, Core Ultra with RDT) or ARMv8.4-A MPAM (Neoverse N2/V2);
+   - Sensitive development laboratories must deploy RF-shielded enclosures or Faraday cages equipped with common-mode power line interference filters certified to NATO SDIP-27 Level A standards.
+3. **Worked Numerical Example:**
+   - A server node features a 16-way associative L3 cache ($`M_{\mathrm{total\_ways}} = 16`$) and a 4-channel DDR5 memory controller delivering a peak bandwidth of $`\mathrm{BW}_{\mathrm{bus\_peak}} = 102.4\,\text{GB/s}`$.
+   - The mission-critical expert system kernel requires a deterministic minimum fact-traversal bandwidth of $`\mathrm{BW}_{\min\_req} = 20\,\text{GB/s}`$.
+   - The architect configures the CAT mask to allocate 4 dedicated cache ways to the safety kernel ($`M_{\mathrm{ways}} = 4`$), while constraining co-located services via an MBA penalty of $`\delta_{\mathrm{mba\_penalty}} = 0.70`$. Guaranteed memory throughput evaluates to:
+     $`\mathrm{BW}_{\mathrm{guaranteed}} = 102.4 \times (4 / 16) \times (1 - 0) = 25.6\,\text{GB/s}`$.
+   - Because $`25.6\,\text{GB/s} \ge 20\,\text{GB/s}`$, the invariant holds with a $`28\%`$ safety margin. Hostile co-located attempts to mount *Prime+Probe* attacks or induce memory starvation are physically barred by silicon-level resource arbiters.
 
 ## 4. Deployment Topologies: From Data Center to Onboard Sensor
 
@@ -793,6 +903,83 @@ where:
 
 Drift thresholds must be calibrated empirically. Even minor numerical shifts can invert candidate rankings among near-identical facts or flip classification decisions at threshold boundaries. Validation must verify vector dimensionality, numerical boundedness, retrieval precision, and final rule outcomes on boundary test suites. Exact bitwise reproducibility requires pinning deterministic execution kernels, thread counts, and reduction tree topologies.
 
+### 8.4. Topological Guarantee of Deterministic Worst-Case Execution Time (WCET) via Forward-Only Jumps
+
+In mission-critical hard real-time systems — ranging from flight-control autopilots (DO-178C Level A) to autonomous automotive emergency braking (ISO 26262 ASIL D) — the execution time of an inference procedure is as vital to functional safety as the mathematical soundness of its derived verdict [[46]](#src-46). An impeccably verified proof loses all operational validity and precipitates catastrophic failure if delivered to an actuator even a single clock cycle past the system's Fault Tolerant Time Interval (FTTI).
+
+Conventional rule engines hosted on Turing-complete, general-purpose instruction sets rely heavily on arbitrary branching and backward jump instructions (`JMP`, `LOOP`, backward edges in inference graphs). This introduces the fundamental Halting Problem:
+- Inability to analytically calculate an exact Worst-Case Execution Time (WCET);
+- The risk of unbounded loops or deadlock states under contradictory or cyclic fact streams;
+- Forced reliance on heuristic watchdog timers, which merely terminate a hung process after a deadline breach, dumping the system into an emergency fail-stop state without completing the necessary safety maneuvers.
+
+The architecture of an evidence-governed knowledge processor resolves this impasse at the silicon topology level by enforcing the **forward-only jumps principle** across the expert instruction set architecture (EISA). Every conditional or unconditional branch in the binary rule microcode is governed by a strict invariant:
+
+```math
+\mathrm{TargetAddress} > \mathrm{CurrentPC}
+```
+
+By virtue of this architectural constraint, the Control Flow Graph (CFG) of any compiled rule program is guaranteed to be a strictly Directed Acyclic Graph (DAG).
+
+```mermaid
+flowchart LR
+    accTitle: Acyclic Control Flow Graph of Logic Processor Enforcing Forward-Only Jumps
+    accDescr: All branching instructions target strictly advancing program counter addresses. Backward jumps are physically prohibited, guaranteeing deterministic WCET.
+
+    PC0["<b>PC = 0x00</b><br/>Load facts"]
+    PC1["<b>PC = 0x04</b><br/>Evaluate rule predicates"]
+    PC2["<b>PC = 0x08</b><br/>Standard rule branch (Rule A)"]
+    PC3["<b>PC = 0x0C</b><br/>Exception branch (Rule B)"]
+    PC4["<b>PC = 0x10</b><br/>Synthesize verdict"]
+    PC5["<b>PC = 0x14</b><br/>Commit output"]
+
+    PC0 --> PC1
+    PC1 -->|"predicate true (forward jump)"| PC3
+    PC1 -->|"predicate false (fallthrough)"| PC2
+    PC2 --> PC4
+    PC3 --> PC4
+    PC4 --> PC5
+
+    classDef nodeStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
+    classDef branchStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef exitStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    class PC0,PC1,PC4 nodeStyle;
+    class PC2,PC3 branchStyle;
+    class PC5 exitStyle;
+```
+
+Because the control flow graph is strictly acyclic, the maximum execution path length is bounded by the total instruction count $`N_{\mathrm{rules}}`$ within the loaded rule memory block. The worst-case execution time is determined analytically in closed form:
+
+```math
+T_{\mathrm{WCET}} = \sum_{i=1}^{M_{\mathrm{longest}}} t_{\mathrm{cycle}}(I_i) \le N_{\mathrm{rules}} \cdot \max_{k} \bigl( t_{\mathrm{cycle}}(I_k) \bigr)
+```
+
+where:
+- $`T_{\mathrm{WCET}}`$ is the analytically verified maximum execution latency of the inference routine under worst-case inputs, measured in nanoseconds ($\text{ns}$) or microseconds ($\mu\text{s}$);
+- $`M_{\mathrm{longest}}`$ is the instruction length of the critical (longest latency) path across the DAG ($`M_{\mathrm{longest}} \le N_{\mathrm{rules}}`$);
+- $`t_{\mathrm{cycle}}(I_i)`$ is the deterministic execution cycle count of instruction $`I_i`$, multiplied by the clock period $`T_{\mathrm{clk}} = 1 / F_{\mathrm{clk}}`$;
+- $`N_{\mathrm{rules}}`$ is the total static instruction count of the compiled rule block (sized to reside entirely within accelerator BRAM/UltraRAM);
+- $`\max_{k} \bigl( t_{\mathrm{cycle}}(I_k) \bigr)`$ is the maximum latency of the most complex instruction in the EISA (for pipelined knowledge processors, $`t_{\mathrm{cycle}} = 1`$ clock cycle via fixed-depth pipeline registers).
+
+#### 8.4.1. Actionable Closed Loop of WCET Calculation and Verification
+
+1. **Control Flow and Runtime Decisions:**
+   - During binary rule compilation, the EISA toolchain applies topological sorting across basic blocks (Kahn's algorithm or Tarjan's topological sort). If a back-edge is detected (indicating recursion or cyclic rules), compilation terminates immediately with a fatal `CYCLIC_RULE_DEPENDENCY_DETECTED` error;
+   - In hardware, the instruction decoder in the FPGA/ASIC execution unit incorporates a hardwired comparator: if an instruction's relative branch offset satisfies $`\mathrm{Offset} \le 0`$, the decode stage raises a non-maskable integrity trap (`HARD_FAULT_ILLEGAL_BACKWARD_JUMP`), placing actuators into a safe fail-closed state within 1 clock cycle;
+   - If verified $`T_{\mathrm{WCET}} \le T_{\mathrm{FTTI\_budget}}`$, the rule package is granted flight-certification clearance for direct closed-loop actuation without requiring dynamic watchdog timers.
+2. **Hardware Dimensioning:**
+   - The on-chip instruction BRAM of the knowledge processor is dimensioned to fully hold the critical path length $`N_{\mathrm{rules}}`$, eliminating external DRAM access jitter (achieving Zero Cache Miss Jitter);
+   - Given a core clock frequency $`F_{\mathrm{clk}} = 200\,\text{MHz}`$ ($`T_{\mathrm{clk}} = 5\,\text{ns}`$) and an automotive brake-by-wire FTTI constraint of $`T_{\mathrm{FTTI}} = 100\,\mu\text{s}`$, the maximum admissible rule block capacity is strictly bounded by:
+     $`N_{\max\_instructions} = T_{\mathrm{FTTI}} / T_{\mathrm{clk}} = (100 \cdot 10^{-6}\,\text{s}) / (5 \cdot 10^{-9}\,\text{s}) = 20{,}000`$ instructions.
+3. **Worked Numerical Example:**
+   - An unmanned aerial vehicle collision avoidance subsystem compiles an emergency flight-envelope rule base totaling $`N_{\mathrm{rules}} = 1{,}200`$ EISA instructions.
+   - The hardware pipeline guarantees deterministic single-cycle execution per instruction ($`t_{\mathrm{cycle}} = 1`$) at an FPGA clock frequency of $`F_{\mathrm{clk}} = 100\,\text{MHz}`$ ($`T_{\mathrm{clk}} = 10\,\text{ns}`$).
+   - Topological DAG analysis identifies a critical path of $`M_{\mathrm{longest}} = 450`$ instructions.
+   - Closed-form WCET evaluates to $`T_{\mathrm{WCET}} = 450 \times 10\,\text{ns} = 4{,}500\,\text{ns} = 4.5\,\mu\text{s}`$.
+   - Given a regulatory emergency response budget of $`T_{\mathrm{budget}} = 50\,\mu\text{s}`$, the safety margin factor is:
+     $`K_{\mathrm{safety\_margin}} = 50\,\mu\text{s} / 4.5\,\mu\text{s} \approx 11.1`$.
+   - Verdict: The system operates with an 11-fold temporal margin, providing mathematical and hardware-enforced guarantees that actuation deadlines will never be missed under any combination of sensor inputs.
+
 ## 9. Promising Hardware Directions for Knowledge Systems
 
 Mainstream machine learning infrastructure predominantly targets raw GPU compute throughput. However, the Roofline analysis in Section 1 demonstrated that expert systems possess an entirely different profile: knowledge graph traversal, production rule matching, and state-space exploration are fundamentally bounded by random memory access latency (*pointer chasing*) rather than floating-point throughput. Consequently, specialized hardware architectures that directly tackle memory bottlenecks are of immense value for knowledge systems. The table below surveys emerging paradigms backed by open research and industry standards.
@@ -933,6 +1120,9 @@ The boundaries of this chapter are clear. Theoretical compute calculations and d
 8. What six engineering conditions must a workload satisfy to qualify for execution across an idle NPU mesh, and why does knowledge pack compression fail these criteria?
 9. Why can a 117-billion parameter Mixture-of-Experts model generate text substantially faster than a 70-billion parameter dense model on identical workstation hardware, and what memory requirement does it still impose?
 10. Why are manufacturer claims of 1 PFLOPS in FP4 with sparsity, 60 TFLOPS in FP16, and 50 TOPS on NPUs mathematically incomparable?
+11. What requirements do ISO/IEC 27001 and IEC 62443-4-1 impose on an isolated research perimeter (Air-Gapped R&D), and how do unidirectional data diodes minimize the residual risk of knowledge exfiltration?
+12. How does hardware L3 cache partitioning (Intel RDT CAT / ARM MPAM) eliminate microarchitectural timing covert channels (Prime+Probe, Flush+Reload) and guarantee memory bus bandwidth for the safety kernel?
+13. Why does prohibiting backward branches (Forward-Only Jumps) in a logic processor's instruction set transform the control flow graph (CFG) into a directed acyclic graph (DAG), enabling analytical proof of worst-case execution time (WCET)?
 
 ## Glossary
 
@@ -961,6 +1151,11 @@ The boundaries of this chapter are clear. Theoretical compute calculations and d
 | Активні параметри | Active parameters | The subset of model weights actively evaluated during the forward pass of an individual token |
 | Структурована розрідженість | Structured sparsity | Hardware-accelerated pattern (e.g., 2:4) where zeroed weights are skipped by tensor units, doubling peak throughput |
 | Спекулятивне декодування | Speculative decoding | Inference optimization where a small draft model generates candidate tokens verified in parallel by a larger model |
+| Ізольований дослідницький периметр | Air-Gapped R&D | Fully autonomous research environment disconnected from external networks with intellectual property protection |
+| Прихований канал | Covert channel | Unauthorized data transfer channel exploiting microarchitectural or physical side effects |
+| Партиціювання кешу | Cache allocation technology | Hardware reservation of isolated cache ways to eliminate cross-process interference (Intel RDT / ARM MPAM) |
+| Пряме розгалуження | Forward-only jumps | Instruction set constraint permitting forward branches only, forming an acyclic DAG and guaranteeing WCET |
+| Час найгіршого випадку | Worst-case execution time (WCET) | Maximum analytically guaranteed program execution time across all possible inputs |
 
 ## Abbreviations
 
@@ -971,9 +1166,11 @@ The boundaries of this chapter are clear. Theoretical compute calculations and d
 | ASIL | Automotive Safety Integrity Level | Risk classification scheme defined by the ISO 26262 functional safety standard |
 | AVX-512 | Advanced Vector Extensions 512 | 512-bit SIMD instruction set extensions for x86 microprocessors |
 | BM25 | Best Matching 25 | Probabilistic lexical ranking function used in information retrieval |
+| CAT | Cache Allocation Technology | Hardware cache way allocation technology |
 | CPU | Central Processing Unit | General-purpose microprocessor executing sequential and branch-heavy instructions |
 | CUDA | Compute Unified Device Architecture | Proprietary parallel computing platform and programming model developed by NVIDIA |
 | CXL | Compute Express Link | Open industry standard interconnect offering high-bandwidth, coherent memory access |
+| DAG | Directed Acyclic Graph | Finite directed graph with no directed cycles |
 | DDR5 | Double Data Rate 5 | Standardized high-bandwidth synchronous dynamic random-access memory |
 | DSP | Digital Signal Processor | Specialized microprocessor optimized for real-time mathematical signal processing |
 | ECC | Error-Correcting Code | Memory system capable of detecting and correcting internal single-bit data corruptions |
@@ -992,17 +1189,21 @@ The boundaries of this chapter are clear. Theoretical compute calculations and d
 | JSONL | JSON Lines | Text-based stream format storing one valid JSON object per line |
 | KPU | Knowledge Processing Unit | Conceptual specialized processor model for knowledge-intensive computing |
 | LPDDR4, LPDDR5X | Low-Power Double Data Rate 4, 5X | Energy-efficient mobile and embedded synchronous dynamic RAM |
+| MBA | Memory Bandwidth Allocation | Hardware-enforced memory bandwidth throttling |
 | MoE | Mixture of Experts | Neural network architecture activating sparse subsets of sub-networks |
+| MPAM | Memory System Resource Partitioning and Monitoring | ARM memory system resource partitioning and monitoring architecture |
 | NPU | Neural Processing Unit | Specialized microchip engineered for hardware acceleration of neural networks |
 | OCR | Optical Character Recognition | Electronic conversion of images of typed or handwritten text into encoded text |
 | PFLOPS | Peta Floating-Point Operations Per Second | One quadrillion ($10^{15}$) floating-point operations per second |
 | PROV-O | PROV Ontology | W3C specification for representing data provenance and processing lineages |
+| RDT | Resource Director Technology | Intel hardware resource management framework |
 | RISC-V | Reduced Instruction Set Computer V | Open standard instruction set architecture based on established RISC principles |
 | ROCm | Radeon Open Compute | Open-source software development platform for GPU computing developed by AMD |
 | SWaP | Size, Weight, and Power | Critical physical design constraints for embedded and mobile platforms |
 | TFLOPS | Tera Floating-Point Operations Per Second | One trillion ($10^{12}$) floating-point operations per second |
 | TLS | Transport Layer Security | Cryptographic transport protocol; mutual TLS (mTLS) authenticates both peers |
 | TOPS | Tera Operations Per Second | One trillion ($10^{12}$) operations per second |
+| WCET | Worst-Case Execution Time | Analytically guaranteed maximum execution duration |
 | WSL | Windows Subsystem for Linux | Windows feature enabling native execution of Linux binary executables |
 | ПЛІС | Програмовна логічна інтегральна схема | Ukrainian acronym for Field-Programmable Gate Array (FPGA) |
 
@@ -1051,6 +1252,9 @@ The boundaries of this chapter are clear. Theoretical compute calculations and d
 41. <a id="src-41"></a>SQLite. [*SQLite FTS5 Extension*](https://www.sqlite.org/fts5.html). SQLite Documentation.
 42. <a id="src-42"></a>NVIDIA. [*Jetson AGX Orin Series Thermal Design Guide*](https://developer.nvidia.com/embedded/learn/jetson-agx-orin-devkit-user-guide). Technical Whitepaper, 2024.
 43. <a id="src-43"></a>NVIDIA. [*Jetson Linux Developer Guide: Power Management and nvpmodel*](https://docs.nvidia.com/jetson/archives/r36.2/DeveloperGuide/text/SD/PlatformPowerAndPerformance/JetsonOrinNanoSeriesJetsonOrinNxSeriesAndJetsonAgxOrinSeries.html). JetPack 6.2 Documentation, 2025.
+44. <a id="src-44"></a>ISO/IEC. [*ISO/IEC 27001:2022. Information security, cybersecurity and privacy protection — Information security management systems — Requirements*](https://www.iso.org/standard/27001). 2022.
+45. <a id="src-45"></a>Intel Corporation. [*Intel Resource Director Technology (Intel RDT) Architecture Specification*](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-resource-director-technology-architecture.html). Reference Guide, 2023.
+46. <a id="src-46"></a>Reinhard Wilhelm et al. [*The Worst-Case Execution Time Problem — Overview of Methods and Survey of Tools*](https://doi.org/10.1145/1347375.1347389). *ACM Transactions on Embedded Computing Systems*, 7(3), 36:1–36:53, 2008.
 
 ---
 
