@@ -78,7 +78,7 @@ flowchart TD
 Синтаксична правильність не гарантує змістовної істинності. Сформований об'єкт проходить вихідний шлюз доказовості хостової системи:
 
 1. **Реєстр закритих відношень:** предикат твердження звіряється із затвердженою онтологією. Будь-яке вигадане відношення відкидається зі статусом `OUT_OF_VOCABULARY`.
-2. **Побайтова верифікація цитати:** кожне твердження зобов'язане містити точні координати байтів у канонічному файлі першоджерела (`byte_start`, `byte_end`) та контрольний геш цитати SHA-256. Ізольований модуль без звернення до ШІ вичитує байти з диска, обчислює геш і звіряє символи такт-у-такт. Якщо модель змінила хоча б один символ чи змістила індекс, твердження маркується як `HALLUCINATED_QUOTE`.
+2. **Побайтова верифікація цитати:** кожне твердження зобов'язане містити точні координати байтів у канонічному файлі першоджерела (`byte_start`, `byte_end`) та контрольний хеш цитати SHA-256. Ізольований модуль без звернення до ШІ вичитує байти з диска, обчислює хеш і звіряє символи такт-у-такт. Якщо модель змінила хоча б один символ чи змістила індекс, твердження маркується як `HALLUCINATED_QUOTE`.
 3. **Звірка числових екстремумів та розмірностей:** якщо висновок містить числове значення (наприклад, поріг тиску 16 бар), числовий екстрактор перевіряє факт його наявності всередині самої верифікованої цитати.
 
 Показник нульових галюцинацій (*Zero-Hallucination Rate*, ZHR) визначається як частка стверджувальних відповідей системи $`\mathcal{C}_{\mathrm{asserted}}`$, які мають повний побайтовий ланцюг доведеного заземлення у першоджерело $`\mathcal{C}_{\mathrm{grounded}}`$:
@@ -143,7 +143,7 @@ sequenceDiagram
     autonumber
     participant Gen as Генератор гіпотез (SLM)
     participant Falsifier as Попперіанський фальсифікатор
-    participant Gate as Хостовий шлюз кастодії
+    participant Gate as Хостовий шлюз кустодії
     participant Verifier as Детерміноване ядро знань
 
     Gen->>Falsifier: Кандидатний факт F+ (Ствердження)
@@ -156,7 +156,7 @@ sequenceDiagram
     Gate->>Gate: Звірка побайтових хешів SHA-256 для цитат F+ і F-
     alt Хеш спотворено або цитата відсутня
         Gate-->>Gen: Відмова HALLUCINATED_QUOTE
-    else Байтову кастодію підтверджено
+    else Байтову кустодію підтверджено
         Gate->>Verifier: Допущені пропозиції (F+, F-)
         deactivate Gate
         activate Verifier
@@ -177,7 +177,7 @@ sequenceDiagram
 
 Натомість застосування граматично керованого декодування GBNF у поєднанні з контрастними попперіанськими парами $`(F^+, F^-)`$ забезпечило:
 1. **0{,}00 % синтаксичного браку:** жодного пошкодженого токена чи невалідного синтаксичного дерева AST завдяки логітному маскуванню на рівні софтмакса;
-2. **Абсолютну фальсифікованість знань:** ядро EVM детерміновано довело всі позитивні факти $`F^+`$, спираючись на байтову кустодію цитат першоджерел у регістрі `%ebx`, та детерміновано спростувало синтезовані контрприклади $`F^-`$ із дефітерними пропусками (`DEFEATER_OMISSION`) або інверсією деонтичної модальності (`DEONTIC_MODALITY_INVERSION`);
+2. **Абсолютну фальсифікованість знань:** ядро EVM [[15]](#src-15) детерміновано довело всі позитивні факти $`F^+`$, спираючись на байтову кустодію цитат першоджерел у регістрі `%ebx`, та детерміновано спростувало синтезовані контрприклади $`F^-`$ із дефітерними пропусками (`DEFEATER_OMISSION`) або інверсією деонтичної модальності (`DEONTIC_MODALITY_INVERSION`);
 3. **Бездоганний показник** ($`\mathrm{ZHR} = 1{,}000000`$): жоден непідтверджений чи суперечливий факт не проник у репозиторій знань, а температурний запас кристала під час активного охолодження склав $`+56^\circ\text{C}`$ до порогу програмного тротлінгу (99°C).
 
 ```mermaid
@@ -630,7 +630,7 @@ func TestAntiHallucination(t *testing.T) {
 
 Дійсне подолання галюцинацій досягається архітектурним розподілом ролей:
 1. Мовна модель виступає виключно генератором пропозицій і семантичним інтерпретатором неструктурованого тексту.
-2. Детерміновані шлюзи на основі граматик, побайтового контролю цитат за гешами SHA-256 та предикатних словників онтології забезпечують стовідсотковий відсів вигадок ($`\text{ZHR} = 1{,}00`$).
+2. Детерміновані шлюзи на основі граматик, побайтового контролю цитат за хешами SHA-256 та предикатних словників онтології забезпечують стовідсотковий відсів вигадок ($`\text{ZHR} = 1{,}00`$).
 3. Природний епістемічний дефіцит розв'язується не фальсифікацією фактів, а типізованою безпечною відмовою ($`\text{FCP} = 100\%`$) або сократівським діалогом через символьні абдуктивні замикання за Чарльзом Пірсом.
 4. Предикатні щити гарантують динамічну безпеку виконавчих приводів за мілісекундні інтервали часу.
 5. Накопичені верифіковані знання слугують еталоном для донавчання моделей через DPO та цільового машинного забування застарілих норм.
@@ -654,7 +654,7 @@ func TestAntiHallucination(t *testing.T) {
 |---|---|
 | Машинна галюцинація (конфабуляція) | генерація мовною моделлю синтаксично правдоподібного тексту, який не має підтвердження у зареєстрованих першоджерелах |
 | Епістемічний дефіцит | стан неповноти знань, за якого наявних фактів і правил недостатньо для категоричного дедуктивного висновку |
-| Побайтовий шлюз допуску | детермінований програмний модуль, що верифікує точний діапазон байтів цитати та її криптографічний геш у незмінному файлі |
+| Побайтовий шлюз допуску | детермінований програмний модуль, що верифікує точний діапазон байтів цитати та її криптографічний хеш у незмінному файлі |
 | Коефіцієнт нульових галюцинацій (ZHR) | частка стверджувальних відповідей системи, які спираються на побайтово доведені цитати першоджерел |
 | Шлюз безпечної відмови (Fail-Closed) | архітектурний принцип примусового переходу системи в режим відмови від твердження при виявленні неповноти знань |
 | Абдуктивне замикання | логічне виведення найбільш імовірної відсутньої передумови за відомим правилом і спостережуваним наслідком |
@@ -682,14 +682,14 @@ func TestAntiHallucination(t *testing.T) {
 | FTTI | Fault Tolerant Time Interval, інтервал часу стійкості до відмов |
 | UCUM | Unified Code for Units of Measure, єдиний код для одиниць вимірювання |
 | JSON-LD | JavaScript Object Notation for Linked Data, формат зв'язаних даних |
-| SHA | Secure Hash Algorithm, безпечний алгоритм гешування |
+| SHA | Secure Hash Algorithm, безпечний алгоритм хешування |
 
 ## Джерела
 1. <a id="src-1"></a>Adam Tauman Kalai, Santosh S. Vempala. *Calibrated Language Models Must Hallucinate*. In *Proceedings of the 56th Annual ACM Symposium on Theory of Computing (STOC 2024)*, 2024. [DOI](https://doi.org/10.1145/3618260.3649777). Див. також: Adam Tauman Kalai, Ofir Nachum, Santosh S. Vempala, Edwin Zhang. *Evaluating large language models for accuracy incentivizes hallucinations*. Nature, 2026. [DOI](https://doi.org/10.1038/s41586-026-10549-w).
 2. <a id="src-2"></a>Ziwei Ji, Nayeon Lee, Rita Frieske, Tiezheng Yu, Dan Su, Yan Xu, Etsuko Ishii, Ye Jin Bang, Andrea Madotto, Pascale Fung. *Survey of Hallucination in Natural Language Generation*. ACM Computing Surveys, 55(12), 2023, pp. 1–38. [DOI](https://doi.org/10.1145/3571730).
 3. <a id="src-3"></a>Ilia Shumailov, Zakhar Shumaylov, Yiren Zhao, Nicolas Papernot, Ross Anderson, Yarin Gal. *AI models collapse when trained on recursively generated data*. Nature, 631, 2024, pp. 755–759. [DOI](https://doi.org/10.1038/s41586-024-07566-y).
 4. <a id="src-4"></a>Brandon T. Willard, Rémi Louf. *Efficient Guided Generation for Large Language Models*. arXiv preprint arXiv:2307.09702, 2023. [arXiv](https://arxiv.org/abs/2307.09702).
-5. <a id="src-5"></a>Charles Sanders Peirce. *Pragmatism as a Principle and Method of Right Thinking: The 1903 Harvard Lectures on Pragmatism*. Редакція Patricia Ann Turrisi, State University of New York Press, 1997.
+5. <a id="src-5"></a>Charles Sanders Peirce. *Pragmatism as a Principle and Method of Right Thinking: The 1903 Harvard Lectures on Pragmatism*. За редакцією Patricia Ann Turrisi, State University of New York Press, 1997.
 6. <a id="src-6"></a>Bettina Könighofer, Roderick Bloem et al. *Shielded Reinforcement Learning*. In *Proceedings of the AAAI Conference on Artificial Intelligence*, 32(1), 2018. [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/11674).
 7. <a id="src-7"></a>Shai Shalev-Shwartz, Shaked Shammah, Amnon Shashua. *On a Formal Model of Safe and Scalable Self-Driving Cars*. arXiv preprint arXiv:1708.06374, 2017. [arXiv](https://arxiv.org/abs/1708.06374).
 8. <a id="src-8"></a>Rafael Rafailov, Archit Sharma, Eric Mitchell, Christopher D. Manning, Stefano Ermon, Chelsea Finn. *Direct Preference Optimization: Your Language Model is Secretly a Reward Model*. In *Advances in Neural Information Processing Systems (NeurIPS 2023)*, 36, 2023. [NeurIPS](https://proceedings.neurips.cc/paper_files/paper/2023/hash/a85b405ed65c6477a4fe8302b5e06ce7-Abstract-Conference.html).
