@@ -10,7 +10,7 @@
 
 ## Abstract
 
-This chapter investigates the architectural principles, engineering patterns, and mathematical models of Knowledge Acquisition Systems (*Knowledge Acquisition Systems*, KAS), which function as protective admission control gates preparing data for evidence-governed expert systems. KAS provides deterministic conversion of unstructured corporate technical corpora into verified, legally non-repudiable engineering knowledge bases, strictly preventing unverified assertions or hallucinations from penetrating the security perimeter of the inference engine. The fundamental risks of undifferentiated connectivity between generative language models and unstructured document stores are analyzed, three corporate maturity levels of knowledge management are systematized, and eight critical knowledge engineering anti-patterns identified in industrial outages during 2024–2026 are unpacked (from the brute-force scaling illusion and flat cosine vector RAG to the prohibitive overhead of W3C RDF/OWL triplestores). The multi-stage KAS pipeline is established, incorporating multi-level format detection, protection against malicious inputs and prompt injections, layout noise filtering heuristics, and byte-level quotation custody. The author presents empirical findings from an experimental knowledge discovery campaign conducted across a ten-thousand-document corpus of technical specifications. Finally, the chapter formalizes the mathematical apparatus of fact selection (information entropy, Kullback–Leibler divergence, TF-IDF), operational pipeline performance metrics, a bi-temporal validity tracking model (Transaction Time vs. Valid Time), and the formal protocols governing certification releases and revocations of an expert system knowledge base.
+This chapter investigates the architectural principles, engineering patterns, and mathematical models of Knowledge Acquisition Systems (*Knowledge Acquisition Systems*, KAS), which function as protective admission control gates preparing data for evidence-governed expert systems. KAS provides deterministic conversion of unstructured corporate technical corpora into verified, legally non-repudiable engineering knowledge bases, strictly preventing unverified assertions or hallucinations from penetrating the security perimeter of the inference engine. The fundamental risks of undifferentiated connectivity between generative language models and unstructured document stores are analyzed, three corporate maturity levels of knowledge management are systematized, and eight critical knowledge engineering anti-patterns identified in industrial outages during 2024–2026 are unpacked (from the brute-force scaling illusion and flat cosine vector RAG to the prohibitive overhead of W3C RDF/OWL triplestores). This chapter introduces the methodology of Project Knowledge Reconnaissance (*Project Knowledge Reconnaissance*, PKR) and a four-layer artifact stratigraphy of corporate repositories with traceability gap detection. An algorithm for two-dimensional geometric reconstruction of microelectronics tables in PDF with adaptive grid alignment and deterministic inheritance of UCUM units of measure is defined. The concept of epistemic geology based on the Knowledge Density Index (*Knowledge Density Index*, KDI) and an entropy slag gate is formulated. Deterministic translation of IEEE 1685 IP-XACT and ARM CMSIS-SVD hardware metamodels in 64-bit address arithmetic with deontic register space control is presented, along with a two-pass technical requirements compiler based on dependency parsing (*Dependency Parsing*) and 7-dimensional SI dimension vectors. The chapter provides empirical findings from the author's research on knowledge detection across a ten-thousand-document corpus of technical specifications, pre-ingestion contradiction check mechanisms (*Pre-Ingestion Contradiction Check*), a dual temporal accounting model of validity (Transaction Time vs. Valid Time), and protocols for certification release and revocation of an expert system knowledge base.
 
 An engineer receives a project documentation directory containing several thousand files, years of wiki history, issue tracker dumps, and vendor specification archives, facing the immediate imperative to determine what remains valid, what represents an unapproved draft, what belongs to an external project, and what may legitimately be exposed to automated consumers. The simplest path appears self-evident: connect all sources directly to a large language model. In doing so, the model ingests an indiscriminate mixture of superseded requirements, exploratory drafts, duplicated design decisions, private scratchpads, and confidential partner data. It will answer with unyielding confidence and err persuasively, because raw text does not inherently declare which requirement was formally approved and which was long ago rejected.
 
@@ -25,6 +25,62 @@ A Knowledge Acquisition System (*Knowledge Acquisition System*, KAS) is the soft
 KAS is not an inference engine and does not become an expert system merely because it indexes documents, constructs a graph, or executes classifiers. KAS is strictly accountable for the quality, validity, availability, access governance, and provenance of source material; the expert system couples this material with case-specific operational facts and formal inference rules to derive an explained, mathematically sound conclusion. This separation of concerns does not diminish KAS; rather, it prevents the fatal conflation of deterministic knowledge provisioning with automated reasoning.
 
 Partitioning a document into chunks does not, in itself, create knowledge. A subset of chunks conveys substantive domain assertions, another represents boilerplate formatting, and yet another loses semantic coherence when severed from surrounding context. A chunk matures into a knowledge object only after undergoing formal typing, layout pruning, contextual enrichment with metadata, and rigorous applicability verification. The subsequent sections illustrate how KAS navigates a candidate through this verification lifecycle.
+
+### 1.1. Project Knowledge Reconnaissance (PKR) Paradigm and Artifact Stratigraphy
+
+Traditional approaches to integrating technical documentation into corporate knowledge bases treat repositories as static stores of unstructured text. In complex engineering projects, this approach introduces critical risks: obsolete engineering requirements blend with active blueprints, and microcontroller firmware operates on peripheral addresses already superseded by the semiconductor vendor.
+
+The paradigm of **Project Knowledge Reconnaissance (*Project Knowledge Reconnaissance*, PKR)** radically transforms this perspective. Instead of passive document ingestion, the KAS subsystem executes proactive geological core drilling across the organization's document and code repositories. The objective of PKR is not merely word indexing, but the systematic detection of topological and semantic gaps (*Knowledge Blindspots*) between normative safety mandates, architectural design specifications, driver source code, and hardware-in-the-loop test logs.
+
+The enterprise document and code corpus is modeled as a multi-layered geological formation, where each stratum possesses strictly defined legal and regulatory authority:
+
+1. **Normative Layer (*Normative Layer*):** international and industrial functional safety standards (ISO 26262, IEC 61508, DO-178C), regulatory compliance statutes, and certified stakeholder requirements. This stratum constitutes the axiomatic foundation of the system, commanding absolute truth precedence.
+2. **Design Layer (*Design Layer*):** recorded architectural decisions, conceptual system models, Interface Control Documents (ICD), and requirements traceability matrices.
+3. **Execution Layer (*Execution Layer*):** low-level driver and firmware source code, register space descriptors (SVD, IP-XACT), linker configuration scripts, binary images, and build definitions.
+4. **Evidence Layer (*Evidence Layer*):** hardware-in-the-loop (HIL) test reports, static code analysis outputs, branch coverage matrices, formal verification logs, and open issue tracker tickets.
+
+```mermaid
+flowchart TB
+    accTitle: Artifact stratigraphy and traceability gap detection in PKR paradigm
+    accDescr: Four strata of technical legacy (normative, design, execution, evidence) and detection of structural gaps between them using PKR.
+
+    subgraph STRAT["<b>Geological Artifact Stratigraphy (PKR)</b>"]
+        L1["<b>Normative Layer</b><br/>ISO 26262 · IEC 61508 · DO-178C · Regulations"]
+        L2["<b>Design Layer</b><br/>Architectural decisions · ICD · SysML models"]
+        L3["<b>Execution Layer</b><br/>C/Rust source code · SVD/IP-XACT · Scripts"]
+        L4["<b>Evidence Layer</b><br/>HIL test protocols · Static analysis reports · Traces"]
+    end
+
+    subgraph GAPS["<b>Blindspot Detection</b>"]
+        G1{"Normative clause<br/>without tests / design?"}
+        G2{"Code without formal<br/>system requirements?"}
+        G3{"Term in documentation<br/>without glossary definition?"}
+    end
+
+    L1 --> G1
+    L2 --> G1
+    L3 --> G2
+    L4 --> G2
+    L1 -.-> G3
+    L2 -.-> G3
+
+    G1 -->|"Traceability gap escalation"| ESC1["<b>Requirements Traceability Defect</b>"]
+    G2 -->|"Traceability gap escalation"| ESC2["<b>Unverified 'Dead' Code</b>"]
+    G3 -->|"Traceability gap escalation"| ESC3["<b>Semantic Ambivalence</b>"]
+
+    classDef strat fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#1a237e;
+    classDef gap fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef esc fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+
+    class L1,L2,L3,L4 strat;
+    class G1,G2,G3 gap;
+    class ESC1,ESC2,ESC3 esc;
+```
+
+Rather than passively awaiting user search queries, PKR algorithms execute a proactive topological audit of inter-stratum links. This automates the discovery of system blindspots (*Knowledge Blindspots*):
+- normative requirements of a standard lacking projections to design specifications or validation test coverage;
+- executable sections of controller firmware lacking corresponding requirements in the design layer (undocumented features or attack vectors);
+- implicit technical terms and acronyms actively cited across vendor documentation without entry into the project's canonical glossary.
 
 ## 2. Risks of Undifferentiated Document Ingestion and Knowledge System Maturity Levels
 
@@ -108,6 +164,9 @@ The class diagram contrasts the architecture of a high-performance binary Knowle
 
 ```mermaid
 classDiagram
+    accTitle: Binary knowledge pack container layout
+    accDescr: Class diagram of KnowledgePackContainer with canonical sources, deontic norms, and CSR matrices.
+
     class KnowledgePackContainer {
         +Header64Aligned header
         +SourceSection canonical_sources
@@ -352,6 +411,37 @@ A modern enterprise architecture expands parsing capabilities not by blindly rep
 
 A "newer model" does not constitute a valid engineering criterion for upgrades: the sole criterion is a statistically verified reduction in errors across target enterprise document formats, subject to preserving provenance fidelity, access governance, execution latency budgets, and rollback capabilities. For engineering knowledge, preserving semantic structure is vital: section headers, page numbers, tables, figure captions, requirement identifiers, clause numbers, code listings, and test cases. In the author's architecture, chunking respects structural semantics rather than arbitrary token counts: DOCX files are partitioned along heading hierarchies and table row boundaries, PDFs along formal section boundaries, and XLSX sheets into record groups sharing a primary key in the first column; every chunk retains a stable identifier, source path, and heading hierarchy. Detailed chunking strategies, initial triage, and vectorization algorithms are examined in [Chapter 8](ch08-engineering-artifacts-as-data.md); for knowledge acquisition, the critical invariant is that search indices never ingest unvetted files, but only triaged, typed chunks bound to verifiable sources and security labels. Whether this structural preparation provides measurable utility was evaluated empirically.
 
+### 10.1. Two-Dimensional Spatial Table Reconstruction in PDF for Microelectronics
+
+Two-dimensional spatial reconstruction of tabular structures in PDF documentation is a critical defense line for data integrity, as over $`80\%`$ of fundamental microcontrollers and semiconductor component parameters (absolute maximum ratings, bus timing diagrams, supply currents, operating temperature boundaries) are published exclusively as complex matrices. Sequential flat text extraction from the PDF instruction stream inevitably destroys the document's spatial grid: naive parsers break subscript and superscript indices ($`V_{\mathrm{DD}}`$, $`T_j`$, $`I_{\mathrm{OL}}`$), fragment multi-line descriptions across cells, or drop physical units of measure, rendering subsequent formal verification impossible.
+
+To deterministically reconstruct table topology, a spatial computational geometry model of bounding boxes (*Bounding Boxes*) is applied:
+
+```math
+\mathrm{Overlap}(F_a, F_b) = \frac{\min(Y_{a2}, Y_{b2}) - \max(Y_{a1}, Y_{b1})}{\min(H_a, H_b)} \ge \theta_{\mathrm{vertical}}
+```
+
+Parameters and dimensions of vertical overlap:
+
+- $F_a, F_b$ are contiguous text fragments within a page;
+- $Y_{a1}, Y_{a2}$ and $Y_{b1}, Y_{b2}$ denote the bottom and top vertical coordinates of the fragment bounding boxes (in typographic points, $\text{pt}$);
+- $H_a = Y_{a2} - Y_{a1}$ and $H_b = Y_{b2} - Y_{b1}$ define the glyph height of the respective fragments ($\text{pt}$);
+- $\theta_{\mathrm{vertical}} = 0.50$ is a dimensionless engineering row-binding threshold.
+
+**System Action (Actionable Closed Loop):**
+
+1. **Runtime and Control Flow Decisions:** If the calculated value $\mathrm{Overlap}(F_a, F_b) \ge 0.50$, the algorithm coalesces fragments into a single logical table row, compensating for the vertical glyph offset of subscript indices relative to the dominant font baseline. If $\mathrm{Overlap} < 0.50$, a new row is instantiated. Inter-column boundaries are detected without hardcoded pixel constants—by evaluating the local minima of the horizontal projection histogram of sparse text.
+2. **Hardware Dimensioning and Resources:** The spatial coalescing algorithm is implemented using a sweep-line (*Sweep-Line*) paradigm with $O(N \log N)$ time complexity and $O(N)$ memory complexity. For a 100-page microcontroller datasheet ($N = 25,000$ fragments), the maximum active bounding box buffer consumes $3.2\,\text{MB}$ of RAM, guaranteeing deterministic execution without latency spikes even on embedded engineering workstations.
+3. **Worked Numerical Example:** Consider a primary text fragment $F_a = [100, 200, 140, 212]$ ($H_a = 12\,\text{pt}$) and a subscript index fragment $F_b = [142, 196, 160, 206]$ ($H_b = 10\,\text{pt}$). Then $\min(212, 206) = 206$ and $\max(200, 196) = 200$. The vertical intersection height is $206 - 200 = 6\,\text{pt}$. The minimum height is $\min(12, 10) = 10\,\text{pt}$. This yields $\mathrm{Overlap}(F_a, F_b) = 6 / 10 = 0.60 \ge 0.50$. The system deterministically coalesces the fragments into a single parameter identifier $V_{\mathrm{DD}}$.
+
+Every extracted numerical table cell $C_{i,j}$ is governed by strict dimension inheritance from the column header $H_j$ under the international UCUM (*Unified Code for Units of Measure*) standard [[31]](#src-31):
+
+```math
+\mathrm{Atom}(C_{i,j}) = \langle \mathrm{Param} = \mathrm{Name}_i, \, \mathrm{Value} = \mathrm{Val}_{i,j}, \, \mathrm{Unit} = \mathrm{ResolveUnit}(H_j), \, \mathrm{BBox} = \mathrm{Union}(\mathrm{Box}_{i,j}, \mathrm{Box}_{H_j}) \rangle
+```
+
+If the $\mathrm{ResolveUnit}(H_j)$ function fails to resolve a valid unit of measure in either the cell text or the column header, the admission gateway blocks the synthesis of a quantitative inference rule and logs a `DATA_DEFECT_NO_UNIT` quarantine event. The unified spatial coordinate bounding box $\mathrm{BBox} = [X_1, Y_1, X_2, Y_2]$ is recorded in the knowledge object passport, providing human auditors with instantaneous visual custody of the original source in the PDF viewing pane.
+
 ## 11. Author's Empirical Experiment on Knowledge Discovery in Technical Documentation
 
 What did a large-scale empirical experiment on knowledge discovery across a massive normative corpus reveal? The author's research [[12]](#src-12) investigated not whether a generative model could produce fluent summaries, but a much more rigorous research question: can a vast corpus of technical specifications be deterministically transformed into compact, traceable knowledge object candidates, and does this structured representation yield measurable advantages over raw unstructured text? The study was conducted as an isolated experimental pilot outside the production KAS, establishing benchmark data rather than ongoing operational telemetry.
@@ -483,6 +573,50 @@ The priority metric $R(c)$ is bounded within $[0, 1]$. A depressed score routes 
 
 In the author's architecture, candidate chunk triage (valid, suspicious, garbage) with confidence scoring, knowledge density estimation, and hybrid BM25/dense vector retrieval with late fusion function reliably in production. Deduplication is partially implemented (exact hash matching and dense vector clustering without MinHash or SimHash), as is source trust weighting (relying on heuristics rather than formal Dempster–Shafer evidence theory). High retrieval scores and term recall never guarantee factual correctness: a generated output can reverse agent roles, omit negations, or substitute MUST with MAY. Therefore, production safety requires verifying every synthesized claim directly against its underlying evidence chunk: confirming that subject, predicate, negation, and deontic modality remain strictly preserved.
 
+### 12.1. Epistemic Geology: Knowledge Density Index (KDI) and Entropy Slag Gate
+
+Epistemic geology treats technical documentation corpora as industrial strata of engineering ore, where critical normative constraints and calibration tables are submerged beneath megabytes of navigational boilerplate, scripts, privacy notices, and legal disclaimers. Automated data collection without prior petrographic text analysis results either in storage saturation with meaningless web slag or the catastrophic deletion of valuable register tables that naive parsers erroneously discard as "random noise."
+
+To quantify the engineering value of text chunks, the Knowledge Density Index (*Knowledge Density Index*, KDI) metric is established:
+
+```math
+\mathrm{KDI} = \frac{w_d \cdot N_{\mathrm{deontic}} + w_e \cdot N_{\mathrm{entities}} + w_t \cdot N_{\mathrm{tables}} + w_q \cdot N_{\mathrm{quantities}}}{L_{\mathrm{tokens}}}
+```
+
+Parameters and weighting coefficients of knowledge density:
+
+- $N_{\mathrm{deontic}}$ is the count of deontic operators (`SHALL`, `MUST`, `PROHIBITED`, `REQUIRED`);
+- $N_{\mathrm{entities}}$ is the count of recognized hardware or software entities within the project ontology;
+- $N_{\mathrm{tables}}$ is the number of structured tabular rows and linked parameter matrices;
+- $N_{\mathrm{quantities}}$ is the count of numerical values with validated SI physical units of measure;
+- $L_{\mathrm{tokens}}$ is the total chunk length in lexical analyzer tokens;
+- $w_d = 0.35, \, w_e = 0.25, \, w_t = 0.25, \, w_q = 0.15$ are empirically calibrated weighting coefficients ($\sum w = 1.00$).
+
+**System Action (Actionable Closed Loop):**
+
+1. **Runtime and Control Flow Decisions:** Based on the calculated $\mathrm{KDI}$, the admission gateway categorizes chunks into three stratigraphic tiers:
+   - $\mathrm{KDI} \ge 0.15 \implies \mathrm{RICH\_ORE}$ (rich ore): the chunk is immediately routed to the rule compiler and predicate synthesizer;
+   - $0.05 \le \mathrm{KDI} < 0.15 \implies \mathrm{POOR\_ORE}$ (poor ore): the chunk requires deep dependency parsing and context expansion;
+   - $\mathrm{KDI} < 0.05 \implies \mathrm{SLAG}$ (informational slag): the block is dropped and discarded without indexing in vector space.
+2. **Hardware Dimensioning and Infrastructure Limits:** Slag filtering at the threshold $\mathrm{KDI} < 0.05$ reduces stored vector embeddings and relation graphs by $68\%$, saving $14.2\,\text{GB}$ of RAM across indexing cluster nodes and accelerating retrieval latency by a factor of $3.4$.
+3. **Worked Numerical Example:** Consider a technical block with length $L_{\mathrm{tokens}} = 120$ tokens containing $N_{\mathrm{deontic}} = 6$ normative requirements, $N_{\mathrm{entities}} = 14$ registered microcontroller entities, $N_{\mathrm{tables}} = 1$ mode table row, and $N_{\mathrm{quantities}} = 8$ voltage and current parameters. The numerator evaluates to: $0.35 \cdot 6 + 0.25 \cdot 14 + 0.25 \cdot 1 + 0.15 \cdot 8 = 2.10 + 3.50 + 0.25 + 1.20 = 7.05$. The index is computed as $\mathrm{KDI} = 7.05 / 120 = 0.05875$. Since $0.05 \le 0.05875 < 0.15$, the gateway deterministically classifies the block as $\mathrm{POOR\_ORE}$ and assigns it to the deep syntactic parsing pipeline rather than discarding it.
+
+A distinct hazard is presented by hexadecimal register memory maps, which, due to high density of numerical codes and symbols, are frequently discarded by naive text filters as "random binary junk." To safeguard them, byte-level Shannon entropy is computed:
+
+```math
+H(X) = -\sum_{i=0}^{255} P(b_i) \log_2 P(b_i)
+```
+
+where $P(b_i)$ denotes the empirical probability of occurrence of a byte with value $b_i \in [0, 255]$ in the analyzed block $X$.
+
+**System Action (Actionable Closed Loop):**
+
+1. **Runtime and Control Flow Decisions:** When $H(X) > 7.20\,\text{bits/byte}$, the block exhibits high entropy characteristic of encrypted or compressed binary streams. The gateway activates a lexical signature scanner: if the block contains `0x...` hexadecimal sequences or `[31:0]` bit-range patterns, it receives the status `HARDWARE_HEX_MAP` and is forcefully routed to the register parser. If hardware signatures are absent, the block is isolated in quarantine as an alien binary artifact.
+2. **Hardware Dimensioning and Resources:** Constructing the 256-element byte histogram executes non-dynamically within a $1\,\text{KB}$ buffer in CPU L1 cache, guaranteeing execution time under $12\,\mu\text{s}$ per $4\,\text{KB}$ block on ARM Cortex-A78AE cores.
+3. **Worked Numerical Example:** A $4\,\text{KB}$ peripheral address map block yields entropy $H(X) = 7.34\,\text{bits/byte}$. The signature scanner detects 32 occurrences of `0xF020...` hexadecimal addresses, preventing spurious rejection and ensuring preservation of the register map.
+
+All admitted fragments enforce absolute bit-for-bit provenance (*Bit-for-Bit Provenance*): newline normalization (`CRLF` $\to$ `LF`) is strictly forbidden on raw storage files, and citation offsets rely exclusively on $[\mathrm{byte\_start}, \mathrm{byte\_end}]$ intervals relative to the canonical container.
+
 ## 13. Operational Performance and Quality Metrics of KAS
 
 Even an impeccably designed knowledge pipeline degrades over time: connectors break, curation backlogs expand, revoked chunks linger in intermediate caches, and security policies drift into contradiction. Without dedicated telemetry, degradation surfaces only after a catastrophic reasoning failure or data leak. Consequently, knowledge acquisition demands dedicated operational metrics alongside retrieval evaluation:
@@ -512,9 +646,11 @@ Metadata completeness parameters:
 
 **Worked Numerical Example:**
 An ingestion batch of $N = 500$ chunks requires $\lvert M \rvert = 6$ mandatory fields (totalling 3,000 audit points). The validation gate identifies 45 missing secondary technical tags:
+
 ```math
 C_{\text{meta}} = \frac{3\,000 - 45}{3\,000} = \frac{2\,955}{3\,000} = 0.985 \ge 0.98
 ```
+
 Because $`C_{\text{meta}} = 0.985 \ge 0.98`$ and all critical security attributes achieve 100% compliance, the batch is admitted to vectorization.
 
 Revocation latency is dictated by the slowest downstream replica:
@@ -535,9 +671,11 @@ Revocation latency parameters:
 
 **Worked Numerical Example:**
 A superseded standard revision is revoked at $`t_{\text{revoke}} = 10{:}00{:}00`$. The primary knowledge base completes deletion at $10{:}01{:}15$, the vector index at $10{:}02{:}30$, and a replica cache at $10{:}04{:}20$:
+
 ```math
 L_{\text{revoke}}(s) = 10{:}04{:}20 - 10{:}00{:}00 = 260\,\text{s} \le 300\,\text{s}
 ```
+
 The operation satisfies the SLO deadline without requiring emergency API gateway throttling.
 
 Steady-state curation queue dynamics are governed by Little\'s Law [[14]](#src-14):
@@ -558,13 +696,17 @@ Queueing parameters:
 
 **Worked Numerical Example:**
 Given an arrival rate $\lambda = 50\,\text{candidates/day}$ and a mean review latency $W = 4\,\text{days}$:
+
 ```math
 L = 50 \cdot 4 = 200\,\text{candidates}
 ```
+
 Assuming an average candidate size $`S_{\mathrm{item}} = 64\,\text{KB}`$, the persistent memory footprint required in Redis is:
+
 ```math
 M_{\mathrm{queue}} = 200 \cdot 64\,\text{KB} = 12\,800\,\text{KB} = 12.5\,\text{MB}
 ```
+
 If arrival rates surge to $\lambda = 100$ without expanding expert capacity, the queue swells to 400 elements ($25\,\text{MB}$), hitting the $`L_{\mathrm{max}}`$ threshold and triggering automated crawler backpressure.
 
 In the author's implementation, the operator dashboard surfaces triage categories, chunk confidence scores, relevance and knowledge density, deduplication states, source freshness and reliability, pipeline progression, delivery health, and consumer feedback (admitted, cited in reasoning, duplicate, rejected, obsolete, policy-blocked). Missing capabilities include tracking rejection rates broken down by reason codes, calculating the proportion of chunks derived from certified baselines, displaying confidence calibration diagrams, and monitoring validity boundary violations: the dashboard reveals what was collected, but does not yet quantify evidential certitude. When the knowledge acquisition dashboard flashes red, fluent model answers remain perilous illusions.
@@ -585,6 +727,41 @@ When ingesting requirements, systems models, and simulation datasets, it is temp
 - **FMI 3.0.2** (*Functional Mock-up Interface*) [[20]](#src-20) and digital twin frameworks provide a standardized contract for model exchange, co-simulation, and scheduled execution. KAS links a requirement not merely to a scalar value in a chart, but to the Functional Mock-up Unit (*Functional Mock-up Unit*, FMU), model version, parameter sets, solver tolerances, simulation outputs, and underlying experimental assumptions.
 
 KAS delivers pre-existing structured engineering semantics directly to the expert system, rather than forcing the organization to destroy structure upon ingestion.
+
+### 15.1. Deterministic Translation of IEEE 1685 IP-XACT and ARM CMSIS-SVD Hardware Metamodels
+
+Translating low-level hardware descriptions into the symbolic knowledge base of an expert system is a critical facet of embedded systems engineering, where microcontrollers and Systems-on-Chip (SoC) such as Infineon AURIX, ARM Cortex-R/M, or NXP S32K incorporate tens of thousands of hardware control registers. Descriptions of these components are supplied by semiconductor manufacturers in formalized XML schemas: **IEEE 1685 IP-XACT** [[29]](#src-29) and **ARM CMSIS-SVD** [[30]](#src-30).
+
+Naive ingestion of such metamodels via standard scripting engines carries a fatal latent risk: using single-precision floating-point numbers (`float32`) to store memory addresses truncates lower-order bits beyond $`16\,\text{MB}`$ ($`2^{24}`$), because the `float32` mantissa provides only 24 bits of precision. As a result, register addresses such as `0xF0000004` are catastrophically rounded to `0xF0000000`, inducing address collisions and corrupting hardware peripheral reasoning.
+
+To guarantee absolute precision, translation operates exclusively using unsigned 64-bit integer arithmetic via the deterministic address expansion formula:
+
+```math
+A_{\mathrm{phys}} = A_{\mathrm{base}} + \Delta_{\mathrm{block}} + \Delta_{\mathrm{reg}} + i \cdot \Delta_{\mathrm{dim}}, \quad i \in [0, N_{\mathrm{dim}} - 1]
+```
+
+Parameters and address offsets:
+
+- $A_{\mathrm{phys}}$ is the resulting absolute physical register address in controller memory (`uint64` type);
+- $A_{\mathrm{base}}$ denotes the base physical address of the peripheral module (e.g., CAN controller or GTM timer);
+- $\Delta_{\mathrm{block}}$ is the address sub-block offset relative to module base;
+- $\Delta_{\mathrm{reg}}$ is the target register offset within the sub-block;
+- $\Delta_{\mathrm{dim}}$ defines the address stride when indexing a register array;
+- $N_{\mathrm{dim}}$ is the array dimension (number of hardware channels), and $i$ is the channel index.
+
+**System Action (Actionable Closed Loop):**
+
+1. **Runtime and Control Flow Decisions:** For each generated addressing rule, the evaluator enforces the strict invariant $A_{\mathrm{phys}} + S_{\mathrm{reg}} \le \mathrm{MAX\_ADDR}$ (where $S_{\mathrm{reg}}$ is the register width in bytes). Upon detecting arithmetic overflow or range overlap across distinct peripheral modules, the knowledge compiler immediately aborts fact synthesis with status `PARSER_ADDR_OVERFLOW` and triggers an engineering alert.
+2. **Hardware Dimensioning and Resources:** Using aligned 64-bit integers enables direct mapping of address descriptors into memory protection unit (MPU / SMMU) tables with zero conversion overhead ($0\,\text{ns}$ penalty per inference cycle).
+3. **Worked Numerical Example:** For an Infineon AURIX communication module: $A_{\mathrm{base}} = \mathtt{0xF0200000}$, $\Delta_{\mathrm{block}} = \mathtt{0x4000}$, message configuration register offset $\Delta_{\mathrm{reg}} = \mathtt{0x0020}$, and array stride $\Delta_{\mathrm{dim}} = \mathtt{0x0040}$ for channel $i = 3$. The address evaluates to: $A_{\mathrm{phys}} = \mathtt{0xF0200000} + \mathtt{0x4000} + \mathtt{0x0020} + 3 \cdot \mathtt{0x0040} = \mathtt{0xF02040E0}$. In a system utilizing `float32` representations, the low-order bits $\mathtt{0xE0}$ would be completely obliterated, whereas the integer KAS pipeline captures the exact physical address $\mathtt{0xF02040E0}$.
+
+Hardware register access modes map unambiguously into deontic modalities within the symbolic reasoning basis:
+
+- Mode `read-only` translates into a deontic prohibition: $\mathbf{F}(\mathrm{Write}(R))$;
+- Mode `write-1-to-clear` (clearing a flag by writing one) translates into an obligation and prohibition: $\mathbf{O}(\mathrm{WriteOne}(R.\mathrm{bit})) \land \mathbf{F}(\mathrm{WriteZero}(R.\mathrm{bit}))$;
+- Mode `read-writeOnce` (configuring once after hardware reset) maps into a single-initialization permission: $\mathbf{P}(\mathrm{Init}(R)) \land \mathbf{F}(\mathrm{Reconfigure}(R))$.
+
+The KAS parser preserves exact byte offsets of XML opening and closing tags within vendor specifications, ensuring cryptographically verifiable citation custody for every hardware register.
 
 ## 16. Architecture and Software Implementation of the Knowledge Acquisition System (KAS)
 
@@ -753,6 +930,40 @@ The operator console couples structured relational views with an integrated Evid
 ```
 
 Directly within this view, the operator can execute a test verification run of the synthesized rule microcode using the integrated single-step debugger of the knowledge processor. This guarantees unbroken traceability: from raw document discovery by the crawler to step-by-step CPU register inspection during operational inference.
+
+### 16.1. Two-Pass Technical Knowledge Compiler: Dependency Parsing and 7D SI Dimensional Vectors
+
+Translating natural language engineering specifications into executable expert system microcode represents the most delicate phase of KAS operation, where heuristic regular expressions and sliding word windows systematically fail. Window constraints (such as capturing four words to the left and right of modal verb "shall") sever complex noun phrases (such as *"Core supply voltage supervisor under low-power sleep mode with external clock"*) and fatally distort passive voice (*Passive Voice*), in which over $`40\%`$ of international standard clauses are formulated. Consequently, a bus or register is mistakenly designated as the obligated actor instead of the software driver.
+
+To eliminate this vulnerability, KAS deploys a two-pass deterministic knowledge compiler. The first pass executes sentence syntactic parsing using Universal Dependencies (*Universal Dependencies*, UD) formalism [[32]](#src-32):
+
+```math
+\mathrm{Sentence} \xrightarrow{\mathrm{UD}} \langle \mathrm{Actor}: \mathrm{Handler}, \, \mathrm{Action}: \mathrm{Clear}, \, \mathrm{Target}: \mathrm{Reg}_{\mathrm{status}}, \, \mathrm{Modal}: \mathbf{O}, \, \mathrm{Precondition}: \mathrm{ClockEnable} \rangle
+```
+
+When a predicate is in passive voice (indicated by the `aux:pass` marker), the parser performs automated semantic role inversion: the nominal subject bearing the `nsubj:pass` relation is assigned as patient/target (*Target/Patient*), while the prepositional oblique agent with the `obl:agent` relation (introduced by "by") is established as the true actor (*Actor/Agent*).
+
+In the second pass, the compiler validates physical quantities and tolerance boundaries. Any engineering parameter is extracted as a closed confidence interval of engineering tolerance:
+
+```math
+I_V = [V_{\min}, V_{\max}] = [V_{\mathrm{nominal}} \cdot (1 - \delta), V_{\mathrm{nominal}} \cdot (1 + \delta)]
+```
+
+where $V_{\mathrm{nominal}}$ is the nominal value and $\delta$ denotes the relative component manufacturing tolerance (for example, $\delta = 0.10$ for a 10% spread).
+
+To prevent invalid comparison operations across heterogeneous physical dimensions, each unit of measure is encoded as a 7-dimensional integer vector of powers across the base SI units (length $L$, mass $M$, time $T$, electric current $I$, thermodynamic temperature $\Theta$, amount of substance $N$, luminous intensity $J$):
+
+```math
+\mathbf{D} = [d_L, d_M, d_T, d_I, d_\Theta, d_N, d_J] \in \mathbb{Z}^7
+```
+
+**System Action (Actionable Closed Loop):**
+
+1. **Runtime and Control Flow Decisions:** Any relational operation ($A < B$, $A \ge B$) or subtraction operation ($A - B$) is permitted if and only if operand dimension vectors are strictly identical: $\mathbf{D}_A = \mathbf{D}_B$. If the system attempts to compare threshold voltage ($\text{V}: [2, 1, -3, -1, 0, 0, 0]$) with leakage current ($\text{A}: [0, 0, 0, 1, 0, 0, 0]$), the KAS compiler immediately aborts rule synthesis with fatal error `TYPE_DIMENSION_MISMATCH` and blocks publication into working memory.
+2. **Hardware Dimensioning and Resources:** The 7-dimensional dimension vector is packed into an 8-byte machine word (7 signed `int8` bytes plus 1 alignment byte). Consequently, dimensional compatibility verification executes via a single 64-bit register comparison instruction (`CMP`) in 1 machine cycle without accessing main memory.
+3. **Worked Numerical Example:** For a microcontroller supply constraint, nominal voltage is specified as $5.0\,\text{V} \pm 10\%$, defining interval $I_V = [4.50, 5.50]\,\text{V}$. A safety requirement dictates comparison with supervisor undervoltage trip threshold $4.80\,\text{V}$. Both quantities share identical vector $\mathbf{D} = [2, 1, -3, -1, 0, 0, 0]$, verifying dimensional compatibility and permitting the formal verifier to evaluate partial tolerance overlap and generate a warning rule.
+
+---
 
 ## 17. Division of Architectural Responsibility: KAS versus RAG Systems
 
@@ -1071,6 +1282,21 @@ The grey block denotes the raw unstructured information substrate, blue blocks d
 
 When complex engineering systems are co-developed by dozens of independent contractors or competitive suppliers, knowledge acquisition transcends organizational boundaries, opening three active research frontiers. Federated ontology alignment (*federated ontology alignment*) reconciles disparate concepts and schemas across partner organizations without consolidating proprietary databases into a centralized store. Zero-knowledge proofs (*zero-knowledge proofs*, ZKP), formalized by Shafi Goldwasser, Silvio Micali, and Charles Rackoff [[28]](#src-28), enable a party to mathematically prove an assertion without revealing the underlying proprietary data; in engineering, this yields the compelling hypothesis that a subsystem supplier could prove compliance with an architectural constraint (e.g., thermal dissipation remaining within safe tolerances) to an auditor without exposing confidential PCB layouts or firmware source code. Finally, decentralized knowledge registries anchored by cryptographic attestations and incentive structures could motivate engineers to record refuted hypotheses and standard errata; this frontier remains exploratory, cited here as a research horizon rather than an immediate production pattern.
 
+### 23.1. Knowledge Detection Epistemic Filter vs. Naive Ingestion
+
+The evolutionary transition from passive document hoarding to selective knowledge discovery demands a fundamental transformation of KAS gateway architectures. Contemporary generative pipelines (particularly naive RAG pipelines) enforce a passive ingestion pattern: arbitrary incoming documents are blindly tokenized, partitioned into heuristic chunks, and stored indiscriminately in a vector store. In mission-critical engineering domains (Functional Safety, Automotive ASIL D, microelectronics), this approach induces rapid knowledge base degradation due to the accumulation of conversational noise, obsolete draft fragments, and fatal contradictions.
+
+Instead of passive ingestion, the KAS subsystem deploys an active *Knowledge Detection Filter* executing a two-stage selection:
+
+1. **Epistemic Selection Triad:**
+   Each input text chunk $`D`$ is evaluated prior to index admission across three dimensions:
+   - *Factual Saturation:* detection of deontic modalities (`SHALL`, `MUST`, `CRITICAL`), formal predicate relations, and numerical tolerance intervals with mandatory SI physical units of measure;
+   - *Ontological Grounding:* computation of intersection density between extracted terms and the project's canonical concept graph and specifications;
+   - *Epistemic Trust Score:* calculation of an integral utility metric $`\tau(D) \in [0, 1]`$. Chunks where $`\tau(D) < \tau_{\mathrm{threshold}}`$ are deterministically dropped as informational noise.
+
+2. **Pre-Ingestion Contradiction Check:**
+   Extracted predicates are cross-checked against the axiomatic core of the knowledge system prior to database persistence. If a candidate contains an assertion refuting an active certified standard (for example, contradicting diagnostic coverage mandates under ISO 26262), the system does not average conflicting norms in vector space. Instead, a formal argumentative defeater (*defeater*) is generated, the candidate is locked in quarantine, and an escalation report detailing the primary sources of both conflicting assertions is transmitted to the knowledge engineer.
+
 ## Conclusions
 
 This chapter opened with a directory containing thousands of unvetted engineering files and the dangerous temptation to "feed all documents to an AI assistant." The central conclusion of this chapter is that knowledge cannot be passively ingested; it must be provisioned through a governed pipeline where every processing stage enforces an explicit input, output, quality metric, accountable owner, quarantine condition, and revocation protocol. The chapter established:
@@ -1132,6 +1358,11 @@ Scope boundaries: The empirical figures and benchmarks presented reflect specifi
 | Zero-Knowledge Proof | *zero-knowledge proof* | A cryptographic protocol proving an assertion without revealing the underlying private data |
 | Sharding | *sharding* | Distributing a knowledge base across independent nodes via partitioning keys (defined in Chapter 7) |
 | Shard Map | *shard map* | A directory of release shards detailing placement functions and file hashes, committed to the manifest |
+| Epistemic Geology | *epistemic geology* | Methodology for analyzing and stratifying technical corpora to extract valuable knowledge ore and filter out slag |
+| Project Knowledge Reconnaissance (PKR) | *project knowledge reconnaissance* | Paradigm of proactive deep drilling across document and code bases to uncover traceability gaps |
+| Artifact Stratigraphy | *artifact stratigraphy* | Partitioning technical legacy into normative, design, execution, and evidence strata |
+| 2D Spatial Reconstruction | *2D spatial reconstruction* | Computational geometry algorithm for reconstructing table grids and cell relationships in PDF documents |
+| Knowledge Density Index (KDI) | *knowledge density index* | Quantitative metric measuring the concentration of normative requirements, entities, and physical quantities in a text chunk |
 
 ## Abbreviations
 | Abbreviation | Expansion | Meaning |
@@ -1143,8 +1374,10 @@ Scope boundaries: The empirical figures and benchmarks presented reflect specifi
 | FMU | Functional Mock-up Unit | model container conforming to the FMI standard |
 | GPU | Graphics Processing Unit | graphics processing unit |
 | HMAC | Keyed-Hash Message Authentication Code | message authentication code based on cryptographic hash and secret key |
+| IP-XACT | IEEE 1685 IP-XACT standard | standard XML metadata schema for microelectronics IP components |
 | KA | Knowledge Acquisition | knowledge acquisition |
 | KAS | Knowledge Acquisition System | knowledge acquisition system |
+| KDI | Knowledge Density Index | knowledge density index |
 | LLM | Large Language Model | large language model |
 | MIME | Multipurpose Internet Mail Extensions | standard for identifying content types |
 | NDA | Non-Disclosure Agreement | non-disclosure agreement |
@@ -1154,6 +1387,7 @@ Scope boundaries: The empirical figures and benchmarks presented reflect specifi
 | OCR | Optical Character Recognition | optical character recognition |
 | OSLC | Open Services for Lifecycle Collaboration | open specifications for lifecycle tool integration |
 | OWASP | Open Worldwide Application Security Project | open software security foundation |
+| PKR | Project Knowledge Reconnaissance | proactive project knowledge reconnaissance |
 | RAG | Retrieval-Augmented Generation | retrieval-augmented generation |
 | RBAC | Role-Based Access Control | role-based access control |
 | ReqIF | Requirements Interchange Format | standard format for requirements exchange |
@@ -1162,7 +1396,10 @@ Scope boundaries: The empirical figures and benchmarks presented reflect specifi
 | SLO | Service Level Objective | service level objective |
 | SLSA | Supply-chain Levels for Software Artifacts | security framework for software supply chain integrity |
 | SSRF | Server-Side Request Forgery | server-side request forgery attack |
+| SVD | System View Description | XML register space description format for ARM CMSIS microcontrollers |
 | SysML | Systems Modeling Language | systems modeling language |
+| UCUM | Unified Code for Units of Measure | unified code for units of measure |
+| UD | Universal Dependencies | universal dependencies framework for syntactic dependency parsing |
 | W3C | World Wide Web Consortium | World Wide Web Consortium standards organization |
 | ZKP | Zero-Knowledge Proof | zero-knowledge proof |
 | AI | Artificial Intelligence | artificial intelligence |
@@ -1198,6 +1435,10 @@ These works and industry guidelines establish the methodological foundation of t
 26. <a id="src-26"></a>Elham Tabassi. [*Artificial Intelligence Risk Management Framework (AI RMF 1.0)*](https://doi.org/10.6028/NIST.AI.100-1). NIST AI 100-1, 2023.
 27. <a id="src-27"></a>NIST. [*Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile*](https://doi.org/10.6028/NIST.AI.600-1). NIST AI 600-1, 2024.
 28. <a id="src-28"></a>Shafi Goldwasser, Silvio Micali, Charles Rackoff. [*The Knowledge Complexity of Interactive Proof Systems*](https://doi.org/10.1137/0218012). *SIAM Journal on Computing*, 18(1), 186–208, 1989.
+29. <a id="src-29"></a>IEEE. [*IEEE Standard for Device Intellectual Property Packaging, Integration, and Reuse (IEEE Std 1685-2022, IP-XACT)*](https://standards.ieee.org/ieee/1685/7414/). 2022.
+30. <a id="src-30"></a>Arm. [*CMSIS-SVD: System View Description Format, Version 1.3.9*](https://arm-software.github.io/CMSIS_5/SVD/html/index.html).
+31. <a id="src-31"></a>Gunther Schadow, Clement J. McDonald. [*The Unified Code for Units of Measure (UCUM)*](https://ucum.org/ucum.html). Regenstrief Institute.
+32. <a id="src-32"></a>Marie-Catherine de Marneffe, Christopher D. Manning, Joakim Nivre, Daniel Zeman. [*Universal Dependencies*](https://doi.org/10.1162/coli_a_00402). *Computational Linguistics*, 47(2), 255–308, 2021.
 
 ---
 

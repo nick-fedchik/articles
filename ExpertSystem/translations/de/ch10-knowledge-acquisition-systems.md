@@ -10,7 +10,7 @@
 
 ## Abstract
 
-In diesem Kapitel werden die Architekturprinzipien, Entwurfsmuster und mathematischen Modelle von Systemen der Wissensakquisition (*Knowledge Acquisition Systems*, KAS) untersucht, die als schützendes Zulassungsgateway der Datenaufbereitung für evidenzbasierte Expertensysteme fungieren. Ein KAS gewährleistet die deterministische Konvertierung unstrukturierter Korpora technischer Dokumentation in verifizierte, juristisch unanfechtbare Bestände ingenieurtechnischen Wissens und verhindert zuverlässig das Eindringen ungeprüfter Fakten oder stochastischer Halluzinationen in den Sicherheitsperimeter der Inferenzmaschine. Es werden die fundamentalen Risiken einer undifferenzierten Anbindung von Sprachmodellen an unstrukturierte Repositories analysiert, drei Reifegrade unternehmensweiter Wissensarbeit systematisiert und acht kritische Antipattern des Knowledge Engineering offengelegt, die in industriellen Systemausfällen der Jahre 2024–2026 zutage traten (von der Illusion naiver Brute-Force-Skalierung über flaches Vektor-RAG bis zum Speicher- und JOIN-Overhead traditioneller W3C-RDF/OWL-Triple-Stores). Definiert wird eine phasenorientierte KAS-Pipeline mit Mechanismen zur mehrstufigen Datenformatdetektion, zum Schutz vor bösartigen Eingaben und indirekten Prompt-Injections, zu Heuristiken für den Ausschluss von Layout-Rauschen sowie zur byteweisen Evidenzkustodie von Quellzitaten. Ergänzt wird die Abhandlung durch empirische Befunde einer Forschungsarbeit des Autors zur Wissenserkennung in einem Korpus von rund zehntausend technischen IETF-Spezifikationen. Formuliert werden der mathematische Apparat der Faktenselektion (Informationsentropie, Kullback-Leibler-Divergenz, Jaccard-Ähnlichkeit, TF-IDF), operative Metriken zur Pipeline-Evaluierung (Metadaten-Vollständigkeit, Widerrufslatenz, Littles Gesetz), ein bitemporales Datenmodell (Transaction Time vs. Valid Time) sowie ein strenges Validierungsreglement für zertifizierte Releases und den deterministischen Widerruf von Inhalten der Wissensbasis eines Expertensystems.
+In diesem Kapitel werden die Architekturprinzipien, Entwurfsmuster und mathematischen Modelle von Systemen der Wissensakquisition (*Knowledge Acquisition Systems*, KAS) untersucht, die als schützendes Zulassungsgateway der Datenaufbereitung für evidenzbasierte Expertensysteme fungieren. Ein KAS gewährleistet die deterministische Konvertierung unstrukturierter Korpora technischer Dokumentation in verifizierte, juristisch unanfechtbare Bestände ingenieurtechnischen Wissens und verhindert zuverlässig das Eindringen ungeprüfter Fakten oder stochastischer Halluzinationen in den Sicherheitsperimeter der Inferenzmaschine. Es werden die fundamentalen Risiken einer undifferenzierten Anbindung von Sprachmodellen an unstrukturierte Repositories analysiert, drei Reifegrade unternehmensweiter Wissensarbeit systematisiert und acht kritische Antipattern des Knowledge Engineering offengelegt, die in industriellen Systemausfällen der Jahre 2024–2026 zutage traten (von der Illusion naiver Brute-Force-Skalierung über flaches Vektor-RAG bis zum Speicher- und JOIN-Overhead traditioneller W3C-RDF/OWL-Triple-Stores). Eingeführt werden die Methodologie der Projektwissensaufklärung (*Project Knowledge Reconnaissance*, PKR) sowie eine vierstufige Artefakt-Stratigraphie unternehmensweiter Repositories mit systemischer Erkennung von Traceability-Lücken. Definiert wird ein Algorithmus zur zweidimensionalen geometrischen Rekonstruktion von Tabellen der Mikroelektronik in PDF mit adaptiver Gitterausrichtung und deterministischer Vererbung von UCUM-Maßeinheiten. Formuliert wird das Konzept der epistemischen Geologie auf Basis des Wissensdichteindex (*Knowledge Density Index*, KDI) und einer Entropieschleuse zur Ausscheidung von Informationsschlacke. Vorgestellt werden die deterministische Übersetzung der Hardware-Metamodelle IEEE 1685 IP-XACT und ARM CMSIS-SVD in 64-Bit-Adressarithmetik mit deontischer Kontrolle des Registerraums sowie ein zweistufiger Compiler für technische Anforderungen auf Basis syntaktischer Abhängigkeitsbäume (*Dependency Parsing*) und 7-dimensionaler SI-Dimensionsvektoren. Ergänzt wird die Abhandlung durch Ergebnisse der Forschungsarbeit des Autors zur Wissenserkennung in einem Korpus von rund zehntausend technischen Spezifikationen, Mechanismen zur Vorabprüfung auf Widerspruchsfreiheit (*Pre-Ingestion Contradiction Check*), ein bitemporales Datenmodell (Transaction Time vs. Valid Time) sowie ein strenges Validierungsreglement für zertifizierte Releases und den deterministischen Widerruf von Inhalten der Wissensbasis eines Expertensystems.
 
 Ein Ingenieur erhält ein Projektverzeichnis mit mehreren Tausend Dateien, die Historie eines Firmen-Wikis über viele Jahre, Exportdaten eines Issue-Trackers sowie Dokumentenarchive von Zulieferern und muss zeitnah herausfiltern, welche Angaben gültig sind, was lediglich Entwurfscharakter besitzt, was zu fremden Projekten gehört und welche Teile überhaupt offengelegt werden dürfen. Die naheliegende, triviale Lösung scheint offensichtlich: Man bindet sämtliche Datenquellen direkt an ein großes Sprachmodell an. In diesem Fall verarbeitet das Modell jedoch ein undifferenziertes Gemisch aus veralteten Spezifikationen, Entwürfen, redundanten Alternativentscheidungen, privaten Arbeitsnotizen und vertraulichen Kundendaten. Es antwortet mit hoher Überzeugungskraft, erzeugt dabei jedoch gravierende sachliche Fehler, da aus dem unstrukturierten Text nicht hervorgeht, welche Anforderung formell ratifiziert und welche längst verworfen wurde.
 
@@ -25,6 +25,60 @@ Ein Wissensakquisitions-System (*Knowledge Acquisition System*, KAS) ist das Sof
 Ein KAS ist keine Inferenzmaschine und wird nicht schon dadurch zum Expertensystem, dass es Dokumente volltextlich indexiert, Wissensgraphen aufbaut oder Klassifikatoren ausführt. Das KAS verantwortet die Qualität, semantische Gültigkeit, Zugriffssicherheit und Provenienz des Wissensmaterials. Das Expertensystem hingegen führt dieses Material mit den Fakten eines konkreten Falls und formalen Domänenregeln zusammen, um eine deduktiv begründete Schlussfolgerung abzuleiten. Diese funktionale Trennung schmälert die Bedeutung des KAS keineswegs, sondern verhindert die fatale Verwechslung einer zuverlässigen Wissensbereitstellung mit dem Prozess logischen Schließens.
 
 Die bloße Zerlegung eines Dokuments in Chunks erzeugt noch kein Wissen. Ein Teil der Fragmente enthält normative Sachbehauptungen, ein anderer Teil besteht lediglich aus formularmäßigem Layout-Rauschen, und wieder andere Teile verlieren ohne ihren Nachbarkontext jegliche semantische Bedeutung. Ein Fragment wird erst dann zu einem echten Wissensobjekt, wenn es typisiert wurde, Layout-Artefakte entfernt wurden, ein hinreichender Kontext mitsamt Metadaten hinterlegt ist und eine formale Anwendbarkeitsprüfung bestanden wurde. Die nachfolgenden Abschnitte illustrieren, wie das KAS ein Textfragment über diesen Kontrollpfad führt.
+
+### 1.1. Paradigma der Projektwissensaufklärung (PKR) und Artefakt-Stratigraphie
+
+Die Projektwissensaufklärung (*Project Knowledge Reconnaissance*, PKR) überwindet die akute kognitive Eintrittsbarriere beim Einstieg eines Ingenieurs oder eines analytischen Systems in eine neue Fachdomäne (kritische eingebettete Systeme, Avionik, Halbleiter-Mikroelektronik). In historischer Analogie zur geologischen Lagerstättenerkundung des klassischen Expertensystems *PROSPECTOR* vollzieht die PKR keine passive Akkumulation von Dateien, sondern ein stratigraphisches Tiefbohren im heterogenen technischen Erbe der Organisation, das über Jahrzehnte des Systembetriebs angewachsen ist.
+
+Der unternehmensweite Dokumenten- und Codebestand wird als mehrschichtige geologische Formation modelliert, in der jede Schicht eine exakt definierte juristische und normative Verbindlichkeit besitzt:
+
+1. **Normative Schicht (*Normative Layer*):** Internationale und branchenspezifische Standards der funktionalen Sicherheit (ISO 26262, IEC 61508, DO-178C), behördliche Vorschriften und Zertifizierungsanforderungen der Stakeholder. Diese Schicht bildet die axiomatische Basis des Systems mit der höchsten Wahrheits- und Geltungspriorität.
+2. **Architekturschicht (*Design Layer*):** Formell verabschiedete Architekturentscheidungen, konzeptionelle Systemmodelle, Spezifikationen hardware- und softwaretechnischer Schnittstellen (ICD) sowie Traceability-Matrizen der Anforderungen.
+3. **Ausführungsschicht (*Execution Layer*):** Quellcode hardwarenaher Treiber und Firmware, Registerraum-Deskriptoren (SVD, IP-XACT), Linkerskripte, Binärabbilder und Build-Konfigurationen.
+4. **Evidenzschicht (*Evidence Layer*):** Protokolle von Hardware-in-the-Loop-Tests (HIL), statische Code-Analyseberichte, Testabdeckungsmatrizen, Verifikationstraces und offene Defekte in Issue-Trackern.
+
+```mermaid
+flowchart TB
+    accTitle: Stratigraphie der Artefakte und Erkennung von Traceability-Lücken im PKR-Paradigma
+    accDescr: Vier Schichten des technischen Bestands (normativ, architektonisch, ausführbar, evidenzbasiert) und die Erkennung struktureller Lücken zwischen ihnen mittels PKR.
+
+    subgraph STRAT["<b>Geologische Artefakt-Stratigraphie (PKR)</b>"]
+        L1["<b>Normative Schicht (Normative Layer)</b><br/>ISO 26262 · IEC 61508 · DO-178C · Vorschriften"]
+        L2["<b>Architekturschicht (Design Layer)</b><br/>Architekturentscheidungen · ICD · SysML-Modelle"]
+        L3["<b>Ausführungsschicht (Execution Layer)</b><br/>C/Rust-Quellcode · SVD/IP-XACT · Skripte"]
+        L4["<b>Evidenzschicht (Evidence Layer)</b><br/>HIL-Protokolle · Statische Analyseberichte · Traces"]
+    end
+
+    subgraph GAPS["<b>Lückenerkennung (Blindspot Detection)</b>"]
+        G1{"Normative Vorgabe<br/>ohne Tests / Design?"}
+        G2{"Code ohne formale<br/>Systemanforderungen?"}
+        G3{"Begriff in Dokumentation<br/>ohne Glossardefinition?"}
+    end
+
+    L1 --> G1
+    L2 --> G1
+    L3 --> G2
+    L4 --> G2
+    L1 -.-> G3
+    L2 -.-> G3
+
+    G1 -->|"Lücken-Eskalation"| ESC1["<b>Defekt der Anforderungstraceability</b>"]
+    G2 -->|"Lücken-Eskalation"| ESC2["<b>Nicht verifizierter «toter» Code</b>"]
+    G3 -->|"Lücken-Eskalation"| ESC3["<b>Semantische Ambivalenz</b>"]
+
+    classDef strat fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#1a237e;
+    classDef gap fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef esc fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+
+    class L1,L2,L3,L4 strat;
+    class G1,G2,G3 gap;
+    class ESC1,ESC2,ESC3 esc;
+```
+
+Anstelle eines passiven Wartens auf Suchanfragen der Anwender führen die PKR-Algorithmen ein vorausschauendes topologisches Audit der Beziehungen zwischen den Schichten durch. Dies ermöglicht die automatisierte Aufdeckung systemischer blinder Flecken (*Knowledge Blindspots*):
+- normative Anforderungen eines Standards, die keine Projektion auf Entwurfsspezifikationen oder keine Abdeckung durch Validierungstests aufweisen;
+- ausführbare Abschnitte der Controller-Firmware, für die keine entsprechenden Anforderungen in der Architekturschicht existieren (undokumentierte Funktionen oder Angriffsvektoren);
+- implizite Fachbegriffe und Abkürzungen, die in der Zuliefererdokumentation intensiv zitiert werden, ohne im kanonischen Glossar des Projekts definiert zu sein.
 
 ## 2. Risiken undifferenzierten Dokumenten-Ingests und Reifegrade von Wissenssystemen
 
@@ -49,6 +103,7 @@ Zusammenfassend gilt: Die Gefahr liegt nicht im Sprachmodell selbst, sondern im 
 Die Analyse industrieller Erfahrungen führender Technologieunternehmen (Alphabet, OpenAI, Anthropic, Meta, Microsoft, IBM) sowie akademischer Forschungszentren (MIT, Stanford, CMU, Oxford) im Zeitraum 2024–2026 offenbart acht systemische Fehlmuster (*Anti-Patterns*). Diese treten regelmäßig auf, wenn generative KI-Modelle ohne methodische Fundierung mit Unternehmensdatenbanken verknüpft werden.
 
 ```
+
                      SYSTEM DER KNOWLEDGE-ENGINEERING-ANTIPATTERN
    ┌────────────────────────────────────────────────────────────────────────┐
    │ 1. Brute-Force Scaling  ──> Halluzinationen werden subtiler und tückischer│
@@ -63,13 +118,13 @@ Die Analyse industrieller Erfahrungen führender Technologieunternehmen (Alphabe
 ```
 
 ### 3.1. Die Illusion der Skalierung durch Brute-Force (Brute-Force Scaling Illusion)
-* **Wesen der Falle:** Die Annahme, dass eine massive Steigerung des Trainingsaufwands ($`10^{26} 	o 10^{28}\,	ext{FLOPs}`$) oder der Einsatz gigantischer Rechencluster mit Hunderttausenden von Beschleunigern faktische Halluzinationen automatisch eliminieren würde.
+* **Wesen der Falle:** Die Annahme, dass eine massive Steigerung des Trainingsaufwands ($`10^{26} \to 10^{28}\,\text{FLOPs}`$) oder der Einsatz gigantischer Rechencluster mit Hunderttausenden von Beschleunigern faktische Halluzinationen automatisch eliminieren würde.
 * **Warum dies eine Sackgasse ist:** Das Theorem von Adam Kalai und Santosh Vempala (STOC 2024, Nature 2026) beweist die mathematische Unvermeidbarkeit von Konfabulationen für jedes kalibrierte Sprachmodell unter Bedingungen unvollständiger Information in den Modellgewichten. Eine Vergrößerung der Netzwerkparameter (von 7B auf 405B) reduziert zwar triviale Fehler, macht die verbleibenden Halluzinationen in komplexen normativen Domänen jedoch **weitaus subtiler, vordergründig plausibler und damit extrem gefährlich für den menschlichen Entscheider**.
 * **Architekturlösung:** Eine Null-Halluzinations-Rate ($`\mathrm{ZHR} = 1{,}000000`$) wird nicht über die Modellgröße erzielt, sondern durch ein externes, isoliertes Zulassungsgateway, das die kryptographische Evidenzkustodie von Zitaten im kanonischen Quelltext verifiziert.
 
 ### 3.2. Grenzen von flachem Vektor-RAG (Flat Cosine Vector RAG)
 * **Wesen der Falle:** Der Wissensabruf stützt sich ausschließlich auf die Kosinus-Ähnlichkeit kontinuierlicher Vektoreinbettungen ganzer Sätze oder Absätze.
-* **Warum dies eine Sackgasse ist:** Kontinuierliche Vektorräume erfassen zwar thematische Verwandtschaft, sind jedoch **vollkommen blind gegenüber deontischen Modalitäten und logischer Polarität**. So weisen die Anforderungen *„Das System muss die Notbremse bei einem Busfehler aktivieren“* und *„Dem System ist es strikt untersagt, die Notbremse bei einem Busfehler zu aktivieren“* eine semantische Kosinus-Ähnlichkeit von $`pprox 0{,}95`$ auf. Ein flacher Vektor-Retriever liefert die diametral entgegengesetzte Norm als hochgradig „relevant“ zurück, was zu fatalen Steuerbefehlen im Aktor führen kann.
+* **Warum dies eine Sackgasse ist:** Kontinuierliche Vektorräume erfassen zwar thematische Verwandtschaft, sind jedoch **vollkommen blind gegenüber deontischen Modalitäten und logischer Polarität**. So weisen die Anforderungen *„Das System muss die Notbremse bei einem Busfehler aktivieren“* und *„Dem System ist es strikt untersagt, die Notbremse bei einem Busfehler zu aktivieren“* eine semantische Kosinus-Ähnlichkeit von $`\approx 0{,}95`$ auf. Ein flacher Vektor-Retriever liefert die diametral entgegengesetzte Norm als hochgradig „relevant“ zurück, was zu fatalen Steuerbefehlen im Aktor führen kann.
 * **Architekturlösung:** Verwendung strukturierter Syntaxrahmen, explizite Extraktion deontischer Operatoren (`MUST`, `MUST NOT`, `SHOULD`, `MAY`) und Indexierung anhand geschlossener Ontologie-Vokabulare.
 
 ### 3.3. Rekursive Verzerrungen der Selbstevaluierung (LLM-as-a-Judge Bias)
@@ -79,13 +134,13 @@ Die Analyse industrieller Erfahrungen führender Technologieunternehmen (Alphabe
 
 ### 3.4. Cloud-basierte Theorembeweiser im kritischen Regelkreis (Heavy Cloud Provers)
 * **Wesen der Falle:** Der Versuch, interaktive Theorembeweiser (Lean 4, Coq, Isabelle) direkt in den operativen Echtzeit-Steuerungszyklus eingebetteter Steuergeräte in der Automobil- oder Avionikindustrie zu integrieren.
-* **Warum dies eine Sackgasse ist:** Interaktive Beweiser wurden für die Grundlagenmathematik konzipiert, nicht für die harten Ressourcenbudgets von Echtzeitbetriebssystemen (RTOS). Die Taktiksuche erfordert Gigabytes an RAM und dauert Sekunden bis Minuten. Für sicherheitskritische Systeme nach ASIL D liegt das Latenzbudget für Reaktionen jedoch im Mikrosekundenbereich ($`< 100\,\mu	ext{s}`$).
+* **Warum dies eine Sackgasse ist:** Interaktive Beweiser wurden für die Grundlagenmathematik konzipiert, nicht für die harten Ressourcenbudgets von Echtzeitbetriebssystemen (RTOS). Die Taktiksuche erfordert Gigabytes an RAM und dauert Sekunden bis Minuten. Für sicherheitskritische Systeme nach ASIL D liegt das Latenzbudget für Reaktionen jedoch im Mikrosekundenbereich ($`< 100\,\mu\text{s}`$).
 * **Architekturlösung:** Eine dedizierte virtuelle Maschine mit festem, deterministischem Mikrocode (EISA / Datalog), die in linearer Zeit mit null dynamischen Speicherallokationen ausgeführt oder direkt in FPGA-Hardware gegossen wird.
 
 ### 3.5. Semantic-Web-Overhead in eingebetteten Systemen (RDF/OWL Bloat)
 * **Wesen der Falle:** Die Speicherung ingenieurtechnischen Wissens in klassischen W3C-Triple-Stores (RDF-Tripel, OWL-Ontologien, SPARQL-Endpunkte).
 * **Warum dies eine Sackgasse ist:** Die textuelle Serialisierung langer URIs, die extreme Atomisierung von Daten in isolierte Subjekt-Prädikat-Objekt-Knoten und die kombinatorische Komplexität von $`O(N^3)`$ bei tiefen Mehrfachtabellen-JOINs führen zu exzessivem Speicherbedarf. Solche Strukturen können nicht direkt über den Systemaufruf `mmap` in den Speicher adressiert werden.
-* **Architekturlösung:** Unveränderliche binäre Wissenscontainer (*Knowledge Packs*) mit 64-Byte-ausgerichteten Headern, CSR-Indizes (*Compressed Sparse Row*) und Deserialisierung ohne Laufzeit-Overhead ($0\ 	ext{B/op}$).
+* **Architekturlösung:** Unveränderliche binäre Wissenscontainer (*Knowledge Packs*) mit 64-Byte-ausgerichteten Headern, CSR-Indizes (*Compressed Sparse Row*) und Deserialisierung ohne Laufzeit-Overhead ($0\ \text{B/op}$).
 
 ### 3.6. Reine Software-Leitplanken statt hardwarebasierter Invarianten (Soft Guardrails)
 * **Wesen der Falle:** Der Versuch, Systemsicherheit allein durch textuelle Instruktionen im System-Prompt (*„antworte stets wahrheitsgemäß, erfinde keine Fakten“*) oder durch oberflächliche Python-Wrapper zu erzwingen.
@@ -108,6 +163,9 @@ Das Klassendiagramm verdeutlicht den internen Aufbau eines modernen, hochperform
 
 ```mermaid
 classDiagram
+    accTitle: Struktur des binären Wissenspaket-Containers
+    accDescr: Klassendiagramm von KnowledgePackContainer mit kanonischen Quellen, deontischen Normen und CSR-Matrizen.
+
     class KnowledgePackContainer {
         +Header64Aligned header
         +SourceSection canonical_sources
@@ -350,6 +408,37 @@ Für komplexe Unternehmensanforderungen empfiehlt sich eine versionierte Parser-
 
 Ein neueres Modell ist kein Selbstzweck: Maßgeblich ist eine messbare Reduktion von Extraktionsfehlern unter Beibehaltung von Provenienz, Zugriffsrechten und deterministischer Latenz. Ingenieurwissen erfordert zwingend den Erhalt struktureller Kontexte: Kapitel, Seite, Tabelle, Bildunterschrift, Anforderungs-ID, Abschnittsnummer, Code-Block und Testfall. In der Lösung des Autors orientiert sich das Chunking an semantischen Grenzen statt an starren Token-Längen: DOCX wird nach Überschriften und Tabellenblöcken unterteilt, PDF nach logischen Abschnitten, XLSX nach Zeilengruppen mit identischem Primärschlüssel. Jedes Fragment erhält eine stabile Kennung, den Quellpfad und die hierarchische Überschriftenkette. Die nachfolgenden Ausführungen belegen den messbaren Nutzen dieser Strukturierung anhand empirischer Daten.
 
+### 10.1. Zweidimensionale räumliche Tabellenrekonstruktion in PDF für die Mikroelektronik
+
+Die zweidimensionale räumliche Rekonstruktion von Tabellenstrukturen in PDF-Dokumenten ist eine kritische Bastion zur Wahrung der Datenintegrität, da über $`80\,\%`$ der fundamentalen Parameter von Mikrocontrollern und Halbleiterbauelementen (Grenzbetriebsspannungen, Bus-Timing-Diagramme, Stromaufnahmen, Temperaturgrenzen) ausschließlich in Form komplexer Matrizen publiziert werden. Die sequentielle Extraktion flachen Textes aus dem PDF-Befehlsstrom zerstört unweigerlich das räumliche Dokumentengitter: Nicht-adaptive Parser zerreißen tief- und hochgestellte Indizes ($`V_{\mathrm{DD}}`$, $`T_j`$, $`I_{\mathrm{OL}}`$), fragmentieren mehrzeilige Beschreibungen in Tabellenzellen oder verlieren physikalische Maßeinheiten, was eine nachfolgende formale Verifikation verunmöglicht.
+
+Zur deterministischen Wiederherstellung der Tabellentopologie wird ein räumliches Modell der algorithmischen Geometrie auf Basis umschreibender Rechtecke (*Bounding Boxes*) eingesetzt:
+
+```math
+\mathrm{Overlap}(F_a, F_b) = \frac{\min(Y_{a2}, Y_{b2}) - \max(Y_{a1}, Y_{b1})}{\min(H_a, H_b)} \ge \theta_{\mathrm{vertical}}
+```
+
+Parameter und Dimensionen der vertikalen Überlappung:
+
+- $`F_a, F_b`$ sind benachbarte Textfragmente innerhalb der Seite;
+- $`Y_{a1}, Y_{a2}`$ sowie $`Y_{b1}, Y_{b2}`$ bezeichnen die unteren und oberen vertikalen Koordinaten der Fragmentrechtecke (in typografischen Punkten, $\text{pt}$);
+- $`H_a = Y_{a2} - Y_{a1}`$ und $`H_b = Y_{b2} - Y_{b1}`$ bestimmen die Zeichenhöhe der jeweiligen Fragmente ($\text{pt}$);
+- $`\theta_{\mathrm{vertical}} = 0{,}50`$ ist der dimensionslose ingenieurtechnische Schwellenwert der Zeilenbindung.
+
+**Systemwirkung (Actionable Closed Loop):**
+
+1. **Laufzeitsteuerung und Berechnungsfluss:** Wenn der berechnete Wert $`\mathrm{Overlap}(F_a, F_b) \ge 0{,}50`$ erfüllt, führt der Algorithmus die Fragmente zu einer einzigen logischen Tabellenzeile zusammen und kompensiert den vertikalen Glyphenversatz tiefgestellter Indizes gegenüber der dominierenden Schriftgrundlinie. Gilt $\mathrm{Overlap} < 0{,}50$, wird eine neue Zeile initiiert. Spaltengrenzen werden ohne starre Pixelkonstanten anhand lokaler Minima im Histogramm der horizontalen Projektion des ausgedünnten Textes detektiert.
+2. **Hardware-Dimensionierung und Ressourcen:** Der Algorithmus der räumlichen Verschmelzung ist als Sweep-Line-Verfahren mit einer Zeitkomplexität von $O(N \log N)$ und einem Speicherbedarf von $O(N)$ implementiert. Für ein 100-seitiges Datenblatt eines Mikrocontrollers ($N = 25\,000$ Fragmente) belegt der Puffer aktiver Bounding Boxes maximal $3{,}2\,\text{MB}$ RAM, was eine deterministische Ausführung ohne Latenzspitzen selbst auf eingebetteten Prüfständen garantiert.
+3. **Praktisches Zahlenbeispiel:** Haupttextfragment $`F_a = [100, 200, 140, 212]`$ ($`H_a = 12\,\text{pt}`$), Subskript-Fragment $`F_b = [142, 196, 160, 206]`$ ($`H_b = 10\,\text{pt}`$). Es gilt $\min(212, 206) = 206$, $\max(200, 196) = 200$. Die Überlappungshöhe beträgt $206 - 200 = 6\,\text{pt}$. Die minimale Höhe ist $\min(12, 10) = 10\,\text{pt}$. Daraus ergibt sich $`\mathrm{Overlap}(F_a, F_b) = 6 / 10 = 0{,}60 \ge 0{,}50`$. Das System verschmilzt die Fragmente deterministisch zur einheitlichen Parameterkennung $`V_{\mathrm{DD}}`$.
+
+Jede extrahierte numerische Tabellenzelle $`C_{i,j}`$ unterliegt der Regel strikter Einheitenvererbung vom Spaltenheader $`H_j`$ gemäß dem internationalen Standard UCUM (*Unified Code for Units of Measure*) [[31]](#src-31):
+
+```math
+\mathrm{Atom}(C_{i,j}) = \langle \mathrm{Param} = \mathrm{Name}_i, \, \mathrm{Value} = \mathrm{Val}_{i,j}, \, \mathrm{Unit} = \mathrm{ResolveUnit}(H_j), \, \mathrm{BBox} = \mathrm{Union}(\mathrm{Box}_{i,j}, \mathrm{Box}_{H_j}) \rangle
+```
+
+Findet die Funktion $`\mathrm{ResolveUnit}(H_j)`$ weder im Zelltext noch im Spaltenkopf eine gültige Maßeinheit, blockiert das Systemgateway die Generierung einer quantitativen Inferenzregel und registriert ein Quarantäneereignis `DATA_DEFECT_NO_UNIT`. Die vereinheitlichte räumliche Koordinate $`\mathrm{BBox} = [X_1, Y_1, X_2, Y_2]`$ wird im Stammdatenpass des Wissensobjekts verankert und ermöglicht dem menschlichen Auditor eine verzögerungsfreie visuelle Kustodie der Primärquelle im PDF-Viewer.
+
 ## 11. Empirisches Experiment des Autors zur Wissenserkennung in technischer Dokumentation
 
 Welche konkreten Erkenntnisse liefert ein groß angelegtes Experiment zur Wissenserkennung in regulatorischen Textkorpora? Das Forschungsexperiment des Autors [[12]](#src-12) untersuchte nicht, ob ein Sprachmodell Dokumente ansprechend zusammenfassen kann. Die Fragestellung war rigoroser: Lässt sich ein umfangreicher technischer Dokumentenkorpus deterministisch in kompakte, lückenlos rückverfolgbare Wissenskandidaten zerlegen, und bietet diese Repräsentation messbare Vorteile gegenüber unstrukturiertem Volltext? Das Experiment fungierte als eigenständiger Forschungspilottest außerhalb des KAS-Produktivbetriebs.
@@ -415,30 +504,30 @@ Ohne formale mathematische Kriterien verbleiben Qualitätsurteile über Textfrag
 
 ```math
 \hat y(x)=
-egin{cases}
-rg\max_y p(y\mid x), & 	ext{falls } \max_y p(y\mid x)\ge	au\ \land\ \mathrm{AutoAllowed}(x),\
-	ext{manuelle Prüfung}, & 	ext{sonst},
+\begin{cases}
+\argmax_y p(y\mid x), & \text{falls } \max_y p(y\mid x)\ge\tau\ \land\ \mathrm{AutoAllowed}(x),\
+\text{manuelle Prüfung}, & \text{sonst},
 \end{cases}
 ```
 
 Erläuterung der Variablen:
 - $x$ repräsentiert das Eingangsdokument, $y$ ein Klassenlabel und $\hat y(x)$ das vorhergesagte Label;
-- $p(y\mid x)$ ist die geschätzte Wahrscheinlichkeit des Labels gegeben $x$; $\max_y$ ermittelt die maximale Konfidenz und $rg\max_y$ das zugehörige Label;
-- $	au$ bezeichnet den numerischen Konfidenzschwellenwert; $\mathrm{AutoAllowed}(x)$ ist ein boolescher Indikator, der angibt, ob automatische Freigaben für dieses Dokument zulässig sind;
+- $p(y\mid x)$ ist die geschätzte Wahrscheinlichkeit des Labels gegeben $x$; $`\max_y`$ ermittelt die maximale Konfidenz und $`\argmax_y`$ das zugehörige Label;
+- $\tau$ bezeichnet den numerischen Konfidenzschwellenwert; $\mathrm{AutoAllowed}(x)$ ist ein boolescher Indikator, der angibt, ob automatische Freigaben für dieses Dokument zulässig sind;
 - $\land$ repräsentiert die logische Konjunktion; sind die Bedingungen nicht simultan erfüllt, greift der Ausweichpfad der Expertenprüfung.
 
-Liegt beispielsweise $p=0{,}82$ bei $	au=0{,}80$ vor und erlaubt die Policy eine automatische Zuweisung, vergibt das System das Label direkt. Verbietet die Policy einen Automatismus, wird das Fragment eskaliert. Der Schwellenwert wird über risikogewichtete Validierungskurven bestimmt: Ein fälschlicherweise als öffentlich eingestuftes Geheimdokument verursacht ungleich höhere Schäden als ein zusätzlicher manueller Prüfschritt. Unkalibrierte Softmax-Ausgaben dürfen keinesfalls mit echten Wahrscheinlichkeiten gleichgesetzt werden; ihre Zuverlässigkeit ist über Kalibrierungsdiagramme (Reliability Diagrams) abzusichern.
+Liegt beispielsweise $p=0{,}82$ bei $\tau=0{,}80$ vor und erlaubt die Policy eine automatische Zuweisung, vergibt das System das Label direkt. Verbietet die Policy einen Automatismus, wird das Fragment eskaliert. Der Schwellenwert wird über risikogewichtete Validierungskurven bestimmt: Ein fälschlicherweise als öffentlich eingestuftes Geheimdokument verursacht ungleich höhere Schäden als ein zusätzlicher manueller Prüfschritt. Unkalibrierte Softmax-Ausgaben dürfen keinesfalls mit echten Wahrscheinlichkeiten gleichgesetzt werden; ihre Zuverlässigkeit ist über Kalibrierungsdiagramme (Reliability Diagrams) abzusichern.
 
 **Deduplizierung.** Exakte Dubletten werden über kryptographische Hashes kanonischer Repräsentationen erkannt. Zur Erkennung von Fast-Duplikaten wird der Text in überlappende Wortsequenzen fester Länge (*Shingles*) zerlegt und mengenbasiert verglichen:
 
 ```math
-J(A,B)=rac{|A\cap B|}{|A\cup B|},\qquad \Prig[h_{\min}(A)=h_{\min}(B)ig]=J(A,B)
+J(A,B)=\frac{|A\cap B|}{|A\cup B|},\qquad \Pr\big[h_{\min}(A)=h_{\min}(B)\big]=J(A,B)
 ```
 
 Erläuterung der Variablen:
 - $A$ und $B$ bezeichnen die Mengen der Shingles zweier Dokumente; $A\cap B$ ist deren Schnittmenge, $A\cup B$ deren Vereinigungsmenge;
-- $|X|$ ist die Mächtigkeit der Menge $X$; $J(A,B)$ ist der Jaccard-Ähnlichkeitskoeffizient;
-- $h_{\min}(A)$ ist das Minimum einer kollisionsresistenten Hash-Funktion über der Menge $A$;
+- $`|X|`$ ist die Mächtigkeit der Menge $X$; $J(A,B)$ ist der Jaccard-Ähnlichkeitskoeffizient;
+- $`h_{\min}(A)`$ ist das Minimum einer kollisionsresistenten Hash-Funktion über der Menge $A$;
 - Die zweite Gleichung belegt, dass die Kollisionswahrscheinlichkeit der minimalen Hashes exakt der Jaccard-Ähnlichkeit entspricht.
 
 Die Ähnlichkeit $J$ liegt im Intervall $[0, 1]$. Weisen zwei Dokumente bei 5 distinkten Shingles 3 gemeinsame Sequenzen auf, gilt $J = 3/5 = 0{,}6$. Der MinHash-Algorithmus nutzt unabhängige Hash-Funktionen, um $J$ über Signaturen effizient ohne paarweisen Vollvergleich abzuschätzen [[13]](#src-13). SimHash approximiert die Kosinus-Ähnlichkeit, während dichte Vektoreinbettungen Paraphrasen aufdecken. Ein Ähnlichkeitswert erzeugt stets nur einen Fusionskandidaten.
@@ -454,20 +543,20 @@ F(t)=e^{-\lambda t}
 Erläuterung der Variablen:
 - $t$ bezeichnet die seit der letzten formalen Verifikation verstrichene Zeit; $\lambda$ ist die domänenspezifische Veralterungsrate;
 - $e$ ist die Basis des natürlichen Logarithmus; das Produkt $-\lambda t$ erzwingt einen monoton fallenden Verlauf;
-- Die Einheit von $\lambda$ ist reziprok zur Zeiteinheit von $t$ ($	ext{Zeit}^{-1}$), wodurch der Exponent dimensionslos bleibt;
+- Die Einheit von $\lambda$ ist reziprok zur Zeiteinheit von $t$ ($\text{Zeit}^{-1}$), wodurch der Exponent dimensionslos bleibt;
 - $F(t) \in (0, 1]$ ist der dimensionslose Frischewert.
 
-Unmittelbar nach der Prüfung gilt $F(0)=1$; mit fortschreitender Zeit konvergiert der Wert gegen 0. Bei $\lambda=0{,}1\,	ext{Tag}^{-1}$ und $t=10\,	ext{Tagen}$ sinkt die Frische auf $F=e^{-1}pprox0{,}368$. Der Frischewert misst keine logische Wahrheit und rechtfertigt kein automatisches Verwerfen von Standards: Bei normativen Dokumenten ist der formale Status (`abgelöst`, `widerrufen`) ausschlaggebend; ein sinkender Frischewert erhöht lediglich die Revisionspriorität. Bei temporären Workarounds von Komponentenlieferanten ist $\lambda$ ungleich höher zu wählen als bei internationalen Normen.
+Unmittelbar nach der Prüfung gilt $F(0)=1$; mit fortschreitender Zeit konvergiert der Wert gegen 0. Bei $\lambda=0{,}1\,\text{Tag}^{-1}$ und $t=10\,\text{Tagen}$ sinkt die Frische auf $F=e^{-1}\approx0{,}368$. Der Frischewert misst keine logische Wahrheit und rechtfertigt kein automatisches Verwerfen von Standards: Bei normativen Dokumenten ist der formale Status (`abgelöst`, `widerrufen`) ausschlaggebend; ein sinkender Frischewert erhöht lediglich die Revisionspriorität. Bei temporären Workarounds von Komponentenlieferanten ist $\lambda$ ungleich höher zu wählen als bei internationalen Normen.
 
 **Revisionspriorität von Fakten.** Die Autorität eines Dokuments ist keine statische Eigenschaft, sondern hängt von der Einzelaussage, der Domäne, dem Gültigkeitsbereich und dem Kontext ab. Die Priorität für eine manuelle Begutachtung berechnet sich diagnostisch:
 
 ```math
-R(c)=w_{	ext{source}}(c)\cdot F(t)\cdot a_{	ext{scope}}(c)\cdot q_{	ext{extract}}(c)
+R(c)=w_{\text{source}}(c)\cdot F(t)\cdot a_{\text{scope}}(c)\cdot q_{\text{extract}}(c)
 ```
 
 Erläuterung der Variablen:
-- $c$ repräsentiert die zu prüfende Sachbehauptung; $w_{	ext{source}}(c)$ ist das Vertrauensgewicht der Primärquelle;
-- $F(t)$ ist der Frischewert; $a_{	ext{scope}}(c)$ bewertet die formale Anwendbarkeit auf Produkt und Zielversion; $q_{	ext{extract}}(c)$ beziffert die Konfidenz der Informationsextraktion;
+- $c$ repräsentiert die zu prüfende Sachbehauptung; $`w_{\text{source}}(c)`$ ist das Vertrauensgewicht der Primärquelle;
+- $F(t)$ ist der Frischewert; $`a_{\text{scope}}(c)`$ bewertet die formale Anwendbarkeit auf Produkt und Zielversion; $`q_{\text{extract}}(c)`$ beziffert die Konfidenz der Informationsextraktion;
 - Alle Faktoren liegen im Intervall $[0, 1]$; das Produkt sinkt signifikant, sobald auch nur ein Faktor degradiert;
 - $R(c)$ dient rein als Steuerungsindikator für die Begutachtungswarteschlange, nicht als statistische Wahrscheinlichkeit der sachlichen Wahrheit.
 
@@ -476,6 +565,50 @@ Ein niedriger Wert für $R(c)$ führt zur Einstufung in die Expertenprüfung; ei
 **Lesbarkeitsprüfung.** Statistische Filter (Perplexität des Sprachmodells, n-Gramm-Verteilungen, Erkennung von OCR-Rauschen und Sprachidentifikation) scheiden Textmüll vor der Indexierung zuverlässig aus.
 
 In der Praxis des Autors arbeiten Heuristiken zur Fragment-Triage (akzeptabel, zweifelhaft, Rauschen) mit Konfidenzwerten, Wissensdichtemetriken sowie hybride Suchen (BM25 kombiniert mit Kosinus-Vektoren und Late-Fusion) stabil. Eine hohe Trefferdichte in der Suche garantiert jedoch keine semantische Exaktheit: Antworten können handelnde Subjekte vertauschen, Verneinungen unterschlagen oder ein `MUST` zu einem `MAY` abschwächen. Dieses Restrisiko wird ausschließlich durch die explizite logische Verifikation jeder generierten Behauptung gegen den zitierten Belegsatz eliminiert.
+
+### 12.1. Epistemische Geologie: Wissensdichteindex (KDI) und Entropieschleuse zur Schlackenfilterung
+
+Die epistemische Geologie betrachtet Bestände technischer Dokumentation als industrielle Schichten ingenieurtechnischen Erzes, in denen kritische normative Vorgaben und Kalibrierungstabellen unter Megabytes an Navigationsleisten, Skripten, Datenschutzhinweisen und juristischen Disclaimern begraben liegen. Eine automatisierte Datenerfassung ohne vorherige petrografische Textanalyse führt entweder zur Überlastung des Speichers mit gehaltlosem Web-Schlacke-Rauschen oder zum fatalen Löschen wertvoller Registertabellen, die primitive Parser fälschlicherweise als „statistisches Rauschen“ einstufen.
+
+Zur quantitativen Bestimmung des ingenieurtechnischen Nutzens von Fragmenten wird die Metrik des Wissensdichteindex (*Knowledge Density Index*, KDI) eingeführt:
+
+```math
+\mathrm{KDI} = \frac{w_d \cdot N_{\mathrm{deontic}} + w_e \cdot N_{\mathrm{entities}} + w_t \cdot N_{\mathrm{tables}} + w_q \cdot N_{\mathrm{quantities}}}{L_{\mathrm{tokens}}}
+```
+
+Parameter und Gewichtungskoeffizienten der Wissensdichte:
+
+- $`N_{\mathrm{deontic}}`$ ist die Anzahl deontischer Operatoren (`SHALL`, `MUST`, `PROHIBITED`, `REQUIRED`);
+- $`N_{\mathrm{entities}}`$ ist die Anzahl erkannter Hard- oder Software-Entitäten der Projektontologie;
+- $`N_{\mathrm{tables}}`$ ist die Anzahl strukturierter Tabellenzeilen und verknüpfter Parametermatrizen;
+- $`N_{\mathrm{quantities}}`$ ist die Anzahl numerischer Werte mit validierten physikalischen SI-Maßeinheiten;
+- $`L_{\mathrm{tokens}}`$ ist die Gesamtlänge des Fragments in Token des lexikalischen Analysators;
+- $`w_d = 0{,}35, \, w_e = 0{,}25, \, w_t = 0{,}25, \, w_q = 0{,}15`$ sind empirisch kalibrierte Gewichte ($\sum w = 1{,}00$).
+
+**Systemwirkung (Actionable Closed Loop):**
+
+1. **Laufzeitsteuerung und Berechnungsfluss:** Anhand des berechneten $\mathrm{KDI}$-Werts klassifiziert das Zulassungsgateway die Fragmente in drei stratigraphische Kategorien:
+   - $`\mathrm{KDI} \ge 0{,}15 \implies \mathrm{RICH\_ORE}`$ (reiches Erz): Das Fragment wird unverzüglich an den Regelcompiler und die Prädikatensynthese weitergeleitet;
+   - $`0{,}05 \le \mathrm{KDI} < 0{,}15 \implies \mathrm{POOR\_ORE}`$ (armes Erz): Das Fragment erfordert eine tiefe syntaktische Abhängigkeitsanalyse und eine Kontexterweiterung;
+   - $\mathrm{KDI} < 0{,}05 \implies \mathrm{SLAG}$ (Informationsschlacke): Der Block wird verworfen und ohne Vektorisierung im Index ausgeschieden.
+2. **Hardware-Dimensionierung und infrastrukturelle Grenzen:** Das Ausfiltern von Schlacke bei $\mathrm{KDI} < 0{,}05$ reduziert das Volumen gespeicherter Vektoreinbettungen und Konnektivitätsgraphen um $68\,\%$, was $14{,}2\,\text{GB}$ Arbeitsspeicher in den Indexierungs-Clusterknoten einspart und die Suchlatenz um das $3{,}4$-Fache beschleunigt.
+3. **Praktisches Zahlenbeispiel:** Ein technischer Textblock mit $`L_{\mathrm{tokens}} = 120`$ Token umfasst $`N_{\mathrm{deontic}} = 6`$ normative Vorgaben, $`N_{\mathrm{entities}} = 14`$ registrierte Mikrocontroller-Entitäten, $`N_{\mathrm{tables}} = 1`$ Zeile einer Betriebsmodustabelle und $`N_{\mathrm{quantities}} = 8`$ Spannungs- und Stromparameter. Der Zähler der Formel ergibt: $0{,}35 \cdot 6 + 0{,}25 \cdot 14 + 0{,}25 \cdot 1 + 0{,}15 \cdot 8 = 2{,}10 + 3{,}50 + 0{,}25 + 1{,}20 = 7{,}05$. Daraus berechnet sich $\mathrm{KDI} = 7{,}05 / 120 = 0{,}05875$. Da $0{,}05 \le 0{,}05875 < 0{,}15$ gilt, stuft das Gateway den Block deterministisch als $`\mathrm{POOR\_ORE}`$ ein und übergibt ihn der vertieften syntaktischen Parsing-Pipeline anstatt ihn zu verwerfen.
+
+Eine besondere Gefahr stellen hexadezimale Tabellen des Registerraums (Memory Maps) dar, die aufgrund ihrer hohen Dichte numerischer Codes und Sonderzeichen von naiven Textfiltern häufig als „zufälliger Binärmüll“ verworfen werden. Zu ihrem Schutz wird die Shannon-Entropie auf Byte-Ebene herangezogen:
+
+```math
+H(X) = -\sum_{i=0}^{255} P(b_i) \log_2 P(b_i)
+```
+
+wobei $`P(b_i)`$ die empirische Auftrittswahrscheinlichkeit des Bytes mit dem Wert $`b_i \in [0, 255]`$ im untersuchten Block $X$ bezeichnet.
+
+**Systemwirkung (Actionable Closed Loop):**
+
+1. **Laufzeitsteuerung und Berechnungsfluss:** Gilt $H(X) > 7{,}20\,\text{Bit/Byte}$, weist der Block eine hohe Entropie auf, wie sie für verschlüsselte oder binäre Datenströme typisch ist. Das Gateway aktiviert einen lexikalischen Signatur-Scanner: Enthält der Block Zeichenfolgen wie `0x...` oder Bitbereiche `[31:0]`, erhält er den Status `HARDWARE_HEX_MAP` und wird zwangsweise an den Register-Parser durchgereicht. Fehlen Hardwaresignaturen, wird der Block als fremdes Binärartefakt in Quarantäne isoliert.
+2. **Hardware-Dimensionierung und Ressourcen:** Der Aufbau des 256-Elemente-Byte-Histogramms erfolgt allokationsfrei in einem $1\,\text{KB}$ großen Puffer im L1-Cache des Prozessors und garantiert eine Rechenzeit von unter $12\,\mu\text{s}$ pro $4\,\text{KB}$-Block auf ARM Cortex-A78AE Kernen.
+3. **Praktisches Zahlenbeispiel:** Ein $4\,\text{KB}$ großer Block einer Peripherie-Adresskarte weist eine Entropie von $H(X) = 7{,}34\,\text{Bit/Byte}$ auf. Der Scanner identifiziert 32 Vorkommen hexadezimaler Adressen `0xF020...`, verhindert das fehlerhafte Verwerfen und garantiert die lückenlose Erhaltung der Registertabelle.
+
+Alle zugelassenen Fragmente wahren die strikte Unveränderlichkeit des primären Bytebestands (*Bit-for-Bit Provenance*): Die Normalisierung von Zeilenumbrüchen (`CRLF` $\to$ `LF`) ist in den Quelldateien des Repositorys untersagt; Zitate referenzieren ausnahmslos Byte-Offset-Intervalle $`[\mathrm{byte\_start}, \mathrm{byte\_end}]`$ relativ zum kanonischen Datei-Container.
 
 ## 13. Operative Leistungs- und Qualitätsmetriken für den KAS-Betrieb
 
@@ -493,49 +626,50 @@ Drei mathematische Formeln definieren verbindliche Service Level Objectives (SLO
 **Metadaten-Vollständigkeit:**
 
 ```math
-C_{	ext{meta}}=rac{1}{N\,\lvert M 
-vert}\sum_{i=1}^{N}\sum_{m\in M}\mathbf{1}ig[m\ 	ext{korrekt für Fragment}\ iig]
+C_{\text{meta}}=\frac{1}{N\,\lvert M \rvert}\sum_{i=1}^{N}\sum_{m\in M}\mathbf{1}\big[m\ \text{korrekt für Fragment}\ i\big]
 ```
 
 Erläuterung der Variablen:
 - $N$ ist die Gesamtzahl aktiver Fragmente, $M$ die Menge der obligatorischen Metadatenfelder und $i$ der Fragmentindex;
 - $m$ bezeichnet ein Pflichtfeld aus $M$; die Indikatorfunktion $\mathbf{1}[\cdot]$ liefert 1, falls das Feld valide belegt ist, andernfalls 0;
-- Die Doppelsumme aggregiert alle Validierungsergebnisse, während der Vorfaktor $1/(N\lvert M 
-vert)$ den relativen Erfüllungsgrad berechnet.
+- Die Doppelsumme aggregiert alle Validierungsergebnisse, während der Vorfaktor $1/(N\lvert M \rvert)$ den relativen Erfüllungsgrad berechnet.
 
 **Laufzeitsteuerung und Service Level Objectives (SLOs):**
-- **Sicherheitsrelevante Attribute:** Für Schutzklasse, Quellen-ID und Normenversion gilt eine strikte Null-Fehler-Toleranz: $C_{\mathrm{meta, sec}} = 1{,}00$. Weist auch nur ein Pflichtfeld einen Defekt auf, wird das gesamte Paket unverzüglich in die Quarantäne-Warteschlange `quarantine_ingest_queue` isoliert;
-- **Allgemeiner Pipeline-Schwellenwert:** Für sekundäre deskriptive Attribute gilt $C_{	ext{meta}} \ge 	au_{\mathrm{meta}} = 0{,}98$. Sinkt der Wert unter 0,98, löst das System das Ereignis `HALT_INGESTION` aus und stoppt Aktualisierungen des Produktionsindex.
+- **Sicherheitsrelevante Attribute:** Für Schutzklasse, Quellen-ID und Normenversion gilt eine strikte Null-Fehler-Toleranz: $`C_{\mathrm{meta, sec}} = 1{,}00`$. Weist auch nur ein Pflichtfeld einen Defekt auf, wird das gesamte Paket unverzüglich in die Quarantäne-Warteschlange `quarantine_ingest_queue` isoliert;
+- **Allgemeiner Pipeline-Schwellenwert:** Für sekundäre deskriptive Attribute gilt $`C_{\text{meta}} \ge \tau_{\mathrm{meta}} = 0{,}98`$. Sinkt der Wert unter 0,98, löst das System das Ereignis `HALT_INGESTION` aus und stoppt Aktualisierungen des Produktionsindex.
 
 **Numerisches Rechenbeispiel:**
-Ein Ingest-Paket von $N = 500$ Fragmenten umfasst $\lvert M 
-vert = 6$ Pflichtfelder ($3\,000$ Prüfpunkte). Der Validator stellt 45 fehlende sekundäre Tags fest:
+Ein Ingest-Paket von $N = 500$ Fragmenten umfasst $\lvert M \rvert = 6$ Pflichtfelder ($3\,000$ Prüfpunkte). Der Validator stellt 45 fehlende sekundäre Tags fest:
+
 ```math
-C_{	ext{meta}} = rac{3\,000 - 45}{3\,000} = rac{2\,955}{3\,000} = 0{,}985 \ge 0{,}98
+C_{\text{meta}} = \frac{3\,000 - 45}{3\,000} = \frac{2\,955}{3\,000} = 0{,}985 \ge 0{,}98
 ```
-Da $C_{	ext{meta}} = 0{,}985$ den Schwellenwert erfüllt und alle Sicherheitsattribute fehlerfrei vorliegen, wird das Paket für die Vektorisierung freigegeben.
+
+Da $`C_{\text{meta}} = 0{,}985`$ den Schwellenwert erfüllt und alle Sicherheitsattribute fehlerfrei vorliegen, wird das Paket für die Vektorisierung freigegeben.
 
 **Widerrufslatenz:**
 Die Widerrufslatenz wird durch die am langsamsten reagierende Replikatskopie bestimmt:
 
 ```math
-L_{	ext{revoke}}(s)=\max_{j\in D(s)}t_{	ext{removed},j}-t_{	ext{revoke}}
+L_{\text{revoke}}(s)=\max_{j\in D(s)}t_{\text{removed},j}-t_{\text{revoke}}
 ```
 
 Erläuterung der Variablen:
 - $s$ bezeichnet die widerrufene Primärquelle, $D(s)$ die Menge aller daraus abgeleiteten Derivate und $j$ ein spezifisches Derivat;
-- $t_{	ext{removed},j}$ ist der Zeitstempel der physischen Löschung des Derivats $j$, $t_{	ext{revoke}}$ der Zeitpunkt des formalen Widerrufs;
-- $L_{	ext{revoke}}(s)$ beziffert die Gesamtlatenz bis zum vollständigen Erlöschen aller abgeleiteten Datenbestände.
+- $`t_{\text{removed},j}`$ ist der Zeitstempel der physischen Löschung des Derivats $j$, $`t_{\text{revoke}}`$ der Zeitpunkt des formalen Widerrufs;
+- $`L_{\text{revoke}}(s)`$ beziffert die Gesamtlatenz bis zum vollständigen Erlöschen aller abgeleiteten Datenbestände.
 
 **Laufzeitsteuerung und Notfall-Timeout:**
-- Normatives Zeitlimit für den Widerruf: $L_{	ext{revoke}}(s) \le 	au_{\mathrm{revoke}} = 300\,	ext{s}$ (maximal 5 Minuten für die kaskadierende Bereinigung von SQL-Tabellen, Vektorindizes und lokalen Caches);
+- Normatives Zeitlimit für den Widerruf: $`L_{\text{revoke}}(s) \le \tau_{\mathrm{revoke}} = 300\,\text{s}`$ (maximal 5 Minuten für die kaskadierende Bereinigung von SQL-Tabellen, Vektorindizes und lokalen Caches);
 - Überschreitet die Dauer 300 Sekunden, schaltet das System in den Schutzmodus `FAIL_SAFE_REVOCATION`: Anfragen an den betroffenen Wissensbereich werden am API-Gateway hart blockiert, bis die Purge-Bestätigung vorliegt.
 
 **Numerisches Rechenbeispiel:**
-Der Widerruf einer ungültig gewordenen Spezifikation erfolgt um $t_{	ext{revoke}} = 10{:}00{:}00$. Die relationale Wissensbasis schließt die Löschung um $10{:}01{:}15$ ab, der Vektorindex um $10{:}02{:}30$ und ein Edge-Cache um $10{:}04{:}20$:
+Der Widerruf einer ungültig gewordenen Spezifikation erfolgt um $`t_{\text{revoke}} = 10{:}00{:}00`$. Die relationale Wissensbasis schließt die Löschung um $10{:}01{:}15$ ab, der Vektorindex um $10{:}02{:}30$ und ein Edge-Cache um $10{:}04{:}20$:
+
 ```math
-L_{	ext{revoke}}(s) = 10{:}04{:}20 - 10{:}00{:}00 = 260\,	ext{s} \le 300\,	ext{s}
+L_{\text{revoke}}(s) = 10{:}04{:}20 - 10{:}00{:}00 = 260\,\text{s} \le 300\,\text{s}
 ```
+
 Die Operation liegt innerhalb des SLO-Limits; ein Notfall-Lockdown des Gateways war nicht erforderlich.
 
 **Dimensionierung der Prüfwarteschlange nach Littles Gesetz:**
@@ -551,19 +685,23 @@ Erläuterung der Variablen:
 - Die Formel beschreibt den stationären Zustand eines stabilen Wartesystems.
 
 **Hardware-Dimensionierung und Backpressure-Steuerung:**
-- Die erforderliche Pufferkapazität berechnet sich als $M_{\mathrm{queue}} = L \cdot S_{\mathrm{item}}$, wobei $S_{\mathrm{item}}$ die mittlere serialisierte Paketgröße eines Kandidaten darstellt;
-- Überschreitet die reale Warteschlange das Limit $L_{\mathrm{max}} = 2 \cdot L$, aktiviert das KAS Backpressure: Konnektoren drosseln die Abfragerate externer Quellen, bis sich $W$ wieder normalisiert hat.
+- Die erforderliche Pufferkapazität berechnet sich als $`M_{\mathrm{queue}} = L \cdot S_{\mathrm{item}}`$, wobei $`S_{\mathrm{item}}`$ die mittlere serialisierte Paketgröße eines Kandidaten darstellt;
+- Überschreitet die reale Warteschlange das Limit $`L_{\mathrm{max}} = 2 \cdot L`$, aktiviert das KAS Backpressure: Konnektoren drosseln die Abfragerate externer Quellen, bis sich $W$ wieder normalisiert hat.
 
 **Numerisches Rechenbeispiel:**
-Bei einer Ankunftsrate von $\lambda = 50\,	ext{Kandidaten/Tag}$ und einer Begutachtungsdauer von $W = 4\,	ext{Tagen}$ ergibt sich:
+Bei einer Ankunftsrate von $\lambda = 50\,\text{Kandidaten/Tag}$ und einer Begutachtungsdauer von $W = 4\,\text{Tagen}$ ergibt sich:
+
 ```math
-L = 50 \cdot 4 = 200\,	ext{Kandidaten}
+L = 50 \cdot 4 = 200\,\text{Kandidaten}
 ```
-Bei einer durchschnittlichen Objektgröße von $S_{\mathrm{item}} = 64\,	ext{KB}$ benötigt der In-Memory-Puffer (z. B. in Redis):
+
+Bei einer durchschnittlichen Objektgröße von $`S_{\mathrm{item}} = 64\,\text{KB}`$ benötigt der In-Memory-Puffer (z. B. in Redis):
+
 ```math
-M_{\mathrm{queue}} = 200 \cdot 64\,	ext{KB} = 12\,800\,	ext{KB} = 12{,}5\,	ext{MB}
+M_{\mathrm{queue}} = 200 \cdot 64\,\text{KB} = 12\,800\,\text{KB} = 12{,}5\,\text{MB}
 ```
-Verdoppelt sich der Zustrom auf $\lambda = 100$ ohne personelle Verstärkung, wächst die Warteschlange auf 400 Elemente ($25\,	ext{MB}$) an, erreicht $L_{\mathrm{max}}$ und zwingt die KAS-Crawler zur Drosselung.
+
+Verdoppelt sich der Zustrom auf $\lambda = 100$ ohne personelle Verstärkung, wächst die Warteschlange auf 400 Elemente ($25\,\text{MB}$) an, erreicht $`L_{\mathrm{max}}`$ und zwingt die KAS-Crawler zur Drosselung.
 
 Im Operator-Dashboard des Autors visualisiert das System Triage-Status, Konfidenzwerte, Relevanz, Informationsdichte, Duplikatsstatus, Frische, Quellenreputation, Pipeline-Fortschritt, Übertragungszuverlässigkeit sowie Konsumenten-Feedback (akzeptiert, in Inferenz verwendet, Duplikat, abgelehnt, veraltet, richtlinienblockiert). Handlungsbedarf besteht bei der Erfassung von Fehlerursachencodes, dem prozentualen Anteil formal zertifizierter Quellen und der Modellkalibrierung. Ein Warnzustand auf dem KAS-Dashboard signalisiert unmissverständlich: Auch wenn die Ausgaben des Sprachmodells überzeugend formuliert sind, darf ihnen fachlich nicht vertraut werden.
 
@@ -583,6 +721,41 @@ Beim Import von Anforderungen, Systemarchitekturen und Simulationsergebnissen be
 - **FMI 3.0.2** (*Functional Mock-up Interface*) [[20]](#src-20) und Digital-Twin-Modelle bieten standardisierte Schnittstellen für Simulationsmodelle. Das KAS verknüpft Systemanforderungen direkt mit Functional Mock-up Units (FMUs), Modellversionen, Solver-Parametern und experimentellen Randbedingungen.
 
 Das KAS erhält die vorhandene ingenieurtechnische Struktur und zwingt das Unternehmen nicht dazu, wertvolle Semantik beim Datenimport zu vernichten.
+
+### 15.1. Deterministische Übersetzung der Hardware-Metamodelle IEEE 1685 IP-XACT und ARM CMSIS-SVD
+
+Die Übersetzung hardwarenaher Beschreibungen in die symbolische Wissensbasis des Expertensystems ist ein kritisches Bindeglied des Embedded Engineering, da Mikrocontroller und Systems-on-Chip (SoC) von Klassen wie Infineon AURIX, ARM Cortex-R/M oder NXP S32K Zehntausende Hardware-Steuerregister umfassen. Beschreibungen dieser Komponenten werden von Halbleiterherstellern in formalisierten XML-Schemata bereitgestellt: **IEEE 1685 IP-XACT** [[29]](#src-29) und **ARM CMSIS-SVD** [[30]](#src-30).
+
+Der Versuch eines naiven Imports solcher Metamodelle über Standard-Skripting-Engines birgt ein fatales Risiko: Die Verwendung von Gleitkommazahlen einfacher Genauigkeit (`float32`) zur Speicherung von Adressen führt zum Abschneiden niederwertiger Bits oberhalb von $`16\,\text{MB}`$ ($`2^{24}`$), da die Mantisse von `float32` lediglich 24 Bits umfasst. Infolgedessen werden Registeradressen wie `0xF0000004` katastrophal zu `0xF0000000` gerundet, was fatale Kollisionen von Hardwareblöcken im Inferenzraum provoziert.
+
+Um absolute Exaktheit zu gewährleisten, erfolgt die Adressübersetzung ausnahmslos in vorzeichenloser 64-Bit-Ganzzahlarithmetik gemäß der Formel deterministischer Adressauflösung:
+
+```math
+A_{\mathrm{phys}} = A_{\mathrm{base}} + \Delta_{\mathrm{block}} + \Delta_{\mathrm{reg}} + i \cdot \Delta_{\mathrm{dim}}, \quad i \in [0, N_{\mathrm{dim}} - 1]
+```
+
+Parameter und Adressoffsets:
+
+- $`A_{\mathrm{phys}}`$ ist die resultierende absolute physische Registeradresse im Speicher des Controllers (Datentyp `uint64`);
+- $`A_{\mathrm{base}}`$ bezeichnet die physische Basisadresse des Peripheriemoduls (z. B. CAN-Controller oder GTM-Timer);
+- $`\Delta_{\mathrm{block}}`$ ist der Offset des Adressunterblocks relativ zur Modulbasis;
+- $`\Delta_{\mathrm{reg}}`$ ist der Offset des Zielregisters innerhalb des Blocks;
+- $`\Delta_{\mathrm{dim}}`$ bestimmt die Adressschrittweite bei der Indizierung von Register-Arrays;
+- $`N_{\mathrm{dim}}`$ ist die Dimension des Arrays (Anzahl der Hardware-Kanäle) und $i$ der Kanalindex.
+
+**Systemwirkung (Actionable Closed Loop):**
+
+1. **Laufzeitsteuerung und Berechnungsfluss:** Für jede generierte Adressierungsregel prüft der Evaluator die strikte Invariante $`A_{\mathrm{phys}} + S_{\mathrm{reg}} \le \mathrm{MAX\_ADDR}`$ (wobei $`S_{\mathrm{reg}}`$ die Registerbreite in Bytes ist). Wird ein arithmetischer Überlauf oder eine Adressbereichsüberlappung verschiedener Module detektiert, bricht der Wissenscompiler die Faktengenerierung sofort mit dem Status `PARSER_ADDR_OVERFLOW` ab und erzeugt eine Eskalationsmeldung für den Ingenieur.
+2. **Hardware-Dimensionierung und Ressourcen:** Die Verwendung ausgerichteter 64-Bit-Ganzzahlen ermöglicht die direkte Projektion von Adressdeskriptoren in die Speicherschutztabellen (MPU / SMMU) ohne Konvertierungsaufwand ($0\,\text{ns}$ Overhead pro Taktzyklus der Inferenz).
+3. **Praktisches Zahlenbeispiel:** Für das Kommunikationsmodul eines Infineon AURIX Controllers sind vorgegeben: $`A_{\mathrm{base}} = \mathtt{0xF0200000}`$, $`\Delta_{\mathrm{block}} = \mathtt{0x4000}`$, der Registeroffset der Nachrichtenkonfiguration $`\Delta_{\mathrm{reg}} = \mathtt{0x0020}`$, die Schrittweite des Objekt-Arrays $`\Delta_{\mathrm{dim}} = \mathtt{0x0040}`$ für Kanal $i = 3$. Daraus berechnet sich: $`A_{\mathrm{phys}} = \mathtt{0xF0200000} + \mathtt{0x4000} + \mathtt{0x0020} + 3 \cdot \mathtt{0x0040} = \mathtt{0xF02040E0}`$. In einem System mit `float32`-Darstellung gingen die niederwertigen Bits $\mathtt{0xE0}$ vollständig verloren, wohingegen die Integer-Pipeline des KAS die exakte physische Adresse $\mathtt{0xF02040E0}$ unverfälscht fixiert.
+
+Hardware-Registerzugriffsmodi werden eindeutig auf deontische Modalitäten der symbolischen Basis abgebildet:
+
+- Der Modus `read-only` wird als deontisches Verbot übersetzt: $\mathbf{F}(\mathrm{Write}(R))$;
+- Der Modus `write-1-to-clear` (Zurücksetzen eines Flags durch Schreiben einer Eins) wird in Pflicht und Verbot abgebildet: $\mathbf{O}(\mathrm{WriteOne}(R.\mathrm{bit})) \land \mathbf{F}(\mathrm{WriteZero}(R.\mathrm{bit}))$;
+- Der Modus `read-writeOnce` (Konfiguration genau einmal nach dem Hardware-Reset) wird als Erlaubnis einmaliger Initialisierung abgebildet: $\mathbf{P}(\mathrm{Init}(R)) \land \mathbf{F}(\mathrm{Reconfigure}(R))$.
+
+Der KAS-Parser fixiert die exakten Byte-Positionen der öffnenden und schließenden XML-Tags in der Spezifikationsdatei des Halbleiterherstellers und garantiert so eine lückenlose kryptografische Zitatkustodie jedes Hardware-Registers.
 
 ## 16. Architektur und softwaretechnische Implementierung des Wissensakquisitions-Systems (KAS)
 
@@ -635,7 +808,7 @@ Der Autor hat sich für die Architektur eines eigenständigen, lokal operierende
 
 Bevor ein Dokument rechenintensive Phasen des syntaktischen und semantischen Parsings durchläuft, muss das KAS den Typ des Datenstroms deterministisch identifizieren. Fehler an dieser Stelle führen zu Systemabstürzen spezialisierter Parser (etwa beim Versuch, Binärarchive als UTF-8 zu interpretieren) oder zum Verlust der Byte-Exaktheit, was den Beweiswert der extrahierten Fakten zerstört.
 
-Die Formaterkennung folgt dem Prinzip des vorsorglichen Prüfens (*Pre-Ingestion Sniffing*): Statt die Datei vollständig in den Arbeitsspeicher zu laden, liest das System lediglich einen festen Initialpuffer $B_{	ext{peek}}$ ein (typischerweise 512–1024 Bytes). Die Analyse erfolgt kaskadierend über drei Ebenen:
+Die Formaterkennung folgt dem Prinzip des vorsorglichen Prüfens (*Pre-Ingestion Sniffing*): Statt die Datei vollständig in den Arbeitsspeicher zu laden, liest das System lediglich einen festen Initialpuffer $`B_{\text{peek}}`$ ein (typischerweise 512–1024 Bytes). Die Analyse erfolgt kaskadierend über drei Ebenen:
 
 ```mermaid
 flowchart TD
@@ -663,7 +836,7 @@ flowchart TD
     class RejectBinary rej;
 ```
 
-1. **Signaturanalyse (Magic Bytes):** Auswertung binärer Dateikopf-Kennungen. Identifiziert vorkompilierte Wissenspakete (`ZKP4`), formatierte Dokumente (`%PDF-`) oder ZIP-Container (`PK`).
+1. **Signaturanalyse (Magic Bytes):** Auswertung binärer Dateikopf-Kennungen. Identifiziert vorkompilierte Wissenspakete (`ZKP4`), formatierte Dokumente (`%PDF-`) oder ZIP-Container (`PK\x03\x04`).
 2. **Kodierungsvalidität:** Prüfung des Byte-Arrays auf Konformität mit UTF-8 und Fehlen von Null-Bytes (`0x00`). Fehlen bekannte Signaturen, enthält die Datei jedoch Null-Bytes oder fehlerhafte Sequenzen, wird sie sofort nach dem Fail-Closed-Prinzip als unbekannter binärer Blob verworfen, ohne Sprachparser zu belasten.
 3. **Strukturmarker (Layout Heuristics):** Bei validem Text analysiert die Sonde die ersten Zeilen auf domänenspezifische Signaturen:
    * **IETF RFC:** Metadaten der Arbeitsgruppen (`Network Working Group`, `Internet Engineering Task Force`), Headerfelder wie `Request for Comments: \d+` oder Abschnitte wie `Status of this Memo`;
@@ -673,7 +846,7 @@ flowchart TD
 Eine fundamentale Invariante der Detektion und Normalisierung ist die Konstruktion einer **Byte-Offset-Zuordnungstabelle (Byte-Offset Source Map)**:
 
 ```math
-\mathcal{M}: 	ext{TokenIndex} \longrightarrow [	ext{byte}_{	ext{start}},\,	ext{byte}_{	ext{end}}]
+\mathcal{M}: \text{TokenIndex} \longrightarrow [\text{byte}_{\text{start}},\,\text{byte}_{\text{end}}]
 ```
 
 Jeder Normalisierungsparser (etwa zur Bereinigung von RFC-Seitenumbrüchen) muss die exakte bytegenaue Zuordnung jedes extrahierten Regelsatzes zur unveränderten Primärdatei beibehalten. Lässt ein Datenformat keine deterministische Rekonstruktion der Originalbytes zu, wird es für die Erstellung der normativen Wissensbasis nicht zugelassen.
@@ -683,7 +856,7 @@ Jeder Normalisierungsparser (etwa zur Bereinigung von RFC-Seitenumbrüchen) muss
 Nach der Formaterkennung leitet das KAS den Datenstrom an den zuständigen Parser weiter. Der Aufrufmechanismus richtet sich nach der Topologie:
 
 #### 16.2.1. Autarker Betriebsmodus (Standalone CLI / TUI)
-In lokalen Analyse- und Kompilierungswerkzeugen stellt der Einsatz von Netzwerk-Brokern eine unnötige Verkomplizierung dar. Der Aufruf erfolgt über ein prozessinternes Strategieregister (*In-Process Strategy Registry*). Die Dispatching-Zeit liegt hierbei praktisch bei null Mikrosekunden ($T_{	ext{dispatch}} pprox 0~\mu	ext{s}$), wodurch jeglicher Serialisierungs-Overhead entfällt.
+In lokalen Analyse- und Kompilierungswerkzeugen stellt der Einsatz von Netzwerk-Brokern eine unnötige Verkomplizierung dar. Der Aufruf erfolgt über ein prozessinternes Strategieregister (*In-Process Strategy Registry*). Die Dispatching-Zeit liegt hierbei praktisch bei null Mikrosekunden ($T_{\text{dispatch}} \approx 0~\mu\text{s}$), wodurch jeglicher Serialisierungs-Overhead entfällt.
 
 #### 16.2.2. Verteilte Unternehmens-Pipeline (Enterprise Crawler Pipeline)
 In verteilten Produktionsumgebungen, in denen Crawler kontinuierlich externe Repositories überwachen, arbeitet die Pipeline ereignisgesteuert auf Basis von **NATS JetStream**:
@@ -752,6 +925,38 @@ Das Operator-Interface verknüpft eine tabellarische Ansicht typisierter Prädik
 
 Direkt aus dieser Konsole heraus kann der Operator den Mikrocode des Wissens im integrierten Einzelschritt-Debugger des Wissensprozessors ausführen. Dies gewährleistet eine lückenlose Traceability: von der Dokumentenerkennung durch den Crawler bis zur schrittweisen Inspektion der Prozessorflags bei der Evaluierung eines ingenieurtechnischen Szenarios.
 
+### 16.1. Zweistufiger Compiler für technisches Wissen: Abhängigkeitsanalyse und 7D-SI-Dimensionsvektoren
+
+Die Übersetzung natürlichsprachlicher technischer Spezifikationen in ausführbaren Mikrocode des Expertensystems ist die anspruchsvollste Phase im KAS-Betrieb, an der heuristische reguläre Ausdrücke und gleitende Wortfenster systematisch scheitern. Feste Fenstergrößen (beispielsweise vier Wörter links und rechts des Modalverbs „shall“) zerreißen komplexe Nominalphrasen (wie *„Core supply voltage supervisor under low-power sleep mode with external clock“*) und verfälschen das Passiv (*Passive Voice*), in dem über $`40\,\%`$ der Anforderungen internationaler Normen formuliert sind. Infolgedessen werden Register oder Busse fälschlicherweise als Subjekt der Pflicht anstelle des Software-Treibers deklariert.
+
+Zur Beseitigung dieser Schwachstelle implementiert das KAS einen zweistufigen deterministischen Wissenscompiler. Die erste Stufe führt ein syntaktisches Parsing des Satzes nach dem Formalismus der universellen Abhängigkeiten (*Universal Dependencies*, UD) [[32]](#src-32) durch:
+
+```math
+\mathrm{Sentence} \xrightarrow{\mathrm{UD}} \langle \mathrm{Actor}: \mathrm{Handler}, \, \mathrm{Action}: \mathrm{Clear}, \, \mathrm{Target}: \mathrm{Reg}_{\mathrm{status}}, \, \mathrm{Modal}: \mathbf{O}, \, \mathrm{Precondition}: \mathrm{ClockEnable} \rangle
+```
+
+Befindet sich das Prädikat im Passiv (erkennbar am Marker `aux:pass`), invertiert der Parser die semantischen Rollen automatisch: Das nominale Subjekt mit der Relation `nsubj:pass` wird als Handlungsobjekt (*Target/Patient*) zugewiesen, während das präpositionale Objekt mit der Relation `obl:agent` (eingeleitet durch „by“) als wahrer Träger der Verpflichtung (*Actor/Agent*) verankert wird.
+
+Auf der zweiten Stufe verifiziert der Compiler physikalische Größen und Toleranzgrenzen. Jeder ingenieurtechnische Parameter wird als geschlossenes Konfidenzintervall der Fertigungstoleranz extrahiert:
+
+```math
+I_V = [V_{\min}, V_{\max}] = [V_{\mathrm{nominal}} \cdot (1 - \delta), V_{\mathrm{nominal}} \cdot (1 + \delta)]
+```
+
+wobei $V_{\mathrm{nominal}}$ der Nominalwert ist und $\delta$ die relative technologische Toleranz der Komponente bezeichnet (z. B. $\delta = 0{,}10$ für eine zehnprozentige Streuung).
+
+Um fehlerhafte Vergleichsoperationen zwischen inkompatiblen physikalischen Größen auszuschließen, wird jede Dimension als 7-dimensionaler Vektor ganzzahliger Exponenten der SI-Basiseinheiten kodiert (Länge $L$, Masse $M$, Zeit $T$, elektrische Stromstärke $I$, thermodynamische Temperatur $\Theta$, Stoffmenge $N$, Lichtstärke $J$):
+
+```math
+\mathbf{D} = [d_L, d_M, d_T, d_I, d_\Theta, d_N, d_J] \in \mathbb{Z}^7
+```
+
+**Systemwirkung (Actionable Closed Loop):**
+
+1. **Laufzeitsteuerung und Berechnungsfluss:** Jede relationale Vergleichsoperation ($A < B$, $A \ge B$) oder arithmetische Subtraktion ($A - B$) ist genau dann zulässig, wenn die Dimensionsvektoren der Operanden strikt identisch sind: $\mathbf{D}_A = \mathbf{D}_B$. Versucht das System, eine Schwellenspannung ($\text{V}: [2, 1, -3, -1, 0, 0, 0]$) mit einem Leckstrom ($\text{A}: [0, 0, 0, 1, 0, 0, 0]$) zu vergleichen, bricht der KAS-Compiler die Regelkompilierung unverzüglich mit dem Fehler `TYPE_DIMENSION_MISMATCH` ab und verhindert die Veröffentlichung im Arbeitsspeicher.
+2. **Hardware-Dimensionierung und Ressourcen:** Der 7-dimensionale Dimensionsvektor wird in ein 8-Byte-Maschinenwort gepackt (7 vorzeichenbehaftete Bytes `int8` plus 1 Padding-Byte). Dadurch erfolgt die Verifikation der Dimensionskompatibilität über eine einzige 64-Bit-Registervergleichsinstruktion (`CMP`) in genau 1 Taktzyklus ohne externen Speicherzugriff.
+3. **Praktisches Zahlenbeispiel:** Für die Versorgungsbedingung eines Mikrocontrollers ist eine Nominalspannung von $5{,}0\,\text{V} \pm 10\,\%$ vorgegeben, was das Intervall $I_V = [4{,}50, 5{,}50]\,\text{V}$ aufspannt. Die Sicherheitsbedingung verlangt den Vergleich mit der unteren Ansprechschwelle des Spannungsüberwachers von $4{,}80\,\text{V}$. Beide Größen besitzen den identischen Vektor $\mathbf{D} = [2, 1, -3, -1, 0, 0, 0]$, was die physikalische Validität bestätigt und dem formalen Verifizierer erlaubt, die partielle Toleranzüberlappung zu berechnen und eine Warnregel zu generieren.
+
 ---
 
 ## 17. Aufteilung der architektonischen Zuständigkeit: KAS versus RAG-Systeme
@@ -765,19 +970,19 @@ Die Lösung verlangt einen harten Systemvertrag. Das maßgebliche Referenzartefa
 Der Einsatz teurer Grafikprozessoren (*GPU*) oder neuronaler Beschleuniger (*NPU*) im KAS ist erst dann gerechtfertigt, wenn Messungen konkrete Verarbeitungsengpässe belegen: Eine Beschleunigung der Vektorisierung bringt keinen Systemgewinn, wenn die Gesamtlaufzeit durch langsame Konnektoren, sequenzielles Dokumentenparsing oder komplexe Policy-Prüfungen dominiert wird. I/O-intensive Konnektoren, Text-Parser, Normalisierungsroutinen, Hashing, SQL-Abfragen, Graph-Traversierungen, Zugriffskontrollen und Audit-Logging laufen naturgemäß am effizientesten auf Mehrkern-CPUs (*Central Processing Unit*). GPUs sind die primäre Wahl für massenhafte OCR-Verarbeitung, Vision-Language-Modelle, Vektoreinbettungen und Cross-Encoder-Re-Ranking; NPUs eignen sich für kompakte, hardware-optimierte Modelle mit statischen Rechengraphen. Diese Aufteilung ist nicht starr: Nicht unterstützte Rechenoperationen, Speicherübertragungszeiten über den PCIe-Bus und CPU-Fallbacks können theoretische Beschleunigungsvorteile zunichtemachen. Die Auswahl für Batch-Vektorisierungen stützt sich auf empirische Messungen von Kaltstartzeit und Verarbeitungsdurchsatz:
 
 ```math
-T_{	ext{CPU}}(N)=T_{0,	ext{CPU}}+rac{N}{q_{	ext{CPU}}},\qquad T_{	ext{ACC}}(N)=T_{0,	ext{ACC}}+rac{N}{q_{	ext{ACC}}}
+T_{\text{CPU}}(N)=T_{0,\text{CPU}}+\frac{N}{q_{\text{CPU}}},\qquad T_{\text{ACC}}(N)=T_{0,\text{ACC}}+\frac{N}{q_{\text{ACC}}}
 ```
 
 Erläuterung der Variablen:
-- $N$ ist die Anzahl der Textfragmente im Batch; $T_{	ext{CPU}}(N)$ und $T_{	ext{ACC}}(N)$ bezeichnen die Gesamtlaufzeiten auf CPU beziehungsweise Beschleuniger (ACC);
-- $T_{0,	ext{CPU}}$ und $T_{0,	ext{ACC}}$ sind die jeweiligen Initialisierungszeiten (Kaltstart, Modell-Laden, Graphkompilierung, Warmup);
-- $q_{	ext{CPU}}$ und $q_{	ext{ACC}}$ bezeichnen den Durchsatz in Fragmenten pro Sekunde; der Summand $N/q$ beziffert die reine Rechenzeit für $N$ Einheiten;
+- $N$ ist die Anzahl der Textfragmente im Batch; $T_{\text{CPU}}(N)$ und $T_{\text{ACC}}(N)$ bezeichnen die Gesamtlaufzeiten auf CPU beziehungsweise Beschleuniger (ACC);
+- $T_{0,\text{CPU}}$ und $T_{0,\text{ACC}}$ sind die jeweiligen Initialisierungszeiten (Kaltstart, Modell-Laden, Graphkompilierung, Warmup);
+- $q_{\text{CPU}}$ und $q_{\text{ACC}}$ bezeichnen den Durchsatz in Fragmenten pro Sekunde; der Summand $N/q$ beziffert die reine Rechenzeit für $N$ Einheiten;
 - Alle Zeitwerte werden in Sekunden angegeben.
 
-Besitzt der Beschleuniger einen höheren Durchsatz ($q_{	ext{ACC}}>q_{	ext{CPU}}$), jedoch eine längere Initialisierungsphase ($T_{0,	ext{ACC}}>T_{0,	ext{CPU}}$), existiert ein kritischer Schnittpunkt $N^*$:
+Besitzt der Beschleuniger einen höheren Durchsatz ($q_{\text{ACC}}>q_{\text{CPU}}$), jedoch eine längere Initialisierungsphase ($T_{0,\text{ACC}}>T_{0,\text{CPU}}$), existiert ein kritischer Schnittpunkt $N^*$:
 
 ```math
-N^{*}=rac{T_{0,	ext{ACC}}-T_{0,	ext{CPU}}}{1/q_{	ext{CPU}}-1/q_{	ext{ACC}}}
+N^{*}=\frac{T_{0,\text{ACC}}-T_{0,\text{CPU}}}{1/q_{\text{CPU}}-1/q_{\text{ACC}}}
 ```
 
 Erläuterung der Variablen:
@@ -787,7 +992,7 @@ Erläuterung der Variablen:
 
 Für Batchgrößen $N > N^*$ ist der Beschleuniger überlegen; für kleinere Losgrößen $N < N^*$ liefert die CPU das schnellere Resultat. Unter Vernachlässigung dynamischer Batch-Effekte, Queueing-Delays und thermischer Drosselung dient $N^*$ als solide Richtgröße zur Auslastungssteuerung.
 
-In einer kontrollierten Versuchsreihe des Autors lieferte das Einbettungsmodell `all-MiniLM-L6-v2` auf CPU, GPU und NPU mathematisch nahezu identisch ausgerichtete Vektoren (Kosinus-Ähnlichkeit korrespondierender Vektoren $> 0{,}9999$). Die NPU erzielte mit 239,1 Einbettungen pro Sekunde den höchsten Durchsatz, benötigte jedoch eine Kaltstartzeit von 6,6 Sekunden. Die CPU lieferte 68,2 Einbettungen pro Sekunde bei einer Kaltstartzeit von lediglich 0,56 Sekunden. Der rechnerische Schnittpunkt lag bei $N^{*}=(6{,}6-0{,}56)/(1/68{,}2-1/239{,}1)pprox576$ Fragmenten: Für größere Batches ist die NPU optimal, für Einzelanfragen die CPU. Dieser Befund gilt für die spezifische Hardware unter OpenVINO 2026.2 [[24]](#src-24); neuere Versionen erfordern Re-Benchmarkings.
+In einer kontrollierten Versuchsreihe des Autors lieferte das Einbettungsmodell `all-MiniLM-L6-v2` auf CPU, GPU und NPU mathematisch nahezu identisch ausgerichtete Vektoren (Kosinus-Ähnlichkeit korrespondierender Vektoren $> 0{,}9999$). Die NPU erzielte mit 239,1 Einbettungen pro Sekunde den höchsten Durchsatz, benötigte jedoch eine Kaltstartzeit von 6,6 Sekunden. Die CPU lieferte 68,2 Einbettungen pro Sekunde bei einer Kaltstartzeit von lediglich 0,56 Sekunden. Der rechnerische Schnittpunkt lag bei $N^{*}=(6{,}6-0{,}56)/(1/68{,}2-1/239{,}1)\approx576$ Fragmenten: Für größere Batches ist die NPU optimal, für Einzelanfragen die CPU. Dieser Befund gilt für die spezifische Hardware unter OpenVINO 2026.2 [[24]](#src-24); neuere Versionen erfordern Re-Benchmarkings.
 
 Für Aufgaben wie OCR und Named Entity Recognition (NER) werden Modelle anhand von Genauigkeit, Speicherbedarf und Inferenzlatenz gewählt. Interaktive Pfade (Zugriffskontrolle, Triage) erfordern strikt garantierte Latenzobergrenzen (95. Perzentil) und stützen sich vorzugsweise auf Regeln oder kompakte Modelle. Batch-Pipelines (Bulk-OCR, tiefe Textanreicherung) bündeln Daten und nutzen GPUs. Entscheidungen zur Lastverlagerung stützen sich stets auf zwei Metrikengruppen: Performanz (95. Perzentil der Latenz, Durchsatz, Energiebedarf pro 1.000 Fragmente) und Qualität (Such-Recall, Extraktionsgenauigkeit, Erhalt von Provenienz und Schutzlabels). Fließen 95 % des KAS-Budgets in GPU-Cluster zur Vektorisierung, ist dies ein klares Indiz dafür, dass Wissensakquisition fälschlicherweise auf reines Vektor-Embedding reduziert wurde, anstatt eine saubere Wissensdisziplin aufzubauen.
 
@@ -858,18 +1063,18 @@ flowchart TB
 
 Der lila Block markiert Entwürfe, orange Blöcke revisionsbedürftige Zustände, grüne Blöcke valides Wissen, graue Blöcke historische Bestände und rote Blöcke verworfene oder widerrufene Daten. Neben dem Status benötigt jedes Objekt explizite Geltungsbedingungen: Baseline, Produktfamilie, Mandant, Zulieferer, Zielversion und Zeitstempel.
 
-Ein einfacher Zeitstempel „Zuletzt aktualisiert“ reicht für Auditierungszwecke nicht aus. Erforderlich ist ein bitemporales Modell: Die **Gültigkeitszeit (*valid time*)** bezeichnet den Zeitraum, in dem eine Aussage in der realen Welt zutraf; die **Transaktionszeit (*transaction time*)** dokumentiert das Intervall, in dem das KAS diese Aussage als aktuellen Wissensstand gespeichert hielt. Das klassische bitemporale Modell nach Christian S. Jensen und Richard T. Snodgrass [[25]](#src-25) definiert: Ein Faktum ist für eine Abfrage der Form „Was galt zum Zeitpunkt $t$ nach dem Kenntnisstand des KAS zum Zeitpunkt $	au$“ genau dann gültig, wenn gilt:
+Ein einfacher Zeitstempel „Zuletzt aktualisiert“ reicht für Auditierungszwecke nicht aus. Erforderlich ist ein bitemporales Modell: Die **Gültigkeitszeit (*valid time*)** bezeichnet den Zeitraum, in dem eine Aussage in der realen Welt zutraf; die **Transaktionszeit (*transaction time*)** dokumentiert das Intervall, in dem das KAS diese Aussage als aktuellen Wissensstand gespeichert hielt. Das klassische bitemporale Modell nach Christian S. Jensen und Richard T. Snodgrass [[25]](#src-25) definiert: Ein Faktum ist für eine Abfrage der Form „Was galt zum Zeitpunkt $t$ nach dem Kenntnisstand des KAS zum Zeitpunkt $\tau$“ genau dann gültig, wenn gilt:
 
 ```math
-t_{	ext{valid-from}}\le t<t_{	ext{valid-to}}\quad\land\quad t_{	ext{recorded-from}}\le	au<t_{	ext{recorded-to}}
+t_{\text{valid-from}}\le t<t_{\text{valid-to}}\quad\land\quad t_{\text{recorded-from}}\le\tau<t_{\text{recorded-to}}
 ```
 
 Erläuterung der Variablen:
-- $[t_{	ext{valid-from}},t_{	ext{valid-to}})$ ist das reale Gültigkeitsintervall des Faktums; $[t_{	ext{recorded-from}},t_{	ext{recorded-to}})$ ist das Intervall, in dem das KAS die Information als aktuell führte;
-- $t$ bezeichnet den Abfragezeitpunkt in der realen Welt; $	au$ ist der historische Revisionszeitpunkt der Wissensbasis;
+- $[t_{\text{valid-from}},t_{\text{valid-to}})$ ist das reale Gültigkeitsintervall des Faktums; $[t_{\text{recorded-from}},t_{\text{recorded-to}})$ ist das Intervall, in dem das KAS die Information als aktuell führte;
+- $t$ bezeichnet den Abfragezeitpunkt in der realen Welt; $\tau$ ist der historische Revisionszeitpunkt der Wissensbasis;
 - Die eckige Klammer schließt den Intervallbeginn ein, die runde Klammer schließt das Intervallende aus; $\land$ fordert die gleichzeitige Gültigkeit beider Zeitbedingungen.
 
-Ein Fakt beantwortet eine Abfrage nur dann, wenn er zum Realzeitpunkt $t$ materiell galt und dem KAS zum Revisionszeitpunkt $	au$ bereits bekannt war. Ein am 7. Juni erfasstes Erratum, das rückwirkend ab dem 1. Juni gilt, war am 3. Juni noch nicht im System bekannt: Eine historische Abfrage nach dem Systemwissen am 3. Juni liefert die alte Fassung, während eine heutige Abfrage nach der Sachlage am 3. Juni das Erratum mit einem Vermerk über den verspäteten Eingang zurückgibt. Diese Differenzierung schützt vor retrospektiver Verfälschung (*Hindsight Bias*) bei Sicherheitsuntersuchungen.
+Ein Fakt beantwortet eine Abfrage nur dann, wenn er zum Realzeitpunkt $t$ materiell galt und dem KAS zum Revisionszeitpunkt $\tau$ bereits bekannt war. Ein am 7. Juni erfasstes Erratum, das rückwirkend ab dem 1. Juni gilt, war am 3. Juni noch nicht im System bekannt: Eine historische Abfrage nach dem Systemwissen am 3. Juni liefert die alte Fassung, während eine heutige Abfrage nach der Sachlage am 3. Juni das Erratum mit einem Vermerk über den verspäteten Eingang zurückgibt. Diese Differenzierung schützt vor retrospektiver Verfälschung (*Hindsight Bias*) bei Sicherheitsuntersuchungen.
 
 ```mermaid
 flowchart LR
@@ -924,7 +1129,7 @@ var forever = time.Date(9999, time.December, 31, 0, 0, 0, 0, time.UTC)
 func asOf(facts []Fact, t, tau time.Time) []string {
 	var out []string
 	for _, f := range facts {
-		valid := !t.Before(f.ValidFrom) && t.Before(f.ValidTo)
+	valid := !t.Before(f.ValidFrom) && t.Before(f.ValidTo)
 		known := !tau.Before(f.RecordedFrom) && tau.Before(f.RecordedTo)
 		if !valid || !known {
 			continue
@@ -972,13 +1177,13 @@ Jede Wissensdomäne erfordert einen benannten Facheigentümer (*Knowledge Stewar
 Wissensbestände erfordern ein strukturiertes Release-Management. Jede Änderung an einem Dokument kann Ausgaben des Expertensystems verändern. Ein Release-Paket besitzt daher ein detailliertes Changelog: hinzugefügte und widerrufene Quellen, geänderte Regeln, modifizierte Einbettungsmodelle, neu erstellte Indizes und ermittelte Qualitätsmetriken. Das Release-Manifest dokumentiert Quellensnapshots, Parser-Versionen, Redaktionsregeln, Tokenizer, Vektormodelle, Indexparameter, Zugriffspolicies und Testkorpora. Die eindeutige Release-ID wird als kryptographischer Hash der kanonischen Manifest-Serialisierung berechnet:
 
 ```math
-	ext{release-id}=Hig(\mathrm{Canon}(	ext{manifest})ig)
+\text{release-id}=H\big(\mathrm{Canon}(\text{manifest})\big)
 ```
 
 Erläuterung der Variablen:
-- $	ext{manifest}$ bezeichnet das Manifest mit allen Parametern und Quellennachweisen;
+- $\text{manifest}$ bezeichnet das Manifest mit allen Parametern und Quellennachweisen;
 - $\mathrm{Canon}$ transformiert das Manifest in eine deterministische, kanonische Byterepräsentation mit festgelegter Feldsortierung;
-- $H$ ist eine kryptographische Hash-Funktion (z. B. SHA-256); $	ext{release-id}$ ist der resultierende Hashwert fester Länge.
+- $H$ ist eine kryptographische Hash-Funktion (z. B. SHA-256); $\text{release-id}$ ist der resultierende Hashwert fester Länge.
 
 Identische kanonische Manifeste erzeugen identische Release-IDs. Der Hash garantiert Integrität, belegt jedoch keine Authentizität: Zur rechtssicheren Beglaubigung wird das Manifest digital signiert. Ein Widerrufseintrag (*Tombstone*) markiert eine Ungültigkeit, ohne die Revisionshistorie zu tilgen.
 
@@ -1063,6 +1268,21 @@ Der graue Block steht für den rohen Informationsraum, blaue Blöcke für Erkenn
 
 Kooperieren Dutzende unabhängiger Partner oder konkurrierender Zulieferer bei der Entwicklung komplexer Gesamtsysteme, überschreitet die Wissensakquisition Unternehmensgrenzen. Drei Forschungsrichtungen gewinnen dabei an Bedeutung: Föderiertes Ontologie-Matching (*Federated Ontology Alignment*) gleicht Begriffsräume zwischen Firmen ab, ohne vertrauliche Datenbanken zentral zusammenzuführen. Zero-Knowledge Proofs (*ZKP*), begründet von Shafi Goldwasser, Silvio Micali und Charles Rackoff [[28]](#src-28), ermöglichen den mathematischen Beweis einer Aussage, ohne die zugrundeliegenden schützenswerten Daten preiszugeben; Zulieferer könnten Kunden oder Auditoren damit nachweisen, dass eine Sicherheitsanforderung (z. B. mechanische Spannungsspitzen) eingehalten wird, ohne Schaltpläne oder Quellcode offenzulegen. Dezentrale Wissensregister mit kryptographischen Signaturen könnten Ingenieure incentivieren, widerlegte Hypothesen und Normenfehler transparent zu dokumentieren. Diese Ansätze markieren vielversprechende Forschungsfelder, stellen im aktuellen Kontext jedoch methodische Forschungshypothesen und noch keine etablierten Industriestandards dar.
 
+### 23.1. Epistemischer Knowledge-Detection-Filter gegen naive Datenaufnahme
+
+Der evolutionäre Übergang von passiver Dokumentenakkumulation zu selektiver Wissenserkennung erfordert eine grundlegende Neuausrichtung der KAS-Gateway-Architektur. Moderne generative Pipelines (insbesondere primitive RAG-Pipelinetypen) implementieren ein passives Ingest-Modell: Beliebige Eingangsdokumente werden undifferenziert tokenisiert, in heuristische Chunks zerlegt und blindlings in einen Vektorspeicher geschrieben. In kritischen Ingenieurdomänen (Functional Safety, Automotive ASIL D, Mikroelektronik) führt dieser Ansatz zur raschen Degradation der Wissensbasis durch die Akkumulation von Floskeln, veralteten Entwurfsfragmenten und fatalen logischen Widersprüchen.
+
+Anstelle eines passiven Ingests etabliert das KAS-Subsystem einen aktiven Wissenserkennungsfilter (*Knowledge Detection Filter*), der eine zweistufige Selektion durchsetzt:
+
+1. **Triade epistemischer Selektion:**
+   Jedes eingehende Textfragment $`D`$ wird vor der Aufnahme in den Index anhand dreier Dimensionen analysiert:
+   - *Faktensättigung:* Detektion des Vorhandenseins deontischer Modalitäten (`SHALL`, `MUST`, `CRITICAL`), formaler prädikativer Relationen und numerischer Toleranzintervalle mit obligatorischen physikalischen SI-Maßeinheiten;
+   - *Ontologische Bindung:* Berechnung der Schnittmengendichte extrahierter Termini mit dem kanonischen Begriffsgraphen und den Projektspezifikationen;
+   - *Epistemischer Konfidenzwert:* Berechnung eines integralen Nützlichkeitskoeffizienten $`\tau(D) \in [0, 1]`$. Fragmente, für die $`\tau(D) < \tau_{\mathrm{threshold}}`$ gilt, werden als Informationsrauschen deterministisch verworfen.
+
+2. **Vorabprüfung auf Widerspruchsfreiheit (Pre-Ingestion Contradiction Check):**
+   Extrahierte Prädikate werden bereits vor dem Schreiben in die Datenbank gegen den axiomatischen Kern des Wissenssystems abgeglichen. Enthält ein Kandidat Aussagen, die einen geltenden zertifizierten Standard widerlegen (z. B. im Widerspruch zu den Anforderungen an den diagnostischen Deckungsgrad nach ISO 26262 stehen), vermengt das System widersprüchliche Normen keineswegs im Vektorraum. Stattdessen wird ein formaler argumentativer Defeater (*defeater*) synthetisiert, der Kandidat in Quarantäne blockiert und ein Eskalationsbericht mit Nennung der Primärquellen beider Konfliktaussagen an den Knowledge Engineer übermittelt.
+
 ## Fazit
 
 Dieses Kapitel nahm seinen Ausgangspunkt bei einem unüberschaubaren Dokumentenbestand und der verlockenden, aber fatalen Idee, „der KI einfach alle Dokumente bereitzustellen“. Die fundamentale Antwort lautet: Wissen wird nicht unbesehen hochgeladen, sondern über eine streng kontrollierte Pipeline bereitgestellt, in der jede Phase durch Eingänge, Ausgänge, Metriken, Verantwortliche, Quarantänebedingungen und Widerrufsroutinen definiert ist. Die zentralen Erkenntnisse lassen sich wie folgt zusammenfassen:
@@ -1070,7 +1290,7 @@ Dieses Kapitel nahm seinen Ausgangspunkt bei einem unüberschaubaren Dokumentenb
 - Wissensakquisition ist eine eigenständige ingenieurtechnische Fachdisziplin; das KAS ist das Softwaresystem, welches die Basistechnologien (Konnektoren, Parser, Segmentierung, Triage, Klassifikation, Deduplizierung, Redaktion, Anreicherung, Verknüpfung, Indexierung, Zugriffskontrolle, Kuratierung, Provenienzverwaltung und Lebenszyklussteuerung) orchestriert. Kein Einzelwerkzeug vermag isoliert zu entscheiden, ob ein Fragment gültig, zulässig und beweiskräftig ist;
 - Sicherheitslabels müssen zwingend auf alle Derivate vererbt werden; Vertraulichkeit basiert auf mehrstufigen Kontrollen von der Erfassung bis zum Widerruf. Nicht vertrauenswürdige Dateien bedrohen die Softwarestabilität des Parsers, während bösartige Texte die logische Entscheidungsfindung attackieren — beide Dimensionen erfordern autonome Schutzmechanismen;
 - Empirische Untersuchungen an 9.746 RFC-Spezifikationen belegen: Lückenlose Provenienz ist eine notwendige, jedoch keineswegs hinreichende Bedingung für valides Wissen. Der funktionale Mehrwert strukturierter Wissensaufbereitung muss für jede Aufgabe (Suche, Lektüre, Klassifikation, Inferenz) gesondert nachgewiesen werden;
-- Mathematische Selektionsfilter ($J$, $F$, $R$) steuern die Priorisierung bei der Begutachtung, etablieren jedoch keine logische Wahrheit; operative Metriken ($C_{	ext{meta}}$, $L_{	ext{revoke}}$, Littles Gesetz) sichern die Stabilität des Pipelinebetriebs;
+- Mathematische Selektionsfilter ($J$, $F$, $R$) steuern die Priorisierung bei der Begutachtung, etablieren jedoch keine logische Wahrheit; operative Metriken ($C_{\text{meta}}$, $L_{\text{revoke}}$, Littles Gesetz) sichern die Stabilität des Pipelinebetriebs;
 - Bitemporale Zeitmodelle erlauben die exakte Rekonstruktion historischer Wissensstände; digital signierte Release-Manifeste und atomare Rollback-Mechanismen erheben die Wissensbasis zu einer auditierbaren industriellen Komponente unter strenger Revisionsdisziplin.
 
 Grenzen der Abhandlung: Die genannten Messwerte entstammen spezifischen Testkorpora, Modellarchitekturen und Hardwareplattformen; die Implementierung des Autors illustriert ein exemplarisches Referenzmuster, wobei weitergehende Eigenschaften (durchgängige Redaktion, strukturierte Gültigkeitsbedingungen, vollständiger Derivate-Widerruf) Zielarchitekturen darstellen. Dokumente erfassen zudem nur einen Teil des Unternehmenswissens; implizites Erfahrungswissen erfordert Methoden der Expertenbefragung ([Kapitel 11](ch11-knowledge-elicitation-from-experts.md)), während linguistische Vertiefungen und die normative Anforderungsextraktion Gegenstand der [Kapitel 12–15](part-03-knowledge-engineering-nlp.md) sind.
@@ -1126,6 +1346,11 @@ Grenzen der Abhandlung: Die genannten Messwerte entstammen spezifischen Testkorp
 | Zero-Knowledge Proof | *zero-knowledge proof* | Kryptographisches Protokoll zum Nachweis einer Aussage ohne Offenlegung der Belegdaten |
 | Sharding | *sharding* | Partitionierung einer Wissensbasis über mehrere Knoten anhand eines Partitionsschlüssels (Kap. 7) |
 | Shard-Map | *shard map* | Verzeichnis aller Shards eines Releases mit Platzierungsfunktion und Prüfhashes |
+| Epistemische Geologie | *epistemic geology* | Methodologie zur Analyse und Stratifikation technischer Korpora zur Gewinnung von Wissenserz und Abscheidung von Schlacke |
+| Projektwissensaufklärung (PKR) | *project knowledge reconnaissance* | Paradigma der vorausschauenden Sondierung des Dokumenten- und Codebestands zur Aufdeckung von Traceability-Lücken |
+| Artefakt-Stratigraphie | *artifact stratigraphy* | Gliederung des technischen Bestands in normative, architektonische, ausführbare und evidenzbasierte Schichten |
+| Zweidimensionale räumliche Rekonstruktion | *2D spatial reconstruction* | Algorithmus zur Wiederherstellung von Tabellengittern und Zellrelationen in PDF mittels algorithmischer Geometrie |
+| Wissensdichteindex (KDI) | *knowledge density index* | Quantitative Bewertung der Konzentration normativer Anforderungen, Entitäten und physikalischer Parameter im Textfragment |
 
 ## Abkürzungen
 
@@ -1161,6 +1386,12 @@ Grenzen der Abhandlung: Die genannten Messwerte entstammen spezifischen Testkorp
 | W3C | World Wide Web Consortium | Standardisierungsgremium für das World Wide Web |
 | ZKP | Zero-Knowledge Proof | Null-Wissen-Beweis / Zero-Knowledge-Protokoll |
 | KI | Künstliche Intelligenz | Artificial Intelligence (*AI*) |
+| IP-XACT | IEEE 1685 IP-XACT standard | XML-Standard zur Beschreibung von Metadaten der Mikroelektronik |
+| KDI | Knowledge Density Index | Wissensdichteindex |
+| PKR | Project Knowledge Reconnaissance | Systemische Projektwissensaufklärung |
+| SVD | System View Description | XML-Format zur Beschreibung des Registerraums von ARM-CMSIS-Mikrocontrollern |
+| UCUM | Unified Code for Units of Measure | Einheitlicher Code für Maßeinheiten |
+| UD | Universal Dependencies | Universelle grammatikalische Abhängigkeiten für syntaktische Parsing-Bäume |
 
 ## Literaturverzeichnis
 
@@ -1194,6 +1425,10 @@ Die nachfolgenden Standards, Fachpublikationen und Richtlinien bilden den method
 26. <a id="src-26"></a>Elham Tabassi. [*Artificial Intelligence Risk Management Framework (AI RMF 1.0)*](https://doi.org/10.6028/NIST.AI.100-1). NIST AI 100-1, 2023.
 27. <a id="src-27"></a>NIST. [*Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile*](https://doi.org/10.6028/NIST.AI.600-1). NIST AI 600-1, 2024.
 28. <a id="src-28"></a>Shafi Goldwasser, Silvio Micali, Charles Rackoff. [*The Knowledge Complexity of Interactive Proof Systems*](https://doi.org/10.1137/0218012). *SIAM Journal on Computing*, 18(1), 186–208, 1989.
+29. <a id="src-29"></a>IEEE. [*IEEE Standard for Device Intellectual Property Packaging, Integration, and Reuse (IEEE Std 1685-2022, IP-XACT)*](https://standards.ieee.org/ieee/1685/7414/). 2022.
+30. <a id="src-30"></a>Arm. [*CMSIS-SVD: System View Description Format, Version 1.3.9*](https://arm-software.github.io/CMSIS_5/SVD/html/index.html).
+31. <a id="src-31"></a>Gunther Schadow, Clement J. McDonald. [*The Unified Code for Units of Measure (UCUM)*](https://ucum.org/ucum.html). Regenstrief Institute.
+32. <a id="src-32"></a>Marie-Catherine de Marneffe, Christopher D. Manning, Joakim Nivre, Daniel Zeman. [*Universal Dependencies*](https://doi.org/10.1162/coli_a_00402). *Computational Linguistics*, 47(2), 255–308, 2021.
 
 ---
 
