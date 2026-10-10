@@ -2,7 +2,7 @@
 
 **關於高可信度智慧系統設計、數學模型、架構與形式驗證的工程專著暨架構師指南（Safety-Critical & Evidence-Grounded AI）**
 
-**作者：** [Mykola Fedchyk](../en/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
+**作者：** [Mykola Fedchyk](../../about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
 **體裁：** 工程專著 / AI 架構師案頭寶典  
 **年份：** 2026  
 
@@ -18,7 +18,7 @@
 
 系統需求、原始碼、測試日誌、法規標準與工程決策早已存在於現代生產環境中，但它們大多作為孤立的產物存在，缺乏形式化的語義、嚴格的有效邊界與雙向可追溯性。一份通過的資格測試報告可能對應的是過時的硬體版本；功能安全標準的條文可能脫離上下文被引用；緊急配置回滾可能在無意中重新啟動已被廢棄的組件。
 
-本書提出了一條端到端的工程管線：從將工程產物形式化為具型別的資料與密碼學簽名的知識包，到符號推理、分步計畫分解、反事實解釋以及能力邊界審計。實務內容輔以基於 Go 語言實現的工業級模組與完整測試套件（[第1章](../en/ch01-introduction-to-expert-systems.md)）、嚴格的數學契約（[第II部](../en/part-02-knowledge-models.md)），以及被證實能防止迴歸的持續學習協定（[第25章](../en/ch25-how-expert-systems-learn.md)）。
+本書提出了一條端到端的工程管線：從將工程產物形式化為具型別的資料與密碼學簽名的知識包，到符號推理、分步計畫分解、反事實解釋以及能力邊界審計。實務內容輔以基於 Go 語言實現的工業級模組與完整測試套件（[第1章](../../ch01-introduction-to-expert-systems.md)）、嚴格的數學契約（[第II部](../../part-02-knowledge-models.md)），以及被證實能防止迴歸的持續學習協定（[第25章](../../ch25-how-expert-systems-learn.md)）。
 
 ### 目標讀者
 
@@ -32,14 +32,14 @@
 
 | 學術方向 | 全球核心著作與學者 | 本書中的概念橋樑 |
 |---|---|---|
-| **第三波神經-符號 AI (NeSy)** | Artur d'Avila Garcez, Luis C. Lamb (*Neurosymbolic AI: The 3rd Wave*, 2023; *Neural-Symbolic Cognitive Reasoning*, Springer, 2009); Henry Kautz (*The Third AI Summer*, AAAI 2022) | 職責分離：統計模型（SLM/LLM）生成查詢假說，確定性符號核心形式驗證並認可事實（[第29章](../en/ch29-neuro-symbolic-architecture.md)）。 |
-| **語義約束與安全學習** | Guy Van den Broeck et al. (*A Semantic Loss Function for Deep Learning with Symbolic Knowledge*, ICML 2018); Luc De Raedt et al. (*DeepProbLog*, IJCAI 2020) | 輸入與輸出准入閘道，基於形式綱要對神經網路候選輸出進行確定性語義過濾（[第28章](../en/ch28-dual-mode-expert-systems.md)、[第33章](../en/ch33-inter-system-knowledge-exchange-and-model-teaching.md)）。 |
-| **可撤銷推理與論證理論** | John L. Pollock (*Defeasible Reasoning*, 1987; *Cognitive Carpentry*, MIT Press, 1995); Phan Minh Dung (*Abstract Argumentation Frameworks*, AIJ 1995); Douglas Walton (*Argumentation Schemes*, Cambridge, 2008) | 將知識分解為主幹主張、來源出處與反駁因素（*rebutting* 與 *undercutting defeaters*）；使用 Dung 抽象論證框架解決法規知識庫中的衝突（[第2章](../en/ch02-epistemology-of-machine-knowledge.md)、[第27章](../en/ch27-safety-case-gsn-synthesis.md)）。 |
-| **關聯規則自主挖掘 (KBC)** | Luis Galárraga, Fabian M. Suchanek et al. (*AMIE: Association Rule Mining under Incomplete Evidence*, WWW 2013, VLDBJ 2015); Stephen Muggleton (*Inductive Logic Programming*, 1994) | 在部分完備性假設（PCA）下從知識庫中自主歸納關聯規則，消除開放世界的虛假反例（[第34章](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)）。 |
-| **形式安全防護罩與認證 (Safe AI)** | Bettina Könighofer, Roderick Bloem et al. (*Shield Synthesis*, 2017); Tim Kelly, Rob Weaver (*Goal Structuring Notation*, York, 2004); André Platzer (*Logical Foundations of CPS*, Springer, 2018) | 依照 ISO 26262/21434 標準以 GSN 記號合成安全案例；為外圍致動器提供形式防護罩與數值有效性包絡（[第27章](../en/ch27-safety-case-gsn-synthesis.md)、[第30章](../en/ch30-safety-cybersecurity-co-engineering.md)、[第33章](../en/ch33-inter-system-knowledge-exchange-and-model-teaching.md)）。 |
-| **認識論邏輯與知識符號學** | John F. Sowa (*Knowledge Representation: Logical, Philosophical, and Computational Foundations*, 2000); Frank van Harmelen et al. (*Handbook of Knowledge Representation*, Elsevier, 2008) | 查爾斯·桑德斯·皮爾士的認識論三元組（概念 → 判斷 → 推理）；在嚴格演繹控制下對工作假說進行溯因推理（[第6章](../en/ch06-applied-mathematics-for-expert-systems.md)、[第34章](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)）。 |
-| **控制論與複雜系統協同論** | Norbert Wiener (*Cybernetics*, 1948); W. Ross Ashby (*An Introduction to Cybernetics*, 1956); Hermann Haken (*Synergetics: An Introduction*, 1977; *Advanced Synergetics*, 1983); Ilya Prigogine (*Order out of Chaos*, 1984) | 艾許比的必要多樣性定律、L0–L4 閉環控制、哈肯役使原理將狀態空間約化為序參量、透過臨界減速（CSD）預警相變，以及知識庫的耗散結構穩定化（[第6章](../en/ch06-applied-mathematics-for-expert-systems.md)、[第22章](../en/ch22-cybernetics-edge-to-backend.md)、[第35章](../en/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)）。 |
-| **知識測試、語言不變性與利普希茨校準** | Kent Beck (*TDD*, 2002); Martin Fowler (*Refactoring*, 2018); Clark Barrett, Leonardo de Moura (*Z3 SMT Solver*, 2008); Chuan Guo et al. (*On Calibration of Modern Neural Networks*, ICML 2017); Marco Tulio Ribeiro et al. (*CheckList*, ACL 2020); John L. Pollock (*Defeasible Reasoning*, 1987) | 四層知識測試金字塔（KTP）：帶前提模擬（`PremiseMock`）的原子規則單元測試（KUT）、消除空洞真陷阱、6 點譜系邊界值分析（BVA）、規則格與反駁因素（KIT）、面對語言變化的語義不變性評分（$\text{SIS} \ge 0.98$）、防止繼電器抖動的利普希茨連續性約束（$L_{\mathcal{K}} \le L_{\max}$），以及共識痕跡知識空缺累積（[第36章](../en/ch36-knowledge-testing-pyramid-and-variational-calibration.md)）。 |
+| **第三波神經-符號 AI (NeSy)** | Artur d'Avila Garcez, Luis C. Lamb (*Neurosymbolic AI: The 3rd Wave*, 2023; *Neural-Symbolic Cognitive Reasoning*, Springer, 2009); Henry Kautz (*The Third AI Summer*, AAAI 2022) | 職責分離：統計模型（SLM/LLM）生成查詢假說，確定性符號核心形式驗證並認可事實（[第29章](../../ch29-neuro-symbolic-architecture.md)）。 |
+| **語義約束與安全學習** | Guy Van den Broeck et al. (*A Semantic Loss Function for Deep Learning with Symbolic Knowledge*, ICML 2018); Luc De Raedt et al. (*DeepProbLog*, IJCAI 2020) | 輸入與輸出准入閘道，基於形式綱要對神經網路候選輸出進行確定性語義過濾（[第28章](../../ch28-dual-mode-expert-systems.md)、[第33章](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)）。 |
+| **可撤銷推理與論證理論** | John L. Pollock (*Defeasible Reasoning*, 1987; *Cognitive Carpentry*, MIT Press, 1995); Phan Minh Dung (*Abstract Argumentation Frameworks*, AIJ 1995); Douglas Walton (*Argumentation Schemes*, Cambridge, 2008) | 將知識分解為主幹主張、來源出處與反駁因素（*rebutting* 與 *undercutting defeaters*）；使用 Dung 抽象論證框架解決法規知識庫中的衝突（[第2章](../../ch02-epistemology-of-machine-knowledge.md)、[第27章](../../ch27-safety-case-gsn-synthesis.md)）。 |
+| **關聯規則自主挖掘 (KBC)** | Luis Galárraga, Fabian M. Suchanek et al. (*AMIE: Association Rule Mining under Incomplete Evidence*, WWW 2013, VLDBJ 2015); Stephen Muggleton (*Inductive Logic Programming*, 1994) | 在部分完備性假設（PCA）下從知識庫中自主歸納關聯規則，消除開放世界的虛假反例（[第34章](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)）。 |
+| **形式安全防護罩與認證 (Safe AI)** | Bettina Könighofer, Roderick Bloem et al. (*Shield Synthesis*, 2017); Tim Kelly, Rob Weaver (*Goal Structuring Notation*, York, 2004); André Platzer (*Logical Foundations of CPS*, Springer, 2018) | 依照 ISO 26262/21434 標準以 GSN 記號合成安全案例；為外圍致動器提供形式防護罩與數值有效性包絡（[第27章](../../ch27-safety-case-gsn-synthesis.md)、[第30章](../../ch30-safety-cybersecurity-co-engineering.md)、[第33章](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)）。 |
+| **認識論邏輯與知識符號學** | John F. Sowa (*Knowledge Representation: Logical, Philosophical, and Computational Foundations*, 2000); Frank van Harmelen et al. (*Handbook of Knowledge Representation*, Elsevier, 2008) | 查爾斯·桑德斯·皮爾士的認識論三元組（概念 → 判斷 → 推理）；在嚴格演繹控制下對工作假說進行溯因推理（[第6章](../../ch06-applied-mathematics-for-expert-systems.md)、[第34章](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)）。 |
+| **控制論與複雜系統協同論** | Norbert Wiener (*Cybernetics*, 1948); W. Ross Ashby (*An Introduction to Cybernetics*, 1956); Hermann Haken (*Synergetics: An Introduction*, 1977; *Advanced Synergetics*, 1983); Ilya Prigogine (*Order out of Chaos*, 1984) | 艾許比的必要多樣性定律、L0–L4 閉環控制、哈肯役使原理將狀態空間約化為序參量、透過臨界減速（CSD）預警相變，以及知識庫的耗散結構穩定化（[第6章](../../ch06-applied-mathematics-for-expert-systems.md)、[第22章](../../ch22-cybernetics-edge-to-backend.md)、[第35章](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)）。 |
+| **知識測試、語言不變性與利普希茨校準** | Kent Beck (*TDD*, 2002); Martin Fowler (*Refactoring*, 2018); Clark Barrett, Leonardo de Moura (*Z3 SMT Solver*, 2008); Chuan Guo et al. (*On Calibration of Modern Neural Networks*, ICML 2017); Marco Tulio Ribeiro et al. (*CheckList*, ACL 2020); John L. Pollock (*Defeasible Reasoning*, 1987) | 四層知識測試金字塔（KTP）：帶前提模擬（`PremiseMock`）的原子規則單元測試（KUT）、消除空洞真陷阱、6 點譜系邊界值分析（BVA）、規則格與反駁因素（KIT）、面對語言變化的語義不變性評分（$\text{SIS} \ge 0.98$）、防止繼電器抖動的利普希茨連續性約束（$L_{\mathcal{K}} \le L_{\max}$），以及共識痕跡知識空缺累積（[第36章](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)）。 |
 
 ---
 
@@ -49,25 +49,25 @@
 
 ### 1. 基礎理論模型與嚴格數學形式化
 
-1. **證據紮根不變量 (EGI) 與事實准入閘道（[第2章](../en/ch02-epistemology-of-machine-knowledge.md)、[第19章](../en/ch19-from-question-to-evidence.md)、[第28章](../en/ch28-dual-mode-expert-systems.md)、[第29章](../en/ch29-neuro-symbolic-architecture.md)）：**
+1. **證據紮根不變量 (EGI) 與事實准入閘道（[第2章](../../ch02-epistemology-of-machine-knowledge.md)、[第19章](../../ch19-from-question-to-evidence.md)、[第28章](../../ch28-dual-mode-expert-systems.md)、[第29章](../../ch29-neuro-symbolic-architecture.md)）：**
    * *理論構想：* 作者建立並形式化了紮根完備性不變量 $\mathrm{Comp}(C) = 1.00$，規定在證據導向系統中，任何主張若未確定性投影至權威一級知識來源，均不得賦予被認可事實的地位。事實庫中的每個條目均附帶密碼學元組：不可變字節偏移 `[byte_start, byte_end]`、規範片段雜湊 `quote_sha256`，以及 PROV-O 出處證書識別碼。
    * *工程意義：* 字節級准入閘道在軟硬體邊界處徹底杜絕了神經網路幻覺滲透入受版本控制的知識庫中，確保對無憑據數據零容忍（$ZHR = 1.00$）。
-2. **四層知識測試金字塔 (KTP) 與推理空間利普希茨穩定性（[第36章](../en/ch36-knowledge-testing-pyramid-and-variational-calibration.md)）：**
+2. **四層知識測試金字塔 (KTP) 與推理空間利普希茨穩定性（[第36章](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)）：**
    * *理論構想：* 作者首次提出了系統化的知識測試金字塔（KTP），將馬丁·福勒的測試金字塔規則引入知識系統：隔離前提（`PremiseMock`）的規則單元測試（KUT）、規則交互與反駁因素的整合測試（KIT），以及在查詢多樣體上的變分校準（KVT）。
    * *數學機制：* 定義了消除空洞真的不變量（當 $P \equiv \text{False}$ 時的 $P \to Q$）、語言擾動下的語義不變性度量（$\mathrm{SIS} \ge 0.98$），以及推理空間利普希茨連續性約束（$L_{\mathcal{K}} \le L_{\max}$），從數學上杜絕微小輸入擾動導致的災難性繼電器抖動。
-3. **波普爾規範證偽理論與主動合規審計員（[第39章](../en/ch39-active-compliance-auditor-and-popperian-testing.md)）：**
+3. **波普爾規範證偽理論與主動合規審計員（[第39章](../../ch39-active-compliance-auditor-and-popperian-testing.md)）：**
    * *理論構想：* 實現從僅僅回答問題的傳統「被動神諭」到踐行卡爾·波普爾證偽原則的主動知識審計範式的轉變。系統自主探測需求空間（ASPICE 4.0、ISO 26262、ISO/SAE 21434），合成反例，識別不完整規格，並自主設計產品的全套驗證方案。
    * *實用價值：* 將神經網路對邊界場景的創造性生成（System 1）與符號核心的確定性道義驗證（System 2）相結合，有效防止控制迴路中的操作人員（Human-in-the-Loop）產生審批疲勞。
-4. **知識庫維度的協同縮約與 CSD 早期診斷（[第6章](../en/ch06-applied-mathematics-for-expert-systems.md)、[第22章](../en/ch22-cybernetics-edge-to-backend.md)、[第35章](../en/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)）：**
+4. **知識庫維度的協同縮約與 CSD 早期診斷（[第6章](../../ch06-applied-mathematics-for-expert-systems.md)、[第22章](../../ch22-cybernetics-edge-to-backend.md)、[第35章](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)）：**
    * *理論構想：* 將赫爾曼·哈肯的協同論數學工具（序參量與役使原理）及伊利亞·普里高津的耗散結構理論應用於複雜知識庫的演化。
    * *科學成果：* 開發了將遙測多維狀態空間縮約為序參量的方法，並整合了基於自相關與方差的臨界減速（*Critical Slowing Down*, CSD）前饋探測器，在緊急閾值感測器觸發前及早預警動態失穩。
-5. **行動自主性等級 (A0–A4) 模型、授權閘道與等冪長篇交易（[第21章](../en/ch21-from-recommendation-to-action.md)）：**
+5. **行動自主性等級 (A0–A4) 模型、授權閘道與等冪長篇交易（[第21章](../../ch21-from-recommendation-to-action.md)）：**
    * *理論構想：* 制定了系統行動權限的離散尺度（A0：被動分析、A1：草案準備、A2：人工簽署執行、A3：受控自主、A4：緊急安全切斷），該權限並非賦予整個系統，而是賦予「行動、環境、風險等級」三元組。
    * *數學機制：* 引入基於密碼學金鑰 $k$ 的代數等冪不變量 $f(f(x, k), k) \equiv f(x, k)$、分步閉環執行，以及帶有 `OutcomeUnknown` 狀態且獨立驗證後置條件的分散式補償長篇交易（Saga）協定。
-6. **GSN 記號下功能安全與網路安全的形式協同工程（[第27章](../en/ch27-safety-case-gsn-synthesis.md)、[第30章](../en/ch30-safety-cybersecurity-co-engineering.md)）：**
+6. **GSN 記號下功能安全與網路安全的形式協同工程（[第27章](../../ch27-safety-case-gsn-synthesis.md)、[第30章](../../ch30-safety-cybersecurity-co-engineering.md)）：**
    * *理論構想：* 建立了目標結構化記號（GSN）論證樹的協調合成模型，同時滿足 ISO 26262（功能安全）與 ISO/SAE 21434（網路安全）的嚴格標準。
    * *工程突破：* 形式化了衝突目標間的數學仲裁（緊急響應時間預算 vs 密碼學認證深度），並建立了利用加鹽默克爾樹向外部審計員選擇性披露證據的安全協定。
-7. **解釋真實性與語義一致性驗證協定（[第20章](../en/ch20-explanation-engine.md)）：**
+7. **解釋真實性與語義一致性驗證協定（[第20章](../../ch20-explanation-engine.md)）：**
    * *理論構想：* 解釋不再被視為生成模型自由生成的文字，而是作為由證明圖、規則版本與固定事實快照唯一導出的確定性產物。
    * *數學機制：* 形式化了真實性度量閘道（$C_{\text{facts}} = 1.00, H_{\text{free}} = 1.00$），一旦符號推理與操作員文字呈現之間出現任何微小差異，自動安全退回至剛性模板。
 
@@ -75,19 +75,19 @@
 
 ### 2. 經驗實證研究、作者實驗台與系統工程
 
-1. **基於 `mmap` 與零反序列化的不可變二進位知識包（[第32章](../en/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)）：**
+1. **基於 `mmap` 與零反序列化的不可變二進位知識包（[第32章](../../ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)）：**
    * *作者原創：* 知識包雙層架構（原始來源的正準層 + 索引的衍生實體化層）。
    * *實證成果：* 透過系統呼叫 `mmap` 將索引直接映射至虛擬位址空間，完全消除動態記憶體分配開銷（zero-allocation），使引擎在次線性時間內啟動，無論本體容量達到多少吉字節（GB）。
-2. **基於 IETF RFC-1000 與 W3C-150 規範語料庫的經驗校準平台（[第2章](../en/ch02-epistemology-of-machine-knowledge.md)、[第4章](../en/ch04-evolution-from-bayes-to-evidence-ai.md)、[第14章](../en/ch14-requirements-detection-and-formalization.md)、[第25章](../en/ch25-how-expert-systems-learn.md)）：**
+2. **基於 IETF RFC-1000 與 W3C-150 規範語料庫的經驗校準平台（[第2章](../../ch02-epistemology-of-machine-knowledge.md)、[第4章](../../ch04-evolution-from-bayes-to-evidence-ai.md)、[第14章](../../ch14-requirements-detection-and-formalization.md)、[第25章](../../ch25-how-expert-systems-learn.md)）：**
    * *作者實驗：* 針對 1000 份現行 IETF RFC 規範（分佈於網際網路發展的 5 個歷史紀元）以及 W3C 語料庫中的 150 個複雜診斷查詢（包括人工注入的邏輯衝突與虛談）部署了大規模研究實驗台。
    * *實用成果：* 建立了客觀的知識考試矩陣，檢測規範衝突，並從數學上證明了知識庫更新時的防迴歸保護。
-3. **多步關聯分析、符號溯因與蘇格拉底式對話（[第34章](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)）：**
+3. **多步關聯分析、符號溯因與蘇格拉底式對話（[第34章](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)）：**
    * *作者開發：* 雙向有界廣度優先搜尋演算法（Bidirectional Bounded BFS, $k \le 6$），具備循環防止功能，可為任意相互關聯的實體形成複合字節級證據鏈。
    * *工程優勢：* 在嚴格演繹控制下實現皮爾士符號溯因，並提供具型別的蘇格拉底式澄清框架（*Clarification Frames*），引導系統與人類展開建設性對話，而非在封閉世界假設（CWA）下盲目拒絕。
-4. **外圍控制系統的形式防護罩與數值有效性包絡（[第33章](../en/ch33-inter-system-knowledge-exchange-and-model-teaching.md)、[附錄乙](../en/appendix-b-robotics-and-cyber-physical-systems.md)、[附錄丙](../en/appendix-c-autonomous-navigation-and-geosearch.md)、[附錄戊](../en/appendix-e-mixed-signal-neuromorphic-expert-systems.md)）：**
+4. **外圍控制系統的形式防護罩與數值有效性包絡（[第33章](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)、[附錄乙](../../appendix-b-robotics-and-cyber-physical-systems.md)、[附錄丙](../../appendix-c-autonomous-navigation-and-geosearch.md)、[附錄戊](../../appendix-e-mixed-signal-neuromorphic-expert-systems.md)）：**
    * *作者原創：* 將離散邏輯不變量轉換為數位訊號處理器（DSP）與無 GNSS 自主導航（TRN/DSMAC/VIO）連續數值安全走廊的方法學。
    * *實用可靠性：* 基於 Ed25519 密碼學的簽名規則交換、候選知識的安全隔離檢疫，以及在硬體層級切斷危險控制信號。
-5. **防止透過解釋外洩機密資訊與差異審計（[第20章](../en/ch20-explanation-engine.md)）：**
+5. **防止透過解釋外洩機密資訊與差異審計（[第20章](../../ch20-explanation-engine.md)）：**
    * *作者開發：* 解釋中間表示精簡協定（$\mathrm{EIR}_{\text{redacted}}$），對證明圖的每個節點和邊緣執行 ACL 檢查，阻斷透過連續對比性「WHY NOT」查詢進行模型重構的側信道攻擊。
 
 ---
@@ -113,15 +113,15 @@
 
 ## 推薦閱讀路徑
 
-**首次軟體驗證：** [1](../en/ch01-introduction-to-expert-systems.md) → [7](../en/ch07-knowledge-base-typology.md) → [8](../en/ch08-engineering-artifacts-as-data.md) → [17](../en/ch17-implementation-stack.md) → [23](../en/ch23-knowledge-base-verification.md) → [25](../en/ch25-how-expert-systems-learn.md)。目標：獲得可重現的、具備證據支撐的結論，配合負面測試與受控的知識演進。語言模型並非必要。
+**首次軟體驗證：** [1](../../ch01-introduction-to-expert-systems.md) → [7](../../ch07-knowledge-base-typology.md) → [8](../../ch08-engineering-artifacts-as-data.md) → [17](../../ch17-implementation-stack.md) → [23](../../ch23-knowledge-base-verification.md) → [25](../../ch25-how-expert-systems-learn.md)。目標：獲得可重現的、具備證據支撐的結論，配合負面測試與受控的知識演進。語言模型並非必要。
 
-**知識工程：** [第II部](../en/part-02-knowledge-models.md) → [第III部](../en/part-03-knowledge-engineering-nlp.md) → [19](../en/ch19-from-question-to-evidence.md) → [20](../en/ch20-explanation-engine.md) → [26](../en/ch26-continual-learning.md)。目標：協調語義、來源出處、知識獲取與新候選知識的驗證。第II部完整保留了第7–11章的跨部科學測試計畫。
+**知識工程：** [第II部](../../part-02-knowledge-models.md) → [第III部](../../part-03-knowledge-engineering-nlp.md) → [19](../../ch19-from-question-to-evidence.md) → [20](../../ch20-explanation-engine.md) → [26](../../ch26-continual-learning.md)。目標：協調語義、來源出處、知識獲取與新候選知識的驗證。第II部完整保留了第7–11章的跨部科學測試計畫。
 
-**解決方案架構：** [16](../en/ch16-expert-systems-architecture.md) → [19](../en/ch19-from-question-to-evidence.md) → [31](../en/ch31-syllogistic-reasoning-and-relation-lattices.md) → [20](../en/ch20-explanation-engine.md) → [21](../en/ch21-from-recommendation-to-action.md)。目標：明確分離證據基礎的檢驗、規範的適用、解釋的生成與行動權限的授予。
+**解決方案架構：** [16](../../ch16-expert-systems-architecture.md) → [19](../../ch19-from-question-to-evidence.md) → [31](../../ch31-syllogistic-reasoning-and-relation-lattices.md) → [20](../../ch20-explanation-engine.md) → [21](../../ch21-from-recommendation-to-action.md)。目標：明確分離證據基礎的檢驗、規範的適用、解釋的生成與行動權限的授予。
 
-**驗證與安全：** [23](../en/ch23-knowledge-base-verification.md) → [36](../en/ch36-knowledge-testing-pyramid-and-variational-calibration.md) → [25](../en/ch25-how-expert-systems-learn.md) → [26](../en/ch26-continual-learning.md) → [27](../en/ch27-safety-case-gsn-synthesis.md) → [30](../en/ch30-safety-cybersecurity-co-engineering.md)。外部系統的診斷透過[第24章](../en/ch24-system-diagnosis.md)提供專門入口。
+**驗證與安全：** [23](../../ch23-knowledge-base-verification.md) → [36](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md) → [25](../../ch25-how-expert-systems-learn.md) → [26](../../ch26-continual-learning.md) → [27](../../ch27-safety-case-gsn-synthesis.md) → [30](../../ch30-safety-cybersecurity-co-engineering.md)。外部系統的診斷透過[第24章](../../ch24-system-diagnosis.md)提供專門入口。
 
-**混合應答與運維：** [第VI部](../en/part-06-frontiers-neuro-symbolic.md) → [第VII部](../en/part-07-runtime-and-knowledge-exchange.md) → [40](../en/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) 及相應附錄。目標：整合語言模型、管理知識空缺、建構分散式知識服務架構並驗證系統間共享。[第2章](../en/ch02-epistemology-of-machine-knowledge.md)、[第4章](../en/ch04-evolution-from-bayes-to-evidence-ai.md)與[第6章](../en/ch06-applied-mathematics-for-expert-systems.md)可根據具體需求作為契約、歷史與數學指南閱讀。
+**混合應答與運維：** [第VI部](../../part-06-frontiers-neuro-symbolic.md) → [第VII部](../../part-07-runtime-and-knowledge-exchange.md) → [40](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) 及相應附錄。目標：整合語言模型、管理知識空缺、建構分散式知識服務架構並驗證系統間共享。[第2章](../../ch02-epistemology-of-machine-knowledge.md)、[第4章](../../ch04-evolution-from-bayes-to-evidence-ai.md)與[第6章](../../ch06-applied-mathematics-for-expert-systems.md)可根據具體需求作為契約、歷史與數學指南閱讀。
 
 ---
 
@@ -168,103 +168,103 @@ flowchart TD
 
 ---
 
-### [第I部 概念與認識論基礎](../en/part-01-foundations.md)
+### [第I部 概念與認識論基礎](../../part-01-foundations.md)
 
 *何時需要專家系統、何者可視為知識，以及如何完整保留組織決策的客觀依據。*
 
-* [第1章 專家系統導論：從混沌到受控知識](../en/ch01-introduction-to-expert-systems.md)
-* [第2章 工程師的認識論：機器有權將何者稱為知識](../en/ch02-epistemology-of-machine-knowledge.md)
-* [第3章 專家系統與一般資訊參考系統之根本差異](../en/ch03-beyond-reference-information-systems.md)
-* [第4章 專家系統的演進：從貝氏定理到證據導向 AI 解決方案](../en/ch04-evolution-from-bayes-to-evidence-ai.md)
-* [第5章 信任三元組：專家系統、證據導向建議與企業記憶](../en/ch05-triad-of-trust-and-corporate-memory.md)
+* [第1章 專家系統導論：從混沌到受控知識](../../ch01-introduction-to-expert-systems.md)
+* [第2章 工程師的認識論：機器有權將何者稱為知識](../../ch02-epistemology-of-machine-knowledge.md)
+* [第3章 專家系統與一般資訊參考系統之根本差異](../../ch03-beyond-reference-information-systems.md)
+* [第4章 專家系統的演進：從貝氏定理到證據導向 AI 解決方案](../../ch04-evolution-from-bayes-to-evidence-ai.md)
+* [第5章 信任三元組：專家系統、證據導向建議與企業記憶](../../ch05-triad-of-trust-and-corporate-memory.md)
 
 ---
 
-### [第II部 數學模型、知識表示與知識儲存](../en/part-02-knowledge-models.md)
+### [第II部 數學模型、知識表示與知識儲存](../../part-02-knowledge-models.md)
 
 *數學運算與表示的選擇、具型別產物、可追溯性圖譜與不可變知識包。*
 
-* [第6章 專家系統應用數學：規則、機率、圖譜與因果關係](../en/ch06-applied-mathematics-for-expert-systems.md)
-* [第7章 知識庫類型學：規則、本體、案例與向量](../en/ch07-knowledge-base-typology.md)
-* [第8章 作為專家系統資料的工程產物](../en/ch08-engineering-artifacts-as-data.md)
-* [第9章 工程知識圖譜：從需求到硬體的全程追溯](../en/ch09-engineering-knowledge-graph-traceability.md)
-* [第32章 不可變知識包：字節級准入、索引與記憶體映射](../en/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)
+* [第6章 專家系統應用數學：規則、機率、圖譜與因果關係](../../ch06-applied-mathematics-for-expert-systems.md)
+* [第7章 知識庫類型學：規則、本體、案例與向量](../../ch07-knowledge-base-typology.md)
+* [第8章 作為專家系統資料的工程產物](../../ch08-engineering-artifacts-as-data.md)
+* [第9章 工程知識圖譜：從需求到硬體的全程追溯](../../ch09-engineering-knowledge-graph-traceability.md)
+* [第32章 不可變知識包：字節級准入、索引與記憶體映射](../../ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)
 
 ---
 
-### [第III部 知識獲取、語言分析與輸入評估](../en/part-03-knowledge-engineering-nlp.md)
+### [第III部 知識獲取、語言分析與輸入評估](../../part-03-knowledge-engineering-nlp.md)
 
 *文檔、專家經驗與觀測：候選知識獲取、語言分析、形式化與證據評估。*
 
-* [第10章 知識獲取系統：來源、准入與生命週期](../en/ch10-knowledge-acquisition-systems.md)
-* [第11章 從專家萃取知識：訪談、認知地圖與經驗形式化](../en/ch11-knowledge-elicitation-from-experts.md)
-* [第12章 語言學分析與本地模型：保留語義與出處來源](../en/ch12-linguistic-analysis-and-local-models.md)
-* [第13章 自然語言多樣性對抗確定性：編譯問題的核心意義](../en/ch13-language-variability-vs-determinism.md)
-* [第14章 需求與模態偵測：從法規條文到系統不變量](../en/ch14-requirements-detection-and-formalization.md)
-* [第15章 知識抽取與知識庫建構：事實、文法與自動機](../en/ch15-knowledge-extraction-and-kb-construction.md)
-* [第37章 輸入資訊評估：來源、證據與不確定性](../en/ch37-input-information-assessment-and-algorithmic-skepticism.md)
+* [第10章 知識獲取系統：來源、准入與生命週期](../../ch10-knowledge-acquisition-systems.md)
+* [第11章 從專家萃取知識：訪談、認知地圖與經驗形式化](../../ch11-knowledge-elicitation-from-experts.md)
+* [第12章 語言學分析與本地模型：保留語義與出處來源](../../ch12-linguistic-analysis-and-local-models.md)
+* [第13章 自然語言多樣性對抗確定性：編譯問題的核心意義](../../ch13-language-variability-vs-determinism.md)
+* [第14章 需求與模態偵測：從法規條文到系統不變量](../../ch14-requirements-detection-and-formalization.md)
+* [第15章 知識抽取與知識庫建構：事實、文法與自動機](../../ch15-knowledge-extraction-and-kb-construction.md)
+* [第37章 輸入資訊評估：來源、證據與不確定性](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
-### [第IV部 架構、技術棧、推理與行動](../en/part-04-architecture-and-inference.md)
+### [第IV部 架構、技術棧、推理與行動](../../part-04-architecture-and-inference.md)
 
 *架構契約、技術棧、硬體執行、主張驗證、基於規範的推理、解釋機制與控制論反饋迴路。*
 
-* [第16章 專家系統架構：從形式知識到證據導向決策](../en/ch16-expert-systems-architecture.md)
-* [第17章 技術棧：工具、程式語言與規則引擎的選型標準](../en/ch17-implementation-stack.md)
-* [第18章 執行基礎設施：本地模型、硬體加速器、Edge 與 On-Premise](../en/ch18-execution-infrastructure.md)
-* [第19章 從問題到證據：檢索、錨定與主張驗證](../en/ch19-from-question-to-evidence.md)
-* [第31章 基於規範的推理：謂詞階層、例外情況與有效性](../en/ch31-syllogistic-reasoning-and-relation-lattices.md)
-* [第20章 解釋引擎：決策、拒絕與能力極限](../en/ch20-explanation-engine.md)
-* [第21章 從建議到行動：權限控制與生產環境中的安全執行](../en/ch21-from-recommendation-to-action.md)
-* [第22章 控制論反饋迴路：感測器、外圍設備與回授](../en/ch22-cybernetics-edge-to-backend.md)
+* [第16章 專家系統架構：從形式知識到證據導向決策](../../ch16-expert-systems-architecture.md)
+* [第17章 技術棧：工具、程式語言與規則引擎的選型標準](../../ch17-implementation-stack.md)
+* [第18章 執行基礎設施：本地模型、硬體加速器、Edge 與 On-Premise](../../ch18-execution-infrastructure.md)
+* [第19章 從問題到證據：檢索、錨定與主張驗證](../../ch19-from-question-to-evidence.md)
+* [第31章 基於規範的推理：謂詞階層、例外情況與有效性](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [第20章 解釋引擎：決策、拒絕與能力極限](../../ch20-explanation-engine.md)
+* [第21章 從建議到行動：權限控制與生產環境中的安全執行](../../ch21-from-recommendation-to-action.md)
+* [第22章 控制論反饋迴路：感測器、外圍設備與回授](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
-### [第V部 驗證、測試、診斷與安全論證](../en/part-05-verification-and-learning.md)
+### [第V部 驗證、測試、診斷與安全論證](../../part-05-verification-and-learning.md)
 
 *規則形式驗證、知識測試金字塔、波普爾證偽、技術診斷，以及功能安全與網路安全論證。*
 
-* [第23章 知識庫驗證：如何檢查規則的一致性、完備性與可靠性](../en/ch23-knowledge-base-verification.md)
-* [第36章 知識測試金字塔：規則、交互與回答穩定性](../en/ch36-knowledge-testing-pyramid-and-variational-calibration.md)
-* [第39章 主動專家測試員：波普爾證偽、法規合規性（ASPICE/ISO 26262/ISO 21434）與自主測試設計](../en/ch39-active-compliance-auditor-and-popperian-testing.md)
-* [第24章 技術診斷：在資訊不完備條件下如何避免混淆徵狀與根因](../en/ch24-system-diagnosis.md)
-* [第27章 安全論證：論據合成與驗證](../en/ch27-safety-case-gsn-synthesis.md)
-* [第30章 功能安全與網路安全協同工程](../en/ch30-safety-cybersecurity-co-engineering.md)
+* [第23章 知識庫驗證：如何檢查規則的一致性、完備性與可靠性](../../ch23-knowledge-base-verification.md)
+* [第36章 知識測試金字塔：規則、交互與回答穩定性](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [第39章 主動專家測試員：波普爾證偽、法規合規性（ASPICE/ISO 26262/ISO 21434）與自主測試設計](../../ch39-active-compliance-auditor-and-popperian-testing.md)
+* [第24章 技術診斷：在資訊不完備條件下如何避免混淆徵狀與根因](../../ch24-system-diagnosis.md)
+* [第27章 安全論證：論據合成與驗證](../../ch27-safety-case-gsn-synthesis.md)
+* [第30章 功能安全與網路安全協同工程](../../ch30-safety-cybersecurity-co-engineering.md)
 
 ---
 
-### [第VI部 神經-符號模型、認知前沿與持續學習](../en/part-06-frontiers-neuro-symbolic.md)
+### [第VI部 神經-符號模型、認知前沿與持續學習](../../part-06-frontiers-neuro-symbolic.md)
 
 *嚴格推論與諮詢假說、語言模型整合、知識缺口、無憑據回答控制、考試矩陣與實踐持續學習。*
 
-* [第28章 雙模式專家系統：嚴格推理與諮詢假說](../en/ch28-dual-mode-expert-systems.md)
-* [第29章 神經-符號架構：語言模型與證據依據驗證](../en/ch29-neuro-symbolic-architecture.md)
-* [第34章 知識空缺：關聯搜尋、溯因與澄清對話](../en/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
-* [第38章 機器幻覺與知識匱乏：基於證據的應答控制](../en/ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [第25章 如何訓練專家系統：考試矩陣、知識審計與迴歸控制](../en/ch25-how-expert-systems-learn.md)
-* [第26章 經驗實踐中的持續學習（Continual Learning）與克服系統日誌漂移](../en/ch26-continual-learning.md)
+* [第28章 雙模式專家系統：嚴格推理與諮詢假說](../../ch28-dual-mode-expert-systems.md)
+* [第29章 神經-符號架構：語言模型與證據依據驗證](../../ch29-neuro-symbolic-architecture.md)
+* [第34章 知識空缺：關聯搜尋、溯因與澄清對話](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [第38章 機器幻覺與知識匱乏：基於證據的應答控制](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
+* [第25章 如何訓練專家系統：考試矩陣、知識審計與迴歸控制](../../ch25-how-expert-systems-learn.md)
+* [第26章 經驗實踐中的持續學習（Continual Learning）與克服系統日誌漂移](../../ch26-continual-learning.md)
 
 ---
 
-### [第VII部 響應式執行、系統間知識交換與分散式 SOA](../en/part-07-runtime-and-knowledge-exchange.md)
+### [第VII部 響應式執行、系統間知識交換與分散式 SOA](../../part-07-runtime-and-knowledge-exchange.md)
 
 *規則響應式執行、協同論與知識相變、跨系統知識交換，以及企業級分散式認識論架構。*
 
-* [第35章 響應式專家系統：事件、撤銷與知識調適](../en/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
-* [第33章 跨系統知識共享：向外部系統分發規則、模型教學與安全反饋](../en/ch33-inter-system-knowledge-exchange-and-model-teaching.md)
-* [第40章 證據導向專家系統的分散式架構：認識論 SOA、語義路由、記憶體階層與多源可撤銷仲裁](../en/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)
+* [第35章 響應式專家系統：事件、撤銷與知識調適](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
+* [第33章 跨系統知識共享：向外部系統分發規則、模型教學與安全反饋](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
+* [第40章 證據導向專家系統的分散式架構：認識論 SOA、語義路由、記憶體階層與多源可撤銷仲裁](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)
 
 ---
 
 ### 附錄
 
-* [附錄甲 複雜工程專案中證據導向研究的實用框架](../en/appendix-a-evidence-governed-framework.md)
-* [附錄乙 自主機器人與賽博-物理複合體中的證據導向專家系統](../en/appendix-b-robotics-and-cyber-physical-systems.md)
-* [附錄丙 無 GNSS 自主導航：地理空間匹配（TRN/DSMAC）、視覺測程（VIO）與感測器融合的專家仲裁](../en/appendix-c-autonomous-navigation-and-geosearch.md)
-* [附錄丁 類比專家系統、神經形態計算與硬體邏輯推理](../en/appendix-d-analog-expert-systems-and-neuromorphic-computing.md)
-* [附錄戊 混合訊號類比-數位專家系統：證據監督下的神經形態、類比與非傳統計算](../en/appendix-e-mixed-signal-neuromorphic-expert-systems.md)
-* [關於作者：Mykola Fedchyk (Nick Fedchik)](../en/about-the-author.md)
+* [附錄甲 複雜工程專案中證據導向研究的實用框架](../../appendix-a-evidence-governed-framework.md)
+* [附錄乙 自主機器人與賽博-物理複合體中的證據導向專家系統](../../appendix-b-robotics-and-cyber-physical-systems.md)
+* [附錄丙 無 GNSS 自主導航：地理空間匹配（TRN/DSMAC）、視覺測程（VIO）與感測器融合的專家仲裁](../../appendix-c-autonomous-navigation-and-geosearch.md)
+* [附錄丁 類比專家系統、神經形態計算與硬體邏輯推理](../../appendix-d-analog-expert-systems-and-neuromorphic-computing.md)
+* [附錄戊 混合訊號類比-數位專家系統：證據監督下的神經形態、類比與非傳統計算](../../appendix-e-mixed-signal-neuromorphic-expert-systems.md)
+* [關於作者：Mykola Fedchyk (Nick Fedchik)](../../about-the-author.md)
 
 ---
 
@@ -272,4 +272,4 @@ flowchart TD
 
 未來的研究方向並非現成的保證：知識包的可重現建構；受限形式表示的驗證；透過明確授權管理自主代理；特定形式化主張的保密驗證；受控撤銷與機器遺忘（machine unlearning）研究。證明模型的屬性並不自動等同於物理產品的合規性，而刪除一條規則亦不等於完全消除該數據對已訓練模型的影響。
 
-對於硬體加速器與非傳統計算架構，首先必須嚴格測量其誤差率、延遲、能耗以及在故障狀態下的行為表現。相關問題在[第29章](../en/ch29-neuro-symbolic-architecture.md)、[第32章](../en/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)以及[附錄丁](../en/appendix-d-analog-expert-systems-and-neuromorphic-computing.md)和[附錄戊](../en/appendix-e-mixed-signal-neuromorphic-expert-systems.md)中進行了深入探討。第7–11章的實務研究計畫詳見[第II部](../en/part-02-knowledge-models.md)：每項提案均包含明確的假說、對照組比較與證偽條件。
+對於硬體加速器與非傳統計算架構，首先必須嚴格測量其誤差率、延遲、能耗以及在故障狀態下的行為表現。相關問題在[第29章](../../ch29-neuro-symbolic-architecture.md)、[第32章](../../ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)以及[附錄丁](../../appendix-d-analog-expert-systems-and-neuromorphic-computing.md)和[附錄戊](../../appendix-e-mixed-signal-neuromorphic-expert-systems.md)中進行了深入探討。第7–11章的實務研究計畫詳見[第II部](../../part-02-knowledge-models.md)：每項提案均包含明確的假說、對照組比較與證偽條件。
