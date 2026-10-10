@@ -819,28 +819,36 @@ Ein lineares Durcharbeiten von Kapitel 1 bis 40 ist nicht zwingend erforderlich.
 
 Die vollständige Navigationsmatrix findet sich im [Inhaltsverzeichnis des Buches](README.md).
 
-## 17. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+## 17. Pro et Contra — Virtueller Dialog
 
-Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit führenden Vertretern der weltweiten Informatik über die Einsatzgrenzen und die Notwendigkeit deterministischer Expertensysteme.
+> **Epistemische Präambel und akademischer Haftungsausschluss:**  
+> Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur methodischen Belastungsprüfung der im Kapitel aufgestellten Architekturentscheidungen. Zu diesem Diskurs laden wir führende globale Forscher der künstlichen Intelligenz ein, deren Paradigmen die Grenzen des vorgeschlagenen Rahmens herausfordern: Turing-Preisträger **Yann LeCun** – als konsequenten Kritiker diskreter Symbolmodelle und Begründer kontinuierlicher Architekturen latenter Prädiktion (JEPA) – sowie UC-Berkeley-Professor **Stuart Russell**, dessen Arbeiten die mathematische Beweisbarkeit und Kontrollierbarkeit von KI-Systemen maßgeblich begründeten.  
+> *Haftungsausschluss:* Dieses Streitgespräch ist eine modellierte heuristische Synthese, die ausschließlich im wissenschaftlichen und didaktischen Kontext dieser Monografie auf Basis der publizierten Monografien, Fachartikel und Vorträge der geladenen Gelehrten generiert wurde. Es stellt kein wörtliches Protokoll realer Äußerungen dar, sondern dient als Instrument des kritischen Rationalismus zur Falsifikation der ingenieurtechnischen Hypothesen des Autors. Jeder Gesprächspartner debattiert unmittelbar mit dem Autor der Monografie.
 
-**These des Autors (Pro):**
+**These des Kapitels (Mykola Fedchyk):**  
 Kritische cyber-physische Systeme (ASIL-D / DO-178C) erfordern einen deterministischen normativen Zensor: Kontinuierliche stochastische Modelle sind unzulässig, wo die Grenze katastrophaler Ausfälle bei $`\le 10^{-9}`$ pro Stunde liegt.
 
-**Antithese und Zitat des zynischen Kritikers (Contra — Yann LeCun, Meta / NYU, Turing Award — *A Path Towards Autonomous Machine Intelligence*, 2022):**
-> *„Die reale Welt ist kontinuierlich, diffus und verrauscht. Jeder Versuch, sie durch diskrete Regeln oder Symbole zu beschreiben, ist die Sackgasse der GOFAI der 1980er Jahre. Die Zukunft gehört Architekturen kontinuierlicher latenter Prädiktion (JEPA) auf Basis von Energie-Verlustfunktionen, in denen keine einzige manuelle Regel existiert.“*
+**Runde 1: Können diskrete Regeln autonome Systeme steuern?**
 
-**Argumentative Diskussion (Socratic & Dialectical Debate):**
+- **Yann LeCun:**  
+  *„Mykola Fedchyk, Sie bestehen auf der Konstruktion eines diskreten normativen Zensors (EVM) auf Regelbasis, doch das ist die Rückkehr in die Sackgasse der GOFAI vor vierzig Jahren! Die physische Welt ist kontinuierlich, verrauscht und unsicher. Kein komplexes System – vom autonomen Fahrzeug bis zum Operationsroboter – lässt sich durch starre `IF/THEN`-Regeln steuern. Der Versuch, einer kontinuierlichen Realität diskrete Verträge aufzuzwingen, macht Systeme extrem fragil: Bei der geringsten Abweichung vom Schema kollabiert das Verhalten. Wahre Intelligenz erfordert Prädiktion in kontinuierlichen latenten Räumen durch Minimierung von Energie-Verlustfunktionen (JEPA). Ihre Idee eines booleschen Hardware-Zensors wirft die Informatik zurück.“*
 
-- **LeCun:** Sie versuchen Regeln wiederzubeleben, die vor 40 Jahren ausgestorben sind. Die Welt lässt sich nicht in boolesche Operatoren pressen. Ein Automobil kann nicht über IF/THEN gesteuert werden.
+- **Mykola Fedchyk:**  
+  *„Monsieur Yann LeCun, Ihre Kritik wäre vollkommen berechtigt, wenn ich vorschlüge, diskrete Regeln für die Perzeption einzusetzen – für Mustererkennung, Lidar-Segmentierung oder Rauschfilterung. In der Architektur dieser Monografie ist jedoch zwischen Perzeption (Perception) und Aktorik (Actuation) eine fundamentale neue Schicht eingezogen: die normative Zulassung (Eligibility).  
+  Sicht und Trajektorienplanung sind fraglos kontinuierlich. Nähert sich das autonome Fahrzeug jedoch einer ampelgeregelten Kreuzung, gilt das Gesetz absolut diskret: Das Überfahren der Haltelinie bei Rot ist strikt untersagt. Das ist ein diskreter Vertrag! Weist Ihr kontinuierliches latentes Modell auch nur eine Fehlerrate von $10^{-4}$ auf (weil es rotes Ampellicht mit Abendrot verwechselt), führt dies zur tödlichen Katastrophe. Für die Sicherheitsstufe ASIL-D liegt die zulässige Ausfallgrenze bei $`\le 10^{-9}`$ pro Stunde. Keine Verlustfunktions-Optimierung liefert ohne externen Interlock einen mathematischen Nachweis dieser Güte. Meine EVM lernt während der Fahrt nicht durch Versuch und Irrtum – sie stoppt gefährliche Aktionen deterministisch innerhalb eines Taktes.“*
 
-- **Autor (Fedchyk):** Monsieur LeCun, Sie verwechseln Wahrnehmung (Perception) mit regulatorischer Zulassung (Eligibility). Gewiss erfordern Bildverarbeitung und Trajektorienplanung kontinuierliche Felder. Wenn sich ein Fahrzeug jedoch einer Kreuzung nähert, verbietet das geltende Gesetz unmissverständlich das Überfahren einer roten Ampel. Das ist ein diskreter Vertrag! Wenn Ihr neuronales Netz mit einer Wahrscheinlichkeit von $10^{-4}$ entscheidet, dass rotes Licht einem Sonnenuntergang ähnelt, kommt es zur tödlichen Kollision. Unsere EVM agiert als Hardware-Filter: Ihr Modell schlägt eine Bewegung vor, aber der Kern verifiziert die Gesetzeskonformität.
+**Runde 2: Beweisbare Sicherheit versus stochastische Wertausrichtung**
 
-- **LeCun:** Aber das macht das System fragil! Jede Ungenauigkeit in einer Regel stoppt das Fahrzeug.
+- **Stuart Russell:**  
+  *„Mykola Fedchyk, ich teile Ihr Streben nach Verlässlichkeit, erhebe jedoch einen Einwand gegen Ihren Anspruch der vollständigen Eliminierung von Halluzinationen durch bytegenaue Evidenzverwahrung. In meinen Forschungen zur Kontrollierbarkeit autonomer Agenten (*Human Compatible*) zeigen wir: Handelt ein System in offenen Umgebungen, stößt es unvermeidlich auf eine kombinatorische Explosion unvorhergesehener Situationen (Uncertainty). Wenn Ihr Expertensystem strikt im Fail-Closed-Modus operiert und jede Aktion blockiert, für die keine explizite Regel vorliegt, wird das Fahrzeug oder der Roboter bei der ersten atypischen Verkehrslage auf der Straße einfrieren und den Verkehr lahmlegen. Erzeugt Ihr deterministisches Zulassungskonzept nicht ein gelähmtes System, das im realen Betrieb versagt?“*
 
-- **Autor (Fedchyk):** Exakt so ist es: In kritischen Domänen ist es unendlich besser, sicher anzuhalten (Fail-Closed), als mit voller Geschwindigkeit auf Basis einer plausiblen Halluzination zu verunglücken.
+- **Mykola Fedchyk:**  
+  *„Herr Professor Stuart Russell, dies ist eine fundamentale ingenieurtechnische Herausforderung, die meine Monografie über das Konzept des typisierten epistemischen Wissensdefizits (Epistemic Deficit) auflöst.  
+  Trifft ein System auf eine unkartierte Situation, halluziniert ein naives System plausible Vermutungen (wie ein LLM) oder stürzt unkontrolliert ab (wie ein Programmier-Assert). Meine Architektur blockiert nicht blind: Sie erzeugt einen formalen kryptografischen Defizit-Gutschein, sichert den Telemetriekontext und überführt das cyber-physische Aggregat in ein vorab zertifiziertes Minimal-Risk-Manöver (kontrolliertes Abbremsen und Warnblinken gemäß ISO 26262).  
+  Das System wird nicht gelähmt – es garantiert, dass Nichtwissen niemals in unkontrollierte kinetische Aktionen umschlägt. Damit wandelt sich das Problem von stochastischem Zweckoptimismus in garantierte ingenieurmäßige Beherrschbarkeit.“*
 
-**Synthese und wissenschaftliches Urteil des Kapitels:**
-Symbiose statt gegenseitiger Ausschluss: Das kontinuierliche System 1 (JEPA/LLM) verantwortet Relevanz und Heuristik; das diskrete System 2 (EVM) steuert normative Zulassung und Vertragsverifikation.
+**Synthese und wissenschaftliches Urteil des Kapitels:**  
+Der virtuelle Disput bestätigt die Tragfähigkeit der vorgeschlagenen Architektur: Kontinuierliche Modelle (System 1) liefern flexible Wahrnehmung und heuristische Vorschläge, während eine deterministische Inferenzmaschine (System 2) auf Basis kryptografischer Verwahrung normative Legitimität, Vertragsverifikation und die sichere Fail-Closed-Überführung garantiert.
 
 ## Fazit
 

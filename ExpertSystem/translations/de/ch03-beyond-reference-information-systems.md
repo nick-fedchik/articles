@@ -468,28 +468,35 @@ Autonomie ist somit keine pauschale Eigenschaft des Gesamtsystems, sondern ein s
 
 Alle drei Betriebsregeln teilen ein gemeinsames Fundament: Weder eine Wissensaktualisierung noch eine Konfidenzangabe noch eine automatisierte Aktion darf ohne verifizierbare Beweisspur existieren. Es ist exakt dieselbe Forderung nach Nachvollziehbarkeit, die das Expertengutachten vom unverbindlichen Auskunftsdokument unterscheidet – konsequent angewendet auf den gesamten Betriebslebenszyklus.
 
-## 8. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+## 8. Pro et Contra — Virtueller Dialog
 
-Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit führenden Vertretern des kritischen Rationalismus über Fallibilismus und popperianische Fundamente evidenzbasierter KI.
+> **Epistemische Präambel und akademischer Haftungsausschluss:**  
+> Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur methodischen Belastungsprüfung der in diesem Kapitel gezogenen Demarkationslinien zwischen reinen Auskunftssystemen und evidenzbasierten Expertensystemen. Zu diesem Diskurs laden wir führende Vertreter der Wissenschaftstheorie und der Software-Methodologie ein: University of Oxford Professor **David Deutsch** – Pionier des Quantencomputings und Verfechter des kritischen Rationalismus – sowie ETH-Zürich-Professor **Bertrand Meyer** – Schöpfer des Paradigmas des vertragsbasierten Entwurfs (Design by Contract).  
+> *Haftungsausschluss:* Dieses Streitgespräch ist eine modellierte heuristische Synthese, die ausschließlich im wissenschaftlichen und didaktischen Kontext dieser Monografie auf Basis der publizierten Standardwerke und Konzepte der geladenen Forscher generiert wurde. Es stellt kein wörtliches Protokoll realer Äußerungen dar, sondern dient als Instrument der Falsifikationsanalyse zur Überprüfung der Thesen des Autors. Jeder Gesprächspartner debattiert unmittelbar mit dem Autor der Monografie.
 
-**These des Autors (Pro):**
-Die Kernarchitektur implementiert deduktive popperianische Falsifikation: Eine aktive Suche nach Defeatern zur Widerlegung von Hypothesen mit Übergang in die Fail-Closed-Verweigerung bei epistemischer Unsicherheit.
+**These des Kapitels (Mykola Fedchyk):**  
+Ein Expertensystem unterscheidet sich grundlegend von Suchmaschinen und Sprachmodellen dadurch, dass es weder plausiblen Freitext generiert noch Schlussfolgerungen dem Anwender überlässt; stattdessen synthetisiert es ein formal prüfbares Begründungspaket auf Basis softwaretechnischer Verträge mit garantierter Fail-Closed-Verweigerung bei mangelnder Evidenz.
 
-**Antithese und Zitat des zynischen Kritikers (Contra — David Deutsch, Univ. of Oxford — *The Beginning of Infinity*, 2011):**
-> *„Popper lehrte den Fallibilismus: Alles Wissen ist fehlbar und alle Theorien bergen Irrtümer. Die Behauptung einer ZHR=1.000000 ist ein neopositivistisches Dogma, das dem kritischen Rationalismus widerspricht und das System in ein dogmatisches digitales Orakel verwandelt.“*
+**Runde 1: Heuristische Vermutungen versus Hardware-Falsifikatoren**
 
-**Argumentative Diskussion (Socratic & Dialectical Debate):**
+- **David Deutsch:**  
+  *„Mykola Fedchyk, Sie behaupten, dass Ihr evidenzbasiertes System Suchmaschinen und LLMs übertrifft, indem es Halluzinationen eliminiert und Regeln in Hardware gießt. Doch in *The Beginning of Infinity* habe ich dargelegt: Wissen wächst ausschließlich durch kühne Vermutungen (Conjectures) und deren anschließende Kritik. Ihr Bestreben, ein System in starre, vorkompilierte Regeln und kryptografische Verwahrung einzusperren, macht daraus ein dogmatisches Orakel des Wiener Kreises. Eine geschlossene Regelbasis vermag keine guten Erklärungen (Good Explanations) hervorzubringen, wenn neue Grenzfälle die programmierte Hülle überschreiten.“*
 
-- **Deutsch:** Sie bezeichnen Ihr System als popperianisch, beanspruchen jedoch absolute Wahrheit mit einer Präzision von $10^{-6}$. Das ist ein Widerspruch in sich.
+- **Mykola Fedchyk:**  
+  *„Herr Professor David Deutsch, meine Architektur beansprucht keineswegs, ein allwissendes Orakel zu sein. Im Gegenteil: Die Generierung kühner Vermutungen (System 1) überlasse ich vollständig dem menschlichen Ingenieur oder stochastischen Modellen. In der sicherheitskritischen Technik gilt jedoch ein unerbittliches Gesetz: Eine kühne Vermutung ohne sofortige Falsifikation vor dem physischen Aktor kostet Menschenleben.  
+  Meine EVM ist die direkte rechnerische Realisierung eines popperianischen Falsifikators: Sie bestätigt Vermutungen nicht induktiv, sondern feuert eine Batterie von Entkräftungsgründen und Gegenbeispielen ab. Überdies ist eine gute Erklärung nach Deutsch eine Erklärung, deren Details sich nicht leicht variieren lassen, ohne das Gesamtsystem zu zerstören. Exakt dies garantiert unser kryptografischer Beweisgraph: Kein einziger Schritt der Deduktionskette kann manipuliert oder nachträglich variiert werden, ohne die Merkle-Wurzel zu brechen.“*
 
-- **Autor (Fedchyk):** David, wir akzeptieren Ihren Einwand vollumfänglich und sind im mathematischen Modell zu einer strengen statistischen Formulierung nach der Drei-Sigma-Regel übergegangen: $`ZHR \ge 99{,}77\%`$ bei einer Stichprobe von $N = 1309$. Das Wesen unseres popperianischen Ansatzes liegt woanders: Der Kern versucht niemals, eine Hypothese induktiv zu 'bestätigen'. Er feuert eine Batterie von Falsifikatoren ab. Wird auch nur ein einziges Gegenbeispiel gefunden, ist die Hypothese widerlegt.
+**Runde 2: Vertragliche Strenge und relationale Autonomiebegrenzung**
 
-- **Deutsch:** Doch wie generiert Ihr geschlossenes System gute Erklärungen (Good Explanations)?
+- **Bertrand Meyer:**  
+  *„Mykola Fedchyk, als Schöpfer von Design by Contract begrüße ich Ihre Abkehr von stochastischen Black-Boxes zugunsten expliziter Vorbedingungen, Nachbedingungen und Klasseninvarianten. Sie übertragen die Vertragslogik jedoch auf das dynamische Hot-Swapping von Wissenspaketen zur Laufzeit. Wenn Regeln im laufenden Betrieb aktualisiert werden, wie garantieren Sie mathematisch die Widerspruchsfreiheit der Verträge und verhindern Regel-Deadlocks, ohne die Anlage lahmzulegen?“*
 
-- **Autor (Fedchyk):** Neue Hypothesen werden durch das stochastische System 1 (Mensch oder LLM) erzeugt. Unser Kern agiert als Selektor: Er sondert fehlerhafte Mutationen deterministisch aus und ermöglicht so eine künstliche Evolution von Wissen im strengsten popperianischen Sinne.
+- **Mykola Fedchyk:**  
+  *„Herr Professor Bertrand Meyer, diese Herausforderung löst die zweistufige Architektur meiner Monografie auf: Zur Kompilierzeit prüft der Compiler Zvodar globale Invarianten über den Z3 SMT-Solver und tilgt zyklische Widersprüche und unvereinbare Prädikate vor der Paketfreigabe.  
+  Scheitern zur Laufzeit aufgrund von Sensorrauschen oder unbekannten Eingaben die Vorbedingungen, stürzt das System nicht in undefiniertes Verhalten ab: Es erzeugt deterministisch eine typisierte Diagnosespur und überführt das Aggregat in einen sicheren Fail-Closed-Zustand. Der Meyer-Vertrag wird in unserer Architektur zu einer unüberwindbaren Hardware-Schranke.“*
 
-**Synthese und wissenschaftliches Urteil des Kapitels:**
-Evidenzbasierte KI ist kein Orakel der Unfehlbarkeit, sondern ein Hardware-Falsifikator von Fehlern, der nach den Prinzipien des kritischen Rationalismus operiert.
+**Synthese und wissenschaftliches Urteil des Kapitels:**  
+Die Demarkation zwischen Auskunft und Expertensystem liegt in Verantwortung und Falsifizierbarkeit: Die Suche liefert Dokumente, generative Modelle formulieren Vermutungen, während ein Expertensystem die strikte Einhaltung von Verträgen garantiert und die Ausführung beim geringsten Zweifel deterministisch stoppt.
 
 ## Fazit
 Dieses Kapitel begann mit einer weitverbreiteten Fehlannahme: Ein Verzeichnis technischer Dokumente wird mit einer Suchmaschine oder einem Sprachmodell gekoppelt und das Ergebnis vorschnell als „Expertensystem“ tituliert. Ein solches System erbringt wertvolle Dienste, bleibt seiner Natur nach jedoch ein reines Informations- und Auskunftssystem. Die Demarkationslinie zwischen Auskunft und echter Expertise verläuft auf drei komplementären Ebenen, wie das folgende Diagramm zusammenfassend darstellt.

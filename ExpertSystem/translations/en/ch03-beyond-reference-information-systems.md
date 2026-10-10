@@ -469,28 +469,35 @@ Autonomy is an operational property of an individual action rather than of the e
 
 These three operational principles share a common foundation: no knowledge evolution, no confidence metric, and no autonomous actuation may be introduced without an auditable verification trace. This is the exact requirement that separates an expert conclusion from a reference summary, projected across the operational lifecycle of the system.
 
-## 8. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 8. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with leading representatives of critical rationalism regarding fallibilism and the Popperian foundations of evidence-based AI.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously stress-test the demarcation criteria established in this chapter between reference retrieval systems and evidence-governed expert engines. For this inquiry, we invite leading scholars in the philosophy of science and software engineering methodology: University of Oxford Professor **David Deutsch**—pioneer of quantum computing and advocate of critical rationalism, alongside ETH Zurich Professor **Bertrand Meyer**—creator of the Design by Contract paradigm.  
+> *Disclaimer:* This discussion is a modeled heuristic synthesis generated strictly within the academic and pedagogical context of this monograph based on foundational publications, monographs, and conceptual frameworks of the invited researchers. It does not represent verbatim statements and serves as an instrument of falsification analysis to evaluate the author's engineering theses. Each interlocutor debates directly with the author of the monograph.
 
-**Author's Thesis (Pro):**
-The core architecture implements deductive Popperian falsification: an active search for defeaters to refute hypotheses, transitioning into fail-closed refusal under epistemic uncertainty.
+**Chapter Thesis (Mykola Fedchyk):**  
+An expert system differs fundamentally from search and language models in that it neither generates plausible text nor leaves reasoning to the user; instead, it synthesizes a formally verifiable justification bundle grounded in software contracts, with guaranteed Fail-Closed refusal under evidentiary deficits.
 
-**Antithesis and Cynic-Critic Citation (Contra — David Deutsch, Univ. of Oxford — *The Beginning of Infinity*, 2011):**
-> *“Popper taught fallibilism: all knowledge is fallible, and all theories contain hidden misconceptions. Asserting ZHR=1.000000 is a neo-positivist dogma that contradicts critical rationalism and turns the system into a dogmatic digital oracle.”*
+**Round 1: Heuristic Conjectures versus Hardware Falsifiers**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **David Deutsch:**  
+  *“Mykola Fedchyk, you claim that your evidence-governed system surpasses search and LLMs by eliminating hallucinations and anchoring rules into hardware. Yet in *The Beginning of Infinity*, I demonstrated that knowledge grows exclusively through bold conjectures and their subsequent criticism. Your ambition to lock a system within pre-compiled rules and cryptographic custody turns it into a dogmatic oracle of the Vienna Circle. A closed rule base is incapable of creating a Good Explanation when novel edge cases transcend its programmed envelope.”*
 
-- **Deutsch:** You call the system Popperian, yet you claim possession of absolute truth with precision down to $10^{-6}$. That is a contradiction in terms.
+- **Mykola Fedchyk:**  
+  *“Professor David Deutsch, my architecture in no way aspires to construct an omniscient oracle. On the contrary, I delegate the generation of bold conjectures (System 1) entirely to human engineers or stochastic models. However, in safety-critical engineering, an unbending law holds: a bold conjecture without immediate falsification before the physical actuator costs human lives.  
+  My EVM is the direct computational realization of a Popperian falsifier: it does not verify conjectures inductively, but deploys a bank of defeaters and counter-examples. Furthermore, a Good Explanation in your framework is an explanation whose details cannot be easily varied without collapsing the whole structure. That is precisely what our cryptographic proof graph guarantees: not a single step in the deductive path can be tampered with or retroactively altered without invalidating the Merkle root.”*
 
-- **Author (Fedchyk):** David, we fully accept your observation, and in the mathematical model we have transitioned to a rigorous statistical formulation under the rule of three: $`ZHR \ge 99.77\%`$ over a sample size of $N = 1309$. The essence of our Popperian stance lies elsewhere: the core never attempts to 'verify' a hypothesis inductively. It executes a bank of falsifiers. If even a single counterexample is discovered, the hypothesis is refuted.
+**Round 2: Contractual Rigor and Operational Autonomy Boundaries**
 
-- **Deutsch:** But how does your closed system generate Good Explanations?
+- **Bertrand Meyer:**  
+  *“Mykola Fedchyk, as the creator of Design by Contract, I commend your rejection of stochastic black boxes in favor of explicit preconditions, postconditions, and class invariants. However, you extend contract logic to dynamic, real-time knowledge pack hot-swapping. If rules evolve dynamically, how do you mathematically guarantee contract consistency and prevent deadlocks between conflicting rules without halting the operational plant?”*
 
-- **Author (Fedchyk):** Novel hypotheses are generated by stochastic System 1 (human experts or LLMs). Our core serves as an epistemic selector: it deterministically weeds out erroneous mutations, enabling artificial knowledge evolution in the strictest Popperian sense.
+- **Mykola Fedchyk:**  
+  *“Professor Bertrand Meyer, this challenge is resolved through the two-tier architecture formalized in this monograph: during compile-time, the Zvodar compiler evaluates global invariants via the Z3 SMT solver, eliminating cyclic contradictions and mutually exclusive predicates prior to package deployment.  
+  At runtime, if sensor anomalies or unmapped inputs cause preconditions to fail, the engine does not panic into undefined behavior: it deterministically generates a typed diagnostic trace and transitions the controlled subsystem into a safe Fail-Closed state. The Meyer contract in our architecture becomes an impenetrable hardware barrier.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-Evidence-based AI is not an oracle of infallibility, but a hardware falsifier of errors operating under the principles of critical rationalism.
+**Synthesis and Scientific Verdict of the Chapter:**  
+The demarcation between reference tools and expert systems resides in accountability and falsifiability: search retrieves documents, generative models propose conjectures, while an expert system guarantees strict contract execution and deterministically halts actuation at the slightest unresolvable ambiguity.
 
 ## Conclusions
 

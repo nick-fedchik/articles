@@ -1194,28 +1194,34 @@ These invariants are strictly falsifiable. Experimental validation is conducted 
 
 The detailed methodology for constructing knowledge examination matrices, executing stress tests across thousands of specifications, and formulating the mathematical apparatus for ZHR and FCP metrics are developed in [Chapter 23](ch23-knowledge-base-verification.md) and [Chapter 25](ch25-how-expert-systems-learn.md). Hardware acceleration, deterministic memory management via `mmap`, and achieving microsecond query latencies without deserialization overhead are covered in [Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md), while systematic techniques for diagnosing and eliminating machine hallucinations compared to neural approaches are formalized in [Chapter 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md).
 
-## 14. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 14. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with leading representatives of global philosophy of information regarding the nature and boundaries of machine knowledge.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously stress-test the epistemological and engineering premises advanced in this chapter. For this inquiry, we invite eminent philosophers of information and science whose paradigms provide a critical crucible for examining the boundaries of machine knowledge: Yale and Oxford Professor **Luciano Floridi**—founder of the philosophy of information and critic of syntactic reductionism, alongside Sir **Karl Popper**—architect of fallibilism and critical rationalism.  
+> *Disclaimer:* This discussion is a modeled heuristic synthesis generated strictly within the academic and pedagogical context of this monograph based on the published foundational works of the invited thinkers. It does not represent verbatim statements of the participants, but serves as a tool of critical analysis to falsify the author's engineering hypotheses. Each interlocutor debates directly with the author of the monograph.
 
-**Author's Thesis (Pro):**
-Machine knowledge in engineering is founded upon contractual authenticity and byte-level custody of primary sources, rather than statistical plausibility.
+**Chapter Thesis (Mykola Fedchyk):**  
+Machine knowledge in safety-critical engineering is founded not on statistical plausibility, but on contractual authenticity, byte-level custody of primary sources, and the procedural falsifiability of every deduction.
 
-**Antithesis and Cynic-Critic Citation (Contra — Luciano Floridi, Yale / Oxford — *The Philosophy of Information*, 2011):**
-> *“Syntactic data is not identical to semantic information. A SHA-256 custody hash proves only that a byte sequence has not degraded in memory, but does not guarantee its truthfulness relative to the physical world. This is a cryptographic tautology, closed within itself.”*
+**Round 1: Semantic Truth versus Syntactic Data Custody**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Luciano Floridi:**  
+  *“Mykola Fedchyk, in your architecture you commit a textbook error of syntactic reductionism: syntactic data is not identical to semantic information! Your byte-level SHA-256 custody and span grounding descriptors prove merely that a sequence of bytes has not suffered memory degradation or disk corruption. However, that in no way guarantees its truthfulness relative to physical reality. The cryptographic hash of an erroneous or obsolete engineering standard remains nothing more than the flawless hash sum of an error. To claim that a cryptographic hash generates knowledge is to trap oneself in a semantic tautology.”*
 
-- **Floridi:** You are confusing bit immutability with the truthfulness of knowledge. The hash sum of an erroneous standard remains the hash sum of an error.
+- **Mykola Fedchyk:**  
+  *“Professor Luciano Floridi, your caveat is entirely justified regarding metaphysical truths about natural law, but in safety engineering, the ontological status of a standard is distinct: the text of a standard (ISO 26262 or DO-178C) represents the primary regulatory and statutory reality (Deontic Ground Truth). We do not claim that a standard perfectly describes the universe. Our goal is to guarantee contractual non-repudiation: the system must prove to an auditor, court, or certification body that an action followed strictly from the valid mandate enforced within that jurisdiction at the precise moment of operation. Without cryptographic custody, any talk of 'semantic truth' in court dissolves into unaccountable rhetoric. Custody converts intent into an inspectable legal fact.”*
 
-- **Author (Fedchyk):** Professor Floridi, in engineering law, the text of a standard is the primary legal reality. We do not establish metaphysical absolute truths of existence; we ensure contractual non-repudiation: the system proves that an action was authorized by the applicable regulation in force at the moment of execution. Without custody, any 'semantic truth' devolves into unaccountable model chatter.
+**Round 2: Popperian Fallibilism versus Digital Infallibility**
 
-- **Floridi:** But the regulation itself may contain an error!
+- **Karl Popper:**  
+  *“Mykola Fedchyk, you claim that your evidence-governed framework is built upon my methodology of critical rationalism, yet you simultaneously declare zero-hallucination guarantees (ZHR) and infallible knowledge custody. Are you not reviving, under a modern guise, the neo-positivist verificationism of the Vienna Circle that I refuted in 1934? Genuine scientific knowledge remains forever provisional and open to refutation; no computational system may claim possession of definitive truth.”*
 
-- **Author (Fedchyk):** That is precisely why custody is linked to Lex Posterior defeasibility relations: the release of an official Errata automatically deactivates the obsolete norm without requiring model retraining.
+- **Mykola Fedchyk:**  
+  *“Sir Karl Popper, I embrace your principle of fallibilism unreservedly: no rule in a knowledge base is an immutable dogma. That is precisely why my inference machine (EVM) operates not as an inductive generator of confirmatory instances, but as a deductive falsifier: the symbolic core actively deploys defeaters and counter-examples against any candidate hypothesis.  
+  Moreover, fallibilism is baked directly into our knowledge lifecycle: when an official Errata or a revised edition of a standard is published, the architecture enforces the Lex Posterior rule. The obsolete assertion is falsified and superseded by the new norm without requiring model retraining or jeopardizing system integrity. Evidence-governed AI is not an oracle of absolute truth—it is an algorithmic engine for the relentless detection and elimination of error.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-Cryptographic custody is an indispensable prerequisite for legal non-repudiation: it captures not metaphysical absoluteness, but strict adherence to the operative regulation.
+**Synthesis and Scientific Verdict of the Chapter:**  
+Machine knowledge in safety-critical systems is procedural and fallibilistic: byte-level custody guarantees source authenticity, while a deductive Popperian falsifier ensures continuous stress-testing of operational boundaries and the immediate revocation of refuted norms.
 
 ## Conclusions
 

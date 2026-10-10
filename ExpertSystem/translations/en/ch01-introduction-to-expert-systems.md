@@ -822,28 +822,36 @@ Practitioners may tailor their reading trajectory based on professional speciali
 
 Comprehensive reading maps are detailed in the [Table of Contents](README.md).
 
-## 17. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 17. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with leading representatives of global computer science regarding the limits of applicability and necessity of deterministic expert systems.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously stress-test the author's original architectural concepts. For this inquiry, we invite leading global artificial intelligence researchers whose paradigms challenge the boundaries of the proposed framework: Turing Award laureate **Yann LeCun**—as an outspoken critic of discrete symbolic models and the pioneer of continuous joint-embedding predictive architectures (JEPA), alongside UC Berkeley Professor **Stuart Russell**—renowned for his foundational contributions to provable AI safety and value alignment.  
+> *Disclaimer:* This discussion is a modeled heuristic synthesis generated strictly within the academic and pedagogical context of this monograph based on the published monographs, research papers, and public lectures of the invited scholars. It does not represent verbatim transcripts of real-time speech and serves as an instrument of critical rationalism to stress-test the author's engineering hypotheses. Each interlocutor engages in debate directly with the monograph's author.
 
-**Author's Thesis (Pro):**
+**Chapter Thesis (Mykola Fedchyk):**  
 Critical cyber-physical systems (ASIL-D / DO-178C) require a deterministic normative censor: continuous stochastic models are unacceptable where the catastrophic failure limit is $`\le 10^{-9}`$ per hour.
 
-**Antithesis and Cynic-Critic Citation (Contra — Yann LeCun, Meta / NYU, Turing Award — *A Path Towards Autonomous Machine Intelligence*, 2022):**
-> *“The world is continuous, diffuse, and noisy. Any attempts to describe it with discrete rules or symbols represent the dead end of 1980s GOFAI. The future belongs to continuous latent prediction architectures (JEPA) based on energy loss functions where there is not a single manual rule.”*
+**Round 1: Can Discrete Rules Govern Autonomous Systems?**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Yann LeCun:**  
+  *“Mykola Fedchyk, you insist on constructing a discrete normative censor (EVM) based on rules, but that is a return to the dead end of 1980s GOFAI! The world is fundamentally continuous, noisy, and uncertain. No complex system—from an autonomous automobile to a robotic surgeon—can be governed by brittle `IF/THEN` rules. Imposing discrete contracts onto a continuous reality makes systems extraordinarily fragile: at the slightest deviation from the template, the system collapses. Real intelligence requires prediction in continuous latent spaces by minimizing energy-based loss functions (JEPA). Your idea of a hardware boolean censor pushes computer science backwards.”*
 
-- **LeCun:** You are attempting to restore rules that became extinct 40 years ago. The world does not fit into boolean operators. An automobile cannot be controlled by IF/THEN.
+- **Mykola Fedchyk:**  
+  *“Monsieur Yann LeCun, your critique would be entirely justified if I were proposing discrete rules for perception—pattern recognition, lidar segmentation, or sensor noise filtering. But in the architecture of this monograph, a fundamentally new layer is inserted between Perception and Actuation: normative eligibility (Eligibility).  
+  Vision and trajectory planning are indeed continuous. However, when an autonomous vehicle approaches an intersection, statutory law operates discretely: entering on a red signal is strictly forbidden. If your continuous latent model exhibits even a minute error probability of $10^{-4}$ (mistaking a red signal for a sunset glow), a fatal accident occurs. For safety level ASIL-D, the tolerable hazardous failure rate is $`\le 10^{-9}`$ per hour. No loss function optimization without an external interlock provides formal proof of such assurance. My EVM does not learn from errors during operation—it deterministically halts hazardous actuation within one clock cycle.”*
 
-- **Author (Fedchyk):** Monsieur LeCun, you are conflating Perception with regulatory Eligibility. Yes, computer vision and trajectory planning require continuous fields. But when an automobile approaches an intersection, current statutory law directly prohibits running a red light. That is a discrete contract! If your neural network, with probability $10^{-4}$, decides that a red traffic light looks like a sunset, a fatal crash will occur. Our EVM acts as a hardware filter: your model proposes motion, but the core verifies compliance with the law.
+**Round 2: Provable Safety versus Stochastic Alignment**
 
-- **LeCun:** But that makes the system brittle! Any inaccuracy in a rule will stop the car.
+- **Stuart Russell:**  
+  *“Mykola Fedchyk, I share your concern for safety, yet I raise a caveat regarding your claim of total hallucination elimination via byte-level knowledge custody. In my research on system corrigibility (*Human Compatible*), we show that when an autonomous agent operates in open environments, it inevitably encounters a combinatorial explosion of unforeseen situations (Uncertainty). If your expert system operates strictly in Fail-Closed mode and blocks any actuation lacking an explicit rule, the vehicle or robot will simply freeze on the roadway at the first edge case, paralyzing traffic. Does your deterministic eligibility concept not risk creating a paralyzed system incapable of practical operation?”*
 
-- **Author (Fedchyk):** Precisely: in critical domains, it is far better to halt safely (Fail-Closed) than to cause a full-speed collision based on a plausible hallucination.
+- **Mykola Fedchyk:**  
+  *“Professor Stuart Russell, that is a central engineering challenge, and this monograph resolves it through the concept of typed Epistemic Deficit.  
+  When encountering an unmapped scenario, a naive system either hallucinates plausible guesses (like an LLM) or experiences an unhandled panic (like a runtime assertion). My architecture does not merely block execution: it generates a formal cryptographic deficit voucher, captures telemetry context, and transitions the cyber-physical plant into a pre-certified Minimal Risk Maneuver (controlled braking and hazard signaling per ISO 26262).  
+  The system is never paralyzed—it guarantees that ignorance never degenerates into uncontrolled kinetic action. This shifts the safety challenge from stochastic optimism into guaranteed engineering containment.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-Symbiosis instead of mutual exclusion: continuous System 1 (JEPA/LLM) handles relevance and heuristics; discrete System 2 (EVM) governs normative eligibility and contract verification.
+**Synthesis and Scientific Verdict of the Chapter:**  
+The virtual dispute validates the viability of the proposed architecture: continuous architectures (System 1) supply flexible perception and heuristic proposals, while a deterministic rule engine (System 2) backed by cryptographic custody guarantees normative eligibility, contract verification, and safe Fail-Closed containment.
 
 ## Conclusions
 
