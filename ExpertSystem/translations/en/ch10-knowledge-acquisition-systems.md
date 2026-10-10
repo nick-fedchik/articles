@@ -1297,28 +1297,37 @@ Instead of passive ingestion, the KAS subsystem deploys an active *Knowledge Det
 2. **Pre-Ingestion Contradiction Check:**
    Extracted predicates are cross-checked against the axiomatic core of the knowledge system prior to database persistence. If a candidate contains an assertion refuting an active certified standard (for example, contradicting diagnostic coverage mandates under ISO 26262), the system does not average conflicting norms in vector space. Instead, a formal argumentative defeater (*defeater*) is generated, the candidate is locked in quarantine, and an escalation report detailing the primary sources of both conflicting assertions is transmitted to the knowledge engineer.
 
-## 24. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 24. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with leaders of data-centric AI regarding automated knowledge acquisition, KDI entropic geology, and noise reduction.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously stress-test the author's architecture of Knowledge Acquisition Systems (KAS) and documentation epistemic geology. For this inquiry, we invite leading global computer scientists whose paradigms define modern learning pipelines and large-scale data processing: Professor **Andrew Ng**—leader of the Data-Centric AI movement, co-founder of Google Brain and Coursera, alongside Professor **Tom M. Mitchell**—machine learning pioneer, author of the seminal textbook *Machine Learning*, and director of the Never-Ending Language Learning (NELL) project at Carnegie Mellon University.  
+> *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
-**Author's Thesis (Pro):**
-Automated scouting and primary documentation triage via KDI entropic geology isolates dense strata of normative knowledge, filtering out 80% of noisy boilerplate text without invoking expensive cloud models.
+**Chapter Thesis (Mykola Fedchyk):**  
+Engineering knowledge acquisition (KAS) across multi-thousand-page technical specifications must not rely on unbounded context expansion in commercial cloud LLMs, but on deterministic epistemic geology: the Knowledge Deontic Index (KDI), local primary triage, and formal pre-ingestion contradiction verification before rules are admitted into the evidential base.
 
-**Antithesis and Cynic-Critic Citation (Contra — Andrew Ng, Stanford / DeepLearning.AI — *Data-Centric AI*):**
-> *“Heuristic entropy filters are obsolete. Today, it is vastly more efficient to stream an entire datasheet into a 2-million-token LLM context window than to engineer bespoke KDI parsers.”*
+**Round 1: Does boundless context replace engineering epistemic geology?**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Andrew Ng:**  
+  *“Mykola Fedchyk, your pipeline involving epistemic geology, complex Knowledge Deontic Index (KDI) metrics, and multi-tier syntactic triage appears to be textbook over-engineering. Frontier foundation models now comfortably support two-million-token context windows and rich multimodal reasoning. Rather than constructing elaborate, multi-stage Knowledge Acquisition Systems (KAS), an engineer can simply upload an entire monolithic datasheet or regulatory standard directly into the model's context and query it interactively via prompt engineering. Why maintain bespoke local extractors and discard text when model reasoning scales exponentially?”*
 
-- **Ng:** Frontier models feature multi-million-token context windows. Simply ingest the complete PDF and prompt for whatever parameters are required.
+- **Mykola Fedchyk:**  
+  *“Professor Andrew Ng, as the foremost champion of Data-Centric AI, you pioneered the insight that data quality and curated signal triumph over raw model parameter scaling; in functional safety engineering, this principle is an absolute law.  
+  First, extensive empirical research into long-context attention degradation (the 'Needle In A Haystack' pathology) proves that when an engineer stuffs a 2,000-page microcontroller reference manual into a monolithic prompt, the model's recall of subtle pinout interactions or electrical tolerances degrades precipitously, while the frequency of plausible, undetectable hallucinations surges.  
+  Second, in safety-critical cyber-physical systems, transmitting proprietary hardware schematics to external commercial cloud APIs violates cybersecurity and digital sovereignty standards (ISO/SAE 21434). Our lightweight KDI scanner runs locally on embedded ARM host blades in milliseconds: it discards 85% of documentation noise (boilerplate legal disclaimers, layout fluff, marketing prose), isolating pristine normative requirements rich in deontic modal operators (SHALL/MUST NOT).”*
 
-- **Author (Fedchyk):** Professor Ng, the 'Needle In A Haystack' phenomenon has conclusively established that stuffing 1,000 pages into an attention window degrades focus and triggers substantial hallucination rates. Furthermore, routing millions of tokens through cloud infrastructure for every industrial component is economically prohibitive. Our Plastun scanner executes local triage on edge ARM processors in milliseconds, extracting pristine knowledge ore for the local core.
+**Round 2: Autonomous lifelong learning (NELL) versus formal contradiction verification**
 
-- **Ng:** But what about unstructured marginal notes within complex datasheets?
+- **Tom M. Mitchell:**  
+  *“Mykola Fedchyk, in the Never-Ending Language Learning (NELL) project at Carnegie Mellon, we explored architectures that run continuously for years, autonomously extracting beliefs from unstructured web text, learning from their own cumulative experience, and growing a knowledge base without human intervention. You, in contrast, enforce a rigid Pre-Ingestion Contradiction Check and insist on mandatory Human-in-the-Loop qualification gates. Doesn't this reduce your architecture from a genuinely adaptive, self-evolving intelligence into a conservative, brittle rule database incapable of keeping pace with rapid industrial evolution?”*
 
-- **Author (Fedchyk):** The KDI geological index specifically keys into spikes of deontic density: marginal notes flagged with WARNING or CAUTION achieve the highest triage priority coefficients.
+- **Mykola Fedchyk:**  
+  *“Professor Tom Mitchell, autonomous lifelong learning is a brilliant paradigm for open-world semantic discovery, but in mission-critical systems, unconstrained autonomous rule ingestion without formal gatekeeping inevitably leads to semantic drift and epistemic knowledge poisoning (as cataloged in the MITRE ATLAS matrix under AML.T0020).  
+  If an acquisition pipeline autonomously extracts an inaccurate or adversarially altered operational parameter—such as an artificially lowered threshold for battery over-voltage—and injects it directly into the certified rule base, every downstream derivation is silently compromised.  
+  For this reason, in our KAS, no extracted rule candidate ever graduates to normative production status automatically: the Z3 SMT solver verifies it against the axiomatic core for logical unsatisfiability, and final eligibility requires multi-party cryptographic authorization. We guarantee that the corporate memory remains impervious to poisoned inputs while preserving strict auditability.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-KDI epistemic geology reduces computational consumption by 85% and eliminates attention degradation across large-scale technical corpora.
+**Synthesis and Scientific Verdict of the Chapter:**  
+Knowledge Acquisition Systems (KAS) for evidence-governed expert systems must synthesize deterministic KDI epistemic geology with formal contradiction verification: this eliminates long-context hallucination risks, drastically reduces inference overhead, and constructs an ironclad defense against knowledge poisoning in critical engineering repositories.
 
 ## Conclusions
 

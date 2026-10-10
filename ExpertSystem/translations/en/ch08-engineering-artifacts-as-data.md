@@ -957,28 +957,37 @@ Evolutionary adoption must begin at a single high-friction engineering bottlenec
 
 The team selects a single artifact type, defines its minimal schema, and integrates two or three automated validation gates into the CI/CD pipeline. A foundational rule—such as "every requirement added in a pull request must specify an owner and a quantified acceptance threshold"—quickly flags abandoned or ambiguous specifications that went uninspected for years. Once engineers experience how structured artifacts shield them from surprise release emergencies, automate report generation, and eliminate administrative toil, adoption friction dissipates. Machine-readable data structures must earn authority by visibly accelerating daily engineering work, not by executive fiat.
 
-## 20. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 20. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with authors of causal inference theory regarding symbolic grounding of engineering artifacts, physical dimensions, and causal reasoning.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously stress-test the author's paradigm of transforming heterogeneous engineering artifacts into verifiable structured data. For this inquiry, we invite internationally renowned scholars whose foundational bodies of work challenge requirements engineering and semantic modeling: Turing Award laureate **Judea Pearl**—creator of the mathematical theory of causality and counterfactual inference ($do$-calculus), and Turing Award laureate **Frederick Brooks**—author of the seminal works *The Mythical Man-Month* and *No Silver Bullet*, and discoverer of the laws governing essential versus accidental complexity in engineering artifacts.  
+> *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
-**Author's Thesis (Pro):**
-Symbol grounding is achieved through three-dimensional custody: primary source text, 2D PDF table cell coordinates, and physical units formalized under the UCUM standard.
+**Chapter Thesis (Mykola Fedchyk):**  
+Engineering artifacts (requirements, datasheets, CAD schematics, test suites) become verifiable data for an evidential knowledge base exclusively through three-dimensional grounding: cryptographic primary-source custody ($`\mathcal{G}`$), 2D spatial bounding of cells within document coordinates, and physical unit normalization under the UCUM standard with counterfactual constraint validation.
 
-**Antithesis and Cynic-Critic Citation (Contra — Judea Pearl, UCLA, Turing Award — *Causality*, 2009):**
-> *“Matching bits in a table and words in a document does not constitute causal comprehension. You remain trapped at the level of statistical association without a causal intervention operator do(X).”*
+**Round 1: Does spatial and dimensional grounding establish causal understanding?**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Judea Pearl:**  
+  *“Mykola Fedchyk, in your symbol grounding schemes you meticulously link byte offsets in raw PDFs, 2D coordinates of table bounding boxes, and physical units under UCUM (such as $3.3\,\text{V}$). However, mapping syntactic markers to bounding boxes remains strictly on rung one of my causal hierarchy: the level of statistical associations $P(y \mid x)$. Matching numbers from a datasheet into structured schemas does not construct causal comprehension! The system recognizes that the voltage field is $3.3\,\text{V}$, but it does not understand causal interventions: what happens if we forcefully intervene via $do(V = 5.0\,\text{V})$ at a constant load resistance? Without an explicit causal DAG and formal counterfactual modeling, your system cannot anticipate catastrophic cascading failures in anomalous operating regimes.”*
 
-- **Pearl:** Your system knows that 'Voltage' maps to 3.3V, but it lacks structural causal understanding: what happens if resistance doubles?
+- **Mykola Fedchyk:**  
+  *“Professor Judea Pearl, your three-rung causal ladder (association $\to$ intervention $\to$ counterfactual) forms an indispensable foundation of my architecture; however, in cyber-physical engineering, physical laws already embody directional causal mechanisms, unlike purely observational domains such as epidemiology or sociology.  
+  When our UCUM normalizer compiles $3.3\,\text{V}$ and a load of $10\,\Omega$ into the core's AST predicates, they are not treated as passive tabular attributes. They are linked directly into a network of governing physical constraint equations (Ohm's law $I = V/R$, Joule heating $P = I^2 R$, and Maxwell's relations).  
+  Whenever an autonomous agent issues a control action (e.g. closing a power relay), the EVM performs an intervention in an isolated simulation sandbox in a single cycle: it executes $do(\text{Actuator} = \text{ON})$, computes derived variables across the constraint graph, and evaluates whether any safety defeaters fire (such as thermal over-dissipation or voltage sag below minimum operational thresholds). If the intervention violates an invariant, the action is blocked in hardware before the physical actuator is ever energized.”*
 
-- **Author (Fedchyk):** Professor Pearl, for this exact purpose, physical constraint operations are integrated into the core: the UCUM normalizer does not merely check numbers; it validates constraint equations governing physical laws. If a command attempts to apply voltage without accounting for load resistance, the core blocks execution at the dimensional level, preventing hardware damage.
+**Round 2: Accidental complexity of engineering formats versus machine determinism**
 
-- **Pearl:** And how do you model counterfactuals?
+- **Frederick Brooks:**  
+  *“Mykola Fedchyk, in 'No Silver Bullet' I established that software and systems engineering complexity divides into essential complexity (modeling inherent, intractable domain physics) and accidental complexity (flaws, idiosyncrasies, and frictions of tools, representations, and formats). Real-world engineering artifacts are an unmitigated disaster of accidental complexity: millions of fragmented legacy PDFs with broken font encodings, malformed tables, conflicting CAD revisions, and ambiguous natural-language margin notes. Your claim to convert this 'artifact junkyard' into clean, deterministic data via automated parsers and extraction pipelines will inevitably shatter against the reality of human error: a single parsing misinterpretation of a hidden delimiter or a shifted table column will authorize a defective, safety-compromised build.”*
 
-- **Author (Fedchyk):** By instantiating a parallel EVM simulation environment: the core applies a hypothetical input perturbation and computes which protective defeaters fire across the rule graph.
+- **Mykola Fedchyk:**  
+  *“Dr. Frederick Brooks, your warning regarding accidental complexity is entirely justified: a naive automated ingestion script would quickly choke on formatting anomalies. This is precisely why this chapter establishes the foundational paradigm: 'a document is merely an ephemeral projection, whereas an engineering artifact must be born as typed data.'  
+  For legacy documentation (PDF and CAD files), we enforce strict three-dimensional isolation: the parser never guesses ambiguous semantics. Whenever OCR confidence or language model extraction ambiguity falls below our certification threshold, the artifact is quarantined with an immutable span grounding tuple $`\mathcal{G}`$.  
+  No extracted rule enters the active production base without explicit digital sign-off from a certified domain engineer through a Human-in-the-Loop gate. We do not promise a magical 'silver bullet' that eliminates accidental formatting chaos; we engineer a hermetic qualification perimeter that filters out noise at the system boundary and admits only mathematically verified invariants into the core.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-Operational symbol grounding onto SI dimensions and spatial schematic geometries prevents semantic hallucinations during direct interaction with physical hardware.
+**Synthesis and Scientific Verdict of the Chapter:**  
+Transforming engineering artifacts into verified data bridges the chasm between design documentation and physical silicon: UCUM physical dimensions provide the bedrock for rigorous causal intervention modeling ($do$-calculus), while strict isolation of accidental format complexity guarantees that non-deterministic document noise never compromises the functional safety of autonomous systems.
 
 ## Conclusions
 

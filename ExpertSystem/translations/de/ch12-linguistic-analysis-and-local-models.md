@@ -755,28 +755,37 @@ flowchart TD
 | **Disambiguierung (Homonymie)** | Positionsanalyse innerhalb des aktiven Gültigkeitsbereichs (`Scope`). | Kontextuelle Bedeutungsunterscheidung mehrdeutiger Lemmata (`CAN` als Feldbus vs. Modalverb; `state` als Zustand vs. Aussage). |
 | **Implizite Präsuppositionen** | Nicht unterstützt (Closed-World-Assumption). | Inferenz logischer Vorbedingungen (*„resuming a session“* $\implies$ eine vorherige Sitzung war persistiert). |
 
-## 12. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+## 12. Pro et Contra — Virtueller Dialog
 
-Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit Begründern der formalen Argumentationstheorie über anfechtbares Schließen, skeptische Semantik und Zyklenschlichtung.
+> **Epistemische Präambel und akademischer Haftungsausschluss:**  
+> Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur methodischen Belastungsprüfung der vom Autor entwickelten Architektur des linguistischen Verarbeitungstrakts und des Einsatzes lokaler Sprachmodelle. Zu diesem Diskurs laden wir herausragende Theoretiker der Computerlinguistik und der generativen Sprachtheorie ein, deren wissenschaftliche Paradigmen die entgegengesetzten Pole moderner Sprachwissenschaft markieren: Stanford-Professor **Christopher Manning** – Pionier der neuronalen Sprachverarbeitung, Schöpfer von Stanford CoreNLP und Verfechter kontinuierlicher End-to-End-Repräsentationen, sowie MIT-Institutsprofessor **Noam Chomsky** – Begründer der modernen generativen Linguistik, Schöpfer der formalen Grammatikhierarchie und kompromissloser Kritiker statistischer Sprachmodelle als Erkenntnisinstrumente.  
+> *Haftungsausschluss:* Diese Diskussion ist eine simulierte heuristische Synthese, generiert ausschließlich im wissenschaftlichen und didaktischen Kontext dieser Monografie auf der Grundlage veröffentlichter Schriften, Monografien und öffentlicher Vorträge der geladenen Experten. Sie stellt kein Wortprotokoll realer Unterredungen dar, erhebt keinen Anspruch auf gegenwärtige Äußerungen realer Personen und dient als methodisches Instrument des kritischen Rationalismus zur Falsifikation der Hypothesen des Autors. Jeder Gesprächspartner debattiert direkt und ausschließlich mit dem Autor der Monografie (Mykola Fedchyk).
 
-**These des Autors (Pro):**
-Anforderungskonflikte in komplexen Architekturen müssen als abstrakte ASPIC+-Argumentationsstrukturen mit topologischer Erkennung starker Zusammenhangskomponenten modelliert werden.
+**These des Kapitels (Mykola Fedchyk):**  
+Der linguistische Trakt eines evidenzbasierten Expertensystems muss kompakte lokale Sprachmodelle (SLMs) zwingend mit grammatikgesteuerter Generierung (GBNF) und unteilbarer deontischer Tokenisierung verknüpfen: Dies eliminiert strukturelle Halluzinationen unmittelbar auf der Logit-Ebene des Dekodierungsautomaten und garantiert die deterministische Transformation natürlicher Sprache in valide AST-Prädikate innerhalb harter Echtzeitschranken.
 
-**Antithese und Zitat des zynischen Kritikers (Contra — Phan Minh Dung, AIT — *Semantics of Defeat*, 1995):**
-> *„Die Anwendung skeptischer Grounded-Extension-Semantik auf reale Konfliktgraphen führt unweigerlich zu leeren Mengen: Bei symmetrischen Zyklen kann das System keinerlei Entscheidung treffen.“*
+**Runde 1: Werden formale Grammatiken (GBNF) im Zeitalter des End-to-End Deep Learning noch benötigt?**
 
-**Argumentative Diskussion (Socratic & Dialectical Debate):**
+- **Christopher Manning:**  
+  *„Herr Mykola Fedchyk, Ihr Bestreben, lokale Sprachmodelle in starre GBNF-Grammatiken und rigide EARS-Schablonen zu zwingen, wirkt wie der Versuch, die Computerlinguistik um vierzig Jahre zurückzuwerfen – in die Ära handgefertigter, fragiler regelbasierter Parser. Moderne tiefe Transformer erfassen dank Multi-Head-Attention-Mechanismen subtile Kontextbezüge, Anaphern, komplexe Konditionalsätze und diskursive Pragmatik nahtlos End-to-End. Das Aufprägen eines externen Kellerautomaten auf den autoregressiven Decoder beschädigt die kontinuierliche latente Repräsentation des Modells und verwirft wertvolle semantische Nuancen industrieller Fachtexte. Hochwertiges Instruction-Tuning und wenige In-Context-Beispiele (Few-Shot-Prompting) reichen völlig aus, um strukturierte JSON-Ausgaben ohne starres Grammatikkorsett zu erzielen.“*
 
-- **Dung:** Wenn zwei Regeln einander mit gleicher Stärke widersprechen, verwirft die fundierte Erweiterung beide. Das System kapituliert mit 'Ich weiß es nicht'.
+- **Mykola Fedchyk:**  
+  *„Herr Professor Christopher Manning, Instruction-Tuning und Prompting sind hervorragende empirische Heuristiken für Konversationsassistenten, sie bieten jedoch rein probabilistische Garantien. Bei einem SLM mit 99,9% syntaktischer Konformität verbleibt eine Wahrscheinlichkeit von $0{,}1\%$, ein Sonderzeichen unmaskiert auszugeben, eine Klammer zu vergessen oder das JSON-Schema zu verletzen. In einem nach ASIL-D oder DO-178C zertifizierten cyber-physischen Steuergerät ist eine Syntaxfehlerrate von $0{,}1\%$ eine unerträgliche Katastrophe.  
+  Zudem kann ein unkontrollierter Transformer bei Zeilenumbrüchen in unsauber formatierten PDFs den Ausdruck `MUST NOT` trennen und eine verheerende Polaritätsinversion erzeugen, die ein striktes Verbot in eine Erlaubnis verkehrt!  
+  Unsere grammatikgesteuerte Generierung (GBNF) trainiert das Modell nicht neu: Sie agiert als externer endlicher Automat, der bei jedem autoregressiven Schritt eine dynamische Maske über den Logit-Vektor $`\mathbf{z}_t`$ legt. Jedes Token, das gegen die Grammatik oder das Ziel-AST-Schema verstößt, wird vor der Softmax-Berechnung auf die Wahrscheinlichkeit Null gesetzt. Das Modell kann physikalisch keine strukturelle Halluzination generieren und behält den vollen Durchsatz auf lokalen ARM-Kernen bei.“*
 
-- **Autor (Fedchyk):** Herr Professor Dung, exakt das verlangt ASIL-D-Funktionssicherheit! Geraten zwei Standards in einen unauflösbaren symmetrischen Konflikt, DARF ein autonomes System weder eine Münze werfen noch willkürlich wählen. Es ist verpflichtet, die Inferenz mit dem Code REFUSAL_SYMMETRIC_CONFLICT zu stoppen und die Kontrolle an die Sicherheits-Rückfallebene zu übergeben. Ihre skeptische Semantik ist das ideale mathematische Fundament für funktionale Sicherheit.
+**Runde 2: Statistische Approximation versus universelle Grammatik und logische Kompetenz**
 
-- **Dung:** Doch wie steht es um die Berechnungskomplexität von Zyklen?
+- **Noam Chomsky:**  
+  *„Herr Mykola Fedchyk, meine fundamentale Kritik statistischer neuronaler Sprachmodelle bleibt unverändert: Sie sind nichts anderes als gigantische stochastische Spiegel, die oberflächliche Zeichenkorrelationen approximieren, ohne jegliches Verständnis für Semantik, Kausalität oder die invarianten Prinzipien der Universalgrammatik zu besitzen. Sie generieren ein physikalisches Gesetz mit derselben statistischen Leichtigkeit wie eine vollkommene Absurdität, sofern beide hinreichend plausibel klingen. Wenn Sie einem statistischen neuronalen Modell gestatten, an der Wissensextraktion für ingenieurtechnische Systeme mitzuwirken, schleusen Sie einen Generator für Pseudowissen in das Fundament kritischer Infrastrukturen ein. Echte Ingenieurwissenschaft erfordert deduktive Kompetenz (Competence), keine stochastische Verhaltensimitation (Performance).“*
 
-- **Autor (Fedchyk):** Wir setzen Tarjans Algorithmus ein, der Zyklen in linearer Zeit $`O(V+E)`$ erkennt und eine exponentielle Explosion des Beweisbaums verhindert.
+- **Mykola Fedchyk:**  
+  *„Herr Professor Noam Chomsky, ich teile Ihre erkenntnistheoretische Position vollkommen: Ein statistisches neuronales Netz besitzt keine logische Kompetenz und darf niemals als Quelle ingenieurtechnischer Wahrheit dienen. Genau aus diesem Grund ist das lokale SLM in unserer Architektur vollkommen entmachtet: Es besitzt keinerlei Autorität, Wahrheitswerte zu deklarieren!  
+  Das Sprachmodell fungiert ausschließlich als perzeptiver Wandler: Es überführt die hochgradig variable, mehrdeutige Oberflächenstruktur menschlicher Sprache in eine formalisierte Tiefenstruktur aus Prädikatskandidaten.  
+  Die Befugnis, diesen Kandidaten als valides Wissen zuzulassen, liegt jedoch ausschließlich bei einem deterministischen symbolischen Verifizierer (einem Automaten vom Chomsky-Typ 0 bzw. Typ 2). Dieser verankert das Prädikat über das Erdungstupel $`\mathcal{G}`$ in den physikalischen Originalbytes, validiert physikalische Einheiten gegen den UCUM-Standard und führt den logischen Beweis im isolierten EVM-Kern. Wir nutzen die Statistik allein, um die Varianz menschlicher Sprache abzufangen – vertrauen ihr jedoch niemals operative Entscheidungen an.“*
 
-**Synthese und wissenschaftliches Urteil des Kapitels:**
-Anfechtbare ASPIC+-Argumentation unter strikter Grounded-Semantik gewährleistet eine deterministische und fehlersichere Schlichtung technischer Widersprüche.
+**Synthese und wissenschaftliches Urteil des Kapitels:**  
+Der linguistische Trakt des Expertensystems löst den fundamentalen Konflikt zwischen statistischer Flexibilität und formaler Strenge auf: Lokale Modelle unter GBNF-Grammatikkontrolle schlagen eine verlässliche Brücke von natürlicher Sprache zu typisierten ASTs, während der symbolische Kern die lückenlose mathematische Kontrolle über Wahrheit, Determinismus und funktionale Sicherheit behält.
 
 ## Fazit
 

@@ -754,28 +754,37 @@ flowchart TD
 | **Disambiguation** | Positional analysis within the active lexical `Scope`. | Contextual disambiguation of polysemous tokens (`CAN` as bus vs. modal verb; `state` as status vs. assertion). |
 | **Implicit Presuppositions** | Unsupported (operates strictly under the closed-world assumption). | Inferring logical preconditions (*"resuming a session"* $\implies$ an antecedent session was persisted). |
 
-## 12. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 12. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with founders of formal argumentation theory regarding defeasible reasoning, skeptical semantics, and cyclic dispute arbitration.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously stress-test the author's architecture of the linguistic processing pipeline and the integration of local language models. For this inquiry, we invite seminal theorists of computational and generative linguistics whose foundational paradigms represent opposing poles in the science of language: Stanford University Professor **Christopher Manning**—pioneer of neural natural language processing, creator of Stanford CoreNLP, and advocate of continuous end-to-end representations, alongside MIT Institute Professor **Noam Chomsky**—founder of modern generative linguistics, creator of the formal grammar hierarchy, and uncompromising critic of statistical language models as instruments of genuine scientific comprehension.  
+> *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
-**Author's Thesis (Pro):**
-Requirement conflicts within complex engineering architectures must be modeled as ASPIC+ abstract argumentation frameworks with topological strongly connected component decomposition.
+**Chapter Thesis (Mykola Fedchyk):**  
+The linguistic pipeline of an evidence-governed expert system must couple compact local language models (SLMs) with Grammar-Guided Generation (GBNF) and atomic deontic tokenization: this eliminates structural hallucinations directly at the logit level of the decoding automaton and guarantees deterministic transformation of natural language into valid AST predicates within bounded real-time latencies.
 
-**Antithesis and Cynic-Critic Citation (Contra — Phan Minh Dung, AIT — *Semantics of Defeat*, 1995):**
-> *“Applying skeptical Grounded Extension semantics across real-world conflict graphs inevitably produces null extensions: when symmetric attack cycles occur, the system fails to produce any admissible decision.”*
+**Round 1: Are formal grammars (GBNF) needed in the era of end-to-end deep learning?**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Christopher Manning:**  
+  *“Mykola Fedchyk, your insistence on constraining local language models within rigid GBNF context-free grammars and brittle EARS templates feels like an attempt to drag computational linguistics forty years into the past—back to the era of handcrafted, fragile rule-based parsers. Modern deep transformer architectures, powered by multi-head self-attention mechanisms, capture subtle linguistic context, anaphora, complex conditional modalities, and discourse pragmatics seamlessly end-to-end. Forcing an external finite-state machine onto the autoregressive decoder degrades the model's rich continuous latent representations and discards nuanced semantic cues present in authentic engineering texts. High-quality instruction tuning and a few in-context exemplars (few-shot prompting) reliably induce models to output structured JSON without resorting to heavy grammar scaffolding.”*
 
-- **Dung:** If two opposing rules conflict with equal strength, the grounded extension rejects both. The system merely concludes 'I do not know'.
+- **Mykola Fedchyk:**  
+  *“Professor Christopher Manning, instruction tuning and in-context prompting are effective empirical heuristics for conversational assistants, but they provide purely probabilistic guarantees. In an SLM with 99.9% syntactic compliance, there remains a $0.1\%$ probability of emitting an unescaped character, an unclosed delimiter, or a malformed JSON schema. In an ASIL-D or DO-178C safety-critical cyber-physical controller, a $0.1\%$ syntax failure rate is an unmitigated disaster.  
+  Moreover, across noisy PDF line breaks, an unconstrained transformer easily splits the phrase `MUST NOT`, triggering a catastrophic polarity inversion that flips a strict prohibition into an active permission!  
+  Our Grammar-Guided Generation (GBNF) does not retrain or degrade the model: it operates as an external pushdown automaton that dynamically applies a boolean mask over the raw logit vector $`\mathbf{z}_t`$ at each autoregressive generation step. Any token that would violate the formal grammar or the target AST schema is forced to probability zero prior to the softmax calculation. The model physically cannot emit a structural hallucination, while maintaining full local execution throughput on embedded ARM silicon.”*
 
-- **Author (Fedchyk):** Professor Dung, that is precisely what ASIL-D functional safety dictates! When two regulatory standards enter an irreconcilable symmetric deadlock, an autonomous controller CANNOT flip a coin or select a rule arbitrarily. It is obligated to halt execution with a REFUSAL_SYMMETRIC_CONFLICT code and transition control to the safety fallback path. Your skeptical semantics provide the ideal mathematical foundation for functional safety engineering.
+**Round 2: Statistical approximation versus universal grammar and logical competence**
 
-- **Dung:** But what about the combinatorial complexity of cycle evaluation?
+- **Noam Chomsky:**  
+  *“Mykola Fedchyk, my fundamental critique of statistical deep learning models remains resolute: they are essentially massive stochastic curve-fitting mirrors, approximating superficial string correlations across text corpora without any genuine grasp of semantics, causality, or the innate structural principles of Universal Grammar. They generate a true physical law and a completely preposterous fabrication with equal ease, provided both exhibit statistical plausibility. By permitting a statistical neural model to participate in knowledge extraction for mission-critical engineering systems, you introduce a stochastic pseudo-knowledge generator into the foundations of critical infrastructure. Rigorous engineering demands genuine logical Competence, not stochastic behavioral Performance.”*
 
-- **Author (Fedchyk):** We utilize Tarjan's algorithm, which detects cycles in linear time $`O(V+E)`$, preventing exponential proof tree explosions.
+- **Mykola Fedchyk:**  
+  *“Professor Noam Chomsky, I completely endorse your epistemological critique: statistical neural networks possess zero deductive competence and must never be treated as authoritative arbiters of scientific or engineering truth. This is precisely why in our architecture, the local SLM is entirely stripped of the authority to declare truth!  
+  The language model operates exclusively as a perceptual transducer: it projects the high-entropy, ambiguous surface structure of human prose into a formalized deep structure of candidate predicates.  
+  However, the authority to admit that statement into corporate memory is retained exclusively by a deterministic symbolic verifier operating as a Chomsky Type-0 / Type-2 automaton. This verifier anchors the predicate to immutable source bytes via the span grounding tuple $`\mathcal{G}`$, mathematically verifies physical units against the UCUM standard, and executes deductive proofs within the isolated EVM core. We leverage statistical neural representations solely to absorb the noise of natural language variability, while entrusting zero decision-making authority to stochastic processes.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-ASPIC+ defeasible argumentation under strict Grounded semantics delivers deterministic and fail-safe arbitration of engineering contradictions.
+**Synthesis and Scientific Verdict of the Chapter:**  
+The linguistic pipeline of the expert system resolves the classic tension between statistical flexibility and deductive rigor: local models governed by GBNF grammar decoding establish a dependable perceptual bridge from natural language to typed ASTs, while the symbolic core maintains absolute mathematical control over truth, determinism, and functional safety.
 
 ## Conclusions
 

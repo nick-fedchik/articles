@@ -511,28 +511,38 @@ Traditional externalization forces a lead architect to author static documentati
 > [!IMPORTANT]
 > **Ethical and Security Perimeter:** Harvesting the digital shadow of engineering activity must remain strictly decoupled from employee performance evaluation. The expert system aggregates technical facts, structural patterns, and domain predicates, but must never become a tool for workplace surveillance. Violating this boundary incentivizes engineers to manipulate their digital traces, destroying the epistemic integrity of the knowledge base.
 
-## 14. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+## 14. Pro et Contra — Virtual Dialogue
 
-To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with computational linguistics pioneers regarding normative text formalization, deontic modalities, and EARS grammar constraints.
+> **Epistemic Preamble & Academic Disclaimer:**  
+> This section models a virtual intellectual debate to rigorously stress-test the author's methodology for eliciting and formally verifying human expert knowledge. For this inquiry, we invite globally prominent researchers of human cognition and decision-making whose foundational works question the reliability of introspection and the tractability of formalizing human experience: Nobel laureate **Daniel Kahneman**—pioneer of behavioral economics, heuristics of intuitive judgment (*Thinking, Fast and Slow*), and the mechanics of judgmental variance (*Noise: A Flaw in Human Judgment*), alongside Dr. **Gary Klein**—founder of the Naturalistic Decision Making (NDM) movement, architect of the Critical Decision Method (CDM), and author of the Recognition-Primed Decision (RPD) model.  
+> *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
-**Author's Thesis (Pro):**
-Regulatory documentation requirements must be canonicalized under EARS syntax rules with atomic indivisibility of deontic operators (MUST NOT) and multibyte Unicode boundary enforcement.
+**Chapter Thesis (Mykola Fedchyk):**  
+Knowledge elicitation in evidence-governed expert systems mandates transitioning away from unstructured conversational interviews toward formalized debiasing protocols, Brier-score calibration of subjective probability, and CommonKADS task-model canonicalization that decouples domain inferences from procedural control and eliminates cognitive noise.
 
-**Antithesis and Cynic-Critic Citation (Contra — Christopher Manning, Stanford Univ. — *NLP Pioneer*):**
-> *“Natural language is far too rich and nuanced to be confined within five rigid EARS templates. Authentic engineering standards abound with conditional idioms that your parser will discard, producing regulatory blind spots.”*
+**Round 1: Can elicitation protocols overcome expert cognitive traps and systemic noise?**
 
-**Reasoned Discussion (Socratic & Dialectical Debate):**
+- **Daniel Kahneman:**  
+  *“Mykola Fedchyk, decades of research into cognitive heuristics and biases demonstrate that human cognition is an intrinsically flawed, noisy foundation for formal rule bases. Even seasoned domain experts routinely fall victim to the availability heuristic, anchoring effects, and severe overconfidence. Furthermore, our empirical findings on systemic noise prove that the exact same expert diagnostician or compliance auditor renders conflicting verdicts between morning and afternoon depending on fatigue, mood, or context. An expert simply lacks conscious introspective access to the associative machinery of System 1; their post-hoc verbal justifications are retrospective rationalizations. Any attempt to 'elicit knowledge' through human interviews inevitably injects severe cognitive defects and statistical noise directly into the expert system's core.”*
 
-- **Manning:** Language is a living organism. Imposing absolute bans on colloquial phrasing causes the loss of critical specification semantics.
+- **Mykola Fedchyk:**  
+  *“Professor Daniel Kahneman, your profound critique of intuitive judgment forms the exact epistemological justification for our outright rejection of naive interviewing. We never ask an expert to 'explain how they think' in unconstrained dialogue.  
+  First, elicitation sessions strictly follow Critical Decision Method (CDM) protocols augmented with adversarial counterfactual probing: the knowledge engineer deliberately subjects every assertion to extreme numeric boundary testing.  
+  Second, subjective confidence is mathematically calibrated: we do not accept self-reported feelings of certainty, but compute the expert's Brier score across historical verified incident databases, penalizing overconfidence.  
+  Third, rules are never authored unilaterally: we employ a multi-expert Delphi protocol where divergence across independent specialists is explicitly quantified as cognitive noise. We harbor no illusions regarding the perfection of human memory; we construct a mathematical filter that purges psychological biases before any heuristic is permitted to compile into an operational predicate.”*
 
-- **Author (Fedchyk):** Professor Manning, in aerospace and automotive engineering, 'living language' causes catastrophic aircraft crashes! Requirements engineering standards (IREB, INCOSE) mandate that if a requirement cannot be formulated in clear deontic EARS syntax, it represents a defective requirement harboring hidden ambiguities. Our parser does not merely parse text; it functions as a rigorous gatekeeper, compelling systems engineers to remediate ambiguities at the source.
+**Round 2: Tacit knowledge versus CommonKADS formalization**
 
-- **Manning:** And how do you handle newline breaks within 'MUST NOT'?
+- **Gary Klein:**  
+  *“Mykola Fedchyk, in our field research on Naturalistic Decision Making (NDM) with incident commanders, commercial pilots, and trauma surgeons, we established that authentic mastery is tacit, perceptual, and driven by holistic pattern matching (the RPD model). When an expert makes a split-second, life-saving decision under extreme operational pressure, they do not traverse formal decision trees or parse deontic modal logic. They intuitively grasp the perceptual gestalt of the unfolding physical dynamic. Attempting to dissect this seamless tacit mastery into sterile CommonKADS knowledge models, inference schemas, and truth tables strips away the adaptive expertise that makes them masters, leaving behind an inert, brittle syntactic shell.”*
 
-- **Author (Fedchyk):** We implemented an atomic multibyte rune tokenizer that guarantees 0% false polarity inversion rates even across corrupted layout formatting.
+- **Mykola Fedchyk:**  
+  *“Dr. Gary Klein, I have profound respect for your RPD model; it represents the definitive account of how trained human experts operate under acute stress. However, a safety-critical cyber-physical controller—such as an automated railway interlocking computer or an autonomous truck braking module—is not a human and possesses no biological embodiment to 'intuitively feel' situational dynamics.  
+  An electronic control unit (ECU) must execute a deterministic algorithm bounded within hard $O(1)$ real-time latency limits. Moreover, regulatory functional safety standards (ISO 26262, IEC 61508) legally demand an unbroken, formally verifiable audit trail for every action taken. If an autonomous system derails, appealing to 'tacit expert intuition' offers zero legal or forensic protection in a court of inquiry.  
+  The CommonKADS framework is not deployed to mimic human intuition in real time, but to formalize causal structures and safety envelopes derived from rigorous post-incident debriefs. It decouples the task model from inference mechanisms, ensuring that the hard-won experience of master practitioners safeguards the system even when a human operator suffers fatigue or panic.”*
 
-**Synthesis and Scientific Verdict of the Chapter:**
-EARS syntax combined with atomic deontic tokenization converts ambiguous human prose into rigorously verifiable mathematical predicates.
+**Synthesis and Scientific Verdict of the Chapter:**  
+Knowledge elicitation in evidential systems is an engineering discipline for neutralizing human cognitive vulnerabilities: Brier calibration and multi-expert debiasing protocols eliminate heuristic noise, while CommonKADS formalization transforms tacit operational expertise into a mathematically verified, deterministically executable architecture of rules and safety invariants.
 
 ## Conclusions
 
