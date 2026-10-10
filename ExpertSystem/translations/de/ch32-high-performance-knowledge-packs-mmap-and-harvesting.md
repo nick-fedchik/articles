@@ -14,7 +14,7 @@
 
 Man stelle sich den eingebetteten Steuerungsrechner eines autonomen Fahrgestells oder eines robotischen Manipulators vor (Infineon AURIX TC397, ARM Cortex-R52 oder den Edge-Beschleuniger NVIDIA Jetson AGX Orin). Das Expertensystem muss die normative Sicherheitsarbitrierung in einer harten Echtzeitschleife mit einem Fehlertoleranzzeitintervall FTTI von höchstens 20–50 Millisekunden bewältigen (ISO 26262 ASIL D). Speichert das Expertensystem seine Wissensbasis in traditionellen Formaten (JSON, SQLite oder einem Client-Server-DBMS), erfordert ein Kaltstart 1,5–3 Sekunden allein für das Parsen und Allozieren von Millionen Objekten auf dem Heap. Zudem fügt eine unvorhersehbare Garbage-Collection-Pause (*Stop-the-World*) im ungünstigsten Moment eine Latenz von 100–250 ms hinzu. In der Folge wird das FTTI-Zeitbudget gravierend verletzt, ein kritischer Fehlerzustand des Systems wird nicht rechtzeitig erkannt, und der Aktor verliert die Steuerung. Für sicherheitskritische Systeme stellen Zero-Deserialization und speicherallokationsfreier Wissenszugriff keine „verfrühte Optimierung“ dar, sondern eine fundamentale Anforderung funktionaler Sicherheit.
 
-Dieses Kapitel widmet sich der ingenieurtechnischen Herausforderung des Übergangs von einem Prototyp-Expertensystem mit wenigen tausend Regeln zu einer industriellen Wissensbasis im Unternehmensmaßstab: Zehntausende Spezifikationen, Hunderttausende normative Fakten und Mikrosekunden-Reaktionszeiten in eingebetteten Systemen. Es beschreibt eine Eigenentwicklung des Autors: das unveränderliche, selbstbeschreibende Wissenspaket (**Knowledge Pack**) und das Binärformat seines Index **ZNAV-INDEX v2** auf Basis des Systemaufrufs `mmap(2)`. Zunächst erläutert das Kapitel Zusammensetzung und Lebenszyklus des Pakets, die Unterschiede zweier Formatgenerationen sowie die mathematischen Anwendungsgrenzen der Zero-Deserialization. Im weiteren Verlauf werden die Algorithmen des verlustfreien invertierten Fakten-Clusterings, der deterministische Multithread-Build (`--concurrency`), die neuro-symbolische Extraktions-Pipeline mit Byte-Level-Zulassungsgateway, die Metrik der Wissensdichte ($`\mathrm{KDI}`$) und das mathematisch sichere Sharding des Pakets dargelegt, welches das Schweigen eines einzelnen Shards strikt von der Nichtexistenz eines Fakts im Gesamtsystem unterscheidet.
+Dieses Kapitel widmet sich der ingenieurtechnischen Herausforderung des Übergangs von einem Prototyp-Expertensystem mit wenigen tausend Regeln zu einer industriellen Wissensbasis im Unternehmensmaßstab: Zehntausende Spezifikationen, Hunderttausende normative Fakten und Mikrosekunden-Reaktionszeiten in eingebetteten Systemen. Es beschreibt eine Eigenentwicklung des Autors: das unveränderliche, selbstbeschreibende Wissenspaket (**Knowledge Pack**) und das Binärformat seines Index **ZNAV-INDEX v2** auf Basis des Systemaufrufs `mmap(2)`. Zunächst erläutert das Kapitel Zusammensetzung und Lebenszyklus des Pakets, die Unterschiede zweier Formatgenerationen sowie die mathematischen Anwendungsgrenzen der Zero-Deserialization, einschließlich des atomaren Hot-Swaps von Paketen nach dem RCU-Muster (Read-Copy-Update) zur Verhinderung von `SIGBUS`-Abstürzen ohne Systemstillstand. Im weiteren Verlauf werden die Algorithmen des verlustfreien invertierten Fakten-Clusterings, der deterministische Multithread-Build (`--concurrency`), die Sicherheit der Wissenslieferkette nach den Standards SLSA v1.0 Level 4 und NIST SP 800-218 (SSDF), die neuro-symbolische Extraktions-Pipeline mit Byte-Level-Zulassungsgateway, die Metrik der Wissensdichte ($`\mathrm{KDI}`$) und das mathematisch sichere Sharding des Pakets dargelegt, welches das Schweigen eines einzelnen Shards strikt von der Nichtexistenz eines Fakts im Gesamtsystem unterscheidet.
 
 ---
 
@@ -452,6 +452,74 @@ Die Testsuite führte 107 spezialisierte symbolische Inferenz-Mikroprogramme auf
 | **Energiebedarf pro 1 000 000 Inferenzschritte** | — | **4{,}8684 J** | — | ~0{,}33 W Kernleistung |
 
 Die gemessene Diskrepanzrate von **$`\mathrm{Divergence} = 0{,}0000\,\%`$** belegt schlüssig: Die Einhaltung eines strikten 64-Byte-Alignments im Binärformat und der konsequente Verzicht auf veränderliche gemeinsame Speicherzustände neutralisieren die Hardware-Differenzen zwischen dem TSO-Modell von x86-64 und dem Relaxed-Modell von ARM vollständig. Dies gestattet es, Wissenspakete auf x86_64-Build-Servern in der Cloud zu kompilieren und formal zu auditieren, während die exakt identische Inferenzentscheidung auf eingebetteten ARM-Plattformen in mobilen Robotern und Fahrzeugen garantiert ist.
+
+### 3.4. Atomarer Hot-Swap von mmap-Paketen nach dem RCU-Muster (Read-Copy-Update) und Schutz vor SIGBUS
+
+Hochlast-Expertensysteme im kontinuierlichen Dauerbetrieb (Telekommunikations-Traffic-Management, Stromnetzüberwachung, kritische Avionik und medizinische Echtzeit-Assistenten) fordern eine Ausfallzeit von null (*Zero Downtime*) bei der Aktualisierung des normativen Regelbestands oder der Ontologien. In den Unterabschnitten 3.1–3.3 wurde gezeigt, dass die direkte Einblendung binärer Wissenspakete über den Systemaufruf `mmap(MAP_SHARED)` den Deserialisierungs-Overhead vollständig eliminiert und Mikrosekunden-Zugriffszeiten auf Fakten garantiert. Der Versuch jedoch, eine gemappte Datei während aktiver Inferenzabfragen parallel arbeitender Threads direkt im Dateisystem zu modifizieren oder zu überschreiben, führt zu einer katastrophalen Systemhavarie: Versucht der Betriebssystemkern auf eine Seite einer verdrängten oder verkürzten Datei zuzugreifen, erzeugt die CPU eine Hardware-Exception, die vom Linux-Kernel in ein `SIGBUS`-Signal (*Bus Error*) übersetzt wird und den gesamten Prozess des Expertensystems unverzüglich abstürzen lässt [[9]](#src-9).
+
+Ein naiver ingenieurtechnischer Lösungsansatz — das Kapseln des Zeigers auf den gemappten Speicher mit einem traditionellen Leser-Schreiber-Mutex (`sync.RWMutex`) — zerstört die Vorzüge der Zero-Deserialization vollständig: Jede Leseanfrage müsste einen Speicherbus-Lock erwerben (`LOCK CMPXCHG`), was zu massivem Cache-Bouncing zwischen den Prozessorkernen führt und den Lesedurchsatz von Dutzenden Millionen Operationen auf wenige Hunderttausend pro Sekunde einbrechen lässt. Führt die Aktualisierungsroutine wiederum schlicht einen `munmap(2)`-Aufruf auf dem alten Dateideskriptor aus, stürzt jeder parallel laufende Leser, der im selben Takt eine Speicheradresse im Index dereferenziert, augenblicklich ab oder löst ein `SIGBUS` durch Zugriff auf ein deallokiertes virtuelles Speichersegment aus.
+
+Um diesen Zielkonflikt aufzulösen, implementierte der Autor ein Architekturmuster des **atomaren Austauschs des Wissensspeichers basierend auf dem RCU-Lebenszyklus (Read-Copy-Update)** [[27]](#src-27). Das Muster stützt sich auf drei strikte Invarianten:
+
+1. **Unveränderliche parallele Mappings (Immutable Parallel Mappings):** Die neue Version des Wissenspakets $`\mathcal{P}_{k+1}`$ wird als eigenständiges Binärartefakt kompiliert und vom Kernel parallel in einen vollkommen unabhängigen virtuellen Adressbereich des Prozesses via `mmap` im Nur-Lese-Modus (`PROT_READ`, `MAP_SHARED`) eingeblendet. Die Vorgängerversion $`\mathcal{P}_k`$ bleibt dabei vollständig unberührt und intakt.
+2. **Atomarer Zeigertausch (Atomic Pointer Swinging):** Der Root-Deskriptor des aktiven Pakets wird in einem atomaren Prozessorzeiger gekapselt (beispielsweise `atomic.Pointer[KnowledgePack]` in Go oder `std::atomic<const KnowledgePack*>` in C++). Das Update vollzieht sich in einer einzigen atomaren Schreibinstruktion des Zeigers (1 Maschinentakt). Alle neuen Inferenzanfragen, die nach diesem Takt eintreffen, erhalten unverzüglich und sperrenfrei die Referenz auf die neue Version $`\mathcal{P}_{k+1}`$.
+3. **Epochen-Drain und sicheres Unmapping (Epoch Drain & Safe Munmap):** Leser-Threads, deren Ausführung vor dem Zeigertausch auf Version $`\mathcal{P}_k`$ begonnen hat, lesen weiterhin gefahrlos im alten Speicherbereich. Der Lebenszyklus der alten Version wird durch einen atomaren Referenzzähler aktiver Leser der aktuellen Epoche (*Epoch Reference Counter*) geschützt. Der Systemaufruf zur Speicherfreigabe `unix.Munmap()` auf dem alten Segment wird erst dann ausgelöst, wenn die vorherige Epoche vollständig entleert ist und der Zähler aktiver Referenzen exakt null erreicht.
+
+```mermaid
+sequenceDiagram
+    accTitle: Sequenz des atomaren mmap-Pakettauschs nach dem RCU-Muster
+    accDescr: Darstellung des parallelen Lesens, des atomaren Zeigertauschs der Wissensgeneration und der sicheren munmap-Speicherfreigabe nach dem Epochen-Drain.
+    autonumber
+    participant R1 as "Leser 1 (Epoche k)"
+    participant R2 as "Leser 2 (Epoche k+1)"
+    participant AP as "Atomarer Zeiger (atomic.Pointer)"
+    participant W as "Update-Worker (Updater)"
+    participant M as "Speichermanager (Kernel mmap/munmap)"
+
+    Note over R1,M: Paket k gemappt, Epochenzähler k = 1
+    R1->>AP: Lesen des Versionszeigers (erhält P_k)
+    Note over R1: Abfrageausführung im Speicher P_k
+    W->>M: mmap(P_{k+1}, PROT_READ)
+    M-->>W: Erfolgreiches Mapping der neuen Adresse
+    W->>AP: Atomarer Zeigertausch: P_k -> P_{k+1}
+    Note over AP: Zustandswechsel in 1 Maschinentakt
+    R2->>AP: Lesen des Versionszeigers (erhält P_{k+1})
+    Note over R2: Abfrageausführung im Speicher P_{k+1}
+    R1->>W: Abfrage abgeschlossen, Dekrement des Epochenzählers k -> 0
+    Note over W: Drain der Epoche k abgeschlossen (aktive Leser = 0)
+    W->>M: munmap(P_k)
+    Note over M: Sichere Freigabe physischer Seiten ohne SIGBUS-Risiko
+```
+
+Die Dauer der sicheren Übergangsphase der Epochen-Bereinigung (*Grace Period* oder Speicherhaltezeit $`T_{\mathrm{reclaim}}`$) wird durch die am längsten laufende aktive Leseanfrage bestimmt:
+
+```math
+T_{\mathrm{reclaim}} = \max_{j \in [1, N_{\mathrm{active}}]} \left( \tau_{\mathrm{rem}}(r_j) \right) + \Delta_{\mathrm{drain}}
+```
+
+- $`T_{\mathrm{reclaim}}`$ — Dauer der sicheren Epochen-Entleerung (Grace Period) vom Zeitpunkt des atomaren Zeigertauschs bis zur Ausführung des Systemaufrufs `munmap(2)`, angegeben in Millisekunden ($\text{ms}$);
+- $`N_{\mathrm{active}}`$ — Anzahl aktiver Leser-Threads, die vor dem Zeigertausch eine Referenz auf das Paket $`\mathcal{P}_k`$ bezogen haben;
+- $`\tau_{\mathrm{rem}}(r_j)`$ — verbleibende Ausführungszeit der aktiven Anfrage des $j$-ten Lesers bis zur Freigabe der Referenz, nach oben begrenzt durch das System-Timeout $`T_{\mathrm{deadline}}`$ ($`\tau_{\mathrm{rem}}(r_j) \le T_{\mathrm{deadline}}`$);
+- $`\Delta_{\mathrm{drain}}`$ — hardwarebedingte Latenz zur Propagierung von Speicherbarrieren und Durchführung des atomaren Zählerdekrements ($`\Delta_{\mathrm{drain}} \le 2\,\mu\text{s}`$ auf x86-64- und ARM64-Architekturen).
+
+Der Spitzenbedarf an virtuellem Adressraum während des Umschaltvorgangs ($`M_{\mathrm{transit}}`$):
+
+```math
+M_{\mathrm{transit}} = M(\mathcal{P}_k) + M(\mathcal{P}_{k+1}) \le M_{\mathrm{budget}}
+```
+
+- $`M(\mathcal{P}_k)`$ und $`M(\mathcal{P}_{k+1})`$ — Dateigrößen der jeweiligen Wissenspaketgenerationen, die im Speicher abgebildet sind;
+- $`M_{\mathrm{budget}}`$ — Hardware-Limit des virtuellen Adressraums sowie das Betriebssystem-Limit offener Mappings `vm.max_map_count`.
+
+Imperativ des geschlossenen Regelkreises (Actionable Closed Loop):
+
+1. **Laufzeitsteuerung und Kontrollfluss (Control Flow & Runtime Decisions):**
+   Der Hintergrundprozess der Speicherbereinigung (*Reclamation Daemon*) lauscht nach dem Zeigertausch über eine Bedingungsvariable (`sync.Cond`) oder einen Signalkanal auf das Nullwerden des Epochen-Referenzzählers. Fällt der Zähler innerhalb der Zeit $`t \le T_{\mathrm{reclaim}}`$ auf null, ruft der Worker unverzüglich `unix.Munmap(oldData)` auf. Überschreitet die Wartezeit aufgrund eines anomal verzögerten Leser-Threads die Notfallschwelle $`T_{\mathrm{watchdog}} = 2 \times T_{\mathrm{deadline}}`$, bricht die Laufzeitumgebung des Expertensystems den Kontext des blockierten Lesers zwangsweise ab (`context.Canceled`), erzeugt einen diagnostischen Stack-Dump und führt das Unmapping erst nach verifiziertem Verlassen des kritischen Abschnitts durch. Das System blockiert den Aufruf von `munmap`, solange $`N_{\mathrm{active}} \ne 0`$ gilt, was einen mathematisch hundertprozentigen Schutz vor `SIGBUS` garantiert.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Da während des Zeitintervalls $`T_{\mathrm{reclaim}}`$ zwei Paketgenerationen simultan im virtuellen Speicher des Prozesses koexistieren ($`M_{\mathrm{transit}} = M(\mathcal{P}_k) + M(\mathcal{P}_{k+1})`$), muss der Systemingenieur die Linux-Kernelgrenzen konfigurieren: Der Kernelparameter `sysctl vm.max_map_count` muss mindestens $`2 \times N_{\mathrm{shards}} + 64`$ Mapping-Bereiche zulassen (um ein Scheitern des `mmap`-Aufrufs mit dem Fehlercode `ENOMEM` zu verhindern), und der virtuelle Adressraum auf 64-Bit-Plattformen muss mit einem Puffer von mindestens $`2 \times V_{\mathrm{pack}}`$ dimensioniert sein. Da `MAP_SHARED`-Seiten im reinen Lesemodus keine modifizierten Kopien im Swap-Bereich erzeugen, verdoppelt die gemeinsame Nutzung des Seiten-Caches (*Page Cache*) den physischen RAM-Bedarf für unveränderte Sektoren nicht.
+3. **Praktisches Zahlenbeispiel (Worked Numerical Example):**
+   Ein Expertensystem auf einem Bordcomputer betreibt ein Wissenspaket mit einer Größe von $`M(\mathcal{P}_k) = 480\,\text{MB}`$. Zum Zeitpunkt der Bereitstellung eines neuen Updates mit $`M(\mathcal{P}_{k+1}) = 510\,\text{MB}`$ sind im System $`N_{\mathrm{active}} = 64`$ parallele Inferenz-Threads aktiv. Die maximale garantierte Anfragefrist beträgt $`T_{\mathrm{deadline}} = 25\,\text{ms}`$, die aktuell längste Restlaufzeit $`\tau_{\mathrm{rem}} = 14{,}2\,\text{ms}`$, die Barrierenlatenz $`\Delta_{\mathrm{drain}} = 1{,}8\,\mu\text{s}`$. Die berechnete Haltezeit beläuft sich auf $`T_{\mathrm{reclaim}} = 14{,}2018\,\text{ms}`$. Der virtuelle Adressraum beansprucht während des Übergangs $`M_{\mathrm{transit}} = 480 + 510 = 990\,\text{MB} \le 16\,\text{GB}`$ (physisches LPDDR5x-Limit des Bordrechners). Exakt $14{,}2\,\text{ms}$ nach dem Zeigertausch fällt der Leserzähler auf null, der Worker führt `unix.Munmap()` aus und gibt $480\,\text{MB}$ frei. Keiner der 64 aktiven Threads erfährt Latenzspitzen oder einen `SIGBUS`-Fehler, und die Systemverfügbarkeit bleibt bei 100{,}00%.
+
 ---
 
 ## 4. Spezifikation des Binärformats ZNAV-INDEX v2
@@ -892,6 +960,104 @@ func TestDuplicateAndGapAreReported(t *testing.T) {
 Der erste Test speist 1000 Dokumente in randomisierter Abfolge in Pipelines mit 1, 8 und 64 Workern ein und verifiziert die byteweise Identität der finalen Datenströme; der zweite Test prüft die gezielte Erkennung von Lücken und Duplikaten. Die Ausführung mit `-race` stellt zudem die Abwesenheit von Race Conditions sicher.
 
 Die Schreibreihenfolge ist jedoch nicht die einzige Quelle für Diskrepanzen. Die Sprachspezifikation von Go definiert die Iterationsreihenfolge über Maps explizit als randomisiert [[21]](#src-21); Map-Iterationen vor dem Schreiben müssen daher zwingend über sortierte Slice-Indizes erfolgen, wie in Abschnitt 5.1 gezeigt. Zeitstempel im Manifest zerstören ebenfalls die Bit-Identität; die Spezifikation `SOURCE_DATE_EPOCH` des Reproducible-Builds-Projekts schreibt vor, Build-Zeitstempel aus einer Umgebungsvariablen abzuleiten, die an die letzte Modifikation der Quelldaten gebunden ist [[20]](#src-20). Absolute Dateipfade, lokale Spracheinstellungen und Compiler-Versionen dürfen keinesfalls unkontrolliert in die Artefakte einfließen; das Manifest deklariert Toolchain-Versionen explizit und verwendet ausschließlich relative Pfadangaben.
+
+### 6.2. Sicherheit der Wissenslieferkette nach SLSA v1.0 Level 4 und NIST SP 800-218 (SSDF)
+
+Moderne evidenzbasierte Wissensverarbeitung konzentriert ihren formalen Apparat primär auf die Verifikation von Regeln und die Korrektheit logischer Schlüsse, vernachlässigt dabei jedoch häufig die fundamentale Verwundbarkeit der **Wissenslieferkette (Knowledge Supply Chain)**. In Unterabschnitt 6.1 wurde die Bit-für-Bit-Reproduzierbarkeit paralleler Builds durch den Reorder Buffer gelöst; Reproduzierbarkeit allein in einer ungesicherten Umgebung garantiert jedoch weder Authentizität noch Manipulationssicherheit. Übersetzt der Paket-Compiler normative Anforderungen (ISO-Standards, RFC-Spezifikationen, gesetzliche Regularien) in Binärindizes und Pakete für das `mmap`-Speicher-Mapping, ermöglicht die Kompromittierung einer Zwischenbibliothek, der CI/CD-Pipeline oder eines Drittanbieter-Plugins einen Angriff der SolarWinds-Klasse direkt auf die Wissensbasis.
+
+Böswillige Eingriffe in das binäre Wissensartefakt können:
+- Byte-Offsets in der Subjekt- oder Postings-Tabelle verdeckt manipulieren, sodass die Inferenzmaschine auf gefälschte Ausführungsregeln verweist;
+- korrumpierte normative Aussagen einschleusen, die kritische Fehlerzustände eines Aktors fälschlicherweise als zulässig deklarieren;
+- die kryptographische Rückverfolgbarkeit zwischen dem Primärzitat und dem realen Binärcode aufbrechen.
+
+Traditionelle Netzwerk-Perimeter sind hierbei wirkungslos, da die Manipulation während der Kompilierung der Wissensbasis lange vor dem Laden des Pakets in die Laufzeitumgebung erfolgt.
+
+Zur Behebung dieser Bedrohung integrierte der Autor in die Kompilierungs-Pipeline und den Release-Lebenszyklus der Pakete die Anforderungen von **NIST SP 800-218 (Secure Software Development Framework, SSDF)** [[28]](#src-28) sowie der höchsten Vertrauensstufe **SLSA v1.0 Level 4 (Supply-chain Levels for Software Artifacts)** [[29]](#src-29):
+
+1. **Hermetische, isolierte Build-Umgebung (Hermetic Ephemeral Builder):** Die Kompilierung binärer Wissenspakete erfolgt in zustandslosen, ephemeren Sandboxes ohne jeglichen Netzwerkzugriff. Sämtliche regulatorischen Eingabetexte, ABNF-Grammatiken, Normalisierungswerkzeuge und Compiler-Binärdateien werden über kryptographische SHA-256-Hashes fixiert. Jedes dynamische Nachladen externer Abhängigkeiten während des Builds ist technisch unterbunden.
+2. **Zweikanalige Bit-Paritätsprüfung (Multi-Party Bit-for-Bit Parity):** Der Build-Prozess wird parallel auf zwei unabhängigen, isolierten Knoten in unterschiedlichen Administrationsdomänen ausgeführt. Das Paket wird nur dann zur Signierung zugelassen, wenn die erzeugten Binärartefakte vollkommen identisch sind:
+
+```math
+\mathrm{SHA256}(\mathcal{P}_{\mathrm{Worker\_A}}) \equiv \mathrm{SHA256}(\mathcal{P}_{\mathrm{Worker\_B}}).
+```
+
+3. **Kryptographische Provenienz-Attestierung (in-toto Attestation & Sigstore/Ed25519):** Jedem kompilierten Wissenspaket wird ein kryptographisch signiertes Herkunftszertifikat nach der offenen *in-toto Provenance Specification* beigefügt. Das Attestat dokumentiert die lückenlose Stratigraphie des Artefakts: exakte Hashes der normativen Primärquellen, Git-Commit-Hashes der Spezifikationen, Compiler-Version und -Hash, Build-Parameter sowie eine digitale Ed25519-Signatur, die im transparenten Ledger Sigstore/Rekor unveränderlich protokolliert ist.
+
+```mermaid
+flowchart TB
+    accTitle: Pipeline zur Absicherung der Wissenslieferkette nach SLSA Level 4 und NIST SSDF
+    accDescr: Zweikanaliger hermetischer Build, Bit-Paritätsprüfung, Generierung des kryptographischen in-toto-Attestats und Zulassungsgateway für mmap.
+
+    SRC["Regulatorische Eingangsspezifikationen<br/>(SHA-256 fixiert)"]
+
+    subgraph HERM["Isolierte hermetische Build-Umgebung (Ephemere Sandbox)"]
+        direction LR
+        BA["Build-Worker A<br/>(Knoten 1)"]
+        BB["Build-Worker B<br/>(Knoten 2)"]
+    end
+
+    SRC --> BA & BB
+
+    COMP{"Paritätsprüfung:<br/>SHA256(P_A) == SHA256(P_B)?"}
+    BA & BB --> COMP
+
+    COMP -->|"Nein: Bit-Diskrepanz"| REJECT["<b>Build-Abbruch</b><br/>Isolation und Audit der Determinismus-Verletzung"]
+    COMP -->|"Ja: Identische Bytes"| ATTEST["Erzeugung des in-toto-Provenienz-Attestats<br/>(Quellen, Compiler-Hash, Build-Flags)"]
+
+    ATTEST --> SIGN["Kryptographische Ed25519-Signatur<br/>(Sigstore / Rekor Ledger)"]
+
+    subgraph RUNTIME["Laufzeit-Zulassungsgateway des Expertensystems"]
+        GATE{"Attestat-Verifikation Admission(P)"}
+        MOUNT["<b>Sicheres mmap-Mounting</b><br/>(PROT_READ, MAP_SHARED)"]
+        QUAR["<b>Blockierung & Quarantäne</b><br/>Fail-Closed, Sicherheitswarnung"]
+    end
+
+    SIGN --> GATE
+    GATE -->|"Admission == 1"| MOUNT
+    GATE -->|"Admission == 0"| QUAR
+
+    classDef src fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef herm fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef ok fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef bad fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+
+    class SRC,ATTEST,SIGN src;
+    class BA,BB,COMP,GATE herm;
+    class MOUNT ok;
+    class REJECT,QUAR bad;
+```
+
+Die Zulassung eines binären Wissenspakets zur Einblendung in den virtuellen Speicher wird über das automatisierte Prädikat des Zulassungsgateways $`\mathrm{Admission}(\mathcal{P})`$ evaluiert:
+
+```math
+\mathrm{Admission}(\mathcal{P}) = \mathbb{I}\left( \mathrm{VerifySig}_{K_{\mathrm{root}}}(\sigma_{\mathcal{A}}, \mathcal{A}) \land (\mathrm{SHA256}(\mathcal{P}) = \mathcal{A}.\mathrm{digest}) \land \bigwedge_{d \in \mathcal{D}} (\mathrm{SHA256}(d) = \mathcal{A}.\mathrm{sources}[d]) \land \mathcal{A}.\mathrm{hermetic} \right)
+```
+
+Parameter und Dimensionen:
+- $`\mathrm{Admission}(\mathcal{P}) \in \{0, 1\}`$ — boolesches Prädikat zur automatischen Zulassung des Wissenspakets für das virtuelle Speicher-Mapping;
+- $`\mathbb{I}(\cdot)`$ — Indikatorfunktion für den Wahrheitswert logischer Prädikate;
+- $`\mathrm{VerifySig}_{K_{\mathrm{root}}}(\sigma_{\mathcal{A}}, \mathcal{A})`$ — kryptographische Verifikation der digitalen Signatur $`\sigma_{\mathcal{A}}`$ des Attestats $`\mathcal{A}`$ gegen den Root-Verifikationsschlüssel $`K_{\mathrm{root}}`$ nach Ed25519;
+- $`\mathrm{SHA256}(\mathcal{P})`$ — berechneter 256-Bit-Kryptohash der kompilierten Binärdatei des Wissenspakets $`\mathcal{P}`$;
+- $`\mathcal{A}.\mathrm{digest}`$ — im signierten Attestat deskriptiv hinterlegter Artefakt-Hash (*Subject Digest*);
+- $`\bigwedge_{d \in \mathcal{D}} (\mathrm{SHA256}(d) = \mathcal{A}.\mathrm{sources}[d])`$ — Konjunktion der bitweisen Identitätsprüfung aller normativen Eingangsdokumente $d$ gegen das autorisierte Quellenregister $`\mathcal{D}`$;
+- $`\mathcal{A}.\mathrm{hermetic} \in \{\mathrm{True}, \mathrm{False}\}`$ — Konformitäts-Flag der Build-Umgebung bezüglich der SLSA-v1.0-Level-4-Isolationskriterien (vollständige Netzwerkisolation, fixierte Compiler-Versionen).
+
+Imperativ des geschlossenen Regelkreises (Actionable Closed Loop):
+
+1. **Laufzeitsteuerung und Kontrollfluss (Control Flow & Runtime Decisions):**
+   Das Zulassungsgateway des Expertensystems berechnet $`\mathrm{Admission}(\mathcal{P})`$ zwingend vor dem Aufruf von `mmap(2)`.
+   - *Entscheidung $`\mathrm{Admission}(\mathcal{P}) = 1`$ (`PASS`):* Das Paket gilt als integer und authentisch; der Lader blendet es via `mmap` im Modus `PROT_READ` ein und initiiert den RCU-Hot-Swap-Prozess (Abschnitt 3.4).
+   - *Entscheidung $`\mathrm{Admission}(\mathcal{P}) = 0`$ (`FAIL`):* Die *Fail-Closed*-Sicherheitsrichtlinie greift unverzüglich. Der Ladevorgang wird abgebrochen, ein Sicherheitsaudit-Alarm (`Security Tampering Alert`) ausgelöst, die Binärdatei in ein isoliertes Quarantäneverzeichnis verschoben und die Inferenzmaschine verbleibt auf dem bestehenden verifizierten Paketstand oder geht in einen sicheren Stillstandszustand über.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Die Evaluierung von $`\mathrm{Admission}(\mathcal{P})`$ erfordert ein definiertes Zeitbudget beim Start oder Update eines Knotens. Die Überprüfung der Ed25519-Signatur auf ARM Cortex-A78AE-Kernen beansprucht lediglich $45\,\mu\text{s}$. Das Hashing via SHA-256 für ein Paket vom Umfang $`V_{\mathrm{pack}}`$ auf Hardware mit ARMv8-A Crypto Extension oder Intel SHA-NI erreicht eine Verarbeitungsrate von $`B_{\mathrm{sha}} \approx 2{,}4\,\text{GB/s}`$. Die Verifikationslatenz berechnet sich nach:
+
+```math
+T_{\mathrm{verify}} = \frac{V_{\mathrm{pack}}}{B_{\mathrm{sha}}} + T_{\mathrm{sig}}
+```
+
+   wobei $`V_{\mathrm{pack}}`$ die Paketgröße in Bytes darstellt, $`B_{\mathrm{sha}}`$ den Durchsatz der kryptographischen Hashing-Pipeline und $`T_{\mathrm{sig}}`$ die Signaturprüfdauer. Für ein Paket von $`V_{\mathrm{pack}} = 500\,\text{MB}`$ beträgt die gesamte Attestatsprüfung lediglich $208\,\text{ms}$, was sich problemlos in den Hintergrundzyklus ohne Beeinträchtigung laufender Abfragen einfügt.
+3. **Praktisches Zahlenbeispiel (Worked Numerical Example):**
+   Ein Edge-Knoten einer Eisenbahn-Signaltechnik empfängt ein aktualisiertes Wissenspaket für Zugfolgeabstände mit einem Volumen von $`V_{\mathrm{pack}} = 120\,\text{MB}`$. Das Gateway evaluiert das Attestat: Die Signatur $`\sigma_{\mathcal{A}}`$ auf Curve25519 wird in $42\,\mu\text{s}$ validiert. Der Paket-Hash wird hardwarebeschleunigt ermittelt: $`T_{\mathrm{hash}} = 120\,\text{MB} / (2{,}4\,\text{GB/s}) = 50\,\text{ms}`$. Der Hash stimmt mit $`\mathcal{A}.\mathrm{digest}`$ (`0x9f4a...b2c1`) überein. Alle 18 referenzierten IEC/EN-Normen entsprechen ihren Soll-Prüfsummen, und das Flag $`\mathcal{A}.\mathrm{hermetic} = \mathrm{True}`$ ist gesetzt. Es folgt $`\mathrm{Admission}(\mathcal{P}) = 1`$. Das System autorisiert den RCU-Zeigertausch. Wäre auch nur ein einziges Byte im Binärindex manipuliert worden (z. B. ein geänderter Geschwindigkeitsschwellenwert in einer Bremskurvenregel), würde $`\mathrm{SHA256}(\mathcal{P}) \ne \mathcal{A}.\mathrm{digest} \implies \mathrm{Admission}(\mathcal{P}) = 0`$ greifen; das Paket würde nach $50{,}042\,\text{ms}$ verworfen, womit ein unbefugter Eingriff in das Zugsicherungssystem mathematisch ausgeschlossen ist.
 
 ---
 
@@ -2000,6 +2166,8 @@ Die Messwerte belegen den in Kapitel 7 formalisierten Zielkonflikt: Eine gröber
 13. Warum wird als Sharding-Schlüssel die Dokumentenfamilie anstelle des Einzeldokuments gewählt? Welche Vor- und Nachteile resultieren daraus?
 14. Warum untersagt der Anfrageausgang „teilweise gefunden“ die Zusicherung normativer Rechtskraft, und warum verbietet „unbekannt“ die Negation selbst unter der Closed-World-Annahme?
 15. Warum migriert Modulo-Hashing signifikant mehr Schlüssel als Rendezvous-Hashing bei einer Topologieerweiterung, und welcher Rechenaufwand entsteht beim Rendezvous-Hashing pro Schlüssel?
+16. Warum verursacht ein direkter Aufruf von `munmap(2)` auf einem veralteten binären Wissenspaket während der aktiven Abfrageausführung ein `SIGBUS`, und wie verhindert das RCU-Muster mit Epochenzähler diesen Absturz?
+17. Welche drei Kriterien der Standards NIST SP 800-218 (SSDF) und SLSA v1.0 Level 4 garantieren den Schutz der Wissensartefakt-Lieferkette vor Angriffen der SolarWinds-Klasse?
 
 ---
 
@@ -2032,6 +2200,7 @@ Die Messwerte belegen den in Kapitel 7 formalisierten Zielkonflikt: Eine gröber
 | Cache-Zeile | *Cache Line* | Kleinste Transfereinheit zwischen Hauptspeicher und Prozessor-Cache (typischerweise 64 Bytes) |
 | Shard | *Shard* | Autarke Partition eines Wissenspakets zur Verteilung auf eigenständige Rechenknoten |
 | Wissenspaket-Sharding | *Pack Sharding* | Horizontale Zerlegung einer Wissensbasis in konsistente Teilpakete inklusive Topologie-Manifest |
+| Wissenslieferkette | *Knowledge Supply Chain* | Durchgängige Pipeline zur Transformation von regulatorischen Primärquellen in kompilierte binäre Wissensartefakte unter lückenloser Integritäts- und Authentizitätskontrolle |
 | Partitionierungsschlüssel | *Partition Key* | Fachliches Kriterium, nach dem Daten auf Shards verteilt werden (im vorliegenden Kontext die Dokumentenfamilie) |
 | Dokumentenfamilie | *Document Family (Lineage)* | Gesamtheit aller historischen Revisionen und Ableitungen einer regulatorischen Norm |
 | Rendezvous-Hashing | *Rendezvous Hashing* | Platzierungsverfahren nach dem Highest-Random-Weight-Prinzip zur Minimierung von Datenmigrationen |
@@ -2066,15 +2235,19 @@ Die Messwerte belegen den in Kapitel 7 formalisierten Zielkonflikt: Eine gröber
 | LLM | Large Language Model | Großes Sprachmodell (> 10 Mrd. Parameter) |
 | MMU | Memory Management Unit | Hardware-Einheit zur Verwaltung des virtuellen Speichers |
 | NFC | Normalization Form C | Kanonische Dekomposition mit anschließender kanonischer Komposition |
+| NIST | National Institute of Standards and Technology | Nationales Institut für Standards und Technologie der USA (Normungsbehörde) |
 | NVMe | Non-Volatile Memory Express | Protokoll für Hochgeschwindigkeits-Solid-State-Drives über PCIe |
 | PNG | Portable Network Graphics | Verlustfreies Rastergrafikformat mit typisierten Datenblöcken |
 | QUIC | QUIC | Transportprotokoll der IETF auf Basis von UDP |
+| RCU | Read-Copy-Update | Synchronisationsmuster zur sicheren, sperrenfreien Speicherfreigabe ohne Blockierung von Lesern |
 | RDBMS | Relational Database Management System | Relationales Datenbankmanagementsystem |
 | RFC | Request for Comments | Dokumentenreihe technischer Internet-Standards der IETF |
 | RSS | Resident Set Size | Physisch im Arbeitsspeicher belegter Hauptspeicher eines Prozesses |
 | SHA | Secure Hash Algorithm | Kryptographische Hash-Familie; SHA-256 erzeugt 256-Bit-Digests |
 | SIMD | Single Instruction, Multiple Data | Befehlssatzerweiterung zur parallelen Vektorverarbeitung |
 | SLM | Small Language Model | Kompaktes Sprachmodell (1–8 Mrd. Parameter) für lokale Ausführung |
+| SLSA | Supply-chain Levels for Software Artifacts | Sicherheitsstufen für die Integrität von Software- und Wissensartefakt-Lieferketten |
+| SSDF | Secure Software Development Framework | Referenzrahmen für sichere Softwareentwicklung und Artefakterstellung (NIST SP 800-218) |
 | TCP | Transmission Control Protocol | Verbindungsorientiertes Transportprotokoll mit garantierter Zustellung |
 | TLB | Translation Lookaside Buffer | CPU-Puffer zur Beschleunigung der virtuellen Adressübersetzung |
 | UAX | Unicode Standard Annex | Normativer Anhang der Spezifikation des Unicode-Konsortiums |
@@ -2112,6 +2285,9 @@ Die Messwerte belegen den in Kapitel 7 formalisierten Zielkonflikt: Eine gröber
 24. <a id="src-24"></a>The Go Authors. [*Go Fuzzing*](https://go.dev/doc/security/fuzz/). Offizielle Go-Dokumentation.
 25. <a id="src-25"></a>David R. Karger, Eric Lehman, Tom Leighton, Rina Panigrahy, Matthew Levine, Daniel Lewin. [*Consistent Hashing and Random Trees: Distributed Caching Protocols for Relieving Hot Spots on the World Wide Web*](https://doi.org/10.1145/258533.258660). *Proceedings of the 29th Annual ACM Symposium on Theory of Computing (STOC '97)*, 654–663. ACM, 1997.
 26. <a id="src-26"></a>David G. Thaler, Chinya V. Ravishankar. [*Using Name-Based Mappings to Increase Hit Rates*](https://doi.org/10.1109/90.663936). *IEEE/ACM Transactions on Networking*, 6(1), 1–14, 1998.
+27. <a id="src-27"></a>Paul E. McKenney. [*Is Parallel Programming Hard, And, If So, What Can You Do About It?*](https://mirrors.edge.kernel.org/pub/linux/kernel/people/paulmck/perfbook/perfbook.html). Linux Technology Center, IBM, 2024.
+28. <a id="src-28"></a>National Institute of Standards and Technology. [*NIST Special Publication 800-218: Secure Software Development Framework (SSDF) Version 1.1*](https://doi.org/10.6028/NIST.SP.800-218). NIST, 2022.
+29. <a id="src-29"></a>OpenSSF. [*Supply-chain Levels for Software Artifacts (SLSA) Specification v1.0*](https://slsa.dev/spec/v1.0/). Open Source Security Foundation, Linux Foundation, 2023.
 
 ---
 
