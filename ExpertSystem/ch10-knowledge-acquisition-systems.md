@@ -162,6 +162,9 @@ flowchart TB
 
 ```mermaid
 classDiagram
+    accTitle: Структура контейнера двійкового пакету знань
+    accDescr: Діаграма класів KnowledgePackContainer із канонічними джерелами, деонтичними нормами та матрицями CSR.
+
     class KnowledgePackContainer {
         +Header64Aligned header
         +SourceSection canonical_sources
