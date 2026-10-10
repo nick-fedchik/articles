@@ -10,7 +10,7 @@
 
 ## Abstract
 
-Dieses Kapitel untersucht das Problem der automatisierten Erkennung von Anforderungen und deontischen Modalitäten in technischen Spezifikationen, Industriestandards (ISO 26262, DO-178C) und RFCs zur Synthese formaler Invarianten für evidenzbasierte Expertensysteme. Es analysiert die syntaktischen Fallstricke natürlicher Sprache und etabliert einen Algorithmus zur Typisierung von Anforderungen anhand der Grammatikschablonen von EARS (*Easy Approach to Requirements Syntax*). Behandelt wird die Übersetzung formalisierter Anforderungen in Prädikatenlogik erster Stufe, lineare temporale Logik (LTL) und das SMT-LIB-Format zur automatisierten Konsistenzprüfung durch den SMT-Solver Z3, wodurch der deterministische Regelkern des Expertensystems formiert wird. Abschließend werden eine deterministische Pipeline-Implementierung in Go sowie eine durchgängige Engineering-Fallstudie zum Audit von Anforderungen an ein Batteriemanagementsystem (BMS) dargelegt.
+Dieses Kapitel untersucht das Problem der automatisierten Erkennung von Anforderungen und deontischen Modalitäten in technischen Spezifikationen, Industriestandards (ISO 26262, DO-178C) und RFCs zur Synthese formaler Invarianten für evidenzbasierte Expertensysteme. Es analysiert die syntaktischen Fallstricke natürlicher Sprache, entwickelt einen Linter für semantische Mehrdeutigkeit auf Basis eines Lexikons toxischer Deskriptoren und der lexikografischen Vorzugsordnung deontischer Präferenzen sowie Schutzalgorithmen gegen die Polaritätsinversion modaler Quantoren (`MUST NOT`) durch zusammengesetzte Atome, eine Spans erhaltende Tokenisierung (`GroundedToken`) und eine UTF-8-Analyse von Interpunktionsgrenzen. Behandelt wird die neuro-symbolische Gültigkeitsschranke zwischen Relevanz- und Validitätszone mittels grammatikgesteuerter Decodierung (GBNF) und standardisierter EARS-Schablonen (Easy Approach to Requirements Syntax). Untersucht wird die Übersetzung formalisierter Anforderungen in Prädikatenlogik erster Stufe, lineare temporale Logik (LTL) und das SMT-LIB-Format zur automatisierten Konsistenzprüfung durch den SMT-Solver Z3, wodurch der deterministische Regelkern des Expertensystems formiert wird. Abschließend werden eine deterministische Pipeline-Implementierung in Go sowie eine durchgängige Engineering-Fallstudie zum Audit von Anforderungen an ein Batteriemanagementsystem (BMS) dargelegt.
 
 Die Entwicklung eines komplexen Systems – vom Steuergerät einer Traktionsbatterie eines Elektrofahrzeugs bis hin zur bordseitigen Flugzeugsoftware – beginnt nicht mit Code, sondern mit Anforderungen. Anforderungen entstammen drei wesentlichen Quellen: internationalen und branchenspezifischen Normen, dem Lastenheft des Auftraggebers sowie der Komponentendokumentation der Hardwarebasis, also Datenblättern von Mikrocontrollern und Listen bekannter Hardware-Fehler (Errata). Spezifikationen liegen häufig als PDF-, DOCX- oder ReqIF-Dateien (*Requirements Interchange Format*) vor [[1]](#src-1). Standards für funktionale Sicherheit wie die ISO 26262 für Straßenfahrzeuge [[2]](#src-2) oder die DO-178C für flugzeuggestützte Software [[3]](#src-3) fordern eine lückenlose Rückverfolgbarkeit (Traceability) jeder einzelnen Anforderung zu Architekturentscheidungen, Quellcode und Verifikationstests.
 
@@ -79,6 +79,89 @@ Das Auffinden des Signalworts SHALL mittels regulärer Ausdrücke deckt nur eine
 
 Modalität und Syntax müssen demnach zwingend gekoppelt analysiert werden: Die Modalität bestimmt, ob eine Verpflichtung vorliegt, während die Syntax aufdeckt, wer wann welche Aktion unter welchen Randbedingungen ausführen muss. Im nächsten Schritt werden die heterogenen Satzstrukturen auf eine standardisierte Grammatik normiert.
 
+### 1.2. Linter für semantische Mehrdeutigkeit und lexikografische deontische Vorzugsordnung
+
+In der Architektur des Systems zur automatisierten Wissensakquisition ([Kapitel 10](ch10-knowledge-acquisition-systems.md)) bildet die Phase des vorbereitenden lexikalischen Lintings die erste deterministische Barriere vor dem Aufbau des formalen abstrakten Syntaxbaums (AST). In der Praxis industrieller Systementwicklung wimmeln technische Spezifikationen von nicht formalisierter, vager Semantik: Superlativen und relativen Adjektiven („akzeptable Latenz“, „ausreichende Kühlleistung“, „hohe Zuverlässigkeit“, „minimaler Energieverbrauch“). Gelangt ein derart unscharfes Prädikat ohne strikte numerische Verankerung in die Regelbasis, ist der symbolische SMT-Solver außerstande, dafür eine Grenzinvariante zu synthetisieren, während ein probabilistisches Sprachmodell beginnt, halluzinierte Annahmen über zulässige Ansprechschwellen zu generieren. Die Konsequenz ist entweder eine Blockade des formalen Beweises (Deadlock des Verifizierers) oder das katastrophale Übersehen einer Gefahrensituation während des Betriebs des Hardwarekomplexes.
+
+Um diesen Mangel systematisch zu unterbinden, wurde vom Autor ein spezialisierter Linter für semantische Mehrdeutigkeit (*Ambiguity Linter*) entwickelt, der auf einem geschlossenen Lexikon toxischer Deskriptoren $`\mathcal{D}_{\mathrm{toxic}}`$ (definiert gemäß den Richtlinien von ISO/IEC/IEEE 29148 [[13]](#src-13)) operiert. Jede Anforderung, die ein qualitatives Adjektiv ohne Bindung an ein numerisches Intervall des SI-Einheitensystems enthält, wird durch den Compiler unmittelbar zurückgewiesen:
+
+```math
+\text{Inkorrekt: } \mathrm{FastResponse}(\mathrm{ECU}) \quad \longrightarrow \quad \text{Korrekt: } t_{\mathrm{resp}} \le 150\,\mu\text{s}
+```
+
+Gleichzeitig tritt in realen Regelwerken das Problem deontischer Kollisionen auf: wenn eine internationale Norm eine Operation zwingend untersagt (`PROHIBITION`), während die internen technischen Lieferbedingungen des Werks diese temporär gestatten (`PERMISSION`). Ohne deterministische Konfliktlösung verharrt die Inferenzmaschine im Stillstand.
+
+Zur deterministischen Auflösung von Normenkonflikten wird eine lexikografische Vorzugsordnungsfunktion (*Lexicographical Preference Ordering*) eingeführt:
+
+```math
+\mathrm{Rank}(\mathcal{R}) = \langle \mathrm{Tier}(\mathrm{Source}),\ \mathrm{ModalityRank}(M),\ \mathrm{Specificity}(\mathcal{R}) \rangle
+```
+
+Parameter und Komponenten des lexikografischen Rangs:
+- $`\mathrm{Tier}(\mathrm{Source}) \in \{1, 2, 3\}`$ — hierarchischer Rang der normativen Wissensquelle: $`\mathrm{Tier}(\text{Harmonisierte internationale Norm ISO/IEC}) = 3 \succ \mathrm{Tier}(\text{Unternehmensinterne Werksnorm}) = 2 \succ \mathrm{Tier}(\text{Ingenieurheuristik}) = 1`$;
+- $`\mathrm{ModalityRank}(M) \in \{1, 2\}`$ — imperatives Gewicht der deontischen Modalitätskategorie: $`\mathrm{ModalityRank}(\text{PROHIBITION}) = \mathrm{ModalityRank}(\text{OBLIGATION}) = 2 \succ \mathrm{ModalityRank}(\text{PERMISSION}) = 1`$. Ein striktes Verbot und eine kategorische Verpflichtung besitzen absoluten lexikografischen Vorrang vor einer dispositiven Erlaubnis;
+- $`\mathrm{Specificity}(\mathcal{R}) \in \mathbb{N}`$ — Länge der Kette prädikativer Kontextbedingungen (eine hochspezialisierte Regel sticht eine allgemeine Regel nach dem Rechtsprinzip *Lex Specialis Derogat Legi Generali* aus).
+
+#### 1.2.1. Geschlossener Kreis der ingenieurtechnischen Berechnung des deontischen Rangs
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Beim Aufeinandertreffen zweier zueinander im Widerspruch stehender Regeln $`\mathcal{R}_1 \land \neg \mathcal{R}_2`$ berechnet der Wissens-Arbitrator den Differenzvektor $`\Delta \mathbf{r} = \mathrm{Rank}(\mathcal{R}_1) - \mathrm{Rank}(\mathcal{R}_2)`$. Gilt $`\Delta \mathbf{r} > \mathbf{0}`$, setzt sich Regel $`\mathcal{R}_1`$ deterministisch durch (*Strict Undercut*), während $`\mathcal{R}_2`$ als temporär außer Kraft gesetzt markiert wird; gilt $`\Delta \mathbf{r} = \mathbf{0}`$ (Kollision gleichrangiger Normen), schaltet das System in den Schutzmodus *Fail-Closed* mit dem Urteil `QUALIFIED_CONFLICT` und eskaliert den Konflikt an den Chefarchitekten.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Die Rangberechnung nach obiger Formel erfolgt in deterministischer Zeit $O(1)$ über einer gepackten 64-Bit-Ganzzahl `uint64` (wobei 16 Bit für den Tier, 16 Bit für die Modalität und 32 Bit für die Spezifität reserviert sind). Dies erfordert lediglich 8 Byte Speicher pro Regel und ermöglicht das lineare Sortieren von 100.000 Regeln im SRAM-Speicher des Controllers in weniger als $1{,}8\,\text{ms}$.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Angenommen, die ISO 26262 ASIL D untersagt den Eintritt in den Rekuperationsmodus bei einem Fehler auf dem CAN-Bus ($`\mathrm{Tier} = 3, M = \text{PROHIBITION} \to 2, \mathrm{Specificity} = 4`$), während eine interne Werkstattvorschrift dies zu Kalibrierzwecken gestattet ($`\mathrm{Tier} = 2, M = \text{PERMISSION} \to 1, \mathrm{Specificity} = 2`$). Der lexikografische Rang der Sicherheitsnorm $`\langle 3, 2, 4 \rangle`$ dominiert die Werksvorschrift $`\langle 2, 1, 2 \rangle`$ bereits in der ersten Koordinate ($3 > 2$). Das System blockiert die sicherheitskritische Aktion deterministisch und verhindert eine Havarie.
+
+---
+
+### 1.3. Unteilbarkeit deontischer Quantoren, Multibyte-Unicode-Grenzen und Span-Erhaltung
+
+Im Subsystem zum Parsing technischer Regelwerke (RFC, ISO, AUTOSAR) stellt die Fragilität der Tokenisierung an den Nahtstellen modaler Quantoren und Multibyte-Zeichen der UTF-8-Codierung eine kritische Quelle semantischer Defekte dar. Ein naiver sequenzieller Lexer interpretiert den Eingabestrom als lineare Folge von Lexemen, die durch Leerzeichen oder Zeilenumbrüche getrennt sind. Im industriellen Layout normativer Dokumente treten Zeilenumbrüche jedoch nicht selten unmittelbar innerhalb eines zusammengesetzten modalen Quantors auf:
+
+```text
+The client MUST
+NOT generate a 100-continue header if...
+```
+
+Trifft ein naiver Tokenizer auf das Wort `MUST`, registriert er eine strikte Verpflichtung (`Obligation = MUST`), interpretiert den Zeilenumbruch `\n` fälschlich als Satzende oder Klauselgrenze und verwirft die nachfolgende Negationspartikel `NOT`. Infolgedessen wird ein kategorisches Verbot in sein direktes Gegenteil – eine Erlaubnis oder gar Pflicht – invertiert. In Systemen der funktionalen Sicherheit nach ASIL D führt dies zur fatalen Zerstörung von Sicherheitsperimetern.
+
+Darüber hinaus treten zwei flankierende Systemprobleme auf:
+- **Zerstörung der Start-Byte-Offsets (Start-Offset Obliteration):** Entfernt der Tokenizer bei der Textnormalisierung führende Leer- oder Steuerzeichen, ohne das physische Offset vom Beginn der Eingabedatei beizubehalten, erzeugt das Register der Hardware-Beweiskette (`%ebx` register custody) ein fehlerhaftes Intervall `[byte_start, byte_end]`. Der byteweise SHA-256-Hash dieses Segments stimmt nicht mehr mit der Primärquelle überein, was eine lückenlose Verifikation verunmöglicht.
+- **Toter Winkel des Linters bei Nicht-ASCII-Interpunktion (UTF-8 Boundary Blindness):** Standardmäßige reguläre Ausdrücke mit Wortgrenzen `\b` sind ausschließlich für ASCII konzipiert. Bei der Analyse deutscher oder europäischer Dokumente mit Gedankenstrichen (— U+2014, – U+2013), typografischen Anführungszeichen („ “ « »), Apostrophen (’ U+2019) oder geschützten Leerzeichen versagen `\b`-Grenzen. Verbotene oder toxische Deskriptoren (z. B. *„verboten—“* oder *„gefährlich…“*) werden vom Linter schlicht übersehen.
+
+Zur Gewährleistung vollständiger deontischer und kryptografischer Integrität wurde vom Autor ein obligatorisches Vorab-Falten zusammengesetzter Modalphrasen in **unteilbare atomare deontische Lexeme (Composite Deontic Atoms)** eingeführt:
+
+```math
+\mathrm{Tok}_{\mathrm{MUST\_NOT}} = \mathrm{Regex}\bigl(\text{"(?i)\b(must|shall|is\s+required\s+to)\s*[\r\n\t ]+\s*not\b"}\bigr)
+```
+
+Parameter und Scanregeln:
+- Die Grammatik behandelt das Paar $`\langle\mathrm{MODAL}, \mathrm{NEGATION}\rangle`$ als unteilbares binäres Atom;
+- Beliebige Trennzeichen aus Leerzeichen oder Zeilenumbrüchen innerhalb eines maximalen linguistischen Fensters von $W \le 3$ Token dürfen den deontischen Kontext nicht aufbrechen;
+- Die vollständige Bewahrung der physischen Koordinaten wird durch die Struktur `GroundedToken` garantiert:
+
+```go
+type GroundedToken struct {
+    Lexeme      string
+    ByteStart   uint64 // Absolutes physisches Offset in der Datei
+    ByteEnd     uint64 // Physisches Ende des Lexems
+    Line        uint32
+    Column      uint32
+}
+```
+
+Jegliche Normalisierung des Textes ist **ausschließlich in der virtuellen Repräsentation des Tokens** zulässig; die physischen Offsets `ByteStart` und `ByteEnd` bleiben strikt unverändert.
+
+Zur Beseitigung toter Winkel des Lintings wird ein Scan-Algorithmus über die Runen-Decodierfunktion `utf8.DecodeRuneInString` mit Klassifikation anhand von Unicode-Tabellen (`unicode.IsLetter`, `unicode.IsDigit`, `unicode.IsPunct`, `unicode.IsSpace`) eingesetzt. Dies garantiert 0 % falsch-negative Auslassungen toxischer Begriffe an Nahtstellen mit Nicht-ASCII-Interpunktion.
+
+#### 1.3.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der Span-Integrität
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Wird eine Faltung `MUST_NOT` erkannt, setzt der Parser das Verbots-Flag `InvertDeonticPolarity = true`. Stimmt der berechnete SHA-256-Hash des Byte-Fragments `RawFile[ByteStart:ByteEnd]` nicht mit dem im Wissensbasis-Eintrag hinterlegten Hash überein, wird die Translation der Anforderung sofort mit dem Fehler `ERR_CUSTODY_HASH_MISMATCH` abgebrochen und der Regelstatus in den sicheren Zustand Fail-Closed überführt.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Die Struktur `GroundedToken` belegt exakt 32 Byte Speicher (16 Byte `string`-Header, 8 Byte `ByteStart`, 8 Byte `ByteEnd`, 4 Byte `Line`, 4 Byte `Column`). Ein Puffer für 1.000.000 Token eines umfangreichen Industriestandards beansprucht lediglich 32 MB Arbeitsspeicher, was problemlos im RAM der Ingenieurs-Workstation Platz findet.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Beim Parsen der Zeichenkette `The ECU shall\nnot disable cooling` mit einer Länge von 33 Byte und einem Start-Offset von $14\,200$: Ein naiver Tokenizer erzeugte $`\text{SHALL}`$ mit dem Offset-Bereich $[14\,208, 14\,213]$ (fataler Invarianteffekt: Pflicht zur Abschaltung der Kühlung!). Der Spans erhaltende Tokenizer formiert den atomaren Quantor `shall not` mit dem einheitlichen Intervall $[14\,208, 14\,217]$ und dem berechneten SHA-256-Hash $`H = \text{0x9f8a\dots}`$, wodurch die Überhitzung der Batterie zuverlässig verhindert wird.
+
+---
+
 ## 2. EARS-Schablonen: Strukturelle Standardisierung von Engineering-Anforderungen
 
 Freitext in natürlicher Sprache widersetzt sich direkter logischer Inferenz: Autoren verschachteln Bedingungen, verkomplizieren Satzgefüge und verwischen den Gültigkeitsbereich von Negationen. Versucht ein automatisierter Parser, aus beliebiger Prosa unmittelbar einen abstrakten Syntaxbaum (AST) abzuleiten, übersteigt die Fehlerquote bei der Rollenzuweisung 40 %. Für eine zuverlässige semantische Translation müssen Anforderungen daher zunächst in ein kontrolliertes grammatikalisches Gerüst überführt werden.
@@ -128,6 +211,47 @@ Der Entscheidungsbaum stellt lediglich zwei Fragen: Enthält der Satz eine Vorbe
 
 EARS strukturiert Vorbedingungen und Reaktionen, legt jedoch keine eindeutige formale Semantik fest. Eine zustandsbasierte Anforderung kann je nach Vollverb und zeitlichem Kontext eine permanente Invariante, eine begrenzte Übergangszeit oder eine Eintrittsbedingung erfordern. Abweichungen von den EARS-Mustern indizieren Prüfbedarf, stellen jedoch keinen automatischen Beweis für einen Mangel dar. Formale Vorbedingungen, Maßeinheiten und Ausnahmebehandlungen müssen explizit spezifiziert werden.
 
+### 2.1. Grammatikgesteuerte Decodierung (GBNF) und die neuro-symbolische Gültigkeitsschranke
+
+Bei der Interaktion zwischen Fachingenieur und Expertensystem über natürlichsprachliche Anfragen entsteht eine fundamentale Gefahr der Vermischung zweier sich gegenseitig ausschließender Funktionszonen:
+1. **Relevanzzone (*Relevance Zone*):** heuristische Erfassung natürlicher Sprache, Tippfehlerkorrektur, Synonymanreicherung mittels lokaler kompakter Sprachmodelle (*Small Language Models*, SLM);
+2. **Validitäts- bzw. Gültigkeitszone (*Eligibility Zone*):** deterministische logische Überprüfung normativer Toleranzen, mathematische Berechnung von Degressionen und Sicherheitsbewertungen nach ISO 26262 und DO-178C.
+
+Erhält ein probabilistisches Sprachmodell die Freiheit, logische Ausgangsaussagen unbeschränkt zu generieren, entsteht die Schwachstelle einer unkontrollierten Prädikatinjektion (*Wildcard Prompt Injection*): Eine freie Grammatik erlaubt es dem Modell, willkürliche Entitäten zu erfinden (`trigger ::= [a-zA-Z0-9]+`) und damit die formale Wissensbasis zu umgehen. Mehr noch: Bei erkannter Unvollständigkeit des Wissens beginnt das System, scheinbar plausible, jedoch völlig frei erfundene Pseudoerklärungen für Sperrentscheidungen zu fabrizieren.
+
+Zur Errichtung einer unüberwindbaren neuro-symbolischen Gültigkeitsschranke wird die Sprachgenerierung in der Validitätszone durch den Mechanismus der **grammatikgesteuerten Decodierung (*GBNF Grammar-Constrained Sampling*)** auf Basis eines geschlossenen Lexikons des aktiven Wissenspakets maskiert:
+
+```math
+\mathcal{V}_{\mathrm{valid}} = \mathrm{Entities}(\mathcal{K}) \cup \mathrm{Predicates}(\mathcal{K}) \cup \mathrm{Units}(\mathcal{K}) \cup \mathrm{Keywords}_{\mathrm{EARS}}
+```
+
+Parameter und Bestandteile des geschlossenen Decodierungsraums:
+- $`\mathcal{K}`$ — aktives, verifiziertes Wissenspaket;
+- $`\mathrm{Entities}(\mathcal{K})`$ — endliche Menge verifizierter Komponenten- und Signalbezeichner (`BMS_Relay`, `Cell_Voltage`, `PreCharge_Resistor`);
+- $`\mathrm{Predicates}(\mathcal{K})`$ — Menge formalisierter Relationsprädikate und Toleranzoperatoren (`exceeds`, `is_equal`, `activates`);
+- $`\mathrm{Units}(\mathcal{K})`$ — standardisierte physikalische Maßeinheiten des SI-Systems (`ms`, `V`, `A`, `deg_C`);
+- $`\mathrm{Keywords}_{\mathrm{EARS}} = \{\text{WHEN}, \text{WHILE}, \text{IF}, \text{THEN}, \text{WHERE}, \text{THE}, \text{SHALL}, \text{SHALL NOT}\}`$ — reservierte normative Schlüsselwörter der EARS-Syntax.
+
+Während der autoregressiven Auswahl jedes Tokens legt der Syntax-Decoder eine binäre Maske über die Ausgabeschicht der Modell-Logits:
+
+```math
+\mathrm{Logit}'(w) = \begin{cases} \mathrm{Logit}(w), & \text{wenn } w \in \mathcal{V}_{\mathrm{valid}} \text{ und der Übergang im GBNF-Automaten zulässig ist}, \\ -\infty, & \text{sonst.} \end{cases}
+```
+
+Jeder Versuch, ein Token außerhalb des Lexikons oder entgegen den Übergangsregeln der EARS-Grammatik zu generieren, wird mit einer Wahrscheinlichkeit von null ($`P(w) = 0`$) deterministisch abgeschnitten.
+
+Führt die Verifikation zu einem Negativurteil (`REFUSAL`), formuliert das System die Begründung keineswegs über freie Textgenerierung, sondern durch direkten Durchlauf des Beweisgraphen (kontrafaktische Erklärung): Es benennt exakt die verletzte Vorbedingung (z. B. $`T_{\mathrm{sensor}} = 135^\circ\text{C} > T_{\mathrm{max}} = 125^\circ\text{C}`$), zitiert den normativen Textabschnitt mit physischem Byte-Offset und generiert die minimale Korrekturmaßnahme in strikter deontischer Form.
+
+#### 2.1.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der Grammatikmaskierung
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Beim Laden der Regelbasis kompiliert der Syntax-Compiler das GBNF-Skript in einen deterministischen endlichen Automaten (DFA). Trifft eine Benutzeranfrage ein, wird die Eingabe auf eine der 4 kanonischen EARS-Schablonen normalisiert. Versucht das Modell, ein nach dem Automatenzustand unzulässiges Token auszuwählen, stoppt das semantische Gateway die Generierung unverzüglich mit dem Fehler `EARS_SYNTAX_REJECT`, ohne Rechenressourcen von GPU oder NPU für die weitere Kontextentfaltung zu verschwenden.
+2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
+   Die Bitmasken-Tabelle für ein Lexikon mit $`\lvert \mathcal{V}_{\mathrm{valid}} \rvert = 4096`$ Token belegt exakt 512 Byte (64 Wörter zu je `uint64`). Dies passt garantiert vollständig in den ultraschnellen L1-Befehlscache ($32\,\text{KB}$) eines NPU-Beschleunigers oder CPU-Kerns, wodurch die Maskierung in einem einzigen Taktzyklus ($< 1\,\text{ns}$) angewendet wird.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Versucht das Sprachmodell, einen nicht existierenden Parameter `battery_fluid_viscosity` zu generieren (nicht im Vokabular $`\mathcal{V}_{\mathrm{valid}}`$ von 1850 Entitäten enthalten), wird der Logit des ersten Worttokens sofort auf $-\infty$ maskiert. Das alternative valide Token `cell_temperature` mit einem Ausgangs-Logit von $14{,}2$ erhält die resultierende Wahrscheinlichkeit von $1.00$. Die Anfrage wird eindeutig in die EARS-Form *„If cell temperature exceeds 65 deg_C, then BMS shall open main relay“* überführt – unter vollständiger Eliminierung jeglichen Halluzinationsrisikos.
+
+---
+
 ## 3. Mathematische Formalisierung: Von Schablonen zur formalen Logik
 
 Eine EARS-Schablone strukturiert den Text, versetzt Maschinen jedoch noch nicht in die Lage, Anforderungen automatisiert zu verifizieren. Hierzu muss die Schablone in eine formale Zielsprache übersetzt werden: Prädikatenlogik erster Stufe, temporale Logik oder das standardisierte SMT-LIB-Format für automatische Theorembeweiser und Solver.
@@ -166,15 +290,15 @@ In der Praxis dominieren zwei Klassen temporallogischer Eigenschaften. Eine **Si
 
 Parameter und physikalische Dimensionen:
 
-- $\mathit{Current} \in \mathbb{R}_{\ge 0}$ ist der gemessene physikalische Laststrom des Leistungspfads in Ampere ($\text{A}$);
-- $`I_{\max} \in \mathbb{R}_{> 0}`$ ist der thermisch zulässige Abschaltstrom in Ampere ($\text{A}$), dimensioniert nach der Stromtragfähigkeit der Stromschiene (z. B. $I_{\max} = 450\,\text{A}$);
+- $`\mathit{Current} \in \mathbb{R}_{\ge 0}`$ ist der gemessene physikalische Laststrom des Leistungspfads in Ampere ($\text{A}$);
+- $`I_{\max} \in \mathbb{R}_{> 0}`$ ist der thermisch zulässige Abschaltstrom in Ampere ($\text{A}$), dimensioniert nach der Stromtragfähigkeit der Stromschiene (z. B. $`I_{\max} = 450\,\text{A}`$);
 - $\mathit{ContactorState} \in \{\mathit{OPEN}, \mathit{CLOSED}\}$ repräsentiert den diskreten Schaltzustand des Hochvoltschützes;
 - $\Box$ ist der LTL-Temporaloperator „immer“, der die Gültigkeit der Formel für alle Zeitschritte $t \in [0, \infty)$ einfordert;
 - $\neg$ und $\land$ bezeichnen die klassischen logischen Operatoren für Negation und Konjunktion.
 
 Praktische Anwendung und Engineering-Entscheidungen:
 - **Hardwarenahes Monitoring:** Diese Bedingung wird durch einen dedizierten Hardware-Supervisor mit einer Abtastrate von mindestens 10 kHz autark vom Lastzustand des Haupt-Mikrocontrollers überwacht.
-- **Fail-Safe-Aktion:** Wird $\mathit{Current} > I_{\max}$ bei geschlossenem Schütz ($\mathit{ContactorState} = \mathit{CLOSED}$) detektiert, löst eine Hardwareschaltung innerhalb von $`t_{\mathrm{reaction}} \le 2\,\text{ms}`$ eine pyrotechnische Trennstelle (Pyro-Fuse) aus und schaltet den Hochvoltpfad galvanisch spannungsfrei.
+- **Fail-Safe-Aktion:** Wird $`\mathit{Current} > I_{\max}`$ bei geschlossenem Schütz ($\mathit{ContactorState} = \mathit{CLOSED}$) detektiert, löst eine Hardwareschaltung innerhalb von $`t_{\mathrm{reaction}} \le 2\,\text{ms}`$ eine pyrotechnische Trennstelle (Pyro-Fuse) aus und schaltet den Hochvoltpfad galvanisch spannungsfrei.
 
 Die **beschränkte Lebendigkeit (*Bounded Liveness*)** fordert dagegen, dass das System nach Auftreten eines Fehlers garantiert innerhalb eines definierten Zeitintervalls in den sicheren Zustand übergeht:
 
@@ -186,7 +310,7 @@ Parameter und zeitliche Toleranzen:
 
 - $\mathit{FaultTriggered} \in \{\text{True}, \text{False}\}$ ist ein diskretes Fehlerflag (z. B. Zellübertemperatur $> 60\,^\circ\text{C}$ oder CAN-Kommunikationsausfall);
 - $\mathit{SafeStateAchieved} \in \{\text{True}, \text{False}\}$ signalisiert das verifizierte Erreichen des sicheren Zustands (Schütze geöffnet, Traktionspfad spannungsfrei);
-- $\tau \in \mathbb{R}_{> 0}$ ist die maximal zulässige Reaktionszeit in Millisekunden ($\text{ms}$), die in Sicherheitsnormen durch das Fehlertoleranzzeitintervall (*Fault Tolerant Time Interval*, FTTI) strikt limitiert ist: $`\tau \le \text{FTTI} - \Delta t_{\mathrm{margin}}`$ (z. B. $\tau = 50\,\text{ms}$ bei $\text{FTTI} = 100\,\text{ms}$);
+- $`\tau \in \mathbb{R}_{> 0}`$ ist die maximal zulässige Reaktionszeit in Millisekunden ($\text{ms}$), die in Sicherheitsnormen durch das Fehlertoleranzzeitintervall (*Fault Tolerant Time Interval*, FTTI) strikt limitiert ist: $`\tau \le \text{FTTI} - \Delta t_{\mathrm{margin}}`$ (z. B. $\tau = 50\,\text{ms}$ bei $\text{FTTI} = 100\,\text{ms}$);
 - $`\Diamond_{\le\tau}`$ ist der metrische MTL-Operator „irgendwann innerhalb der nächsten $\tau$ Zeiteinheiten“.
 
 Praktische Anwendung und Engineering-Entscheidungen:
@@ -690,11 +814,14 @@ Das Ergebnis dieser Zwischenrepräsentation ist ein verifizierbarer Formelkandid
 
 ## Fazit
 
-Kandidaten für normative Anforderungen werden anhand der Konventionen und des Kontexts des Quelldokuments identifiziert, in eine typisierte Zwischenrepräsentation überführt, auditiert und erst anschließend kompiliert. EARS standardisiert die Satzform, erzwingt jedoch keine eindeutige logische Übersetzung. Das Audit deckt Klärungsbedarf für den Autor auf; der Solver prüft die formale Widerspruchsfreiheit der gewählten Modellierung. Unbekannte Felder und ambige zeitliche Wirkungsbereiche blockieren die Übersetzung, anstatt durch Mutmaßungen gefüllt zu werden.
+1. **Abgrenzungskriterien und Modalkonventionen:** Kandidaten für normative Anforderungen werden anhand der Konventionen und des Kontexts des Quelldokuments (RFC 2119, ISO/IEC-Direktiven) identifiziert, in eine typisierte Zwischenrepräsentation überführt, auditiert und erst anschließend kompiliert. Unbekannte Felder und ambige zeitliche Wirkungsbereiche blockieren die Übersetzung, anstatt durch Mutmaßungen gefüllt zu werden.
+2. **Semantisches Linting und deontische Vorzugsordnung:** Der Linter für semantische Mehrdeutigkeit sperrt toxische, vage Deskriptoren und erzwingt physikalische SI-Toleranzen, während die lexikografische Vorzugsordnung $`\mathrm{Rank}(\mathcal{R})`$ normative Normenkollisionen deterministisch zugunsten höherrangiger Quellen sowie imperativer Verbote und Gebote auflöst ($`\text{PROHIBITION} \succ \text{PERMISSION}`$).
+3. **Unteilbarkeit modaler Quantoren und Span-Erhaltung:** Der Einsatz zusammengesetzter deontischer Atome (`MUST NOT`) und eines Spans erhaltenden Tokenizers `GroundedToken` eliminiert das Risiko fataler Polaritätsinversionen von Verboten durch Zeilenumbrüche, sichert die byteweise SHA-256-Integrität der Beweiskette zu Primärquellen und schließt tote Winkel an Nicht-ASCII-Interpunktionsgrenzen via UTF-8-Analyse aus.
+4. **Neuro-symbolische Gültigkeitsschranke (GBNF):** Die grammatikgesteuerte Decodierung auf Basis eines geschlossenen Lexikons $`\mathcal{V}_{\mathrm{valid}}`$ und der EARS-Syntax isoliert die heuristische Relevanzzone strikt von der beweisbaren Validitätszone, maskiert unzulässige Logits mit dem Wert $-\infty$ und liefert direkte kontrafaktische Erklärungen für Ablehnungen über den Beweisgraphen ohne generative Halluzinationen.
+5. **Synchronisation der Formalisierung mit SMT-Solvern:** Die Überführung strukturierter EARS-Anforderungen in Prädikatenlogik erster Stufe, LTL und SMT-LIB ermöglicht das automatisierte Aufdecken verborgener Widersprüche, Deadlocks und fehlender Zweige mittels Z3 noch vor dem Verfassen der ersten Codezeile.
+6. **Praktische Verifizierbarkeit der Pipeline:** Eine deterministische Go-Pipeline gewährleistet ein lückenloses End-to-End-Audit von Anforderungen, validiert die Wahrung von Trigger- und Reaktionsfristen sowie Sicherheitsinvarianten und erstellt prüffähige Auditberichte mit direkter Rückverfolgbarkeit zu den Quelltext-Bytes.
 
-Synthetische Tests des Go-Programms stellen sicher, dass eine Frist aus der Vorbedingung nicht als Reaktionsfrist fehlinterpretiert wird, eine unbekannte Konvention die Prüfung nicht unbemerkt passiert und MUST NOT stets als striktes Verbot interpretiert wird. Das SMT-LIB-Beispiel demonstriert die Erkennung von Widersprüchen sowie deren Bereinigung; das Ausführungsergebnis stellt jedoch keine Zulassung der Traktionsbatterie dar. Das Bestehen der Parser-Heuristiken und die Erfüllbarkeit einer Formel ersetzen niemals die fachliche Freigabe durch Systemingenieure.
-
-Auch die Grenzen der Methodik sind klar abgesteckt. Reguläre Ausdrücke erfassen ausschließlich kanonische Muster; reale Spezifikationen erfordern daher syntaktisches Parsing und strukturierte Kandidatenvorschläge kleiner Sprachmodelle unter deterministischer Validierung. Der Solver verifiziert lediglich die formalisierten Anteile innerhalb des durch den Ingenieur modellierten Rahmens. [Kapitel 15](ch15-knowledge-extraction-and-kb-construction.md) setzt diesen Pfad fort und zeigt, wie geprüfte Anforderungen nahtlos in die Wissensbasis integriert werden.
+---
 
 ## Fragen zur Selbstprüfung
 
@@ -703,6 +830,11 @@ Auch die Grenzen der Methodik sind klar abgesteckt. Reguläre Ausdrücke erfasse
 3. Welche EARS-Schablone eignet sich für die Anforderung „Im Ladebetrieb darf der Strom 20 A nicht überschreiten“ und welche logische Formel entspricht ihr?
 4. Was bedeutet die Solver-Antwort `unsat` zusammen mit dem *Unsat Core* im Batteriebeispiel und warum beweist die Solver-Antwort allein noch nicht die Korrektheit der Anforderungen?
 5. Warum ist eine Anforderung ohne Alternativzweig bei Relaissteuerungen gefährlich und wie löst eine Schalthysterese dieses Problem?
+6. Wie blockiert der Linter für semantische Mehrdeutigkeit vage Adjektive und wie löst die lexikografische Vorzugsordnung Kollisionen zwischen Normen unterschiedlichen Rangs?
+7. Warum kann ein Zeilenumbruch zwischen `MUST` und `NOT` zu einer katastrophalen Polaritätsinversion der Anforderung in ASIL-D-Systemen führen und wie sichern `GroundedToken`-Strukturen die Beweiskette (Custody)?
+8. Auf welche Weise errichten grammatikgesteuerte Decodierung (GBNF) und das geschlossene Lexikon $`\mathcal{V}_{\mathrm{valid}}`$ eine undurchdringliche Schranke zwischen der heuristischen Relevanzzone und der symbolischen Validitätszone?
+
+---
 
 ## Glossar
 
@@ -723,19 +855,28 @@ Auch die Grenzen der Methodik sind klar abgesteckt. Reguläre Ausdrücke erfasse
 | Hysterese | *hysteresis* | Unterschiedliche Schwellwerte für Ein- und Ausschalten zur Vermeidung von hochfrequentem Flattern |
 | Anforderungs-Baseline | *requirements baseline* | Freigegebener Stand von Anforderungen als verbindliche Basis für Entwicklung und Traceability |
 | Fehlertoleranzzeitintervall | *fault tolerant time interval* | Kürzeste Zeitspanne vom Auftreten eines Fehlers bis zum Eintritt eines potenziellen Schadens ohne Sicherheitsmaßnahme |
+| Linter für semantische Mehrdeutigkeit | *ambiguity linter* | Automatisierter Anforderungsfilter auf Basis eines Lexikons toxischer Deskriptoren und relativer Adjektive |
+| Lexikografische Vorzugsordnung | *lexicographical preference ordering* | Mathematischer Formalismus zur deterministischen Auflösung deontischer Kollisionen nach Quellen- und Modalitätsrängen |
+| Zusammengesetztes deontisches Atom | *composite deontic atom* | Unteilbare lexikalische Einheit eines Verbotsquantors (z. B. `MUST NOT`), resistent gegen Zeilenumbrüche |
+| Spans erhaltender Tokenizer | *span-preserving tokenizer* | Lexikalischer Scanner, der absolute physische Byte-Offsets der Primärquelle zur Integritätssicherung des Custody-Hashes fixiert |
+| Grammatikgesteuerte Decodierung GBNF | *GBNF grammar-constrained decoding* | Mechanismus zur dynamischen Maskierung von Sprachmodell-Logits anhand einer kontextfreien EARS-Grammatik |
+
+---
 
 ## Abkürzungen
 
 | Abkürzung | Vollständige Bezeichnung | Bedeutung |
 |---|---|---|
-| IR | Intermediate Representation | Typisierte intermediäre Repräsentation einer Anforderung |
 | ASIL | Automotive Safety Integrity Level | Sicherheitsintegritätslevel für Kraftfahrzeuge nach ISO 26262 |
+| AST | Abstract Syntax Tree | Abstrakter Syntaxbaum eines Programms oder einer Anforderung |
 | BMS | Battery Management System | Batteriemanagementsystem |
 | CAN | Controller Area Network | Feldbus zur Kommunikation zwischen Steuergeräten im Fahrzeug |
 | CRC | Cyclic Redundancy Check | Zyklische Redundanzprüfung (Prüfsumme) |
 | EARS | Easy Approach to Requirements Syntax | Kontrollierte Grammatikschablonen für Anforderungen |
 | ECU | Electronic Control Unit | Elektronisches Steuergerät |
 | FTTI | Fault Tolerant Time Interval | Fehlertoleranzzeitintervall nach ISO 26262 |
+| GBNF | GGML / GGUF Backus-Naur Form | Kontextfreies Grammatikformat zur Einschränkung des Token-Abtastbereichs |
+| IR | Intermediate Representation | Typisierte intermediäre Repräsentation einer Anforderung |
 | LLM | Large Language Model | Großes Sprachmodell |
 | LTL | Linear Temporal Logic | Lineare temporale Logik |
 | MTL | Metric Temporal Logic | Metrische temporale Logik |
@@ -743,9 +884,13 @@ Auch die Grenzen der Methodik sind klar abgesteckt. Reguläre Ausdrücke erfasse
 | ReqIF | Requirements Interchange Format | Standardisiertes XML-Austauschformat für Anforderungen |
 | RFC | Request for Comments | Dokumentenreihe von Standards und Richtlinien der Internet Engineering Task Force |
 | SHA-256 | Secure Hash Algorithm, 256 bits | Kryptografische Hashfunktion |
+| SI | Système International d'Unités | Internationales Einheitensystem für physikalische Größen |
+| SLM | Small Language Model | Kompaktes spezialisiertes Sprachmodell für das lokale Deployment |
 | SMT | Satisfiability Modulo Theories | Erfüllbarkeit modulo Theorien |
 | STL | Signal Temporal Logic | Signal-Temporallogik für kontinuierliche Signale |
 | VCU | Vehicle Control Unit | Übergeordnetes Fahrzeugsteuergerät |
+
+---
 
 ## Literaturverzeichnis
 
@@ -766,6 +911,8 @@ Auch die Grenzen der Methodik sind klar abgesteckt. Reguläre Ausdrücke erfasse
 15. <a id="src-15"></a>ISO. [*ISO 26262-1:2018. Road vehicles: Functional safety: Part 1: Vocabulary*](https://www.iso.org/standard/68383.html). 2018.
 16. <a id="src-16"></a>Mitwirkende an Pint. [*Non-Multiplicative Units*](https://pint.readthedocs.io/en/stable/user/nonmult.html). Dokumentation zu Temperaturskalen und Offsets.
 17. <a id="src-17"></a>Mitwirkende an cvc5. [*cvc5 Documentation*](https://cvc5.github.io/docs/latest/). Dokumentation des Solvers und der unterstützten Logiken.
+18. <a id="src-18"></a>G. Gerganov et al. [*GBNF (GGML BNF) Grammar Specification and Constrained Sampling*](https://github.com/ggerganov/llama.cpp/blob/master/grammars/README.md). llama.cpp repository, 2023.
+19. <a id="src-19"></a>B. T. Willard, R. Louf. [*Efficient Guided Generation for Large Language Models*](https://arxiv.org/abs/2307.09702). arXiv:2307.09702, 2023.
 
 ---
 
