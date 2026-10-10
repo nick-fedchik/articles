@@ -14,7 +14,7 @@
 
 Man stelle sich den eingebetteten Steuerungsrechner eines autonomen Fahrgestells oder eines robotischen Manipulators vor (Infineon AURIX TC397, ARM Cortex-R52 oder den Edge-Beschleuniger NVIDIA Jetson AGX Orin). Das Expertensystem muss die normative Sicherheitsarbitrierung in einer harten Echtzeitschleife mit einem Fehlertoleranzzeitintervall FTTI von höchstens 20–50 Millisekunden bewältigen (ISO 26262 ASIL D). Speichert das Expertensystem seine Wissensbasis in traditionellen Formaten (JSON, SQLite oder einem Client-Server-DBMS), erfordert ein Kaltstart 1,5–3 Sekunden allein für das Parsen und Allozieren von Millionen Objekten auf dem Heap. Zudem fügt eine unvorhersehbare Garbage-Collection-Pause (*Stop-the-World*) im ungünstigsten Moment eine Latenz von 100–250 ms hinzu. In der Folge wird das FTTI-Zeitbudget gravierend verletzt, ein kritischer Fehlerzustand des Systems wird nicht rechtzeitig erkannt, und der Aktor verliert die Steuerung. Für sicherheitskritische Systeme stellen Zero-Deserialization und speicherallokationsfreier Wissenszugriff keine „verfrühte Optimierung“ dar, sondern eine fundamentale Anforderung funktionaler Sicherheit.
 
-Dieses Kapitel widmet sich der ingenieurtechnischen Herausforderung des Übergangs von einem Prototyp-Expertensystem mit wenigen tausend Regeln zu einer industriellen Wissensbasis im Unternehmensmaßstab: Zehntausende Spezifikationen, Hunderttausende normative Fakten und Mikrosekunden-Reaktionszeiten in eingebetteten Systemen. Es beschreibt eine Eigenentwicklung des Autors: das unveränderliche, selbstbeschreibende Wissenspaket (**Knowledge Pack**) und das Binärformat seines Index **ZNAV-INDEX v2** auf Basis des Systemaufrufs `mmap(2)`. Zunächst erläutert das Kapitel Zusammensetzung und Lebenszyklus des Pakets, die Unterschiede zweier Formatgenerationen sowie die mathematischen Anwendungsgrenzen der Zero-Deserialization, einschließlich des atomaren Hot-Swaps von Paketen nach dem RCU-Muster (Read-Copy-Update) zur Verhinderung von `SIGBUS`-Abstürzen ohne Systemstillstand. Im weiteren Verlauf werden die Algorithmen des verlustfreien invertierten Fakten-Clusterings, der deterministische Multithread-Build (`--concurrency`), die Sicherheit der Wissenslieferkette nach den Standards SLSA v1.0 Level 4 und NIST SP 800-218 (SSDF), die neuro-symbolische Extraktions-Pipeline mit Byte-Level-Zulassungsgateway, die Metrik der Wissensdichte ($`\mathrm{KDI}`$) und das mathematisch sichere Sharding des Pakets dargelegt, welches das Schweigen eines einzelnen Shards strikt von der Nichtexistenz eines Fakts im Gesamtsystem unterscheidet.
+Dieses Kapitel widmet sich der ingenieurtechnischen Herausforderung des Übergangs von einem Prototyp-Expertensystem mit wenigen tausend Regeln zu einer industriellen Wissensbasis im Unternehmensmaßstab: Zehntausende Spezifikationen, Hunderttausende normative Fakten und Mikrosekunden-Reaktionszeiten in eingebetteten Systemen. Es beschreibt eine Eigenentwicklung des Autors: das unveränderliche, selbstbeschreibende Wissenspaket (**Knowledge Pack**) und das Binärformat seines Index **ZNAV-INDEX v2** auf Basis des Systemaufrufs `mmap(2)`. Zunächst erläutert das Kapitel Zusammensetzung und Lebenszyklus des Pakets, die Unterschiede zweier Formatgenerationen sowie die mathematischen Anwendungsgrenzen der Zero-Deserialization, einschließlich des atomaren Hot-Swaps von Paketen nach dem RCU-Muster (Read-Copy-Update) zur Verhinderung von `SIGBUS`-Abstürzen ohne Systemstillstand. Im weiteren Verlauf werden die Algorithmen des verlustfreien invertierten Fakten-Clusterings, der deterministische Multithread-Build (`--concurrency`), die hermetische Kristallisation von ZKP4-Containern mit bitgenauer Reproduzierbarkeit (Bit-for-Bit Reproducibility), explizites Null-Padding und die Merkle-Wurzel der Integrität, die Sicherheit der Wissenslieferkette nach den Standards SLSA v1.0 Level 4 und NIST SP 800-218 (SSDF), die neuro-symbolische Extraktions-Pipeline mit Byte-Level-Zulassungsgateway, die Metrik der Wissensdichte ($`\mathrm{KDI}`$) und das mathematisch sichere Sharding des Pakets dargelegt, welches das Schweigen eines einzelnen Shards strikt von der Nichtexistenz eines Fakts im Gesamtsystem unterscheidet.
 
 ---
 
@@ -1058,6 +1058,95 @@ T_{\mathrm{verify}} = \frac{V_{\mathrm{pack}}}{B_{\mathrm{sha}}} + T_{\mathrm{si
    wobei $`V_{\mathrm{pack}}`$ die Paketgröße in Bytes darstellt, $`B_{\mathrm{sha}}`$ den Durchsatz der kryptographischen Hashing-Pipeline und $`T_{\mathrm{sig}}`$ die Signaturprüfdauer. Für ein Paket von $`V_{\mathrm{pack}} = 500\,\text{MB}`$ beträgt die gesamte Attestatsprüfung lediglich $208\,\text{ms}$, was sich problemlos in den Hintergrundzyklus ohne Beeinträchtigung laufender Abfragen einfügt.
 3. **Praktisches Zahlenbeispiel (Worked Numerical Example):**
    Ein Edge-Knoten einer Eisenbahn-Signaltechnik empfängt ein aktualisiertes Wissenspaket für Zugfolgeabstände mit einem Volumen von $`V_{\mathrm{pack}} = 120\,\text{MB}`$. Das Gateway evaluiert das Attestat: Die Signatur $`\sigma_{\mathcal{A}}`$ auf Curve25519 wird in $42\,\mu\text{s}$ validiert. Der Paket-Hash wird hardwarebeschleunigt ermittelt: $`T_{\mathrm{hash}} = 120\,\text{MB} / (2{,}4\,\text{GB/s}) = 50\,\text{ms}`$. Der Hash stimmt mit $`\mathcal{A}.\mathrm{digest}`$ (`0x9f4a...b2c1`) überein. Alle 18 referenzierten IEC/EN-Normen entsprechen ihren Soll-Prüfsummen, und das Flag $`\mathcal{A}.\mathrm{hermetic} = \mathrm{True}`$ ist gesetzt. Es folgt $`\mathrm{Admission}(\mathcal{P}) = 1`$. Das System autorisiert den RCU-Zeigertausch. Wäre auch nur ein einziges Byte im Binärindex manipuliert worden (z. B. ein geänderter Geschwindigkeitsschwellenwert in einer Bremskurvenregel), würde $`\mathrm{SHA256}(\mathcal{P}) \ne \mathcal{A}.\mathrm{digest} \implies \mathrm{Admission}(\mathcal{P}) = 0`$ greifen; das Paket würde nach $50{,}042\,\text{ms}$ verworfen, womit ein unbefugter Eingriff in das Zugsicherungssystem mathematisch ausgeschlossen ist.
+
+### 6.3. Hermetische Wissenskristallisation von Wissenscontainern (ZKP4) und bitgenaue Reproduzierbarkeit (Bit-for-Bit Reproducibility)
+
+Der Übergang von textuellen normativen Quellen zu kompilierten binären ZKP4-Paketen mit direktem Memory Mapping via `mmap(2)` stellt eine kompromisslose Anforderung an die kryptographische Zuverlässigkeit: **die bitgenaue Reproduzierbarkeit (Bit-for-Bit Reproducibility)**. In sicherheitskritischen Systemen, in denen ein dedizierter Hardware-Verifikationskern (EVM oder EPU) die byteweise Authentizität normativer Wissens-Snapshots über ein spezielles Attestierungsregister `%ebx` abgleicht, zerstört bereits die Modifikation eines einzigen Bits im generierten `.kp`-Container die gesamte Vertrauenskette. Kompilieren zwei unabhängige Build-Knoten denselben Eingangsstandard (ISO oder RFC) und resultieren daraus Binärpakete mit voneinander abweichenden SHA-256-Prüfsummen, blockiert das Laufzeit-Zulassungsgateway das Laden unweigerlich mit dem Notstopp-Verdikt `HALT_REFUSE (0x403)`.
+
+Die Ursache derartiger Diskrepanzen liegt nicht in Fehlern des logischen Schließens, sondern im verdeckten Nichtdeterminismus von Systemwerkzeugen und Programmiersprachen:
+1. **Nichtdeterministische Traversierung von assoziativen Arrays (Non-Deterministic Map Traversal):** Moderne Programmiersprachen (insbesondere Go) randomisieren die Iterationsreihenfolge über `map`-Strukturen gezielt zur Abwehr von HashDoS-Angriffen. Werden Symboltabellen, Prädikatslisten oder Regelsektionen in der Reihenfolge eines solchen Iterators in den Binärstrom serialisiert, erzeugt jeder Compiler-Lauf ein anderes Byte-Layout.
+2. **Verschleppung von Metadaten der Build-Umgebung (Host Path & Timestamp Pollution):** Die Einbettung absoluter Host-Dateipfade (`/home/builder/...`), Zeitstempel des aktuellen Build-Laufs oder variabler Compiler-Versionstags in Sektions-Header.
+3. **Nichtinitialisierter Datenmüll in Ausrichtungs-Zwischenräumen (Dirty Padding):** Das Ausrichten von Datenstrukturen an 64-Byte-Cacheline-Grenzen mittels Dateizeiger-Verschiebung (`fseek` oder `lseek`) ohne explizites Schreiben von Nullen hinterlässt uninitialisierte Restbytes aus dem Arbeitsspeicher des Hosts und erzeugt zufälliges binäres Rauschen.
+
+Zur Eliminierung dieser Defekte wurde vom Autor der Standard der **hermetischen Wissenskristallisation (Hermetic Knowledge Crystallization Pipeline)** konzipiert, wie er im nachfolgenden Diagramm dargestellt ist.
+
+```mermaid
+flowchart TD
+    accTitle: Hermetische Wissenskristallisations-Pipeline für binäre Wissenscontainer
+    accDescr: Vier aufeinanderfolgende Schritte zur Beseitigung von Build-Nichtdeterminismus von der Textnormalisierung bis zur Erzeugung eines bitgenau reproduzierbaren ZKP4-Containers.
+
+    Doc["<b>Technisches Eingangsdokument</b><br/>RFC / IP-XACT / PDF-Norm"] --> S1["<b>1. Normalisierung der Zeilenenden</b><br/>Erzwungenes LF (\n), vollständiges Entfernen von CRLF"]
+    S1 --> S2["<b>2. Kanonische Tabellensortierung</b><br/>Lexikographische Ordnung nach SHA-256-ID"]
+    S2 --> S3["<b>3. Isolation der Build-Umgebung</b><br/>Compiler-Flag -trimpath, Fixierung von SOURCE_DATE_EPOCH"]
+    S3 --> S4["<b>4. Nullung des Alignments (0x00)</b><br/>Striktes 64-Byte-Zero-Padding ohne fseek-Lücken"]
+    S4 --> ZKP["<b>Deterministischer Binärcontainer .kp</b><br/>Bitgenaue Reproduzierbarkeit (ZKP4)"]
+
+    classDef in fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef step fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef out fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    class Doc in;
+    class S1,S2,S3,S4 step;
+    class ZKP out;
+```
+
+#### 6.3.1. Vierstufige hermetische Wissenskristallisations-Pipeline
+
+Die hermetische Kristallisations-Pipeline eliminiert jegliche Umgebungsentropie über vier sequentielle Phasen:
+1. **Normalisierung von Zeilenenden und Encodings:** Sämtliche normativen Eingangstexte werden in die Unicode-Normalform NFC überführt, unter strikter Vereinheitlichung der Zeilenumbrüche auf das einzelne Steuerzeichen LF (`\n`, `0x0A`). Wagenrückläufe CR (`\r`, `0x0D`) sowie Byte-Order-Marks (BOM) werden vollständig entfernt.
+2. **Kanonische lexikographische Sortierung der Datenstrukturen:** Jede Sammlung von Prädikaten, Symbolen oder ingenieurtechnischen Wissensatomen wird vor der binären Serialisierung nach ihrem primären kryptographischen Schlüssel sortiert:
+
+```math
+\forall i < j: \quad \mathrm{Hash}(A_i) <_{\mathrm{lex}} \mathrm{Hash}(A_j)
+```
+
+wobei $`\mathrm{Hash}(A)`$ den 256-Bit-Kryptohash des Wissensatoms bezeichnet und $<_{\mathrm{lex}}$ die Relation der strikten byteweisen lexikographischen Ordnung darstellt.
+3. **Hermetische Compiler-Isolation:** Der Build-Prozess wird unter Verwendung des Flags `-trimpath` ausgeführt, wodurch lokale Dateipfade des Entwicklers aus den Symboltabellen getilgt werden. Sämtliche Zeitstempel werden durch eine deterministische Epoche ersetzt, die über den Standard `SOURCE_DATE_EPOCH` definiert ist (Unix-Zeit des letzten signierten Commits des Normen-Repositories).
+4. **Erzwungenes Auffüllen von Ausrichtungsintervallen (Strict Zero-Padding):** Das Alignment von Tabellen und Posting-Listen an den 64-Byte-Cacheline-Grenzen des Prozessors erfolgt ausnahmslos durch das explizite Schreiben von Null-Bytes (`0x00`).
+
+#### 6.3.2. Kanonische Serialisierung, Null-Padding und Merkle-Wurzel der Container-Integrität
+
+Die Berechnung der Anzahl an Auffüllbytes bis zur nächsten 64-Byte-Cacheline-Grenze erfolgt nach der Formel:
+
+```math
+\mathrm{PadBytes} = (64 - (\mathrm{CurrentOffset} \bmod 64)) \bmod 64
+```
+
+wobei:
+- $`\mathrm{CurrentOffset} \in \mathbb{N}_0`$ — die aktuelle byteweise Schreibposition innerhalb des Binärcontainers;
+- $`\mathrm{PadBytes} \in [0, 63]`$ — die exakte Anzahl an Null-Bytes (`0x00`), die zwingend vor Beginn der nachfolgenden Sektion in den Bytestrom geschrieben werden müssen. Das Überspringen von Adressbereichen ohne explizites Schreiben (`fseek`, `seek`) ist strikt untersagt, um ein Durchsickern uninitialisierten Speicherzustands (*Dirty Padding*) auszuschließen.
+
+Zum Schutz des mehrteiligen ZKP4-Containers enthält der Paket-Header eine hierarchische Merkle-Wurzel der Integrität (*Container Integrity Root*), welche die diskreten Prüfsummen aller vier strukturellen Sektionen bindet:
+
+```math
+\mathrm{RootHash} = H(H(\mathrm{Header}) \mathbin{\Vert} H(\mathrm{Symbols}) \mathbin{\Vert} H(\mathrm{Atoms}) \mathbin{\Vert} H(\mathrm{Slices}))
+```
+
+wobei:
+- $H(\cdot)$ — die kryptographische Hashfunktion SHA-256;
+- $\mathbin{\Vert}$ — die binäre Konkatenation der 32-Byte-Digests;
+- $\mathrm{Header}$, $\mathrm{Symbols}$, $\mathrm{Atoms}$, $\mathrm{Slices}$ — die entsprechenden Binärsegmente des kompilierten ZKP4-Containers;
+- $\mathrm{RootHash}$ — die resultierende 256-Bit-Wurzel des Integritätsbaums, die in das unveränderliche Manifest eingetragen und mittels digitaler Ed25519-Signatur beglaubigt wird.
+
+#### 6.3.3. Geschlossener Kreis der ingenieurtechnischen Berechnung der bitgenauen Reproduzierbarkeit
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   - Vor dem Einblenden des Containers in den Adressraum via `mmap(2)` berechnet der Lader $\mathrm{RootHash}$ von der Festplatte und vergleicht den Wert mit dem signierten Eintrag im Manifest sowie dem Hardware-Zulassungsregister `%ebx`.
+   - Gilt $`\mathrm{RootHash} \equiv \mathcal{A}.\mathrm{root\_digest}`$, wird der Container im Modus `PROT_READ | MAP_SHARED` in den virtuellen Speicher eingebunden, und der Zeiger auf die aktive Wissensbasis wird über das RCU-Protokoll in einem einzigen Takt atomar aktualisiert.
+   - Weicht auch nur ein einziges Bit ab, generiert das System unverzüglich das Alarmsignal `HALT_REFUSE (0x403)`, verweigert das Laden des nicht vertrauenswürdigen Containers und wechselt in den Fail-Closed-Zustand.
+2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
+   - Das strikte 64-Byte-Alignment garantiert, dass jede atomare Wissensstruktur innerhalb einer einzigen L1/L2-Cacheline ($64\,\text{Byte}$) zu liegen kommt. Dies verhindert Split-Cache-Line-Penalties, die pro Speicherzugriff $12\text{–}18$ zusätzliche Taktzyklen Latenz verursachen würden.
+   - Null-dynamische Speicherallokation: Das eingeblendete ZKP4-Abbild wird unmittelbar aus den Page-Cache-Seiten des Kernels adressiert, was einen Kaltstart in $T_{\mathrm{boot}} < 45\,\mu\text{s}$ selbst bei Datenvolumina von $V_{\mathrm{pack}} = 4\,\text{GB}$ gewährleistet.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   - Auf zwei unabhängigen Build-Servern (Knoten A unter Ubuntu 24.04 ARM64 und Knoten B unter Debian 12 x86_64) wird das normative Avionik-Korpus nach DO-178C kompiliert.
+   - Die Symbolsektion schließt an der Position $\mathrm{CurrentOffset} = 145{,}453\,\text{Bytes}$ ab. Der Compiler ermittelt das erforderliche Padding:
+
+```math
+\mathrm{PadBytes} = (64 - (145453 \bmod 64)) \bmod 64 = (64 - 45) \bmod 64 = 19\,\text{Bytes}.
+```
+
+   - Der Compiler schreibt explizit $19$ Null-Bytes `0x00` und führt das Offset auf den ausgerichteten Wert von $145{,}472\,\text{Bytes}$ ($145472 / 64 = 2273$).
+   - Dank `-trimpath`, fixiertem $\mathrm{SOURCE\_DATE\_EPOCH} = 1718000000$ und lexikographischer Prädikatssortierung erzeugen beide Server eine Binärdatei `avionics-core.kp` mit einem Umfang von exakt $48{,}234{,}496\,\text{Bytes}$ und identischem Wurzel-Hash $\mathrm{RootHash} = \text{0x7e2b8c...4a19}$. Das Gateway bestätigt die bitgenaue Parität, und das Update wird erfolgreich im Bordcomputer des Luftfahrzeugs aktiviert.
 
 ---
 
@@ -2168,6 +2257,7 @@ Die Messwerte belegen den in Kapitel 7 formalisierten Zielkonflikt: Eine gröber
 15. Warum migriert Modulo-Hashing signifikant mehr Schlüssel als Rendezvous-Hashing bei einer Topologieerweiterung, und welcher Rechenaufwand entsteht beim Rendezvous-Hashing pro Schlüssel?
 16. Warum verursacht ein direkter Aufruf von `munmap(2)` auf einem veralteten binären Wissenspaket während der aktiven Abfrageausführung ein `SIGBUS`, und wie verhindert das RCU-Muster mit Epochenzähler diesen Absturz?
 17. Welche drei Kriterien der Standards NIST SP 800-218 (SSDF) und SLSA v1.0 Level 4 garantieren den Schutz der Wissensartefakt-Lieferkette vor Angriffen der SolarWinds-Klasse?
+18. Welche vier Stufen der hermetischen Kristallisations-Pipeline garantieren die bitgenaue Reproduzierbarkeit von ZKP4-Containern, und warum stellen uninitialisiertes Alignment (Dirty Padding) sowie die nichtdeterministische Map-Traversierung kritische Bedrohungen für die kryptographische Integrität dar?
 
 ---
 
@@ -2182,7 +2272,11 @@ Die Messwerte belegen den in Kapitel 7 formalisierten Zielkonflikt: Eine gröber
 | Verlustfreies Clustering | *Lossless Fact Clustering* | Zusammenführung identischer Fakten zu einer kanonischen Aussage unter lückenloser Erhaltung aller Primärzitate |
 | Injektive Schlüsselkodierung | *Injective Key Encoding* | Serialisierungsverfahren, bei dem unterschiedliche Feldinhalte garantiert disjunkte Byte-Sequenzen erzeugen (z. B. durch Längenpräfixe) |
 | Unicode-Normalisierung | *Unicode Normalization* | Überführung typographisch äquivalenter Unicode-Zeichenketten in eine einheitliche Binärform (z. B. Form NFC) |
+| Bitgenaue Reproduzierbarkeit | *Bit-for-Bit Reproducibility* | Eigenschaft eines Binärpakets, bei der Kompilierung auf verschiedenen unabhängigen Knoten bis auf das letzte Bit mit der Referenz übereinzustimmen |
 | Bit-für-Bit-Reproduzierbarkeit | *Bit-for-Bit Reproducibility* | Eigenschaft eines Build-Systems, aus identischen Quellen und Parametern bit-identische Binärdateien zu erzeugen |
+| Hermetische Wissenskristallisation | *Hermetic Knowledge Crystallization* | Mehrstufiger Prozess zur Kompilierung binärer Wissenscontainer (ZKP4), der Umgebungs-Nichtdeterminismus, Zeitstempel und uninitialisierte Padding-Bytes vollständig eliminiert |
+| Striktes Null-Padding | *Strict Zero-Padding* | Erzwungenes explizites Schreiben von Null-Bytes (0x00) zur Ausrichtung an 64-Byte-Cacheline-Grenzen anstelle uninitialisierter Speicherlücken |
+| Container-Integritätswurzel | *Container Integrity Root* | Hierarchischer Merkle-Hash im Header des Binärcontainers, berechnet über die diskreten Hashes aller Container-Sektionen |
 | Geordneter Puffer | *Reorder Buffer* | Pufferstruktur, welche nebenläufig generierte Teilergebnisse aufnimmt und strikt in der Dokumentenreihenfolge freigibt |
 | Neuro-symbolisches Harvesting | *Neuro-symbolic Harvesting* | Pipeline zur Wissensextraktion, in der Sprachmodelle Hypothesen vorschlagen und deterministischer Host-Code die Freigabe entscheidet |
 | Zulassungsgateway | *Admission Gate* | Deterministische Prüfstufe, welche Faktenkandidaten gegen Quellregister, Byte-Offsets und den Relationsverband verifiziert |
@@ -2253,6 +2347,7 @@ Die Messwerte belegen den in Kapitel 7 formalisierten Zielkonflikt: Eine gröber
 | UAX | Unicode Standard Annex | Normativer Anhang der Spezifikation des Unicode-Konsortiums |
 | UDP | User Datagram Protocol | Verbindungsloses, unzuverlässiges Paketübertragungsprotokoll |
 | UTF-8 | Unicode Transformation Format, 8-bit | Zeichenkodierung variabler Länge (1–4 Bytes pro Codepunkt) |
+| ZKP4 | Zero-copy Knowledge Pack v4 | Viersektionaler binärer Wissenscontainer mit bitgenauer Reproduzierbarkeit und 64-Byte-Alignment |
 | DBMS | Datenbankmanagementsystem | Softwaresystem zur Speicherung, Verwaltung und Abfrage von Daten |
 
 ---

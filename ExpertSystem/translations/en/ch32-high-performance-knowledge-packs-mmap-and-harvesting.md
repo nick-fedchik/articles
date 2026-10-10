@@ -14,7 +14,7 @@
 
 Consider an embedded compute platform deployed in an autonomous chassis or robotic manipulator (such as an Infineon AURIX TC397, ARM Cortex-R52, or edge accelerator like the NVIDIA Jetson AGX Orin). The expert system must execute normative safety arbitration within a hard real-time control loop with a fault-tolerant time interval (FTTI) budget of no more than 20–50 milliseconds (ISO 26262 ASIL D). If the expert system stores its knowledge base in conventional formats (such as JSON, SQLite, or a client-server RDBMS), a cold start requires 1.5–3 seconds to parse and allocate millions of heap objects, while an unpredictable garbage collection stop-the-world pause at a critical juncture introduces an additional latency of 100–250 ms. As a result, the FTTI budget is grossly violated, hazardous system states are not recognized in time, and the physical actuator loses closed-loop control. In safety-critical architectures, zero-deserialization and dynamic-allocation-free knowledge retrieval are not "premature optimizations," but rigorous functional safety mandates.
 
-This chapter addresses the engineering challenge of transitioning an expert system prototype containing several thousand rules into an industrial-scale knowledge base: tens of thousands of specifications, hundreds of thousands of normative facts, and microsecond response latencies in embedded execution environments. The chapter details an original architecture: the immutable, self-describing **Knowledge Pack** and the binary specification of its **ZNAV-INDEX v2** index leveraging the `mmap(2)` system call. The chapter begins by detailing the composition and lifecycle of the knowledge pack, the distinctions between two format generations, and the mathematical boundaries of zero-deserialization applicability, including atomic hot-swapping of packs via the Read-Copy-Update (RCU) pattern to prevent `SIGBUS` crashes without downtime. It then investigates the algorithms for lossless inverted fact clustering, deterministic concurrent compilation (`--concurrency`), knowledge supply chain security under SLSA v1.0 Level 4 and NIST SP 800-218 (SSDF), the neuro-symbolic extraction pipeline with a byte-level admission gateway, the Knowledge Density Index ($`\mathrm{KDI}`$), and mathematically sound pack sharding that strictly differentiates shard silence from the absence of knowledge in the system.
+This chapter addresses the engineering challenge of transitioning an expert system prototype containing several thousand rules into an industrial-scale knowledge base: tens of thousands of specifications, hundreds of thousands of normative facts, and microsecond response latencies in embedded execution environments. The chapter details an original architecture: the immutable, self-describing **Knowledge Pack** and the binary specification of its **ZNAV-INDEX v2** index leveraging the `mmap(2)` system call. The chapter begins by detailing the composition and lifecycle of the knowledge pack, the distinctions between two format generations, and the mathematical boundaries of zero-deserialization applicability, including atomic hot-swapping of packs via the Read-Copy-Update (RCU) pattern to prevent `SIGBUS` crashes without downtime. It then investigates the algorithms for lossless inverted fact clustering, deterministic concurrent compilation (`--concurrency`), hermetic crystallization of ZKP4 binary containers with bit-for-bit reproducibility (enforcing strict 64-byte zero-padding and hierarchical container integrity Merkle roots), knowledge supply chain security under SLSA v1.0 Level 4 and NIST SP 800-218 (SSDF), the neuro-symbolic extraction pipeline with a byte-level admission gateway, the Knowledge Density Index ($`\mathrm{KDI}`$), and mathematically sound pack sharding that strictly differentiates shard silence from the absence of knowledge in the system.
 
 ---
 
@@ -1062,6 +1062,95 @@ T_{\mathrm{verify}} = \frac{V_{\mathrm{pack}}}{B_{\mathrm{sha}}} + T_{\mathrm{si
    where $`V_{\mathrm{pack}}`$ is the knowledge pack size in bytes, $`B_{\mathrm{sha}}`$ is the cryptographic hashing throughput, and $`T_{\mathrm{sig}}`$ is the signature verification latency. For a pack of $`V_{\mathrm{pack}} = 500\,\text{MB}`$, total verification consumes only $208\,\text{ms}$, executing comfortably within background reload windows without degrading active inference pipelines.
 3. **Worked Numerical Example:**
    An edge railway signaling automation node receives an updated knowledge pack governing train separation safety rules with footprint $`V_{\mathrm{pack}} = 120\,\text{MB}`$. The admission gateway validates the attestation: the Curve25519 signature $`\sigma_{\mathcal{A}}`$ verifies in $42\,\mu\text{s}$. Hardware-accelerated hashing completes in $`T_{\mathrm{hash}} = 120\,\text{MB} / (2.4\,\text{GB/s}) = 50\,\text{ms}`$. The evaluated digest matches $`\mathcal{A}.\mathrm{digest}`$ (`0x9f4a...b2c1`). All 18 input IEC/EN standards match registered digests, and $`\mathcal{A}.\mathrm{hermetic} = \mathrm{True}`$. The predicate returns $`\mathrm{Admission}(\mathcal{P}) = 1`$. The runtime authorizes the atomic RCU pointer swing. Had a single byte within the binary index been altered (e.g., modifying a braking deceleration threshold), $`\mathrm{SHA256}(\mathcal{P}) \ne \mathcal{A}.\mathrm{digest} \implies \mathrm{Admission}(\mathcal{P}) = 0`$, blocking the poisoned pack in $50.042\,\text{ms}$ and preventing safety perimeter subversion.
+
+### 6.3. Hermetic Knowledge Container Crystallization (ZKP4) and Bit-for-Bit Reproducibility
+
+Transitioning from textual normative sources to compiled binary ZKP4 packs with direct virtual memory mapping via `mmap(2)` imposes an uncompromising demand on cryptographic integrity: **Bit-for-Bit Reproducibility**. In mission-critical architectures where the hardware verification core (EVM or EPU) validates the byte-exact authenticity of normative snapshots via a dedicated attestation register `%ebx`, even a single mutated bit within a generated `.kp` container invalidates the entire chain of trust. If two independent build nodes compile the exact same input ISO or RFC standard but produce binary packs yielding differing SHA-256 digests, the runtime admission gateway rejects loading with an emergency stop verdict: `HALT_REFUSE (0x403)`.
+
+The root cause of such discrepancies stems not from flaws in logical inference, but from latent non-determinism in underlying system toolchains and programming languages:
+1. **Non-Deterministic Map Traversal:** Modern runtime languages (notably Go) deliberately randomize iteration order over hash maps (`map`) to mitigate algorithmic complexity attacks (HashDoS). If symbol tables, predicate dictionaries, or rule sequences are emitted into the binary stream in map iteration order, every compiler execution yields a different byte permutation.
+2. **Host Path & Timestamp Pollution:** Uncontrolled inclusion of absolute host filesystem paths (`/home/builder/...`), ephemeral build timestamps, or compiler toolchain version metadata into section headers.
+3. **Dirty Padding in Alignment Intervals:** Aligning structures to 64-byte processor cache line boundaries via file seek operations (`fseek` or `lseek`) without explicitly writing zero bytes leaves remnant uninitialized bytes from host RAM in the gaps, introducing random binary noise.
+
+To eliminate these defects, the author proposes the **Hermetic Knowledge Crystallization Pipeline** standard, depicted in the diagram below.
+
+```mermaid
+flowchart TD
+    accTitle: Hermetic Knowledge Crystallization Pipeline for Binary Knowledge Containers
+    accDescr: Four sequential phases eliminating build non-determinism from text normalization to the generation of a bit-for-bit reproducible ZKP4 container.
+
+    Doc["<b>Input Technical Document</b><br/>RFC / IP-XACT / PDF Standard"] --> S1["<b>1. Line Ending Normalization</b><br/>Enforce LF (\n), strip CRLF and BOM"]
+    S1 --> S2["<b>2. Canonical Table Sorting</b><br/>Lexicographical order by SHA-256 ID"]
+    S2 --> S3["<b>3. Build Environment Isolation</b><br/>Flag -trimpath, fix SOURCE_DATE_EPOCH"]
+    S3 --> S4["<b>4. Strict Zero-Padding (0x00)</b><br/>Strict 64-byte zero-padding without fseek gaps"]
+    S4 --> ZKP["<b>Deterministic Binary Container .kp</b><br/>Bit-for-bit reproducibility (ZKP4)"]
+
+    classDef in fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef step fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef out fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    class Doc in;
+    class S1,S2,S3,S4 step;
+    class ZKP out;
+```
+
+#### 6.3.1. Four-Tier Hermetic Knowledge Crystallization Pipeline
+
+The hermetic crystallization pipeline eliminates environmental entropy across four sequential phases:
+1. **Normalization of Line Endings and Encodings:** All input normative texts are converted to Unicode NFC canonical form, strictly normalizing newline characters to a single LF (`\n`, `0x0A`). Carriage returns CR (`\r`, `0x0D`) and byte-order marks (BOM) are categorically stripped.
+2. **Canonical Lexicographic Structure Sorting:** Every collection of predicates, symbols, or engineering atoms is sorted prior to binary serialization according to a primary cryptographic key:
+
+```math
+\forall i < j: \quad \mathrm{Hash}(A_i) <_{\mathrm{lex}} \mathrm{Hash}(A_j)
+```
+
+where $`\mathrm{Hash}(A)`$ represents the 256-bit cryptographic digest of knowledge atom $A$, and $<_{\mathrm{lex}}$ denotes strict byte-level lexicographical ordering.
+3. **Hermetic Compiler Isolation:** Compilation executes with the `-trimpath` flag, removing host developer filesystem paths from symbol tables, while all build timestamps are replaced by a deterministic epoch defined by `SOURCE_DATE_EPOCH` (the Unix timestamp of the latest cryptographically signed commit within the normative repository).
+4. **Strict Zero-Padding:** Aligning tables and posting lists to 64-byte CPU cache line boundaries is performed exclusively via the explicit emission of zero bytes (`0x00`).
+
+#### 6.3.2. Canonical Serialization, Zero-Padding, and Container Integrity Merkle Root
+
+The quantity of padding bytes required to align an offset to a 64-byte cache line boundary is computed as:
+
+```math
+\mathrm{PadBytes} = (64 - (\mathrm{CurrentOffset} \bmod 64)) \bmod 64
+```
+
+where:
+- $`\mathrm{CurrentOffset} \in \mathbb{N}_0`$ — current byte offset within the output binary container;
+- $`\mathrm{PadBytes} \in [0, 63]`$ — exact number of `0x00` zero bytes that must be explicitly written into the stream before serializing the subsequent section. Using address seeking without writing (`fseek`, `seek`) is strictly forbidden to prevent leaking uninitialized host memory (*dirty padding*).
+
+To protect multi-section ZKP4 containers, the container header incorporates a hierarchical Merkle root (*Container Integrity Root*) binding the discrete checksums of all four structural sections:
+
+```math
+\mathrm{RootHash} = H(H(\mathrm{Header}) \mathbin{\Vert} H(\mathrm{Symbols}) \mathbin{\Vert} H(\mathrm{Atoms}) \mathbin{\Vert} H(\mathrm{Slices}))
+```
+
+where:
+- $H(\cdot)$ — SHA-256 cryptographic hash function;
+- $\mathbin{\Vert}$ — binary concatenation of 32-byte digests;
+- $\mathrm{Header}$, $\mathrm{Symbols}$, $\mathrm{Atoms}$, $\mathrm{Slices}$ — respective binary segments of the compiled ZKP4 container;
+- $\mathrm{RootHash}$ — 256-bit resultant integrity tree root recorded in the immutable manifest and authenticated via an Ed25519 digital signature.
+
+#### 6.3.3. Actionable Closed Loop of Bit-for-Bit Reproducibility Engineering Verification
+
+1. **Control Flow & Runtime Decisions:**
+   - Prior to memory-mapping the container via `mmap(2)`, the loader computes $\mathrm{RootHash}$ from disk and verifies it against the signed manifest value and the hardware admission register `%ebx`.
+   - If $`\mathrm{RootHash} \equiv \mathcal{A}.\mathrm{root\_digest}`$, the container is mapped into the virtual address space with `PROT_READ | MAP_SHARED`, and the active knowledge pointer is atomically swung via RCU within a single CPU cycle.
+   - If any discrepancy is detected—even down to a single bit—the system immediately raises a `HALT_REFUSE (0x403)` alarm, blocks mounting of the untrusted container, and enters a Fail-Closed posture.
+2. **Hardware Dimensioning:**
+   - Strict 64-byte alignment guarantees that every atomic knowledge structure resides within a single L1/L2 cache line ($64\,\text{bytes}$), eliminating split cache line penalties that otherwise introduce $12\text{--}18$ latency cycles on every memory access.
+   - Zero dynamic heap allocation: the mapped ZKP4 image is serviced directly from the kernel Page Cache, achieving cold-start latencies of $T_{\mathrm{boot}} < 45\,\mu\text{s}$ even across knowledge packs spanning $V_{\mathrm{pack}} = 4\,\text{GB}$.
+3. **Worked Numerical Example:**
+   - On two independent build nodes (Node A running Ubuntu 24.04 ARM64 and Node B running Debian 12 x86_64), the avionics normative corpus DO-178C is compiled.
+   - The symbol section terminates at offset $`\mathrm{CurrentOffset} = 145{,}453\,\text{bytes}`$. The compiler computes the required padding size:
+
+```math
+\mathrm{PadBytes} = (64 - (145453 \bmod 64)) \bmod 64 = (64 - 45) \bmod 64 = 19\,\text{bytes}.
+```
+
+   - The compiler strictly writes $19$ zero bytes `0x00`, advancing the offset to the aligned boundary of $145{,}472\,\text{bytes}$ ($145472 / 64 = 2273$).
+   - Thanks to the `-trimpath` flag, pinning $`\mathrm{SOURCE\_DATE\_EPOCH} = 1718000000`$, and lexicographic sorting of predicates, both servers generate a binary file `avionics-core.kp` of size $48{,}234{,}496\,\text{bytes}$ with an identical root hash $`\mathrm{RootHash} = \text{0x7e2b8c...4a19}`$. The admission gateway validates bit-for-bit parity, and the update is successfully mounted into the aircraft's onboard compute unit.
 
 ---
 
@@ -2173,6 +2262,7 @@ These metrics substantiate the core trade-off formalized in Chapter 7: coarser p
 15. Why does modulo rehashing remap a substantially higher proportion of keys than rendezvous hashing upon node addition, and what is the computational cost of rendezvous evaluation per key?
 16. Why does calling `munmap(2)` directly on an outdated binary knowledge pack during active query execution trigger `SIGBUS`, and how does the RCU pattern with an epoch counter prevent this crash?
 17. Which three criteria from NIST SP 800-218 (SSDF) and SLSA v1.0 Level 4 guarantee protection of the knowledge artifact supply chain against SolarWinds-class attacks?
+18. Which four phases of the hermetic crystallization pipeline guarantee bit-for-bit reproducibility of ZKP4 containers, and why are uninitialized alignment bytes (dirty padding) and arbitrary map iteration orders critical vulnerabilities for cryptographic custody?
 
 ---
 
@@ -2188,13 +2278,16 @@ These metrics substantiate the core trade-off formalized in Chapter 7: coarser p
 | Memory Mapping | Memory Mapping (`mmap`) | Operating system call mapping file pages directly into process virtual address space |
 | Memory Alignment | Memory Alignment | Arranging data in memory at addresses evenly divisible by machine word or SIMD register boundaries |
 | Reorder Buffer | Reorder Buffer | Synchronization queue that holds out-of-order parallel worker outputs and commits them sequentially by task index |
+| Hermetic Knowledge Crystallization | Hermetic Knowledge Crystallization | Multi-tier compilation process for binary knowledge containers (ZKP4) eliminating build environment entropy, timestamps, and uninitialized padding bytes |
 | Hermetic Knowledge Build | Hermetic Knowledge Build | Knowledge compilation in an isolated, ephemeral sandbox without network access, with all tools and inputs pinned to cryptographic SHA-256 digests |
 | Reference Data | Reference Data | Global foundational data read by all queries, replicated uniformly across all shards and validated via digest |
 | Subject Directory | Subject Directory | Compact directory mapping subjects to document lineages, enabling query routers to target specific shards |
+| Strict Zero-Padding | Strict Zero-Padding | Explicit emission of zero bytes (0x00) to align section boundaries to 64-byte CPU cache lines instead of leaving uninitialized memory gaps |
 | Knowledge Density Index | Knowledge Density Index (KDI) | Ratio of frequency-weighted formal knowledge primitives to primary text volume; does not measure recall |
 | Canonical Layer | Canonical Layer | Authoritative sources, assertions, citations, and predicate vocabulary constituting the single source of truth |
 | Partition Key | Partition Key | Document attribute utilized by placement functions to assign records to shards (e.g., document lineage) |
 | Consistent Hashing | Consistent Hashing | Ring-based hash placement minimizing key migration when node counts vary |
+| Container Integrity Root | Container Integrity Root | Hierarchical Merkle tree root hash stored in binary container headers computed across discrete section digests |
 | Knowledge Supply Chain | Knowledge Supply Chain | End-to-end pipeline transforming normative source specifications into compiled binary knowledge artifacts under strict integrity and authenticity controls |
 | Cache Line | Cache Line | Smallest unit of data transferred between main memory and CPU cache hierarchies (typically 64 bytes) |
 | Query Router | Router | Component directing queries to target shards and emitting formal verdicts: found, found partially, absent, or unknown |
@@ -2206,6 +2299,7 @@ These metrics substantiate the core trade-off formalized in Chapter 7: coarser p
 | Unicode Normalization | Unicode Normalization | Standardized transformation ensuring canonically equivalent Unicode character sequences share identical binary encodings (e.g., NFC) |
 | Zero Deserialization | Zero-Deserialization | Accessing binary data structures directly without decoding or allocating intermediate heap objects |
 | Injective Key Encoding | Injective Key Encoding | Field serialization ensuring distinct field tuples always yield distinct byte sequences (e.g., via length prefixing) |
+| Bit-for-Bit Reproducibility (Container) | Bit-for-Bit Reproducibility | Property of a binary knowledge package matching the reference specification down to the last bit across independent heterogeneous nodes |
 | Bit-for-Bit Reproducibility | Bit-for-Bit Reproducibility | Property of a build system yielding byte-for-byte identical artifacts from identical source, environment, and instructions |
 | Pack Generation | Pack Generation | A single immutable release iteration of a knowledge pack identified by a unique cryptographic hash |
 | Format Generation | Format Version | Structural specification version of the pack container (v1, v2) validated by readers prior to mounting |
@@ -2263,6 +2357,7 @@ These metrics substantiate the core trade-off formalized in Chapter 7: coarser p
 | UAX | Unicode Standard Annex | Formal normative annex published as part of the Unicode Standard |
 | UDP | User Datagram Protocol | Lightweight, connectionless datagram transport protocol |
 | UTF-8 | Unicode Transformation Format, 8-bit | Variable-width character encoding capable of encoding all valid Unicode code points |
+| ZKP4 | Zero-copy Knowledge Pack v4 | Four-section binary knowledge container featuring bit-for-bit reproducibility and 64-byte alignment |
 | СКБД | Database Management System (DBMS) | Software system for storing, managing, and querying structured data collections |
 
 ---
