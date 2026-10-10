@@ -741,6 +741,24 @@ func TestAntiHallucination(t *testing.T) {
 
 These tests demonstrate the governing architectural invariant: no generative language model can bypass the deterministic verification gate. Any divergence yields either instantaneous detection of a hallucination or a structured, safe refusal accompanied by a targeted Socratic request for physical ground truth.
 
+## 8. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+
+To ensure epistemic rigor and a comprehensive audit of the monograph's architectural solutions, this section unfolds a direct adversarial debate with pioneers of data-centric artificial intelligence regarding automated knowledge acquisition, remediating machine hallucinations, and the reliability of human curation (Human-in-the-Loop).
+
+**Author's Thesis (Pro):**
+Manually authoring millions of engineering rules is economically non-viable. Znavets v4 incorporates an automated pipeline for knowledge extraction and formal rule synthesis from engineering documentation, regulatory standards (RFC, ISO, AUTOSAR), and circuit schematics via the `Plastun` suite and multimodal models (VLM). However, auto-extracted knowledge never enters production storage directly: it is staged into a quarantine repository (`Zvalyshche`), where it undergoes formal deduplication, syntactic linting, and mandatory qualification by a human expert (Human-in-the-Loop Curator).
+
+**Antithesis and Cynic Critic's Quote (Contra — Prof. Andrew Ng, Stanford University, founder of DeepLearning.AI, pioneer of Data-Centric AI):**
+> *«Automated knowledge extraction from messy unstructured documents using LLMs and vision models is fundamentally susceptible to data poisoning, subtle semantic drift, and catastrophic error propagation. Putting a 'human-in-the-loop curator' at the end of the pipeline is a complete bottleneck illusion. No human engineer or committee can thoroughly audit tens of thousands of auto-generated formal Horn clauses or micro-rules without experiencing acute review fatigue. Inevitably, subtly corrupted rules will slip past the curator into your 'Zvalyshche' quarantine, silently poisoning your supposedly verified knowledge base.»*
+
+**Argumentative Discussion (Socratic & Dialectical Debate):**
+- **Author (Fedchyk):** Professor Ng, the author fully shares your emphasis on uncompromising data quality (Data-Centric AI). The architecture harbors no illusions regarding human stamina when proofreading tens of thousands of formal rule expressions. That is precisely why the human curator is not the primary filter, but the *final* barrier, preceded by automated mathematical solvers. When the `Plastun` extractor synthesizes a rule from a regulatory PDF, it enters quarantine not as an asserted axiom, but strictly as a *hypothesis*. The quarantine pipeline automatically invokes SMT solvers to verify that the hypothesis does not contradict existing axioms, introduces no cyclical derivations, and binds its terms exclusively to the official IP-XACT ontology glossary.
+- **Ng:** But even if a rule is logically consistent, it can be factually inaccurate! If the model hallucinated and swapped configuration register addresses in a microcontroller manual, the SMT solver cannot detect the discrepancy!
+- **Author (Fedchyk):** Here the byte-level provenance invariant (`%ebx custody`) intervenes. The compiler rejects any rule lacking an exact byte slice from the primary PDF source. The engineering curator is not burdened with abstract logic evaluation: the interface displays the original source document page alongside the generated opcode and asks: "Does Table 4.2 define bit 7 as Enable?". The task reduces to rapid, visual grounding verification.
+
+**Synthesis and Scientific Verdict of the Chapter:**
+Automated knowledge synthesis becomes dependable only when generative models are strictly stripped of direct write access to the knowledge repository. Quarantine verification paired with automated inconsistency detection and byte-level primary source attribution ensures rapid ingestion without compromising evidential rigor.
+
 ## Conclusions
 
 Machine hallucination is the inevitable consequence of optimizing statistical sequence likelihood in the absence of epistemic truth criteria. Attempting to eliminate hallucinations by expanding parameter counts or appending prompt instructions addresses superficial symptoms rather than root causes.
