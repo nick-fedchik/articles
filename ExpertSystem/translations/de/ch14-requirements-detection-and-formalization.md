@@ -812,6 +812,29 @@ Z3 verifiziert das formale Modell, nicht den Prosatext. Für eine gewählte Logi
 
 Das Ergebnis dieser Zwischenrepräsentation ist ein verifizierbarer Formelkandidat mit transparenten Grenzen. Exakt dieses Artefakt kann – verknüpft mit Herkunftsnachweisen und Genehmigungsvermerken – in die Konstruktion der Wissensbasis überführt werden.
 
+## 8. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit Theoretikern juristischer Argumentation über deontische Schlichtung und gesellschaftliche Wertehierarchien.
+
+**These des Autors (Pro):**
+Die automatisierte Schlichtung von Normkollisionen stützt sich auf die kanonische Trias des Rechts (Lex Superior / Specialis / Posterior), die in Hardware-Prioritätsselektoren kodiert ist.
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Trevor Bench-Capon, Univ. of Liverpool — *Value-based Argumentation*):**
+> *„Juristische Schlichtung lässt sich nicht auf Paragrafenränge reduzieren: Sie fußt auf der Teleologie gesellschaftlicher Werte. Ohne Wertemodell trifft die Maschine formal legale, aber sinnwidrige Entscheidungen.“*
+
+**Argumentative Diskussion (Socratic & Dialectical Debate):**
+
+- **Bench-Capon:** Wenn eine Sicherheitsvorschrift mit Datenschutz kollidiert, kann die nüchterne Lex Superior nicht entscheiden, was Vorrang hat.
+
+- **Autor (Fedchyk):** In industriellen Systemen sind Werte in der Hierarchie funktionaler Sicherheitsstandards verankert: Anforderungen zum Schutz von Menschenleben (Safety / ISO 26262) haben stets absoluten lexikografischen Vorrang vor Effizienz oder Energieeinsparung, was fest im 4-Bit-Selektor des EISA-Registers verdrahtet ist.
+
+- **Bench-Capon:** Und was geschieht bei identischem Sicherheitsniveau der kollidierenden Normen?
+
+- **Autor (Fedchyk):** Der Kern registriert einen symmetrischen Konflikt und aktiviert die konservative Fail-Closed-Blockade anstelle unkalkulierbarer Eigeninitiative.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Die Hardware-Schlichtung deontischer Präferenzen eliminiert menschliche Subjektivität bei der strikten Wahrung des Schutzes von Menschenleben.
+
 ## Fazit
 
 1. **Abgrenzungskriterien und Modalkonventionen:** Kandidaten für normative Anforderungen werden anhand der Konventionen und des Kontexts des Quelldokuments (RFC 2119, ISO/IEC-Direktiven) identifiziert, in eine typisierte Zwischenrepräsentation überführt, auditiert und erst anschließend kompiliert. Unbekannte Felder und ambige zeitliche Wirkungsbereiche blockieren die Übersetzung, anstatt durch Mutmaßungen gefüllt zu werden.

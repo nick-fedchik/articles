@@ -1315,6 +1315,29 @@ The table below contrasts the architectural properties of an evidence-governed e
 
 This table contrasts formally verifiable deductive inference against baseline generative retrieval architectures, rather than exhaustively categorizing all conceivable RAG variants. Generative pipelines can be augmented with source byte addressing, revision filtering, formal grammars, and external provers. The demarcation is defined by the verification contract governing the output, not by marketing nomenclature. In the pipeline presented in this chapter, search indices and language models propose candidate structures, while knowledge admission and package release are governed exclusively by deterministic verification and human engineering sign-offs.
 
+## 15. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+
+To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with constrained learning researchers regarding knowledge extraction fidelity and model hallucination validation.
+
+**Author's Thesis (Pro):**
+Converting unstructured texts into production rules proceeds across two stages: neural structural hypothesis generation via SLM followed by deterministic linter validation filtering out hallucinations.
+
+**Antithesis and Cynic-Critic Citation (Contra — Dan Roth, UPenn / AWS — *Learning with Constraints*):**
+> *“An extraction model inevitably hallucinates across intricate logical dependencies. If quantifiers are bound incorrectly, a formal linter cannot detect the underlying semantic error.”*
+
+**Reasoned Discussion (Socratic & Dialectical Debate):**
+
+- **Roth:** A symbolic linter verifies syntactic structure, but remains blind to distorted semantic content.
+
+- **Author (Fedchyk):** Our linter verifies not merely form, but byte-level projection (%ebx): every entity must possess a verified span in the source text with non-zero lexical overlap, and an unbound subject immediately routes the rule into a Quarantine Gate requiring human-in-the-loop qualification.
+
+- **Roth:** Doesn't that slow down the knowledge engineering pipeline?
+
+- **Author (Fedchyk):** It slows down ingestion, yet guarantees zero unverified rules in the certified ZKP4 repository.
+
+**Synthesis and Scientific Verdict of the Chapter:**
+A two-stage extraction pipeline combines model productivity with uncompromising filtering of fabricated assertions.
+
 ## Conclusions
 
 Technical documentation is transformed into a verified expert system knowledge base via a five-phase compilation pipeline: structural decomposition, sentence parsing, specialized extractors, byte-level grounding, and a deterministic admission gate. Every admitted fact is anchored to its primary source coordinates: document hash, byte interval, section breadcrumbs, and cryptographic quote digest. Within this architecture, language models act as candidate proposers, while deterministic verifiers maintain absolute authority over knowledge admission.

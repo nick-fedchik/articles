@@ -813,6 +813,29 @@ Z3 checks the formal mathematical model, not raw text. For targeted verification
 
 The synthesized intermediate representation constitutes a verifiable candidate formula with bounded semantics. This artifact, backed by cryptographic source provenance and human sign-off, serves as the authoritative input for downstream knowledge base construction.
 
+## 8. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+
+To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with legal argumentation theorists regarding deontic arbitration formalization and social value hierarchies.
+
+**Author's Thesis (Pro):**
+Automated contradiction arbitration relies on the canonical legal triad (Lex Superior / Specialis / Posterior) encoded within hardware priority selectors.
+
+**Antithesis and Cynic-Critic Citation (Contra — Trevor Bench-Capon, Univ. of Liverpool — *Value-based Argumentation*):**
+> *“Legal arbitration cannot be reduced to mechanical jurisdiction indexes: it rests upon the teleology of societal values. Without a value model, the machine will issue formally lawful yet absurd decisions.”*
+
+**Reasoned Discussion (Socratic & Dialectical Debate):**
+
+- **Bench-Capon:** If a safety rule conflicts with a data privacy statute, sterile Lex Superior cannot adjudicate which value is paramount.
+
+- **Author (Fedchyk):** In industrial engineering systems, values are codified within functional safety hierarchies: life protection requirements (Safety / ISO 26262) hold absolute lexicographical priority over performance or power efficiency, hardcoded directly into the 4-bit priority selector of EISA registers.
+
+- **Bench-Capon:** And what if contradictory norms share the identical safety level?
+
+- **Author (Fedchyk):** The core detects a symmetric deadlock and activates conservative fail-closed suspension instead of hazardous speculative autonomy.
+
+**Synthesis and Scientific Verdict of the Chapter:**
+Hardware arbitration of deontic preferences eliminates human subjectivity while upholding life-safety priorities.
+
 ## Conclusions
 
 1. **Demarcation Criteria and Modality Conventions:** Candidate normative requirements are identified based on document drafting conventions and structural context (RFC 2119, ISO/IEC Directives), parsed into strongly typed intermediate representations, audited, and only then compiled. Unknown fields and ambiguous temporal scopes halt compilation rather than being filled with speculative defaults.

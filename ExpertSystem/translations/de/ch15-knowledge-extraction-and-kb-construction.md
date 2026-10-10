@@ -1306,6 +1306,29 @@ Die nachfolgende Matrix fasst die fundamentalen architektonischen Unterschiede z
 
 Diese Gegenüberstellung kontrastiert eine mathematisch prüfbare Inferenzarchitektur mit dem elementaren generativen Retrieval. Selbstverständlich lässt sich auch ein RAG-System um Quellkoordinaten, Revisionsfilter und externe Validatoren erweitern – die Differenzierung wird durch den formalen Verifikationskontrakt bestimmt, nicht durch die verwendete Technologiebezeichnung.
 
+## 15. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit Forschern des Constrained Learning über die Zuverlässigkeit der Wissensextraktion und die Validierung von Modellhalluzinationen.
+
+**These des Autors (Pro):**
+Die Transformation von Freitext in Regeln erfolgt zweistufig: neuronale Generierung struktureller Hypothesen durch SLMs und anschließendes deterministisches Linting durch Validatoren zur Eliminierung von Halluzinationen.
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Dan Roth, UPenn / AWS — *Learning with Constraints*):**
+> *„Ein Extraktionsmodell halluziniert unweigerlich bei verschachtelten logischen Verknüpfungen. Wenn Quantoren fehlerhaft gebunden sind, kann ein formaler Linter den inhaltlichen Irrtum nicht erkennen.“*
+
+**Argumentative Diskussion (Socratic & Dialectical Debate):**
+
+- **Roth:** Ein symbolischer Linter prüft die Form, ist jedoch blind gegenüber verdrehtem Sinn.
+
+- **Autor (Fedchyk):** Unser Linter prüft nicht nur die Syntax, sondern die bytegenaue Quellprojektion (%ebx): Jede Entität muss einen nachgewiesenen Textausschnitt mit echtem lexikalischem Schnitt aufweisen. Fehlende Subjektbindungen überführen die Regel sofort in das Quarantäne-Gate zur Prüfung durch menschliche Fachexperten.
+
+- **Roth:** Verlangsamt das nicht die Entwicklung?
+
+- **Autor (Fedchyk):** Es verlangsamt die Ingestion, garantiert jedoch null unbewiesene Regeln im finalen ZKP4-Speicher.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Die zweistufige Extraktionspipeline verbindet Modellproduktivität mit kompromissloser Filterung fabrizierter Aussagen.
+
 ## Fazit
 
 Technische Spezifikationen und Standards werden über eine fünfphasige Pipeline in eine deterministisch verifizierbare Wissensbasis überführt: strukturelle Dekomposition, Satzanalyse, spezialisierte Extraktoren, Byte-genaue Verankerung und eine formale Zulassungsschleuse. Jeder autorisierte Fakt verfügt über eine unzerstörbare Adresse in der Primärquelle: Dokumentenkennung, Byte-Intervall, struktureller Überschriftenpfad und Zitat-Hash. Statistische Sprachmodelle dienen in diesem Prozess ausschließlich als Hypothesengeneratoren; alle Entscheidungen über Wissenszulassungen treffen deterministische Prüfalgorithmen.
