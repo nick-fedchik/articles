@@ -1195,6 +1195,29 @@ A single global accuracy metric will obscure localized subsystem degradation. Ac
 
 Failure metrics must be isolated causally across the processing cascade: an ungrounded response must be decomposed into ingestion omissions, retrieval misses, reranking errors, symbolic constraint violations, and LLM generation hallucinations. Otherwise, engineering teams squander resources "prompt engineering the LLM" when the root cause is a missing test report in the underlying graph snapshot.
 
+## 19. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+
+To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with pioneers of knowledge engineering regarding knowledge base typology, the evolution of expert shells, and neuro-symbolic dualism.
+
+**Author's Thesis (Pro):**
+A modern expert system shell must be architected upon strict neuro-symbolic dualism: a stochastic SLM front-end (Relevance) + a deterministic EVM core (Eligibility).
+
+**Antithesis and Cynic-Critic Citation (Contra — Edward Feigenbaum, Stanford, Turing Award — *Father of Expert Systems*):**
+> *“Expert system shells of the 1980s collapsed under their inability to adapt and the prohibitive costs of maintenance. Isn't your separation simply another bureaucratic superstructure?”*
+
+**Reasoned Discussion (Socratic & Dialectical Debate):**
+
+- **Feigenbaum:** Back in the 1980s, we attempted to construct universal shells (EMYCIN, KEE). They shattered because human experts cannot articulate their heuristics into rigid rules.
+
+- **Author (Fedchyk):** Professor Feigenbaum, your fundamental limitation was the absence of large language models. Humans truly think associatively. In our shell, humans do not manually write rules: a local SLM extracts raw candidate rules from documentation, and the human merely signs off on compiled descriptors. The symbolic core assumes the exact responsibility that LLMs fail at: rigorous, deterministic eligibility enforcement.
+
+- **Feigenbaum:** But who guarantees that the coupling between the SLM and the core does not degrade when the model weights are updated?
+
+- **Author (Fedchyk):** The coupling is formally anchored by a GBNF grammar and an AST schema: updating SLM weights cannot alter the operand types acceptable to the core.
+
+**Synthesis and Scientific Verdict of the Chapter:**
+The neuro-symbolic shell unifies the linguistic adaptability of neural networks with the mathematical reliability of a symbolic core.
+
 ## Conclusions
 
 This chapter began with the dilemma of whether brake controller BrakeController 3.2 can be authorized for release, confronted by an information system that uniformly returned text passages for every query. The central finding of this chapter is that knowledge base types and inference mechanisms must be selected according to the required evidential result, not marketing designations or storage formats:

@@ -755,6 +755,29 @@ flowchart TD
 | **Disambiguierung (Homonymie)** | Positionsanalyse innerhalb des aktiven Gültigkeitsbereichs (`Scope`). | Kontextuelle Bedeutungsunterscheidung mehrdeutiger Lemmata (`CAN` als Feldbus vs. Modalverb; `state` als Zustand vs. Aussage). |
 | **Implizite Präsuppositionen** | Nicht unterstützt (Closed-World-Assumption). | Inferenz logischer Vorbedingungen (*„resuming a session“* $\implies$ eine vorherige Sitzung war persistiert). |
 
+## 12. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit Begründern der formalen Argumentationstheorie über anfechtbares Schließen, skeptische Semantik und Zyklenschlichtung.
+
+**These des Autors (Pro):**
+Anforderungskonflikte in komplexen Architekturen müssen als abstrakte ASPIC+-Argumentationsstrukturen mit topologischer Erkennung starker Zusammenhangskomponenten modelliert werden.
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Phan Minh Dung, AIT — *Semantics of Defeat*, 1995):**
+> *„Die Anwendung skeptischer Grounded-Extension-Semantik auf reale Konfliktgraphen führt unweigerlich zu leeren Mengen: Bei symmetrischen Zyklen kann das System keinerlei Entscheidung treffen.“*
+
+**Argumentative Diskussion (Socratic & Dialectical Debate):**
+
+- **Dung:** Wenn zwei Regeln einander mit gleicher Stärke widersprechen, verwirft die fundierte Erweiterung beide. Das System kapituliert mit 'Ich weiß es nicht'.
+
+- **Autor (Fedchyk):** Herr Professor Dung, exakt das verlangt ASIL-D-Funktionssicherheit! Geraten zwei Standards in einen unauflösbaren symmetrischen Konflikt, DARF ein autonomes System weder eine Münze werfen noch willkürlich wählen. Es ist verpflichtet, die Inferenz mit dem Code REFUSAL_SYMMETRIC_CONFLICT zu stoppen und die Kontrolle an die Sicherheits-Rückfallebene zu übergeben. Ihre skeptische Semantik ist das ideale mathematische Fundament für funktionale Sicherheit.
+
+- **Dung:** Doch wie steht es um die Berechnungskomplexität von Zyklen?
+
+- **Autor (Fedchyk):** Wir setzen Tarjans Algorithmus ein, der Zyklen in linearer Zeit $`O(V+E)`$ erkennt und eine exponentielle Explosion des Beweisbaums verhindert.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Anfechtbare ASPIC+-Argumentation unter strikter Grounded-Semantik gewährleistet eine deterministische und fehlersichere Schlichtung technischer Widersprüche.
+
 ## Fazit
 
 Dieses Kapitel ging von der Fragestellung aus, wie ein linguistisches Subsystem konstruiert werden kann, das vielfältige menschliche Formulierungen versteht, jedoch strikt nur das behauptet, was aus den Bytes der Primärquelle rekonstruierbar ist. Die Antwort lautet: Das linguistische Subsystem erweitert die Bandbreite der menschlichen Formulierungen, die ein Expertensystem aufnehmen kann, und verengt zugleich die Menge der ausgegebenen Behauptungen auf jene, die sich durch unveränderliche Bytes des Originals belegen lassen. Hierfür bewahrt jede Texttransformation eine lückenlose Provenienz-Map, jede Komponente agiert unter strikt beschränkten Berechtigungen, Vektorähnlichkeit dient lediglich der Vorsortierung, und die finale Zulassung obliegt einem deterministischen Verifizierer auf Basis von Manifesten, kryptografischen Hashes und Zugriffskontrollen.

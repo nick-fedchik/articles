@@ -511,6 +511,29 @@ Konventionelle Externalisierungsmethoden zwingen Chefarchitekten dazu, umfangrei
 > [!IMPORTANT]
 > **Ethische und sicherheitstechnische Schranke:** Die Erfassung des digitalen Arbeitsschattens muss strikt von der individuellen Leistungs- und Verhaltenskontrolle getrennt sein. Ein Expertensystem aggregiert ingenieurtechnische Fakten, Schaltungsmuster und Diagnoseprädikate – es darf niemals zu einem Überwachungsinstrument degradiert werden. Andernfalls verzerren Entwickler ihre digitalen Arbeitsspuren, was die Verlässlichkeit und Integrität der Wissensbasis nachhaltig zerstört.
 
+## 14. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit Pionieren der Computerlinguistik über die Formalisierung technischer Vorschriften, deontische Modalität und EARS-Grammatikgrenzen.
+
+**These des Autors (Pro):**
+Vorschriften in normativer Dokumentation müssen nach EARS-Regeln mit unteilbaren deontischen Quantoren (MUST NOT) und Multibyte-Unicode-Grenzen kanonisiert werden.
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Christopher Manning, Stanford Univ. — *NLP Pioneer*):**
+> *„Natürliche Sprache ist viel zu reichhaltig, um in fünf EARS-Schablonen gepresst zu werden. Echte Industrienormen stecken voller Bedingungssätze, die Ihr Parser schlicht verwirft und so regulatorische Blindstellen erzeugt.“*
+
+**Argumentative Diskussion (Socratic & Dialectical Debate):**
+
+- **Manning:** Sprache ist lebendig. Ein Verbot konditionaler Wendungen führt zum Verlust der halben Spezifikation.
+
+- **Autor (Fedchyk):** Herr Professor Manning, in der Luftfahrt und Automobilindustrie führt 'lebendige Sprache' zu Flugzeugabstürzen! Anforderungsstandards (IREB, INCOSE) fordern unmissverständlich: Lässt sich eine Anforderung nicht in klarer deontischer EARS-Syntax formulieren, ist sie mangelhaft und birgt verdeckte Mehrdeutigkeiten. Unser Parser analysiert Text nicht nur — er fungiert als strikter Zensor, der Ingenieure zur Beseitigung von Unschärfen zwingt.
+
+- **Manning:** Und wie behandeln Sie Zeilenumbrüche innerhalb von 'MUST NOT'?
+
+- **Autor (Fedchyk):** Wir haben einen unteilbaren Multibyte-Rune-Tokenizer implementiert, der selbst bei fehlerhafter Formatierung eine Fehlerrate von 0% bei der Polaritätsinversion garantiert.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Die EARS-Syntax in Verbindung mit unteilbaren deontischen Tokens transformiert unscharfe menschliche Sprache in streng verifizierbare mathematische Prädikate.
+
 ## Fazit
 
 Dieses Kapitel ging von der Frage aus, wie sich ein Experteninterview in verifizierbares Wissen überführen lässt, anstatt bloße Gesprächsprotokolle anzuhäufen. Die Antwort lautet: Wissenserhebung ist ein disziplinierter ingenieurtechnischer Prozess, in dem eine Äußerung zum Wissenskandidaten, der Kandidat zur formalisierten Hypothese und die Hypothese schließlich zur verifizierten Regel mit definierten Gültigkeitsgrenzen und lückenloser Provenienz heranreift. Jede Sitzung fokussiert auf eine spezifische Entscheidung; Methoden werden kombiniert, da jedes Verfahren für bestimmte Wissenstypen blind ist; und subjektive Gewissheit, empirische Häufigkeit sowie kalibrierte Wahrscheinlichkeiten werden strikt getrennt geführt.

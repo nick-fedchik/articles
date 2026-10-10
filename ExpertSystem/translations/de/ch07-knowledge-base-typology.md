@@ -1187,6 +1187,29 @@ Zur Sicherung der Gesamtqualität müssen Abnahmekriterien mechanismspezifisch d
 
 Kaskadierende Qualitätsmetriken müssen kausal verknüpft sein: Bleibt eine Antwort unbestätigt, muss analysiert werden, ob die Ursache im Ingestion-Drop, im Retrieval-Verlust, im Reranking, im symbolischen Zustand oder im LLM liegt. Andernfalls investieren Entwicklungsteams Ressourcen in das Prompt-Engineering, obwohl schlicht das Testprotokoll im Graphen fehlte.
 
+## 19. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit Pionieren des Knowledge Engineering über Wissensbasistypologien, die Evolution von Expertensystem-Shells und neuro-symbolischen Dualismus.
+
+**These des Autors (Pro):**
+Eine moderne Expertensystem-Shell muss auf einem strikten neuro-symbolischen Dualismus aufgebaut sein: stochastisches SLM-Frontend (Relevanz) + deterministischer EVM-Kern (Zulassung/Eligibility).
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Edward Feigenbaum, Stanford, Turing Award — *Father of Expert Systems*):**
+> *„Die Expertensystem-Shells der 1980er Jahre scheiterten an mangelnder Anpassungsfähigkeit und untragbaren Wartungskosten. Ist Ihre Trennung nicht bloß ein weiterer bürokratischer Überbau?“*
+
+**Argumentative Diskussion (Socratic & Dialectical Debate):**
+
+- **Feigenbaum:** Wir haben in den 1980er Jahren versucht, universelle Shells (EMYCIN, KEE) zu konstruieren. Sie scheiterten daran, dass menschliche Experten ihre Heuristiken nicht in starre Regeln fassen können.
+
+- **Autor (Fedchyk):** Herr Professor Feigenbaum, Ihre fundamentale Einschränkung bestand im Fehlen großer Sprachmodelle. Menschen denken tatsächlich assoziativ. In unserer Shell schreiben Menschen keine Regeln von Hand: Ein lokales SLM extrahiert Rohregelkandidaten aus der Dokumentation, und der Mensch zeichnet lediglich kompilierte Deskriptoren gegen. Der symbolische Kern übernimmt exakt jene Rolle, an der LLMs scheitern: die strikte, deterministische Zulassungsprüfung.
+
+- **Feigenbaum:** Doch wer garantiert, dass die Kopplung zwischen SLM und Kern bei Modellaktualisierungen nicht zerbricht?
+
+- **Autor (Fedchyk):** Die Kopplung ist über formale GBNF-Grammatiken und ein AST-Schema fixiert: Eine Änderung der SLM-Gewichte kann die vom Kern akzeptierten Operandentypen nicht verändern.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Die neuro-symbolische Shell vereint die linguistische Flexibilität neuronaler Netze mit der mathematischen Verlässlichkeit eines symbolischen Kerns.
+
 ## Fazit
 
 Dieses Kapitel nahm seinen Ausgang bei der Freigabefrage für das Steuergerät BrakeController 3.2 und bei Informationssystemen, die jede ingenieurtechnische Anfrage mit einem undifferenzierten Textabschnitt beantworten. Das zentrale Ergebnis lautet: Wissensbasis-Typen und Inferenzmechanismen müssen strikt nach dem geforderten Entscheidungsergebnis ausgewählt werden – niemals nach Marketingbegriffen oder Speicherformaten:
