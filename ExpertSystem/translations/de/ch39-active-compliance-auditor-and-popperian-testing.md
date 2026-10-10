@@ -12,9 +12,9 @@
 
 ## Abstract
 
-Beim Entwurf missionskritischer cyber-physikalischer Systeme (ISO 26262 ASIL D, ISO/SAE 21434 CAL 4, DO-178C DAL A, Automotive SPICE 4.0) führen die rein manuelle Aufbereitung normativer Berichte und eine passive Verifikation unausweichlich zu verheerenden Konsequenzen. Müssen Sicherheitsingenieure tausende Einzelanforderungen in statischen Tabellen abgleichen, führt die kognitive Überlastung zum sogenannten „Compliance-Theater“ (*Compliance Theatre*) — dem rein formalen Abhaken von Checklisten ohne mathematische Verifikation kritischer Grenzzustände. Das Übersehen eines einzigen verdeckten Einzelfehlers (Single-Point Fault Metric, $\text{SPFM} < 99\%$) oder eines unberücksichtigten Angriffsvektors auf den fahrzeuginternen Bus hat fatale Unfälle, teure Rückrufaktionen autonomer Flotten sowie die persönliche strafrechtliche Haftung der Auditoren zur Folge.
+Beim Entwurf missionskritischer cyber-physikalischer Systeme (ISO 26262 ASIL D, ISO/SAE 21434 CAL 4, DO-178C DAL A, Automotive SPICE 4.0) führen die rein manuelle Aufbereitung normativer Berichte und eine passive Verifikation unausweichlich zu verheerenden Konsequenzen. Müssen Sicherheitsingenieure tausende Einzelanforderungen in statischen Tabellen abgleichen, führt die kognitive Überlastung zum sogenannten „Compliance-Theater“ (*Compliance Theatre*) — dem rein formalen Abhaken von Checklisten ohne mathematische Verifikation kritischer Grenzzustände. Das Übersehen eines einzigen verdeckten Einzelfehlers ($`\mathrm{SPFM} < 99\%`$) oder eines unberücksichtigten Angriffsvektors auf den fahrzeuginternen Bus hat fatale Unfälle, teure Rückrufaktionen autonomer Flotten sowie die persönliche strafrechtliche Haftung der Auditoren zur Folge.
 
-Dieses Kapitel überwindet diese Krise durch den Übergang von einem passiven Auskunftsorakel zu einem aktiven Auditor für Domänenwissen (*Active Compliance Auditor*). Auf Basis des Falsifikationsprinzips von Karl Popper ($\mathcal{F}(\mathcal{H}, \mathcal{K})$ für die Entwurfshypothese $\mathcal{H}$ und die Normenbasis $\mathcal{K}$) sowie der Grundlegung dieser Monographie [[8]](#src-8) übernimmt das evidenzbasierte Expertensystem die Initiative zur systematischen Untersuchung des Systementwurfs: Es sucht autonom nach Gegenbeispielen, deckt normative Widersprüche zwischen Anforderungen der funktionalen Sicherheit (*Safety*) und des Cyber-Schutzes (*Security*) auf, generiert strikte Zertifizierungsartefakte (HARA, TARA, SAR, DFAR/FMEDA) mit vollständiger Rückverfolgbarkeit ($100{,}0\%$) und entwirft falsifizierende Prüfszenarien, während der Mensch im Regelkreis (*Human-in-the-Loop*) als oberste Entscheidungsinstanz verbleibt.
+Dieses Kapitel überwindet diese Krise durch den Übergang von einem passiven Auskunftsorakel zu einem aktiven Auditor für Domänenwissen (*Active Compliance Auditor*). Auf Basis des Falsifikationsprinzips von Karl Popper ($`\mathcal{F}(\mathcal{H}, \mathcal{K})`$ für die Entwurfshypothese $`\mathcal{H}`$ und die Normenbasis $`\mathcal{K}`$) sowie der Grundlegung dieser Monographie [[8]](#src-8) übernimmt das evidenzbasierte Expertensystem die Initiative zur systematischen Untersuchung des Systementwurfs: Es sucht autonom nach Gegenbeispielen, verhindert theoretischen Drift (*Anti-Theory Drift Principle*) durch die Regel der epistemischen Notwendigkeit, deckt normative Widersprüche zwischen Anforderungen der funktionalen Sicherheit (*Safety*) und des Cyber-Schutzes (*Security*) auf, generiert strikte Zertifizierungsartefakte (HARA, TARA, SAR, DFAR/FMEDA) mit vollständiger Rückverfolgbarkeit ($100{,}0\%$) und entwirft falsifizierende Prüfszenarien. Im Rahmen popperianischer Dialektik und adversarialen Pair Programmings werden die Rollen des Falsifikator-Agenten (*Popperian Red Teamer*) und des Systemingenieur-Agenten (*Formal Implementer*) klar voneinander abgegrenzt, die beratende Relevanzzone (*Relevance Zone*) von der entscheidenden Berechtigungszone (*Eligibility Zone*) getrennt und der Mensch im Regelkreis (*Human-in-the-Loop*) als oberste Schiedsinstanz des Systems verankert.
 
 ---
 
@@ -198,9 +198,49 @@ Die Falsifikationszeit wird dank der Vorab-Indizierung von Normen in Bitmasken d
 
 #### 3. Praktisches numerisches Beispiel
 - Ein Entwickler postuliert die Zulässigkeit eines einkanaligen ADC mit einem diagnostischen Deckungsgrad von $`90\%`$ für ein ASIL-D-Subsystem.
-- Die symbolische Inferenzmaschine identifiziert innerhalb von $`210\,\mu\text{s}`$ das Normatom $`\nu_{418}`$ (ISO 26262-5, Abschn. 8.4.3: Zwingende Forderung nach $\text{SPFM} \ge 99\%$).
+- Die symbolische Inferenzmaschine identifiziert innerhalb von $`210\,\mu\text{s}`$ das Normatom $`\nu_{418}`$ (ISO 26262-5, Abschn. 8.4.3: Zwingende Forderung nach $`\mathrm{SPFM} \ge 99\%`$).
 - $`\mathcal{F}(\mathcal{H}, \mathcal{K}) = \{\nu_{418}\} \neq \emptyset \implies \mathrm{Verdict} = \mathbf{FALSIFIED}`$.
 - **Systemreaktion:** Es wird ein Blockadeprotokoll mit Ausweis des Defizits erzeugt: $`\Delta \mathrm{SPFM} = 9{,}0\%`$. Der Commit wird im Repository abgewiesen.
+
+### 3.3. Prinzip des Anti-Theorie-Drifts und der sparsamen Wissensmodellierung
+
+In der Praxis des Entwurfs komplexer Expertensysteme führt das Bestreben, eine universelle philosophische Metasprache für alle denkbaren Anwendungsfälle zu konstruieren, nicht selten in eine methodische Falle — den theoretischen Drift (*Theory Drift* oder *Over-abstraction*). Wenn sich Forscher, anstatt konkrete ingenieurtechnische Probleme zu lösen, vorzeitig in abstrakten Makro-Theorien verlieren (globalen All-Ontologien, redundanten synergetischen Relationen), wächst die rechnerische Komplexität des Modells exponentiell an, während die Fähigkeit der Wissensbasis, Ausgangsartefakte deterministisch zu verifizieren und Randkollisionen aufzudecken, gegen null strebt. Um diesem Konstruktionsfehler vorzubeugen, hat der Autor das *Prinzip des Anti-Theorie-Drifts und der sparsamen Wissensmodellierung* formuliert und implementiert.
+
+#### 3.3.1. Popperianisches Falsifizierbarkeitskriterium und die Regel der epistemischen Notwendigkeit
+
+1. **Popperianisches Falsifizierbarkeitskriterium der Ontologie:**
+Ein formales Wissensmodell $`\mathcal{M}`$ wird nicht nach der Anzahl theoretischer Abstraktionen oder Begriffe bewertet, die es potenziell beschreiben könnte, sondern nach seiner Fähigkeit, unzutreffende, redundante oder widersprüchliche Aussagen aus einer Menge generierter Gegenbeispiele $`\mathcal{C}`$ strikt und fehlerfrei zurückzuweisen:
+
+```math
+\mathrm{RejectionRate}(\mathcal{M}, \mathcal{C}) = \frac{\lvert \lbrace c \in \mathcal{C} \mid \mathcal{M} \models \neg c \rbrace \rvert}{\lvert \mathcal{C} \rvert} \ge \tau_{\mathrm{falsify}} = 1{,}00
+```
+
+wobei:
+- $`\mathcal{M}`$ das formalisierte ontologische Modell des Fachbereichs ist;
+- $`\mathcal{C}`$ die Menge der vom Falsifikator generierten Prüf-Gegenbeispiele, anomalen Zustände und widersprüchlichen Anforderungen darstellt;
+- $`\tau_{\mathrm{falsify}} = 1{,}00`$ die normative Schwelle absoluter Abgrenzungsselektivität ist (jedes Übersehen eines Widerspruchs belegt eine übermäßige Unschärfe der Ontologie).
+
+2. **Regel der epistemischen Notwendigkeit (Lex Parsimoniae):**
+Jedes neue Prädikat, jede neue Relation oder taxonomische Abstraktionsebene $`\Delta \mathcal{P}`$ in der Wissensbasis muss strikt durch ein unmittelbares Wissensdefizit oder eine nachgewiesene Kollision in den verarbeiteten technischen Artefakten $`\mathcal{E}_{\mathrm{deficit}}`$ begründet sein:
+
+```math
+\forall p \in \Delta \mathcal{P}, \quad \exists e \in \mathcal{E}_{\mathrm{deficit}} : \mathrm{Resolves}(p, e) \land \neg \exists q \in \mathcal{P}_{\mathrm{existing}} (\mathrm{Expressible}(q, e))
+```
+
+wobei:
+- $`\mathcal{P}_{\mathrm{existing}}`$ die vorhandene Basis typisierter Prädikate erster Stufe (FOL) ist;
+- $`\mathcal{E}_{\mathrm{deficit}}`$ die Menge erfasster empirischer oder normativer Verifikationsdefizite bezeichnet.
+
+Lässt sich eine ingenieurtechnische Aussage mit dem einfacheren Apparat der bestehenden Basis ohne Erzeugung redundanter konzeptioneller Überbauten eindeutig verifizieren, so gilt die Einführung von $`\Delta \mathcal{P}`$ als kritischer methodischer Entwurfsfehler.
+
+#### 3.3.2. Geschlossener Kreis der ingenieurtechnischen Berechnung der Ontologiesparsamkeit
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Bei der Kompilierung der Wissensbasis prüft der Ontologie-Analysator jedes Prädikat anhand der Regel der epistemischen Notwendigkeit. Ergibt sich für ein neues Prädikat $`\mathrm{Resolves}(p, e) = \mathrm{false}`$ oder lässt es sich semantisch aus der bestehenden Basis $`\mathcal{P}_{\mathrm{existing}}`$ ableiten, bricht der Compiler die Image-Generierung mit dem Fehlercode `ERR_THEORY_DRIFT` ab und erzeugt das Ablehnungstoken `REFUSAL`. Zeigt sich beim Regressionstest, dass $`\mathrm{RejectionRate}(\mathcal{M}, \mathcal{C}) < 1{,}00`$ ist, wird die Wissensbasis als übermäßig permissiv (*Over-permissive*) verworfen, was ihre Weitergabe an das Zertifizierungs-Audit blockiert.
+2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
+   Jede überflüssige taxonomische Ebene und redundante Relation erhöht die Resolutionstiefe $`d`$, was zu einem kombinatorischen Anstieg der Unifikationszeit $`T_{\mathrm{unif}} \propto \mathcal{O}(2^d)`$ führt. Die Begrenzung der Ontologietiefe auf $`d \le 4`$ und die Eliminierung theoretischen Drifts garantieren ein lineares Scanning des BRAM-Speichers ($`< 512\,\text{KB}`$) sowie eine Inferenz-Antwortzeit von $`t_{\mathrm{eval}} \le 1{,}0\,\text{ms}`$ ohne das Risiko eines Hardware-Stack-Überlaufs im Mikrocontroller.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Ein Entwickler versucht, anstelle des deterministischen Prädikatenpaars `VoltageInRange(v)` und `ValidCRC(frame)` eine abstrakte Klasse „Universeller quanten-synergetischer Sensorzustand“ einzuführen. Im Falsifikations-Benchmark wurden $`\lvert \mathcal{C} \rvert = 100`$ fehlerhafte Pakete mit transientem Rauschen und Busfehlern erzeugt. Das vage Metamodell wies lediglich 42 Anomalien zurück ($`\mathrm{RejectionRate} = 0{,}42 < 1{,}00`$) und ließ 58 kritische Ausfälle passieren. Die sparsame Basis $`\mathcal{P}_{\mathrm{existing}}`$ wies $`100`$ von $`100`$ Anomalien ($`\mathrm{RejectionRate} = 1{,}00`$) in einer Zeit von $`72\,\mu\text{s}`$ zurück. Der Compiler lehnte die konzeptionelle Überfrachtung ab und bewahrte den Determinismus des Gesamtsystems.
 
 ---
 
@@ -338,19 +378,93 @@ wobei $`\mathcal{R}`$ die Gesamtmenge der formalisierten Anforderungen aus Stand
 
 ## 7. Ingenieurtechnische und humanistische Dimension: Der Mensch im Regelkreis (Human-in-the-Loop)
 
-Die Einführung eines aktiven Compliance-Auditors verdrängt den Menschen keineswegs aus dem ingenieurtechnischen Prozess. Im Gegenteil: Sie stellt den ursprünglichen, schöpferischen Kern des Ingenieurberufs wieder her.
+Die Einführung eines aktiven Compliance-Auditors schließt den Menschen keineswegs aus dem ingenieurtechnischen Prozess aus. Im Gegenteil: Sie stellt den ursprünglichen, anspruchsvollen Kern des Ingenieurberufs wieder her, indem sie den Verstand des Fachmanns von monotoner Routine entlastet und ihn in die Rolle des obersten Schiedsrichters über architektonische Entscheidungen erhebt.
 
-### 7.1. Delegierung routinemäßiger Verifikationsberechnungen an die Maschine
+### 7.1. Popperianische Dialektik und adversariales Pair Programming: Red Teamer gegen Formal Implementer
+
+Der Einsatz großer generativer Sprachmodelle (LLMs) als Entwicklungsassistenten in missionskritischen Systemen (ASIL-D nach ISO 26262, DAL-A nach DO-178C, SIL-4 nach IEC 61508) stößt auf gefährliche methodische Schwachstellen:
+1. **Konformismus-Syndrom und Bestätigungsfehler (Sycophancy & Confirmation Bias):** Generative Modelle sind darauf optimiert, dem Benutzer zu gefallen. Anstatt unerbittlich nach Fehlern zu suchen, neigen sie dazu, zweifelhafte Entwürfe abzunicken, oberflächliche tautologische Unit-Tests zu generieren, die das Problem verschleiern, und Spaghetti-Code („Reparatur-Patches“) nachzuschieben, der lokale Symptome anstelle der eigentlichen Ursachen kuriert.
+2. **Kombinatorische Blindheit klassischer Code-Reviews (Code Review Blindness):** In heterogenen Systemkomplexen (RTL-/Verilog-Hardwarekerne, Streaming-Pipelines von Ereignis-Brokern, direkter Speicherzugriff über `mmap`) ist ein menschlicher Reviewer nicht in der Lage, sämtliche Überläufe und Deadlocks mental nachzuvollziehen. Wie die praktische Ingenieurerfahrung des Autors bei der Prüfung realer Steuerungen zeigte, traten dabei kritische Schwachstellen zutage, die von herkömmlichen Tests unbemerkt geblieben waren:
+   - Vorzeichenbit-Wrapping `[47:16]` in Hardwaremodulen für Betriebsbereiche, was zur fehlerhaften Freigabe von Silizium-Überlastungen führte (Defekt `ENV-01`);
+   - Die Degeneration natürlichsprachlicher semantischer Bedingungen zu Wildcards, wodurch jede nicht erkannte Bedingung stillschweigend als erfüllt gewertet wurde (`GBN-01`);
+   - Linearer Schnittdrift um 1 LSB, deterministische Deadlocks in Hintergrund-Dämonen und verdeckte Verkürzungen normativer Dokumente.
+3. **Falle der verfrühten Codierung (Premature Coding Trap):** Der Versuch, einen „Defekt sofort im Code zu beheben“, ohne zuvor die Spezifikation und das Architecture Decision Record (ADR) zu aktualisieren, zerstört die normative Rückverfolgbarkeit und verwandelt die Codebasis in ein unzertifizierbares Flickwerk.
+
+Zur Beherrschung dieser Risiken hat der Autor die Methodik des **popperianischen dialektischen Audits und des adversarialen Pair Programmings** vorgeschlagen und formalisiert:
+
+```mermaid
+flowchart TD
+    accTitle: Popperianische Dialektik und adversariales Pair Programming
+    accDescr: Triade der Arbeitsteilung zwischen dem menschlichen Chefarchitekten, dem Popperian Red Teamer und dem Formal Implementer.
+
+    Human["Chefarchitekt (Human-in-the-Loop)<br/>«Sapiens dominabitur astris» — Axiomatik, Qualitätsstandards (Constraint)"]
+    RedTeamer["Popperian Red Teamer (Auditor-Agent)<br/>Popper-Kriterium: Unerbittliche Falsifikation, SAT-Gegenbeispiele"]
+    Implementer["Formal Implementer (Ingenieur-Agent)<br/>Analysis-First, ADR, Fail-Closed-Arithmetik, Null-Regression"]
+
+    Human -->|Imperativ & Scope-Phasierung| RedTeamer
+    Human -->|ADR-Genehmigung & Aufsicht| Implementer
+    RedTeamer -->|Formale Gegenbeispiele & Angriffsvektoren| Implementer
+    Implementer -->|Beweisbasierte Patches & Traceability-Matrix| RedTeamer
+```
+
+#### Epistemischer Dualismus der Rollen: Red Teamer gegen Implementer
+
+1. **Rolle „Popperian Red Teamer“ (Falsifikator-Agent):**
+   - Die Erfolgsmetrik des Agenten bemisst sich nicht nach der Anzahl akzeptierter Module, sondern nach der **Zahl aufgedeckter Lücken, widerlegter Invarianten und gefundener Gegenbeispiele**.
+   - Der Agent agiert nach dem strengen Popper'schen Abgrenzungskriterium: Die Sicherheit des Codes wird ausschließlich durch seine Robustheit gegenüber unaufhörlichen Widerlegungsversuchen bewiesen.
+   - Werkzeugkasten: SMT-/SAT-Solver für Hardware-Grenzwerte, adversariale Randvektoren, Datenstruktur-Fuzzing, Angriffe auf Deskriptor-Erschöpfung und Überprüfung von Custody-Verletzungen.
+2. **Rolle „Formal Implementer“ (Systemingenieur-Agent):**
+   - **Verbot verbaler Apologie:** Dem Ingenieur ist es strikt untersagt, Mängel durch narrative Begründungen zu rechtfertigen. Jedes gefundene Gegenbeispiel gilt als zwingender Anlass zur Einführung einer streng typisierten Invariante.
+   - **Fail-Closed-Prinzip ($`\mathrm{ZHR} = 1{,}000000`$):** Fehlt eine Bedingung oder ist ein Sachverhalt mehrdeutig, gibt das System eine deterministische, typisierte Verweigerung zurück (`REFUSAL`, `UNSUPPORTED_CONDITION`), wodurch unkontrollierte Halluzinationen ausgeschlossen werden.
+3. **Rolle „Chief Architect“ (Menschlicher Schiedsrichter im Regelkreis):**
+   - Gibt die unumstößliche philosophische Invariante vor: *«Sapiens dominabitur astris»* (Der Weise wird über die Gestirne herrschen) — die Forderung nach absoluter wissenschaftlicher Disziplin und der Zurückweisung von Spaghetti-Code.
+   - Gewährleistet die Steuerung nach den 5 Dimensionen von Karl Wiegers: Qualität (Quality) ist eine unverrückbare Randbedingung (Flexibilität = 0); Umfang (Scope) bildet den primären Freiheitsgrad durch durchdachte Release-Phasierung.
+
+#### Gesetz des lückenlosen Rückverfolgbarkeitszyklus (Zero-Gap Traceability Cycle)
+
+Jede Änderung am Systemcode unterliegt der mathematischen Regel der geschlossenen Rückverfolgbarkeit:
+
+```math
+\mathrm{Defect}_{\mathrm{Audit}} \implies \mathrm{SWR} \implies \mathrm{ADR} \implies \mathrm{Task} \implies \mathrm{FailClosedCode} \implies \mathrm{AdversarialProof}
+```
+
+wobei jeder Audit-Defekt $`\mathrm{Defect}_{\mathrm{Audit}}`$ in eine formale Softwareanforderung $`\mathrm{SWR}`$, eine Architekturentscheidung $`\mathrm{ADR}`$, ein dekomponiertes Arbeitspaket $`\mathrm{Task}`$ sowie in nach dem Fail-Closed-Standard gehärteten Code $`\mathrm{FailClosedCode}`$ überführt wird und mit einem strengen formalen Beweis der Regressionsfreiheit $`\mathrm{AdversarialProof}`$ abschließt. Die Regel *Analysis-First* verbietet das Schreiben von Code ohne vorab abgestimmte Architekturanforderung kategorisch.
+
+#### 7.1.1. Geschlossener Kreis der popperianischen adversarialen Steuerung
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   Wird durch den Red-Teamer-Agenten ein Gegenbeispiel entdeckt, blockiert die CI/CD-Pipeline sofort den Release-Fortschritt und setzt den Aufgabenstatus auf `DEFECT_DETECTED`. Der Implementer ist verpflichtet, ein ADR auszuarbeiten und eine Fail-Closed-Prüfung zu implementieren. Der Versuch eines direkten Code-Merges ohne Verifikation durch den Red Teamer wird am Repository-Gateway abgewiesen. Erst nachdem der Red Teamer die Erschöpfung des Angriffsraums bestätigt hat ($`\mathrm{Status} = \mathrm{VERIFIED}`$), setzt der menschliche Chefarchitekt die finale kryptographische Signatur zur Freigabe auf `PRODUCTION_READY`.
+2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
+   Die adversariale Modellierung erfordert dedizierte, deterministische Rechenressourcen für den SAT-/SMT-Solver. Ein striktes Zeitlimit pro Invariante von $`t_{\mathrm{solver}} \le 5{,}0\,\text{s}`$ und eine Speicherbegrenzung von $`M_{\mathrm{solver}} \le 2\,\text{GB}`$ pro Prozess verhindern ein Einfrieren des Verifikationsservers und garantieren den Abschluss des vollständigen Audit-Zyklus in $`< 15\,\text{min}`$ auf einer 8-Kern-CI/CD-Maschine.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Beim Audit einer Inverter-Steuereinheit erzeugt der Red Teamer einen Vektor mit dem Grenzwert $`V_{\mathrm{attack}} = \text{0x7FFF\_FFFF\_0000}`$, der durch Bit-Verschiebung in `[47:16]` (Defekt `ENV-01`) das Stromvorzeichen von positiv zu negativ invertiert und ein fehlerhaftes Notbremssignal auslöst. Der Implementer dokumentiert ADR-104 und ersetzt den naiven Shift durch eine Hardware-Sättigung mit Überlauf-Flag-Prüfung. Der Red Teamer wiederholt 1000 Mutationsläufe und verifiziert: $`\mathrm{Failures} = 0`$, $`\mathrm{Status} = \mathrm{SATURATED\_FAIL\_CLOSED}`$. Der Defekt ist auf Systemebene vollständig behoben.
+
+### 7.2. Neuro-symbolische Wasserscheide der Befugnisse: Relevanzzone gegen Berechtigungszone
+
+Zur Gewährleistung der Zuverlässigkeit missionskritischer Systeme formuliert der Autor das fundamentale Gesetz der Kompetenzteilung zwischen heuristischer KI und symbolischem Kern:
+
+| Verarbeitungspfad | Komponente | Rolle in der Architektur | Befugnisse und Status der Urteile |
+|---|---|---|---|
+| **System 1 (Relevanzzone / Relevance Zone)** | SLM / LLM / Heuristischer Parser | Primäre Erkundung, Absichtsanalyse des Benutzers, Extraktion semantischer Terme und Synonyme | **Ausschließlich beratend (Advisory).** Keine Befugnis, Aussagen als normativ wahr oder zertifiziert zu deklarieren. Konfidenz strikt $`\mathrm{Conf} < 1{,}00`$. |
+| **System 2 (Berechtigungszone / Eligibility Zone)** | Deterministische Mikrobefehle der EVM / EISA, SAT, ASPIC+ | Normative Verifikation, Zulassung anhand physikalischer Grenzen, Hardware-Sperren | **Ausschlaggebend und endgültig (Decisive).** Mathematischer Nachweis der Übereinstimmung mit der Primärquelle inklusive bytegenauer Custody (%ebx, SHA-256) und $`\mathrm{ZHR} = 1{,}000000`$. |
+
+Keine Schlussfolgerung und keine Empfehlung der System-1-Komponente kann den Zustand des Zertifizierungs-Gateways verändern, ohne das deterministische Sieb von System 2 passiert zu haben.
+
+### 7.3. Delegierung von Routineprüfungen an die Maschine
+
+Im Rahmen dieser popperianischen Partnerschaft übernimmt die Maschine die ermüdendsten Abschnitte des Compliance-Prozesses:
 - Das Durchsuchen tausender Seiten regulatorischer Normtexte;
 - Das Befüllen gigantischer Rückverfolgbarkeitstabellen (Excel / Polarion);
 - Die semantische Kontrolle strikter deontischer Modalitäten (`MUST`, `SHALL`, `REQUIRED`);
 - Die mathematische Neuberechnung von Zuverlässigkeitskennzahlen (SPFM, LFM, FIT-Raten);
 - Die Verifikation der lückenlosen Anforderungsabdeckung im Quellcode.
 
-### 7.2. Strategische und schöpferische Funktionen des Sicherheitsingenieurs
-- **Schöpferische Ingenieurleistung:** Der Entwurf eleganter, performanter und inhärent robuster Systemarchitekturen;
+### 7.4. Strategische und kreative Funktionen des Sicherheitsingenieurs
+
+Die Befreiung des Menschen vom routinemäßigen „Compliance-Theater“ gibt dem Ingenieur seine leitende heuristische Funktion zurück:
+- **Tiefgehende schöpferische Ingenieurleistung:** Der Entwurf eleganter, performanter und inhärent robuster Systemarchitekturen;
 - **Physikalische Intuition:** Die Untersuchung seltener physikalischer Hardwareanomalien, thermischer Driften, Siliziumalterung oder strahlungsinduzierter Single-Event-Upsets (SEU), die in standardisierten Regelwerken nicht antizipiert werden können;
-- **Strategische Verantwortung:** Der Ingenieur verliert die Furcht vor Audits, da jedes Detail durch eine mathematisch verifizierte Nachweisbasis gestützt ist. Er unterzeichnet SAR- und TARA-Berichte mit der Gewissheit eines unanfechtbaren epistemischen Fundaments.
+- **Strategische Verantwortung:** Der Ingenieur verliert die Furcht vor Audits, da jedes normative Detail durch eine mathematisch verifizierte Basis gestützt ist. Er unterzeichnet SAR- und TARA-Berichte mit der Gewissheit eines unanfechtbaren epistemischen Fundaments.
 
 ---
 
@@ -550,6 +664,8 @@ func (e *ActiveComplianceEngine) InterrogateSystem(entity string) []string {
 8. Worin besteht das fundamentale Spannungsverhältnis zwischen funktionaler Sicherheit (Verfügbarkeit) und Cybersicherheit (Integrität), und wie löst das ASPIC+-Framework diese Kollision auf?
 9. Wie interagieren der stochastische Kandidatengenerator (System 1) und der deterministische Prüfer (System 2) beim autonomen Testdesign?
 10. Welche Aufgaben werden an die Maschine delegiert und welche verbleiben zwingend beim Menschen gemäß dem Prinzip des „Menschen im Regelkreis“ (*Human-in-the-Loop*)?
+11. Worin besteht das „Prinzip des Anti-Theorie-Drifts und der sparsamen Wissensmodellierung“ von Ontologien und wie berechnet sich die Kennzahl RejectionRate?
+12. Wie verteilen sich die Aufgaben zwischen Popperian Red Teamer, Formal Implementer und dem menschlichen Chefarchitekten im Paradigma des adversarialen Pair Programmings gemäß dem Gesetz des Zero-Gap Traceability?
 
 ---
 
@@ -566,6 +682,11 @@ func (e *ActiveComplianceEngine) InterrogateSystem(entity string) []string {
 | SPFM (Single-Point Fault Metric) | Zuverlässigkeitsmetrik zur Bewertung der Robustheit des Systems gegenüber Einzelfehlern |
 | LFM (Latent Fault Metric) | Zuverlässigkeitsmetrik zur Bewertung des Anteils erkannter oder beherrschter latenter Mehrfachfehler |
 | Mensch im Regelkreis (Human-in-the-Loop) | Architekturprinzip, das die strategische Führungs- und finale Entscheidungsrolle beim Fachexperten belässt |
+| Anti-Theorie-Drift (Anti-Theory Drift) | Methodische Falle des unkontrollierten Wachstums redundanter Abstraktionen im Wissensmodell ohne Zuwachs an Verifikationsleistung |
+| Regel der epistemischen Notwendigkeit | Prinzip des Verbots der Einführung neuer Prädikate und Metaebenen ohne nachgewiesenes Verifikationsdefizit in der Prädikatenbasis erster Stufe |
+| Popperian Red Teamer | Autonomer Falsifikator-Agent, dessen Erfolgsmetrik in der Entdeckung von Gegenbeispielen, verletzten Invarianten und der Widerlegung von Hypothesen besteht |
+| Formal Implementer | Systemingenieur-Agent, der auf Basis von Gegenbeispielen typisierte Fail-Closed-Lösungen gemäß dem Analysis-First-Reglement entwickelt |
+| Relevanz- und Berechtigungszone (Relevance vs Eligibility) | Architektonische Trennung zwischen beratenden heuristischen KI-Funktionen (System 1) und entscheidenden formalen Beweisen des symbolischen Kerns (System 2) |
 
 ---
 
@@ -589,6 +710,9 @@ func (e *ActiveComplianceEngine) InterrogateSystem(entity string) []string {
 | SBOM | Software Bill of Materials |
 | OTA | Over-The-Air (drahtlose Aktualisierung) |
 | ZHR | Zero-Hallucination Rate |
+| ADR | Architecture Decision Record (Architekturentscheidungsdokument) |
+| SWR | Software Requirement (Softwareanforderung) |
+| SAT | Boolean Satisfiability Problem (Erfüllbarkeitsproblem der Aussagenlogik) |
 
 ---
 
@@ -602,6 +726,8 @@ func (e *ActiveComplianceEngine) InterrogateSystem(entity string) []string {
 6. <a id="src-6"></a>**Kelly, T., & Weaver, R.** (2004). *The Goal Structuring Notation — A Safety Argument Notation*. Proceedings of Dependable Systems and Networks.
 7. <a id="src-7"></a>**Dung, P. M.** (1995). *On the acceptability of arguments and its fundamental role in nonmonotonic reasoning, logic programming and n-person games*. Artificial Intelligence, 77(2), 321–357.
 8. <a id="src-8"></a>**Fedchyk, M.** (2026). *Architektur evidenzbasierter Expertensysteme: von formalen Ontologien zu neuro-symbolischer KI*.
+9. <a id="src-9"></a>**Popper, K. R.** (1963). *Conjectures and Refutations: The Growth of Scientific Knowledge*. London: Routledge and Kegan Paul.
+10. <a id="src-10"></a>**Wiegers, K., & Beatty, J.** (2013). *Software Requirements (3rd Edition)*. Redmond, WA: Microsoft Press.
 
 ---
 
