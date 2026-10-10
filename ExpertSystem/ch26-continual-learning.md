@@ -231,8 +231,7 @@ d^{\pi}(x)\ne d^{\mu}(x).
 
 - Для цієї умови $\pi(a\mid x)$ є ймовірністю дії $a$ за цільовою політикою, а $\mu(a\mid x)$ за політикою журналювання;
 - $x$ є контекстом, $a$ дією, а $`>0`$ означає ненульову ймовірність;
-- $\Rightarrow$ вимагає, щоб кожна дія з ненульовою ймовірністю за цільовою політикою також мала ненульову ймовірність у журналі.
-- $\Rightarrow$ є логічною імплікацією: якщо цільова політика може вибрати дію, журналювальна політика теж має давати їй ненульову ймовірність.
+- $\Rightarrow$ є логічною імплікацією: якщо цільова політика може вибрати дію, журналювальна політика обов'язково має надавати їй ненульову ймовірність (спільний носій).
 
 Отже, правило вимагає перекриття можливих дій, але не гарантує малої дисперсії: мала ймовірність у знаменнику все одно створює велику вагу.
 
@@ -666,7 +665,7 @@ x^*=\arg\max_{x\in U}
 
 За умовних значень нижньої межі $-0{,}03$ і $\varepsilon=0{,}05$ нерівність виконується. Різниця цінностей і допуск мають однакові одиниці; результат залежить від оцінювача та покриття даних.
 
-з жорсткими умовами
+Статистична нерівність обов'язково доповнюється детермінованими жорсткими умовами безпеки:
 
 ```math
 F_{\text{крит}}(\pi)=0,
@@ -947,7 +946,7 @@ Open Bandit Pipeline Юти Сайто та співавторів дає син
 10. <a id="src-10"></a>Arslan Chaudhry, Puneet K. Dokania, Thalaiyasingam Ajanthan, Philip H. S. Torr. [*Riemannian Walk for Incremental Learning: Understanding Forgetting and Intransigence*](https://doi.org/10.1007/978-3-030-01252-6_33). ECCV, LNCS, 556–572, 2018.
 11. <a id="src-11"></a>David Lopez-Paz, Marc'Aurelio Ranzato. [*Gradient Episodic Memory for Continual Learning*](https://papers.nips.cc/paper_files/paper/2017/hash/f87522788a2be2d171666752f97ddebb-Abstract.html). NeurIPS, 2017.
 12. <a id="src-12"></a>Matthias De Lange, Rahaf Aljundi, Marc Masana, Sarah Parisot, Xu Jia, Aleš Leonardis, Greg Slabaugh, Tinne Tuytelaars. [*A Continual Learning Survey: Defying Forgetting in Classification Tasks*](https://doi.org/10.1109/TPAMI.2021.3057446). *IEEE Transactions on Pattern Analysis and Machine Intelligence*, 2021.
-13. <a id="src-13"></a>James Kirkpatrick, Razvan Pascanu, Neil Rabinowitz, Joel Veness, Guillaume Desjardins та ін. [*Overcoming Catastrophic Forgetting in Neural Networks*](https://doi.org/10.1073/pnas.1611835114). *PNAS*, 114(13), 3521–3526, 2017.
+13. <a id="src-13"></a>James Kirkpatrick, Razvan Pascanu, Neil Rabinowitz, Joel Veness, Guillaume Desjardins et al. [*Overcoming Catastrophic Forgetting in Neural Networks*](https://doi.org/10.1073/pnas.1611835114). *PNAS*, 114(13), 3521–3526, 2017.
 14. <a id="src-14"></a>Agnar Aamodt, Enric Plaza. [*Case-Based Reasoning: Foundational Issues, Methodological Variations, and System Approaches*](https://doi.org/10.3233/AIC-1994-7104). *AI Communications*, 7(1), 39–59, 1994.
 15. <a id="src-15"></a>Stephen Muggleton. [*Inductive Logic Programming*](https://doi.org/10.1007/BF03037089). *New Generation Computing*, 8(4), 295–318, 1991.
 16. <a id="src-16"></a>Jon Doyle. [*A Truth Maintenance System*](https://doi.org/10.1016/0004-3702(79)90008-0). *Artificial Intelligence*, 12(3), 231–272, 1979.
