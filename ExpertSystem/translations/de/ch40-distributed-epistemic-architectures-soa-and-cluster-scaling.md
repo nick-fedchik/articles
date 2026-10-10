@@ -13,7 +13,8 @@
 
 Alle vorangegangenen Kapitel dieser Monographie haben eine fundamentale These schlüssig bewiesen: Ein zuverlässiges Expertensystem darf nicht auf stochastischen Verallgemeinerungen großer Sprachmodelle oder ungeprüften Faktensammlungen beruhen. Wahre Expertise erfordert mathematischen Determinismus, formale Inferenz, bytegenaue Verwahrungskette der Primärquellen ($ZHR = 1.00$) und unabhängige Auditierbarkeit. Der Übergang des Systems vom isolierten Laborprüfstand in reale industrielle F&E-Umgebungen stellt den Softwarearchitekten jedoch vor eine neue kritische Herausforderung: **Skalierbarkeit, Verteiltheit und allgegenwärtige Verfügbarkeit (Ubiquitous Availability)**.
 
-Dieses Kapitel schließt den theoretischen Zyklus der Monographie ab und synthetisiert für den Leser einen **industriellen Referenzarchitektur-Prototyp eines evidenzbasierten Expertensystems**. Losgelöst von spezifischen kommerziellen Chipmarken oder proprietären Schnittstellen definiert dieses Kapitel funktionale Klassen von Hardware- und Software-Recheneinheiten, die für den Aufbau eines hochskalierbaren Systems erforderlich sind. Gegenstand der Analyse ist eine dreischichtige epistemische serviceorientierte Architektur (Epistemic SOA), in der schlanke mobile Clients (Smartphones, Terminals) über einen intelligenten semantischen Broker mit einem föderierten Cluster spezialisierter Domänendienste interagieren. Eine mehrstufige Speicherhierarchie wird formalisiert: Mathematisch wird die Bedingung der Pipeline-Kontinuität und der vollständigen Latenzverbergung ($`T_{\mathrm{refill}} \ll T_{\mathrm{execute}}`$) durch das Konzept aktiver Wissensarbeitssätze (*Active Working Sets*) und symmetrischer doppelter Pufferung (*Ping-Pong Pipeline*) bewiesen. Für Szenarien mit unvollständigen lokalen Wissensbasen wird ein Modell der föderierten Suche (*Scatter-Gather*) in Verbindung mit einer mehrquellenbasierten defeasiblen Evidenzaggregation (*ASPIC+*) entwickelt, welches Korroboration, die Entkräftung schwacher Empfehlungen und die qualifizierte Erkennung normativer Widersprüche gewährleistet. Abschließend bietet eine ingenieurtechnische Technologieauswahlmatrix dem Systemarchitekten konkrete Richtlinien zur Bereitstellung eines lauffähigen Prototyps auf verfügbarer Hardware im Einklang mit dem jeweiligen Projektbudget.
+Dieses Kapitel schließt den theoretischen Zyklus der Monographie ab und synthetisiert für den Leser einen **industriellen Referenzarchitektur-Prototyp eines evidenzbasierten Expertensystems**. Losgelöst von spezifischen kommerziellen Chipmarken oder proprietären Schnittstellen definiert dieses Kapitel funktionale Klassen von Hardware- und Software-Recheneinheiten, die für den Aufbau eines hochskalierbaren Systems erforderlich sind. Gegenstand der Analyse ist eine dreischichtige epistemische serviceorientierte Architektur (Epistemic SOA), in der schlanke mobile Clients (Smartphones, Terminals) über einen intelligenten semantischen Broker mit einem föderierten Cluster spezialisierter Domänendienste interagieren. Eine mehrstufige Speicherhierarchie wird formalisiert: Mathematisch wird die Bedingung der Pipeline-Kontinuität und der vollständigen Latenzverbergung ($`T_{\mathrm{refill}} \ll T_{\mathrm{execute}}`$) durch das Konzept aktiver Wissensarbeitssätze (*Active Working Sets*) und symmetrischer doppelter Pufferung (*Ping-Pong Pipeline*) bewiesen. Für Szenarien mit unvollständigen lokalen Wissensbasen wird ein Modell der föderierten Suche (*Scatter-Gather*) in Verbindung mit einer mehrquellenbasierten defeasiblen Evidenzaggregation (*ASPIC+*) entwickelt, welches Korroboration, die Entkräftung schwacher Empfehlungen und die qualifizierte Erkennung normativer Widersprüche gewährleistet. Besondere Aufmerksamkeit gilt der verteilten semantischen Triage von Wissensdefiziten auf Basis von 64-Bit-SimHash und BK-Bäumen mit Schutz vor Entartung des Merkmalsraums (Degeneracy Guard) und autonomen WAL-Puffern sowie dem Aufbau eines unveränderlichen Entscheidungsbuchs (Immutable Decision Ledger) auf hierarchischen Merkle-Bäumen mit WORM-Verankerung zur Gewährleistung der rechtlichen und technischen Unabstreitbarkeit (Non-Repudiation) im ASIL-D-Audit. Abschließend bietet eine ingenieurtechnische Technologieauswahlmatrix dem Systemarchitekten konkrete Richtlinien zur Bereitstellung eines lauffähigen Prototyps auf verfügbarer Hardware im Einklang mit dem jeweiligen Projektbudget.
+
 
 ---
 
@@ -413,7 +414,226 @@ In einer solchen Konstellation untersagt das Expertensystem gemäß den Richtlin
 
 ---
 
-## 6. Ingenieurmatrix der Technologieauswahl und budgetorientierte Skalierung
+## 6. Verteilte Triage von Wissensdefiziten und Härtung von Nachrichtenwarteschlangen
+
+In der verteilten Architektur evidenzbasierter Expertensysteme, in der jeder Knoten dem kompromisslosen Prinzip des Blockierens bei unvollständigem Wissen folgt (Fail-Closed, $`\mathrm{ZHR} = 1{,}00`$), führt jeder fehlende Fakt, jede unaufgelöste normative Ambivalenz oder Regelkollision zur automatischen Erzeugung eines Wissensdefizit-Tickets (*Knowledge Gap Ticket*). Bei großflächigen industriellen Bereitstellungen (Hunderte von Bordsteuergeräten oder Tausende von kontinuierlichen CI/CD-Audit-Agenten) entsteht die systemische Bedrohung eines Ticketsturms bei Wissenslücken (*Gap-Ticket Storm*): Eine naive lineare Aggregation von Anfragen unter globalen Sperren führt zur Erschöpfung des Thread-Pools des Nachrichtenbrokers, zum Überlauf der Arbeitsspeicher-Warteschlangen und zu Denial-of-Memory-Zuständen. Zur Bewältigung dieser Krise stützt sich das verteilte Wissenssystem auf ein dreistufiges Subsystem der semantischen Triage.
+
+### 6.1. SimHash-Fingerabdrücke und metrische Burkhard-Keller-Bäume (BK-Tree)
+
+Um redundante Duplikate zu eliminieren und gleichartige Defizite zu einheitlichen Engineering-Aufgaben zusammenzufassen, wird jedes eingehende Defizit-Ticket tokenisiert und mittels des SimHash-Algorithmus [[8]](#src-8) zu einem 64-Bit-lokalitätssensitiven Fingerabdruck (*Locality-Sensitive Hash, LSH*) komprimiert. Im Gegensatz zu kryptografischen Hashfunktionen (SHA-256), bei denen die Änderung eines einzelnen Bits das Ergebnis vollständig verändert (Lawineneffekt), bewahrt SimHash die topologische Nähe der Eingangsvektoren im Hamming-Raum: Ähnliche Defizitformulierungen erhalten nahe beieinander liegende Binärvektoren.
+
+Jedes $`i`$-te Bit des 64-Bit-Fingerabdrucks $`h(\mathbf{t}) \in \{0, 1\}^{64}`$ des Tickets $`\mathbf{t}`$ wird als gewichtete Summe der Merkmalsprojektionen berechnet:
+
+```math
+h_i(\mathbf{t}) = \frac{1 + \mathrm{sign}\left(\sum_{w \in \mathbf{t}} \mathrm{weight}(w) \cdot \bigl(2 \cdot b_i(w) - 1\bigr)\right)}{2}, \quad i \in [0, 63]
+```
+
+wobei:
+- $`\mathbf{t} = \{w_1, w_2, \dots, w_k\}`$ die Menge der Token (Prädikate, Normenbezeichner, semantische Lexeme des Defizitkontexts) darstellt;
+- $`\mathrm{weight}(w)`$ den Gewichtungskoeffizienten des Tokens bezeichnet (beispielsweise TF-IDF-Score oder Informationsgewicht des ontologischen Konzepts, $`\mathrm{weight}(w) > 0`$);
+- $`b_i(w) \in \{0, 1\}`$ das $`i`$-te Bit des 64-Bit-Basishashes des Tokens $`w`$ angibt (generiert durch die schnelle nicht-kryptografische Funktion xxHash64);
+- $`\mathrm{sign}(x)`$ die Vorzeichenfunktion ist ($`+1`$ für $`x \ge 0`$ und $`-1`$ für $`x < 0`$).
+
+Zwei Defizit-Tickets $`\mathbf{t}_1`$ und $`\mathbf{t}_2`$ werden demselben strukturellen Wissensdefizit-Cluster zugeordnet, wenn ihr bitweiser Hamming-Abstand den Cluster-Schwellenwert nicht überschreitet:
+
+```math
+D_{\mathrm{Hamming}}\bigl(h(\mathbf{t}_1), h(\mathbf{t}_2)\bigr) = \sum_{i=0}^{63} \Bigl(h_i(\mathbf{t}_1) \oplus h_i(\mathbf{t}_2)\Bigr) \le \tau_{\mathrm{gap\_cluster}} = 3
+```
+
+wobei $`\oplus`$ die bitweise XOR-Operation bezeichnet und der Schwellenwert $`\tau_{\mathrm{gap\_cluster}} = 3`$ einer inhaltlichen Übereinstimmung von über $95\,\%$ entspricht.
+
+Um eine lineare Durchmusterung bestehender Cluster ($`O(N)`$) zu vermeiden, die während eines Sturms zum Stillstand der Verarbeitung führt, werden die gespeicherten Cluster-Fingerabdrücke in einem metrischen Burkhard-Keller-Baum (*BK-Tree*) [[9]](#src-9) organisiert. Da der Hamming-Abstand die Metrik-Axiome (insbesondere die Dreiecksungleichung) erfüllt, erfolgt die Suche nach dem nächstgelegenen Cluster in logarithmischer Zeit $`O(\log N)`$, was den Rechenaufwand um drei Größenordnungen senkt.
+
+#### 6.1.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der Wissensdefizit-Triage
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   - Stellt ein Agent das Fehlen einer Regel fest, generiert er ein Defizit-Ticket und übergibt dieses an das lokale Triage-Modul. Gilt $`D_{\mathrm{Hamming}}(h(\mathbf{t}), h_{\mathrm{existing}}) \le 3`$, wird das neue Ticket nicht im zentralen NATS-Ereignisbus publiziert, sondern lokal als Ereigniszähler des Clusters aggregiert (`IncClusterHit(ClusterID)`);
+   - Ist der Hamming-Abstand zu allen bekannten Knoten des BK-Baums $`D_{\mathrm{Hamming}} > 3`$, registriert das System einen neuen eindeutigen Wissensdefizit-Cluster, fügt ihn in den BK-Baum ein und publiziert das Ereignis `vida.gap.discovered` auf dem NATS-Bus zur weiteren Untersuchung durch Wissensingenieure.
+2. **Hardware-Dimensionierung (Hardware Dimensioning):**
+   - Jeder Knoten des BK-Baums belegt $`64\,\text{Byte}`$ im Arbeitsspeicher (64-Bit-Schlüssel, Trefferzähler, Zeiger auf Kindknoten von $`0`$ bis $`64`$). Für einen Pool von $`100\,000`$ eindeutigen Defizit-Clustern benötigt die gesamte BK-Baumstruktur lediglich $`6{,}4\,\text{MB}`$ RAM. Dies erlaubt es, die Struktur vollständig im L3-Cache des Prozessors zu halten und Zugriffsverzögerungen auf den externen DRAM-Speicher zu eliminieren.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   - Während eines nächtlichen Testlaufs eines autonomen Manövriersystems generierten $`1\,000`$ virtuelle Agenten $`50\,000`$ Defizit-Tickets infolge einer fehlenden Spezifikation für das Bremsverhalten bei Gierschleudern auf Glatteis.
+   - Durch die Auswertung von $`D_{\mathrm{Hamming}} \le 3`$ im BK-Baum fasste das System $`50\,000`$ gleichartige Anfragen in exakt $`2`$ Wurzel-Defizit-Cluster zusammen (Deduplizierungsrate $`99{,}996\,\%`$). Die Last auf dem Kommunikationsbus sank von $`50\,000`$ auf $`2`$ Nachrichten, wodurch ein Zusammenbruch der Aufgabenwarteschlange abgewendet wurde.
+
+### 6.2. Ingress-Validierung: Schutz vor Entartung des Merkmalsraums und strikte Deserialisierung
+
+Im realen verteilten Betrieb sehen sich asynchrone Message-Broker (NATS JetStream, Apache Kafka) mit einem gravierenden latenten Fehler konfrontiert: dem **schleichenden Kollaps des metrischen Hashraums** (*Contract Drift Collapse*) [[7]](#src-7). Übermittelt ein sendender Agent infolge eines Serialisierer-Versionswechsels ein Ticket mit abweichenden Feldbezeichnern (beispielsweise `ticket_id` anstelle des vom Empfänger erwarteten `TicketID` oder `context` statt `Query`), belässt ein toleranter JSON-Deserialisierer diese Felder stillschweigend als leere Zeichenketten (`""`).
+
+Der Text-Vektorisierer erhält eine leere Eingabe. Der SimHash-Algorithmus über einer leeren Tokenmenge liefert deterministisch einen konstanten Nullvektor:
+
+```math
+\mathrm{SimHash}(\emptyset) = \mathrm{0x0000000000000000}
+```
+
+Infolgedessen erhalten grundverschiedene Wissensdefizite aus völlig unterschiedlichen Subsystemen (vom Kalibrierungsfehler eines Stromsensors bis zur juristischen Kollision in Richtlinien) den identischen Fingerabdruck `0x0000000000000000`. Da der Hamming-Abstand zwischen ihnen $`D_{\mathrm{Hamming}} = 0 \le 3`$ beträgt, verschmilzt das System völlig unzusammenhängende Fehler zu einem gigantischen, entarteten Pseudocluster und lähmt damit die Arbeit der Wissensingenieure.
+
+Zur Beseitigung dieser Schwachstelle wird ein kombinierter architektonischer Schutzmechanismus (*Degeneracy Guard*) etabliert:
+
+1. **Invariante minimaler lexikalischer Komplexität (Distinct Tokens Invariant):**
+   Vor der Berechnung der SimHash-Faltung wird die hinreichende Entropie des Merkmalsraums überprüft:
+
+```math
+\mathrm{DistinctTokens}(T) \ge K_{\mathrm{min}} \quad (K_{\mathrm{min}} = 2)
+```
+
+   Ist die Anzahl eindeutiger semantischer Token $`\mathrm{DistinctTokens}(T) < 2`$ oder die Länge des Eingabetextes null, bricht der Aufruf unmittelbar mit dem Fehler `ErrDegenerateFeatureSpace` ab. Die Werte `0x0000000000000000` und `0xFFFFFFFFFFFFFFFF` werden als Anomalie-Marker reserviert und hardwareseitig gegen die Aufnahme in den BK-Baum gesperrt;
+
+2. **Strikte zweiseitige Vertragsabgleichung (Strict Unmarshal):**
+   Systemnachrichten-Deserialisierer im verteilten Bus werden auf das absolute Verbot unbekannter oder fehlender Pflichtfelder konfiguriert:
+   ```go
+   decoder := json.NewDecoder(streamReader)
+   decoder.DisallowUnknownFields()
+   ```
+   Nachrichten mit fehlenden oder korrumpierten Feldern werden unverzüglich abgewiesen und in eine Quarantäne-Warteschlange für unzustellbare Nachrichten (*Dead-Letter Queue, DLQ*) umgeleitet;
+
+3. **Standardisierung hierarchischer Multi-Token-Busmasken:**
+   Im NATS-Broker filtert eine Sternchen-Maske (`vida.tasks.*`) **strikt genau ein Token** der Hierarchie. Um den Nachrichtendurchlauf von hierarchisch tief verschachtelten Knoten zu garantieren, werden alle System-Abonnements auf den Operator für vollständige Teilbäume `>` standardisiert:
+
+```math
+\mathrm{SubSubject} = \text{"vida.tasks.>"} \quad (\text{anstelle des fehlerhaften } \text{"vida.tasks.*"})
+```
+
+#### 6.2.1. Geschlossener Kreis der ingenieurtechnischen Ingress-Vertragsüberprüfung
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   - Enthält eine eingehende Nachricht nicht die geforderten Schema-Pflichtfelder oder gilt $`\mathrm{DistinctTokens} < 2`$, erzeugt das Triage-Modul das Ereignis `ALERT_CONTRACT_DEGENERACY` und verwirft das Ticket in die DLQ. Der Ausführungsfluss verhindert, dass korrumpierte Daten in den BK-Baum gelangen;
+   - Ist der Vertrag valide und gilt $`\mathrm{DistinctTokens} \ge 2`$, berechnet das System den regulären 64-Bit-SimHash-Fingerabdruck und leitet ihn an den Clustering-Algorithmus weiter.
+2. **Hardware-Dimensionierung (Hardware Dimensioning):**
+   - Der DLQ-Quarantänepuffer wird auf einem separaten SSD-Speicher mit einer Größenbegrenzung von $`10\,\text{GB}`$ bereitgestellt, gekoppelt mit einer Alarmierung des Bereitschaftsingenieurs bei einer Belegung von über $`50\,\%`$;
+   - Die Prüfung mittels `DisallowUnknownFields` erfordert nicht mehr als $`1{,}2\,\mu\text{s}`$ pro Nachricht, wodurch der Knotendurchsatz von über $`80\,000`$ Nachrichten/s auf einem einzelnen CPU-Kern aufrechterhalten wird.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   - Nach einem Firmware-Update des Sensormoduls eines Flugreglers wurde das Kontextfeld versehentlich von `context_spec` in `ctx_spec` umbenannt.
+   - Das Schutz-Gateway `decoder.DisallowUnknownFields()` erkannte das unbekannte Feld `ctx_spec` innerhalb von $`0{,}8\,\mu\text{s}`$ und leitete die Anfrage unter Ausgabe eines Notfallprotokolls in die DLQ um. Dadurch wurde die fehlerhafte Entartung von $`15\,000`$ Tickets in den Null-Fingerabdruck `0x0` verhindert und die Reinheit des semantischen Defizit-Index im Unternehmens-Repository bewahrt.
+
+### 6.3. Autonomer lokaler WAL-Puffer und Lame-Duck-Verhalten bei Netztrennung
+
+In industriellen verteilten Systemen ist die Verbindung zwischen Edge-Knoten (Workstations, Bordcomputern) und dem zentralen Wissens-Broker nicht ausfallfrei: Elektromagnetische Störungen, Netzwerkumschaltungen oder Serverwartungen führen zu temporären Knotenisolationen (*Network Partitions* gemäß CAP-Theorem). Erkennt ein Edge-Agent in einem solchen Moment ein Wissensdefizit, führt ein Fehlen von Pufferungsmechanismen entweder zum Blockieren des Arbeitsprozesses oder zum unbemerkten Verlust sicherheitskritischer Wissenslücken.
+
+Zur Gewährleistung einer lückenlosen Auditierung wird der Edge-Knoten mit einem autonomen lokalen Write-Ahead-Log (*WAL*) ausgestattet:
+1. **Verschlüsselter WAL-Ringpuffer:** Defizit-Tickets werden unverzüglich in einem lokalen Festplattenjournal protokolliert, das mit einem asymmetrischen Sitzungsschlüssel geschützt ist. Das Journal unterliegt einer festen Festplattenquote (beispielsweise $`500\,\text{MB}`$). Bei Erreichen der Quote wird eine Ringrotation aktiviert, bei der ältere redundante Einträge verdrängt werden, eindeutige kritische Urteile jedoch erhalten bleiben;
+2. **Wiederverbindung und FIFO-Drainage:** Sobald der Netzwerk-Stack die Wiederherstellung der Verbindung zum Wissens-Broker registriert, liest ein Hintergrund-Agent das lokale WAL sequenziell aus und publiziert die akkumulierten Tickets nach dem FIFO-Prinzip paketweise, ohne den primären Invarianten-Prüfzyklus zu blockieren;
+3. **Geregeltes Außerbetriebnahme-Protokoll (Lame-Duck-Modus):**
+   Bei einem geplanten Update oder Herunterfahren eines Clusterknotens wird ein zweistufiges Sicherheitsstopp-Protokoll aktiviert:
+   - Der Knoten deregistriert sich umgehend im dynamischen Register des Brokers (`UNREGISTER_PENDING`) und stoppt die Annahme neuer Anfragen von Thin Clients;
+   - Alle aktiven Inferenzsitzungen werden regulär zu Ende geführt, und intermediäre Defizit-Warteschlangen werden vollständig auf die Festplatte in das WAL synchronisiert und an einen benachbarten Standby-Knoten übergeben;
+   - Erst nach Bestätigung des vollständigen Pufferabgleichs beendet der Prozess seine Ausführung ordnungsgemäß (`SHUTDOWN_CLEAN`).
+
+## 7. Unveränderliches Entscheidungsbuch (Immutable Decision Ledger) auf Merkle-Bäumen und WORM-Speichern
+
+In sicherheitskritischen Anwendungsfeldern von Expertensystemen – wie der funktionalen Sicherheit autonomer Fahrzeuge (ISO 26262 ASIL D), der Zertifizierung von Bordsoftware (DO-178C DAL A) und der medizinischen Diagnostik – ist die **Nichtabstreitbarkeit von Entscheidungen (Non-Repudiation)** eine zentrale rechtliche und technische Kernanforderung. Herkömmliche relationale Datenbanken (PostgreSQL, SQLite) oder textuelle Betriebssystemprotokolle sind für diese Aufgabe ungeeignet: Jeder privilegierte Serveradministrator könnte nachträglich Datensätze manipulieren, Urteile fälschen oder das Vorliegen von Sicherheitsverstößen bei retrospektiven Unfalluntersuchungen verschleiern. Andererseits verursacht der naive Versuch, das gesamte Gigabyte-Volumen an Beweisketten in eine öffentliche Blockchain zu schreiben, unzulässige Latenzen (Sekunden statt Mikrosekunden), immense finanzielle Kosten und die Offenlegung vertraulichen Firmenwissens.
+
+Die evidenzbasierte Architektur löst dieses Dilemma durch den Aufbau eines **unveränderlichen Entscheidungsbuchs (Immutable Decision Ledger)** auf Basis lokaler Merkle-Bäume und einer verteilten Verankerung von Kontrollwurzeln.
+
+```mermaid
+flowchart TD
+    accTitle: Architektur des unveränderlichen Entscheidungsbuchs auf Basis von Merkle-Bäumen
+    accDescr: Ein vierkomponentiges Entscheidungs-Beweisbündel wird gehasht, mit Ed25519 signiert, in einem Merkle-Baum zusammengefasst und periodisch in einem WORM-Speicher verankert.
+
+    subgraph Decision["Entscheidungsfindung des Expertensystems"]
+        INP["<b>Eingangsdaten</b><br/>Sensorvektor I"]
+        KBV["<b>Version der Wissensbasis</b><br/>Hash des Regelkorpus V_KB"]
+        PRF["<b>Beweisgraph</b><br/>ASPIC+ / GSN-Zielbaum"]
+        VRD["<b>Systemurteil</b><br/>ACCEPT / REFUSAL"]
+    end
+
+    subgraph Bundle["Kryptografisches Entscheidungsbündel (Evidence Bundle)"]
+        H_INP["H(InputData)"]
+        H_KBV["H(KB_Version)"]
+        H_PRF["H(ProofGraph)"]
+        H_VRD["H(Verdict)"]
+        SIG["<b>Digitale Signatur Ed25519</b><br/>Sign(H_INP || H_KBV || H_PRF || H_VRD)"]
+        
+        H_INP --- H_KBV --- H_PRF --- H_VRD --> SIG
+    end
+
+    subgraph MerkleLayer["Hierarchischer Merkle-Entscheidungsbaum"]
+        LEAF1["Entscheidungsbündel 1"]
+        LEAF2["Entscheidungsbündel 2"]
+        LEAF3["Entscheidungsbündel 3"]
+        LEAF4["Entscheidungsbündel 4"]
+        
+        NODE12["Knoten Hash(1 || 2)"]
+        NODE34["Knoten Hash(3 || 4)"]
+        M_ROOT["<b>Merkle-Wurzel (Merkle Root)</b><br/>Hash(Node12 || Node34)"]
+        
+        LEAF1 --> NODE12
+        LEAF2 --> NODE12
+        LEAF3 --> NODE34
+        LEAF4 --> NODE34
+        NODE12 --> M_ROOT
+        NODE34 --> M_ROOT
+    end
+
+    subgraph Anchoring["Unveränderlicher Speicher (Anchoring Layer)"]
+        WORM["<b>Hardware-WORM-Speicher</b><br/>Write Once Read Many<br/>oder Konsortial-Distributed-Ledger"]
+    end
+
+    INP --> H_INP
+    KBV --> H_KBV
+    PRF --> H_PRF
+    VRD --> H_VRD
+
+    SIG --> LEAF1
+    M_ROOT -->|"periodische Epochen-Verankerung"| WORM
+
+    classDef dec fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
+    classDef bun fill:#fff8e1,stroke:#f57f17,stroke-width:2px,color:#e65100;
+    classDef mer fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef anc fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+
+    class INP,KBV,PRF,VRD dec;
+    class H_INP,H_KBV,H_PRF,H_VRD,SIG bun;
+    class LEAF1,LEAF2,LEAF3,LEAF4,NODE12,NODE34,M_ROOT mer;
+    class WORM anc;
+```
+
+### 7.1. Decision Evidence Bundle und kryptografische Bindung
+
+Jedes Inferenzurteil wird vor der Übermittlung an den Anfragenden in ein kryptografisch integres, binäres Beweisbündel (*Decision Evidence Bundle*) verpackt, welches vier miteinander verknüpfte Hash-Deskriptoren umfasst:
+
+```math
+\mathrm{EvidenceBundle} = \mathrm{Sign}_{\mathrm{Ed25519}}\Bigl(H(I) \mathbin{\Vert} H(V_{\mathrm{KB}}) \mathbin{\Vert} H(G_{\mathrm{proof}}) \mathbin{\Vert} H(\mathrm{Verdict})\Bigr)
+```
+
+wobei:
+- $`H(I)`$ den kryptografischen SHA-256-Hash des Eingangsvektors der Beobachtungen, der Telemetrie oder des normativen Abfragetextes $`I`$ bezeichnet;
+- $`H(V_{\mathrm{KB}})`$ den Hash der aktuellen Version der Wissensbasis, der normativen Ontologien und Defeater darstellt (gewährleistet die bytegenaue Fixierung des Regelzustands zum Inferenzzeitpunkt);
+- $`H(G_{\mathrm{proof}})`$ den Hash der Struktur des ASPIC+-Argumentationsgraphen oder des GSN-Zielbeweisbaums angibt (einschließlich aller aktivierten Prädikate und entkräfteten Zweige);
+- $`H(\mathrm{Verdict})`$ den Hash des resultierenden Urteils (`ACCEPT`, `REFUSAL`, `QUALIFIED`) bildet;
+- $`\mathbin{\Vert}`$ die binäre Konkatenationsoperation darstellt;
+- $`\mathrm{Sign}_{\mathrm{Ed25519}}`$ die digitale Signatur mit dem asymmetrischen Schlüssel des Rechenknotens nach dem Ed25519-Verfahren (RFC 8032) ist.
+
+Diese Struktur liefert den mathematischen Beweis: Weder die Eingangsparameter noch die angewandten Regelversionen oder das Urteil selbst können nachträglich manipuliert werden, ohne die Gültigkeit der digitalen Signatur zu zerstören.
+
+### 7.2. Hierarchischer Merkle-Baum und periodische WORM-Verankerung
+
+Um einen hohen Durchsatz sicherzustellen, werden Entscheidungsbündel nicht einzeln in langsame externe Register geschrieben. Stattdessen werden sie im Arbeitsspeicher des Knotens in Echtzeit zu lokalen binären Merkle-Bäumen [[10]](#src-10) aggregiert:
+
+```math
+\mathrm{Root}_{\mathrm{Merkle}} = \mathrm{Hash}\bigl(\mathrm{Node}_{\mathrm{left}} \mathbin{\Vert} \mathrm{Node}_{\mathrm{right}}\bigr)
+```
+
+Alle $`T_{\mathrm{epoch}}`$ Sekunden (oder nach der Akkumulation von $`K_{\mathrm{batch}}`$ Entscheidungen, beispielsweise $`1\,000`$ Bündeln) wird die berechnete Baumwurzel $`\mathrm{Root}_{\mathrm{Merkle}}`$ in einem geschützten WORM-Speicher (*Write Once Read Many*, optisches Medium oder Cloud-Speicher mit S3 Object Lock) abgelegt oder in einem Konsortial-Ledger registriert.
+
+Um die Authentizität einer einzelnen historischen Entscheidung gegenüber einem Auditor nachzuweisen, genügt die Bereitstellung eines kompakten Audit-Pfades (*Merkle Audit Trail*) der Länge $`\lceil \log_2 N \rceil`$ Hashes. Der Auditor verifiziert die Kette vom Blatt bis zur öffentlich verankerten Wurzel in wenigen Mikrosekunden, ohne den gesamten Datenbestand einlesen zu müssen.
+
+#### 7.2.1. Geschlossener Kreis der ingenieurtechnischen Entscheidungsbuch-Verifikation
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   - Nach der Urteilsfindung erzeugt der Wissensdienst ein `EvidenceBundle` und fügt dieses als Blatt in den aktuellen Epochen-Baum ein;
+   - Weicht bei der Validierung einer historischen Abfrage der berechnete Hash ab ($`\mathrm{Root}_{\mathrm{computed}} \ne \mathrm{Root}_{\mathrm{WORM}}`$), löst das System einen Alarm höchster Priorität `AUDIT_CORRUPTION_DETECTED` aus und sperrt den Zertifizierungsstatus des Knotens bis zur Klärung der Datenmanipulation;
+   - Stimmen die Wurzeln überein, stellt der Audit-Inspektor ein Zertifikat der rechtlichen und technischen Nichtabstreitbarkeit des Urteils aus (`NON_REPUDIATION_VERIFIED`).
+2. **Hardware-Dimensionierung (Hardware Dimensioning):**
+   - Die Berechnung eines Baumknotens auf Basis von SHA-256 oder BLAKE3 beansprucht auf einem modernen Prozessor mit SHA-NI-Hardwarebeschleunigung weniger als $`0{,}15\,\mu\text{s}`$;
+   - Für einen Cluster mit einem Durchsatz von $`10\,000`$ Entscheidungen/s erzeugt eine Epoche von $`T_{\mathrm{epoch}} = 10\,\text{s}`$ einen Merkle-Baum mit $`100\,000`$ Blättern. Die Größe des Audit-Pfades beträgt lediglich $`\lceil \log_2 100\,000 \rceil = 17`$ Hashes ($`17 \times 32 = 544\,\text{Byte}`$), was den Netzwerkverkehr bei Zertifizierungsaudits minimiert.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   - Während eines ISO-26262-Audits eines automobilen ASIL-D-Systems entstand ein Verdacht hinsichtlich eines vor 6 Monaten gefällten Notbremsurteils.
+   - Das Expertensystem lieferte das kryptografische Entscheidungsbündel zusammen mit den 17 Hashes des Merkle-Pfades.
+   - Ein unabhängiger Verifizierer rekonstruierte die Baumwurzel in 17 Hash-Schritten ($`2{,}5\,\mu\text{s}`$) und glich sie mit der im WORM-Register hinterlegten Wurzel ab. Die bitgenaue Übereinstimmung bewies zweifelsfrei, dass weder die Sensordaten des Schleudervorgangs noch die Version der Bremsregeln nachträglich modifiziert wurden, wodurch der Hersteller vor Haftungsansprüchen geschützt wurde.
+
+---
+
+## 8. Ingenieurtechnische Entscheidungsmatrix: Skalierung nach Projektbudget
 
 Der wesentliche Nutzen des theoretischen Referenzprototyps besteht darin, dass er einen **Entwicklungspfad** vorgibt und nicht eine starre Einkaufsliste proprietärer Hardware vorschreibt. Der Entwicklungsingenieur kann das System schrittweise auf derjenigen Hardware implementieren, die im Rahmen des aktuellen Budgets seines Forschungs- oder Industrieprojekts zur Verfügung steht:
 
@@ -433,6 +653,8 @@ Der wesentliche Nutzen des theoretischen Referenzprototyps besteht darin, dass e
 4. **Überwindung der Speicherkapazitätskluft:** Die strikte Trennung statischer Textzitate vom mathematischen Regelskelett reduziert den Arbeitsbereich auf das kompakte Active Working Set ($`\mathrm{AWS} \le 32\,\text{MB}`$). Eine zweibankige Pipelined-Pufferung (Ping-Pong Pipeline) garantiert eine vollständige Latenzverbergung durch Erfüllung der Ungleichung $`T_{\mathrm{refill}} \ll T_{\mathrm{execute}}`$ und verhindert Leerlaufzyklen des Inferenzkerns ($\eta = 1{,}00$).
 5. **Mehrquellenbasiertes argumentatives Schiedsverfahren:** Bei unvollständigem Wissen aggregiert das Scatter-Gather-Muster Aussagen benachbarter Clusterdienste über den ASPIC+-Formalismus. Das System verstärkt die Verlässlichkeit durch Evidenz-Korroboration, entkräftet schwache Empfehlungen deterministisch durch höherrangige Imperative und aktiviert bei unauflösbaren Normenkollisionen eine kompromisslose *Fail-Closed*-Schutzschleuse.
 6. **Praxisnahe Evolution nach Projektbudget:** Der vorgestellte Referenzprototyp fungiert als modularer Entwicklungsleitfaden, der stufenlos vom Einplatz-Laborprüfstand (Stufe 1) über den R&D-Team-Cluster (Stufe 2) bis hin zum industriellen, hardware-deterministischen ASIL-D-System (Stufe 3) skaliert.
+7. **Triage von Wissensdefiziten und SimHash-Clustering:** Die dezentrale Verarbeitung identifizierter Wissenslücken mittels 64-Bit-SimHash und BK-Tree unterbindet lawinenartige Anfrage-Stürme und eine Überlastung der Dienste. Ein lokaler WAL-Puffer mit strikter Festplattenquote garantiert die Erhaltung ermittelter Wissensdefizite selbst bei Verbindungsausfällen zum zentralen Broker, während der Übergang in den Lame-Duck-Modus die Ausgabe unbewiesener Aussagen verhindert.
+8. **Schutz des Merkmalsraums und unveränderliches Entscheidungsbuch:** Token-Entartungen in Abfragen und schematische Anomalien werden an der Ingress-Grenze durch strikte Deserialisierung (`DisallowUnknownFields`) und die Invariante $`\mathrm{DistinctTokens}(T) \ge 2`$ abgewehrt. Alle erzeugten Entscheidungs-Beweisbündel werden irreversibel in Merkle-Bäumen und WORM-Medien verankert, wodurch ein manipulationssicherer Audit-Trail mit kryptografischer Bindung von Eingangsbedingungen, Urteil und Regelversion entsteht.
 
 ---
 
@@ -445,6 +667,9 @@ Der wesentliche Nutzen des theoretischen Referenzprototyps besteht darin, dass e
 5. Welche drei epistemischen Trigger signalisieren dem semantischen Broker die Notwendigkeit, von einer lokalen Auswertung zu einer föderierten Abfrage nach dem Scatter-Gather-Muster überzugehen?
 6. Wie löst die ASPIC+-Argumentationsmaschine eine normative Kollision auf, wenn zwei gleichrangige, harmonisierte Standards einander widersprechende Anforderungen stellen?
 7. Beschreiben Sie anhand der Technologieauswahlmatrix den Evolutionspfad eines Expertensystems vom Ein-Rechner-Laborprototypen bis zum heterogenen Industriekomplex.
+8. Auf welche Weise lösen 64-Bit-SimHash-Fingerabdrücke und metrische BK-Bäume das Problem von Lawinenstürmen bei Wissensdefizit-Tickets in einem verteilten Cluster?
+9. Warum kann das Ersetzen des Wildcard-Operators `vida.tasks.>` durch `vida.tasks.*` in einer NATS-Nachrichtenwarteschlange zu einem systemischen Verlust von Wissenskontext-Teilbäumen führen?
+10. Welche vier kryptografischen Hashes bilden die Struktur des Decision Evidence Bundle, und wie garantiert der Merkle-Baum die Unveränderlichkeit und Nichtabstreitbarkeit gefällter Urteile?
 
 ---
 
@@ -463,6 +688,12 @@ Der wesentliche Nutzen des theoretischen Referenzprototyps besteht darin, dass e
 | Evidenz-Korroboration | Corroboration | Mathematische Verstärkung des aggregierten Vertrauens in ein Urteil bei Vorliegen übereinstimmender Nachweise unabhängiger Quellen |
 | Regelentkräftung | Undercutting Defeat | Mechanismus der nichtmonotonen Argumentation, bei dem eine höherrangige verbindliche Norm eine kollidierende Empfehlung annulliert |
 | Fail-Closed-Kollisionsschleuse | Fail-Closed Qualified Conflict Gate | Sicherheitsmechanismus zur Verhinderung automatischer Scheinkompromisse bei unvereinbaren gleichrangigen Normen mit Eskalation an den Architekten |
+| Triage von Wissensdefiziten | Knowledge Gap Triage | Algorithmische Clusterung und Deduplizierung ermittelter fehlender Fakten in verteilten Umgebungen |
+| SimHash-Fingerabdruck | SimHash Fingerprint | 64-Bit-Hash mit lokaler Sensitivität zur Messung der semantischen Hamming-Distanz |
+| Burkhard-Keller-Baum | Burkhard-Keller Tree (BK-Tree) | Metrischer Baum zur diskreten logarithmischen Suche $`O(\log N)`$ nach nächstgelegenen Wissensvektoren |
+| Schutz vor Merkmalsentartung | Feature Degeneracy Guard | Ingress-Validierungsmechanismus zur Filterung trivialer und anomaler Vektoren anhand von Entropieschwellen |
+| Entscheidungs-Beweisbündel | Decision Evidence Bundle | Kryptografisches Tupel aus Hashes der Eingangsdaten, der Wissensbasis-Version, des Beweisgraphen und einer Ed25519-Signatur |
+| Unveränderliches Entscheidungsbuch | Immutable Decision Ledger | Verteilte Struktur auf Basis von Merkle-Bäumen und WORM-Speichern für das manipulationssichere Audit von Urteilen |
 
 ---
 
@@ -473,18 +704,23 @@ Der wesentliche Nutzen des theoretischen Referenzprototyps besteht darin, dass e
 | ASIL | Automotive Safety Integrity Level | Sicherheitsanforderungsstufe für Automobilelektronik nach ISO 26262 (Stufen A bis D) |
 | ASPIC+ | Argumentation Service Platform with Incomplete and Conflicting Information | Formaler Rahmen zur Strukturierung von Argumenten, Annahmen und Angriffs-/Entkräftungsregeln |
 | AWS | Active Working Set | Aktiver Arbeitssatz von Wissensregeln, der minimal zur Berechnung einer Abfrage benötigt wird |
+| BK-Tree | Burkhard-Keller Tree | Metrischer Baum zur Suche nächster Nachbarn in Räumen mit diskreter Metrik |
 | BRAM | Block Random Access Memory | Schneller On-Chip-Speicher eines Hardware-Regelprozessors mit deterministischer Zugriffszeit |
+| DLQ | Dead-Letter Queue | Quarantäne-Warteschlange für unzustellbare oder anomale Nachrichten zur Isolation fehlerhafter Pakete |
 | DMA | Direct Memory Access | Direkter Speicherzugriff für den autonomen Hardware-Datentransfer ohne CPU-Beteiligung |
 | EVM | Epistemic Virtual Machine | Deterministische virtuelle Maschine zur Ausführung logischer Resolutionen und Beweisführungen |
 | gRPC | Google Remote Procedure Call | Leistungsfähiges binäres RPC-Framework auf Basis von HTTP/2 und Protocol Buffers |
 | IPC | Inter-Process Communication | Betriebssystemmechanismen zum schnellen Datenaustausch zwischen Prozessen auf demselben Host |
 | KTP | Knowledge Testing Pyramid | Mehrstufige Methodik zum Testen von Wissensbasen von atomaren Fakten bis zu Integrationsszenarien |
+| LSH | Locality-Sensitive Hashing | Lokalitätssensitives Hashing zur schnellen Gruppierung ähnlicher Objekte |
 | NPU | Neural Processing Unit | Spezialisierter Hardwarebeschleuniger für Tensor- und Matrixoperationen künstlicher neuronaler Netze |
 | PWA | Progressive Web Application | Webanwendungs-Technologie mit Unterstützung für Offline-Caching der Benutzeroberfläche |
 | RPC | Remote Procedure Call | Paradigma für die Interaktion verteilter Softwarekomponenten über entfernte Prozeduraufrufe |
 | SLM | Small Language Model | Kompaktes spezialisiertes Sprachmodell (1B–7B Parameter) für linguistische Diskursanalyse |
 | SOA | Service-Oriented Architecture | Serviceorientierte Softwarearchitektur mit lose gekoppelten Dienstkomponenten |
 | TARA | Threat Analysis and Risk Assessment | Methodik zur Bedrohungsanalyse und Risikobewertung im Fahrzeugbau nach ISO/SAE 21434 |
+| WAL | Write-Ahead Log | Vorauseilendes Festplattenprotokoll zur Gewährleistung von Atomarität und Persistenz |
+| WORM | Write Once, Read Many | Speicher-Medium mit einmaligem Schreibvorgang und unveränderlichem Mehrfach-Lesezugriff |
 | ZHR | Zero-Hallucination Rate | Metrik für das vollständige Fehlen unbegründeter Modellausgaben ($ZHR = 1.00$) in evidenzbasierten ES |
 
 ---
@@ -497,8 +733,12 @@ Der wesentliche Nutzen des theoretischen Referenzprototyps besteht darin, dass e
 <a id="src-4"></a>[4] Fielding, R. T. (2000). *Architectural Styles and the Design of Network-based Software Architectures*. Doctoral dissertation, University of California, Irvine.  
 <a id="src-5"></a>[5] ISO 26262:2018. *Road vehicles — Functional safety* (Parts 1–12). International Organization for Standardization.  
 <a id="src-6"></a>[6] RTCA DO-178C / EUROCAE ED-12C (2011). *Software Considerations in Airborne Systems and Equipment Certification*. RTCA.  
-<a id="src-7"></a>[7] NIST AI 100-1 (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0)*. National Institute of Standards and Technology.
+<a id="src-7"></a>[7] NIST AI 100-1 (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0)*. National Institute of Standards and Technology.  
+<a id="src-8"></a>[8] Charikar, M. S. (2002). Similarity estimation techniques from rounding algorithms. *Proceedings of the thirtieth annual ACM symposium on Theory of computing*, 380–388.  
+<a id="src-9"></a>[9] Burkhard, W. A., & Keller, R. M. (1973). Some approaches to best-match file searching. *Communications of the ACM*, 16(4), 230–236.  
+<a id="src-10"></a>[10] Merkle, R. C. (1987). A digital signature based on a conventional encryption function. *Advances in Cryptology — CRYPTO ’87*, LNCS 293, 369–378.
 
 ---
 
 [← Kapitel 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md) | [Inhaltsverzeichnis](README.md) | [Teil VII](part-07-runtime-and-knowledge-exchange.md) | [Zu den Anhängen →](appendix-a-evidence-governed-framework.md)
+

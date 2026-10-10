@@ -13,7 +13,7 @@
 
 All preceding chapters of this monograph have systematically established a fundamental thesis: a dependable expert system cannot rest upon stochastic generalizations of large language models or unverified fact bases. Genuine expertise demands mathematical determinism, formal deduction, byte-level custody of primary sources ($ZHR = 1.00$), and independent auditability. However, deploying the system beyond the research test bench into a real-world industrial R&D environment confronts the architect with a critical new challenge: **scalability, distribution, and ubiquitous availability**.
 
-This chapter concludes the theoretical cycle of the monograph by formulating for the reader a **reference architectural prototype of an industrial-grade evidence-governed expert system**. Abstracting away from proprietary silicon vendors and commercial hardware specifications, the chapter delineates the functional classes of hardware and software evaluators required to build a scalable architecture. It examines a three-tier Epistemic Service-Oriented Architecture (Epistemic SOA), wherein thin mobile clients (smartphones, engineering terminals) interact with a cluster of domain services through an intelligent semantic broker. A multi-tier memory hierarchy is formalized: the pipeline continuity condition and complete latency hiding ($`T_{\mathrm{refill}} \ll T_{\mathrm{execute}}`$) are mathematically proven via Active Working Sets (AWS) and symmetric double buffering (Ping-Pong Pipeline). To handle knowledge gaps across individual domain services, the chapter establishes a model for federated search (Scatter-Gather) and multi-source defeasible evidence aggregation (ASPIC+), ensuring corroboration, undercutting defeat of weak recommendations, and qualified identification of normative collisions. Finally, an engineering technology selection matrix is presented, enabling the systems architect to deploy a functional prototype on available infrastructure aligned with project budget constraints.
+This chapter concludes the theoretical cycle of the monograph by formulating for the reader a **reference architectural prototype of an industrial-grade evidence-governed expert system**. Abstracting away from proprietary silicon vendors and commercial hardware specifications, the chapter delineates the functional classes of hardware and software evaluators required to build a scalable architecture. It examines a three-tier Epistemic Service-Oriented Architecture (Epistemic SOA), wherein thin mobile clients (smartphones, engineering terminals) interact with a cluster of domain services through an intelligent semantic broker. A multi-tier memory hierarchy is formalized: the pipeline continuity condition and complete latency hiding ($`T_{\mathrm{refill}} \ll T_{\mathrm{execute}}`$) are mathematically proven via Active Working Sets (AWS) and symmetric double buffering (Ping-Pong Pipeline). To handle knowledge gaps across individual domain services, the chapter establishes a model for federated search (Scatter-Gather) and multi-source defeasible evidence aggregation (ASPIC+). Special emphasis is dedicated to distributed semantic triage of knowledge deficits based on 64-bit SimHash fingerprinting and Burkhard-Keller metric trees (BK-Trees), hardened by feature space degeneracy guards and autonomous local WAL buffers, as well as constructing an Immutable Decision Ledger over hierarchical Merkle trees with WORM anchoring to ensure legal and technical non-repudiation for ASIL D certification audits. Finally, an engineering technology selection matrix is presented, enabling the systems architect to deploy a functional prototype on available infrastructure aligned with project budget constraints.
 
 ---
 
@@ -413,7 +413,226 @@ Under such conditions, conforming to the guidelines of trustworthy artificial in
 
 ---
 
-## 6. Engineering Matrix for Technology Selection and Scaling by Project Budget
+## 6. Distributed Knowledge Gap Triage and Message Queue Hardening
+
+In a distributed architecture of evidence-governed expert systems, where every node operates under the uncompromising Fail-Closed principle under epistemic incompleteness ($`\mathrm{ZHR} = 1.00`$), any missing fact, unresolved normative ambiguity, or conflicting rule immediately triggers an automated Knowledge Gap Ticket. In large-scale industrial deployments (hundreds of embedded controllers or thousands of continuous CI/CD compliance audit agents), a systemic threat emerges: an avalanche **Knowledge Gap Ticket Storm**. Naive linear query aggregation under global locks exhausts message broker thread pools, overflows operating memory queues, and precipitates a Denial of Memory outage. To mitigate this vulnerability, the distributed knowledge platform relies on a three-tier semantic triage subsystem.
+
+### 6.1. SimHash Fingerprinting and Burkhard-Keller Metric Trees (BK-Tree)
+
+To eliminate redundant ticket duplication and coalesce identical knowledge deficits into unified engineering action items, each incoming deficit ticket is tokenized and folded into a 64-bit Locality-Sensitive Hash (LSH) using the SimHash algorithm [[8]](#src-8). Unlike cryptographic hash functions (such as SHA-256), where a single bit alteration induces a radical avalanche effect across the entire digest, SimHash preserves the topological proximity of input feature vectors within Hamming space: semantically similar deficit formulations yield proximate binary vectors.
+
+Each $`i`$-th bit of the 64-bit fingerprint $`h(\mathbf{t}) \in \{0, 1\}^{64}`$ for ticket $`\mathbf{t}`$ is computed as a weighted projection of its constituent features:
+
+```math
+h_i(\mathbf{t}) = \frac{1 + \mathrm{sign}\left(\sum_{w \in \mathbf{t}} \mathrm{weight}(w) \cdot \bigl(2 \cdot b_i(w) - 1\bigr)\right)}{2}, \quad i \in [0, 63]
+```
+
+where:
+- $`\mathbf{t} = \{w_1, w_2, \dots, w_k\}`$ is the multiset of extracted tokens (predicates, regulatory standard identifiers, semantic context lexemes of the knowledge deficit);
+- $`\mathrm{weight}(w)`$ is the feature weight coefficient (e.g., TF-IDF score or ontological concept information weight, $`\mathrm{weight}(w) > 0`$);
+- $`b_i(w) \in \{0, 1\}`$ is the $`i`$-th bit of the 64-bit base hash of token $`w`$ (generated via a fast non-cryptographic hash function such as xxHash64);
+- $`\mathrm{sign}(x)`$ is the signum function ($`+1`$ for $`x \ge 0`$ and $`-1`$ for $`x < 0`$).
+
+Two knowledge deficit tickets $`\mathbf{t}_1`$ and $`\mathbf{t}_2`$ are assigned to the same structural deficit cluster if their bitwise Hamming distance does not exceed the clustering threshold:
+
+```math
+D_{\mathrm{Hamming}}\bigl(h(\mathbf{t}_1), h(\mathbf{t}_2)\bigr) = \sum_{i=0}^{63} \Bigl(h_i(\mathbf{t}_1) \oplus h_i(\mathbf{t}_2)\Bigr) \le \tau_{\mathrm{gap\_cluster}} = 3
+```
+
+where $`\oplus`$ denotes the bitwise exclusive OR (XOR) operation, and the threshold $`\tau_{\mathrm{gap\_cluster}} = 3`$ corresponds to a semantic content similarity exceeding $`95\%`$.
+
+To avoid linear scanning across all existing clusters ($`O(N)`$), which would induce pipeline stalls during ticket storms, persisted cluster fingerprints are indexed in a Burkhard-Keller metric tree (**BK-Tree**) [[9]](#src-9). Because the Hamming distance strictly satisfies all metric axioms (specifically the triangle inequality), querying for the nearest cluster executes in logarithmic time $`O(\log N)`$, reducing computational overhead by three orders of magnitude.
+
+#### 6.1.1. Actionable Closed Loop of Knowledge Deficit Triage
+
+1. **Control Flow & Runtime Decisions:**
+   - When an audit agent detects a missing rule, it constructs a deficit ticket and dispatches it to the local triage module. If $`D_{\mathrm{Hamming}}(h(\mathbf{t}), h_{\mathrm{existing}}) \le 3`$, the new ticket is not published to the central NATS event bus; instead, it is aggregated locally by incrementing an incident occurrence counter (`IncClusterHit(ClusterID)`);
+   - If the Hamming distance to all existing nodes in the BK-Tree satisfies $`D_{\mathrm{Hamming}} > 3`$, the system registers a novel, unique knowledge deficit cluster, inserts it into the BK-Tree, and publishes a `vida.gap.discovered` event to the NATS bus for investigation by knowledge engineers.
+2. **Hardware Dimensioning:**
+   - Each BK-Tree node occupies $`64\,\text{bytes}`$ in operating memory (64-bit key, hit counter, child pointers for distances $`0`$ to $`64`$). For a pool of $`100\,000`$ unique deficit clusters, the entire BK-Tree requires merely $`6.4\,\text{MB}`$ of RAM. This compact footprint allows it to reside permanently within processor L3 cache, eliminating DRAM access latency.
+3. **Worked Numerical Example:**
+   - During a nightly testing sweep of an autonomous maneuvering subsystem, $`1\,000`$ virtual agents generated $`50\,000`$ deficit tickets due to an unmodeled cornering deceleration specification on black ice.
+   - By evaluating $`D_{\mathrm{Hamming}} \le 3`$ across the BK-Tree, the system collapsed the $`50\,000`$ incoming requests into exactly $`2`$ root deficit clusters (a deduplication ratio of $`99.996\%`$). Message bus traffic plummeted from $`50\,000`$ to $`2`$ discrete messages, preventing task queue collapse.
+
+### 6.2. Ingress Validation: Feature Space Degeneracy Guard and Strict Unmarshaling
+
+In distributed production environments, asynchronous message brokers (NATS JetStream, Apache Kafka) encounter a severe, latent failure mode: **silent metric space collapse** (*Contract Drift Collapse*) [[7]](#src-7). If an upstream producer agent alters its serializer schema and transmits a ticket with mismatched field names (for example, `ticket_id` instead of the expected `TicketID`, or `context` instead of `Query`), a permissive JSON unmarshaler silently leaves destination struct fields as empty strings (`""`).
+
+The text vectorizer subsequently receives empty input. The SimHash algorithm evaluated over an empty token set deterministically produces a constant zero vector:
+
+```math
+\mathrm{SimHash}(\emptyset) = \mathrm{0x0000000000000000}
+```
+
+Consequently, disparate knowledge deficits from completely unrelated subsystems (ranging from a current sensor calibration fault to a legal conflict across directives) all receive the identical fingerprint `0x0000000000000000`. Since the Hamming distance between them is $`D_{\mathrm{Hamming}} = 0 \le 3`$, the system merges completely unrelated anomalies into a single degenerate pseudo-cluster, paralyzing the triage queue.
+
+To eliminate this vulnerability, a multi-layer architectural guard (*Degeneracy Guard*) is enforced:
+
+1. **Distinct Tokens Invariant:**
+   Prior to evaluating the SimHash projection, the feature space entropy is validated:
+
+```math
+\mathrm{DistinctTokens}(T) \ge K_{\mathrm{min}} \quad (K_{\mathrm{min}} = 2)
+```
+
+   If the count of unique semantic tokens satisfies $`\mathrm{DistinctTokens}(T) < 2`$ or the input string length is zero, execution immediately halts with an `ErrDegenerateFeatureSpace` fault. The values `0x0000000000000000` and `0xFFFFFFFFFFFFFFFF` are permanently reserved as anomaly markers and hardware-blocked from insertion into the BK-Tree;
+
+2. **Strict Schema Unmarshaling (Strict Unmarshal):**
+   Distributed bus deserializers are configured to strictly prohibit unknown or omitted mandatory fields:
+   ```go
+   decoder := json.NewDecoder(streamReader)
+   decoder.DisallowUnknownFields()
+   ```
+   Messages with missing or malformed fields are instantly rejected and routed to a quarantine Dead-Letter Queue (*DLQ*);
+
+3. **Multi-Token Hierarchical Wildcard Standardization:**
+   In the NATS broker, a single-token asterisk wildcard (`vida.tasks.*`) matches **strictly one hierarchical token**. To guarantee message capture from nested multi-tier services, all system subscriptions are standardized on the full-subtree wildcard operator `>`:
+
+```math
+\mathrm{SubSubject} = \text{"vida.tasks.>"} \quad (\text{instead of erroneous } \text{"vida.tasks.*"})
+```
+
+#### 6.2.1. Actionable Closed Loop of Ingress Contract Verification
+
+1. **Control Flow & Runtime Decisions:**
+   - If an incoming payload violates schema contracts or exhibits $`\mathrm{DistinctTokens} < 2`$, the triage module emits an `ALERT_CONTRACT_DEGENERACY` event and drops the ticket into the DLQ. Execution terminates before malformed data reaches the BK-Tree;
+   - If the payload is schema-valid and $`\mathrm{DistinctTokens} \ge 2`$, the engine calculates the full 64-bit SimHash digest and proceeds to metric clustering.
+2. **Hardware Dimensioning:**
+   - The DLQ quarantine buffer is provisioned on dedicated NVMe/SSD storage with a strict quota of $`10\,\text{GB}`$, triggering paging alerts when capacity exceeds $`50\%`$;
+   - The `DisallowUnknownFields` verification adds no more than $`1.2\,\mu\text{s}`$ per message, maintaining node throughput above $`80\,000`$ messages/sec on a single CPU core.
+3. **Worked Numerical Example:**
+   - Following a firmware update to a flight controller sensor module, a context field was inadvertently renamed from `context_spec` to `ctx_spec`.
+   - The `decoder.DisallowUnknownFields()` gateway flagged the unknown field `ctx_spec` within $`0.8\,\mu\text{s}`$ and routed the payload to the DLQ with an error trace. This prevented the catastrophic collapse of $`15\,000`$ subsequent deficit tickets into the null fingerprint `0x0`, preserving the integrity of the enterprise knowledge index.
+
+### 6.3. Autonomous Local WAL Buffer and Lame Duck Graceful Degradation
+
+In industrial distributed deployments, network partitions between peripheral nodes (edge workstations, on-board computers) and the central knowledge broker are inevitable due to electromagnetic interference, physical reconnection, or maintenance windows. If an edge agent detects a knowledge gap during network isolation, an unbuffered architecture either hangs the execution thread or silently drops safety-critical gap tickets.
+
+To preserve continuous auditing under the CAP theorem constraints, the edge node is fortified with an autonomous Write-Ahead Log (**WAL**):
+1. **Ring Encrypted WAL Buffer:** Deficit tickets are immediately flushed to an append-only local disk log encrypted with the session asymmetric key. The log is constrained by a fixed storage quota (e.g., $`500\,\text{MB}`$). Upon reaching quota limits, ring rotation evicts redundant duplicate entries while preserving distinct high-severity verdicts;
+2. **Connection Recovery and FIFO Drain:** Once the network stack detects re-established connectivity with the knowledge broker, a background worker performs sequential replay of the local WAL, batch-publishing accumulated tickets under a FIFO discipline without stalling primary inference pipelines;
+3. **Controlled Decommissioning Protocol (Lame Duck Mode):**
+   During scheduled node maintenance or cluster scaling events, a graceful shutdown protocol is executed:
+   - The node unregisters from the broker's active registry (`UNREGISTER_PENDING`), rejecting new client requests;
+   - Active reasoning sessions run to completion, intermediate gap queues are flushed to local WAL and replicated to an adjacent peer node;
+   - Only upon full buffer synchronization does the runtime issue a clean termination signal (`SHUTDOWN_CLEAN`).
+
+## 7. Immutable Decision Ledger on Merkle Trees and WORM Storage
+
+In safety-critical applications of expert systems — such as autonomous driving (ISO 26262 ASIL D), airborne software certification (DO-178C DAL A), and medical diagnostics — a paramount legal and engineering mandate is **non-repudiation of decisions**. Conventional relational databases (PostgreSQL, SQLite) or operating system audit logs fail to satisfy this requirement: a privileged database administrator can mutate historical records, forge verdicts, or expunge safety violations during post-incident investigations. Conversely, naively committing multi-gigabyte evidentiary proof graphs to a public blockchain introduces prohibitive latency (seconds instead of microseconds), unsustainable transaction costs, and confidentiality breaches of proprietary engineering IP.
+
+The evidence-governed architecture resolves this dilemma by constructing an **Immutable Decision Ledger** based on in-memory hierarchical Merkle trees and distributed periodic root anchoring.
+
+```mermaid
+flowchart TD
+    accTitle: Architecture of an immutable decision ledger based on Merkle trees
+    accDescr: The four-component decision evidence bundle is hashed and signed with Ed25519, aggregated into a Merkle tree, and periodically anchored to WORM storage.
+
+    subgraph Decision["Expert System Decision Formation"]
+        INP["<b>Input Data</b><br/>sensor vector I"]
+        KBV["<b>Knowledge Base Version</b><br/>corpus hash V_KB"]
+        PRF["<b>Proof Graph</b><br/>ASPIC+ / GSN tree"]
+        VRD["<b>System Verdict</b><br/>ACCEPT / REFUSAL"]
+    end
+
+    subgraph Bundle["Decision Evidence Bundle"]
+        H_INP["H(InputData)"]
+        H_KBV["H(KB_Version)"]
+        H_PRF["H(ProofGraph)"]
+        H_VRD["H(Verdict)"]
+        SIG["<b>Ed25519 Digital Signature</b><br/>Sign(H_INP || H_KBV || H_PRF || H_VRD)"]
+        
+        H_INP --- H_KBV --- H_PRF --- H_VRD --> SIG
+    end
+
+    subgraph MerkleLayer["Hierarchical Decision Merkle Tree"]
+        LEAF1["Decision Bundle 1"]
+        LEAF2["Decision Bundle 2"]
+        LEAF3["Decision Bundle 3"]
+        LEAF4["Decision Bundle 4"]
+        
+        NODE12["Node Hash(1 || 2)"]
+        NODE34["Node Hash(3 || 4)"]
+        M_ROOT["<b>Merkle Root</b><br/>Hash(Node12 || Node34)"]
+        
+        LEAF1 --> NODE12
+        LEAF2 --> NODE12
+        LEAF3 --> NODE34
+        LEAF4 --> NODE34
+        NODE12 --> M_ROOT
+        NODE34 --> M_ROOT
+    end
+
+    subgraph Anchoring["Immutable Anchoring Layer"]
+        WORM["<b>Hardware WORM Storage</b><br/>Write Once Read Many<br/>or consortium distributed ledger"]
+    end
+
+    INP --> H_INP
+    KBV --> H_KBV
+    PRF --> H_PRF
+    VRD --> H_VRD
+
+    SIG --> LEAF1
+    M_ROOT -->|"periodic epoch anchoring"| WORM
+
+    classDef dec fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
+    classDef bun fill:#fff8e1,stroke:#f57f17,stroke-width:2px,color:#e65100;
+    classDef mer fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef anc fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+
+    class INP,KBV,PRF,VRD dec;
+    class H_INP,H_KBV,H_PRF,H_VRD,SIG bun;
+    class LEAF1,LEAF2,LEAF3,LEAF4,NODE12,NODE34,M_ROOT mer;
+    class WORM anc;
+```
+
+### 7.1. Decision Evidence Bundle and Cryptographic Grounding
+
+Prior to returning a deduction result to an external consumer, every inference event is packaged into a cryptographically sealed binary container — the **Decision Evidence Bundle** — containing four interconnected digest descriptors:
+
+```math
+\mathrm{EvidenceBundle} = \mathrm{Sign}_{\mathrm{Ed25519}}\Bigl(H(I) \mathbin{\Vert} H(V_{\mathrm{KB}}) \mathbin{\Vert} H(G_{\mathrm{proof}}) \mathbin{\Vert} H(\mathrm{Verdict})\Bigr)
+```
+
+where:
+- $`H(I)`$ is the SHA-256 cryptographic digest of the input observation vector, telemetry payload, or regulatory query text $`I`$;
+- $`H(V_{\mathrm{KB}})`$ is the digest of the active knowledge base version, regulatory ontologies, and defeater tables (enforcing byte-level custody of the rule state at execution time);
+- $`H(G_{\mathrm{proof}})`$ is the structural digest of the ASPIC+ argumentation graph or GSN goal structuring tree (encompassing all evaluated predicates and defeated branches);
+- $`H(\mathrm{Verdict})`$ is the digest of the emitted verdict (`ACCEPT`, `REFUSAL`, `QUALIFIED`);
+- $`\mathbin{\Vert}`$ denotes binary concatenation;
+- $`\mathrm{Sign}_{\mathrm{Ed25519}}`$ represents the digital signature executed using the computing node's private asymmetric key under Ed25519 (RFC 8032).
+
+This cryptographic binding provides mathematical proof: neither the input parameters, nor the applied rule versions, nor the emitted verdict can be altered without invalidating the digital signature.
+
+### 7.2. Hierarchical Merkle Tree and Periodic Anchoring
+
+To sustain high throughput, individual evidence bundles are not committed one-by-one to slow persistent ledgers. Instead, they are aggregated in real time into local binary Merkle trees [[10]](#src-10) within operating memory:
+
+```math
+\mathrm{Root}_{\mathrm{Merkle}} = \mathrm{Hash}\bigl(\mathrm{Node}_{\mathrm{left}} \mathbin{\Vert} \mathrm{Node}_{\mathrm{right}}\bigr)
+```
+
+Every $`T_{\mathrm{epoch}}`$ seconds (or upon accumulating $`K_{\mathrm{batch}}`$ decisions, e.g., $`1\,000`$ bundles), the computed root $`\mathrm{Root}_{\mathrm{Merkle}}`$ is committed to Write-Once-Read-Many (**WORM**) storage (optical media or cloud object stores configured with S3 Object Lock compliance retention) or published to an enterprise consortium distributed ledger.
+
+To prove the authenticity of any individual historical decision, an auditor requires only a compact **Merkle Audit Trail** of length $`\lceil \log_2 N \rceil`$ hashes. The auditor validates the hash chain from the leaf bundle to the publicly anchored root in microseconds, without needing to ingest or read the entire repository of historical decisions.
+
+#### 7.2.1. Actionable Closed Loop of Decision Ledger Verification
+
+1. **Control Flow & Runtime Decisions:**
+   - Upon synthesizing a verdict, the knowledge service creates an `EvidenceBundle` and inserts it as a leaf in the current epoch tree;
+   - If historical validation computes $`\mathrm{Root}_{\mathrm{computed}} \ne \mathrm{Root}_{\mathrm{WORM}}`$, the runtime triggers a priority-1 `AUDIT_CORRUPTION_DETECTED` alarm and revokes the node's certification status until the forensic investigation concludes;
+   - If the roots match identically, the verification inspector issues a non-repudiation certificate (`NON_REPUDIATION_VERIFIED`).
+2. **Hardware Dimensioning:**
+   - Evaluating a tree node using SHA-256 or BLAKE3 consumes less than $`0.15\,\mu\text{s}`$ on modern CPUs equipped with SHA-NI hardware instructions;
+   - For a cluster processing $`10\,000`$ decisions/sec, an epoch duration of $`T_{\mathrm{epoch}} = 10\,\text{s}`$ aggregates $`100\,000`$ leaves into a single Merkle tree. The audit path comprises merely $`\lceil \log_2 100\,000 \rceil = 17`$ hashes ($`17 \times 32 = 544\,\text{bytes}`$), minimizing regulatory audit network overhead.
+3. **Worked Numerical Example:**
+   - During an ISO 26262 ASIL D audit of an automotive platform, an emergency automated braking verdict rendered 6 months prior was called into question.
+   - The expert system furnished the Decision Evidence Bundle alongside 17 hashes constituting the Merkle audit trail.
+   - An independent verifier reconstructed the tree root across 17 hash operations ($`2.5\,\mu\text{s}`$) and cross-checked it against the root anchored in WORM storage on that date. The exact match byte-for-byte proved that neither the vehicle telemetry nor the braking rules had been modified ex post facto, shielding the manufacturer from liability exposure.
+
+---
+
+## 8. Engineering Decision Matrix: Scaling by Project Budget
 
 The fundamental value of this theoretical prototype lies in defining an **architectural trajectory** rather than a rigid vendor bill of materials. An engineering practitioner can instantiate the system upon hardware assets aligned with the current budget profile of their research or commercial program:
 
@@ -433,6 +652,8 @@ The fundamental value of this theoretical prototype lies in defining an **archit
 4. **Bridging the Memory Capacity Gap:** Separating static citations from the mathematical skeleton of rules shrinks the working footprint to a compact Active Working Set ($`\mathrm{AWS} \le 32\,\text{MB}`$). Two-bank pipelined double buffering (Ping-Pong Pipeline) achieves complete latency hiding by enforcing the invariant $`T_{\mathrm{refill}} \ll T_{\mathrm{execute}}`$, eliminating rule processor stalls ($\eta = 1.00$).
 5. **Multi-Source Argumentative Arbitration:** When knowledge deficits are identified, the Scatter-Gather pattern aggregates evidence across peer cluster services within the ASPIC+ formalism. The system amplifies confidence via evidence corroboration, deterministically undercuts weak recommendations using superior imperative norms, and trips a *Fail-Closed* safety gate upon encountering unresolvable normative collisions.
 6. **Practical Evolution Aligned with Project Budget:** The proposed prototype establishes a conceptual developmental roadmap, scaling seamlessly from a single-machine laboratory test bench (Tier 1) to a collaborative R&D cluster (Tier 2) and an industrial-grade hardware-deterministic complex certified for ASIL-D environments (Tier 3).
+7. **Knowledge Gap Triage and SimHash Clustering:** Decentralized handling of detected knowledge deficits via 64-bit SimHash and BK-Trees eliminates avalanche storms of redundant queries and service overload. A local WAL buffer with a strict disk quota guarantees the persistence of identified gaps even during network partitions from the central broker, while transitioning into Lame Duck mode prevents the emission of unproven claims.
+8. **Feature Space Guard and Immutable Decision Ledger:** Token degeneracy in incoming requests and schema drift anomalies are blocked at the ingress boundary by strict deserialization (`DisallowUnknownFields`) and the $`\mathrm{DistinctTokens}(T) \ge 2`$ invariant. All synthesized decision evidence bundles are irreversibly anchored into Merkle trees and WORM storage, establishing an unforgeable, legally binding audit trail with cryptographic binding across input conditions, the emitted verdict, and knowledge base versions.
 
 ---
 
@@ -445,6 +666,9 @@ The fundamental value of this theoretical prototype lies in defining an **archit
 5. Which three epistemic triggers signal the Semantic Broker to transition from local evaluation to a federated Scatter-Gather inquiry?
 6. How does the ASPIC+ argumentation engine resolve a normative collision when two equally authoritative harmonized standards mandate mutually exclusive requirements?
 7. Trace the evolutionary trajectory of an expert system from a single-node laboratory prototype to an industrial heterogeneous enterprise deployment using the technology selection matrix.
+8. How do 64-bit SimHash fingerprints and Burkhard-Keller metric trees (BK-Trees) resolve the avalanche storm of knowledge deficit tickets in a distributed cluster?
+9. Why can replacing the wildcard `vida.tasks.>` with `vida.tasks.*` in a NATS message broker lead to catastrophic systemic loss of hierarchical knowledge context subtrees?
+10. Which four cryptographic hashes constitute the structure of a Decision Evidence Bundle, and how does a Merkle tree guarantee the immutability and non-repudiation of accepted verdicts?
 
 ---
 
@@ -463,6 +687,12 @@ The fundamental value of this theoretical prototype lies in defining an **archit
 | Corroboration | Короборація свідчень | Mathematical amplification of cumulative confidence resulting from convergent evidence provided by independent sources |
 | Undercutting Defeat | Анулювання правила | Non-monotonic reasoning mechanism wherein a mandatory norm of superior rank invalidates a conflicting advisory recommendation |
 | Fail-Closed Qualified Conflict Gate | Кваліфікована колізія Fail-Closed | Protective suspension of automated compromise under mutually exclusive equal-rank norms, triggering mandatory escalation to the lead architect |
+| Knowledge Gap Triage | Тріаж дефіциту знань | Algorithmic clustering and deduplication of detected missing facts in a distributed environment |
+| SimHash Fingerprint | Відбиток SimHash | 64-bit locality-sensitive hash for measuring semantic Hamming distance |
+| Burkhard-Keller Tree (BK-Tree) | Дерево Буркхарда-Келлера | Metric tree enabling discrete logarithmic $`O(\log N)`$ search for nearest knowledge vectors |
+| Feature Degeneracy Guard | Бар'єр дегенерації ознак | Ingress stream validation mechanism filtering trivial and anomalous vectors based on entropy thresholds |
+| Decision Evidence Bundle | Доказовий пакет рішення | Cryptographic tuple comprising hashes of input data, knowledge base version, proof graph, and an Ed25519 signature |
+| Immutable Decision Ledger | Незмінний реєстр рішень | Distributed structure based on Merkle trees and WORM storage for non-repudiable audit of system verdicts |
 
 ---
 
@@ -473,18 +703,23 @@ The fundamental value of this theoretical prototype lies in defining an **archit
 | ASIL | Automotive Safety Integrity Level | Automotive electronics safety integrity classification defined under ISO 26262 (levels A through D) |
 | ASPIC+ | Argumentation Service Platform with Incomplete and Conflicting Information | Formal framework for structuring arguments, presumptions, and attack/defeat relations |
 | AWS | Active Working Set | Minimal active working knowledge set strictly necessary for evaluating a query |
+| BK-Tree | Burkhard-Keller Tree | Metric tree for nearest-neighbor search in discrete metric spaces |
 | BRAM | Block Random Access Memory | Fast on-chip memory within hardware rule accelerators characterized by deterministic single-cycle access |
+| DLQ | Dead-Letter Queue | Quarantine queue for undeliverable or malformed messages to isolate faulty packets |
 | DMA | Direct Memory Access | Autonomous hardware memory transfer mechanism bypassing central processor execution cores |
 | EVM | Epistemic Virtual Machine | Deterministic virtual machine executing evidence-governed logical inference resolutions |
 | gRPC | Google Remote Procedure Call | High-performance binary RPC framework built on HTTP/2 and Protocol Buffers |
 | IPC | Inter-Process Communication | Operating system mechanisms facilitating data exchange between concurrent processes on a single host |
 | KTP | Knowledge Testing Pyramid | Multi-tier knowledge base testing methodology spanning atomic facts to end-to-end integration scenarios |
+| LSH | Locality-Sensitive Hashing | Algorithmic technique hashing similar input items into identical or nearby buckets |
 | NPU | Neural Processing Unit | Specialized silicon accelerator optimized for tensor and neural network workloads |
 | PWA | Progressive Web Application | Web application technology enabling offline application shell caching and responsive execution |
 | RPC | Remote Procedure Call | Distributed computing paradigm enabling procedure execution across separate address spaces |
 | SLM | Small Language Model | Compact domain-adapted language model (1B–7B parameters) for linguistic analysis and classification |
 | SOA | Service-Oriented Architecture | Software architectural style characterized by loosely coupled, independently deployable services |
 | TARA | Threat Analysis and Risk Assessment | Threat analysis and risk assessment methodology defined under ISO/SAE 21434 |
+| WAL | Write-Ahead Log | Append-only logging technique ensuring atomicity and durability on persistent disk storage |
+| WORM | Write Once, Read Many | Storage technology permitting data to be written once while preventing tampering or modification |
 | ZHR | Zero-Hallucination Rate | Metric denoting complete absence of ungrounded generative assertions ($ZHR = 1.00$) in evidence-governed expert systems |
 
 ---
@@ -497,8 +732,12 @@ The fundamental value of this theoretical prototype lies in defining an **archit
 <a id="src-4"></a>[4] Fielding, R. T. (2000). *Architectural Styles and the Design of Network-based Software Architectures*. Doctoral dissertation, University of California, Irvine.  
 <a id="src-5"></a>[5] ISO 26262:2018. *Road vehicles — Functional safety* (Parts 1–12). International Organization for Standardization.  
 <a id="src-6"></a>[6] RTCA DO-178C / EUROCAE ED-12C (2011). *Software Considerations in Airborne Systems and Equipment Certification*. RTCA.  
-<a id="src-7"></a>[7] NIST AI 100-1 (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0)*. National Institute of Standards and Technology.
+<a id="src-7"></a>[7] NIST AI 100-1 (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0)*. National Institute of Standards and Technology.  
+<a id="src-8"></a>[8] Charikar, M. S. (2002). Similarity estimation techniques from rounding algorithms. *Proceedings of the thirtieth annual ACM symposium on Theory of computing*, 380–388.  
+<a id="src-9"></a>[9] Burkhard, W. A., & Keller, R. M. (1973). Some approaches to best-match file searching. *Communications of the ACM*, 16(4), 230–236.  
+<a id="src-10"></a>[10] Merkle, R. C. (1987). A digital signature based on a conventional encryption function. *Advances in Cryptology — CRYPTO ’87*, LNCS 293, 369–378.
 
 ---
 
 [← Chapter 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md) | [Table of Contents](README.md) | [Part VII](part-07-runtime-and-knowledge-exchange.md) | [To Appendices →](appendix-a-evidence-governed-framework.md)
+
