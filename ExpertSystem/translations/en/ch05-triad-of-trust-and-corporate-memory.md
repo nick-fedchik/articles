@@ -567,6 +567,29 @@ This book revisits the five foundational mission-critical domains introduced in 
 
 In every single row of the table, the final column culminates in the same immutable invariant: final decision authority rests exclusively with an accountable human professional. Critical domains differ in who holds authorization credentials and the societal cost of failure, but in no domain does an evidence-governed recommendation transfer legal or moral accountability to the expert system.
 
+## 7. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+
+To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with the authors of web ontology and provenance standards regarding immutability, temporal dynamics, and corporate memory maintenance.
+
+**Author's Thesis (Pro):**
+Decisions in critical systems must be packaged into immutable cryptographic bundles hashing inputs, knowledge bases, inference derivation graphs, and output verdicts.
+
+**Antithesis and Cynic-Critic Citation (Contra — Deborah McGuinness, RPI / W3C — *OWL Explanation & Provenance*):**
+> *“Fixing the hash of a primary source does not protect against obsolete data. If an error existed in the original standard, the system petrifies it indefinitely, blindly validating an outdated specification.”*
+
+**Reasoned Discussion (Socratic & Dialectical Debate):**
+
+- **McGuinness:** Your system will confidently trust an error simply because the citation hash matches the original text from three years ago.
+
+- **Author (Fedchyk):** Deborah, that is precisely why we introduced temporal deontic logic: every transaction mandates checking the validity time-window of the knowledge pack. When a regulatory authority issues an Errata, it compiles into a new ZKP4 carrying a higher Lex Posterior index. Through Merkle trees, an auditor observes: at the time of the 2024 accident, the action complied with standard v1, but in 2026 it is rightfully blocked under standard v2.
+
+- **McGuinness:** What about the auditability of explanation chains?
+
+- **Author (Fedchyk):** Every proof step is recorded in a t10s transactional passport, which can be expanded into an exhaustive explanation via a GSN tree.
+
+**Synthesis and Scientific Verdict of the Chapter:**
+Corporate memory must capture not only the verdict fact itself, but also the precise temporal context and regulatory environment version operative at the moment of inference.
+
 ## Conclusions
 
 **A Triangle of Trust in Place of Unauditable Documentation Chatbots.** This chapter opened with an onboarded engineer unable to determine why a communications mode was disabled. Resolving that inquiry requires all three vertices of the triad: corporate memory preserving the original architectural decision with its status and relational links; an expert system executing deterministic verification against the active product version; and an evidence-governed recommendation that a human engineer can independently audit and authorize. This chapter has demonstrated that:

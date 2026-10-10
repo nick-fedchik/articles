@@ -1677,6 +1677,29 @@ Zahlenwerte wie „Risiko 0,72“ oder „Ähnlichkeit 0,85“ besitzen für sic
 
 Das gefährlichste KI-System ist jenes, das niemals „Ich weiß es nicht“ sagt und Datenlücken durch statistische Halluzinationen überbrückt. Ein belastbares Expertensystem muss Nichtwissen mathematisch präzise formalisieren: Die Kleene-Logik erzwingt den Status „unbekannt“, die Konfliktmasse $K \ge 0{,}50$ signalisiert unauflösbare Quellenwidersprüche, und Schwellen der Mahalanobis-Distanz markieren unzuverlässige Sensormessungen. Das System muss trennscharf zwischen fehlenden Nachweisen, kontradiktorischen Quellen und Berechtigungskonflikten differenzieren und im Zweifelsfall stets den Fail-Closed-Zustand wählen ([Kapitel 20](ch20-explanation-engine.md)).
 
+## 16. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit Pionieren des Deep Learning über Wissensmodularität, lokale Korrektur-Patches und verteilte Repräsentationen.
+
+**These des Autors (Pro):**
+Die Isolation von Wissen in Form separater binärer Reparatur-Patches erlaubt es, Defekte der Wissensbasis punktgenau ohne Nachtraining und ohne Beeinträchtigung anderer zertifizierter Normen zu beheben.
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Geoffrey Hinton, Univ. of Toronto, Turing Award / Nobelpreis):**
+> *„Der Versuch, Wissen in modulare lokale 'Patches' zu zerlegen, widerspricht dem Wesen verteilter Repräsentationen. Im Gehirn ist Wissen über Milliarden Synapsen verteilt. Modularität ist eine menschliche Illusion, die Systeme ineffizient macht.“*
+
+**Argumentative Diskussion (Socratic & Dialectical Debate):**
+
+- **Hinton:** Das Gehirn besitzt keine isolierte Speicherzelle für jede einzelne Normvorschrift. Verteilte Repräsentationen sind robust gegenüber lokalen Schäden.
+
+- **Autor (Fedchyk):** Herr Professor Hinton, die Biologie kann es sich leisten, einen Einzelfakt zugunsten von Plastizität zu vergessen. Aber in der Avionik oder in Kernkraftwerken: Wenn ein FAA-Inspektor einen Fehler in einer Landevorschrift feststellt, dürfen Sie kein 100-Milliarden-Parameter-Modell neu trainieren in der Hoffnung, dass es nicht vergisst, wie man das Fahrwerk ausfährt! Sie sind verpflichtet, innerhalb von 10 Minuten einen punktgenauen, mathematisch bewiesenen Patch einzuspielen, der exakt eine Regel ändert, während die übrigen 50.000 zertifiziert bleiben.
+
+- **Hinton:** Aber wie steht es um kombinatorische Konflikte zwischen neuen Patches und alten Regeln?
+
+- **Autor (Fedchyk):** Konflikte werden über die ASPIC+-Widerlegungssemantik deterministisch aufgelöst: Der neue Defeater setzt die alte Regel außer Kraft, ohne die Netzstruktur zu beschädigen.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Binäre Reparatur-Patches für Wissen sind der einzige wirtschaftlich und rechtlich tragfähige Weg, sicherheitskritische Systeme ohne katastrophale Rezertifizierungskosten zu warten.
+
 ## Fazit
 
 Dieses Kapitel begann mit der Frage, ob Version 2.4 der Steuerungssoftware freigegeben werden darf. Die fundierte Antwort setzt sich aus mehreren formalen Teilnachweisen zusammen: Datalog erzwingt den Freigabestopp, da Anforderung R-17 sicherheitskritisch und geändert ist, jedoch über keinen bestandenen Test verfügt. Ein Bayessches Netz beziffert die Defektwahrscheinlichkeit nach dem Testfehlschlag auf 0,645, entlastet die Software jedoch auf 0,236, sobald der Prüfstandsfehler verifiziert ist. Die Dempster-Shafer-Konfliktmasse deckt unvereinbare Spezifikationsgrenzen auf und verhindert gefährliche Renormierungsillusionen. Ein historischer Präzedenzfall mit Ähnlichkeitswert 0,78 liefert den initialen Diagnoseansatz, während der Traceability-Graph die betroffenen Artefakte lückenlos auflistet. Die wesentlichen Erkenntnisse lauten:

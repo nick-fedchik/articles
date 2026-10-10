@@ -822,6 +822,29 @@ Practitioners may tailor their reading trajectory based on professional speciali
 
 Comprehensive reading maps are detailed in the [Table of Contents](README.md).
 
+## 17. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+
+To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with leading representatives of global computer science regarding the limits of applicability and necessity of deterministic expert systems.
+
+**Author's Thesis (Pro):**
+Critical cyber-physical systems (ASIL-D / DO-178C) require a deterministic normative censor: continuous stochastic models are unacceptable where the catastrophic failure limit is $`\le 10^{-9}`$ per hour.
+
+**Antithesis and Cynic-Critic Citation (Contra — Yann LeCun, Meta / NYU, Turing Award — *A Path Towards Autonomous Machine Intelligence*, 2022):**
+> *“The world is continuous, diffuse, and noisy. Any attempts to describe it with discrete rules or symbols represent the dead end of 1980s GOFAI. The future belongs to continuous latent prediction architectures (JEPA) based on energy loss functions where there is not a single manual rule.”*
+
+**Reasoned Discussion (Socratic & Dialectical Debate):**
+
+- **LeCun:** You are attempting to restore rules that became extinct 40 years ago. The world does not fit into boolean operators. An automobile cannot be controlled by IF/THEN.
+
+- **Author (Fedchyk):** Monsieur LeCun, you are conflating Perception with regulatory Eligibility. Yes, computer vision and trajectory planning require continuous fields. But when an automobile approaches an intersection, current statutory law directly prohibits running a red light. That is a discrete contract! If your neural network, with probability $10^{-4}$, decides that a red traffic light looks like a sunset, a fatal crash will occur. Our EVM acts as a hardware filter: your model proposes motion, but the core verifies compliance with the law.
+
+- **LeCun:** But that makes the system brittle! Any inaccuracy in a rule will stop the car.
+
+- **Author (Fedchyk):** Precisely: in critical domains, it is far better to halt safely (Fail-Closed) than to cause a full-speed collision based on a plausible hallucination.
+
+**Synthesis and Scientific Verdict of the Chapter:**
+Symbiosis instead of mutual exclusion: continuous System 1 (JEPA/LLM) handles relevance and heuristics; discrete System 2 (EVM) governs normative eligibility and contract verification.
+
 ## Conclusions
 
 Why is an expert system essential to an engineer who already possesses document search and generative language models? An expert system delivers a verified verdict: substantiated by admitted facts, explicit production rules, version-locked sources, declared boundary conditions, and identified decision authority. Search delegates synthesis entirely to human memory; language models obscure the evidentiary basis of their assertions; an evidence-governed expert system makes the deductive trajectory fully inspectable.

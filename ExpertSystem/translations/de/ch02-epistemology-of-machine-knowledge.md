@@ -1155,6 +1155,29 @@ Diese Invarianten sind empirisch falsifizierbar. Zu ihrer Validierung nutzt man 
 
 Die detaillierte Methodik von Wissensprüfungsmatrizen, Stresstests an realen Spezifikationen und die Mathematik der ZHR- und FCP-Metriken werden in [Kapitel 23](ch23-knowledge-base-verification.md) und [Kapitel 25](ch25-how-expert-systems-learn.md) vertieft. Hardwarebeschleunigung, speichereffizientes Mapping via `mmap` und Mikrosekundenlatenzen ohne Deserialisierung behandelt [Kapitel 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md); Strategien zur Beseitigung von Maschinenhalluzinationen analysiert [Kapitel 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md).
 
+## 14. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit führenden Vertretern der weltweiten Informationsphilosophie über Natur und Grenzen maschinellen Wissens.
+
+**These des Autors (Pro):**
+Maschinelles Wissen im Ingenieurwesen basiert auf vertraglicher Authentizität und bytegenauer Verwahrung von Primärquellen, nicht auf statistischer Plausibilität.
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Luciano Floridi, Yale / Oxford — *The Philosophy of Information*, 2011):**
+> *„Syntaktische Daten sind nicht identisch mit semantischer Information. Die Verwahrung mittels SHA-256 beweist lediglich, dass eine Bytefolge im Speicher nicht korrumpiert wurde, garantiert jedoch keineswegs ihren Wahrheitsgehalt bezüglich der physischen Welt. Dies ist eine in sich geschlossene kryptografische Tautologie.“*
+
+**Argumentative Diskussion (Socratic & Dialectical Debate):**
+
+- **Floridi:** Sie verwechseln Bit-Unveränderlichkeit mit dem Wahrheitsgehalt von Wissen. Der Hash-Wert eines fehlerhaften Standards bleibt der Hash-Wert eines Fehlers.
+
+- **Autor (Fedchyk):** Herr Professor Floridi, im Ingenieurrecht ist der Normentext die primäre rechtliche Realität. Wir etablieren keine metaphysischen Absolutheiten des Seins; wir gewährleisten vertragliche Nichtabstreitbarkeit (Non-repudiation): Das System beweist, dass eine Handlung durch das zum Ausführungszeitpunkt gültige Regelwerk autorisiert war. Ohne Verwahrung degeneriert jede 'semantische Wahrheit' zu unverbindlichem Modellgeschwätz.
+
+- **Floridi:** Aber die Norm selbst kann Mängel aufweisen!
+
+- **Autor (Fedchyk):** Genau deshalb wird die Verwahrung mit Lex-Posterior-Widerlegungsrelationen verknüpft: Das Erscheinen einer offiziellen Errata deaktiviert die veraltete Bestimmung automatisch, ohne dass ein Modell neu trainiert werden muss.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Kryptografische Verwahrung ist eine unverzichtbare Voraussetzung für rechtliche Nichtabstreitbarkeit: Sie erfasst keine metaphysische Absolutheit, sondern die strikte Konformität mit dem geltenden Regelwerk.
+
 ## Fazit
 
 Dieses Kapitel widmete sich der Leitfrage, was eine Maschine rechtmäßig als Wissen bezeichnen darf. Die Antwort dieses Buches ist prozedural: Wissen eines Expertensystems ist eine Aussage, die auf einer verifizierbaren Evidenzbasis ruht, deren Zielobjekt, Geltungsbereich und Gültigkeitszeitraum formal definiert sind, deren Ableitung deterministisch bekannt ist, deren Widersprüche aufgelöst sind, deren Zugriff autorisiert ist und die alle vorgeschriebenen Freigaben durchlaufen hat. Ein plausibler Text, dichte Vektorkorrelationen oder institutionelle Autorität begründen diesen Status nicht.

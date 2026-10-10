@@ -819,6 +819,29 @@ Ein lineares Durcharbeiten von Kapitel 1 bis 40 ist nicht zwingend erforderlich.
 
 Die vollständige Navigationsmatrix findet sich im [Inhaltsverzeichnis des Buches](README.md).
 
+## 17. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit führenden Vertretern der weltweiten Informatik über die Einsatzgrenzen und die Notwendigkeit deterministischer Expertensysteme.
+
+**These des Autors (Pro):**
+Kritische cyber-physische Systeme (ASIL-D / DO-178C) erfordern einen deterministischen normativen Zensor: Kontinuierliche stochastische Modelle sind unzulässig, wo die Grenze katastrophaler Ausfälle bei $`\le 10^{-9}`$ pro Stunde liegt.
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Yann LeCun, Meta / NYU, Turing Award — *A Path Towards Autonomous Machine Intelligence*, 2022):**
+> *„Die reale Welt ist kontinuierlich, diffus und verrauscht. Jeder Versuch, sie durch diskrete Regeln oder Symbole zu beschreiben, ist die Sackgasse der GOFAI der 1980er Jahre. Die Zukunft gehört Architekturen kontinuierlicher latenter Prädiktion (JEPA) auf Basis von Energie-Verlustfunktionen, in denen keine einzige manuelle Regel existiert.“*
+
+**Argumentative Diskussion (Socratic & Dialectical Debate):**
+
+- **LeCun:** Sie versuchen Regeln wiederzubeleben, die vor 40 Jahren ausgestorben sind. Die Welt lässt sich nicht in boolesche Operatoren pressen. Ein Automobil kann nicht über IF/THEN gesteuert werden.
+
+- **Autor (Fedchyk):** Monsieur LeCun, Sie verwechseln Wahrnehmung (Perception) mit regulatorischer Zulassung (Eligibility). Gewiss erfordern Bildverarbeitung und Trajektorienplanung kontinuierliche Felder. Wenn sich ein Fahrzeug jedoch einer Kreuzung nähert, verbietet das geltende Gesetz unmissverständlich das Überfahren einer roten Ampel. Das ist ein diskreter Vertrag! Wenn Ihr neuronales Netz mit einer Wahrscheinlichkeit von $10^{-4}$ entscheidet, dass rotes Licht einem Sonnenuntergang ähnelt, kommt es zur tödlichen Kollision. Unsere EVM agiert als Hardware-Filter: Ihr Modell schlägt eine Bewegung vor, aber der Kern verifiziert die Gesetzeskonformität.
+
+- **LeCun:** Aber das macht das System fragil! Jede Ungenauigkeit in einer Regel stoppt das Fahrzeug.
+
+- **Autor (Fedchyk):** Exakt so ist es: In kritischen Domänen ist es unendlich besser, sicher anzuhalten (Fail-Closed), als mit voller Geschwindigkeit auf Basis einer plausiblen Halluzination zu verunglücken.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Symbiose statt gegenseitiger Ausschluss: Das kontinuierliche System 1 (JEPA/LLM) verantwortet Relevanz und Heuristik; das diskrete System 2 (EVM) steuert normative Zulassung und Vertragsverifikation.
+
 ## Fazit
 
 Welchen greifbaren Mehrwert bietet ein Expertensystem einem Ingenieur, dem bereits Suchmaschinen und generative Sprachmodelle zur Verfügung stehen? Ein Expertensystem liefert ein formal verifizierbares Urteil: gestützt auf explizite Fakten, deterministische Regeln, versionierte Primärquellen, definierte Gültigkeitsgrenzen und benannte Entscheidungsträger. Eine Suchmaschine überlässt die Schlussfolgerung dem Menschen; ein Sprachmodell verschleiert die wahren Kausalursachen seiner Textgenerierung; ein evidenzbasiertes Expertensystem macht den gesamten Argumentationspfad auditierbar.

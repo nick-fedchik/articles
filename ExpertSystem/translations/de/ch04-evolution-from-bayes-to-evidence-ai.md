@@ -1340,6 +1340,29 @@ Die Regel „Menschliche Überprüfung anfordern“ greift dann nicht bei einer 
 
 Die Prinzipien von Datenqualität, Reproduzierbarkeit und Auditierbarkeit existierten bereits im klassischen Knowledge Engineering; Sprachmodelle, dynamische APIs und Vektorindizes über zehntausenden heterogenen Dokumenten haben ihre Brisanz jedoch drastisch verschärft. Ohne explizite Eingangsdatenprüfung, Snapshot-Versionierung und mehrdimensionale Ungewissheitszerlegung mutiert ein Expertensystem zu einem rhetorisch gewandten, aber unberechenbaren Orakel.
 
+## 11. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit den Begründern formaler Basis-Ontologien über Entitätstypisierung und die Grenzen der Ingenieurmodellierung.
+
+**These des Autors (Pro):**
+Ontologischer Realismus erfordert eine dreidimensionale Differenzierung von Entitäten: Unabhängige Objekte (Continuant), Prozesse (Occurrent) und normative Vorschriften (Deontic).
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Barry Smith, Univ. at Buffalo — *Basic Formal Ontology*, ISO/IEC 21838):**
+> *„Wenn eine Wissensbasis nicht auf einer strengen Basis-Ontologie oberster Ebene ruht, versinkt sie im semantischen Chaos, sobald Datenblätter verschiedener Halbleiterhersteller zusammengeführt werden.“*
+
+**Argumentative Diskussion (Socratic & Dialectical Debate):**
+
+- **Smith:** Ingenieure bezeichnen mit dem Begriff 'State' sowohl einen Registerzustand als auch einen Motorbetriebsmodus. Ohne BFO wird Ihr System nicht existierende Verknüpfungen generieren.
+
+- **Autor (Fedchyk):** Professor Smith, ZKP4 kodiert BFO-Kategorien auf der Ebene binärer Deskriptoren: Ein Hardware-Pin oder Register wird als Continuant adressiert, ein Interrupt-Signal als Occurrent und zeitliche Toleranzen als Deontic Spans. Jede Kategorienvermischung führt bereits in der Ingestion-Phase zu einem Typfehler (Type Mismatch).
+
+- **Smith:** Und wie lösen Sie Nomenklatur-Diskrepanzen zwischen Infineon und NXP?
+
+- **Autor (Fedchyk):** Über kanonische Metamodelle nach IP-XACT und IEEE 1685: Physische Basisadressen und Bitmasken fungieren als vereinheitlichte Invarianten, die über den Marketingbezeichnungen der Hersteller stehen.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Die ontologische Strenge der BFO, implementiert auf der Ebene binärer Containerstrukturen, verhindert semantische Kollisionen in heterogenen Ingenieurdatenbanken.
+
 ## Fazit
 Dieses Kapitel begann mit der Frage, ob ein Software-Release nach einem intermittierend fehlschlagenden Regressionstest freigegeben werden darf. Die Geschichte der Inferenzmethoden liefert die methodische Antwort: Zuerst muss die Art der Ungewissheit klassifiziert werden, daraufhin ist der passende Berechnungsapparat zu wählen, und die Schlussfolgerung ist zwingend in ein verifizierbares Begründungspaket einzubetten. Die zentralen Erkenntnisse lauten:
 

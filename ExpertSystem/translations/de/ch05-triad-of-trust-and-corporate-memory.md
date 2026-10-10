@@ -567,6 +567,29 @@ Die Monografie kehrt zu den fünf Referenzdomänen zurück, die in [Kapitel 1](c
 
 Die letzte Spalte dieser Übersicht schließt in allen Zeilen mit demselben Grundsatz: Die Entscheidung trifft ausnahmslos der autorisierte Mensch. Die Domänen unterscheiden sich in den Rollenprofilen der Prüfer und den Fehlerkosten – in keinem Fall jedoch delegiert die Empfehlung die rechtliche oder funktionale Verantwortung an das Expertensystem.
 
+## 7. Disput mit der Koryphäe: Kontradiktorische Debatte im Dienste der wissenschaftlichen Wahrheit
+
+Zur Gewährleistung epistemischer Strenge und einer umfassenden Prüfung der architektonischen Entscheidungen dieser Monografie entfaltet dieser Abschnitt eine direkte kontradiktorische Debatte mit den Autoren von Web-Ontologie- und Provenienz-Standards über Unveränderlichkeit, Zeitdynamik und Aktualisierung des Unternehmensgedächtnisses.
+
+**These des Autors (Pro):**
+Entscheidungen in kritischen Systemen müssen in unveränderliche kryptografische Bündel gepackt werden, die Eingabedaten, Wissensbasis, Inferenzgraphen und Urteil kryptografisch hashen.
+
+**Antithese und Zitat des zynischen Kritikers (Contra — Deborah McGuinness, RPI / W3C — *OWL Explanation & Provenance*):**
+> *„Die Fixierung des Hash-Werts einer Primärquelle schützt nicht vor veralteten Daten. Wenn die Norm einen Fehler enthielt, konserviert das System diesen auf ewig und bestätigt blind ein überholtes Regelwerk.“*
+
+**Argumentative Diskussion (Socratic & Dialectical Debate):**
+
+- **McGuinness:** Ihr System wird einem Fehler blind vertrauen, bloß weil der Hash-Wert des Zitats mit dem Normentext von vor drei Jahren übereinstimmt.
+
+- **Autor (Fedchyk):** Deborah, genau deshalb haben wir temporale deontische Logik eingeführt: Jede Transaktion prüft zwingend das Gültigkeitsfenster des Wissenspakets. Erlässt eine Regulierungsbehörde ein Errata, wird dieses in ein neues ZKP4 mit höherem Lex-Posterior-Index kompiliert. Über Merkle-Bäume erkennt der Auditor: Zum Zeitpunkt des Unfalls 2024 entsprach die Handlung der Norm v1, im Jahr 2026 wird sie jedoch rechtmäßig nach Norm v2 blockiert.
+
+- **McGuinness:** Und wie steht es um die Nachvollziehbarkeit der Erklärungskette?
+
+- **Autor (Fedchyk):** Jeder Beweisschritt wird im Transaktionspass t10s protokolliert und kann über einen GSN-Baum in eine vollständige Erklärung überführt werden.
+
+**Synthese und wissenschaftliches Urteil des Kapitels:**
+Das Unternehmensgedächtnis muss nicht nur das Urteil selbst fixieren, sondern auch den exakten zeitlichen Kontext und die Version des normativen Umfelds zum Inferenzzeitpunkt.
+
 ## Fazit
 
 **Ein Dreieck des Vertrauens statt eines einfachen Chatbots über Dokumenten.** Dieses Kapitel begann mit dem Dilemma eines neuen Ingenieurs, der die Hintergründe eines deaktivierten Kommunikationsmodus nicht ermitteln konnte. Die Lösung erfordert das synchrone Zusammenspiel aller drei Komponenten: das Unternehmensgedächtnis, das den ursprünglichen Beschluss mitsamt Status und Kontextbeziehungen vorhält; das Expertensystem, das die Inferenzregeln auf die aktuelle Produkt-Baseline anwendet; und die evidenzbasierte Empfehlung, die der Ingenieur nachvollziehen, prüfen und formal autorisieren kann. Dieses Kapitel hat gezeigt:

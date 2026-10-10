@@ -1194,6 +1194,29 @@ These invariants are strictly falsifiable. Experimental validation is conducted 
 
 The detailed methodology for constructing knowledge examination matrices, executing stress tests across thousands of specifications, and formulating the mathematical apparatus for ZHR and FCP metrics are developed in [Chapter 23](ch23-knowledge-base-verification.md) and [Chapter 25](ch25-how-expert-systems-learn.md). Hardware acceleration, deterministic memory management via `mmap`, and achieving microsecond query latencies without deserialization overhead are covered in [Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md), while systematic techniques for diagnosing and eliminating machine hallucinations compared to neural approaches are formalized in [Chapter 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md).
 
+## 14. Dispute with the Luminary: Adversarial Debate for the Sake of Scientific Truth
+
+To ensure epistemic rigor and comprehensive verification of the monograph's architectural decisions, this section unfolds a direct adversarial debate with leading representatives of global philosophy of information regarding the nature and boundaries of machine knowledge.
+
+**Author's Thesis (Pro):**
+Machine knowledge in engineering is founded upon contractual authenticity and byte-level custody of primary sources, rather than statistical plausibility.
+
+**Antithesis and Cynic-Critic Citation (Contra — Luciano Floridi, Yale / Oxford — *The Philosophy of Information*, 2011):**
+> *“Syntactic data is not identical to semantic information. A SHA-256 custody hash proves only that a byte sequence has not degraded in memory, but does not guarantee its truthfulness relative to the physical world. This is a cryptographic tautology, closed within itself.”*
+
+**Reasoned Discussion (Socratic & Dialectical Debate):**
+
+- **Floridi:** You are confusing bit immutability with the truthfulness of knowledge. The hash sum of an erroneous standard remains the hash sum of an error.
+
+- **Author (Fedchyk):** Professor Floridi, in engineering law, the text of a standard is the primary legal reality. We do not establish metaphysical absolute truths of existence; we ensure contractual non-repudiation: the system proves that an action was authorized by the applicable regulation in force at the moment of execution. Without custody, any 'semantic truth' devolves into unaccountable model chatter.
+
+- **Floridi:** But the regulation itself may contain an error!
+
+- **Author (Fedchyk):** That is precisely why custody is linked to Lex Posterior defeasibility relations: the release of an official Errata automatically deactivates the obsolete norm without requiring model retraining.
+
+**Synthesis and Scientific Verdict of the Chapter:**
+Cryptographic custody is an indispensable prerequisite for legal non-repudiation: it captures not metaphysical absoluteness, but strict adherence to the operative regulation.
+
 ## Conclusions
 
 This chapter opened with the question of what a machine may lawfully call knowledge. This book's answer is procedural: expert system knowledge is a proposition possessing a verifiable evidentiary ground, an identified target entity, a bounded operational scope and validity timeframe, an inspectable derivation method, resolved contradictions, verified access authorization, and appropriate human review sign-offs. Plausible prose, embedding cosine similarities, or authorial corporate seniority confer no such entitlement.
