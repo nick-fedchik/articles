@@ -10,7 +10,7 @@
 
 ## Abstract
 
-This chapter establishes the epistemic foundation for the architecture of expert systems: it formalizes the rigorous criteria by which a symbolic core distinguishes verified knowledge from statistically plausible yet factually ungrounded text. It investigates the epistemic gap separating stochastic language models from deterministic logical deduction, a distinction paramount to eliminating catastrophic failures in mission-critical applications governed by ISO 26262, IEC 61508, and DO-178C. It demonstrates how fundamental principles of epistemology, ontology, mathematical logic, hermeneutics, and security transform into seven mandatory verification gates within an automated admission checkpoint for facts. It formulates a procedural definition of machine knowledge, a mathematical applicability predicate grounded in Kleene's strong three-valued logic, a bitemporal model for tracking fact validity, and an algebraic criterion governing the entitlement to assert. An end-to-end engineering case study involving power module bench testing at 95 °C illustrates the practical operation of reproducible proof traces and fail-closed safety mechanisms.
+This chapter establishes the epistemic foundation for the architecture of expert systems: it formalizes the rigorous criteria by which a symbolic core distinguishes verified knowledge from statistically plausible yet factually ungrounded text. It investigates the epistemic gap separating stochastic language models from deterministic logical deduction, a distinction paramount to eliminating catastrophic failures in mission-critical applications governed by ISO 26262, IEC 61508, and DO-178C. It demonstrates how fundamental principles of epistemology, ontology, mathematical logic, hermeneutics, and security transform into seven mandatory verification gates within an automated admission checkpoint for facts. It formulates a procedural definition of machine knowledge, reveals the relational nature of facts grounded in Friedrich Hayek's "The Sensory Order", formalizes a mathematical applicability predicate grounded in Kleene's strong three-valued logic, a bitemporal model for tracking fact validity, and an algebraic criterion governing the entitlement to assert. An end-to-end engineering case study involving power module bench testing at 95 °C illustrates the practical operation of reproducible proof traces and fail-closed safety mechanisms.
 
 ## 1. The Engineering Contract of an Evidence-Grounded Response: Seven Epistemic Criteria
 
@@ -197,6 +197,70 @@ An executable JSON schema for this record is detailed in Section 12, while the c
 A solitary scalar field such as `confidence = 0.93` cannot substitute for these metadata attributes. A naked probability reveals neither what the 0.93 value measures, what reference dataset calibrated the score, nor whether the user possesses security clearance to inspect the underlying premise.
 
 The engineering takeaway from epistemology is unmistakable: maintain claims, evidence, provenance graphs, and defeaters as independent, linked entities. Only then can an expert system audit every inference step and systematically eliminate Gettier failures. Yet even an impeccably documented claim may describe an entirely different physical object than the one queried.
+
+### 5.1. Relational Nature of Machine Knowledge: Friedrich Hayek's "The Sensory Order" vs. Naive Positivism
+
+The relational nature of machine knowledge serves as a foundational barrier against naive positivism, which erroneously conflates knowledge with isolated facts or static records stored in flat relational database tables. In mission-critical expert systems engineering, an identical physical signal or normative statement (for instance, a measured voltage of $`3.3\,\text{V}`$ or a temperature of $`95\,^\circ\text{C}`$) carries zero normative meaning in isolation; its status as an "admissible tolerance", an "overload hazard", or an "emergency trip condition" arises exclusively through its topological position within a classification network of relations. Neglecting this relational topology strips the system of contextual discernment, precipitating catastrophic failures where routine bench testing states are conflated with plant-wide emergency shutoffs or temporary engineering waivers are silently ignored.
+
+This architectural principle directly builds upon the epistemological foundation of *The Sensory Order* (1952) by Nobel laureate Friedrich A. Hayek [[32]](#src-32). Hayek demonstrated that sensory perception and cognitive knowledge are never passive, mechanical impressions of an external physical reality, but rather a dynamic process of multi-layered classification: every novel impulse acquires operational meaning only insofar as it is classified relative to a pre-existing topological nexus of relations and systemic expectations. In an evidence-governed expert system, the admission of any candidate fact $`f`$ into the reasoning engine is determined not by an isolated declaration of "truth", but by its formal embedding within a deontic lattice of foundational axioms and the verified absence of blocking counter-arguments (defeaters).
+
+```mermaid
+flowchart TD
+    accTitle: Hayek's Relational Classification Lattice in Expert Systems
+    accDescr: An incoming sensor signal or textual fact is classified against operational context, admission rules, and defeaters to yield a deontic status.
+
+    S["<b>Input Signal / Fact</b><br/>T = 95 °C"] --> C{"<b>Relational Classifier</b><br/>Context: test bench, revision, date"}
+    C -->|"Bench R-4 · Revision B"| R1["<b>Rule W-17</b><br/>Normative weight: w = 8"]
+    C -->|"Standard Operating Procedure"| R2["<b>Procedure P-22</b><br/>Normative weight: w = 6"]
+    C -->|"Baseline Standard"| D1["<b>Standard v4 (Defeater)</b><br/>Prohibition weight: w = 7"]
+
+    R1 & R2 --> NUM["<b>Supporting Relations</b><br/>Weight sum: 14"]
+    D1 --> DEN["<b>Defeating Relations</b><br/>Defeater weight: 7"]
+
+    NUM & DEN --> EVAL["<b>Relational Rank Evaluation</b><br/>Rank = 1.75 ≥ 1.00"]
+    EVAL --> RES["<b>Verdict: ACCEPT_CONDITIONAL</b><br/>Conditional fact admission"]
+
+    classDef in fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
+    classDef rule fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef def fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+    classDef act fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+
+    class S in;
+    class C,EVAL in;
+    class R1,R2,NUM rule;
+    class D1,DEN def;
+    class RES act;
+```
+
+To mathematically formalize Hayek's classification process, we define the relational rank operator for a candidate fact $`f`$ within a knowledge base $`\mathcal{K} = \langle \mathcal{F}, \mathcal{R}, \mathcal{D} \rangle`$:
+
+$$
+\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = \frac{\sum_{r \in \mathcal{R}} \mathbb{I}(f \in \mathrm{Prem}(r)) \cdot w(r)}{1 + \sum_{d \in \mathcal{D}} \mathbb{I}(d \text{ defeats } f) \cdot w(d)}
+$$
+
+where:
+- $`f \in \mathcal{F}`$ is the candidate atomic proposition;
+- $`\mathcal{R}`$ is the set of active normative rules with integer normative weights $`w(r) \in [1, 10]`$;
+- $`\mathcal{D}`$ is the set of active defeaters (rebutting/undercutting conditions) with weights $`w(d) \in [1, 10]`$;
+- $`\mathbb{I}(\cdot) \in \{0, 1\}`$ is an indicator function denoting premise inclusion or defeater scope;
+- $`\mathrm{Rank}_{\mathrm{rel}} \in [0, +\infty)`$ is the dimensionless relational strength score of the fact within the classification lattice.
+
+The actionable closed-loop calculation mandate governs runtime system state transitions:
+
+1. **Control Flow & Runtime Decisions:**
+   If $`\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = 0`$ (the fact is completely ungrounded and disconnected from normative rules), the symbolic core immediately tags the proposition as `UNGROUNDED_ATOM` and excludes it from downstream deduction with a formal `REFUSAL`. If $`\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) \ge \tau_{\mathrm{rel}} = 1.00`$ in the absence of undefeated defeaters, the fact is automatically admitted to unification in the proof tree. When $`0 < \mathrm{Rank}_{\mathrm{rel}} < 1.00`$, an escalation gate routes the inquiry to a human certifier (`QUALIFIED`).
+
+2. **Hardware Dimensioning & Infrastructure Limits:**
+   Evaluating the relational rank requires fast traversal of incident edges across the knowledge graph. For an active working set of $`\lvert \mathcal{F} \rvert = 50\,000`$ facts and $`\lvert \mathcal{R} \rvert = 12\,000`$ rules, a Compressed Sparse Row (CSR) adjacency matrix consumes $`M_{\mathrm{CSR}} = (2 \cdot \lvert \mathcal{E} \rvert + \lvert \mathcal{F} \rvert) \cdot 8\,\text{bytes} \approx 3.2\,\text{MB}`$. This index fits entirely within L3 processor cache or UltraRAM on dedicated FPGA inference co-processors, guaranteeing an evaluation latency of $`T_{\mathrm{rank}} \le 180\,\text{ns}`$ without DRAM bus contention.
+
+3. **Worked Numerical Example:**
+   Consider an observed case temperature $`T_{\mathrm{case}} = 95\,^\circ\text{C}`$ for prototype Revision B on test bench R-4. The observation is corroborated by waiver rule W-17 ($`w(r_1) = 8`$) and standard procedure $`P\text{-}22`$ ($`w(r_2) = 6`$). Concurrently, general test standard v4 acts as a defeating rule ($`w(d_1) = 7`$), prohibiting temperatures exceeding 90 °C:
+
+$$
+\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = \frac{8 \cdot 1 + 6 \cdot 1}{1 + 7 \cdot 1} = \frac{14}{8} = 1.75 \ge 1.00
+$$
+
+   Since $`1.75 \ge 1.00`$, waiver W-17 overrides the general prohibition within its valid operational scope (Revision B, bench R-4). The system issues an admissible verdict `ACCEPT_CONDITIONAL`. If the test bench is switched to uncertified bench R-2, waiver W-17 drops to zero ($`w(r_1) = 0`$), yielding $`\mathrm{Rank}_{\mathrm{rel}} = \frac{6}{8} = 0.75 < 1.00`$, which triggers an immediate fail-closed interlock `REFUSAL`.
 
 ## 6. Ontological Identification: Overcoming Semantic Homonymy and Contextual Constraints
 
@@ -1256,6 +1320,7 @@ The following [Chapter 3](ch03-beyond-reference-information-systems.md) contrast
 29. <a id="src-29"></a>Bruce Schneier, John Kelsey. [*Secure Audit Logs to Support Computer Forensics*](https://doi.org/10.1145/317087.317089). *ACM Transactions on Information and System Security*, 2(2), 159–176, 1999.
 30. <a id="src-30"></a>Yonatan Geifman, Ran El-Yaniv. [*Selective Classification for Deep Neural Networks*](https://papers.nips.cc/paper_files/paper/2017/hash/4a8423d5e91fda00bb7e46540e2b0cf1-Abstract.html). NeurIPS, 2017.
 31. <a id="src-31"></a>NIST. [*Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile*](https://doi.org/10.6028/NIST.AI.600-1). NIST AI 600-1, 2024.
+32. <a id="src-32"></a>Friedrich A. Hayek. [*The Sensory Order: An Inquiry into the Foundations of Theoretical Psychology*](https://press.uchicago.edu/ucp/books/book/chicago/S/bo3684126.html). University of Chicago Press, 1952. Relational theory of perception and cognitive classification networks.
 
 ---
 
