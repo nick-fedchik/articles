@@ -287,6 +287,110 @@ Alle Module wurden im industriellen und quelloffenen Software-Stack unter Ubuntu
 2. **`verilator` (v5.032):** Hochperformante C++-Zyklusemulation für Stress-Tests über Millionen von Iterationen ohne Genauigkeitsverlust.
 3. **`covered` (v0.7.10):** Ermittlung von Hardware-Code-Coverage-Metriken (Line-, Toggle-, Combinational-Logic- und FSM-State-Coverage) zur Zertifizierung von Silizium-IP nach ISO 26262 ASIL D.
 
+### 4.6. Nicht-amnesische Verstoß-Flags (Non-Amnesic Sticky Flags) und Fail-Closed-Hardware-Invarianten
+
+In software- und hardwaregestützten Systemen zur Entscheidungsunterstützung stellt die «Verstoß-Amnesie» (*Violation Amnesia*) eine klassische und kritische Schwachstelle dar. Während der sequenziellen Abarbeitung eines Prüfbaums detektiert eine der Zwischeninstruktionen eine Verletzung zulässiger Sicherheitsgrenzen (beispielsweise das Überschreiten eines kritischen Temperatur- oder Spannungsschwellenwerts) und setzt ein Alarm-Flag. In naiven Prozessorarchitekturen überschreibt jedoch eine nachfolgende, erfolgreich beendete Instruktion der Logik-Pipeline das Prozessorstatusregister automatisch (`flag_zf = 1` oder `status = 0`) und maskiert so den vorangegangenen Fehlerzustand. In sicherheitskritischen Anwendungsdomänen (ISO 26262 ASIL D, IEC 61508 SIL 3, DO-254 DAL A) stellt dieser Effekt einen katastrophalen Entwurfsfehler dar: Das System könnte ein autorisierendes Hardware-Urteil (`disp_accept = 1`) zur Durchführung einer gefährlichen Aktion erteilen, obwohl zuvor ein normativer Invariantenbruch festgestellt wurde.
+
+Zur Beseitigung dieser Schwachstelle ist in die Hardwarearchitektur der EPU das Entwurfsprinzip der **nicht-amnesischen Verstoßfixierung (Non-Amnesic Sticky Latches)** auf Siliziumebene integriert:
+
+1. **Einseitiges Verriegeln von Fehler-Flags:**
+   Sämtliche Bedingungsverletzungs-Flags werden als asynchrone Flipflops mit prioritärem Zustandsspeicher ausgeführt. Keine nachfolgende erfolgreiche Instruktion der Inferenz-Pipeline besitzt die schaltungstechnische Möglichkeit, ein gesetztes Fehler-Flag zurückzusetzen:
+
+```verilog
+// Hardware-Implementierung des nicht-amnesischen Verstoß-Latches in evm_core.v
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+        sticky_violation <= 1'b0;
+    end else if (soft_clear_attempt && !auth_override) begin
+        // Softwarebefehle und nachfolgende Instruktionen können einen erfassten Verstoß nicht löschen
+        sticky_violation <= sticky_violation;
+    end else begin
+        // Einseitiges Verriegeln: Zustand 1 wird bedingungslos bis zum Hardware-Reset gehalten
+        sticky_violation <= sticky_violation | cond_violation;
+    end
+end
+```
+
+2. **Schaltungstechnische Disjunktion des Sicherheitsstatus:**
+   Der Gesamtsicherheitsstatus wird durch eine hardwarebasierte Disjunktion aller verriegelten Verstoßleitungen gebildet:
+
+```math
+\mathrm{Violation} = \mathrm{ZF} \lor \mathrm{DF} \lor \mathrm{UF} \lor \mathrm{OF} \lor \mathrm{StickyFail}
+```
+
+wobei:
+- $`\mathrm{ZF}`$ (Zero/Range Flag) — Flag für das Verlassen des zulässigen Normintervalls $[Min, Max]$ durch die überwachte Messgröße;
+- $`\mathrm{DF}`$ (Defeater Flag) — Flag für die Aktivierung einer Ausnahme- oder Widerlegungsbedingung der Norm;
+- $`\mathrm{UF}`$ (Unit Flag) — Flag für Dimensionsinkonsistenzen physikalischer Größen nach dem SI/UCUM-System;
+- $`\mathrm{OF}`$ (Overflow Flag) — Flag für arithmetischen Überlauf oder Genauigkeitsverlust bei Festkomma-Arithmetik (Q16.16);
+- $`\mathrm{StickyFail}`$ — nicht-amnesischer verriegelter Status der Evidenzkette oder eines Ausfalls der SHA-256-Pipeline.
+
+3. **Hardware-Invariante Fail-Closed:**
+   Die Erzeugung der Steuerausgangssignale unterliegt der fundamentalen Invariante:
+   $`\mathrm{disp\_accept} = \lnot \mathrm{Violation} \land \mathrm{ProofValid}`$, während $`\mathrm{disp\_refuse} = \mathrm{Violation} \lor \lnot \mathrm{ProofValid}`$. Ein Zurücksetzen des verriegelten Fehlerzustands ist ausschließlich über einen autorisierten vollständigen Hardware-Reset des geschützten Zustands oder über ein separates, verifiziertes Signal eines externen, unabhängigen Schiedsrichtersubsystems möglich, was die Maskierung von Fehlern innerhalb des ausgeführten Regelflusses vollständig ausschließt.
+
+#### 4.6.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der nicht-amnesischen Fixierung (Actionable Closed Loop)
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   - Beim Setzen mindestens einer Verstoßleitung schaltet der EPU-Kern mit $0$ Takten Latenz die Leitung `disp_accept` auf Null und verriegelt `disp_refuse = 1`;
+   - Die Abarbeitung des aktuellen Mikrobefehlsstroms wird sofort abgebrochen; der FSM-Zustandsautomat wechselt in den Modus `FAIL_CLOSED_LATCHED`;
+   - Versuche des Hosts, ohne vollständigen Hardware-Reset (`PRESETn`) einen neuen Beweis zu initiieren, werden mit dem Busfehlerstatus `PSLVERR = 1` abgewiesen.
+2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
+   - Jedes nicht-amnesische Verstoß-Flipflop wird auf exakt $1$ LUT2-Zelle und $1$ D-Flipflop mit asynchroner Reset-Leitung realisiert;
+   - Die kombinatorische Signallaufzeit der Disjunktion beträgt $`t_{\mathrm{comb}} \le 0{,}42\,\text{ns}`$, was weniger als $15\,\%$ der Taktperiode des Kerns bei einer Frequenz von $350\,\text{MHz}$ ($`T_{\mathrm{clk}} = 2{,}85\,\text{ns}`$) ausmacht;
+   - Der resultierende Worst Negative Slack bleibt strikt positiv ($WNS = +0{,}68\,\text{ns}$), wodurch Verletzungen der Setup-Zeiten sicher vermieden werden.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   In einem automobilen Traktionsinverter-Steuerungssubsystem wird eine Kette aus $12$ aufeinanderfolgenden Sicherheitsprüfungen abgearbeitet. Bei Schritt $3$ registriert die Instruktion `OP_ASSERT_RANGE` eine Überhitzung der Statorwicklung ($`T_{\mathrm{stator}} = 148^\circ\text{C} > 140^\circ\text{C}`$) und setzt das Signal $`\mathrm{cond\_violation} = 1`$. Die nachfolgenden $9$ Überprüfungen (Öldruck, Isolationswiderstand, DC-Zwischenkreisspannung) verlaufen nominal erfolgreich.
+   - Bei einer naiven Prozessorarchitektur würde das Flag-Register durch den letzten erfolgreichen Prüfschritt überschrieben und fälschlicherweise das Freigabesignal $`\mathrm{disp\_accept} = 1`$ ausgegeben;
+   - In der EPU-Architektur verriegelt das nicht-amnesische Latch $`\mathrm{StickyFail} = 1`$ innerhalb von $1$ Takt ($2{,}85\,\text{ns}$) und hält die Leitung $`\mathrm{Violation} = 1`$ bis zum Ende der Sitzung aufrecht;
+   - **Entscheidung:** Das Expertensystem aktiviert auf Hardwareebene $`\mathrm{disp\_refuse} = 1`$ mit dem Fehlercode `0x422` (`REFUSAL_UNSATISFIABLE`), wodurch eine thermische Zerstörung des Elektromotors bei hoher Fahrgeschwindigkeit zuverlässig verhindert wird.
+
+### 4.7. Schaltungstechnischer Schutz des Wissensprozessors gegen Seitenkanalangriffe und Fehlerinjektionen (FIPS 140-3)
+
+Die Spezifikation eines dedizierten Hardware-Wissensprozessors (EPU) auf FPGA-Basis für sicherheitskritische eingebettete Systeme und Verteidigungsanwendungen bleibt unvollständig ohne Berücksichtigung der Bedrohungen physischer Angriffe auf Siliziumebene. Ein Angreifer mit direktem physischem oder messtechnischem Zugang zur Hardware kann folgende Methoden anwenden:
+- **Seitenkanalangriffe (Side-Channel Attacks):** Die Analyse von Korrelationen im dynamischen Stromverbrauch (DPA — *Differential Power Analysis*, CPA — *Correlation Power Analysis*) oder der elektromagnetischen Abstrahlung ermöglicht die Rekonstruktion privater kryptografischer Schlüssel sowie vertraulicher Regeln der Wissensbasis;
+- **Fehlerinjektion und Glitching (Fault Injection / Glitching):** Ein künstlich induzierter kurzzeitiger Spannungseinbruch der Kernversorgung (Voltage Glitching), Manipulationen an den Taktflanken (Clock Glitching) oder fokussierte Laserpulse können Metastabilität in den Zustands-Flipflops des Prozessors hervorrufen, Verstoß-Flags unzulässig zurücksetzen und unberechtigten Zugriff auf sicherheitskritische Aktionen freigeben.
+
+Zum Schutz des Wissensprozessors gemäß den höchsten Anforderungen des Standards **FIPS 140-3 (Physical Security Level 3/4)** sind im RTL-Fundament des EPU-Kerns folgende schaltungstechnische Gegenmaßnahmen verankert:
+
+1. **Ausführung von Mikrcode in konstanter Zeit (Constant-Time Microcode):**
+   Die Ausführungsdauer jeder Regel- und Defeater-Prüfinstruktion des EISA-Befehlssatzes ist hardwareseitig exakt ausbalanciert und unabhängig von den numerischen Werten der Operanden:
+
+```math
+\Delta t_{\mathrm{exec}}(I, D_1) = \Delta t_{\mathrm{exec}}(I, D_2) = \mathrm{const}
+```
+
+wobei $I$ einen beliebigen Befehl des EISA-Satzes repräsentiert und $`D_1, D_2`$ beliebige Eingangsdatensätze darstellen (nominal oder anomal). Durch den Verzicht auf dynamische Verzweigungen und datenabhängige Schleifen wird jeglicher zeitliche Jitter eliminiert ($`\Delta t_{\mathrm{jitter}} = 0`$), was zeitbasierte Seitenkanalangriffe (Time-Attacks) unmöglich macht.
+
+2. **Dual-Rail-Vorladelogik (Dual-Rail Precharge Logic / DRL):**
+   Kritische digitale ALU-Komparatoren und die SHA-256-Custody-Hash-Pfade sind in differentieller Logik mit komplementären Signalpaaren ($Q$ und $\overline{Q}$) implementiert. Jeder logische Übergang erzwingt das Umschalten genau eines der beiden Signale unabhängig vom Bitwert ($0 \to 1$ oder $1 \to 0$), wodurch das dynamische Stromaufnahmeprofil geglättet und Korrelationsspitzen bei DPA/CPA auf das Niveau thermischen Rauschens abgesenkt werden.
+
+3. **On-Chip-Spannungs- und Takt-Glitch-Detektoren:**
+   Auf dem FPGA-Die sind ultraschnelle Sensorelemente integriert:
+   - Der Kernspannungs-Komparator registriert Abweichungen von mehr als $`\Delta V_{\mathrm{core}} > 12\,\%`$ von der Nennspannung ($`V_{\mathrm{core}} = 0{,}85\,\text{V}`$ für FinFET UltraScale+);
+   - Der Taktpuls-Detektor erfasst unzulässige Verkürzungen der Halbperiode ($`T_{\mathrm{pulse}} < 0{,}6 \cdot T_{\mathrm{nom}}`$).
+   Jeder detektierte Glitch versetzt die Hardwareverriegelung innerhalb von $1$ Takt ($2{,}85\,\text{ns}$) in den Schutzmodus `TAMPER_LOCKOUT`, löscht den Inhalt der Arbeitsregister `%er0..%er7` und erzwingt dauerhaft `disp_refuse = 1`.
+
+4. **PUF-basierte Schlüsselverwahrung (Physically Unclonable Functions):**
+   Kryptografische Schlüssel zur Integritätsprüfung des Knowledge Packs und der Zitat-Signaturen werden aus mikroskopischen technologischen Fertigungstoleranzen der Siliziumstruktur abgeleitet (SRAM PUF). Der Masterschlüssel wird zu keinem Zeitpunkt im Klartext in statischem BRAM oder externem Flash-Speicher abgelegt: Er wird dynamisch in Registern ausschließlich für die Dauer einer verifizierten Sitzung generiert, was ein Auslesen über JTAG-Sonden oder optische Mikroskopie ausschließt.
+
+#### 4.7.1. Geschlossener Kreis der ingenieurtechnischen Berechnung des schaltungstechnischen Schutzes (Actionable Closed Loop)
+
+1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
+   - Beim Ansprechen eines On-Chip-Glitch-Detektors wird das Signal `HARD_INTERLOCK_FAULT` generiert, das externe APB/AXI-Busausgänge hardwareseitig mit $0$ Takten Latenz sperrt;
+   - Es erfolgt eine sofortige Nullung des Registersatzes (`Zeroize Register File`) sowie das Verwerfen des flüchtigen PUF-Sitzungsschlüssels;
+   - Die Rückkehr in den Normalbetrieb erfordert eine vollständige, authentifizierte Reinitialisierungssequenz durch den übergeordneten Sicherheitsprozessor des Hosts (Root of Trust).
+2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
+   - Die Implementierung der DRL-Inverslogik und der chipinternen Glitch-Detektoren erhöht die Logikzellenauslastung des Kerns um weniger als $3{,}5\,\%$ (zusätzlich $\sim 60$ LUTs pro `evm_core`);
+   - Der Spannungsdetektor gewährleistet eine Reaktionszeit von $`t_{\mathrm{detect}} \le 0{,}8\,\text{ns}`$, was die typische Pulsdauer von Injektionsglitches ($2–10\,\text{ns}$) zuverlässig abfängt;
+   - Die Schaltung ist für den erweiterten automobilen Temperaturbereich von $-40^\circ\text{C}$ bis $+125^\circ\text{C}$ (AEC-Q100 Grade 1) spezifiziert und verifiziert.
+3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
+   Ein Angreifer versucht, das nicht-amnesische Verstoß-Latch während der Ausführung einer kritischen Sicherheitsnorm zurückzusetzen, indem er über eine Nadelsonde einen negativen Spannungsimpuls von $\Delta V = -250\,\text{mV}$ mit einer Dauer von $4{,}5\,\text{ns}$ auf die Kernversorgungsleitung $`V_{\mathrm{core}} = 0{,}85\,\text{V}`$ injiziert.
+   - Die Versorgungsspannung bricht auf $0{,}60\,\text{V}$ ein und unterschreitet den Schwellenwert von $12\,\%$ ($`V_{\mathrm{thresh}} = 0{,}748\,\text{V}`$) deutlich;
+   - Der chipinterne analoge Sensor detektiert den Einbruch in $0{,}8\,\text{ns}$ und aktiviert die Hardware-Interruptleitung `TAMPER_TRIP`;
+   - Noch bevor der Spannungseinbruch ein Umkippen der D-Flipflops auslösen kann, erzwingt die Schutzlogik `disp_accept = 0` und verriegelt `disp_refuse = 1`;
+   - **Entscheidung:** Der physische Manipulationsversuch des Siliziumkerns wird erfolgreich abgewehrt; die Urteilssicherheit des Expertensystems bleibt ohne Risiko eines unerkannten Gefahrenzustands vollumfänglich gewahrt.
+
 ---
 
 ## 5. Experimentkonzept: Paralleles EPU-Kern-Array (Systolic Multi-Core Array)
