@@ -727,6 +727,14 @@ The architecture of an evidence-governed expert system rests upon absolute segre
   Second, our Go JTMS engine executes dependency invalidation in strictly deterministic $O(V + E)$ linear time via directed graph traversal: when a primary fact (such as test result TC-89) is retracted, the algorithm invalidates only those downstream lemmas lacking alternative verified justifications.  
   Runtime working memory operates over lightweight 64-bit pointers referencing immutable, memory-mapped fact structures. We do not evaluate hypothetical environments dynamically—we guarantee deterministic eviction of invalidated conclusions without combinatorial explosion.”*
 
+- **Johan de Kleer:**  
+  *“An acyclic graph and linear $O(V + E)$ dependency invalidation perform admirably when the fact base is static or mutates in discrete batches. However, in the operational runtime of cyber-physical systems, incoming sensor telemetry streams generate thousands of events per second. If physical sensor readings continuously oscillate across critical threshold boundaries, your JTMS network will suffer severe high-frequency truth churn and cascading invalidation thrashing, completely stalling the deductive reasoning loop. How does your architecture survive continuous stochastic physical streams?”*
+
+- **Mykola Fedchyk:**  
+  *“Dr. Johan, continuous high-frequency sensor telemetry never enters the JTMS graph directly!  
+  Our architecture enforces strict two-plane separation: high-frequency raw telemetry streams are captured in lock-free ring buffers within the operational advisory ingress gateway, where Kalman filters, Schmidt triggers, and hysteresis deadbands suppress physical noise and microscopic oscillations.  
+  The JTMS dependency network is activated exclusively upon quantized symbolic events and normative facts (for instance, a subsystem state transition to `CRITICAL_OVERHEAT` or the formal revocation of a component certification). The justification DAG does not model the microscopic physics of silicon; it models deontic commitments and discrete logical lemmas, entirely eliminating truth thrashing and guaranteeing bounded worst-case response times.”*
+
 **Round 2: Epistemic CQRS and subsystem contracts versus eventual consistency hazards**
 
 - **Martin Fowler:**  
@@ -738,6 +746,14 @@ The architecture of an evidence-governed expert system rests upon absolute segre
   The ingestion pipeline never updates live inference structures in place. Every batch of newly admitted rules, ontologies, and SMT invariants is compiled into an isolated, immutable knowledge artifact cryptographically sealed with a Merkle root hash.  
   Publishing an update to the read path occurs as an atomic pointer swap (analogous to RCU).  
   Every client session pins an immutable epoch context: the deductive engine, vector indices, and contract validators are mathematically guaranteed to query the identical snapshot. An engineering verdict emitted today retains 100% bitwise reproducibility decades into the future.”*
+
+- **Martin Fowler:**  
+  *“However, pinning client inference sessions to immutable knowledge snapshots via Epistemic Snapshot Isolation creates a dangerous safety blind spot. What happens when operational field monitoring uncovers a critical safety hazard requiring an immediate emergency revocation of an operational rule? A long-running analytical query pinned to the preceding snapshot will continue emitting hazardous recommendations based on now-invalidated knowledge, oblivious to the fact that an emergency epoch swap occurred. How do you guarantee immediate reaction to safety incidents without violating transaction isolation?”*
+
+- **Mykola Fedchyk:**  
+  *“Mr. Martin, snapshot isolation in our architecture is decoupled from emergency safety revocations via a system-wide Epoch Invalidation Signal (EIS) broadcast over shared memory.  
+  When an emergency safety-critical rule revocation occurs, the control plane immediately issues an epoch revocation token and atomically asserts a global poison bit for the compromised epoch snapshot.  
+  Before any recommendation or certified verdict crosses the system safety boundary, the reasoning engine executes a mandatory atomic memory barrier verifying the validity token of its pinned epoch. If the poison bit is detected, the session aborts instantly, suppresses pending recommendations, trips the fail-closed `DISP_REFUSE` safety interlock, and initiates a safe stop. Safety invariants strictly preempt transactional read isolation.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 Architectural determinism in evidence-governed expert systems is achieved through the synergy of epistemic CQRS and linear JTMS: immutable snapshot isolation eliminates race conditions and state desynchronization, linear truth maintenance guarantees instantaneous retraction of invalidated lemmas, and W3C PROV-O modeling ensures comprehensive auditability.

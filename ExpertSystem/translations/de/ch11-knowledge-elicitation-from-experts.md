@@ -531,6 +531,14 @@ Die Wissenserhebung in evidenzbasierten Expertensystemen erfordert die Abkehr vo
   Zweitens wird subjektive Sicherheit mathematisch kalibriert: Wir akzeptieren keine gefühlte Gewissheit, sondern berechnen den Brier-Score des Experten anhand verifizierter historischer Fehlerdatenbanken, wodurch Überkonfidenz hart abgestraft wird.  
   Drittens fließen Regeln niemals monokratisch ein: Es gilt ein mehrstufiges Delphi-Verfahren mit mehreren unabhängigen Experten, bei dem Varianz zwischen den Urteilen formal als Rauschindikator isoliert wird. Wir hegen keine Illusionen über die Unfehlbarkeit menschlicher Kognition; wir errichten einen mathematischen Filter, der psychologische Verzerrungen eliminiert, noch bevor eine Heuristik als Maschinenprädikat kompiliert wird.“*
 
+- **Daniel Kahneman:**  
+  *„Was geschieht jedoch, wenn ein gesamtes Fachkollegium dieselbe systematische kognitive Verzerrung teilt – eine institutionelle Gruppenblindheit oder eine über Jahrzehnte verfestigte ingenieurtechnische Dogmatik? Ihre Delphi-Protokolle und Brier-Scores werden in einem solchen Fall lediglich hohe subjektive Sicherheit mit verschwindender Urteilsvarianz um ein grundlegend fehlerhaftes Modell attestieren. Die mathematische Kalibrierung des Konsenses bietet keinerlei Schutz gegen den kollektiven Irrtum einer gesamten Fachschule.“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Professor Daniel, exakt aus diesem Grund ist der menschliche Konsens in unserer Architektur niemals die finale Instanz für Wahrheit.  
+  Jede aus Experteninterviews extrahierte und im Wissensmodell formalisierte Regel wird zwingend einem falsifikatorischen Mutationstesten unterzogen und mittels SMT-Solvern gegen historische Telemetrieprotokolle und physikalische Messdatenreihen geprüft.  
+  Behauptet ein Gremium von Chefingenieuren einstimmig eine Invariante, die den empirisch aufgezeichneten Sensorsignalen oder thermodynamischen Belastungsgrenzen des Systems mathematisch widerspricht, generiert der SMT-Solver ein formales Gegenbeispiel, und die Regel wird unverzüglich abgewiesen. Für unser System besitzen objektive physikalische Naturgesetze und empirische Sensorprotokolle stets höheren normativen Rang als der kollegiale Expertenkonsens.“*
+
 **Runde 2: Implizites Erfahrungswissen (Tacit Knowledge) versus CommonKADS-Formalisierung**
 
 - **Gary Klein:**  
@@ -540,6 +548,14 @@ Die Wissenserhebung in evidenzbasierten Expertensystemen erfordert die Abkehr vo
   *„Herr Dr. Gary Klein, ich schätze Ihr RPD-Modell zutiefst; es beschreibt präzise, wie ein trainierter Mensch unter extremem Stress agiert. Doch ein sicherheitskritisches cyber-physisches System – etwa die elektronische Stellwerkslogik einer Bahnstrecke oder die Bremssteuerung eines autonomen Lkw – ist kein biologischer Organismus und verfügt über keinen Körper, um 'die Dynamik der Lage intuitiv zu spüren'.  
   Ein elektronisches Steuergerät (ECU) muss einen deterministischen Algorithmus mit harter $O(1)$-Latenzfrist abarbeiten. Darüber hinaus verlangen funktionale Sicherheitsnormen (ISO 26262, IEC 61508) zwingend einen lückenlosen, formal verifizierbaren Audit-Pfad für jede sicherheitsrelevante Aktion. Verunglückt ein autonomer Zug, schützt der Verweis auf 'die implizite Intuition des Experten' vor Gericht niemanden.  
   Die CommonKADS-Methodik dient nicht dazu, menschliche Intuition in Echtzeit nachzuahmen, sondern kausale Mechanismen und Sicherheitsgrenzen aus strukturierten Nachanalysen kritischer Vorfälle zu formalisieren. Sie trennt das Aufgabenmodell von der Inferenzebene und stellt sicher, dass das Erfahrungswissen meisterhafter Praktiker das System selbst dann schützt, wenn der menschliche Bediener ermüdet oder in Panik gerät.“*
+
+- **Gary Klein:**  
+  *„Doch wenn eine operative Anlage mit beispiellosen Ausnahmesituationen konfrontiert wird – kaskadierenden Mehrfachausfällen oder gänzlich neuartigen 'Schwarzen Schwänen' –, frieren starre CommonKADS-Schemata und vorberechnete Entscheidungstabellen unweigerlich ein oder fallen in den Fail-Closed-Zustand, weil dieses Szenario während der Wissenserhebung schlicht nicht antizipiert wurde. Ein menschlicher Experte improvisiert in solch einem Moment, indem er spontan kreative Analogien bildet. Macht Ihre kompromisslose Formalisierung das System angesichts echter betrieblicher Neuartigkeit nicht extrem fragil?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Dr. Gary, in sicherheitskritischen Cyber-Physical Systems der Stufe ASIL D ist autonome maschinelle Improvisation das direkte Synonym für eine Katastrophe.  
+  Registriert unser Expertensystem einen Zustand außerhalb des definierten Betriebsbereichs (ODD) oder die Verletzung fundamentaler Nachbedingungen, flieht es nicht in statistische Spekulationen: Es erzeugt eine typisierte Verweigerung `DISP_REFUSE`, geht deterministisch in einen sicheren Zustand über (Fail-Closed bzw. Safe Stop) und leitet eine strukturierte Kontrollübergabe an das Bedienpersonal ein.  
+  Wir formalisieren Expertenwissen gezielt, um unüberwindbare Sicherheitsgrenzen zu ziehen, innerhalb derer die Automatik Havarien abwendet, während offene, kreative Improvisation dem Menschen in einem sicheren, überwachten Regelkreis vorbehalten bleibt.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
 Die Wissenserhebung in evidenzbasierten Systemen ist eine ingenieurtechnische Disziplin zur Überwindung menschlicher Kognitionsgrenzen: Brier-Kalibrierung und strukturierte Debiasing-Protokolle neutralisieren heuristisches Rauschen, während die CommonKADS-Formalisierung implizite Praktikererfahrung in eine mathematisch geprüfte, deterministisch ausführbare Architektur von Regeln und Sicherheitsgrenzen überführt.

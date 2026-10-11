@@ -1316,6 +1316,14 @@ Engineering knowledge acquisition (KAS) across multi-thousand-page technical spe
   First, extensive empirical research into long-context attention degradation (the 'Needle In A Haystack' pathology) proves that when an engineer stuffs a 2,000-page microcontroller reference manual into a monolithic prompt, the model's recall of subtle pinout interactions or electrical tolerances degrades precipitously, while the frequency of plausible, undetectable hallucinations surges.  
   Second, in safety-critical cyber-physical systems, transmitting proprietary hardware schematics to external commercial cloud APIs violates cybersecurity and digital sovereignty standards (ISO/SAE 21434). Our lightweight KDI scanner runs locally on embedded ARM host blades in milliseconds: it discards 85% of documentation noise (boilerplate legal disclaimers, layout fluff, marketing prose), isolating pristine normative requirements rich in deontic modal operators (SHALL/MUST NOT).”*
 
+- **Andrew Ng:**  
+  *“However, if you rely strictly on explicit deontic markers and heuristic KDI filtering, do you not risk discarding vital tacit and implicit engineering knowledge? Many authentic field bulletins, architectural design records, and hardware errata are authored in unstructured natural prose without RFC 2119 keywords ("SHALL", "MUST"). If an engineer documents a critical thermal boundary descriptively, your heuristic KDI filter will reject it as informational slag. Large foundation models, leveraging zero-shot generalization, capture the author's nuanced semantic intent without rigid formatting. Doesn't your aggressive front-end filter introduce catastrophic blind spots into the knowledge base?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Andrew, KDI does not act as a crude lexical keyword filter; it is a multi-tier semantic entropy weighting mechanism that routes unformatted candidates into constrained GBNF grammars.  
+  When KAS encounters a descriptive text block displaying a dense concentration of domain entities (microelectronics registers or bus protocols) lacking explicit deontic modals, it does not silently discard it: the fragment is tagged with `KAS_PARSE_ANOMALY` and isolated in an epistemic quarantine for targeted review by a knowledge engineer.  
+  In functional safety (ISO 26262 ASIL D), 'implicit', unquantified requirements are classified not as desirable flexibility, but as primary defects in requirements engineering. A model that attempts to invent or hallucinate implicit architectural intent without formal constraints produces not verified knowledge, but statistical conjecture that fails certification audits.”*
+
 **Round 2: Autonomous lifelong learning (NELL) versus formal contradiction verification**
 
 - **Tom M. Mitchell:**  
@@ -1325,6 +1333,14 @@ Engineering knowledge acquisition (KAS) across multi-thousand-page technical spe
   *“Professor Tom Mitchell, autonomous lifelong learning is a brilliant paradigm for open-world semantic discovery, but in mission-critical systems, unconstrained autonomous rule ingestion without formal gatekeeping inevitably leads to semantic drift and epistemic knowledge poisoning (as cataloged in the MITRE ATLAS matrix under AML.T0020).  
   If an acquisition pipeline autonomously extracts an inaccurate or adversarially altered operational parameter—such as an artificially lowered threshold for battery over-voltage—and injects it directly into the certified rule base, every downstream derivation is silently compromised.  
   For this reason, in our KAS, no extracted rule candidate ever graduates to normative production status automatically: the Z3 SMT solver verifies it against the axiomatic core for logical unsatisfiability, and final eligibility requires multi-party cryptographic authorization. We guarantee that the corporate memory remains impervious to poisoned inputs while preserving strict auditability.”*
+
+- **Tom M. Mitchell:**  
+  *“Yet enforcing mandatory human-in-the-loop qualification creates a severe scalability bottleneck. In large industrial enterprises, hundreds of new engineering artifacts arrive daily: from HIL test logs to hardware errata updates. If every extracted predicate must await multi-party signing by senior domain experts, the KAS pipeline suffers cognitive paralysis, and engineers will inevitably resort to rubber-stamping out of cognitive fatigue. How do you maintain high throughput without compromising verification rigor?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Tom, scalability is achieved through two-tier automated separation backed by formal SMT proof certificates.  
+  Over 90% of routine rule candidates that are logically orthogonal to the axiomatic core ($`Th(\Sigma \cup \{R\}) \not\vdash \bot`$) and anchored in cryptographically authenticated primary sources receive an automated certificate of consistency and are admitted to operational status without human intervention.  
+  The Human-in-the-Loop expert committee is invoked strictly on an exception-driven basis: only when the SMT solver flags a logical contradiction between sources or when a candidate alters an invariant of the highest criticality (ASIL D / SIL 4). Rather than forcing experts to manually inspect thousands of routine assertions, we present them with a mathematically localized conflict and a minimal counterexample, collapsing triage latency from hours to seconds.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 Knowledge Acquisition Systems (KAS) for evidence-governed expert systems must synthesize deterministic KDI epistemic geology with formal contradiction verification: this eliminates long-context hallucination risks, drastically reduces inference overhead, and constructs an ironclad defense against knowledge poisoning in critical engineering repositories.

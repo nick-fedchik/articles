@@ -531,6 +531,14 @@ Knowledge elicitation in evidence-governed expert systems mandates transitioning
   Second, subjective confidence is mathematically calibrated: we do not accept self-reported feelings of certainty, but compute the expert's Brier score across historical verified incident databases, penalizing overconfidence.  
   Third, rules are never authored unilaterally: we employ a multi-expert Delphi protocol where divergence across independent specialists is explicitly quantified as cognitive noise. We harbor no illusions regarding the perfection of human memory; we construct a mathematical filter that purges psychological biases before any heuristic is permitted to compile into an operational predicate.”*
 
+- **Daniel Kahneman:**  
+  *“What happens, however, when an entire engineering cohort shares the exact same systemic bias—an institutional groupthink or shared blind spot forged across decades of legacy organizational dogma? Your Delphi protocols and Brier calibrations will simply register high subjective confidence with zero inter-expert variance around a fundamentally flawed world model. Mathematical calibration of expert consensus offers no immunization against collective delusion shared by an entire professional school.”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Daniel, that is precisely why human expert consensus is never accepted as the ultimate ground truth in our architecture.  
+  Every rule elicited from specialists and formalized within the knowledge model is systematically subjected to adversarial mutation testing and evaluated against physical telemetry logs using SMT solvers.  
+  If an expert panel unanimously asserts a safety invariant that mathematically contradicts empirical sensor traces or thermodynamic limits of the physical system, the SMT solver synthesizes a counterexample, and the assertion is immediately rejected. In our architecture, objective physical laws and empirical sensor logs hold absolute normative precedence over corporate expert consensus.”*
+
 **Round 2: Tacit knowledge versus CommonKADS formalization**
 
 - **Gary Klein:**  
@@ -540,6 +548,14 @@ Knowledge elicitation in evidence-governed expert systems mandates transitioning
   *“Dr. Gary Klein, I have profound respect for your RPD model; it represents the definitive account of how trained human experts operate under acute stress. However, a safety-critical cyber-physical controller—such as an automated railway interlocking computer or an autonomous truck braking module—is not a human and possesses no biological embodiment to 'intuitively feel' situational dynamics.  
   An electronic control unit (ECU) must execute a deterministic algorithm bounded within hard $O(1)$ real-time latency limits. Moreover, regulatory functional safety standards (ISO 26262, IEC 61508) legally demand an unbroken, formally verifiable audit trail for every action taken. If an autonomous system derails, appealing to 'tacit expert intuition' offers zero legal or forensic protection in a court of inquiry.  
   The CommonKADS framework is not deployed to mimic human intuition in real time, but to formalize causal structures and safety envelopes derived from rigorous post-incident debriefs. It decouples the task model from inference mechanisms, ensuring that the hard-won experience of master practitioners safeguards the system even when a human operator suffers fatigue or panic.”*
+
+- **Gary Klein:**  
+  *“Yet when an operational system encounters unprecedented edge cases—cascading multi-subsystem failures or novel black swan anomalies—rigid CommonKADS schemas and pre-compiled decision tables inevitably freeze or fail closed because the scenario was never anticipated during knowledge elicitation. In such moments, a human expert innovates, synthesizing creative analogies and improvising in real time. Does your insistence on unyielding formalization not render the system fragile and helpless when confronted with authentic novelty?”*
+
+- **Mykola Fedchyk:**  
+  *“Dr. Gary, in ASIL D mission-critical cyber-physical systems, autonomous machine improvisation is synonymous with catastrophe.  
+  When our expert system encounters an anomaly outside its defined Operational Design Domain (ODD) or detects a violation of foundational postconditions, it never engages in reckless statistical guessing: it issues a typed refusal `DISP_REFUSE`, deterministically transitions to a fail-closed degradation state (or emergency safe stop), and executes an orderly handover to a qualified human operator.  
+  We formalize expert knowledge specifically to erect unbreachable safety envelopes within which automation prevents accidents, reserving open-ended creative improvisation for human operators within a safe, bounded control loop.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 Knowledge elicitation in evidential systems is an engineering discipline for neutralizing human cognitive vulnerabilities: Brier calibration and multi-expert debiasing protocols eliminate heuristic noise, while CommonKADS formalization transforms tacit operational expertise into a mathematically verified, deterministically executable architecture of rules and safety invariants.

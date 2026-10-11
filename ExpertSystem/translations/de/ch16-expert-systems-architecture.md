@@ -728,6 +728,14 @@ Die Architektur beweisgestützter Expertensysteme basiert auf der kompromisslose
   Zweitens führt unsere Go-JTMS-Engine die Abhängigkeitsinvalidierung in deterministischer linearer Zeit $O(V + E)$ durch gerichtete Graph-Traversierung aus: Wird ein Primärfakt (wie das Testergebnis TC-89) widerrufen, deaktiviert der Algorithmus ausschließlich jene abhängigen Urteile, die über keine alternativen verifizierten Begründungen verfügen.  
   Der Arbeitsspeicher operiert über schlanke 64-Bit-Zeiger auf speicherabgebildete (mmap) unveränderliche Daten. Wir explorieren keine hypothetischen Kontexte zur Laufzeit — wir garantieren die deterministische Eliminierung ungültig gewordener Schlüsse ohne kombinatorische Explosion.“*
 
+- **Johan de Kleer:**  
+  *„Ein azyklischer Graph und eine lineare Abhängigkeitsinvalidierung in $O(V + E)$ funktionieren tadellos, solange die Faktenbasis statisch ist oder sich in diskreten Batches ändert. In der operativen Praxis von Cyber-Physical Systems erzeugt die eingehende Sensortelemetrie jedoch Tausende Ereignisse pro Sekunde. Wenn physische Messwerte kontinuierlich um Schwellenwerte oszillieren, gerät Ihr JTMS-Netzwerk in ein hochfrequentes Wahrheitsflattern (Truth Churn) und kaskadierendes Invalidierungstrudeln, was die logische Inferenzschleife vollständig blockiert. Wie widersteht Ihre Architektur kontinuierlichen stochastischen Eingangsströmen der realen Welt?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Dr. Johan, kontinuierliche Sensortelemetrie gelangt grundsätzlich niemals direkt in den JTMS-Graphen!  
+  Unsere Architektur erzwingt eine strikte zweistufige Entkopplung: Hochfrequente rohe Telemetrieströme laufen in sperrfreien Ringpuffern des operativen Eingangstors auf, wo Kalman-Filter, Schmitt-Trigger und Hysteresebänder physikalisches Rauschen und Mikroschwankungen dämpfen.  
+  Das JTMS-Netzwerk reagiert ausschließlich auf quantisierte symbolische Ereignisse und normative Fakten (beispielsweise den Zustandswechsel eines Subsystems zu `CRITICAL_OVERHEAT` oder den formalen Widerruf eines Komponentenzertifikats). Der Begründungsgraph modelliert nicht die Mikrophysik der Hardware, sondern deontische Verpflichtungen und diskrete logische Konsequenzen. Dies schließt Wahrheitsflattern vollständig aus und garantiert deterministische Antwortzeiten.“*
+
 **Runde 2: Epistemisches CQRS und Schnittstellenverträge versus Risiken asynchroner Konsistenz (Eventual Consistency)**
 
 - **Martin Fowler:**  
@@ -739,6 +747,14 @@ Die Architektur beweisgestützter Expertensysteme basiert auf der kompromisslose
   Die Ingestions-Pipeline modifiziert niemals produktive Lesestrukturen im laufenden Betrieb. Jeder Batch neu zugelassener Regeln und Fakten wird in ein isoliertes, unveränderliches Wissensartefakt mit Merkle-Root-Hash kompiliert.  
   Die Veröffentlichung auf dem Lesepfad erfolgt über einen atomaren Zeigertausch (analog zu RCU).  
   Jede Benutzeranfrage bindet sich an eine unveränderliche Epoche: Inferenzmaschine, Vektorindizes und Vertragsprüfer lesen garantiert denselben synchronisierten Snapshot. Eine heute gefällte ingenieurtechnische Entscheidung bleibt selbst in zwanzig Jahren bitgenau reproduzierbar.“*
+
+- **Martin Fowler:**  
+  *„Das Binden von Abfragesitzungen an unveränderliche Wissens-Snapshots über Epistemic Snapshot Isolation birgt jedoch eine gefährliche Sicherheitslücke. Was geschieht, wenn im operativen Feld ein gravierendes Sicherheitsrisiko entdeckt wird, das den sofortigen Notfallwiderruf einer Betriebsregel erzwingt? Eine langlebige Analysesitzung, die an den vorherigen Snapshot gebunden ist, generiert weiterhin gefährliche Empfehlungen auf Basis des bereits widerlegten Wissens, ohne vom Epochenwechsel zu wissen. Wie garantieren Sie unverzügliche Reaktionen auf Sicherheitsvorfälle, ohne die Transaktionsisolation zu verletzen?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Martin, die Snapshot-Isolation ist in unserer Architektur über ein systemweites Epochen-Invalidierungssignal (Epoch Invalidation Signal, EIS) im gemeinsamen Speicher von Notfallwiderrufen entkoppelt.  
+  Wird eine sicherheitskritische Regel im Notfall widerrufen, emittiert die Steuerungsebene sofort ein Widerruftoken und setzt atomar ein globales Giftbit (*Poison Bit*) für den kompromittierten Snapshot.  
+  Bevor eine Aktion oder ein zertifiziertes Urteil die Sicherheitsgrenze der Inferenzmaschine verlässt, führt die Engine eine atomare Speicherbarriere aus, die das Gültigkeitstoken der gebundenen Epoche prüft. Ist das Giftbit gesetzt, bricht die Sitzung sofort ab, unterdrückt anhängige Empfehlungen, schaltet die Schutzkontrolle in den Zustand `DISP_REFUSE` und leitet einen sicheren Halt ein. Sicherheitsinvarianten brechen die transaktionale Leseisolation ausnahmslos.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
 Der architektonische Determinismus beweisgestützter Expertensysteme wird durch das Zusammenspiel von epistemischem CQRS und linearem JTMS gesichert: Snapshot-Isolation verhindert Race Conditions und Datenasynchronität, lineare Wahrheitserhaltung garantiert das sofortige Bereinigen widerrufener Fakten, und die W3C PROV-O-Modellierung gewährleistet lückenlose forensische Nachvollziehbarkeit.
