@@ -1091,7 +1091,7 @@ Diese Minimalkonfiguration nutzt eine einzelne SQLite-Datei, deren FTS5-Erweiter
 **These des Kapitels (Mykola Fedchyk):**  
 Die Ausführungsinfrastruktur beweisgestützter Expertensysteme erfordert eine strikte Trennung operativer Lastprofile: Die Isolation volatiler Tensormatrizen auf NPUs/GPUs von deterministischer symbolischer Deduktion auf CPUs und dedizierten FPGA-Koprozessoren (EVM) mit 4-stufiger Pipeline garantiert Nanosekunden-Beweisvalidierung (WCET $O(1)$) und absolute Immunität gegen mikroarchitektonischen Jitter.
 
-**Runde 1: Der quantitative RISC-Ansatz versus spezialisierte Hardware-Regel-Koprozessoren (EVM)**
+**Runde 1.1: Der quantitative RISC-Ansatz versus spezialisierte Hardware-Regel-Koprozessoren (EVM)**
 
 - **John L. Hennessy:**  
   *„Mykola Fedchyk, in unseren grundlegenden Forschungen zur Computerarchitektur (Hennessy & Patterson) haben wir ein quantitatives Gesetz bewiesen: Schnelle universelle RISC-Prozessoren bei 3–4 GHz mit mehrstufigen Cache-Hierarchien und aggressiver Sprungvorhersage übertreffen spezialisierte Logik-Koprozessoren konsistent. Der Versuch, eine eigene virtuelle Maschine (EVM) auf einem 100-MHz-FPGA zur Regelausführung zu betreiben, ist ein wirtschaftlicher und technologischer Anachronismus. Jeder moderne Server-CPU führt kompilierten Code zur Verwahrungsprüfung über breite SIMD-Vektoren (AVX-512 oder ARM Neon) um ein Vielfaches schneller aus, ohne den Siliziumaufwand und die Wartungslast eigener Verilog-Kerne zu tragen.“*
@@ -1101,7 +1101,17 @@ Die Ausführungsinfrastruktur beweisgestützter Expertensysteme erfordert eine s
   Superskalare Out-of-Order-Prozessoren erzeugen massiven mikroarchitektonischen Jitter: L3-Cache-Misses, Fehlvorhersagen und Pipeline-Flushes können die Latenz von 50 Nanosekunden auf über 200 Mikrosekunden hochschnellen lassen.  
   Unser FPGA-Koprozessor verzichtet auf dynamische Caches und spekulative Ausführung: Er implementiert eine deterministische Pipeline, in der jede Verwahrungsprüfung in exakt 8 Takten (80 ns bei 100 MHz) terminiert. Für sicherheitsrelevante Aktuatoren sind deterministische 80 Nanosekunden ohne Jitter unendlich wertvoller als die schwankende Gigahertz-Lotterie eines Allzweckprozessors.“*
 
-**Runde 2: Statische Timing-Analyse (STA) und Busbandbreiten-Engpässe in echtem Silizium**
+**Runde 1.2: Hardware-Cache-Partitionierung und Bus-Interferenz durch stochastische Lasten**
+
+- **John L. Hennessy:**  
+  *„Selbst wenn Ihr Koprozessor auf Registerebene über eine isolierte Pipeline verfügt, teilt er sich Systembusse, Hauptspeicher und PCIe-Schnittstellen unweigerlich mit dem Host-Betriebssystem. In unseren Analysen von Speicherhierarchien haben wir nachgewiesen, dass paralleler, unbegrenzter Datenverkehr (wie schwere neuronale Netze auf einer NPU oder DMA-Transfers) Busse saturiert und unvorhersehbare Speicherzugriffslatenzen im DRAM verursacht, die jede Worst-Case-Ausführungszeit (WCET) zunichtemachen. Wie können Sie deterministische Hardware-Ausführung ohne vollständige physische Isolation des Speicher-Interconnects behaupten?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Professor John Hennessy, um Buskonflikte auf Hardwareebene zu beherrschen, erzwingen wir eine strikte Hardware-Ressourcenpartitionierung nach den Standards Intel RDT (Resource Director Technology) und ARM MPAM (Memory System Resource Partitioning and Monitoring).  
+  Dem Sicherheitskern und dem Hardware-Koprozessor werden dedizierte L3-Cache-Ways (Cache Allocation Technology, CAT) und eine garantierte Speicherbandbreite (Memory Bandwidth Allocation, MBA) zugewiesen. Hintergrund-Workloads neuronaler Netze werden auf Bus-Ebene gedrosselt, sobald sie ihr zugeteiltes Budget $`B_{\mathrm{cap}}`$ überschreiten.  
+  Darüber hinaus erzwingt der Befehlssatz unseres Regelprozessors ausschließlich Vorwärtssprünge (Forward-Only Jumps), wodurch der Kontrollflussgraph (CFG) zu einem rein azyklischen DAG kollabiert. Dies liefert den mathematischen Beweis für schleifenfreie Terminierung in konstanter Taktzahl und macht die analytische WCET-Berechnung selbst unter maximaler Systemlast exakt und beweisbar.“*
+
+**Runde 2.1: Statische Timing-Analyse (STA) und Busbandbreiten-Engpässe in echtem Silizium**
 
 - **Jim Keller:**  
   *„Mykola Fedchyk, eine 4-stufige Pipeline in Verilog für die Simulation zu entwerfen, ist trivial; funktionierendes Silizium zu bauen, ist eine ganz andere Realität. Wenn Ihr Koprozessor versucht, 256-Bit-Kryptohashes bei 100 MHz auf einem günstigen FPGA kombinatorisch zu vergleichen, laufen Sie wegen Routing-Verzögerungen und Clock-Skew unweigerlich in Setup- und Hold-Time-Verletzungen. Sobald zudem intensive Regelströme externe Speicherbusse belasten, wird Ihre Pipeline durch Speicherengpässe (Memory Stalls) ausgehungert, was Ihre sauberen WCET-Garantien zunichtemacht.“*
@@ -1110,6 +1120,18 @@ Die Ausführungsinfrastruktur beweisgestützter Expertensysteme erfordert eine s
   *„Herr Jim Keller, genau um diese physikalischen Siliziumfallen zu vermeiden, haben wir naive monolithische Komparatoren verworfen!  
   Erstens ist unser 256-Bit-Verwahrungskomparator als systolische Pipeline aus vier parallelen 64-Bit-Registerstufen aufgebaut. Die statische Timing-Analyse (STA) in Vivado bestätigt selbst für die langsamste Geschwindigkeitsstufe des Xilinx Artix-7 bei 100 MHz einen positiven Puffer (positive slack) von über 2,1 ns.  
   Zweitens haben wir Buskonflikte während der operativen Inferenz eliminiert: Der aktive Regelsatz liegt vor Beginn der Inferenz im internen Dual-Port-Block-RAM (BRAM). Der Koprozessor liest Befehle und Operanden aus dem BRAM mit null Wait-States. Die Hintergrund-Nachladung neuer Regeln erfolgt über Ping-Pong-Doppelpufferung via DMA, was eine 100%ige Pipeline-Auslastung ohne Speicher-Stalls garantiert.“*
+
+**Runde 2.2: Thermische Derating-Effekte, strahlungsinduzierte Bitkipper (SEU) und Silizium-Degradation**
+
+- **Jim Keller:**  
+  *„Sie haben den Hash-Vergleich in eine 4-stufige systolische Pipeline zerlegt und BRAM eingeplant. Doch echtes Silizium besteht nicht nur aus Takten — es bedeutet thermische Verlustleistung (TDP), Transistordegradation durch Elektromigration und strahlungsinduzierte Bitfehler (Single Event Upsets, SEU). Wenn Ihr FPGA-Beschleuniger in einer Flugzeugavionik oder einem Satelliten bei Temperaturen von -40°C bis +105°C arbeitet, schrumpft ein statischer Timing-Puffer von 2,1 ns durch thermisches Derating und Spannungseinbrüche schnell auf null. Wie stellt Ihre Hardwarearchitektur sicher, dass eine 'deterministische Inferenz' nicht durch einen atmosphärischen Neutronentreffer im Register zu einem fatalen Fehlentscheid mutiert?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Jim Keller, in der Höhenavionik und bei sicherheitskritischen Missionen ist das Ignorieren strahlungsbedingter SEUs eine direkte Einladung zur Katastrophe!  
+  Deshalb integrieren unsere Hardware-Implementierungen auf Infineon-AURIX-Mikrocontrollern und strahlentoleranten Xilinx-UltraScale+-FPGAs drei physische Schutzebenen.  
+  Erstens sind alle chipinternen BRAM-Blöcke und Pipelineregister durch hardwarebasierte SEC-DED-Kodierung (Single Error Correction, Double Error Detection) geschützt, die Ein-Bit-Fehler in 1 Takt korrigiert und bei Mehr-Bit-Fehlern sofort einen Trap auslöst.  
+  Zweitens sind kritische Registerkaskaden und ALUs in Triple Modular Redundancy (TMR) mit Hardware-Mehrheitsentscheidern (Majority Voter) in jedem Takt synthetisiert.  
+  Drittens wird die statische Timing-Analyse (STA) für den extremen Worst-Case Slow Corner gerechnet ($`T_j = 125^\circ\text{C}`$ bei $`V_{\mathrm{core}} - 10\%`$). Selbst unter diesen Extrembedingungen hält unser systolisches Design einen positiven Puffer von über 1,4 ns. Tritt dennoch ein nicht korrigierbarer Siliziumfehler auf, schaltet ein Hardware-Watchdog den Aktor-Pfad in 1 Takt in den sicheren Zustand (Fail-Closed), wodurch die Ausführung unvalidierter Regeln absolut verhindert wird.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
 Die Ausführungsinfrastruktur beweisgestützter Systeme vereint die Leistungsfähigkeit heterogener Hardware mit mathematischer Determiniertheit: Hochdurchsatzfähige NPU-Adapter generieren Hypothesen in isolierten Adressräumen, während FPGA-Koprozessoren und deterministische CPU-Kerne Nanosekunden-Beweise unter vollständiger Einhaltung physikalischer Siliziumgrenzen garantieren.

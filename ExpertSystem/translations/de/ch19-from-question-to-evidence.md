@@ -698,7 +698,7 @@ Dieses Verfahren schützt die Wissensbasis vor einer destruktiven Fehlerrückkop
 **These des Kapitels (Mykola Fedchyk):**  
 Die Formulierung einer autoritativen Antwort auf eine technische Anfrage erfordert vier obligatorische Phasen: semantische Anfragedekomposition, strukturierte Behauptungsextraktion, deterministische bytegenaue Verankerung jedes Wissensatoms in der Primärquelle und symbolische Implikationsprüfung, wodurch das Eindringen generativer Halluzinationen in die persistente Wissensbasis ausgeschlossen wird.
 
-**Runde 1: Kontinuierliche kontextuelle Inferenz versus rigide GBNF-Grammatiknormalisierung und Klärungsstopps**
+**Runde 1.1: Kontinuierliche kontextuelle Inferenz versus rigide GBNF-Grammatiknormalisierung und Klärungsstopps**
 
 - **Percy Liang:**  
   *„Mykola Fedchyk, die Semantik natürlicher Sprache ist fundamental kontinuierlich, kontextgebunden und pragmatisch. Wenn Sie hochdimensionale linguistische Nuancen in starre formale ASTs oder strikte GBNF-Grammatiken zwingen, zahlen Sie unvermeidlich den Preis der Repräsentationsverzerrung. In der kritischen Mensch-Maschine-Interaktion formulieren Benutzer dringende Befehle mit dialektalen Variationen, Ellipsen und unausgesprochenen Annahmen. Ein starres syntaktisches Tor, das Anfragen verwirft oder bei minimalen Unschärfen mit CLARIFICATION stoppt, führt in dynamischen Betriebsumgebungen zum Missionsabbruch. Moderne Basismodelle lösen Alignment durch kontextuelle Zero-Shot-Inferenz, nicht durch die Grammatik-Flaschenhälse der 1970er Jahre.“*
@@ -709,7 +709,18 @@ Die Formulierung einer autoritativen Antwort auf eine technische Anfrage erforde
   Unsere Normalisierungspipeline entscheidet Kontext nicht eigenmächtig; sie zerlegt das Prädikat: Druck (Parameter), Senkung (Aktion), 'sicheres Niveau' (Spezifikationsmangel — fehlende numerische Schranke). Der Übergang in den Zustand `CLARIFICATION` ist die einzig mathematisch korrekte Aktion zur Verhinderung heuristischer Havarien.  
   Dabei erhält der Bediener keine leere Verweigerung, sondern eine typisierte Menge eindeutiger semantischer Disjunkte zur Ein-Klick-Auswahl. Wir schaffen nicht die natürliche Sprache ab, sondern die fatale Illusion von Verständnis zwischen Mensch und nicht-deterministischem Automaten.“*
 
-**Runde 2: Durchgängig differenzierbares neurales Retrieval (REALM) versus diskrete Byte-Verwahrungstupel**
+**Runde 1.2: Aggregierte Evaluationsbenchmarks (HELM) und F1-Metriken versus vierwertiges Verifikationstor**
+
+- **Percy Liang:**  
+  *„Wie steht es um ganzheitliche generative Evaluierungsbenchmarks und semantische Präzisionsmetriken wie HELM? In modernen Evaluierungsframeworks quantifizieren wir die Systemgenauigkeit über Tausende diverser Testszenarien hinweg mittels F1-Score oder aggregierter Multi-Task-Genauigkeit (Accuracy). Ihr vierwertiges Verifikationstor (`ENTAILED`, `PARTIAL`, `CONTRADICTED`, `NOT_ENOUGH_EVIDENCE`) mit seiner strikten Schwellenwert-Filterung bei $\mathrm{Comp}(C) = 1.0$ wirkt übermäßig strafend: Wenn eine Extraktionspipeline 4 von 5 Wissensatomen bindet (ein Vollständigkeitsgrad von 0,80), löst dies eine vollständige operative Verweigerung (`REFUSAL`) aus. Macht das Verweigern von Antworten wegen eines einzigen ungebundenen Sekundäratoms das Expertensystem im Praxiseinsatz durch Verweigerungskaskaden nicht unbrauchbar?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Professor Percy Liang, in allgemeinen KI-Benchmarks ist ein Vollständigkeitswert von 80 % ein respektables akademisches Resultat, doch in der funktionalen Sicherheitszertifizierung bedeutet dies 20 % undefiniertes Systemverhalten!  
+  Wenn eine sicherheitskritische Ingenieursaussage Subjekt, Aktion, Wert, physikalische Einheit und operative Randbedingungen umfasst, verwandelt das Fehlen eines einzigen Atoms — etwa der Maßeinheit: 8 Oktette statt 8 Bits oder 8 Wörter — die Systemempfehlung in eine direkte Unfallursache.  
+  Der Status `PARTIAL` in unserem Verifikationstor ist niemals eine stumme Zurückweisung: Das System händigt dem Ingenieur ein partiell bewiesenes Paket mit expliziter Diagnosetelemetrie aus: 'Verifiziert: Mindestlänge = 8. Nicht verifiziert in Primärquelle: Maßeinheit. Manuelle Qualifizierung durch Fachexperten zwingend erforderlich.'  
+  Wir ersetzen die gefährliche Illusion einer plausiblen Antwort durch eine epistemisch ehrliche Demarkation zwischen bewiesenem und unbewiesenem Wissen. Einen Sicherheitsingenieur dazu zu zwingen, eine Maßeinheit in 3 Sekunden zu präzisieren, ist unendlich sicherer, als ihm eine halluzinierte Zahl zu liefern, die den Puffer eines Netzwerk-Switches sprengt.“*
+
+**Runde 2.1: Durchgängig differenzierbares neurales Retrieval (REALM) versus diskrete Byte-Verwahrungstupel**
 
 - **Kelvin Guu:**  
   *„Mykola Fedchyk, bei der Entwicklung von REALM haben wir bewiesen, dass das gemeinsame Vortraining von Sprachmodellen mit einem differenzierbaren neuronalen Retriever die Wissensextraktion über kontinuierliche Vektorräume optimiert. Das Modell lernt selbstständig, die relevantesten Passagen zur Beantwortung von Fragen zu identifizieren, ohne dass Behauptungen manuell in diskrete Atome zerlegt oder Byte-Offsets nachverfolgt werden müssen. Ihre Forderung nach bytegenauer Verankerung jedes Atoms (etwa des Wortes 'eight' als Zahl 8 mit Einheit 'octets' in RFC 768) macht die Pipeline anfällig für kleinste Textschwankungen oder Encoding-Unterschiede. Warum erzwingen Sie starre diskrete Verankerungen, wenn ein end-to-end trainierter Retriever semantische Äquivalenzen auf natürliche Weise erfasst?“*
@@ -719,6 +730,17 @@ Die Formulierung einer autoritativen Antwort auf eine technische Anfrage erforde
   Ein neuronaler Retriever liefert zwar möglicherweise die richtige Zahl, ist jedoch mathematisch unfähig zu beweisen, dass diese Zahl aus einer bindenden normativen Klausel stammt und nicht von internen Modellgewichten halluziniert oder aus einem veralteten Dokumentenentwurf extrahiert wurde.  
   Ändert sich im authentischen Normentext auch nur ein einziges Byte, wird dessen kryptografischer SHA-256-Hash ungültig.  
   Unsere vierstufige Pipeline verifiziert keine bloße Vektorähnlichkeit, sondern eine lückenlose Beweiskette: Das Prädikat `MinimumLength(UDP, 8, octet)` wird erst dann als wahr akzeptiert, wenn seine Atome auf exakte Byte-Koordinaten in RFC 768 mit einer Vollständigkeit oberhalb der Zertifizierungsschwelle projiziert werden. Wir überlassen Sicherheitsentscheidungen nicht den verborgenen Schichten neuronaler Netze — wir machen jeden Deduktionsschritt zu einer maschinell prüfbaren Rechtstatsache.“*
+
+**Runde 2.2: Zusammengesetzte Aussagen über verteilte Textpassagen versus singuläre Byte-Spannen**
+
+- **Kelvin Guu:**  
+  *„In der Praxis fassen technische Normen komplexe Fakten selten in einem einzigen, in sich geschlossenen Satz zusammen. In Ihrem eigenen RFC-768-Beispiel erfordert die Längenbestimmung eine kompositionelle Deduktion: Der Abschnitt zum Header-Format definiert das Längenfeld, während eine nachfolgende Klammerbemerkung das Minimum von 8 Oktetten festlegt. Durch Cross-Attention-Mechanismen verknüpft ein differenzierbarer End-to-End-Retriever mühelos verteilte Passagen über entfernte Dokumentseiten hinweg. Wenn Ihr deterministischer Grounder auf einer zusammenhängenden Byte-Spanne für eine Gesamtaussage beharrt, kapituliert er vor der vielschichtigen kompositionellen Logik realer Industriestandards!“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Dr. Kelvin Guu, unser deterministischer Grounder hat niemals verlangt, dass alle Atome einer Aussage innerhalb einer einzigen monolithischen Byte-Spanne liegen müssen!  
+  Das Beweistupel einer Aussage $\mathcal{E}$ ist als Menge unabhängiger geerdeter Spannen definiert: Jedes konstituierende Feld (Subjekt, Prädikat, Wert, Einheit) besitzt eigene diskrete Start- und End-Byte-Offsets $`[S_i, E_i]`$, die aus unterschiedlichen Absätzen, Tabellen oder separaten Anhängen der Norm stammen können.  
+  Die Vollständigkeitsmetrik $\mathrm{Comp}(C)$ berechnet das Verhältnis formal geerdeter Felder zum obligatorischen ontologischen Vertrag. Zusammengesetzte Schlussfolgerungen — etwa die Berechnung der minimalen Nutzlast durch Subtraktion der Header-Länge von der Gesamtlänge — werden nicht diffusen Vektorräumen überlassen, sondern formalen prädikatenlogischen Inferenzregeln über verifizierten Fakten.  
+  Kompositionalität wird somit durch transparente symbolische Deduktion erreicht, bei der jede elementare Prämisse über eine unzerstörbare Byte-Adresse verfügt, anstatt durch stochastische Aufmerksamkeitsverteilungen in neuronalen Gewichten.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
 Die Transformation einer Frage in einen formalen Beweis ist ein streng deterministischer Demarkationsprozess: Die semantische Normalisierung verhindert heuristische Fehlschlüsse durch das `CLARIFICATION`-Protokoll, während die bytegenaue Verankerung von Behauptungen an der Primärquelle ausschließt, dass generative Halluzinationen autoritatives Ingenieurwissen kontaminieren.

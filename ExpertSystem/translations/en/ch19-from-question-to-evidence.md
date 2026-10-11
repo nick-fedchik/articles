@@ -699,7 +699,7 @@ This governance model shields the knowledge base from compounding error loops: a
 **Chapter Thesis (Mykola Fedchyk):**  
 Formulating an authoritative engineering verdict from natural language requires four mandatory pipeline stages: semantic query decomposition, candidate claim extraction, deterministic byte-level span grounding of every knowledge atom against normative text, and symbolic entailment verification, strictly preventing generative hallucinations from penetrating the persistent knowledge base.
 
-**Round 1: Continuous contextual reasoning versus rigid GBNF grammar normalization and clarification halts**
+**Round 1.1: Continuous Contextual Reasoning versus Rigid Grammar Normalization (GBNF) and Clarification Halting**
 
 - **Percy Liang:**  
   *“Mykola Fedchyk, natural language semantics is fundamentally continuous, context-bound, and pragmatic. By forcing high-dimensional linguistic nuance into brittle formal ASTs or strict GBNF grammars, you inevitably introduce the 'representation distortion penalty'. In safety-critical human-machine interaction, users formulate urgent commands with dialectal variance, ellipses, and unstated domain assumptions. A rigid syntactic gate that discards queries or halts with a CLARIFICATION refusal on minor ambiguities will cause catastrophic task failure in dynamic operational environments. Modern foundational models solve alignment through zero-shot contextual reasoning, not through 1970s Chomskyan grammar bottlenecks.”*
@@ -710,7 +710,18 @@ Formulating an authoritative engineering verdict from natural language requires 
   Our normalization pipeline does not attempt to resolve context arbitrarily; it decomposes the predicate: pressure (parameter), reduction (action), 'safe level' (specification defect — lack of quantitative bounds). Transitioning into `CLARIFICATION` is the only mathematically sound decision that prevents heuristic disaster.  
   Crucially, the operator receives not a blank refusal, but a typed set of unambiguous semantic disjuncts with single-click disambiguation. We do not suppress human language; we eliminate the dangerous illusion of understanding between a human and a non-deterministic automaton.”*
 
-**Round 2: End-to-end differentiable neural retrieval (REALM) versus discrete byte-level custody tuples**
+**Round 1.2: Aggregate Evaluation Benchmarks (HELM) and F1 Metrics versus the Four-Valued Verification Gate**
+
+- **Percy Liang:**  
+  *“What about holistic generative evaluation benchmarks and semantic precision metrics such as HELM? In modern evaluation frameworks, we quantify system accuracy across thousands of diverse test suites using continuous F1 scores or aggregate multi-task accuracy. Your four-valued gate (`ENTAILED`, `PARTIAL`, `CONTRADICTED`, `NOT_ENOUGH_EVIDENCE`) with its rigid threshold gating at $\mathrm{Comp}(C) = 1.0$ appears excessively punitive: if an extraction pipeline grounds 4 out of 5 assertion atoms (a completeness score of 0.80), it triggers a complete operational refusal (`REFUSAL`). Doesn't halting execution over a single secondary ungrounded atom render the expert system practically unusable in field operations due to refusal cascades?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Percy Liang, on general-purpose AI benchmarks an 80% completeness score is a commendable research result, but in functional safety certification, that represents 20% undefined behavior!  
+  If a safety-critical engineering assertion comprises subject, action, value, unit of measurement, and operational preconditions, omitting a single atom—such as the physical unit: 8 octets versus 8 bits or 8 words—turns a system recommendation into an immediate failure vector.  
+  The `PARTIAL` status in our verification gate is never a silent rejection: the system issues a partially proven package to the engineer accompanied by explicit diagnostic telemetry: 'Verified: MinimumLength = 8. Unverified in authoritative source: Unit of measurement. Mandatory human engineering qualification required.'  
+  We replace the dangerous illusion of a plausible answer with an epistemically honest demarcation between proven and unproven knowledge. Requiring a human safety engineer to disambiguate a measurement unit in 3 seconds is infinitely superior to emitting a hallucinated answer that overflows a network switch buffer.”*
+
+**Round 2.1: End-to-End Differentiable Neural Retrieval (REALM) versus Discrete Byte-Level Custody Tuples**
 
 - **Kelvin Guu:**  
   *“Mykola Fedchyk, in our work developing REALM, we demonstrated that pre-training language models with an end-to-end differentiable neural retriever enables latent semantic matching across continuous embedding spaces. The model organically discovers the most relevant passages for answering queries without requiring manual decomposition into discrete atoms or tedious byte offset tracking. Your insistence on byte-exact grounding of every claim atom (such as mapping the word 'eight' to the numeric value 8 with unit 'octets' in RFC 768) makes the pipeline brittle when facing minor textual variations or document encoding differences. Why impose rigid discrete anchors when an end-to-end retriever captures semantic equivalence naturally?”*
@@ -720,6 +731,17 @@ Formulating an authoritative engineering verdict from natural language requires 
   A neural retriever might emit the correct numeric literal, but it cannot mathematically prove that this value originates from a binding normative clause rather than being synthesized from parametric model weights or extracted from a superseded document draft.  
   If a single byte in the authentic standard text changes, its cryptographic SHA-256 hash becomes invalid.  
   Our four-stage pipeline verifies not mere vector similarity, but an unbroken chain of custody: the predicate `MinimumLength(UDP, 8, octet)` is admitted only when its atoms project onto exact byte offsets within RFC 768 with completeness meeting certified thresholds. We refuse to delegate functional safety decisions to hidden neural layers—we transform every deduction step into a machine-checkable legal fact.”*
+
+**Round 2.2: Composite Assertions Across Dispersed Passages versus Single Continuous Spans**
+
+- **Kelvin Guu:**  
+  *“In practice, authoritative technical specifications rarely encapsulate a complex fact within a single self-contained sentence. In your own RFC 768 example, determining datagram bounds requires compositional deduction: the header layout section specifies the length field, while parenthetical remarks state the minimum value of 8 octets. Through cross-attention mechanisms, an end-to-end differentiable retriever effortlessly correlates dispersed passages across distant pages. If your deterministic grounder insists on continuous byte intervals for an assertion, it collapses when confronted with the multi-page compositional logic characteristic of industrial specifications.”*
+
+- **Mykola Fedchyk:**  
+  *“Dr. Kelvin Guu, our deterministic grounder never mandates that all assertion atoms reside within a single monolithic byte span!  
+  An assertion proof tuple $\mathcal{E}$ is defined as a set of independent grounded spans: each constituent field (Subject, Predicate, Value, Unit) possesses its own discrete start and end byte offsets $`[S_i, E_i]`$, which may originate from separate paragraphs, tables, or distinct appendixes within the specification.  
+  The completeness metric $\mathrm{Comp}(C)$ evaluates the ratio of rigorously grounded fields against the mandatory ontological contract. Composite deductive inferences—such as computing minimum user payload by subtracting header length from total datagram length—are delegated not to opaque latent vector projections, but to formal first-order predicate deduction over verified facts.  
+  Compositionality is thus achieved through transparent symbolic deduction where every atomic premise preserves an immutable byte-level provenance trail, rather than through stochastic cross-attention across latent weights.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 Transforming an engineering question into certified evidence is a strictly deterministic demarcation process: semantic normalization prevents catastrophic heuristic assumptions via the `CLARIFICATION` protocol, while byte-exact span grounding ensures that generative parametric hallucinations can never contaminate authoritative engineering knowledge bases.

@@ -1107,7 +1107,7 @@ This minimal stack relies on a single SQLite database file, utilizing the built-
 **Chapter Thesis (Mykola Fedchyk):**  
 The execution infrastructure of evidence-governed expert systems mandates strict segregation of operational workload profiles: isolating volatile tensor matrix computations on NPUs/GPUs from deterministic symbolic deduction on CPUs and dedicated FPGA coprocessors (EVM) with a 4-stage pipeline guarantees nanosecond-scale custody verification (WCET $O(1)$) and absolute immunity to microarchitectural jitter.
 
-**Round 1: The quantitative RISC approach versus dedicated hardware rule coprocessors (EVM)**
+**Round 1.1: The Quantitative RISC Approach versus Dedicated Hardware Rule Coprocessors (EVM)**
 
 - **John L. Hennessy:**  
   *“Mykola Fedchyk, in our foundational research on computer architecture (Hennessy & Patterson), we established a quantitative economic law: high-frequency general-purpose RISC processors operating at 3–4 GHz with multi-level cache hierarchies and aggressive branch prediction consistently outperform specialized logical coprocessors. Attempting to deploy a bespoke hardware virtual machine (EVM) on a 100 MHz FPGA to execute symbolic deduction rules is an economic and architectural anachronism. Modern server CPUs execute compiled custody checking code significantly faster via wide SIMD vector registers (AVX-512 or ARM Neon) without incurring the silicon footprint and maintenance burden of bespoke Verilog designs.”*
@@ -1117,7 +1117,17 @@ The execution infrastructure of evidence-governed expert systems mandates strict
   Superscalar out-of-order execution engines introduce severe microarchitectural jitter: L3 cache misses, branch mispredictions, and pipeline flushes can blow execution latency from 50 nanoseconds to over 200 microseconds.  
   Our dedicated FPGA coprocessor dispenses with dynamic caches and speculative execution: it implements a strictly deterministic pipeline where every proof custody check completes in exactly 8 clock cycles (80 ns at 100 MHz). For safety-critical actuators, deterministic 80 nanoseconds with zero microarchitectural jitter is vastly superior to the erratic gigahertz lottery of a general-purpose CPU.”*
 
-**Round 2: Static Timing Analysis (STA) and bus bandwidth bottlenecks in real silicon**
+**Round 1.2: Hardware Cache Partitioning and Bus Interference from Stochastic Workloads**
+
+- **John L. Hennessy:**  
+  *“Even if your coprocessor is pipeline-isolated at the register level, it inevitably contends for shared system buses, main memory, and PCIe interconnects with the host operating system. In our investigations into memory hierarchy performance, we demonstrated that concurrent unconstrained traffic (such as heavy deep neural network inference on an NPU or high-throughput DMA transfers) saturates interconnects and introduces non-deterministic memory access latencies to DRAM, destroying any theoretical Worst-Case Execution Time (WCET) bounds. How can you claim deterministic hardware execution without complete physical isolation of the memory fabric?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor John Hennessy, to solve memory bus contention at the hardware level, we enforce strict hardware resource partitioning compliant with Intel RDT (Resource Director Technology) and ARM MPAM (Memory System Resource Partitioning and Monitoring).  
+  The safety-critical core and hardware coprocessor are allocated dedicated L3 cache ways via Cache Allocation Technology (CAT) and guaranteed memory controller bandwidth via Memory Bandwidth Allocation (MBA). Background neural network traffic is aggressively throttled at the bus controller level whenever it exceeds its assigned budget $`B_{\mathrm{cap}}`$.  
+  Furthermore, our symbolic rule processor's instruction set architecture enforces Forward-Only Jumps, constraining the control flow graph (CFG) into a strictly acyclic DAG. This provides a mathematical guarantee of loop-free termination within a constant cycle count, ensuring analytical WCET calculation remains mathematically sound even under worst-case system loads.”*
+
+**Round 2.1: Static Timing Analysis (STA) and Bus Bandwidth Bottlenecks in Real Silicon**
 
 - **Jim Keller:**  
   *“Mykola Fedchyk, designing a 4-stage execution pipeline in Verilog for RTL simulation is one thing; getting it to meet timing in physical silicon is another. If your coprocessor attempts to execute 256-bit combinational equality checks on cryptographic hashes at 100 MHz across low-cost FPGAs, you will inevitably hit setup and hold time violations caused by routing congestion and clock skew. Furthermore, once an intensive rule stream demands sustained ingestion from external memory buses, your pipeline will inevitably suffer memory starvation stalls, completely invalidating your clean WCET guarantees.”*
@@ -1126,6 +1136,18 @@ The execution infrastructure of evidence-governed expert systems mandates strict
   *“Mr. Jim Keller, to prevent exactly those physical silicon pitfalls, we rejected naive monolithic comparator architectures!  
   First, our 256-bit custody comparator is partitioned into a four-stage systolic pipeline of parallel 64-bit register slices with intermediate flip-flop stages. Static Timing Analysis (STA) in Vivado confirms positive slack exceeding 2.1 ns even on the slowest speed grade of Xilinx Artix-7 at 100 MHz.  
   Second, we eliminated bus contention during operational inference: active rule working sets are resident within internal dual-port Block RAM (BRAM) prior to cycle execution. The coprocessor accesses instructions and operands from BRAM with zero wait-states. Background rule replenishment is executed via ping-pong double buffering over autonomous DMA channels, sustaining 100% pipeline utilization without a single memory stall.”*
+
+**Round 2.2: Thermal Derating, Radiation-Induced Soft Errors (SEU), and Silicon Degradation**
+
+- **Jim Keller:**  
+  *“You partitioned hash comparisons into a 4-stage systolic pipeline and budgeted BRAM. But real-world silicon isn't just clock cycles—it's thermal dissipation (TDP), transistor aging from electromigration, and radiation-induced Single Event Upsets (SEU). If your FPGA accelerator is deployed inside an aircraft avionics bay or satellite operating across temperatures from -40°C to +105°C, a 2.1 ns static timing margin can evaporate to zero due to thermal derating and switching voltage drops. How does your hardware architecture guarantee that a 'deterministic inference' isn't actually a silent bitflip in a register caused by an atmospheric neutron?”*
+
+- **Mykola Fedchyk:**  
+  *“Mr. Jim Keller, in high-altitude aerospace and safety-critical missions, ignoring radiation-induced SEUs is a recipe for catastrophic system failure!  
+  This is why our hardware implementations on Infineon AURIX microcontrollers and radiation-tolerant Xilinx UltraScale+ FPGAs incorporate three physical defense layers.  
+  First, all on-chip BRAM blocks and pipeline registers are protected by hardware SEC-DED (Single Error Correction, Double Error Detection) circuitry, repairing single-bit errors within 1 clock cycle and raising an immediate trap on uncorrectable multi-bit faults.  
+  Second, critical register slices and combinatorial ALUs are synthesized with Triple Modular Redundancy (TMR) featuring hardware majority voters evaluated on every clock cycle.  
+  Third, Static Timing Analysis (STA) is conducted against the extreme Worst-Case Slow Corner ($`T_j = 125^\circ\text{C}`$ and $`V_{\mathrm{core}} - 10\%`$). Even under these harsh conditions, our systolic pipeline maintains positive timing slack exceeding 1.4 ns. Should an unrecoverable silicon fault occur, a hardware watchdog transitions the actuation path to a fail-closed safe state within 1 clock cycle, barring the execution of unvalidated rules.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 The execution infrastructure of evidence-governed systems fuses the flexibility of heterogeneous silicon with mathematical certainty: high-throughput NPU adapters propose structural candidates within isolated memory zones, while hardware FPGA coprocessors and deterministic CPU cores guarantee nanosecond proof verification under strict compliance with real-world silicon timing constraints.
