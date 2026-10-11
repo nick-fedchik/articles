@@ -669,7 +669,7 @@ Der Arbeitsspeicher puffert ausschließlich den situativen Kontext des Dialogs u
 **These des Kapitels (Mykola Fedchyk):**  
 Die Überwindung sprachlicher Variabilität in technischen Abfragen erfordert eine semantische Kompilierung: die Synthese von Constrained Conditional Models (CCM) und zustandsbasierten GBNF-Grammatiken mit deterministischer GroupPass-Metrikkontrolle, wodurch eine unendliche Vielfalt umgangssprachlicher Formulierungen in eindeutige AST-Prädikate überführt wird, ohne Negationspolarität oder Quantoren einzubüßen.
 
-**Runde 1: Können statistische Klassifikatoren logische Constraints ohne Polaritätsinversion zuverlässig erzwingen?**
+**Runde 1.1: Können statistische Klassifikatoren logische Constraints ohne Polaritätsinversion zuverlässig erzwingen?**
 
 - **Dan Roth:**  
   *„Mykola Fedchyk, in unserer grundlegenden Arbeit über Constrained Conditional Models (CCM) haben wir statistisches Lernen mit ganzzahliger linearer Programmierung (ILP) verknüpft, um Ausgaben des maschinellen Lernens globale deklarative Bedingungen aufzuerlegen. Sie versuchen jedoch, dieses Paradigma auf unbeschränkte Ingenieurabfragen mit extremer syntaktischer Volatilität anzuwenden. Statistische Sprachklassifikatoren scheitern naturgemäß am Negationsskopus oder verwechseln subtile Quantorenunterschiede (`mindestens eins` gegenüber `alle`), wenn ein Ingenieur technischen Jargon oder passive Konstruktionen verwendet. Wenn das neuronale Frontend bei der Extraktion von Absichten oder Slots irrt, kann kein nachgelagerter semantischer Compiler verhindern, dass das System eine fehlerhafte, sicherheitskritische logische Abfrage ausführt.“*
@@ -680,7 +680,17 @@ Die Überwindung sprachlicher Variabilität in technischen Abfragen erfordert ei
   Zweitens ist die Token-Dekodierung des Modells strikt auf ein zustandsbasiertes GBNF-Grammatikattern beschränkt, das ausschließlich gültige Slots der zertifizierten Domänenontologie zulässt.  
   Drittens erzwingen wir eine kompromisslose Freigabe-Invariante — die GroupPass-Metrik: Erzeugt ein Äquivalenzcluster semantisch identischer Paraphrasierungen auch nur eine einzige abweichende AST-Logikform, blockiert das Release-Tor das Modell. Und bei jeder nicht auflösbaren Mehrdeutigkeit erfindet der Host-Verifizierer keinen Slot, sondern initiiert ein deterministisches Klärungsprotokoll.“*
 
-**Runde 2: Kontextuelle Pragmatik und Gesprächsimplizaturen versus rigide ontologische Kanonisierung**
+**Runde 1.2: Mehrschichtige nichtlineare Bedingungen und kombinatorische Explosion in Echtzeit**
+
+- **Dan Roth:**  
+  *„Mykola Fedchyk, in realen CCM-Anwendungen sind wechselseitige Bedingungen zwischen Entitäten selten linear oder rein lokal. Wenn eine technische Abfrage Beziehungen über drei verschiedene Standards, zwei Betriebsspannungsgrenzen und kollidierende deontische Modalitäten spannt, wächst die Dimension des ganzzahligen linearen Programms exponentiell. Wie kann Ihr zustandsbasiertes GBNF-Gitter komplexe Slot-Interdependenzen bewältigen, ohne eine kombinatorische Explosion auszulösen und das harte Echtzeitbudget $O(1)$ auf eingebetteten Prozessoren zu sprengen?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Professor Roth, wir lösen diesen Konflikt durch eine hierarchische Zerlegung des Constraint-Raums. Der lokale GBNF-Kellerautomat führt während der Autoregression rein syntaktische Token-Maskierungen in $O(1)$ durch – er löst zur Laufzeit keine globalen ILP-Optimierungen.  
+  Globale Slot-Abhängigkeiten und domänenübergreifende Invarianten werden an eine nachgelagerte diskrete Verifikationsphase delegiert: eine deterministische stratifizierte Datalog-Engine und einen SMT-Solver (Z3) innerhalb des isolierten Host-Verifizierers.  
+  Da jeder Wissensdienst über eine strikt typisierte, bereichsbeschränkte Mikro-Ontologie operiert, benötigt die SMT-Lösung nur wenige Millisekunden ($<15\,\text{ms}$). Erweisen sich globale Constraints als unlösbar (UNSAT), verschwendet das System keine Zyklen mit heuristischem Backtracking, sondern emittiert unmittelbar den exakten Prädikatskonflikt unter Einhaltung harter Fristen.“*
+
+**Runde 2.1: Kontextuelle Pragmatik und Gesprächsimplizaturen versus rigide ontologische Kanonisierung**
 
 - **Christopher Potts:**  
   *„Mykola Fedchyk, die menschliche Sprache lässt sich nicht auf sterile Slot-Befüllung oder abstrakten Prädikatenkalkül reduzieren. Sie basiert fundamental auf Grice’schen pragmatischen Implikaturen, Präsuppositionen und kontextabhängigen Sprecherabsichten. Wenn ein Ingenieur fragt: 'Kann ich diesen Controller jetzt neu starten?', ruft er nicht bloß eine Statusabfrage auf — er stützt sich auf einen impliziten gemeinsamen Dialogverlauf und erwartet situatives Verständnis. Indem Sie dieses reiche pragmatische Spektrum in eine starre kanonische Ontologie pressen und bei der kleinsten Abweichung von Ihrer formalen Grammatik die Antwort verweigern, konstruieren Sie ein frustrierend sprödes System, das Menschen zwingt, in Pseudocode statt in natürlicher Sprache zu kommunizieren.“*
@@ -690,6 +700,16 @@ Die Überwindung sprachlicher Variabilität in technischen Abfragen erfordert ei
   Wenn ein Operator im Leitstand eines Kernkraftwerks oder in der Flugzeugwartung fragt, 'kann der Controller neu gestartet werden?', besitzt das funktionale Sicherheitssystem keinerlei Befugnis, zu 'vermuten, was der Benutzer wohl meinte'.  
   Enthält die Abfrage Polysemie oder fehlt ein expliziter Parameter `scope` (wie ein spezifischer Sicherheitsstandard oder eine Hardware-Revision), ist jeder Versuch, die Absicht statistisch zu erraten, grobe Fahrlässigkeit.  
   Unsere Architektur wandelt implizite Präsuppositionen in explizite ingenieurtechnische Fakten um: Der Arbeitsspeicher puffert den Sitzungskontext strikt als ungeprüfte Hypothese, während der Host-Verifizierer vor der Ausführung eine explizite Bestätigung verlangt. Wir entwickeln keine KI als gefälligen Gesprächspartner; wir bauen eine kompromisslose semantische Schnittstelle, bei der jedes Wort eine justiziable Verantwortung trägt.“*
+
+**Runde 2.2: Konversationelle Unschärfe (Vagueness) versus kooperative metalinguistische Präzisierung**
+
+- **Christopher Potts:**  
+  *„Mykola Fedchyk, in der industriellen Praxis erinnern sich Fachleute selten spontan an die exakte RFC-Nummer, das Registerbitfeld oder mikrosekundengenaue Timing-Schranken. Konversationelle Unschärfe (Conversational Vagueness) fungiert als unverzichtbare kommunikative Heuristik: Ingenieure formulieren approximative Anfragen zur Orientierung. Wenn Ihr System auf jede sprachliche Ungenauigkeit mit einem trockenen 'Parameter präzisieren oder Anfrage abgewiesen' reagiert, kollabiert der Dialogfluss. Sollte ein beweisgestütztes System nicht vielmehr kooperativ metalinguistische Verhandlungen führen und den Hypothesenraum schrittweise verengen, anstatt sich defensiv zu verbarrikadieren?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Professor Potts, wir differenzieren strikt zwischen stochastischer Halluzination und kooperativer Mehrdeutigkeitsauflösung. Das System manövriert den Ingenieur niemals in eine Sackgasse: Anstelle einer stummen Blockade initiiert der Verifizierer ein deterministisches sokratisches Klärungsprotokoll (*Socratic Elicitation Protocol*).  
+  Wird ein fehlender Pflichtparameter erkannt (z. B. `MISSING_SCOPE_PARAMETER`), durchsucht der Verifizierer benachbarte Wissensartefakte und generiert eine strukturierte Auswahlliste aus dem Unternehmensgedächtnis: 'Beziehen Sie sich auf den CAN-Bus nach ISO 11898-2 oder das CAN-FD-Protokoll nach Bosch-Spezifikation 2012?'.  
+  Der Ingenieur trifft per Klick eine unmissverständliche Wahl, die als kryptografisch signierte Absicht erfasst wird. Auf diese Weise transformieren wir natürliche Sprachunschärfe in eine präzise ingenieurtechnische Entscheidung, ohne jeglichen Raum für stochastische Modellwillkür zu lassen.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
 Die Beherrschung sprachlicher Variabilität in beweisgestützten Expertensystemen gelingt nicht durch die Ausweitung probabilistischer Assoziationen, sondern durch rigorose semantische Kompilierung: Das Zusammenspiel von Constrained Conditional Models, GBNF-grammatikgesteuerter Dekodierung und GroupPass-Invarianzgarantien stellt sicher, dass unbegrenzte Formulierungsvarianten deterministisch in wohldefinierte Inferenzprädikate überführt werden.

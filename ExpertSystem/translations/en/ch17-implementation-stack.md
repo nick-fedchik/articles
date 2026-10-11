@@ -437,17 +437,28 @@ Comparative benchmarking operationalizes the third core principle detailed in th
 **Chapter Thesis (Mykola Fedchyk):**  
 The technology stack of a mission-critical expert system must not be assembled around monolithic framework abstractions, but through rigorous functional segregation based on operational semantics and failure modes: coupling compiled systems languages (Go/Rust), stratified Datalog for transitive reachability, SMT solvers for invariants, and zero-copy mmap key-value stores guarantees determinism and qualification under DO-178C / ISO 26262.
 
-**Round 1: Unified compiler infrastructure (MLIR) versus isolated domain micro-engines**
+**Round 1.1: Unified compiler infrastructure (MLIR) versus isolated domain micro-engines**
 
 - **Chris Lattner:**  
-  *“Mykola Fedchyk, in our work creating LLVM and MLIR, we proved that constructing fragmented, bespoke compilers without a unified multi-level intermediate representation is an architectural dead end. You propose a bespoke collection of point tools: a lexical scanner, a Datalog interpreter, an AST compiler in Zvodar, and a custom virtual machine. Why invent custom micro-engines instead of defining a unified MLIR dialect for engineering rules that leverages existing compiler passes for polyhedral optimization, operator fusion, and automatic hardware lowering to CPUs, GPUs, and accelerators?”*
+  *“Mykola Fedchyk, in our work creating LLVM and MLIR, we proved that constructing fragmented, bespoke compilers without a unified multi-level intermediate representation is an architectural dead end. You propose a bespoke collection of point tools: a lexical scanner, a Datalog interpreter, an AST compiler in the knowledge base compiler, and a custom virtual machine. Why invent custom micro-engines instead of defining a unified MLIR dialect for engineering rules that leverages existing compiler passes for polyhedral optimization, operator fusion, and automatic hardware lowering to CPUs, GPUs, and accelerators?”*
 
 - **Mykola Fedchyk:**  
   *“Mr. Chris Lattner, MLIR represents the state of the art for high-performance computing and machine learning compilation, but in functional safety certification under DO-178C Level A or ISO 26262 ASIL D, the massive LLVM/MLIR C++ codebase represents an intractable qualification barrier!  
   Tool Qualification Level 1 (TQL-1) demands formal mathematical evidence that optimization passes never introduce undefined behavior or alter program semantics. Qualifying thousands of heuristic optimization passes across LLVM is virtually impossible for embedded avionics.  
   This is why our runtime execution kernel is implemented in a minimal, memory-safe subset of Go/Rust executing verified predicates without speculative dynamic JIT compilation. We embrace MLIR as an offline target for global rule synthesis and analysis, but the execution engine residing inside the safety perimeter must remain radically compact, auditable, and mathematically deterministic.”*
 
-**Round 2: "One Size Does Not Fit All" versus the operational fragility of polyglot persistence**
+**Round 1.2: Native Ahead-of-Time (AOT) compilation versus qualified bytecode virtual machines**
+
+- **Chris Lattner:**  
+  *“If your overarching objective is the elimination of undefined behavior and rigorous formal verification, why stop at a bytecode interpreter or intermediate rule engine at all? Modern memory-safe systems languages—such as Rust or Swift with its strict ownership model and non-GC concurrency—enable compiling specifications directly into native bare-metal machine code via Ahead-of-Time (AOT) compilation. Why interpose an extra abstraction layer in the form of a rule virtual machine or interpreted Datalog, when a native binary artifact delivers zero latency overhead, direct register access, and exhaustive memory safety checked entirely at static compile time?”*
+
+- **Mykola Fedchyk:**  
+  *“Mr. Chris Lattner, static AOT translation of rules into a monolithic firmware binary introduces a catastrophic lifecycle problem in mission-critical operations!  
+  In avionics or automotive ECUs, updating an entire native binary image triggers a mandatory re-certification of the complete flight-control software stack under the full lifecycle of DO-178C / ISO 26262—costing millions of dollars and taking many months.  
+  Instead, our architecture decouples a qualified, immutable execution engine (Qualified Runtime Virtual Machine) from loadable knowledge packages. The runtime engine is verified and certified once as a platform with deterministic tick timing and strict memory sandboxing guarantees.  
+  The domain rules themselves are shipped as compact, typed bytecode sealed with multi-party cryptographic consortium signatures. The virtual machine authenticates the signature, verifies stack boundaries, and executes instructions with zero dynamic memory allocation. This enables agile, safe deployment of updated normative knowledge to vehicles and aircraft without reflashing and re-qualifying the entire underlying system software.”*
+
+**Round 2.1: "One Size Does Not Fit All" versus the operational fragility of polyglot persistence**
 
 - **Michael Stonebraker:**  
   *“Mykola Fedchyk, my thesis that 'One Size Does Not Fit All' is standard doctrine in modern database systems. However, you push this principle to an operational extreme: you advocate deploying relational tables, graph stores for traceability, Datalog engines for transitive closure, vector databases for similarity, and RocksDB/LMDB for serialized rules. Scattering knowledge across four or five distinct storage engines introduces a maintenance nightmare of distributed transactions, network latency hops, and schema drift. Modern extensible relational databases like PostgreSQL, equipped with recursive CTEs and `pgvector`, solve all these requirements within a single ACID transaction boundary. Why incur catastrophic operational fragility?”*
@@ -457,6 +468,17 @@ The technology stack of a mission-critical expert system must not be assembled a
   Computing transitive closures over deep requirement trees via recursive SQL CTEs induces massive buffer pool churning, evicting transactional tables from memory. Furthermore, `pgvector` indexing competes directly for disk I/O against critical audit logging.  
   Crucially, our architecture incurs zero distributed transactions or network synchronization latency! We have eliminated online transactional updates from the read path.  
   The offline compilation pipeline compiles all admitted facts and rules into immutable, memory-mapped (mmap) binary artifacts and read-only LMDB/RocksDB databases. The inference engine accesses these structures directly from memory with zero network overhead and zero lock contention. We achieve your specialized engine performance without transactional overhead.”*
+
+**Round 2.2: Pure in-memory relational DBMS (VoltDB) versus memory-mapped storage (LMDB) under cold-start brownout recovery**
+
+- **Michael Stonebraker:**  
+  *“If you have migrated your entire dataset to read-only memory-mapped pages (mmap), why carry the baggage of disk-heritage embedded key-value engines like RocksDB or LMDB with their B-trees and LSM structures? In H-Store and VoltDB, we established that true in-memory architectures with core-partitioned memory allocation outperform traditional storage engines by orders of magnitude. If your knowledge base is immutable and resides in RAM, a relational in-memory engine provides declarative SQL access, transitive graph operations, and pure relational consistency without low-level B-tree page wrangling.”*
+
+- **Mykola Fedchyk:**  
+  *“Dr. Michael Stonebraker, the divergence between a pure in-memory DBMS (VoltDB/RAM) and a memory-mapped engine like LMDB hinges on cold-start physics and brownout fault recovery!  
+  In automotive and avionics controllers, brief power dips (brownout resets) are frequent operational realities, after which the control unit must restore full real-time operational readiness in under 50 milliseconds.  
+  A pure in-memory DBMS on reboot must deserialize gigabytes of rules, graphs, and indexes from flash into RAM, rebuilding dynamic pointer structures—a process requiring several seconds.  
+  In contrast, an LMDB file is already a structured, ready-to-run memory snapshot. The `mmap(2)` kernel system call renders the entire knowledge base instantly accessible with zero deserialization cycles: memory pages are paged in on demand by the OS kernel, and data structures rely on relative offsets rather than absolute heap pointers. Furthermore, OS kernel memory sharing permits dozens of isolated safety watchdog processes to read the identical knowledge base concurrently without duplicating physical controller RAM. This achieves power-loss resilience, instant initialization, and hardware efficiency that no dynamic in-memory SQL engine can match.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 The technology stack of an evidence-governed system is dictated by reliability theorems and certification standards, not industry fashion: isolating compiled systems languages protects the safety perimeter from undefined behavior, formal solvers guarantee mathematical consistency, and immutable specialized stores eliminate the compromises of monolithic databases.

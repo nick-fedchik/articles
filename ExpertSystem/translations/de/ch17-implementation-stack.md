@@ -437,17 +437,28 @@ Das vergleichende Benchmarking konkretisiert die dritte Lehre des folgenden Absc
 **These des Kapitels (Mykola Fedchyk):**  
 Der Technologiestack missionskritischer Expertensysteme darf nicht um monolithische Framework-Abstraktionen herum aufgebaut werden, sondern erfordert eine strikte funktionale Trennung nach Operationssemantik und Fehlermodi: Die Verknüpfung kompilierter Systemsprachen (Go/Rust), stratifizierten Datalogs für transitive Erreichbarkeit, SMT-Solvern für Invarianten und speicherabgebildeten (mmap) Key-Value-Speichern garantiert Determinismus und Zertifizierbarkeit nach DO-178C / ISO 26262.
 
-**Runde 1: Universelle Compiler-Infrastruktur (MLIR) versus isolierte Domänen-Mikro-Engines**
+**Runde 1.1: Universelle Compiler-Infrastruktur (MLIR) versus isolierte Domänen-Mikro-Engines**
 
 - **Chris Lattner:**  
-  *„Mykola Fedchyk, bei der Entwicklung von LLVM und MLIR haben wir bewiesen, dass der Bau isolierter, maßgeschneiderter Compiler ohne eine einheitliche mehrstufige Zwischenrepräsentation eine ingenieurtechnische Sackgasse ist. Sie schlagen eine fragmentierte Sammlung von Punktwerkzeugen vor: einen Syntaxscanner, einen Datalog-Interpreter, einen AST-Compiler in Zvodar und eine eigene virtuelle Maschine. Warum bauen Sie anstelle dieser Fragmentierung keinen einheitlichen MLIR-Dialekt für technische Regeln, der bestehende Compiler-Passes für Schleifenoptimierung und automatische Hardware-Generierung auf CPUs und GPUs nutzt?“*
+  *„Mykola Fedchyk, bei der Entwicklung von LLVM und MLIR haben wir bewiesen, dass der Bau isolierter, maßgeschneiderter Compiler ohne eine einheitliche mehrstufige Zwischenrepräsentation eine ingenieurtechnische Sackgasse ist. Sie schlagen eine fragmentierte Sammlung von Punktwerkzeugen vor: einen Syntaxscanner, einen Datalog-Interpreter, einen AST-Compiler im Wissensbasis-Compiler und eine eigene virtuelle Maschine. Warum bauen Sie anstelle dieser Fragmentierung keinen einheitlichen MLIR-Dialekt für technische Regeln, der bestehende Compiler-Passes für Schleifenoptimierung und automatische Hardware-Generierung auf CPUs und GPUs nutzt?“*
 
 - **Mykola Fedchyk:**  
   *„Herr Chris Lattner, MLIR ist der Goldstandard für Hochleistungsrechnen und maschinelles Lernen, doch in der funktionalen Sicherheitszertifizierung nach DO-178C Level A oder ISO 26262 ASIL D wird die gigantische C++-Codebasis von LLVM/MLIR zu einer unüberwindbaren Hürde!  
   Die Werkzeugqualifizierung (Tool Qualification Level, TQL-1) verlangt den mathematischen Beweis, dass Optimierungsdurchläufe niemals undefiniertes Verhalten einführen oder die Semantik verändern. Tausende heuristische Transformationen in LLVM für Bordcontroller zu qualifizieren, ist praktisch unmöglich.  
   Deshalb ist unser operativer Inferenzkern in einer minimalen, speichersicheren Teilmenge von Go/Rust implementiert und führt verifizierte Prädikate ohne dynamische JIT-Kompilierung aus. Wir begrüßen MLIR als hervorragendes Werkzeug zur Offline-Regelsynthese, doch die Ausführungs-Engine innerhalb des Sicherheitsperimeters muss radikal schlank, formal verifizierbar und vollständig deterministisch bleiben.“*
 
-**Runde 2: „One Size Does Not Fit All“ versus operationelle Komplexität polyglotter Persistenz**
+**Runde 1.2: Native Ahead-of-Time-Kompilierung (AOT) versus qualifizierte Bytecode-VMs**
+
+- **Chris Lattner:**  
+  *„Wenn Ihr übergeordnetes Ziel das Fehlen undefinierten Verhaltens und eine lückenlose formale Verifikation ist, warum verharren Sie dann bei einem Bytecode-Interpreter oder einer Zwischen-Regel-Engine? Moderne speichersichere Systemsprachen wie Rust oder Swift mit ihrem strikten Eigentumsmodell und Nicht-GC-Nebenläufigkeit erlauben es, Spezifikationen via Ahead-of-Time-Kompilierung (AOT) direkt in nativen Bare-Metal-Maschinencode zu überführen. Warum ziehen Sie eine zusätzliche Abstraktionsschicht in Gestalt einer virtuellen Regelmaschine oder eines interpretierten Datalogs ein, wenn ein nativer Binär-Artefakt null Latenz-Overhead, direkten Registerzugriff und vollständige Speichersicherheitsprüfungen zur statischen Compile-Zeit bietet?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Chris Lattner, die statische AOT-Kompilierung von Regeln in ein monolithisches Firmware-Image erzeugt ein katastrophales Lebenszyklusproblem im operativen Betrieb!  
+  In der Avionik oder bei automobilen Steuergeräten erfordert jede Änderung des nativen Binär-Images eine erneute Zertifizierung des gesamten Steuerungssoftware-Stacks über den vollständigen Lebenszyklus von DO-178C / ISO 26262 — was Millionenbeträge verschlingt und viele Monate beansprucht.  
+  Stattdessen entkoppelt unsere Architektur eine qualifizierte, unveränderliche Ausführungs-Engine (Qualified Runtime Virtual Machine) von nachladbaren Wissenspaketen. Die Runtime-Engine wird einmalig als Plattform mit deterministischem Taktverhalten und striktem Speichersandboxing zertifiziert.  
+  Die Domänenregeln selbst werden als kompakter, typisierter Bytecode ausgeliefert, der durch kryptografische Konsortiumssignaturen versiegelt ist. Die virtuelle Maschine verifiziert die Signatur, prüft Stackgrenzen und führt Instruktionen ohne dynamische Speicherallokation aus. Dies ermöglicht die zügige und sichere Aktualisierung normativen Wissens an Bord, ohne das gesamte Betriebssystem des Flugzeugs oder Fahrzeugs neu zu flashen und rezertifizieren zu müssen.“*
+
+**Runde 2.1: „One Size Does Not Fit All“ versus operationelle Komplexität polyglotter Persistenz**
 
 - **Michael Stonebraker:**  
   *„Mykola Fedchyk, meine These, dass ein Datenbanksystem niemals alle Arbeitslasten optimal abdecken kann (One Size Does Not Fit All), ist heute Standardwissen. Doch Sie treiben diesen Grundsatz auf die Spitze: Sie fordern relationale Tabellen, Graphspeicher für Traceability, Datalog für transitive Hüllen, Vektordatenbanken für Ähnlichkeit und RocksDB/LMDB für serialisierte Regeln. Das Verteilen von Wissen über vier oder fünf unterschiedliche Speichersysteme erzeugt einen Albtraum verteilter Transaktionen, Netzwerklatenzen und Schema-Desynchronisationen. Moderne relationale DBMS wie PostgreSQL mit rekursiven CTEs und `pgvector` lösen all diese Aufgaben innerhalb einer einzigen ACID-Transaktionsgrenze. Warum zahlen Sie den Preis katastrophaler administrativer Fragilität?“*
@@ -457,6 +468,17 @@ Der Technologiestack missionskritischer Expertensysteme darf nicht um monolithis
   Rekursive SQL-CTEs zur Berechnung transitiver Abhängigkeiten in tiefen Anforderungsgraphen führen zu massivem Verdrängen des Puffercaches (Buffer Pool Churning) und blockieren Transaktionen. Und die Vektorsuche in `pgvector` konkurriert direkt mit kritischen Audit-Logs um Platten-I/O.  
   Entscheidend ist: Unsere Architektur erfordert keinerlei verteilte Transaktionen oder Netzwerksynchronisation! Wir haben Online-Transaktionen auf dem Lesepfad vollständig eliminiert.  
   Die Offline-Ingestion kompiliert alle geprüften Fakten in unveränderliche Binärstrukturen und schreibgeschützte LMDB/RocksDB-Dateien mit Zero-Copy-Speicherabbildung (mmap). Die Inferenzmaschine liest diese Arteakte direkt aus dem virtuellen Speicher ohne Netzwerklatenz. Wir erreichen die Höchstleistung spezialisierter Datenstrukturen ohne Transaktionschaos.“*
+
+**Runde 2.2: Reine In-Memory-DBMS (VoltDB) versus speicherabgebildete Speicher (LMDB) bei Kaltstart und Brownout**
+
+- **Michael Stonebraker:**  
+  *„Wenn Sie Ihren gesamten Datenbestand in schreibgeschützten speicherabgebildeten RAM (mmap) überführt haben, warum schleppen Sie dann den Ballast disk-historischer Embedded-Key-Value-Engines wie RocksDB oder LMDB mit ihren B-Bäumen und LSM-Bäumen mit? In H-Store und VoltDB haben wir bewiesen, dass echte In-Memory-Architekturen mit kern-partitionierter Speicherallokation traditionelle Speicher um Größenordnungen übertreffen. Wenn Ihre Wissensbasis unveränderlich im RAM liegt, bietet eine relationale In-Memory-Engine deklarativen SQL-Zugriff, transitive Graphoperationen und relationale Konsistenz ohne systemnahes B-Baum-Paging.“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Dr. Michael Stonebraker, die fundamentale Differenz zwischen einer reinen In-Memory-DBMS (VoltDB/RAM) und einer speicherabgebildeten LMDB-Datenbank liegt in der Physik des Kaltstarts und der Beherrschung von Stromunterbrechungen (Brownout Resets)!  
+  In automobilen Steuergeräten und der Avionik sind kurzzeitige Spannungseinbrüche ein reales Betriebsrisiko, nach denen das System in unter 50 Millisekunden wieder die volle Echtzeitbetriebsbereitschaft herstellen muss.  
+  Eine reine In-Memory-DBMS muss beim Neustart Gigabytes an Regeln, Graphen und Indizes aus dem Flash-Speicher in das RAM deserialisieren und dynamische Zeigerstrukturen neu aufbauen — was mehrere Sekunden dauert.  
+  Im Gegensatz dazu ist eine LMDB-Datei bereits ein fertiges, binäres Speicherabbild. Der Kernel-Systemaufruf `mmap(2)` macht die Wissensbasis ohne jeden Deserialisierungstakt sofort verfügbar: Speicherseiten werden vom Betriebssystemkern bei Bedarf eingeblendet, und alle Strukturen arbeiten mit relativen Byte-Offsets statt absoluten Heap-Zeigern. Darüber hinaus erlaubt Shared Memory des Kernels Dutzenden isolierten Watchdog-Prozessen den simultanen Zugriff auf dieselbe Wissensbasis, ohne den physischen RAM-Bedarf zu vervielfachen. Dies garantiert Ausfallsicherheit gegen Spannungsabfall, verzögerungsfreie Einsatzbereitschaft und maximale Hardwareeffizienz, die keine dynamische In-Memory-SQL-Engine erreichen kann.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
 Der Technologiestack eines beweisgestützten Systems wird nicht von Moden, sondern von Zuverlässigkeitstheoremen und Zertifizierungsnormen bestimmt: Die Isolation kompilierter Systemsprachen schützt den Sicherheitsperimeter vor undefiniertem Verhalten, formale Solver garantieren mathematische Konsistenz, und unveränderliche spezialisierte Speicher eliminieren die Kompromisse monolithischer Allzweckdatenbanken.

@@ -821,7 +821,7 @@ Das Ergebnis dieser Zwischenrepräsentation ist ein verifizierbarer Formelkandid
 **These des Kapitels (Mykola Fedchyk):**  
 Die Transformation unstrukturierter technischer Standards in verifizierbare mathematische Invarianten gelingt durch syntaktische Kanalisierung natürlicher Sprache mittels EARS-Schablonen, semantisches Linting vager Adjektive unter Erzwingung physikalischer SI-Toleranzen und grammatikgesteuerte Kompilierung in geschlossene SMT-LIB-Formeln zur automatisierten Erkennung von Spezifikationsblockaden mittels Z3.
 
-**Runde 1: Können rigide syntaktische EARS-Schablonen die operationelle Komplexität normativer Systeme erfassen?**
+**Runde 1.1: Können rigide syntaktische EARS-Schablonen die operationelle Komplexität normativer Systeme erfassen?**
 
 - **Alistair Mavin:**  
   *„Mykola Fedchyk, als wir die EARS-Methodik bei Rolls-Royce entwickelten, war unser primäres Ziel, technische Anforderungen von der Mehrdeutigkeit der natürlichen Sprache durch intuitive Strukturmuster (Ubiquitous, Event-driven, State-driven usw.) zu befreien. EARS wurde jedoch als praktische Kommunikationsbrücke zwischen Menschen — Anforderungsautoren und Systemingenieuren — konzipiert. Der Versuch, die Extraktion von Anforderungen aus beliebigen Standards vollständig zu automatisieren und vielschichtige Prozesse der funktionalen Sicherheit in starre Formelkäfige zu zwingen, birgt das Risiko, implizite Annahmen abzuschneiden, die Ingenieure im Kopf tragen, aber selten in Schablonenslots explizieren.“*
@@ -831,7 +831,17 @@ Die Transformation unstrukturierter technischer Standards in verifizierbare math
   Wenn eine technische Anforderung nicht in eine disziplinierte EARS-Schablone mit messbaren Triggern, harten Reaktionsfristen (`innerhalb von X ms`) und erschöpfenden Alternativzweigen passt, ist sie keine Anforderung, sondern toxische Mehrdeutigkeit.  
   In meiner Architektur klassifiziert die Go-Audit-Pipeline nicht bloß deontische Modalitäten (`SHALL`, `MUST NOT`), sondern erzwingt vollständige strukturelle Integrität nach EARS. Formuliert eine Norm 'das System muss unverzüglich reagieren', erzeugt unser semantischer Linter sofort den Fehler `MISSING_TIME_BOUND`. Wir schneiden keinen Kontext ab — wir zwingen Fachexperten dazu, Annahmen in verifizierbare physikalische Invarianten zu überführen.“*
 
-**Runde 2: Formalisierung in SMT-Prädikaten versus Vollständigkeit der Domänentheorie (Four-Variable Model)**
+**Runde 1.2: Schichtübergreifende normative Kollisionen in hierarchischen EARS-Spezifikationen**
+
+- **Alistair Mavin:**  
+  *„In komplexen Großsystemen verteilen sich EARS-Anforderungen über mehrere Architekturschichten: System-EARS, Teilsystem-EARS und Software-EARS. Häufig fügt sich eine lokale Sicherheitsanforderung eines Subsystems perfekt in ein EARS-Muster ein, kollidiert jedoch diametral mit einer übergeordneten Systemverfügbarkeits-Anforderung. Wie können Ihr syntaktischer Linter und die Formalisierungs-Engine solche vertikalen Hierarchiekonflikte automatisiert aufdecken und harmonisieren, ohne dass Systemarchitekten permanent manuell eingreifen müssen?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Mavin, wir lösen dies durch eine deterministische lexikografische Rangordnung $`\mathrm{Rank}(\mathcal{R})`$ und die automatisierte Extraktion minimaler unerfüllbarer Kerne (*Minimal Unsatisfiable Cores*, MUC) in Z3.  
+  Sicherheitsanforderungen höchster Integrität (ASIL D / DO-178C Level A) dominieren funktionale Bequemlichkeits- oder Energieoptimierungsziele strikt.  
+  Wenn die Pipeline eine ebenenübergreifende Konjunktion in eine SMT-LIB-Formel übersetzt und der Solver `unsat` meldet, erzeugt das System nicht bloß einen Abbruch, sondern lokalisiert das exakte konfliktverursachende Erdungstupel $`\mathcal{G}`$ über beide Spezifikationsebenen und konstruiert einen Gegenbeispiel-Trace (*Counter-Example Trace*): 'Sicherheitsanforderung SYS-REQ-104 erzwingt die Aktorabschaltung binnen $15\,\text{ms}$, während funktionale Anforderung SW-REQ-210 eine Diagnoseeinschwingzeit von $40\,\text{ms}$ verlangt'. Dies liefert Architekten eine mathematisch exakte Diagnose anstelle wochenlanger Abstimmungsrunden.“*
+
+**Runde 2.1: Formalisierung in SMT-Prädikaten versus Vollständigkeit der Domänentheorie (Four-Variable Model)**
 
 - **Pamela Zave:**  
   *„Mykola Fedchyk, die Kompilierung von EARS-Anforderungen in SMT-LIB-Prädikate und die Widerspruchssuche via Z3-Solver ist faszinierend, birgt jedoch eine klassische Falle formaler Methoden. In unserem Vier-Variablen-Modell (Jackson & Zave) erfordert Korrektheit den Beweis von $S, W \vdash R$: Die Spezifikationsverhaltensweisen $S$ müssen zusammen mit den physikalischen Umweltannahmen $W$ die Anforderungen $R$ erfüllen. Wenn Sie den Text $R$ isoliert formalisieren, ohne eine vollständige mathematische Theorie des physikalischen Umfelds $W$ (wie elektrochemische Übergangsprozesse einer Batteriezelle) einzubinden, liefert ein SMT-`sat` von Z3 eine trügerische und gefährliche Illusion von Sicherheit.“*
@@ -840,6 +850,16 @@ Die Transformation unstrukturierter technischer Standards in verifizierbare math
   *„Frau Dr. Pamela Zave, ich teile Ihre fundamentale Erkenntnis über die Unverzichtbarkeit des Umgebungsmodells $W$ uneingeschränkt. Genau deshalb evaluiert unser Requirements-IR Prädikate niemals isoliert, sondern als Randbedingungen über geschlossenen Zustandsvektoren.  
   Erstens formalisiert unsere Kompilierungs-Pipeline Umweltannahmen $W$ über explizite physikalische SI-Intervalle (z. B. $T \in [-40, +85]^\circ\text{C}$, $V \in [2.5, 4.2]\,\text{V}$).  
   Zweitens zielt die SMT-Prüfung nicht auf ein bequemes `sat`, sondern auf das Auffinden unerfüllbarer Kerne (`unsat core`): Führt die Schnittmenge zweier Anforderungen unter gültigen Umgebungsbedingungen $W$ zu einem logischen Widerspruch (wie im Fallbeispiel der gleichzeitigen Notkühlung und Schützabschaltung), stoppt die Pipeline die Architekturfreigabe per Fail-Closed vor jeder Codeerstellung. SMT ersetzt nicht die Physik, sondern dient als beweisbarer Schutzwall gegen Spezifikationskonflikte.“*
+
+**Runde 2.2: Hardware-Ungenauigkeiten, Sensorquantisierung und Latenzen bei der Anforderungsverifikation**
+
+- **Pamela Zave:**  
+  *„Im Vier-Variablen-Modell stützt sich die Brücke zwischen kontrollierten Variablen $C$ und beobachteten Variablen $M$ auf imperfekte physikalische Eingabe- $I$ und Ausgabegeräte $O$. Reale Sensoren weisen Temperaturdrift, ADC-Quantisierungsrauschen und Busübertragungslatenzen auf. Wenn Ihre SMT-Übersetzung mit idealisierten mathematischen Variablen $x \in \mathbb{R}$ rechnet, wird Ihre verifizierte Spezifikation auf realem Silizium versagen. Kann Ihr SMT-Modell Abtastverzögerungen $\tau_{\mathrm{delay}}$ und Sensortoleranzen $\pm \delta$ berücksichtigen, ohne den Solver in einen kombinatorischen Kollaps zu treiben?“*
+
+- **Mykola Fedchyk:**  
+  *„Frau Dr. Zave, genau um diese Diskrepanz zu schließen, formulieren wir Umweltbeschränkungen in quantorenfreier linearer reeller Arithmetik (QF_LRA) und Intervallanalysen.  
+  Jede überwachte Größe $m(t)$ wird nicht als idealer Skalar modelliert, sondern als Unsicherheitsintervall auf Basis realer Registerdaten aus CMSIS-SVD: $m(t) \in [s(t) - \delta_{\mathrm{adc}}, s(t) + \delta_{\mathrm{adc}}]$ mit beschränkter Abtastlatenz $\tau_{\mathrm{sample}} \le \Delta t_{\mathrm{bus}}$.  
+  Sicherheitsanforderungen werden so verifiziert, dass die Invariante auch unter ungünstigstem Rauschen (*Worst-Case Noise Margin*) garantiert wahr bleibt. Z3 beweist in polynomieller Zeit, dass selbst an den Extremgrenzen von Hardwarefehlern und Übertragungslatenzen das Software-Regelgesetz $S$ die Anforderung $R$ niemals verletzt. Damit verschmilzt Ihr Vier-Variablen-Modell direkt mit der industriellen eingebetteten Mikroelektronik.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
 Die deterministische Erkennung und Formalisierung normativer Anforderungen schafft durchgängige Nachverfolgbarkeit vom Standard-Byteoffset bis zur Ausführungslogik: EARS-Muster beseitigen sprachliche Unschärfen, semantisches Linting verbietet unbestimmte Adjektive ohne SI-Einheiten, und die Transformation in SMT-LIB garantiert die mathematische Widerspruchsfreiheit technischer Spezifikationen vor Implementierungsbeginn.

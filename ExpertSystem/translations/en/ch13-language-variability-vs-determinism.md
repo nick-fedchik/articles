@@ -669,7 +669,7 @@ Session working memory stores conversational context and never functions as an e
 **Chapter Thesis (Mykola Fedchyk):**  
 Overcoming linguistic variability in engineering queries mandates semantic compilation: synthesizing Constrained Conditional Models (CCM) and finite-state GBNF grammars with deterministic GroupPass metric governance, collapsing infinite colloquial surface phrasing into unambiguous AST predicates without sacrificing negation polarity or quantifier bounds.
 
-**Round 1: Can statistical classifiers reliably enforce logical constraints without polarity inversion?**
+**Round 1.1: Can statistical classifiers reliably enforce logical constraints without polarity inversion?**
 
 - **Dan Roth:**  
   *“Mykola Fedchyk, in our foundational work on Constrained Conditional Models (CCM), we integrated statistical learning with Integer Linear Programming (ILP) to impose global declarative constraints onto machine learning outputs. However, you attempt to deploy this paradigm across unconstrained engineering user queries exhibiting extreme syntactic volatility. Statistical language classifiers intrinsically struggle with negation scope or confuse fine-grained quantifier distinctions (`at least one` versus `all`) when an engineer employs colloquial technical jargon or passive grammatical constructions. If the neural front-end errs during intent or slot extraction, no downstream semantic compiler can prevent the system from executing an invalid, hazardous logical query.”*
@@ -680,7 +680,17 @@ Overcoming linguistic variability in engineering queries mandates semantic compi
   Second, the model's token decoding is strictly confined within a finite-state GBNF grammar lattice, admitting only valid slots declared in the certified domain ontology.  
   Third, we enforce an uncompromising release invariant—the GroupPass metric: if an equivalence cluster of semantically identical rephrasings generates even a single diverging AST logical form, the release gate fails the model. Whenever ambiguity cannot be eliminated deterministically, the host verifier refuses to fabricate a slot and initiates a deterministic clarification protocol.”*
 
-**Round 2: Contextual pragmatics and conversational implicatures versus rigid ontological canonization**
+**Round 1.2: Multi-layered non-linear constraints and real-time combinatorial explosion**
+
+- **Dan Roth:**  
+  *“Mykola Fedchyk, in practical applications, CCM confronts the reality that cross-entity constraints are rarely linear or purely local. If an engineering query spans relationships between three distinct standards, two operating voltage thresholds, and conflicting deontic modalities, the dimensionality of the Integer Linear Program explodes exponentially. How can your GBNF finite-state lattice process complex cross-slot interdependencies without triggering combinatorial explosion and violating hard real-time $O(1)$ response budgets on embedded silicon?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Roth, we resolve this tension via hierarchical constraint decomposition. The local GBNF pushdown automaton performs purely syntactic token masking in $O(1)$ during autoregressive decoding—it never solves global ILP optimization problems at runtime.  
+  Global inter-slot dependencies and cross-domain invariants are delegated to a subsequent discrete verification phase: a deterministic stratified Datalog engine and an SMT solver (Z3) hosted within the isolated verifier.  
+  Because each knowledge service operates over a strictly typed, scope-bounded micro-ontology, SMT solving completes in milliseconds ($<15\,\text{ms}$). If global constraints prove unsatisfiable (UNSAT), the system wastes zero cycles on heuristic backtracking: it immediately emits an exact conflict core of predicates, guaranteeing bounded latencies.”*
+
+**Round 2.1: Contextual pragmatics and conversational implicatures versus rigid ontological canonization**
 
 - **Christopher Potts:**  
   *“Mykola Fedchyk, human language cannot be reduced to sterile slot-filling or abstract predicate calculus. It is fundamentally driven by Gricean pragmatic implicatures, presuppositions, and context-dependent speaker intentions. When an engineer asks, 'Can I restart this controller now?', they are not merely calling an API status check—they rely on an implicit shared conversational history and expect nuanced situational awareness. By forcing this rich pragmatic spectrum into a rigid canonical ontology and refusing to answer whenever an utterance deviates from your formal grammar, you build an infuriatingly brittle, uncooperative system that forces humans to communicate in pseudocode rather than natural language.”*
@@ -690,6 +700,16 @@ Overcoming linguistic variability in engineering queries mandates semantic compi
   When an operator in a nuclear control room or an avionics maintenance bay asks 'can I restart this controller?', the functional safety system possesses zero legal or ethical right to 'infer what the user probably meant.'  
   If the query harbors polysemy or lacks an explicit `scope` parameter (such as a specific safety standard or controller hardware revision), attempting to guess the user's intent via statistical inference is criminal negligence.  
   Our architecture transforms implicit presuppositions into explicit engineering facts: working memory retains session context strictly as an unverified candidate, while the host verifier requires explicit confirmation before execution. We do not design an AI to be a pleasing conversational companion; we construct an uncompromising semantic interface where every word carries measurable liability.”*
+
+**Round 2.2: Conversational vagueness versus adaptive metalinguistic elicitation**
+
+- **Christopher Potts:**  
+  *“Mykola Fedchyk, in real-world engineering, practitioners rarely recall the exact RFC number, bitfield register index, or specific microsecond timing bound off the top of their heads. Conversational vagueness serves as an essential communicative heuristic: engineers formulate approximate queries to orient themselves. If your system responds to every minor lexical imprecision with a blunt 'Specify parameter or request rejected', user collaboration collapses. Shouldn't an evidence-based system engage in cooperative metalinguistic negotiation, gently pruning the hypothesis space without defensive stonewalling?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Potts, we rigorously distinguish between stochastic hallucination and cooperative disambiguation. The system never strands the engineer in a dead end: instead of a silent refusal, the verifier initiates a deterministic Socratic Elicitation Protocol.  
+  When an essential parameter is missing (e.g. `MISSING_SCOPE_PARAMETER`), the verifier traverses adjacent artifacts in corporate memory and generates a structured, multi-choice prompt: 'Do you refer to the CAN bus per ISO 11898-2 or the CAN FD protocol per Bosch 2012 specification?'.  
+  The engineer selects an explicit option, producing a cryptographically recorded declaration of intent. Through this protocol, conversational vagueness is safely converted into rigorous engineering facts without inviting stochastic generative drift.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 Overcoming linguistic variability in evidence-governed expert systems is achieved not by expanding probabilistic associations, but through rigorous semantic compilation: coupling Constrained Conditional Models, GBNF grammar-guided decoding, and GroupPass invariance guarantees ensures that unbounded phrasing variations safely collapse into deterministic inference predicates.

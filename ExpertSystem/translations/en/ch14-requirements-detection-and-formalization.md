@@ -822,7 +822,7 @@ The synthesized intermediate representation constitutes a verifiable candidate f
 **Chapter Thesis (Mykola Fedchyk):**  
 Transforming unstructured technical standards into verifiable mathematical invariants is achieved through syntactic channelization of natural language via EARS templates, semantic linting of qualitative adjectives mandating physical SI tolerances, and grammatically guided compilation into closed SMT-LIB formulas to detect latent deadlocks using Z3.
 
-**Round 1: Can rigid syntactic EARS templates capture the true operational complexity of normative systems?**
+**Round 1.1: Can rigid syntactic EARS templates capture the true operational complexity of normative systems?**
 
 - **Alistair Mavin:**  
   *“Mykola Fedchyk, when we developed the EARS methodology at Rolls-Royce, our primary goal was to rescue engineering requirements from natural language ambiguity through several intuitive structural patterns (Ubiquitous, Event-driven, State-driven, etc.). However, EARS was conceived as a practical communicative bridge between humans—specification authors and systems engineers. Attempting to fully automate requirement extraction from arbitrary standards and forcing complex, multifaceted functional safety processes into rigid syntactic cages risks severing vital contextual assumptions that engineers hold in their minds but rarely transcribe into explicit template slots.”*
@@ -832,7 +832,17 @@ Transforming unstructured technical standards into verifiable mathematical invar
   If an engineering requirement cannot be articulated within a disciplined EARS template with explicit triggers, physical deadlines (`within X ms`), and exhaustive alternative branches—it is not a requirement; it is toxic ambiguity.  
   In my architecture, the Go audit pipeline does not merely classify deontic modality (`SHALL`, `MUST NOT`); it enforces rigorous structural completeness under EARS. If a standard states that 'the system shall promptly respond', our semantic linter immediately issues a blocking `MISSING_TIME_BOUND` violation. We do not discard engineering context—we compel domain experts to quantify it into verifiable physical invariants.”*
 
-**Round 2: SMT predicate formalization versus domain theory completeness (The Four-Variable Model)**
+**Round 1.2: Cross-layer normative collisions in hierarchical EARS specifications**
+
+- **Alistair Mavin:**  
+  *“Across massive cyber-physical platforms, EARS requirements partition across multiple architectural tiers: System-level EARS, Subsystem EARS, and Software EARS. Frequently, a subsystem safety requirement aligns impeccably with local EARS patterns, yet directly conflicts with a top-level system availability requirement. How can your syntactic linter and formal translation engine detect and reconcile such vertical hierarchical collisions without requiring constant human intervention from systems architects?”*
+
+- **Mykola Fedchyk:**  
+  *“Mr. Mavin, we resolve this through deterministic lexicographical ranking $`\mathrm{Rank}(\mathcal{R})`$ and automated extraction of Minimal Unsatisfiable Cores (MUC) within Z3.  
+  Safety requirements of paramount integrity (ASIL D / DO-178C Level A) strictly dominate operational convenience or energy optimization goals.  
+  When our pipeline compiles the multi-tier conjunction into an SMT-LIB formula and the solver emits `unsat`, the system does not simply fail: it extracts the exact conflicting span grounding tuple $`\mathcal{G}`$ across both specification tiers and constructs an automated Counter-Example Trace: 'Safety requirement SYS-REQ-104 mandates actuator cutoff within $15\,\text{ms}$, whereas operational requirement SW-REQ-210 requires a $40\,\text{ms}$ diagnostic settling period'. This provides architects with an exact mathematical diagnosis rather than weeks of cross-departmental friction.”*
+
+**Round 2.1: SMT predicate formalization versus domain theory completeness (The Four-Variable Model)**
 
 - **Pamela Zave:**  
   *“Mykola Fedchyk, compiling EARS requirements into SMT-LIB predicates and querying satisfiability via the Z3 solver is an alluring paradigm, but it falls into a classical formal methods pitfall. In our Four-Variable Model (Jackson & Zave), proving correctness requires establishing $S, W \vdash R$: the specification behaviors $S$ in conjunction with environmental assumptions $W$ must satisfy requirements $R$. If you formalize the requirement text $R$ in isolation without a complete mathematical domain theory of the physical environment $W$ (such as electrochemical dynamics within a lithium-ion cell), an SMT `sat` result provides a hollow, hazardous illusion of safety.”*
@@ -841,6 +851,16 @@ Transforming unstructured technical standards into verifiable mathematical invar
   *“Dr. Pamela Zave, I wholeheartedly endorse your foundational insight regarding the paramount importance of the environment model $W$. This is precisely why our intermediate Requirements IR never evaluates predicates in a vacuum, but as bounded constraints over closed system state vectors.  
   First, our compilation pipeline formalizes environmental assumptions $W$ via explicit physical SI intervals (e.g., $T \in [-40, +85]^\circ\text{C}$, $V \in [2.5, 4.2]\,\text{V}$).  
   Second, SMT verification is not conducted to obtain a complacent `sat`, but to expose unsatisfiable cores (`unsat core`): if valid environmental states $W$ force a contradiction between two system specifications (such as the chapter's case study where simultaneous emergency cooling and contactor isolation collide), compilation is aborted via Fail-Closed before any hardware or code is generated. SMT is not deployed to replace physics, but as an evidentiary barrier against logical inconsistency and specification deadlocks.”*
+
+**Round 2.2: Hardware inaccuracies, sensor quantization, and latency in requirements verification**
+
+- **Pamela Zave:**  
+  *“In the Four-Variable Model, the bridge between controlled variables $C$ and monitored variables $M$ rests upon imperfect physical input $I$ and output $O$ mechanisms. Real sensors exhibit thermal drift, ADC quantization noise, and transmission jitter across buses. If your SMT translation presumes idealized mathematical variables $x \in \mathbb{R}$, your verified specification will fail when deployed on physical silicon. Can your SMT model incorporate sampling delays $\tau_{\mathrm{delay}}$ and sensor tolerances $\pm \delta$ without triggering solver combinatorial collapse?”*
+
+- **Mykola Fedchyk:**  
+  *“Dr. Zave, bridging this reality gap is precisely why we formulate environmental constraints using Quantifier-Free Linear Real Arithmetic (QF_LRA) and interval analysis.  
+  Every monitored variable $m(t)$ is modeled not as an idealized scalar, but as an uncertainty interval parameterized by silicon specifications extracted from CMSIS-SVD: $m(t) \in [s(t) - \delta_{\mathrm{adc}}, s(t) + \delta_{\mathrm{adc}}]$ with bounded sampling delay $\tau_{\mathrm{sample}} \le \Delta t_{\mathrm{bus}}$.  
+  Safety requirements are verified to guarantee that the invariant holds under the Worst-Case Noise Margin. In polynomial time, Z3 proves that even at the extreme boundary of sensor quantization and transport latency, the software control law $S$ preserves requirement invariant $R$. This unites your Four-Variable Model with the physical reality of embedded hardware.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 Deterministic detection and formalization of normative requirements establishes end-to-end traceability from standard byte offsets to execution logic: EARS templates eliminate conversational ambiguity, semantic linting forbids ungrounded descriptors without physical SI units, and translation to SMT-LIB guarantees the mathematical consistency of engineering specifications prior to implementation.

@@ -1324,7 +1324,7 @@ This table contrasts formally verifiable deductive inference against baseline ge
 **Chapter Thesis (Mykola Fedchyk):**  
 Constructing a verifiable engineering knowledge base demands abandoning naive fixed-size chunking in favor of Floating-size Annotation Units (FAU) governed by Ashby's law, byte-exact fact grounding via the tuple $`\mathcal{G}`$, multi-model storage, and a multi-stage Popperian admission gate with SMT verification to counter epistemic knowledge poisoning (MITRE ATLAS).
 
-**Round 1: Planetary-scale Open Information Extraction (Open IE) versus Floating-size Annotation Units (FAU)**
+**Round 1.1: Planetary-scale Open Information Extraction (Open IE) versus Floating-size Annotation Units (FAU)**
 
 - **Oren Etzioni:**  
   *“Mykola Fedchyk, in our foundational work on Open Information Extraction (Open IE and TextRunner), we demonstrated that scaling knowledge bases to planetary dimensions is achievable only when extraction algorithms operate unburdened by rigid predefined schemas or brittle ontological constraints. You propose tethering every extracted assertion to physical source byte coordinates, mandating complex extraction of Floating-size Annotation Units (FAU) and proof certificates sealed with Ed25519 cryptographic signatures. Such excessive bureaucracy and computational friction cripple ingestion throughput: you will never be able to ingest even a fraction of the industrial standards and technical documentation that modern open extractors absorb effortlessly.”*
@@ -1334,7 +1334,17 @@ Constructing a verifiable engineering knowledge base demands abandoning naive fi
   According to W. Ross Ashby's cybernetic Law of Requisite Variety, the control capacity of the extraction pipeline must match the structural variety of the normative source document. This is why we discarded fixed chunking and engineered Floating-size Annotation Units (FAU) that preserve the topological layout of technical tables, graphs, and clauses.  
   Every admitted fact is indelibly bound by the tuple $`\mathcal{G} = \langle \mathrm{DocID}, \mathrm{SHA256}, \mathrm{StartByte}, \mathrm{EndByte}, \mathrm{Predicate} \rangle`$. If a candidate assertion lacks byte-level physical verification in the authoritative primary text, it is immediately discarded. We deliberately sacrifice speculative throughput to achieve uncompromising evidentiary certainty.”*
 
-**Round 2: Probabilistic topic models (LDA) versus the Popperian admission gate and knowledge poisoning defense (MITRE ATLAS)**
+**Round 1.2: Compositional Semantic Relations and Emergent Predicates versus Rigid Ontological Schemas**
+
+- **Oren Etzioni:**  
+  *“What about compositional and cross-domain relations that are absent a priori from your pre-defined ontology? Open IE extracts arbitrary relational phrases directly from unstructured text ('X transiently inhibits Y under condition Z'), enabling the discovery of unforeseen physical interactions across complex subsystems. If your extraction pipeline mandates prior formal specification of every predicate in OWL/RDF, you will inevitably discard critical empirical findings and rare component failure modes expressed by engineers in non-standard phrasing.”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Oren Etzioni, the system neither silently discards unrecognized relations nor recklessly admits them into the decision-making runtime. Unrecognized constructions are tagged with the status `UNRECOGNIZED_RELATION_CANDIDATE` while preserving full byte-level evidence custody $`\mathcal{G}`$, and routed to a quarantined engineering triage queue (*Discovery Staging Buffer*).  
+  There, a linguistic analyzer extracts the syntactic skeleton and drafts an ontology extension proposal via a pull request to the knowledge repository.  
+  However, until a candidate predicate receives a strictly typed contract, verified SI units, and formal sign-off from a certification safety engineer, it possesses zero authority to influence rule execution in autonomous vehicles or flight control avionics. We fully support knowledge evolution, but exclusively through a disciplined engineering release cycle, never through the chaotic entropy of unconstrained vector clusters.”*
+
+**Round 2.1: Probabilistic Topic Models (LDA) versus the Popperian Admission Gate and Knowledge Poisoning Defense (MITRE ATLAS)**
 
 - **David Blei:**  
   *“Mykola Fedchyk, real-world technical corpora and engineering documentation harbor deep, latent semantic structures. Probabilistic Bayesian models, such as Latent Dirichlet Allocation (LDA) and deep variational autoencoders, naturally capture textual noise, uncertainty, and thematic mixtures without imposing artificial crisp boundaries. In contrast, your 'Popperian admission gate' aggressively discards any knowledge candidate that fails strict first-order SMT checks or exhibits numerical parameter divergence. This symbolic rigidity ignores the statistical evolution of engineering terminology and renders your knowledge base brittle when encountering legitimate editorial updates.”*
@@ -1343,6 +1353,16 @@ Constructing a verifiable engineering knowledge base demands abandoning naive fi
   *“Professor David Blei, probabilistic models are indispensable for exploratory data mining, but in safety-critical expert systems, latent probability distributions become a wide-open vector for hostile subversion!  
   Under the MITRE ATLAS adversarial matrix (techniques AML.T0020 and AML.T0043), an adversary or compromised supplier can subtly manipulate safety-critical thresholds (for example, shifting battery emergency cutoff voltage from 400 V to 435 V). A probabilistic model smoothly assimilates this toxic injection into its latent distribution as acceptable variance.  
   Our Popperian admission gate operates under zero-trust: the Z3 SMT solver executes symbolic threshold sensitivity audits ($\Delta \theta \le \epsilon_{\mathrm{safety}}$) and polarity inversion checks. If a candidate fact breaches established safety invariants, it is never smoothed away; it is instantly quarantined for mandatory Human-in-the-Loop qualification. An authoritative engineering knowledge base cannot be probabilistic—it must be mathematically falsifiable.”*
+
+**Round 2.2: Longitudinal Concept Drift versus Rigid Bitemporal Discreteness**
+
+- **David Blei:**  
+  *“In Dynamic Topic Models (DTM), we track how the meanings of technical terms drift smoothly across decades: the operational concept of 'safe state' in 1990s automotive guidelines differs markedly from its probabilistic distribution in ISO 26262:2018. Your Popperian dichotomy treats any parameter or context drift as adversarial poisoning or semantic anomaly. Doesn't this discrete rigidity obstruct the natural evolution of normative language as standards transition across generational revisions?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor David Blei, we capture the evolution of terminology not by blurring statistical probabilities, but through strict bitemporal validity $`[T_{\mathrm{valid\_start}}, T_{\mathrm{valid\_end}}]`$ and version-scoped namespaces.  
+  When a new revision of ISO 26262 is ratified, the expert system does not 'retrain topic distributions' to overwrite earlier axioms. The prior definition remains immutable within its historical temporal slice to service previously deployed, certified platforms, while the updated norm is committed as an independent immutable RDF Quad bound to the new edition.  
+  The SMT solver validates the logical satisfiability and consistency of facts strictly within the scoped target release context $`S_v`$. This completely eliminates temporal contamination, preventing newly minted rules from silently breaking legacy systems without explicit engineering re-qualification.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 The construction of a verifiable engineering knowledge base is a rigorously authenticated process: Floating-size Annotation Units (FAU) preserve the topological coherence of source specifications, byte-level grounding $`\mathcal{G}`$ enforces an unbroken chain of custody, and the Popperian admission gate with SMT verification provides mathematical immunity against hallucinations and adversarial epistemic poisoning.
