@@ -1695,6 +1695,15 @@ Der mathematische Apparat kritischer Expertensysteme erfordert strikte Modularit
   *„Herr Professor Geoffrey Hinton, biologische Gehirne können sich Plastizität und das graduelle Vergessen von Detailwissen im Tausch gegen adaptives Überleben leisten. In der Avionik, Kernkraftwerksleittechnik und autonomen Mobilität (ISO 26262 ASIL-D) gelten jedoch gänzlich andere ingenieurtechnische und rechtliche Gesetze.  
   Wenn ein FAA-Inspektor einen kritischen Mangel in einer Abfangprozedur eines Passagierflugzeugs feststellt, besitzen Sie weder das ingenieurmäßige noch das rechtliche Mandat, ein mehrwöchiges Nachtraining eines 100-Milliarden-Parameter-Netzes zu starten – in der vagen Hoffnung, dass das Modell in der neu austarierten Synapsenlandschaft nicht verlernt hat, wie das Fahrwerk ausgefahren wird! Sie sind verpflichtet, innerhalb von 15 Minuten einen atomaren, kompilierten und formal verifizierten Reparatur-Patch einzuspielen, der exakt eine Regel ändert, während 50.000 zertifizierte Sicherheitsinvarianten unberührt bleiben. Eine verteilte Repräsentation vermag solche Regressionsgarantien prinzipbedingt nicht zu liefern.“*
 
+- **Geoffrey Hinton:**  
+  *„Doch in hochgradig nichtlinearen physikalischen Prozessen – etwa bei der Schätzung der Reifenhaftung auf Blitzeis oder der adaptiven Schwingungskompensation von Turbinenschaufeln – sind Sensordaten naturgemäß verrauscht, widersprüchlich und korreliert. Tiefe neuronale Netze extrahieren latente kausale Regelmäßigkeiten über kontinuierlichen Gradientenabstieg auf hochdimensionalen Mannigfaltigkeiten. Ihre diskrete symbolische Logik, die Dempster-Shafer-Evidenztheorie oder diskrete Bayessche Netze erzwingen vordefinierte Wahrscheinlichkeitsverteilungen und subjektive Vertrauensgewichte. Was geschieht, wenn Ihr Expertensystem auf das Dempster-Paradoxon stößt – wenn zwei dekalibrierte physische Sensoren mit fast 100 % Sicherheit einander diametral ausschließende Hypothesen aufstellen? Ihre diskrete Mathematik kollabiert in einen absurden Null-Nenner, während ein kontinuierliches neuronales Netz eine robuste Entscheidung sanft interpoliert!“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Professor Geoffrey, exakt aus diesem Grund wird das Dempster-Paradoxon in Abschnitt 6.5 dieser Monografie nicht verschleiert, sondern als erstrangiges diagnostisches Alarmsignal behandelt!  
+  Wenn die Evidenz-Konfliktmasse gegen Eins strebt ($`k \to 1`$), verweigert das System kategorisch die blinde konjunktive Verknüpfung und die willkürliche weiche Interpolation.  
+  In einem sicherheitskritischen cyber-physischen System führt die weiche Interpolation zwischen zwei unvereinbaren physikalischen Zuständen – etwa ‚Bremsdruck beträgt 0 bar‘ und ‚Bremsdruck beträgt 150 bar‘ – zu einer lebensgefährlichen Halluzination: der Annahme, der Druck liege bei 75 bar.  
+  Unsere mathematische Architektur erzwingt eine deterministische Sicherheitsverzweigung: Bei hohem Konflikt aktiviert sie entweder den kausalen $do(\cdot)$-Operator von Judea Pearl zur aktiven Sondierung der Sensorik oder vollzieht eine typisierte Verweigerung `DISP_REFUSE` in den fehlersicheren Zustand (Fail-Closed). Wir übertünchen Sensorkonflikte nicht mit glatten Gewichten – wir machen epistemische Konflikte sichtbar, messbar und beherrschbar.“*
+
 **Runde 2: Zustandsexplosion und Skalierbarkeit formaler Verifikation**
 
 - **Moshe Vardi:**  
@@ -1702,8 +1711,18 @@ Der mathematische Apparat kritischer Expertensysteme erfordert strikte Modularit
 
 - **Mykola Fedchyk:**  
   *„Herr Professor Moshe Vardi, die Beherrschung der Zustandsexplosion ist eine der zentralen mathematischen Errungenschaften dieser Monografie.  
-  Erstens entkoppeln wir die Prüfung globaler temporaler Eigenschaften in eine Offline-Kompilierungsphase im Zvodar-Compiler, wo der Z3 SMT-Solver den Regelgraphen in unabhängige, disjunkte Teilgraphen (Cones of Influence) zerlegt.  
+  Erstens entkoppeln wir die Prüfung globaler temporaler Eigenschaften in eine Offline-Kompilierungsphase im Wissensbasis-Compiler (Knowledge Compiler), wo der Z3 SMT-Solver den Regelgraphen in unabhängige, disjunkte Teilgraphen (Cones of Influence) zerlegt.  
   Zweitens operiert der Ausführungskern zur Laufzeit strikt auf stratifiziertem Datalog ohne Rekursion oder auf einem Forward-Only-Sprunggitter, was die polynomielle Terminierung (PTIME) mit formal beweisbarer Worst-Case-Ausführungszeit (WCET) garantiert. Atomare Zeigertabellen-Swaps über RCU auf Basis von `mmap`-Speicherbanken aktivieren Patches in einem einzigen Prozessortakt – ohne Locks und ohne Unterbrechung der Inferenzthreads.“*
+
+- **Moshe Vardi:**  
+  *„Sie berufen sich auf die Zerlegung des Regelgraphen in unabhängige Cones of Influence und rekursionsfreies stratifiziertes Datalog, um polynomielle Laufzeit (PTIME) zu garantieren. Doch in realen Luftfahrt- und Automobilnormen enthalten deontische Spezifikationen fortlaufend wechselseitige Verpflichtungen und zyklische zeitliche Abhängigkeiten (beispielsweise Bedingung $A$ fordert die Aktivierung von $B$ binnen $50\,\text{ms}$, es sei denn, $C$ trat zuvor ein). Wenn Sie in einer nichtdeterministischen Umgebung agieren, in der Safety- und Liveness-Eigenschaften unendlich lange gelten müssen, blähen asynchrone Sensor-Interrupts den Zustandsraum weit über einfache azyklische Teilgraphen auf. Werden Sie die Ausdrucksmächtigkeit Ihrer Spezifikationssprache nicht beschneiden müssen, bloß um die Entscheidbarkeit zu retten?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Professor Moshe, Sie beleuchten den fundamentalen Zielkonflikt zwischen logischer Expressivität und Verifikationsdeterminismus.  
+  Unser architektonischer Standpunkt ist unmissverständlich: Ja, wir beschränken die Ausdrucksmächtigkeit der Laufzeitsprache ganz bewusst, um felsenfeste Determiniertheit zu garantieren!  
+  In der operativen Inferenzmaschine (EVM) sind beliebige temporale Formeln der vollen LTL-Logik mit unbeschränkten Operatoren strikt untersagt. Stattdessen erzwingen wir metrische temporale Logik (MTL) über endlichen, begrenzten Prädiktionshorizonten ($T_{\mathrm{horizon}} < \infty$).  
+  Jede deontische Schleife wird in diskrete Zeitfenster quantisiert, wodurch der SMT-Solver die Invariantenprüfung auf Bounded Model Checking (BMC) über $k$ Schritte mit formalem Vollständigkeitsbeweis über den Durchmesser des Zustandstransitionsgraphen reduzieren kann.  
+  Versucht ein Spezifikationsingenieur, eine unentscheidbare oder zyklisch blockierende Regel zu formulieren, verwirft der Wissensbasis-Compiler (Knowledge Compiler) das Paket bereits beim Kompilieren. Wir garantieren: Was im Silizium des Controllers ausgeführt wird, terminiert innerhalb eines beweisbaren, konstanten Taktbudgets.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
 Mathematische Strenge in evidenzbasierten Systemen ruht auf einer Arbeitsteilung: Der Offline-Compiler garantiert über SMT-Solver die Widerspruchs- und Regressionsfreiheit von Wissens-Patches, während der Laufzeitkern auf Basis stratifizierter Logik deterministische Ausführung unter strikten Hardware-Zeitbudgets sichert.

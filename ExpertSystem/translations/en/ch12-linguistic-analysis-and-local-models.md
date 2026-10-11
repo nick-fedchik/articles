@@ -763,7 +763,7 @@ flowchart TD
 **Chapter Thesis (Mykola Fedchyk):**  
 The linguistic pipeline of an evidence-governed expert system must couple compact local language models (SLMs) with Grammar-Guided Generation (GBNF) and atomic deontic tokenization: this eliminates structural hallucinations directly at the logit level of the decoding automaton and guarantees deterministic transformation of natural language into valid AST predicates within bounded real-time latencies.
 
-**Round 1: Are formal grammars (GBNF) needed in the era of end-to-end deep learning?**
+**Round 1.1: Are formal grammars (GBNF) needed in the era of end-to-end deep learning?**
 
 - **Christopher Manning:**  
   *“Mykola Fedchyk, your insistence on constraining local language models within rigid GBNF context-free grammars and brittle EARS templates feels like an attempt to drag computational linguistics forty years into the past—back to the era of handcrafted, fragile rule-based parsers. Modern deep transformer architectures, powered by multi-head self-attention mechanisms, capture subtle linguistic context, anaphora, complex conditional modalities, and discourse pragmatics seamlessly end-to-end. Forcing an external finite-state machine onto the autoregressive decoder degrades the model's rich continuous latent representations and discards nuanced semantic cues present in authentic engineering texts. High-quality instruction tuning and a few in-context exemplars (few-shot prompting) reliably induce models to output structured JSON without resorting to heavy grammar scaffolding.”*
@@ -773,7 +773,17 @@ The linguistic pipeline of an evidence-governed expert system must couple compac
   Moreover, across noisy PDF line breaks, an unconstrained transformer easily splits the phrase `MUST NOT`, triggering a catastrophic polarity inversion that flips a strict prohibition into an active permission!  
   Our Grammar-Guided Generation (GBNF) does not retrain or degrade the model: it operates as an external pushdown automaton that dynamically applies a boolean mask over the raw logit vector $`\mathbf{z}_t`$ at each autoregressive generation step. Any token that would violate the formal grammar or the target AST schema is forced to probability zero prior to the softmax calculation. The model physically cannot emit a structural hallucination, while maintaining full local execution throughput on embedded ARM silicon.”*
 
-**Round 2: Statistical approximation versus universal grammar and logical competence**
+**Round 1.2: Chain-of-Thought reasoning and massive context windows versus hardware GBNF logit masks**
+
+- **Christopher Manning:**  
+  *“Mykola Fedchyk, contemporary autoregressive architectures leveraging Chain-of-Thought (CoT) reasoning and multi-million-token context windows routinely perform multi-step self-reflection, automated error recovery, and internal consistency verification across their latent activations without external constraints. Isn't confining the decoder to an external pushdown automaton an unnecessary bottleneck that prevents the model from reasoning through subtle semantic ambiguities in engineering requirements before emitting a final typed predicate?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Manning, empirical studies on autoregressive Chain-of-Thought demonstrate that recursive prompting suffers from cumulative error propagation: the probability of preserving deductive consistency decays exponentially with reasoning length ($P(\mathrm{success}) \sim (1 - \epsilon)^L$).  
+  In an embedded hard real-time environment, we possess neither the milliseconds nor the megawatts required to execute stochastic, hundred-step internal dialogues on liquid-cooled, 32-core accelerator clusters. Our deployment target is an automotive ARM Cortex or edge microcontroller operating within tight memory envelopes (KV Cache $\le 128\,\text{MB}$) and strict $50\,\text{ms}$ latency budgets.  
+  GBNF logit masking operates as a zero-overhead predictive filter integrated directly within the next-token sampling loop: it prevents the model from branching into stochastic error trajectories, guaranteeing mathematical determinism at minimal computational and thermodynamic cost.”*
+
+**Round 2.1: Statistical approximation versus universal grammar and logical competence**
 
 - **Noam Chomsky:**  
   *“Mykola Fedchyk, my fundamental critique of statistical deep learning models remains resolute: they are essentially massive stochastic curve-fitting mirrors, approximating superficial string correlations across text corpora without any genuine grasp of semantics, causality, or the innate structural principles of Universal Grammar. They generate a true physical law and a completely preposterous fabrication with equal ease, provided both exhibit statistical plausibility. By permitting a statistical neural model to participate in knowledge extraction for mission-critical engineering systems, you introduce a stochastic pseudo-knowledge generator into the foundations of critical infrastructure. Rigorous engineering demands genuine logical Competence, not stochastic behavioral Performance.”*
@@ -782,6 +792,16 @@ The linguistic pipeline of an evidence-governed expert system must couple compac
   *“Professor Noam Chomsky, I completely endorse your epistemological critique: statistical neural networks possess zero deductive competence and must never be treated as authoritative arbiters of scientific or engineering truth. This is precisely why in our architecture, the local SLM is entirely stripped of the authority to declare truth!  
   The language model operates exclusively as a perceptual transducer: it projects the high-entropy, ambiguous surface structure of human prose into a formalized deep structure of candidate predicates.  
   However, the authority to admit that statement into corporate memory is retained exclusively by a deterministic symbolic verifier operating as a Chomsky Type-0 / Type-2 automaton. This verifier anchors the predicate to immutable source bytes via the span grounding tuple $`\mathcal{G}`$, mathematically verifies physical units against the UCUM standard, and executes deductive proofs within the isolated EVM core. We leverage statistical neural representations solely to absorb the noise of natural language variability, while entrusting zero decision-making authority to stochastic processes.”*
+
+**Round 2.2: Poverty of the Stimulus and the boundaries of physical Symbol Grounding**
+
+- **Noam Chomsky:**  
+  *“Mykola Fedchyk, even if you restrict the model's output via a Type-2 context-free GBNF grammar according to my classification, you merely solve the problem of syntactic form (Syntax), leaving the fundamental challenges of semantic meaning (Semantics) and ontological truth completely unresolved. Under my 'Poverty of the Stimulus' thesis, no system trained exclusively on superficial textual distributions can infer the true causal structure of physical reality. Your SLM merely projects one set of ungrounded symbols onto another set of AST tokens. Does not such a 'semantic pipeline' produce a perilous illusion of safety, masking the machine's absolute inability to grasp the physical essence of an engineering artifact?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Chomsky, that insight penetrates directly to the core of Searle's Chinese Room and the symbol grounding problem. This is precisely why in our architecture, the linguistic pipeline makes no pretense of 'understanding physical reality'—it operates strictly as a syntactic compiler from natural prose into first-order logical representations.  
+  Symbol Grounding is achieved entirely outside the neural network: every predicate parameter is bound to physical dimensions in accordance with the SI/UCUM standard, and logical invariants are validated by an external SMT solver (Z3) operating under formal Tarskian semantics. The solver enforces immutable physical laws—such as verifying that current draw cannot exceed conductor tolerances governed by Ohm's Law.  
+  If the language model emits a syntactically immaculate yet physically nonsensical statement, the symbolic verifier detects the contradiction in Conjunctive Normal Form (UNSAT) and halts execution with a `SEMANTIC_DIMENSION_ERROR`. We strictly honor your demarcation between syntax and semantics: syntax is guaranteed by GBNF, while semantics is enforced by formal mathematics and physics ontologies.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 The linguistic pipeline of the expert system resolves the classic tension between statistical flexibility and deductive rigor: local models governed by GBNF grammar decoding establish a dependable perceptual bridge from natural language to typed ASTs, while the symbolic core maintains absolute mathematical control over truth, determinism, and functional safety.

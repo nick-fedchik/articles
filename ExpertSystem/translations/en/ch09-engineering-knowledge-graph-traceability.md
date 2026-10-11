@@ -931,7 +931,7 @@ This comparison does not imply that the EKG is cost-free: an EKG requires strict
 **Chapter Thesis (Mykola Fedchyk):**  
 End-to-end traceability in functional safety engineering (ASPICE v4.0 / ISO 26262) mandates a mathematically closed, cryptographically verifiable knowledge graph (100% Traceability DAG), where every safety requirement (SHR/SWR), architectural decision (ADR), hardware register, and test suite is interconnected via typed edges subject to strict uncovered-element detection and complete coverage invariants.
 
-**Round 1: The open linked world (Semantic Web) versus closed engineering DAGs**
+**Round 1.1: The open linked world (Semantic Web) versus closed engineering DAGs**
 
 - **Tim Berners-Lee:**  
   *“Mykola Fedchyk, in our architectural vision for the Semantic Web, we established Linked Open Data upon RDF triples, OWL ontologies, and global URIs. You, conversely, engineer a rigid, proprietary, strictly enclosed directed acyclic graph (DAG) operating under the Closed World Assumption (CWA). Doesn't this abandon the paramount virtue of web-scale knowledge graphs—namely, decentralization, global cross-vendor interoperability, and continuous open-ended evolutionary schema extension?”*
@@ -941,7 +941,17 @@ End-to-end traceability in functional safety engineering (ASPICE v4.0 / ISO 2626
   Under OWA, the absence of an edge between a safety requirement and an executable test case is interpreted as 'we do not yet know if a test exists somewhere in the universe.' In safety-critical engineering, the absence of a test represents an immediate catastrophe: a catastrophic breach of the coverage invariant $\mathrm{Coverage}_{R \rightarrow T} = 1.0$, which must deterministically halt the CI/CD release build.  
   Furthermore, full-blown RDF/SPARQL engines relying on runtime dynamic inferencing fail to provide deterministic $O(1)$ query latencies in hard real-time execution. We utilize immutable binary quad-stores anchored in Merkle DAGs and memory-mapped indexes, enforcing rigid schema typing and complete hermetic isolation from external environmental stochasticity.”*
 
-**Round 2: Git commit simplicity versus safety-critical requirements traceability**
+**Round 1.2: Federated SPARQL queries and RDF-star versus deterministic embedded Merkle DAGs**
+
+- **Tim Berners-Lee:**  
+  *“Mykola Fedchyk, modern RDF 1.2 and RDF-star standards allow statement-level annotations on individual triples (Reification / Edge Properties), while federated SPARQL queries (via the `SERVICE` keyword) enable querying heterogeneous distributed repositories across different tier-1 and tier-2 suppliers without constructing a monolithic centralized graph. Wouldn't it be far more scalable to federate traceability across sensor, microcontroller, and software vendors via open web endpoints rather than demanding total entity ingestion into a single rigid local Merkle DAG?”*
+
+- **Mykola Fedchyk:**  
+  *“Sir Tim, in hard real-time embedded systems, no braking actuator or flight-control processor can tolerate awaiting an HTTP response from a remote SPARQL endpoint with its unpredictable network latency, DNS failures, or unexpected supplier schema migrations.  
+  The ISO 26262 audit trail mandate is categorical: system configuration requires hermetic reproducibility. While we preserve the formal semantics of RDF-Quads, we compile them offline into immutable binary knowledge packs authenticated with Ed25519 cryptographic signatures and RFC 3161 timestamps.  
+  All transitive reachability closures are computed locally in milliseconds via optimized memory-mapped (mmap) indices. Multi-vendor supply-chain integration is achieved not through live web endpoints, but via cryptographically signed vendor artifact imports merged into a single hermetic Merkle tree with complete integrity verification.”*
+
+**Round 2.1: Git commit simplicity versus safety-critical requirements traceability**
 
 - **Linus Torvalds:**  
   *“Mykola Fedchyk, all this end-to-end traceability under ASPICE v4.0, complex graph databases, and architectural decision records (ADRs) are textbook corporate bureaucracy. They produce endless man-hours of clerical status reports while hindering talented developers from writing functional, high-performance code. The Linux kernel powers billions of servers, smartphones, and supercomputers without a single traceability graph, without ASPICE audit matrices, and without formal requirements prose. We have Git commit logs, mailing list review threads, and clean modular code. Quality code speaks for itself; why choke developer productivity with graph overhead?”*
@@ -950,6 +960,16 @@ End-to-end traceability in functional safety engineering (ASPICE v4.0 / ISO 2626
   *“Linus Torvalds, as the author of ebtables in your Linux kernel, I maintain profound admiration for the open-source ethos and Git's architectural minimalism. Nevertheless, a general-purpose OS and an ASIL-D certified automotive safety controller operate under completely distinct physical and legal liability frameworks.  
   Linux is not certified to SIL-4 or ASIL-D for deployed automotive steer-by-wire or emergency braking systems operating at $130\,\text{km/h}$. When an autonomous vehicle crashes due to a sensor buffer overrun, regulatory tribunals (NHTSA, TÜV) and forensic investigators do not evaluate git commit message aesthetics: they subpoena an immutable, cryptographically verifiable evidentiary audit trail proving which specific safety goal mandated that buffer size, which ADR justified the data type, and which hardware-in-the-loop (HIL) test verified it on physical silicon under extreme temperature regimes.  
   Without an automated knowledge graph, engineering teams waste thousands of frantic man-hours manually compiling retrospective compliance spreadsheets before every audit. Our knowledge graph does not burden the developer: an automated Go analyzer extracts graph edges directly from source code annotations and CMSIS-SVD register maps in milliseconds, eliminating manual clerical overhead while guaranteeing mathematical audit completeness.”*
+
+**Round 2.2: Git submodules and `git bisect` versus predictive Change Impact Analysis**
+
+- **Linus Torvalds:**  
+  *“If an engineer breaks a driver or a bus protocol, `git bisect` finds the exact offending commit across a million-revision tree in a dozen iterations $O(\log N)$. Git submodules and tags link firmware commits directly to specific hardware revisions. Why erect an elaborate semantic graph Change Impact Analysis engine when standard Unix utilities and Git already pinpoint exactly where and when the code broke?”*
+
+- **Mykola Fedchyk:**  
+  *“Linus, `git bisect` is inherently reactive: to identify a regression, the failure must have already occurred, and an automated test capable of triggering it must already be committed and executed. In avionics or automotive safety, we cannot afford to destroy a million-dollar HIL rig or await a brake actuator failure on a highway.  
+  Our graph-based Change Impact Analysis (CIA) is predictive and static. When an engineer modifies a single bit-shift constant in a CMSIS-SVD register definition, standard `git diff` perceives only a changed line of text.  
+  The Engineering Knowledge Graph computes the transitive closure $`\mathrm{Impact}(c)`$ in milliseconds: it instantly flags that this bit change impacts four peripheral drivers, invalidates two architectural decision records (ADRs), violates an ASIL-D safety requirement, and necessitates the execution of 18 specific HIL test cases before the pull request can be merged into main. We do not replace Git—we provide semantic vision that raw text diffs simply cannot see.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 The engineering knowledge graph elevates relationships between requirements, code, registers, and test executions into formally verifiable facts backed by a cryptographic chain of custody. Enforcing the Closed World Assumption eliminates verification blind spots, ensuring automated compliance with rigorous functional safety standards without imposing bureaucratic friction on the software engineering process.

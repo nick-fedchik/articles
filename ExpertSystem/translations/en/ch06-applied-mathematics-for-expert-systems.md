@@ -1790,6 +1790,15 @@ The mathematical apparatus of critical expert systems demands strict modularity:
   *“Professor Geoffrey Hinton, biological brains can afford plasticity and the graceful degradation of isolated memories in exchange for adaptive survival. However, in avionics, nuclear power generation, and autonomous mobility (ISO 26262 ASIL-D), entirely different engineering and statutory principles govern.  
   If an FAA certification inspector identifies a critical flaw in an aircraft landing flare procedure, you have no engineering or legal right to initiate a multi-week retraining run of a 100-billion-parameter neural network, hoping against hope that in the newly settled synaptic landscape the model hasn't forgotten how to deploy the landing gear! You are required to deploy an atomic, compiled, and formally verified remediation patch within 15 minutes that alters exactly one rule while leaving 50,000 certified safety invariants untouched. A distributed representation is fundamentally incapable of providing such non-regression guarantees.”*
 
+- **Geoffrey Hinton:**  
+  *“Yet in complex non-linear physical phenomena—such as inferring tire adhesion on black ice or actively compensating for turbine blade flutter—sensor feeds are intrinsically noisy, contradictory, and cross-correlated. Deep neural architectures extract latent causal regularities via continuous gradient descent across high-dimensional manifolds. Your discrete symbolic logic, Dempster-Shafer evidence theory, or even discrete Bayesian networks mandate handcrafted prior distributions and subjective belief assignments. What happens when your expert system encounters Dempster’s paradox—where two miscalibrated physical sensors assign near-total certainty to mutually exclusive hypotheses? Your discrete mathematics collapses into an absurd zero denominator, whereas a continuous neural network smoothly interpolates a resilient decision!”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Geoffrey, that is precisely why in Section 6.5 of this monograph, Dempster's paradox is not swept under the rug, but treated as a first-class diagnostic alarm!  
+  When the evidentiary conflict mass approaches unity ($`k \to 1`$), the engine categorically rejects blind conjunctive fusion and unprincipled smooth interpolation.  
+  In a safety-critical cyber-physical system, smoothly interpolating between two mutually exclusive physical hypotheses—such as 'brake line pressure is 0 bar' versus 'brake line pressure is 150 bar'—produces a catastrophic hallucination: assuming pressure is 75 bar.  
+  Our mathematical architecture triggers deterministic defensive bifurcation: under high conflict, it either invokes Judea Pearl's causal $do(\cdot)$ operator to actively probe physical sensors, or executes a typed `DISP_REFUSE` safety transition into a Fail-Closed state. We refuse to mask sensor contradictions behind continuous weights—we make epistemic conflict visible, measurable, and safe.”*
+
 **Round 2: State Explosion and the Scalability of Formal Verification**
 
 - **Moshe Vardi:**  
@@ -1797,8 +1806,18 @@ The mathematical apparatus of critical expert systems demands strict modularity:
 
 - **Mykola Fedchyk:**  
   *“Professor Moshe Vardi, taming state explosion is one of the principal mathematical achievements formalized in this monograph.  
-  First, we decouple global temporal verification into an offline compilation phase within our Zvodar compiler, where the Z3 SMT solver decomposes the rule graph into independent, disjoint subgraphs (Cones of Influence).  
+  First, we decouple global temporal verification into an offline compilation phase within our knowledge base compiler, where the Z3 SMT solver decomposes the rule graph into independent, disjoint subgraphs (Cones of Influence).  
   Second, at runtime, the execution engine operates strictly over stratified Datalog without recursion or a Forward-Only jump lattice, which mathematically guarantees polynomial termination (PTIME) bounded by a provable Worst-Case Execution Time (WCET). Atomic pointer swaps via RCU over `mmap` memory banks activate patches in a single clock cycle without computational stalls or locks.”*
+
+- **Moshe Vardi:**  
+  *“You appeal to decomposing rule graphs into independent Cones of Influence and deploying recursion-free stratified Datalog to guarantee polynomial time (PTIME). Yet in real avionics and automotive standards, deontic specifications routinely encode reciprocal obligations and cyclic temporal constraints (e.g., condition $A$ mandates triggering $B$ within $50\,\text{ms}$, unless $C$ occurred beforehand). When operating within non-deterministic environments where safety and liveness invariants must hold indefinitely, asynchronous sensor interrupts blow up the state space far beyond acyclic subgraphs. Will you not be forced to cripple the expressive power of your specification language merely to preserve decidability?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Moshe, you illuminate the quintessential trade-off between logical expressivity and verification determinism.  
+  Our architectural stance is unapologetic: yes, we deliberately constrain runtime expressivity to guarantee ironclad determinism!  
+  The operational inference engine (EVM) strictly prohibits unrestricted temporal formulas from full LTL with infinite temporal operators. Instead, we enforce Metric Temporal Logic (MTL) over bounded finite prediction horizons ($T_{\mathrm{horizon}} < \infty$).  
+  Every deontic loop is quantized into discrete temporal envelopes, allowing our SMT solver to reduce invariant verification to Bounded Model Checking (BMC) across $k$ steps, with formal completeness proofs derived from the diameter of the state transition graph.  
+  If a systems engineer attempts to specify an undecidable or cyclic deadlock condition, the knowledge base compiler rejects the knowledge pack during compilation. We guarantee that whatever executes inside controller silicon terminates within a provable, constant clock-cycle budget.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 Mathematical rigor in evidence-governed systems relies on synthesis: offline compilation powered by SMT solvers guarantees non-contradiction and non-regression of remediation patches, while a runtime core grounded in stratified logic guarantees deterministic execution within strict hardware time budgets.
