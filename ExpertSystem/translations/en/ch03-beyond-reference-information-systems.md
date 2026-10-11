@@ -487,14 +487,33 @@ An expert system differs fundamentally from search and language models in that i
   *“Professor David Deutsch, my architecture in no way aspires to construct an omniscient oracle. On the contrary, I delegate the generation of bold conjectures (System 1) entirely to human engineers or stochastic models. However, in safety-critical engineering, an unbending law holds: a bold conjecture without immediate falsification before the physical actuator costs human lives.  
   My EVM is the direct computational realization of a Popperian falsifier: it does not verify conjectures inductively, but deploys a bank of defeaters and counter-examples. Furthermore, a Good Explanation in your framework is an explanation whose details cannot be easily varied without collapsing the whole structure. That is precisely what our cryptographic proof graph guarantees: not a single step in the deductive path can be tampered with or retroactively altered without invalidating the Merkle root.”*
 
+- **David Deutsch:**  
+  *“Yet does this not expose a profound paradox of explanation? You argue that an execution trace graph qualifies as a Good Explanation under my criterion simply because it is hard to vary without breaking the Merkle root. However, cryptographic immutability is merely the syntactic rigidity of a data structure, not an explanatory account of physical reality! A good explanation reveals why the world behaves as it does: why specific physical parameters cause precise consequences. If your expert system provides an engineer with a formal deductive chain of fifty predicates of the form 'Rule R17 requires V <= 48V because Standard S Section 4.2', it explains merely administrative compliance, not physical causality. Does this not abandon the engineer to reference search for underlying physical first principles?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Deutsch, that draws an essential distinction between regulatory justification and causal physical explanation.  
+  This is precisely why our architecture enforces a clean separation between reference retrieval of statutory clauses and the runtime evaluation of engineering case predicates.  
+  A Justification Bundle does not merely cite standard paragraphs: it synthesizes a formal proof of physical contract satisfaction. Each predicate binds directly to measured testbench physical metrics ($`T_{\mathrm{case}}`$, current, voltage, transient settling times) and explicitly computes the margin to physical failure limits.  
+  Furthermore, when operational boundaries are violated, the engine produces neither fabulation nor speculative hypotheses, but emits a Minimal Unsatisfiable Core (MUC) isolating the exact physical precondition that failed. This transforms an administrative citation chain into a functional engineering explanation that pinpoints the root cause behind actuation refusal.”*
+
 **Round 2: Contractual Rigor and Operational Autonomy Boundaries**
 
 - **Bertrand Meyer:**  
   *“Mykola Fedchyk, as the creator of Design by Contract, I commend your rejection of stochastic black boxes in favor of explicit preconditions, postconditions, and class invariants. However, you extend contract logic to dynamic, real-time knowledge pack hot-swapping. If rules evolve dynamically, how do you mathematically guarantee contract consistency and prevent deadlocks between conflicting rules without halting the operational plant?”*
 
 - **Mykola Fedchyk:**  
-  *“Professor Bertrand Meyer, this challenge is resolved through the two-tier architecture formalized in this monograph: during compile-time, the Zvodar compiler evaluates global invariants via the Z3 SMT solver, eliminating cyclic contradictions and mutually exclusive predicates prior to package deployment.  
+  *“Professor Bertrand Meyer, this challenge is resolved through the two-tier architecture formalized in this monograph: during compile-time, the knowledge base compiler evaluates global invariants via the Z3 SMT solver, eliminating cyclic contradictions and mutually exclusive predicates prior to package deployment.  
   At runtime, if sensor anomalies or unmapped inputs cause preconditions to fail, the engine does not panic into undefined behavior: it deterministically generates a typed diagnostic trace and transitions the controlled subsystem into a safe Fail-Closed state. The Meyer contract in our architecture becomes an impenetrable hardware barrier.”*
+
+- **Bertrand Meyer:**  
+  *“Your approach of validating invariants during compilation via an SMT solver is unassailable for monolithic static software. Yet in contract theory, subcontracting and behavioral inheritance present severe challenges: automotive safety and avionics systems integrate dozens of interdependent subsystems from separate Tier-1 suppliers, each with bespoke specifications. When an expert system must evaluate a composite engineering case spanning general ISO 26262 standards, OEM-specific requirements, and temporary engineering waivers, a combinatorial explosion of cross-cutting postconditions emerges. Will your strict Fail-Closed contract semantics not risk paralyzing the entire industrial plant due to excessive risk aversion?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Meyer, this touches the quintessential dilemma of safety engineering: false tripping and availability loss.  
+  To prevent operational paralysis, the architecture introduces hierarchical exception typing and deontic preemption:  
+  1. Engineering waivers are formalized not as reckless contract circumventions, but as strictly scoped contextual narrowings with explicit bi-temporal validity windows $[t_{\mathrm{start}}, t_{\mathrm{end}}]$ and elevated monitoring requirements on correlated physical boundaries.  
+  2. Rather than collapsing into binary crash-stop behavior, the architecture enforces typed levels of Graceful Degradation: upon minor conflicts between secondary postconditions, the system withholds automatic actuation authority (`QUALIFIED_DISPENSATION`), demanding explicit Chief Engineer sign-off, while preserving safe baseline plant operation.  
+  We never compromise safety for availability: where an ASIL D baseline invariant is violated, halting the plant remains the only lawful and morally defensible action.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 The demarcation between reference tools and expert systems resides in accountability and falsifiability: search retrieves documents, generative models propose conjectures, while an expert system guarantees strict contract execution and deterministically halts actuation at the slightest unresolvable ambiguity.

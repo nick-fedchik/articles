@@ -840,6 +840,14 @@ Critical cyber-physical systems (ASIL-D / DO-178C) require a deterministic norma
   *“Monsieur Yann LeCun, your critique would be entirely justified if I were proposing discrete rules for perception—pattern recognition, lidar segmentation, or sensor noise filtering. But in the architecture of this monograph, a fundamentally new layer is inserted between Perception and Actuation: normative eligibility (Eligibility).  
   Vision and trajectory planning are indeed continuous. However, when an autonomous vehicle approaches an intersection, statutory law operates discretely: entering on a red signal is strictly forbidden. If your continuous latent model exhibits even a minute error probability of $10^{-4}$ (mistaking a red signal for a sunset glow), a fatal accident occurs. For safety level ASIL-D, the tolerable hazardous failure rate is $`\le 10^{-9}`$ per hour. No loss function optimization without an external interlock provides formal proof of such assurance. My EVM does not learn from errors during operation—it deterministically halts hazardous actuation within one clock cycle.”*
 
+- **Yann LeCun:**  
+  *“Even if you isolate eligibility into a discrete gate, how does your discrete censor interpret the physical environment without rich latent semantic representations? Concepts such as 'red traffic light', 'pedestrian in lane', or 'construction barrel' do not arrive at the controller as clean, pre-packaged discrete predicates—they must be extracted from noisy arrays of sensor pixels and lidar point clouds. If the perceptual neural network falters at the input stage, your immaculate discrete censor receives an inverted fact and issues a mathematically validated catastrophe. Isn't an isolated symbolic interlock a dangerous illusion of safety if it blindly relies on continuous upstream perception?”*
+
+- **Mykola Fedchyk:**  
+  *“Monsieur Yann, that is precisely where naive GOFAI diverges from our safety architecture: the eligibility censor never trusts a single neural network output.  
+  First, critical actuation mandates multimodal invariant checking: every predicate must be corroborated across independent physical channels (lidar, radar, camera) under heterogeneous redundancy, precluding common-mode neural weight failures.  
+  Second, censor inputs ingest not merely an uncalibrated class label, but full state estimation covariance matrices alongside immutable physical invariants of energy and momentum conservation. If a detected entity violates kinematics or if sensor divergence crosses a certified bound, the censor issues a deterministic refusal (`DISP_REFUSE`), preventing any actuation based on corrupted perceptual inputs.”*
+
 **Round 2: Provable Safety versus Stochastic Alignment**
 
 - **Stuart Russell:**  
@@ -849,6 +857,14 @@ Critical cyber-physical systems (ASIL-D / DO-178C) require a deterministic norma
   *“Professor Stuart Russell, that is a central engineering challenge, and this monograph resolves it through the concept of typed Epistemic Deficit.  
   When encountering an unmapped scenario, a naive system either hallucinates plausible guesses (like an LLM) or experiences an unhandled panic (like a runtime assertion). My architecture does not merely block execution: it generates a formal cryptographic deficit voucher, captures telemetry context, and transitions the cyber-physical plant into a pre-certified Minimal Risk Maneuver (controlled braking and hazard signaling per ISO 26262).  
   The system is never paralyzed—it guarantees that ignorance never degenerates into uncontrolled kinetic action. This shifts the safety challenge from stochastic optimism into guaranteed engineering containment.”*
+
+- **Stuart Russell:**  
+  *“Resolving ignorance via typed epistemic deficit vouchers and Minimal Risk Maneuvers (MRM) is sound for isolated incidents. However, scaled across a fleet of thousands of autonomous agents in a dense metropolitan area, triggering safe stops for every unmodeled edge case causes systemic infrastructure collapse: hundreds of stalled vehicles stranded in traffic lanes will paralyze the city. True safety, in my framework (*Human Compatible*), requires machines to infer human preferences and optimize under uncertainty through value alignment rather than fleeing into conservative degradation. How do you prevent fleet-wide infrastructure paralysis stemming from hyper-cautious fallibilism?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Stuart, we explicitly decouple emergency hardware interlocks from macroscopic operational planning.  
+  First, MRM execution is not a binary cliff; it enforces tiered Graceful Degradation—spanning speed derating, headway expansion, and controlled lane clearing rather than locking the wheels dead in the center of an intersection.  
+  Second, every epistemic deficit voucher is cryptographically signed and ingested into an offline knowledge refinement backlog for engineers. We deliberately refuse to let a machine 'guess human intentions' on the fly while actuating two tons of kinetic mass at speed. In mission-critical systems engineering, stochastic speculation regarding unmodeled human desires carries vastly higher catastrophe risk than a transient traffic slowdown. A halted conveyor or slowed transit fleet is always preferable to a fatal high-speed braking failure.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 The virtual dispute validates the viability of the proposed architecture: continuous architectures (System 1) supply flexible perception and heuristic proposals, while a deterministic rule engine (System 2) backed by cryptographic custody guarantees normative eligibility, contract verification, and safe Fail-Closed containment.

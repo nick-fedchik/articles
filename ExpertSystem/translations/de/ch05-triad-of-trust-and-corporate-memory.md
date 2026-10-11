@@ -511,7 +511,7 @@ flowchart TD
         S3["<b>Qualitätsauditor</b><br/>HSM-Token #3 (Anteil s3)"]
     end
 
-    BUNDLE["<b>Release-Kandidat ZKP4</b><br/>Hash H_bundle = SHA256(Rules)"]
+    BUNDLE["<b>Wissenspaket-Release-Kandidat</b><br/>Hash H_bundle = SHA256(Rules)"]
     
     BUNDLE -->|Autorisierungsanfrage| S1
     BUNDLE -->|Autorisierungsanfrage| S2
@@ -527,7 +527,7 @@ flowchart TD
 ```
 
 1. **Schwellenwert-Konsortiumssignatur (Threshold Cryptography $k$-of-$n$):**
-   Kein einzelner Ingenieur oder Administrator verfügt über den vollständigen privaten Schlüssel zur Veröffentlichung von Regeln. Die Erzeugung einer gültigen digitalen Signatur für ein neues Wissensbasis-Release oder ZKP4-Paket erfordert den Konsens von mindestens $k$ unabhängigen Anteilseignern aus einer Gesamtmenge von $n$ vertrauenswürdigen Parteien (beispielsweise Sicherheitsingenieur + Leitender Systemingenieur + Qualitätsauditor, $k=3, n=5$).
+   Kein einzelner Ingenieur oder Administrator verfügt über den vollständigen privaten Schlüssel zur Veröffentlichung von Regeln. Die Erzeugung einer gültigen digitalen Signatur für ein neues Wissensbasis-Release oder binäres Regelpaket erfordert den Konsens von mindestens $k$ unabhängigen Anteilseignern aus einer Gesamtmenge von $n$ vertrauenswürdigen Parteien (beispielsweise Sicherheitsingenieur + Leitender Systemingenieur + Qualitätsauditor, $k=3, n=5$).
    Hierbei kommt das Shamir-Geheimnisteilungsverfahren (*Shamir's Secret Sharing*) oder sichere Mehrparteienberechnung (*Multi-Party Computation*, MPC) zum Einsatz, bei der die resultierende Signatur über das Lagrange-Polynomschema synthetisiert wird:
 
 ```math
@@ -574,7 +574,7 @@ Die letzte Spalte dieser Übersicht schließt in allen Zeilen mit demselben Grun
 > *Haftungsausschluss:* Diese Debatte ist eine modellierte heuristische Synthese, die ausschließlich im wissenschaftlichen und didaktischen Kontext dieser Monografie auf Basis der publizierten Monografien, Fachartikel und Vorträge der geladenen Koryphäen generiert wurde. Sie stellt kein wörtliches Protokoll realer Aussagen dar, sondern dient als Instrument der kritischen Analyse architektonischer Invarianten des Autors. Jeder Gesprächspartner debattiert unmittelbar mit dem Autor der Monografie.
 
 **These des Kapitels (Mykola Fedchyk):**  
-Das Unternehmensgedächtnis über kritische Ingenieurentscheidungen darf nicht in unstrukturierten Datenbanken oder unverankertem Freitext verbleiben: Es erfordert die Entäußerung von Wissen in Form unveränderlicher kryptografischer Artefakte (ZKP4) mit bytegenauer Evidenzverwahrung, Schwellenwert-Konsortiumsautorisierung ($k$-of-$n$) und vertrauenswürdigen RFC 3161-Zeitstempeln.
+Das Unternehmensgedächtnis über kritische Ingenieurentscheidungen darf nicht in unstrukturierten Datenbanken oder unverankertem Freitext verbleiben: Es erfordert die Entäußerung von Wissen in Form unveränderlicher binärer Wissenspakete mit bytegenauer Evidenzverwahrung, Schwellenwert-Konsortiumsautorisierung ($k$-of-$n$) und vertrauenswürdigen RFC 3161-Zeitstempeln.
 
 **Runde 1: Überwindung des Wissensakquisitions-Flaschenhalses und Personalwechsel**
 
@@ -583,7 +583,16 @@ Das Unternehmensgedächtnis über kritische Ingenieurentscheidungen darf nicht i
 
 - **Mykola Fedchyk:**  
   *„Herr Professor Edward Feigenbaum, Ihr Lebenswerk bildet das Fundament, auf dem diese Monografie aufbaut. Die erste Generation der Expertensysteme geriet in die Krise, weil Regeln als monolithische, untypisierte Textheuristiken ohne Hardware-Isolation, kryptografische Verwahrung oder klare Eigentümergrenzen gepflegt wurden.  
-  In meiner Architektur friert die kryptografische Verwahrung das Wissen nicht regungslos ein – sie schützt die Integrität der Beweiskette (Chain of Custody). Wissensevolution wird als kontrollierte Release-Pipeline geführt: Neue ZKP4-Regelpakete durchlaufen automatisierte Regressionstest-Batterien, erhalten Schwellenwert-Signaturen des Konsortiums über HSM-Tokens und werden mit RFC 3161-Zeitstempeln versiegelt. Wir belassen das Erfahrungswissen nicht in den Köpfen scheidender Veteranen: Wir wandeln es in ein maschinenlesbares Unternehmensgut um, das über Generationswechsel hinweg verlustfrei erhalten bleibt.“*
+  In meiner Architektur friert die kryptografische Verwahrung das Wissen nicht regungslos ein – sie schützt die Integrität der Beweiskette (Chain of Custody). Wissensevolution wird als kontrollierte Release-Pipeline geführt: Neue binäre Regelpakete durchlaufen automatisierte Regressionstest-Batterien, erhalten Schwellenwert-Signaturen des Konsortiums über HSM-Tokens und werden mit RFC 3161-Zeitstempeln versiegelt. Wir belassen das Erfahrungswissen nicht in den Köpfen scheidender Veteranen: Wir wandeln es in ein maschinenlesbares Unternehmensgut um, das über Generationswechsel hinweg verlustfrei erhalten bleibt.“*
+
+- **Edward Feigenbaum:**  
+  *„In der realen Ingenieurpraxis besteht der Löwenanteil von Fachwissen jedoch aus implizitem Erfahrungswissen (Tacit Knowledge), intuitiven Heuristiken und Daumenregeln (Rules of Thumb), die erfahrene Chefingenieure über Jahrzehnte hinweg entwickeln! Solche Heuristiken lassen sich nicht bytegenau an Paragrafen offizieller Normen binden, da sie in Lehrbüchern und Spezifikationen schlicht nicht existieren. Wenn Sie eine absolute bytegenaue Verwahrung zu Primärquellen für jede einzelne Regel erzwingen, berauben Sie das Expertensystem dann nicht genau jener heuristischen Flexibilität, die Systeme wie Dendral bei unvollständigen Daten erst praxistauglich machte?“*
+
+- **Mykola Fedchyk:**  
+  *„Herr Professor Edward, dies markiert die fundamentale Unterscheidung zwischen heuristischer Hypothesengenerierung und zwingenden normativen Schranken.  
+  In unserer Architektur werden implizite Heuristiken keineswegs verworfen – sie werden in die Schicht der deliberativen Planung und Hypothesenbildung (System 1) kanalisiert.  
+  In der funktionalen Sicherheit gilt jedoch ein eisernes Gesetz: Keine intuitive Heuristik darf eigenmächtig Freigaben erteilen oder Aktoren ansteuern, solange sie nicht von einem formalen Sicherheitsperimeter (Safety Perimeter) verifiziert wurde.  
+  Überdies ermöglicht das Unternehmensgedächtnis die Entäußerung selbst impliziter Heuristiken: Über strukturierte Architektur-Entscheidungsdatensätze (ADRs) und Post-Mortem-Analysen von Feldausfällen kristallisiert sich Veteranen-Intuition in typisierte Regeln mit klar umrissenen Gültigkeitsgrenzen. Wir wandeln subjektive Intuition in ein verifiziertes, langlebiges Unternehmensvermögen um.“*
 
 **Runde 2: Zeitliche Wissensalterung und die Provenienzspur**
 
@@ -593,6 +602,17 @@ Das Unternehmensgedächtnis über kritische Ingenieurentscheidungen darf nicht i
 - **Mykola Fedchyk:**  
   *„Frau Professorin Deborah McGuinness, exakt zur Abwehr dieses Fehlers führt die Monografie temporale deontische Logik und das Lex-Posterior-Protokoll ein.  
   Jedes Wissensartefakt besitzt nicht nur einen Span-Deskriptor, sondern ein explizites Gültigkeitsfenster $[t_{\mathrm{start}}, t_{\mathrm{end}}]$. Veröffentlicht die Regulierungsbehörde ein offizielles Erratum, erzeugt unser Compiler ein gezieltes binäres Reparatur-Patch mit höherem Revisionsindex. Untersucht ein Auditor einen Vorfall von vor drei Jahren, beweist der Merkle-Baum, dass die Handlung zum damaligen Zeitpunkt strikt der Norm v1.0 entsprach; für den heutigen Betrieb wird dieselbe Aktion jedoch deterministisch durch die Norm v2.0 blockiert. Dies liefert eine lückenlose Provenienz (Provenance), die Fakten nicht bloß aufzeichnet, sondern vor jedem Sicherheitsprüfer justiziabel und unanfechtbar macht.“*
+
+- **Deborah McGuinness:**  
+  *„Ihr Lex-Posterior-Modell greift elegant innerhalb einer geschlossenen Organisation. Doch in globalen mehrstufigen Lieferketten (Tier-1 und Tier-2) der Luftfahrt oder des Automobilbaus kreuzt der W3C-PROV-O-Graph zwangsläufig Unternehmensgrenzen mit asymmetrischem Vertrauen und proprietären Ontologien. Zulieferer von Bremssteuerungen oder Lidar-Sensoren werden ihre internen Konstruktionsdetails unter Verweis auf Geschäftsgeheimnisse niemals offenlegen. Wie kann Ihr Expertensystem eine lückenlose Verwahrungskette und Begründung konstruieren, wenn wesentliche Provenienzknoten hinter verschlossenen Türen externer Zulieferer liegen?“*
+
+- **Mykola Fedchyk:**  
+  *„Frau Professorin Deborah, diese Herausforderung lässt sich nicht durch die naive Forderung nach vollständiger Offenlegung proprietären Quellcodes bewältigen.  
+  Unsere Architektur löst sie über formale Schnittstellenverträge und kryptografische Verpflichtungen (Cryptographic Commitments):  
+  1. Der Zulieferer liefert keinen vertraulichen Quellcode, sondern einen formalisierten Schnittstellenvertrag in Form von SMT-Invarianten zusammen mit kryptografischen Sicherheitszertifikaten.  
+  2. Im PROV-O-Graphen wird ein solcher Knoten als typisierte Black-Box-Zusicherung mit verifizierbarer Attestierung (*Black-Box Assertion with Verifiable Attestation*) modelliert.  
+  3. Die Inferenzmaschine des OEM verifiziert mathematisch, dass der externe Vertrag den fahrzeugweiten ASIL-D-Invarianten genügt, ohne Einblick in das geistige Eigentum des Zulieferers zu verlangen.  
+  Die Verwahrungskette reißt nicht ab: Sie stützt sich auf rechtsverbindliche kryptografische Attestierungen und mathematisch bewiesene Vertragsschranken.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
 Kryptografische Wissensverwahrung und mehrseitige Hardware-Autorisierung beheben die Schwachstellen der ersten Expertensystem-Generation: Sie erheben das Unternehmensgedächtnis von einem fragilen Dokumentenarchiv zu einem streng versionierten, zeitlich definierten und rechtlich nichtabstreitbaren Infrastrukturkapital.

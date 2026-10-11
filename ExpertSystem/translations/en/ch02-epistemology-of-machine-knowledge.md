@@ -1211,6 +1211,14 @@ Machine knowledge in safety-critical engineering is founded not on statistical p
 - **Mykola Fedchyk:**  
   *“Professor Luciano Floridi, your caveat is entirely justified regarding metaphysical truths about natural law, but in safety engineering, the ontological status of a standard is distinct: the text of a standard (ISO 26262 or DO-178C) represents the primary regulatory and statutory reality (Deontic Ground Truth). We do not claim that a standard perfectly describes the universe. Our goal is to guarantee contractual non-repudiation: the system must prove to an auditor, court, or certification body that an action followed strictly from the valid mandate enforced within that jurisdiction at the precise moment of operation. Without cryptographic custody, any talk of 'semantic truth' in court dissolves into unaccountable rhetoric. Custody converts intent into an inspectable legal fact.”*
 
+- **Luciano Floridi:**  
+  *“Yet recognizing a standard as deontic ground truth does not eliminate the Semantic Gap. Even if the text of ISO 26262 is cryptographically pinned byte-for-byte, a computing system manipulates purely ungrounded syntactic symbols devoid of intrinsic intentionality: to a processor, the string 'vehicle must brake to standstill' is merely an array of UTF-8 bytes, not a comprehension of physical danger. When you translate natural-language regulatory specifications into formal symbolic predicates, that translation act is not cryptographic—it is executed by human annotators or large language models. Does this translation boundary not introduce the exact semantic noise and ungrounded distortion you claim to purge via hashing?”*
+
+- **Mykola Fedchyk:**  
+  *“Professor Luciano, the semantic gap is real during specification compilation, which is precisely why our architecture explicitly rejects unconstrained, automated rule ingestion.  
+  First, the span grounding descriptor binds the symbolic predicate to exact byte offsets within the primary source via an unbroken cryptographic tuple.  
+  Second, we make no metaphysical claim of granting intrinsic intentionality or conscious understanding to the silicon substrate. In mission-critical engineering, semantic comprehension is operationalized as behavioral equivalence and contract satisfaction: predicates compile into executable state invariants subjected to rigorous verification across formal SMT models and Hardware-in-the-Loop (HIL) testbenches. When system execution under all edge conditions strictly conforms to the formalized invariant, and that invariant carries the cryptographic multi-signature of an accountable knowledge engineer, the semantic gap is formally bridged by human legal liability and mathematical proof.”*
+
 **Round 2: Popperian Fallibilism versus Digital Infallibility**
 
 - **Karl Popper:**  
@@ -1219,6 +1227,14 @@ Machine knowledge in safety-critical engineering is founded not on statistical p
 - **Mykola Fedchyk:**  
   *“Sir Karl Popper, I embrace your principle of fallibilism unreservedly: no rule in a knowledge base is an immutable dogma. That is precisely why my inference machine (EVM) operates not as an inductive generator of confirmatory instances, but as a deductive falsifier: the symbolic core actively deploys defeaters and counter-examples against any candidate hypothesis.  
   Moreover, fallibilism is baked directly into our knowledge lifecycle: when an official Errata or a revised edition of a standard is published, the architecture enforces the Lex Posterior rule. The obsolete assertion is falsified and superseded by the new norm without requiring model retraining or jeopardizing system integrity. Evidence-governed AI is not an oracle of absolute truth—it is an algorithmic engine for the relentless detection and elimination of error.”*
+
+- **Karl Popper:**  
+  *“You appeal to the Lex Posterior principle and official Errata as your refutation engine. But that is merely top-down bureaucratic falsification—a retrospective admission of error by an institutional committee, often arriving years after defects manifest! Authentic critical rationalism demands relentless, bottom-up attempts to falsify models through severe empirical tests and unyielding confrontations with reality. If a certified regulatory standard contains an empirically defective formula for braking friction under icy conditions, is your expert system capable of falsifying the official standard from its own operational sensor observations before the regulatory body issues an update?”*
+
+- **Mykola Fedchyk:**  
+  *“Sir Karl, that is precisely where the most radical dimension of our epistemology operates: autonomous counterfactual empirical auditing.  
+  When our system observes that empirical sensor streams consistently diverge from the predictions of the normative model, the SMT reasoning core synthesizes an empirical defeater.  
+  The system lacks statutory authority to unilaterally overwrite a certified legal standard—to do so would violate the rule of law. However, it executes the precise imperative of critical rationalism: it immediately raises an `EPISTEMIC_ANOMALY` flag, deterministically suspends automated actuation within the compromised operational domain, transitions the plant into a fail-closed safe state, and emits a minimal reproducible counter-example for systems engineers. We have operationalized Popperian falsification as an automated early-warning alarm alerting engineering oversight to the inadequacy of reigning doctrine.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 Machine knowledge in safety-critical systems is procedural and fallibilistic: byte-level custody guarantees source authenticity, while a deductive Popperian falsifier ensures continuous stress-testing of operational boundaries and the immediate revocation of refuted norms.
