@@ -55,6 +55,19 @@ An expert system is never constructed upon a single mathematical method. A deter
 
 This taxonomy does not substitute for detailed architectural design, but it systematically prevents three pervasive engineering substitutions: substituting similarity scores for formal proof, substituting correlation for causation, and substituting fluent textual assertions for a justified refusal under insufficient data. The subsequent sections follow the order of this taxonomy, interspersed with discussions of the computational mechanisms that render inference practically feasible: rule execution engines, truth maintenance systems, and hybrid retrieval. Deterministic logic is examined first, as it furnishes the expert system with its strongest guarantee: an identical set of verified facts and rules deterministically yields an identical verdict.
 
+> [!NOTE]
+> **Author's Taxonomy of 9 Mathematical Disciplines for Engineering Uncertainty Routing**
+> 1. Deterministic logical deduction and Datalog: computation of the least fixed point $\mathrm{lfp}(\Gamma)$ to enforce RFC 2119 deontic compliance.
+> 2. Kleene's three-valued logic $\mathbb{K}_3$: open-world assumption (OWA) governance and typed justified refusal `UNKNOWN`.
+> 3. Bayesian belief networks: posterior risk updating via Bayes' theorem and competitive explaining away of alternative causes.
+> 4. Dempster–Shafer evidence theory: calculation of conflict mass $K$ and deterministic prevention of Zadeh's paradox.
+> 5. Case-based reasoning (CBR) and relational graphs: weighted precedent similarity $\mathrm{sim}(q,c)$ and artifact traceability reachability.
+> 6. Multi-criteria decision analysis (AHP/TOPSIS) and constraint satisfaction (CSP): ranking of engineering candidates with weight sensitivity frontiers.
+> 7. Semantic and hybrid retrieval: reciprocal rank fusion (RRF) between lexical BM25 and dense embeddings as an epistemic verification gate.
+> 8. Mahalanobis distance metric: covariance-aware plausibility filtering of physical telemetry and rejection of sensor innovations.
+> 9. Pearl's structural causal analysis: three-level ladder of causation, $do$-calculus, and counterfactuals to neutralize Simpson's paradox.
+> *Safety Engineering Invariant:* Collapsing these heterogeneous mathematical scales into a single scalar "confidence" number is strictly prohibited.
+
 ## 3. Deterministic Logic and Production Rules: Formalization of Inference
 
 The opening question asks: does it follow from the release criteria that version 2.4 must be blocked? The answer cannot be "probably, yes": a rule has either fired on verified facts or it has not. Logic equips the expert system with a rigorous formal language for such conclusions and guarantees that every inference is reproducible and auditable.
@@ -726,6 +739,16 @@ States are equivalent if every possible input word either leads both states into
 
 Subduction categorizes observations, deduction enforces verified safety rules, induction synthesizes new rule hypotheses, abduction isolates root causes of failure, traduction transfers precedent experience, eduction normalizes rule bases, and reduction keeps complex verification tractable. For an expert system, the critical engineering imperative is strictly preserving output epistemic status: deductive, subductive, and eductive results are emitted as mathematically guaranteed conclusions, whereas traductive, inductive, and abductive outputs must be explicitly flagged as hypotheses bounded by validation plans and safety shields. The next challenge is computational: how a rule engine executes thousands of rules over millions of facts without latency degradation.
 
+> [!NOTE]
+> **Author's Systematization of Seven Reasoning Methods and Epistemological Consequence Statuses**
+> 1. Subduction: subsuming observations under categories and OWL ontologies; analytic status deterministically dictated by taxonomy.
+> 2. Deduction: inference via rules $P \to Q$; strictly true status required for admission gates, release audits, and safety certification.
+> 3. Induction: synthesizing rule hypotheses from logs and empirical test series; hypothetical status requiring mandatory formal verification.
+> 4. Abduction: isolating the most probable root cause $P$ given observed symptom $Q$ in fault tree analysis (FTA); plausible hypothesis status.
+> 5. Traduction: transferring solutions across precedent cases via analogy; heuristic status requiring containment by a Safety Shield.
+> 6. Eduction: equivalent syntactic transformation of propositions $\neg Q \to \neg P$; identically true status for rule base normalization.
+> 7. Reduction: decomposing complex goals via AND/OR trees and Hopcroft state minimization; status preserving solvability and semantic invariants.
+
 ## 5. Rule Execution Algorithms: Rete Networks, Agenda, and Conflict Resolution
 
 When a system contains tens of rules, the inference engine can scan all rules against all facts on every cycle. However, when an industrial system scales to thousands of rules and millions of facts, exhaustive linear matching on every state change becomes computationally intractable, preventing the rule engine from keeping pace with real-time events.
@@ -1146,6 +1169,13 @@ In the first example, normalized belief mass for "target" is 0.545, for "no targ
 This demonstrates an architectural principle: an expert system must check conflict mass $K$ against calibrated safety thresholds prior to executing evidence fusion. If $K$ exceeds the threshold, the system must emit "sources in conflict" alongside an inventory of conflicting claims, rather than generating an artificially normalized verdict. Furthermore, Dempster combination requires evidence independence: two engineering reports summarizing the identical test log do not constitute independent observations.
 
 Probability, degree of membership, and belief mass measure fundamentally distinct phenomena. Bayesian networks weigh competing causes, Markov chains model temporal transitions, fuzzy sets handle non-crisp boundaries, and evidence theory surfaces source conflicts. All four operate over predefined variables. Engineering experience that resists tabular parameterization is captured via precedent cases and graph structures.
+
+> [!NOTE]
+> **Author's Protective Gate against Zadeh's Paradox and Critical Evidentiary Conflict Criterion**
+> 1. Mathematical limit of Dempster's rule of combination: as conflict coefficient $K \to 1$, the normalization factor $(1-K)^{-1}$ induces counterintuitive hyper-amplification of improbable edge hypotheses (Zadeh's paradox).
+> 2. Pre-normalization verification invariant: mandatory upfront computation of conflict mass $K = \sum_{A \cap B = \emptyset} m_1(A) m_2(B)$ prior to applying combination formulas.
+> 3. Fail-Closed gating: when $K \ge \tau_K$ (where $\tau_K \in [0.5, 0.8]$ is an approved domain safety threshold), the system deterministically refuses numerical fusion and emits typed refusal `EVIDENTIARY_CONFLICT`.
+> 4. Evidence source independence: algorithmic verification of sensor and informational channel orthogonality to prevent spurious corroboration under common cause failures.
 
 ## 8. Structured Experience Modeling: Precedents, Relational Graphs, and Ontologies
 
@@ -1634,6 +1664,13 @@ For an evidence-governed expert system, Haken's slaving principle fulfills two d
    As an engineering system approaches a physical bifurcation (e.g., aerodynamic stall on a drone wing or thermal runaway of a power MOSFET), control parameter $\lambda \to 0$. Consequently, the system relaxation time following perturbations diverges toward infinity: $`\tau = 1/|\lambda| \to \infty`$.  
    Mathematically, this causes a sharp increase in telemetry variance and causes the lag-1 autocorrelation coefficient to approach unity: $`\rho_1 \to 1`$. An expert system tracks this phenomenon as a **pre-bifurcation indicator**, alerting operators to impending instability long before physical parameters cross critical threshold limits.
 
+> [!NOTE]
+> **Author's Model of Synergetic Dimensionality Reduction and Pre-Bifurcation CSD Diagnostics**
+> 1. Haken's ontological state space reduction: the macroscopic state of a complex cyber-physical system with thousands of micro-variables is governed by compact semantic order parameters ($\xi$) that slave fast relaxing modes ($y_j \approx h_j(\xi)$).
+> 2. Invariants over compact graphs: the knowledge base verifies safety rules over a discrete graph of order parameters instead of combinatorial searches across raw telemetry.
+> 3. Critical Slowing Down (CSD) phenomenon: near dynamic instability thresholds, control parameter $\lambda \to 0$, causing perturbation relaxation time $\tau = 1/|\lambda| \to \infty$.
+> 4. Pre-bifurcation defeater: detecting noise variance surges and lag-1 autocorrelation increases $\rho_1 \to 1$ in telemetry time series alerts to impending failure long before crossing redline thresholds.
+
 ## 13. Structural Causal Analysis: From Correlations to Counterfactual Inference
 
 The final introductory question is the most deceptive: is the observed relationship truly causal? An engineering organization made code reviews mandatory for a subset of software tasks. Over a fiscal quarter, the defect rate among reviewed tasks was 26%, whereas the rate among unreviewed tasks was only 20%. The conclusion that "code reviews degrade software quality" is fallacious. Reviews were preferentially assigned to highly complex tasks: 80% of reviewed tasks were complex, compared to only 20% of unreviewed tasks, and complex tasks exhibit higher defect densities regardless of review.
@@ -1753,6 +1790,13 @@ X_i=f_i\big(\mathrm{Pa}_i,U_i\big),\qquad i=1,\dots,n
 An SCM formalizes physical mechanisms. A counterfactual inquiry might ask: would the actuator have survived had the thermal protection circuit triggered 20 milliseconds earlier, under the exact operational temperature, load, and voltage conditions observed during the failure? To evaluate this, the model infers exogenous noise $U$ from factual telemetry, modifies the protection threshold function, and evaluates the counterfactual outcome. Accuracy depends on the correctness of structural equations $`f_i`$; counterfactual modeling augments, but does not replace, empirical physical experimentation.
 
 Pearl's ladder dictates an epistemic hierarchy for expert systems. A correlation between firmware build versions and sensor faults is an observational hypothesis (Level 1). A controlled diagnostic routine is an intervention demonstrating active effect (Level 2). A definitive claim that a specific hardware revision caused an operational failure requires a structural causal model referencing verified engineering equations (Level 3). The expert system must tag every claim with its corresponding causal level.
+
+> [!NOTE]
+> **Author's Three-Tier Evidentiary Discipline for Causal Analysis in Safety Engineering**
+> 1. Level 1 (Association / Observation): $P(Y \mid X)$ — captures statistical correlation between events; functions strictly as heuristic grounds for hypotheses and grants no normative inference authority.
+> 2. Level 2 (Intervention / Action): $P(Y \mid do(X))$ — assesses consequences of active tests or policy changes; neutralizes Simpson's paradox by severing backdoor confounder paths $Z$ via $do$-calculus.
+> 3. Level 3 (Counterfactuals / Retrospection): $P(Y_{X=x'} \mid X=x, Y=y)$ — evaluates alternative scenarios within an invariant Structural Causal Model (SCM) $X_i = f_i(\mathrm{Pa}_i, U_i)$ for incident investigation.
+> 4. Epistemic status demarcation: the expert system must explicitly tag the causal tier of every claim within its justification certificate (*Proof Packet*).
 
 ## 14. Explainability Metrics and Statistical Confidence Calibration
 

@@ -55,6 +55,19 @@ Ein Expertensystem baut niemals auf einer einzelnen Methode auf. Eine Regel bewe
 
 Diese Tabelle ersetzt zwar keinen Systementwurf, schützt jedoch vor drei klassischen Fehlern: der Verwechslung von Ähnlichkeitswerten mit formalen Beweisen, der Gleichsetzung von Korrelation mit Kausalität und der Generierung trügerisch souveräner Texte anstelle einer fundierten Ablehnung bei Datenmangel. Die Abschnitte dieses Kapitels folgen im Wesentlichen den Zeilen dieser Tabelle; dazwischengeschaltet sind Abschnitte über jene Mechanismen, die eine praktische Ausführung erst ermöglichen: Regel-Engines, Konsistenzsicherung und Information Retrieval. An erster Stelle steht die Logik, denn sie verleiht dem Expertensystem die stärkste aller ingenieurtechnischen Garantien: Dieselbe Menge an Fakten und Regeln führt deterministisch stets zur selben Schlussfolgerung.
 
+> [!NOTE]
+> **Autorentaxonomie von 9 mathematischen Disziplinen zur Steuerung ingenieurtechnischer Ungewissheit**
+> 1. Deterministische logische Deduktion und Datalog: Berechnung des kleinsten Fixpunkts $\mathrm{lfp}(\Gamma)$ zur Durchsetzung deontischer RFC-2119-Normen.
+> 2. Dreiwertige Kleene-Logik $\mathbb{K}_3$: Verwaltung der Open-World-Annahme (OWA) und fundierte typisierte Ablehnung `UNKNOWN`.
+> 3. Bayessche Glaubensnetze: A-posteriori-Risikoaktualisierung nach dem Satz von Bayes und kompetitives Explaining-Away alternativer Ursachen.
+> 4. Dempster-Shafer-Evidenztheorie: Berechnung der Konfliktmasse $K$ und deterministische Blockierung des Zadeh-Paradoxons.
+> 5. Fallbasiertes Schließen (CBR) und relationale Graphen: gewichtete Fallähnlichkeit $\mathrm{sim}(q,c)$ und Erreichbarkeitsanalyse in Artefakt-Traceability-Graphen.
+> 6. Mehrkriterielle Entscheidungsanalyse (AHP/TOPSIS) und Constraint-Erfüllung (CSP): Rangordnung ingenieurtechnischer Alternativen mit Gewichtssensitivitätsanalysen.
+> 7. Semantische und hybride Suche: Reciprocal Rank Fusion (RRF) zwischen lexikalischem BM25 und dichten Vektor-Embeddings als Verifikationsfilter.
+> 8. Mahalanobis-Distanzmetrik: kovarianzbewusste Plausibilitätsprüfung physikalischer Telemetrie und Verwerfung von Sensoranomalien.
+> 9. Kausalanalyse nach Pearl: dreistufige Kausalitätsleiter, $do$-Kalkül und Kontrafaktizität zur Neutralisierung des Simpson-Paradoxons.
+> *Sicherheitsingenieurtechnische Invariante:* Die Verdichtung dieser heterogenen mathematischen Skalen zu einem einzigen skalaren „Konfidenzwert“ ist kategorisch untersagt.
+
 ## 3. Deterministische Logik und Produktionsregeln: Formalisierung der Inferenz
 
 Die erste Frage aus der Einleitung lautet: Folgt aus den Freigaberegeln zwingend, dass die Version 2.4 blockiert werden muss? Die Antwort auf eine solche Frage darf niemals „wahrscheinlich ja“ lauten: Eine formale Regel feuert entweder auf Basis verifizierter Fakten oder sie feuert nicht. Die mathematische Logik stellt dem Expertensystem die formale Sprache für derartige Ableitungen bereit und garantiert, dass jeder Schluss exakt reproduzierbar und vollständig auditierbar ist.
@@ -734,6 +747,16 @@ Zustände sind äquivalent, wenn jede beliebige Eingabesequenz von beiden Zustä
 
 Subduktion typisiert Messungen, Deduktion erzwingt normative Vorgaben, Induktion synthetisiert neue Regelhypothesen, Abduktion lokalisiert Fehlerursachen, Traduktion nutzt Erfahrungsschätze, Eduktion optimiert Wissensstrukturen und Reduktion bändigt kombinatorische Komplexität. Für das Expertensystem ist die Demarkation des epistemischen Status fundamental: Deduktive, subduktive und edukative Ergebnisse werden als formale Garantien präsentiert; traduktive, induktive und abduktive Schlüsse hingegen als Hypothesen mit explizitem Prüfplan. Die nächste ingenieurtechnische Frage lautet: Wie wendet eine Inferenzmaschine tausende Regeln auf Millionen Fakten an, ohne zu blockieren?
 
+> [!NOTE]
+> **Autorensystematik von sieben Inferenzmethoden und epistemologischen Konklusionsstatus**
+> 1. Subduktion: Einordnung von Fakten unter Kategorien und OWL-Ontologien; analytischer Status, der taxometrisch determiniert ist.
+> 2. Deduktion: Inferenz über Regeln $P \to Q$; zwingend wahrer Status für Freigabegates, Release-Audits und Sicherheitszertifizierungen.
+> 3. Induktion: Synthese von Regelhypothesen aus Logs und Prüfstandsdaten; hypothetischer Status, der zwingend formal verifiziert werden muss.
+> 4. Abduktion: Ermittlung der plausibelsten Ursache $P$ aus dem Symptom $Q$ in Fehlerbäumen (FTA); Status einer plausiblen Hypothese für die technische Diagnose.
+> 5. Traduktion: Übertragung von Lösungen zwischen Präzedenzfällen per Analogie; heuristischer Status, der eines Schutzschilds (Safety Shield) bedarf.
+> 6. Eduktion: äquivalente syntaktische Transformation von Aussagen $\neg Q \to \neg P$; tautologisch wahrer Status zur Normalisierung der Wissensbasis.
+> 7. Reduktion: Dekomposition komplexer Ziele über UND/ODER-Bäume und Hopcroft-Zustandsminimierung; Status der Erhaltung von Lösbarkeit und Semantik.
+
 ## 5. Regelausführungsalgorithmen: Rete-Netzwerk, Agenda und Konfliktlösung
 
 Umfasst eine Wissensbasis lediglich einige Dutzend Regeln, kann die Inferenzmaschine nach jeder Faktenänderung trivial sämtliche Regeln gegen alle Fakten abgleichen. Bei tausenden Regeln und Millionen von Fakten wird ein vollständiger Brute-Force-Durchlauf jedoch rechentechnisch untragbar; die Regel-Engine verliert den Anschluss an einlaufende Ereignisströme.
@@ -1119,6 +1142,13 @@ Im ersten Szenario verschwindet die massive Konfliktmasse von 0,5600 durch die R
 Regel für die Systemarchitektur: Zuerst wird die Konfliktmasse $K$ gegen die Sicherheitsschwelle geprüft. Erst bei $K < \theta_{\mathrm{conflict}}$ darf kombiniert werden; andernfalls erfolgt eine strukturierte Ablehnung.
 
 Wahrscheinlichkeit, Zugehörigkeitsgrad und Glaubensmasse quantifizieren unterschiedliche Dimensionen von Ungewissheit. Das Bayessche Netz wägt Ursachen ab, Markov-Modelle erfassen zeitliche Dynamiken, Fuzzy-Funktionen bilden weiche Grenzen ab und die Evidenztheorie legt Quellenkonflikte offen. Diese Ansätze setzen vordefinierte Variablen voraus. Wissen, das sich nicht in starre Zufallsvariablen pressen lässt, wird über Präzedenzfälle und relationale Graphen abgebildet.
+
+> [!NOTE]
+> **Autorenschutz-Gate gegen das Zadeh-Paradoxon und Kriterium der kritischen Evidenzkonfliktmasse**
+> 1. Mathematische Grenze der Dempster-Kombinationsregel: Bei kritischem Anstieg des Konfliktkoeffizienten $K \to 1$ führt der Normierungsfaktor $(1-K)^{-1}$ zur kontraintuitiven Hyperbolisierung unwahrscheinlicher Randhypothesen (Zadeh-Paradoxon).
+> 2. Vorabprüfungs-Invariante: obligatorische Vorberechnung der Konfliktmasse $K = \sum_{A \cap B = \emptyset} m_1(A) m_2(B)$ vor Anwendung von Kombinationsoperatoren.
+> 3. Fail-Closed-Blockierung: Überschreitet $K \ge \tau_K$ (wobei $\tau_K \in [0{,}5; 0{,}8]$ den freigegebenen Sicherheitsschwellenwert darstellt), verweigert das System deterministisch die numerische Fusion und emittiert die typisierte Ablehnung `EVIDENTIARY_CONFLICT`.
+> 4. Unabhängigkeit der Evidenzquellen: algorithmische Prüfung der Orthogonalität von Sensor- und Informationskanälen zur Verhinderung falscher gegenseitiger Bestätigung bei gemeinsamen Fehlerursachen (*Common Cause Failure*).
 
 ## 8. Modellierung strukturierter Erfahrung: Präzedenzfälle, relationale Graphen und Ontologien
 
@@ -1553,6 +1583,13 @@ Dieses Prinzip erfüllt zwei fundamentale Aufgaben in Expertensystemen:
 1. **Ontologische Raumreduktion:** Die Wissensbasis operiert auf *semantischen Ordnungsparametern* (z. B. $\xi_1 = \text{„Kavitationsunwucht des Rotors“}$, $\xi_2 = \text{„Verlust der Navigationsintegrität“}$) anstatt auf Rohdaten.
 2. **Früherkennung von Bifurkationen durch Critical Slowing Down:** Nähert sich das System einem Bifurkationspunkt (z. B. Strömungsabriss an einer Tragfläche), strebt der Kontrollparameter $\lambda \to 0$. Die Relaxationszeit divergiert: $\tau = 1/|\lambda| \to \infty$. Mathematisch resultiert dies in einem steilen Anstieg der Messrauschvarianz und der Autokorrelation erster Ordnung $\rho_1 \to 1$. Das Expertensystem erkennt dieses Phänomen als Frühwarnindikator, lange bevor physische Alarmschwellen durchbrochen werden.
 
+> [!NOTE]
+> **Autorenmodell der synergetischen Dimensionsreduktion und präbifurkatorischen CSD-Diagnostik**
+> 1. Ontologische Zustandsraumreduktion nach Haken: Der makroskopische Zustand eines komplexen cyber-physischen Systems mit tausenden Mikrovariablen wird durch kompakte semantische Ordnungsparameter ($\xi$) beschrieben, denen die schnellen Moden versklavt sind ($y_j \approx h_j(\xi)$).
+> 2. Invarianten über kompakten Graphen: Die Wissensbasis prüft Sicherheitsregeln über einem diskreten Begriffsgraphen der Ordnungsparameter anstatt kombinatorischer Suchen über Rohdaten.
+> 3. Phänomen des Critical Slowing Down (CSD): Nahe dynamischen Instabilitätsschwellen strebt der Kontrollparameter $\lambda \to 0$, wodurch die Relaxationszeit nach Störungen divergiert: $\tau = 1/|\lambda| \to \infty$.
+> 4. Präbifurkatorischer Defeater: Die Erfassung sprunghafter Rauschvarianzanstiege und Autokorrelationen erster Ordnung $\rho_1 \to 1$ in Telemetriezeitreihen warnt vor Systemversagen lange vor Durchbrechen physikalischer Grenzschwellen.
+
 ## 13. Strukturelle Kausalanalyse: Von Korrelationen zu kontrafaktischer Inferenz
 
 Die letzte Leitfrage aus der Einleitung ist die tückischste: Handelt es sich um echte Kausalität? Ein Entwicklungsteam führte verpflichtende Code-Reviews für komplexe Aufgaben ein. Nach drei Monaten lag die Defektrate bei den gereviewten Aufgaben bei 26 %, bei den ungereviewten Aufgaben jedoch bei nur 20 %. Der naive Schluss „Code-Reviews schaden der Qualität“ ist fatal falsch. Reviews wurden primär hochkomplexen Aufgaben zugewiesen (80 % Anteil komplexer Aufgaben im Review-Pfad, aber nur 20 % im Direkt-Pfad).
@@ -1658,6 +1695,13 @@ X_i=f_i\big(\mathrm{Pa}_i,U_i\big),\qquad i=1,\dots,n
 - $f_i$ sind deterministische Mechanismen.
 
 Beispiel für eine kontrafaktische Anfrage: „Wäre das Steuergerät ausgefallen, wenn die Notabschaltung unter exakt denselben Temperatur- und Lastbedingungen 20 Millisekunden früher ausgelöst hätte?“ Das SCM inferiert zunächst die spezifischen Werte der exogenen Variablen $U$ aus dem beobachteten Einzelfall (*Abduktion*), modifiziert die Gleichung des Schutzmechanismus (*Intervention*) und berechnet das Ergebnis deterministisch neu (*Prädiktion*).
+
+> [!NOTE]
+> **Dreistufige Autorendisziplin der Kausalevidenz im sicherheitskritischen Ingenieurwesen**
+> 1. Ebene 1 (Assoziation / Beobachtung): $P(Y \mid X)$ — erfasst statistische Korrelationen zwischen Ereignissen; dient rein heuristisch der Hypothesenbildung und berechtigt zu keiner normativen Entscheidung.
+> 2. Ebene 2 (Intervention / Handeln): $P(Y \mid do(X))$ — quantifiziert die Wirkung aktiver Tests oder Eingriffe; neutralisiert das Simpson-Paradoxon durch chirurgische Blockierung von Confounder-Pfaden $Z$ via $do$-Kalkül.
+> 3. Ebene 3 (Kontrafaktizität / Retrospektive): $P(Y_{X=x'} \mid X=x, Y=y)$ — evaluiert alternative Szenarien in invarianten strukturellen Kausalmodellen (SCM) $X_i = f_i(\mathrm{Pa}_i, U_i)$ zur Unfallursachenanalyse.
+> 4. Demarkation des epistemischen Status: Das Expertensystem muss die Kausalebene jeder Aussage im Begründungszertifikat (*Proof Packet*) explizit deklarieren.
 
 ## 14. Erklärbarkeitsmetriken und statistische Konfidenzkalibrierung
 
