@@ -48,6 +48,15 @@ Aus der Praxis des Autors: Diese Grenze muss vom ersten Tag an kompromisslos gez
 
 Damit der Architekturkern Wissen verwalten kann, muss präzise definiert werden, was im ingenieurtechnischen Sinn als operatives Wissen gilt.
 
+> [!NOTE]
+> **Fünf fundamentale Invarianten des Architekturkerns nach dem Autorenmodell**
+> 1. Exklusive Hoheit über die Wahrheitssemantik: Vollständige Entkopplung der Entscheidungsautorität von probabilistischen und heuristischen Modellen.
+> 2. Deterministische Provenienz-Rückverfolgbarkeit: Protokollierung eines unveränderlichen Begründungsgraphen für jeden Inferenzschritt nach W3C PROV-O.
+> 3. Kapselung austauschbarer Adapter: Anbindung von LLMs, Vektordatenbanken und Retrieval-Engines rein als ungeprüfte Kandidatenlieferanten ohne Urteilsrecht.
+> 4. Steuerung des Wissenslebenszyklus: Zwingende Validierung von Lebenszyklus-Statuswerten, zeitlichen Gültigkeitsfenstern und Artefakt-Zuständigkeiten.
+> 5. Autonome Wiederherstellung aus der kanonischen Quelle: Vollständige deterministische Rekonstruktion sekundärer Indizes bei Datenbeschädigung oder Drift.
+> *Laufzeitsteuerung:* Jeder Versuch eines externen Adapters, Wahrheitszustände am Architekturkern vorbei zu modifizieren, wird mit E_CORE_SECURITY_FAULT blockiert.
+
 ## 2. Operatives Wissen im ingenieurtechnischen Sinne
 
 Für ein Expertensystem ist Wissen nicht einfach unstrukturierter Text. Ein technisches Dokument kann zwar die Primärquelle von Wissen sein, stellt jedoch für sich genommen noch kein operatives Wissen dar, mit dem eine Inferenzmaschine arbeiten kann.
@@ -208,6 +217,14 @@ Im Diagramm mündet der Befüllungspfad in der kanonischen Wissensbasis und den 
 - **Das Autorisierungs-Gateway** reguliert den Zugriff auf Fakten und Textfragmente. Rollenbasierte Zugriffskontrolle RBAC (*Role-Based Access Control*) vergibt Rechte nach Benutzerrollen [[9]](#src-9), während attributbasierte Zugriffskontrolle ABAC (*Attribute-Based Access Control*) Attribute des Nutzers, der Ressource und des Kontexts auswertet, beispielsweise Projektzugehörigkeit und Freigabestufe [[10]](#src-10). Solche Richtlinien lassen sich deklarativ formulieren, etwa in der Sprache Rego des Open Policy Agent [[11]](#src-11).
 
 Um das Zusammenspiel dieser Komponenten zu verdeutlichen, wird der Lebenszyklus einer exemplarischen Anfrage nachvollzogen.
+
+> [!NOTE]
+> **Vier Invarianten der asymmetrischen Pfadtrennung (Befüllungspfad vs. Lesepfad) des Autors**
+> 1. Zeitliche und rechnerische Entkopplung: Die Hintergrundverarbeitung schwerer Rohquellen beeinträchtigt niemals die Subsekunden-Latenz des Lesepfads.
+> 2. Unveränderlichkeit des Snapshots: Der Lesepfad operiert ausschließlich auf validierten und zeitlich fixierten Momentaufnahmen der Wissensbasis.
+> 3. Unidirektionaler Inferenzfluss: Während der Inferenz abgeleitete Fakten werden zwingend an den Normalisierungseingang zurückgeführt und schreiben niemals direkt.
+> 4. Kontextuelles Zugriffsmandat: Jede Anfrage durchläuft eine prädikative ABAC/RBAC-Prüfung vor der Evaluierung formaler Produktionsregeln.
+> *Laufzeitsteuerung:* Jeder direkte Schreibversuch in die kanonische Wissensbasis am Befüllungspfad vorbei wird mit E_READONLY_STORAGE_VIOLATION abgewiesen.
 
 ## 6. Lebenszyklus einer Anfrage: Von der Fragestellung zum Beweispaket
 
@@ -444,6 +461,14 @@ Der Widerruf des Testergebnisses TC-89 änderte keine einzige übergeordnete Sch
 
 Die Anzahl der ATMS-Umgebungen kann kombinatorisch anwachsen. Für positive Regeln ohne Generierung unendlicher neuer Terme berechnet der gezeigte Algorithmus den kleinsten Fixpunkt über einer endlichen Knotenmenge; negative Begründungen und Nicht-Monotonie-Konflikte sind hier nicht implementiert. Der Widerruf einer Prämisse deklariert abhängige Aussagen nicht als falsch, sondern veranlasst das System zur erneuten Prüfung alternativer Stützen. Der Traceability-Graph muss kein streng azyklischer Graph (DAG) sein; Zyklen sind in realen Datenmodellen zulässig, dürfen jedoch ohne Primärstütze niemals Gültigkeit erzeugen.
 
+> [!NOTE]
+> **Vier Invarianten nichtmonotoner Wahrheitserhaltung nach der Analyse des Autors**
+> 1. Semantische Rechtfertigungsdichotomie: Das Label OUT kennzeichnet ausschließlich das Fehlen verifizierter Stützen, nicht die erwiesene Falschheit der Aussage.
+> 2. Nichtmonotone Kaskaden-Isolation: Der Widerruf einer Prämisse invalidiert eine Konklusion nicht, solange eine unabhängige alternative Begründung trägt.
+> 3. Schutz vor zirkulärer Selbstbegründung: Wahrheitslabels werden ausgehend vom kleinsten Fixpunkt propagiert, was zirkuläre Scheinstützen ausschließt.
+> 4. Kontextualisierte Hypothesenbindung: Jede abgeleitete Proposition wird an die minimale widerspruchsfreie Annahmenmenge im ATMS-Verband gekoppelt.
+> *Laufzeitsteuerung:* Die Detektion eines Widerspruchs in einer ATMS-Umgebung markiert den Knoten als NOGOD und schließt ihn aus dem Lösungsraum aus.
+
 ## 8. Konsistenter Lesekontext und Reproduzierbarkeit von Entscheidungen
 
 Eine reproduzierbare Antwort erfordert einen eindeutig fixierten Lesekontext: Wissenspaket-ID, Versionen von Regeln und Schemata, Fachprofil, Zieldatum, explizite Annahmen und Zugriffsrichtlinien. Die kanonische Wissensbasis und abgeleitete Indizes müssen ihre Datengenerationen explizit deklarieren. Liefert die Suchkomponente Treffer einer abweichenden Generation, verifiziert der Prüfer den Kandidaten im fixierten Snapshot oder weist ihn ab; ein Vermischen von Fakten zweier Release-Stände ist unzulässig. Dasselbe Prinzip gilt für partitionierte Architekturen: Eine Anfrage bindet dieselbe Generation über alle Shards hinweg; die Antwort eines Shards mit abweichender Generation wird wie das Schweigen des Shards behandelt. Das Schweigen eines Shards ist kein Beweis für die Nichtexistenz eines Fakts: Vier mögliche Abfrageergebnisse und sechs Partitionierungsregeln wurden in [Kapitel 7](ch07-knowledge-base-typology.md) behandelt, die Router-Implementierung in Abschnitt 10 von [Kapitel 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md).
@@ -516,6 +541,15 @@ Die Resilienz einer Architektur bemisst sich nicht allein am Normalbetrieb, sond
 | **Sprachmodell** | Erzeugung plausibler Behauptungen ohne Quellenbeleg (Halluzination) | Korrumpiertes Beweispaket, Täuschung des Prüfingenieurs | Zwingender Nachweisabgleich jeder Behauptung mit Zitaten der kanonischen Basis, Veto bei fehlender Primärquellenbindung |
 
 Alle sechs Schichten folgen einem gemeinsamen Architekturprinzip: Im Zweifel schweigt die Schicht nicht, sondern markiert Daten als degradiert, verschiebt sie in Quarantäne oder blockiert die Inferenz. Der verdeckte Fehler wird zu einem expliziten, im Audit-Log und im Beweispaket dokumentierten Ereignis. Um schleichende Qualitätsverluste rechtzeitig zu detektieren, sind quantitative Metriken erforderlich.
+
+> [!NOTE]
+> **Fünf Mechanismen zur Lokalisierung stiller Systemfehler nach der Architektur des Autors**
+> 1. Konnektor-Schutz vor partieller Desynchronisation: High-Watermark-Ereignisverfolgung und Versetzen betroffener Quellen in den Status DEGRADED_SOURCE.
+> 2. Quarantäne-Isolation der Normalisierungsschicht: Pufferung unbekannter Statuswerte zur Verhinderung fälschlicher Mängelschließungen in Release-Gates.
+> 3. Wissensgraph-Schutz vor verwaisten Kanten: Transaktionale Kaskadenlöschungen und periodische Integritätsaudits isolierter Teilgraphen.
+> 4. Inferenz-Determinismus: Strikte Sitzungsisolation des Arbeitsspeichers und explizite Salience-Priorisierung zur Eliminierung von Nicht-Determinismus.
+> 5. Veto gegen unbelegte Behauptungen: Zwingender zeichengenauer Belegabgleich von LLM-Aussagen gegen Passagen der kanonischen Wissensbasis.
+> *Laufzeitsteuerung:* Der Übergang eines Konnektors in den Zustand DEGRADED_SOURCE aktiviert das Fail-Closed-Sicherheitsgate und blockiert automatisierte Urteile.
 
 ## 11. Qualitätskalibrierung und Regressionskontrolle
 
@@ -695,6 +729,14 @@ rule-R-SEC-BLOCK-v3
 </details>
 
 Die Abfrage liefert die drei direkten Stützen der Entscheidung inklusive der angewendeten Regel sowie die Vorgängerevision der modifizierten Anforderung zurück. Dies bildet die deklarierten Abhängigkeiten des Graphen ab, nicht den vollständigen Systemzustand der Laufzeitumgebung. Für Daten-Pipelines wird eine vergleichbare Nachverfolgbarkeit von Jobs und Datensätzen über den Standard OpenLineage realisiert [[25]](#src-25). Das Audit-Log muss Ereignisse mit konkreten Artefakten und Verifikationsergebnissen verknüpfen; der Graph an sich verbürgt weder die materielle Richtigkeit noch die Authentizität jedes Datensatzes ohne kryptografische Signaturen.
+
+> [!NOTE]
+> **Vier Invarianten kryptografischer Versionierung und Provenienz-Verfolgung des Autors**
+> 1. Vollständigkeit des Konfigurations-Snapshots: Eindeutige kryptografische Bindung von Regelsätzen, Ontologien, Embedding-Pipelines und System-Prompts.
+> 2. W3C-PROV-O-Provenienzmodell: Abbildung des Ausführungstraces als unveränderlicher gerichteter Graph aus Entitäten, Aktivitäten und handelnden Agenten.
+> 3. Kryptografischer Fingerprint des Wissenszustands: Berechnung von Merkle-Baum-Hashes über genutzte Fakten zur zeitlichen Fixierung des Urteils.
+> 4. Entkopplung historischer Rekonstruktion von aktuellen Rechten: Trennung zwischen der Prüfung vergangener Begründungen und aktiven Zugriffsrechten.
+> *Laufzeitsteuerung:* Jede Entscheidung ohne authentischen kryptografischen W3C-PROV-O-Graphen wird vom Audit-Gateway als unzertifiziert abgewiesen.
 
 ## 13. Sieben Architekturregeln eines evidenzbasierten Systems
 

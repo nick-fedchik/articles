@@ -48,6 +48,15 @@ From the author's engineering practice: this boundary must be drawn uncompromisi
 
 For the architectural core to effectively govern knowledge, one must first define what qualifies as operational knowledge.
 
+> [!NOTE]
+> **Five Fundamental Invariants of the Architectural Core Proposed by the Author**
+> 1. Exclusive ownership of truth semantics: complete isolation of decision authority from probabilistic and heuristic models.
+> 2. Deterministic provenance traceability: recording an immutable justification graph for every inference step conforming to W3C PROV-O.
+> 3. Isolation of replaceable adapters: coupling LLMs, vector databases, and retrieval engines strictly as unprivileged candidate suppliers without verdict rights.
+> 4. Knowledge lifecycle governance: mandatory validation of lifecycle states, temporal validity intervals, and artifact ownership.
+> 5. Autonomous recovery from canonical truth: ensuring full deterministic reconstruction of secondary indices upon degradation or corruption.
+> *Runtime Governance:* Any attempt by an external adapter to mutate epistemic truth without traversing the architectural core is aborted with E_CORE_SECURITY_FAULT.
+
 ## 2. Operational Knowledge in an Engineering Sense
 
 To an expert system, knowledge cannot be treated as unstructured text. An engineering document may serve as an authoritative source of knowledge, but raw text in itself does not constitute operational knowledge that an automated inference engine can process.
@@ -208,6 +217,14 @@ In this architecture, the fill path terminates at the canonical knowledge base a
 - **The Authorization Gateway** enforces data access policies over facts and document fragments. Role-Based Access Control (RBAC) grants baseline permissions based on organizational role [[9]](#src-9), while Attribute-Based Access Control (ABAC) evaluates user, resource, and environmental attributes, such as project assignment and security clearance level [[10]](#src-10). Access policies are cleanly expressed in declarative languages such as Rego within an Open Policy Agent daemon [[11]](#src-11).
 
 To observe how these components interact in production, we examine the lifecycle of a concrete query.
+
+> [!NOTE]
+> **Four Invariants of Asymmetric Flow Separation (Fill Path vs. Read Path) Formulated by the Author**
+> 1. Temporal and computational decoupling: background ingestion of heavy unstructured sources never degrades sub-second read-path inference latency.
+> 2. Snapshot immutability: the read path queries strictly validated and temporally pinned knowledge base snapshots.
+> 3. Unidirectional inference derivation: derived facts synthesized during read-path reasoning recycle back to normalization ingress and never write directly.
+> 4. Contextual access mandate: every query undergoes rigorous ABAC/RBAC predicate filtering prior to activating production rules.
+> *Runtime Governance:* Any unmediated write attempt to the canonical knowledge base bypassing the ingestion pipeline is rejected with E_READONLY_STORAGE_VIOLATION.
 
 ## 6. Query Lifecycle: From Question to Proof Package
 
@@ -443,6 +460,14 @@ Retracting test result TC-89 leaves all high-level conclusions intact because co
 
 The environment lattice in an ATMS can experience combinatorial expansion. For positive Datalog-like rules without infinite value generation, the algorithm computes the least fixed point over a finite set of nodes; non-monotonic negation and conflict assumptions are omitted for clarity. Retracting a premise does not declare dependent propositions false: the engine re-evaluates whether alternative justifications sustain them. Furthermore, the knowledge graph need not form a directed acyclic graph (DAG); cycles are legitimate across cyclic domain relations, provided they do not synthesize self-justifying claims devoid of external ground premises.
 
+> [!NOTE]
+> **Four Invariants of Non-Monotonic Truth Maintenance Identified by the Author**
+> 1. Semantic justification dichotomy: the OUT label denotes solely the absence of verified justifications rather than proven proposition falsity.
+> 2. Non-monotonic cascade isolation: retracting a single premise does not invalidate a conclusion if an independent alternative justification holds.
+> 3. Protection against circular self-justification: truth labels are derived upward from a least fixed point, eliminating circular bootstrapping loops.
+> 4. Contextualized hypothesis tracking: each derived proposition is bound to the minimal consistent assumption set within the ATMS environment lattice.
+> *Runtime Governance:* Detecting an active contradiction within an ATMS environment immediately tags the node as NOGOD and purges it from the valid search space.
+
 ## 8. Consistent Read Context and Decision Replay
 
 Reproducing an expert decision requires evaluating it against an exact historical execution context: knowledge pack identifier, rule and schema version digests, domain profile, target timestamp, explicit operational assumptions, and active access control policies. Both canonical stores and derived search indices must report data generation tags. If a retrieval adapter returns artifacts from a divergent generation, the verifier must evaluate candidates against a pinned snapshot or reject the operation, preventing the conflation of facts across distinct release baselines. This principle applies equally to partitioned architectures: a query must address a single generation tag across all shards, and a shard reporting a mismatched generation is treated as silent. Shard silence does not denote the non-existence of a fact: the four possible query outcomes and the six data partitioning rules are formalized in [Chapter 7](ch07-knowledge-base-typology.md), with router implementation details provided in Section 10 of [Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md).
@@ -515,6 +540,15 @@ Architectural resilience is evaluated not merely under nominal conditions, but b
 | **Language Model** | Factual assertion synthesized without source citation | Fraudulent proof package, misinforming human auditors | Strict sentence-level grounding verifiers against canonical passages, automatic veto on ungrounded claims |
 
 A unifying design philosophy governs all six mitigations: when confronted with uncertainty, an architectural layer must never remain silent; it must flag the affected state as degraded, route data to quarantine, or abort the decision. Silent failure is thereby transformed into explicit degradation visible within audit ledgers and proof packages. However, detecting insidious, long-term quality drift requires formal mathematical measurement.
+
+> [!NOTE]
+> **Five Mechanisms for Localizing Silent Failures Formulated in the Author's Architecture**
+> 1. Connector defense against partial desynchronization: high-watermark event tracking and transitioning degraded sources to DEGRADED_SOURCE status.
+> 2. Quarantine isolation in normalization: dead-letter buffering of unrecognized values to prevent erroneous defect resolution in safety gates.
+> 3. Knowledge graph protection against dangling edges: transactional cascade deletes and periodic background scans for orphaned subgraphs.
+> 4. Inference engine determinism: strict working memory session isolation and explicit rule salience rankings to eliminate race conditions.
+> 5. Ungrounded generation veto: mandatory byte-exact passage grounding of language model assertions against canonical knowledge packs.
+> *Runtime Governance:* Any connector transitioning to DEGRADED_SOURCE automatically triggers the Fail-Closed safety gate, halting automated resolutions.
 
 ## 11. Quality Calibration and Regression Control
 
@@ -694,6 +728,14 @@ rule-R-SEC-BLOCK-v3
 </details>
 
 The query retrieves the three direct grounds supporting the decision—including the specific rule version—along with the superseded revision of the requirement. These represent the stated dependencies of the graph, rather than proof that all runtime dependencies were captured. For data pipelines, comparable dataset and job lineages are formalized by OpenLineage [[25]](#src-25). Audit logs must link events to exact artifact digests and verification results; the graph alone does not certify the truth or authorship of each entry.
+
+> [!NOTE]
+> **Four Invariants of Cryptographic Versioning and Provenance Tracking Developed by the Author**
+> 1. Configuration snapshot completeness: unambiguous cryptographic pinning of rule suites, ontologies, embedding pipelines, and system prompts.
+> 2. W3C PROV-O provenance graph model: structuring the execution trace as an immutable directed graph of entities, activities, and acting agents.
+> 3. Epistemic state cryptographic fingerprinting: computing Merkle tree digests over utilized facts to permanently anchor decisions in time.
+> 4. Decoupling historical replay from current credentials: distinguishing between verifying past reasoning validity and active operator access rights.
+> *Runtime Governance:* Any expert decision synthesized without an authentic W3C PROV-O provenance graph is rejected by the audit gateway as uncertified.
 
 ## 13. Seven Architectural Rules of an Evidence-Governed System
 
