@@ -60,6 +60,15 @@ utterance → candidate → corroborated candidate → validated rule → releas
 
 Advancing an assertion to a higher maturity status requires distinct empirical or formal justification. A language model summary cannot bypass this lifecycle by directly promoting an utterance to a validated rule.
 
+> [!NOTE]
+> **Five Epistemic Lifecycle Statuses of Cognitive Knowledge Elicitation**
+> 1. Utterance: raw transcript or verbal statement confirming solely that the assertion was uttered by an expert, not its validity.
+> 2. Knowledge Candidate: structured typed frame capturing explicit predicates, contextual envelope, speaker modality, and open gaps.
+> 3. Corroborated Candidate: formal proposition triangulated against hardware telemetry logs, architectural schemas, and peer reviews.
+> 4. Validated Rule: formal deontic constraint tested against an isolated holdout dataset with zero catastrophic safety slice risk.
+> 5. Released Knowledge: certified executable microcode deployed in a versioned knowledge base under accountable human stewardship.
+> *Runtime Governance:* Bypassing intermediate statuses directly from utterance to validated rule is strictly prohibited under Fail-Closed.
+
 ## 2. Targeted Elicitation Session Design: Decision-Centric Focus
 
 Open-ended interview prompts such as "tell us everything you know about system initialization" generate voluminous transcripts but yield minimal knowledge suitable for algorithmic verification. For this reason, the CommonKADS (*Common Knowledge Acquisition and Documentation Structuring*) methodology initiates knowledge engineering with an analysis of the organizational context and task hierarchy rather than an unstructured conversation [[4]](#src-4). Prior to launching an elicitation session, the knowledge engineer must determine:
@@ -203,6 +212,18 @@ This dialectic extracts the operational envelope of the rule rather than merely 
 
 If an expert cannot articulate a single potential counterexample or boundary failure mode, this indicates a need to consult independent data sources and additional specialists, rather than proving that the rule is universally valid.
 
+> [!NOTE]
+> **Eight Vectors of Popperian Falsification Auditing for Expert Heuristics**
+> 1. Clarification Vector: operationalizing subjective adjectives into measurable physical units and quantitative tolerance envelopes.
+> 2. Contrast Vector: identifying confounding fault signatures that present identical waveforms but indicate divergent root causes.
+> 3. Exception Vector: proactive elicitation of defeaters—operational states where the trigger occurs while the subsystem functions nominally.
+> 4. Absence Vector: determining system behavior when the required telemetry signal or sensor channel is uninstrumented or broken.
+> 5. Temporal Dynamics Vector: assessing rule validity across thermal warm-up curves, component aging, and cold reboot cycles.
+> 6. Provenance Vector: rigorously separating direct hands-on observation, vendor documentation claims, and deductive speculation.
+> 7. Disagreement Vector: interrogating architectural divergences and alternative diagnostic approaches championed by peer engineers.
+> 8. Falsification Test Vector: formulating an unambiguous physical experiment capable of decisively refuting the candidate rule.
+> *Runtime Governance:* Rules lacking explicit boundary defeaters are quarantined to prevent unconstrained generalization of local heuristics.
+
 ## 6. Mathematical Demarcation of Subjective Confidence and Statistical Frequency
 
 Within an expert system knowledge base, qualitative modal assertions (such as "usually," "almost always," or "rarely") inject severe epistemic uncertainty into automated inference engines. If a knowledge engineer naively maps such verbal qualifiers to fixed Certainty Factors (CF) without empirical calibration, reasoning chains become stochastically unstable: accumulated subjective weights trigger unexpected verdict degradation or false emergency shutdowns. Ruth Beyth-Marom demonstrated experimentally that technical experts exhibit dramatic numerical variance when interpreting identical verbal probability terms (subjective estimations for the term "probable" ranged from 0.40 to 0.85) [[12]](#src-12). Consequently, any expert assertion destined for a production diagnostic rule must undergo mathematical demarcation separating point frequency, Bayesian posterior credible intervals, and calibrated inter-rater reliability.
@@ -259,6 +280,13 @@ The computed $\kappa$ metric serves as a deterministic validation gate within th
 3. **$\kappa < 0.40$ (Critical Disagreement or Inconsistency):** Reflects fundamentally divergent mental models or contradictory definitions; automated rule synthesis is halted, and the candidate is moved to quarantine alongside a formal collision report submitted to the knowledge governance board.
 
 For multi-rater cohorts exceeding two experts or datasets with missing annotations, Krippendorff's alpha is applied using a predefined difference metric [[14]](#src-14). If $`p_e = 1`$, the denominator evaluates to zero and kappa is undefined: this represents a degenerate edge case rather than perfect agreement.
+
+> [!NOTE]
+> **Three-Tier Mathematical Admission Gate for Inter-Expert Agreement via Cohen's Kappa ($\kappa$)**
+> 1. High Concordance ($\kappa \ge 0.75$): statistically negligible discrepancies granting automated clearance for rule code generation.
+> 2. Moderate Concordance ($0.40 \le \kappa < 0.75$): latent semantic divergence mandating a targeted defeater elicitation session.
+> 3. Critical Discordance ($\kappa < 0.40$): fundamental ontological collision requiring quarantine and escalation to an expert arbitration panel.
+> *Runtime Governance:* Admission of heuristics into ASIL D loops requires simultaneous verification of $\kappa \ge 0.75$ and Bayesian width $\Delta p \le 0.15$.
 
 ## 7. Active Elicitation Algorithms: Maximizing Information Gain
 
@@ -443,6 +471,19 @@ Even a meticulously planned interview can yield invalid rules if cognitive heuri
 
 All listed anti-patterns improperly inflate assertion status: an unverified guess becomes a rule, social compliance is mistaken for physical truth, and a language model summary masquerades as confirmed fact. The remediation across all rows is uniform: trace assertions back to primary sources and empirical verification.
 
+> [!NOTE]
+> **Nine Authorial Anti-Patterns in Cognitive Knowledge Engineering**
+> 1. Unfocused Interviewing: accumulating unstructured narrative text detached from verifiable diagnostic decision cases.
+> 2. Hindsight Bias: deceptive rationalization of diagnostic reasoning reconstructed after the failure outcome is already known.
+> 3. Leading Questions: inadvertently nudging the expert toward pre-conceived hypotheses rather than conducting neutral evaluations.
+> 4. Unquantified Adjective Features: encoding vague terms ("unstable", "noisy") without binding them to formal physical tolerances.
+> 5. Hallucinatory Gap Filling: permitting neural models to fabricate missing thresholds instead of preserving explicit `threshold: null` flags.
+> 6. Forced Consensus: averaging conflicting expert assertions, which erases vital localized exceptions and operating boundaries.
+> 7. Pseudo-Independent Corroboration: treating multiple citations of the same underlying specification as independent verification proofs.
+> 8. Circular Self-Confirmation: confusing the expert's approval of the interview transcript with formal empirical validation of the rule.
+> 9. Superficial Sample Saturation: evaluating rules exclusively on typical cases while ignoring catastrophic edge-case operating boundaries.
+> *Runtime Governance:* Detecting any cognitive anti-pattern halts rule certification, routing the candidate back to hardware falsification.
+
 ## 12. Iterative Operational Protocol for the First Knowledge Elicitation Cycle
 
 For an initial exploratory pilot, an engineering team should focus on a single concrete decision and 10–20 diverse historical incidents. This serves as an organizational guideline rather than a statistically sufficient sample for quantifying rare failures. Duplicate records of a single incident and identical physical boards must be grouped into shared partitions during cross-validation splits. Prior to recording, legal rights, privacy constraints, and access boundaries must be established; an alignment session standardizes domain vocabulary and workflow boundaries.
@@ -510,6 +551,13 @@ Traditional externalization forces a lead architect to author static documentati
 
 > [!IMPORTANT]
 > **Ethical and Security Perimeter:** Harvesting the digital shadow of engineering activity must remain strictly decoupled from employee performance evaluation. The expert system aggregates technical facts, structural patterns, and domain predicates, but must never become a tool for workplace surveillance. Violating this boundary incentivizes engineers to manipulate their digital traces, destroying the epistemic integrity of the knowledge base.
+
+> [!NOTE]
+> **Three Authorial Invariants for Passive Knowledge Extraction from Engineering Digital Footprints**
+> 1. Codebase Evolution Auditing: mining Git patch histories and pull request reviews to discover latent, undocumented architectural heuristics.
+> 2. Incident Communication Deconstruction: extracting genuine diagnostic sequences from operational emergency logs rather than idealized manuals.
+> 3. Algorithmic Expertise Retrieval: mapping technical domain competencies from code commits under strict ethical separation from HR evaluations.
+> *Runtime Governance:* Strict anonymization and cryptographic separation of extracted predicates preventing knowledge systems from enabling administrative surveillance.
 
 ## 14. Pro et Contra Dialogue
 

@@ -60,6 +60,15 @@ utterance → candidate → corroborated candidate → validated rule → releas
 
 Im deutschen Entwicklungsprozess entspricht dies der Sequenz: Äußerung → Wissenskandidat → korroborierter Kandidat → validierte Regel → freigegebenes Wissen. Jeder Statusübergang erfordert eine explizite formale Rechtfertigung. Die Zusammenfassung eines Sprachmodells darf den Status niemals eigenmächtig von einer bloßen Äußerung direkt zu einer validierten Regel befördern.
 
+> [!NOTE]
+> **Fünf epistemische Lebenszyklus-Zustände der kognitiven Wissenserhebung**
+> 1. Äußerung (Utterance): Rohes Transkript oder Sprachfragment, das lediglich belegt, dass der Experte eine Aussage getätigt hat.
+> 2. Wissenskandidat (Knowledge Candidate): Typisierter Datenframe mit expliziten Prädikaten, Kontextgrenzen, Modalitäten und offenen Lücken.
+> 3. Bestätigter Kandidat (Corroborated Candidate): Durch Telemetrieprotokolle, Schaltungsunterlagen und Peer-Reviews triangulierte Hypothese.
+> 4. Validierte Regel (Validated Rule): Auf isolierten Testdatensätzen verifizierte deontische Norm mit Nulltoleranz auf kritischen Sicherheitsslices.
+> 5. Freigegebenes Wissen (Released Knowledge): Zertifizierter Mikrocode in der versionierten Wissensbasis unter verantwortlicher menschlicher Kustodie.
+> *Runtime Governance:* Direkte Statusübergänge von einer Äußerung zu einer validierten Regel sind nach dem Fail-Closed-Prinzip unzulässig.
+
 ## 2. Zielgerichtetes Design von Elicitation-Sessions: Ausrichtung auf Entscheidungsfindung
 
 Die unspezifische Aufforderung „Erzählen Sie alles, was Sie über den Boot-Vorgang des Systems wissen“ führt unweigerlich zu seitenlangen Transkripten, liefert jedoch kaum formal testbares Wissen. Die CommonKADS-Methodologie (*Common Knowledge Acquisition and Documentation Structuring*) setzt beim Knowledge Engineering daher primär bei der Analyse der Organisation und der spezifischen Aufgabenstellung an, anstatt direkt mit informellen Interviews zu beginnen [[4]](#src-4). Vor jeder Befragungssitzung müssen folgende Parameter präzise definiert werden:
@@ -203,6 +212,18 @@ Auf diese Weise dokumentiert der Dialog nicht nur bestätigende Instanzen, sonde
 
 Kann ein Fachexperte keinerlei denkbare Gegenbeispiele benennen, so signalisiert dies die dringende Notwendigkeit weiterer empirischer Fallanalysen und unabhängiger Quellen – keineswegs jedoch die absolute Allgemeingültigkeit der Regel.
 
+> [!NOTE]
+> **Acht Vektoren des Popper'schen Falsifikationsaudits für Expertenheuristiken**
+> 1. Klärungsvektor (Clarification): Operationalisierung subjektiver Adjektive in messbare physikalische Größen und Toleranzintervalle.
+> 2. Kontrastvektor (Contrast): Identifikation ähnlicher Fehlersignaturen, die auf grundverschiedene Ursachen zurückzuführen sind.
+> 3. Ausnahmevektor (Exception): Gezielte Erhebung von Defeatern — Zuständen, in denen das Symptom auftritt, das System jedoch intakt ist.
+> 4. Absenzvektor (Absence): Bestimmung des Verhaltens bei Ausfall oder Fehlen des erforderlichen Sensor- oder Telemetriekanals.
+> 5. Zeitvektor (Temporal Dynamics): Evaluierung der Regelgültigkeit über thermische Einschwingvorgänge, Alterung und Kaltstarts hinweg.
+> 6. Provenienzvektor (Provenance): Strikte Trennung zwischen eigener Laborbeobachtung, Herstellerdokumentation und theoretischer Annahme.
+> 7. Dissensvektor (Disagreement): Erfassung abweichender Denkmodelle und alternativer Diagnosepfade anderer Fachkollegen.
+> 8. Falsifikationstestvektor: Formulierung eines entscheidenden physischen Experiments, das die Regel zweifelsfrei widerlegen kann.
+> *Runtime Governance:* Regeln ohne explizite Randdefeater werden isoliert, um unzulässige Verallgemeinerungen lokaler Kontexte zu unterbinden.
+
 ## 6. Mathematische Abgrenzung von subjektiver Gewissheit und statistischer Häufigkeit
 
 In der Wissensbasis eines Expertensystems erzeugen vage verbale Modalitätsausdrücke (etwa „üblicherweise“, „fast immer“, „selten“) kritische Unsicherheiten für logische Inferenzalgorithmen. Überträgt der Knowledge Engineer solche Äußerungen ohne empirische Kalibrierung in statische Sicherheitsfaktoren (*Certainty Factors*, CF), geraten die Inferenzketten der Inferenzmaschine stochastisch aus dem Gleichgewicht: Die Akkumulation subjektiver Multiplikatoren führt zu unkontrollierter Degradation der Entscheidungsfindung oder zu fatalen Fehlauslösungen von Notfallsystemen. Ruth Beyth-Marom wies experimentell nach, dass Fachexperten bei identischen verbalen Quantifikatoren eine drastische numerische Streuung aufweisen (für den Ausdruck „wahrscheinlich“ variierte die Zuordnung von 0,40 bis 0,85) [[12]](#src-12). Jede Expertenäußerung mit diagnostischem Regelcharakter erfordert daher eine strikte mathematische Differenzierung in Punkthäufigkeit, bayesianisches A-posteriori-Intervall und kalibrierte Beurteilerübereinstimmung.
@@ -259,6 +280,13 @@ Der berechnete Wert $\kappa$ fungiert als deterministisches Validierungsgateway 
 3. **$\kappa < 0{,}40$ (Kritische Diskrepanz oder Widerspruch):** Fundamentale Divergenz der mentalen Modelle oder Begriffsdefinitionen; die automatische Regelübernahme wird vollständig gesperrt, der Wissenskandidat wandert in ein Quarantäne-Repository und ein Kollisionsprotokoll wird an die Schiedskommission übermittelt.
 
 Bei mehr als zwei Beurteilern oder unvollständigen Zuweisungen kommt Krippendorffs Alpha mit einer vorab definierten Distanzmetrik zum Einsatz [[14]](#src-14). Gilt $p_e=1$, wird der Nenner null und Kappa ist undefiniert: Hierbei handelt es sich um einen degenerierten Sonderfall, keineswegs um perfekte Einigkeit.
+
+> [!NOTE]
+> **Dreistufige mathematische Zulassungsschleuse für Inter-Experten-Übereinstimmung via Cohens Kappa ($\kappa$)**
+> 1. Hohe Konkordanz ($\kappa \ge 0{,}75$): Statistisch vernachlässigbare Diskrepanzen mit automatischer Freigabe zur Regelkodegenerierung.
+> 2. Moderate Konkordanz ($0{,}40 \le \kappa < 0{,}75$): Verdeckter semantischer Konflikt, der eine gezielte Defeater-Erhebungssitzung erzwingt.
+> 3. Kritische Diskordanz ($\kappa < 0{,}40$): Fundamentale ontologische Divergenz mit sofortiger Quarantäne und Eskalation an das Schiedsgremium.
+> *Runtime Governance:* Die Zulassung von Heuristiken in ASIL-D-Regelkreise erfordert zwingend $\kappa \ge 0{,}75$ und ein Bayesian-Intervall $\Delta p \le 0{,}15$.
 
 ## 7. Aktive Befragungsalgorithmen: Maximierung des Informationsgewinns
 
@@ -443,6 +471,19 @@ Selbst eine methodisch vorbereitete Befragung mündet in fehlerhafte Wissensbase
 
 Alle aufgeführten Antipattern führen zu einer ungerechtfertigten Statusüberhöhung: Eine Vermutung mutiert zur Regel, soziale Einigkeit wird mit physikalischer Gesetzmäßigkeit verwechselt und die Zusammenfassung eines Sprachmodells gilt vorschnell als gesicherter Fakt. Die fundamentale Gegenmaßnahme ist stets dieselbe: Jedes Wissenselement muss an Primärquellen und empirischen Experimenten gemessen werden.
 
+> [!NOTE]
+> **Neun Autoren-Antipattern des kognitiven Knowledge Engineering**
+> 1. Unfokussierte Befragung: Anhäufung unstrukturierter Narrationen ohne Bindung an verifizierbare diagnostische Entscheidungsfälle.
+> 2. Rückschaufehler (Hindsight Bias): Trügerische Rationalisierung des Diagnosepfads, nachdem der tatsächliche Fehlerausgang bereits feststeht.
+> 3. Suggestivfragen: Unbewusstes Hinführen des Experten zu vorgefassten Hypothesen anstelle neutraler blindierter Fallprüfungen.
+> 4. Unquantifizierte Adjektivmerkmale: Übernahme vager Ausdrücke („instabil“, „verrauscht“) ohne exakte physikalische Toleranzgrenzen.
+> 5. Halluzinatorische Lückenfüllung: Zulassen modellgenerierter Schwellenwerte anstelle der expliziten Wahrung von `threshold: null`.
+> 6. Erzwungener Konsens: Glätten widersprüchlicher Aussagen, wodurch kritische kontextbezogene Ausnahmebedingungen zerstört werden.
+> 7. Scheinbar unabhängige Bestätigung: Fehlinterpretation redundanter Zitate derselben Primärquelle als unabhängige Mehrfachbelege.
+> 8. Zirkuläre Selbstbestätigung: Verwechslung der Freigabe des Gesprächsprotokolls mit der formalen empirischen Gültigkeit der Regel.
+> 9. Artifizielle Stichprobensättigung: Evaluierung anhand trivialer Standardfälle unter Ausblendung seltener katastrophaler Grenzwertausfälle.
+> *Runtime Governance:* Das Erkennen eines Antipatterns blockiert die Regelzertifizierung und erzwingt eine erneute physische Falsifikation.
+
 ## 12. Iterativer operativer Ablauf des ersten Wissenserhebungszyklus
 
 Für ein initiales Pilotprojekt empfiehlt es sich, mit einer einzigen klar umrissenen Entscheidungsaufgabe und 10–20 heterogenen Vorfällen zu beginnen. Dies stellt einen pragmatischen Orientierungsrahmen dar, keine statistisch abgesicherte Stichprobengröße für seltene Extremereignisse. Mehrfachaufzeichnungen desselben Vorfalls sowie identische Leiterplatten müssen beim Datensplitting zwingend in derselben Partition verbleiben, um Datenlecks zu vermeiden. Vor Beginn der Erhebung werden rechtliche Rahmenbedingungen, Vertraulichkeitsstufen und Zugriffsrechte vereinbart; eine Kick-off-Sitzung synchronisiert das Fachvokabular und die Prozessschritte.
@@ -510,6 +551,13 @@ Konventionelle Externalisierungsmethoden zwingen Chefarchitekten dazu, umfangrei
 
 > [!IMPORTANT]
 > **Ethische und sicherheitstechnische Schranke:** Die Erfassung des digitalen Arbeitsschattens muss strikt von der individuellen Leistungs- und Verhaltenskontrolle getrennt sein. Ein Expertensystem aggregiert ingenieurtechnische Fakten, Schaltungsmuster und Diagnoseprädikate – es darf niemals zu einem Überwachungsinstrument degradiert werden. Andernfalls verzerren Entwickler ihre digitalen Arbeitsspuren, was die Verlässlichkeit und Integrität der Wissensbasis nachhaltig zerstört.
+
+> [!NOTE]
+> **Drei Autoren-Invarianten zur passiven Wissensextraktion aus digitalen Spuren ingenieurtechnischer Prozesse**
+> 1. Audit der Code-Evolution: Analyse von Git-Commit-Verläufen und Pull-Request-Reviews zur Aufdeckung latenter, undokumentierter Entwurfsheuristiken.
+> 2. Dekonstruktion von Störfall-Kommunikationen: Extraktion realer Diagnoseketten aus operativen Incident-Logs anstelle idealisierter Vorschriften.
+> 3. Algorithmisches Expertise-Retrieval: Kompetenzkartierung anhand von Code-Autorschaft unter strikter ethischer Trennung von Leistungsbeurteilungen.
+> *Runtime Governance:* Strikte Anonymisierung extrahierter Prädikate zur Verhinderung jeglicher Zweckentfremdung als Instrument administrativer Mitarbeiterüberwachung.
 
 ## 14. Dialog Pro et Contra
 
