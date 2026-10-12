@@ -130,6 +130,15 @@ Die nachfolgende Tabelle präzisiert die Zielgruppen der einzelnen Typen sowie d
 
 Die Anfragen WHY NOT und WHAT MUST CHANGE besitzen jene kontrastive Struktur, die Miller hervorgehoben hat: Den Ingenieur interessiert nicht abstrakt „Warum DENY?“, sondern konkret „Warum DENY und nicht ALLOW?“ sowie „Was trennt DENY von ALLOW?“. Die folgenden Abschnitte verdeutlichen jeden Anfragetyp an einem durchgehenden Fallbeispiel.
 
+> [!NOTE]
+> **Fünf Klassen erklärender Anfragen in der Autoren-Evidenzarchitektur**
+> 1. HOW: Konstruktion eines vollständigen isomorphen Beweisgraphen mit allen aktivierten Regeln und intermediären Lemmata für Kern-Verifizierer.
+> 2. WHY: Isolierung des minimal hinreichenden Beweisteilgraphen zur Begründung eines affirmativen Urteils für Zertifizierungsauditoren.
+> 3. WHY NOT: Deterministische Berechnung des minimalen Konfliktkerns (MUC) über den QuickXPlain-Algorithmus bei Blockierung des Zielzustands.
+> 4. WHAT IF: Simulierte Re-Inferenz auf einem isolierten Kind-Datenschnitt unter hypothetisch modifizierten Parametern.
+> 5. WHAT MUST CHANGE: Synthese eines umsetzbaren Handlungsplans (Actionable Recourse) zur Minimierung ingenieurtechnischer Änderungskosten.
+> *Laufzeitsteuerung:* Eine Anfrage mit nicht unterstützter Struktur oder widersprüchlichem Vertrag wird mit Code E_INVALID_EXPLANATION_QUERY abgewiesen.
+
 ## 3. Beweisgraph und Nachvollziehbarkeit von Schlüssen
 
 Die Konstruktion eines Beweisgraphen (*proof graph*) bildet den fundamentalen Nachvollziehbarkeitsmechanismus, der den Prozess der symbolischen Inferenz in einen transparenten, gerichteten azyklischen Graphen aus Fakten, logischen Verknüpfungen und intermediären Lemmata transformiert. In industriellen Pipelines zur Freigabe von Firmware und eingebetteter Software führt die Vernachlässigung formaler Traces zu Szenarien, in denen Releases ohne klare Benennung unerfüllter Kriterien blockiert werden, was Entwickler zu zeitraubendem Raten zwingt. Ein triviales lineares Ausführungsprotokoll bildet Verzweigungen alternativer Pfade nicht ab (etwa die Kompensation von Tests durch eine genehmigte Ausnahme) und verdeckt so die eigentliche Fehlerursache.
@@ -280,6 +289,14 @@ Wird ein ungültiger Opcode detektiert, ein Adressüberlauf provoziert oder eine
    - Auf einem Prüfstand zur Verifikation der Firmware eines Sicherheits-Gateways blockiert das System mit `DENY release:gateway-fw-7.4`.
    - Der Auditor lädt den Dump in den EISA Debugger und setzt den semantischen Breakpoint `BREAK ON flag(DF) == 1`. Bei der Ausführung der Instruktion an Adresse $\mathrm{EIR} = \text{0x01A4}$ stoppt das System: Registriert werden $\mathrm{DF} = 1$, $\mathrm{ZF} = 1$ sowie der Null-Freigabestatus im Register $R_0 = \text{0x00000000}$.
    - Der Auditor betätigt `StepBack()`. Das System stellt in 1 Takt den vorherigen Zustand $\mathcal{S}_{t-1}$ anhand des Delta-Frames $\Delta_{t-1}$ wieder her: Es stellt sich heraus, dass die vorangegangene Instruktion `EVAL_SIGNATURE` an der Adresse $\mathrm{EIR} = \text{0x01A0}$ das Offset der Ausnahmemetadaten W-17 ausgewertet und die Rollen-ID `0x02` (`project_lead`) detektiert hat, während die Sicherheitsrichtlinie zwingend `0x01` (`safety_owner`) forderte. Der Auditor erhält binnen Sekunden einen lückenlosen Beleg für die Ursache der Release-Blockade, ohne tausende Zeilen Quellcode manuell prüfen zu müssen.
+
+> [!NOTE]
+> **Vier Invarianten der Hardware-Inferenzverfolgung und des Mikrocodedebuggings nach der Autorenarchitektur**
+> 1. Bereitstellung eines Ringpuffers statischer Delta-Frames ($\Delta_t$) für deterministisches, taktgenaues Zurücksetzen via `StepBack()`.
+> 2. Hardwarenahe Erfassung der Kern-Statusflags ($\mathrm{ZF}, \mathrm{UF}, \mathrm{DF}, \mathrm{CF}$) bei jedem Taktzyklus der Mikrocode-Inferenz.
+> 3. Allokation des Rewind-Zustandsstapels strikt im statischen BRAM/L2-Speicher ohne dynamische Heap-Zuweisung zur Laufzeit.
+> 4. Sofortige Überführung des Kerns in den sicheren Zustand `HALT_FAULT` bei Adressierungsfehlern oder ungültigen Operationscodes.
+> *Laufzeitsteuerung:* Der Versuch, über die Puffergrenze hinaus zurückzusetzen, löst eine Ausnahme mit Code E_DEBUG_RING_BUFFER_UNDERFLOW aus.
 
 ## 4. Berechnung von WHY-NOT-Ablehnungen: Minimaler Konflikt und QuickXPlain-Algorithmus
 
@@ -585,6 +602,14 @@ Wobei die Elemente des Ausdrucks eine präzise Filtersemantik besitzen:
 
 Die Filterung isolierter Fakten ist notwendig, aber nicht hinreichend: Die Zahl verborgener Gründe, der Name einer Regel und selbst das Gesamtfazit können geschützte Interna preisgeben. Die Sicherheitsrichtlinie muss das aggregierte Ergebnis und jegliche Mitteilung über verborgene Gründe gesondert autorisieren. Ist es untersagt, das Vorhandensein eines solchen Grundes mitzuteilen, wird eine einheitliche neutrale Ablehnung ohne Zähler oder Bezeichner ausgegeben. Ein sichtbarer Erklärungsabschnitt wird niemals als vollständig deklariert; bei entsprechender Freigabe werden die Grenzen der sichtbaren Darstellung explizit ausgewiesen. Geprüft werden zudem Anfrageserien, Antwortzeiten, Caches und Protokolle. Paarweise Tests vergleichen Eingaben mit identischen erlaubten Daten und variierenden geschützten Daten.
 
+> [!NOTE]
+> **Vier Regeln zum Schutz vor Wissensabfluss durch Erklärungen nach dem Autorenstandard**
+> 1. Formale Reduktion der intermediären Erklärungskonstruktion ($\mathrm{EIR}_{\text{redacted}}$) auf Symbolgraphebene vor der Textgenerierung.
+> 2. Zwingender Übergang in den Blind-Denial-Modus bei Risiken indirekter Inferenz durch Knotenzahlen oder Baumstrukturen.
+> 3. Normalisierung der Latenzzeiten der Antworterzeugung ($\Delta \tau \le \epsilon$) zur Abwehr von Timing-Seitenkanalangriffen auf geschützte Regeln.
+> 4. Strikte Validierung attributbasierter Zugriffskontrollen (ABAC) sowohl für atomare Prädikate als auch für aggregierte Erklärungsurteile.
+> *Laufzeitsteuerung:* Der Versuch, Erklärungen für unautorisierte Prädikate abzurufen, wird mit einem neutralen Template unter Code E_EXPLANATION_ACCESS_DENIED unterdrückt.
+
 ## 7. Kompetenzgrenzen, algorithmische Skepsis und Selbstprüfung
 
 Das Konzept der funktionalen Sicherheit verlangt, dass sich ein System seiner Einsatzgrenzen (*Operational Design Domain*, ODD) stets bewusst ist und niemals versucht, Regeln über deren validierten Gültigkeitsbereich hinaus zu extrapolieren. In kritischen Ingenieurdomänen ereignen sich katastrophale Systemausfälle nicht nur durch grobe logische Fehler in der Wissensbasis, sondern durch anmaßende Extrapolation: Das Expertensystem trifft auf einen anomalen oder unvollständigen Snapshot von Eingangsdaten und generiert, anstatt anzuhalten, eine scheinbar plausible Fehlentscheidung. Der naive Optimismus symbolischer Systeme („Was nicht widerlegt werden kann, gilt als wahr“ gemäß der Closed-World-Assumption CWA) ist in offenen und dynamischen Umgebungen unzulässig. Ein evidenzbasiertes System muss algorithmische Skepsis und Metakognition (*metacognition* – das Nachdenken über das eigene Schließen) implementieren und die Legitimität eines Urteils vor dessen Festschreibung formal prüfen. In einer systematischen Übersichtsarbeit zu neuro-symbolischen Systemen stellten Colelough und Regli 2024 fest, dass Metakognition das am wenigsten erforschte Teilgebiet darstellt: Nur 5 % der untersuchten Arbeiten widmeten sich diesem Thema [[8]](#src-8). Die Ingenieurpraxis erfordert dabei fünf obligatorische Prüfungen:
@@ -717,6 +742,14 @@ C_{\text{facts}} = \frac{5}{5} = 1{,}00, \qquad H_{\text{free}} = \frac{5}{6} \a
 Da $H_{\text{free}} = 0{,}833 < 1{,}00$ ist, detektiert das System eine Halluzination, blockiert die Ausgabe des Modells und präsentiert dem Operator eine garantierte deterministische Vorlage auf Basis von $\mathrm{EIR}$.
 
 Ein derartiges mehrstufiges Gateway sichert die vollständige Reproduzierbarkeit des Audit-Trails: Ein Auditor kann die natürlichsprachliche Erklärung jederzeit mit dem ursprünglichen Fakten-Snapshot abgleichen und sich von der absoluten Konformität jedes Wortes mit der mathematischen Ableitungslogik überzeugen.
+
+> [!NOTE]
+> **Vier Kriterien zur Verifikation von Erklärungstreue und semantischer Konsistenz nach dem Autorenprotokoll**
+> 1. Syntaktisch-semantische Projektion und Isomorphieprüfung zwischen dem formalen Beweiszertifikat und der internen $\mathrm{EIR}$-Struktur.
+> 2. Stresstests durch semantische Fehlerinjektion (Fault Injection) zur Validierung der Gate-Sensitivität gegenüber Prädikats- oder Einheitenverfälschungen.
+> 3. Metrisches Zulassungstor mit strikter Konformität: $C_{\text{facts}} = 1{,}00$ (keine ausgelassene Prämisse) und $H_{\text{free}} = 1{,}00$ (null Halluzinationen).
+> 4. Deterministischer Fail-Safe-Fallback auf ein vorkompiliertes Template bei jeglicher metrischer Abweichung zwischen Text und Beweisgraph.
+> *Laufzeitsteuerung:* Jede Diskrepanz zwischen Verbalisierung und Beweisgraph führt zur sofortigen Blockierung des Modells unter Code E_VERBALIZATION_FIDELITY_VIOLATION.
 
 ## 10. Dialog Pro et Contra
 

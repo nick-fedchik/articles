@@ -130,6 +130,15 @@ The table below clarifies the target audience for each query type and the exact 
 
 Queries of type WHY NOT and WHAT MUST CHANGE exhibit the contrastive structure identified by Miller: an engineer is not interested in "why DENY" in the abstract, but rather "why DENY rather than ALLOW" and "what separates DENY from ALLOW". The subsequent sections illustrate each query type using a unified engineering example.
 
+> [!NOTE]
+> **Five Classes of Explanatory Queries in the Author's Evidence Architecture**
+> 1. HOW: constructing a complete isomorphic proof graph detailing all activated rules and intermediate lemmas for core engine verifiers.
+> 2. WHY: isolating the minimal sufficient proof subgraph substantiating an affirmative verdict for certification auditors.
+> 3. WHY NOT: deterministic computation of the minimal unsatisfiable core (MUC) via QuickXPlain upon blocking a target state.
+> 4. WHAT IF: simulated re-inference across an isolated child data snapshot instantiated with hypothetical parameters.
+> 5. WHAT MUST CHANGE: synthesizing an actionable recourse plan minimizing engineering modification costs within permissible boundaries.
+> *Runtime Governance:* Any query with an unsupported structure or conflicting contract is rejected by the gateway under code E_INVALID_EXPLANATION_QUERY.
+
 ## 3. Proof Graph and Inference Tracing
 
 Constructing a proof graph (*proof graph*) serves as the foundational tracing mechanism that transforms the symbolic deduction process into a transparent, directed acyclic graph capturing the interrelationships between facts, logical connectives, and intermediate lemmas. In industrial firmware release pipelines and embedded software systems, neglecting formal tracing leads to scenarios where releases are blocked without clear identification of unmet engineering criteria, forcing developers into trial-and-error remediation. A trivial linear execution log fails to represent divergent alternative branches (such as substituting a test with an approved waiver), obscuring the true root cause of failure.
@@ -280,6 +289,14 @@ Upon detecting an invalid opcode, out-of-bounds address reference, or division b
    - In an automated firmware verification testbench for a secure industrial gateway, the expert system issues an execution lock: `DENY release:gateway-fw-7.4`.
    - The auditor loads the execution dump into the EISA Debugger and arms the semantic breakpoint `BREAK ON flag(DF) == 1`. Execution halts at instruction address $`\mathrm{EIR} = \text{0x01A4}`$, registering flags $`\mathrm{DF} = 1`$, $`\mathrm{ZF} = 1`$, and an authorization status register $`R_0 = \text{0x00000000}`$.
    - The auditor invokes `StepBack()`. Within a single clock cycle, the debugger reconstructs state $`\mathcal{S}_{t-1}`$ from delta frame $`\Delta_{t-1}`$: the preceding instruction `EVAL_SIGNATURE` at address $`\mathrm{EIR} = \text{0x01A0}`$ inspected the metadata offset of waiver W-17 and identified signatory role `0x02` (`project_lead`), whereas the safety policy strictly mandated `0x01` (`safety_owner`). The auditor obtains irrefutable, byte-verifiable provenance for the release refusal in seconds, eliminating manual inspection across thousands of lines of source code.
+
+> [!NOTE]
+> **Four Invariants of Hardware Inference Tracing and Microcode Debugging Formulated in the Author's Architecture**
+> 1. Maintaining a fixed-size ring buffer of delta frames ($\Delta_t$) enabling deterministic cycle-accurate rewinding via `StepBack()`.
+> 2. Hardware-level tracking of core execution flags ($\mathrm{ZF}, \mathrm{UF}, \mathrm{DF}, \mathrm{CF}$) at every clock cycle of microcode inference execution.
+> 3. Allocating the rewind state stack strictly within static BRAM/L2 memory, enforcing zero dynamic heap allocations at runtime.
+> 4. Immediate core transition into safe `HALT_FAULT` containment upon addressing violations or invalid operation codes.
+> *Runtime Governance:* Any attempt to rewind execution past the boundary of the ring buffer raises an exception under code E_DEBUG_RING_BUFFER_UNDERFLOW.
 
 ## 4. Computing WHY NOT Refusals: Minimal Conflict and the QuickXPlain Algorithm
 
@@ -585,6 +602,14 @@ Where the expression components govern filtering semantics:
 
 Filtering individual facts is necessary but insufficient: the count of hidden reasons, rule names, and the verdict itself can leak confidential information. Security policies must explicitly govern whether aggregated verdicts and notices of concealed grounds may be disclosed. Where disclosing the existence of a classified ground is prohibited, the engine returns a uniform neutral refusal devoid of counters or IDs. A visible explanation fragment must never be designated as complete; when permitted, the boundaries of the visible projection should be stated. Audits must monitor query sequences, response latencies, cache state, and logs. Pairwise differential tests evaluate inputs sharing identical public data but differing classified data to verify isolation.
 
+> [!NOTE]
+> **Four Rules for Preventing Knowledge Leakage via Explanations Formulated by the Author**
+> 1. Formal redaction of the explanation intermediate representation ($\mathrm{EIR}_{\text{redacted}}$) at the symbolic graph level prior to text rendering.
+> 2. Mandatory enforcement of Blind Denial mode whenever indirect inference risks arise from tree node counts or structural topologies.
+> 3. Normalization of response generation latency ($\Delta \tau \le \epsilon$) to neutralize timing side-channel attacks against confidential rules.
+> 4. Rigorous validation of attribute-based access control (ABAC) policies across individual predicates and aggregated explanatory verdicts.
+> *Runtime Governance:* Any attempt to elicit explanations for unauthorized predicates is suppressed with a neutral template under code E_EXPLANATION_ACCESS_DENIED.
+
 ## 7. Competence Boundaries, Algorithmic Skepticism, and Self-Verification
 
 Functional safety requires that an expert system maintain strict self-awareness of its Operational Design Domain (ODD) and never extrapolate rules beyond validated boundaries. In safety-critical engineering domains, catastrophic failures arise not only from overt bugs in the knowledge base, but from overconfident extrapolation: an expert system encounters an out-of-distribution or incomplete fact snapshot and, instead of halting, synthesizes a deceptively plausible verdict. The naive optimism of traditional symbolic engines ("if negation is not proved, assume the proposition is true" under the Closed World Assumption, CWA) is intolerable in open, dynamic environments. An evidenced system must incorporate algorithmic skepticism and metacognition (*metacognition*—reasoning about its own reasoning), formally verifying the legitimacy of emitting a verdict before committing it. In their 2024 systematic survey of neuro-symbolic research, Colelough and Regli identified metacognition as the least explored dimension, addressed in only 5% of examined literature [[8]](#src-8). Industrial practice requires five mandatory checks:
@@ -717,6 +742,14 @@ C_{\text{facts}} = \frac{5}{5} = 1{,}00, \qquad H_{\text{free}} = \frac{5}{6} \a
 Because $`H_{\text{free}} \approx 0.833 < 1.00`$, the system flags a hallucination, halts delivery of the model's text, and outputs the guaranteed deterministic template derived directly from $\mathrm{EIR}$.
 
 This multi-stage gate guarantees complete audit trail reproducibility: an auditor can always trace natural language explanations directly back to the originating fact snapshot, verifying that every word adheres to the mathematical logic of the underlying conclusion.
+
+> [!NOTE]
+> **Four Criteria for Verifying Explanation Faithfulness and Consistency Formulated by the Author**
+> 1. Syntactic and semantic projection verifying graph isomorphism between the formal proof certificate and the internal $\mathrm{EIR}$ structure.
+> 2. Stress testing via semantic fault injection to validate gateway sensitivity against substituted predicates, units, or inverted negations.
+> 3. Metric admission gate enforcing absolute compliance: $C_{\text{facts}} = 1.00$ (zero omitted premises) and $H_{\text{free}} = 1.00$ (zero hallucinations).
+> 4. Deterministic fail-safe fallback to a pre-compiled template upon any metric deviation between generated prose and the proof graph.
+> *Runtime Governance:* Any detected divergence between the verbalized output and the proof graph triggers immediate model containment under code E_VERBALIZATION_FIDELITY_VIOLATION.
 
 ## 10. Pro et Contra Dialogue
 
