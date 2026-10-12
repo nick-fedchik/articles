@@ -56,12 +56,12 @@ Um eine deterministische Reproduzierbarkeit der Prüfung zu garantieren, wird di
 \mathcal{S}_v=(F_v,K_v,R_v,G_v,I_v,E_v,M_v,P_v,A_v,T_v).
 ```
 
-- Zusammensetzung der Version $`\mathcal{S}_v`$: Der Index $v$ kennzeichnet die Version, und jede Komponente mit dem Subskript $v$ ist fester Bestandteil dieses Snapshots;
-- $`F_v`$ repräsentiert Fakten, $`K_v`$ verwaltete Wissenselemente (Konzepte, Ontologien und Ausnahmen), $`R_v`$ Inferenzregeln;
-- $`G_v`$ ist der Relationsgraph, $`I_v`$ bezeichnet die lexikalischen und vektoriellen Suchindizes;
-- $`E_v`$ steht für Embedding- und Re-Ranking-Modelle, $`M_v`$ für Sprach- und Machine-Learning-Modelle;
-- $`P_v`$ umfasst Prompt-Templates und Ausgabeschemata, $`A_v`$ Zugriffskontrollrichtlinien;
-- $`T_v`$ spezifiziert Werkzeugversionen und Ausführungsumgebung; die Klammern fassen diese Komponenten zu einem konsistenten System-Snapshot zusammen.
+- Zusammensetzung der Version $\mathcal{S}_v$: Der Index $v$ kennzeichnet die Version, und jede Komponente mit dem Subskript $v$ ist fester Bestandteil dieses Snapshots;
+- $F_v$ repräsentiert Fakten, $K_v$ verwaltete Wissenselemente (Konzepte, Ontologien und Ausnahmen), $R_v$ Inferenzregeln;
+- $G_v$ ist der Relationsgraph, $I_v$ bezeichnet die lexikalischen und vektoriellen Suchindizes;
+- $E_v$ steht für Embedding- und Re-Ranking-Modelle, $M_v$ für Sprach- und Machine-Learning-Modelle;
+- $P_v$ umfasst Prompt-Templates und Ausgabeschemata, $A_v$ Zugriffskontrollrichtlinien;
+- $T_v$ spezifiziert Werkzeugversionen und Ausführungsumgebung; die Klammern fassen diese Komponenten zu einem konsistenten System-Snapshot zusammen.
 
 Ein solcher Snapshot impliziert, dass jeder Release-Kandidat eine explizite Transformation der Produktivversion darstellen muss:
 
@@ -69,8 +69,8 @@ Ein solcher Snapshot impliziert, dass jeder Release-Kandidat eine explizite Tran
 \mathcal{S}_{v+1}^{\text{cand}}=\mathrm{Apply}(\mathcal{S}_v,\Delta).
 ```
 
-- Für den Zustandsübergang ist $`\mathcal{S}_{v+1}^{\text{cand}}`$ der Versionskandidat nach $v$, wobei das Superskript $\text{cand}$ den Status als Kandidat markiert;
-- $\mathrm{Apply}$ wendet die Modifikation deterministisch auf den Snapshot $`\mathcal{S}_v`$ an, wobei $\Delta$ die formale Änderungsbeschreibung darstellt;
+- Für den Zustandsübergang ist $\mathcal{S}_{v+1}^{\text{cand}}$ der Versionskandidat nach $v$, wobei das Superskript $\text{cand}$ den Status als Kandidat markiert;
+- $\mathrm{Apply}$ wendet die Modifikation deterministisch auf den Snapshot $\mathcal{S}_v$ an, wobei $\Delta$ die formale Änderungsbeschreibung darstellt;
 - Das Gleichheitszeichen $=$ verdeutlicht, dass der Kandidat ausschließlich durch Anwendung dieser Änderung entsteht und nicht durch eine beliebige Neuzusammenstellung von Komponenten.
 
 Die Transformation $\Delta$ besitzt eine geschlossene Abhängigkeitshülle. Der Austausch eines Embedding-Modells erzwingt die vollständige Neuerstellung des Vektorindex, da Vektoren des Altmodells inkompatibel zu den Einbettungen des Neumodells sind. Eine Änderung der Ontologie erfordert die erneute Ableitung aller Folgerungen sowie den Re-Check der Graph-Constraints. Die Release-Einheit ist daher nicht die isolierte Zeile, die ein Ingenieur editiert hat, sondern die vollständige transitive Hülle der Änderung, fixiert in einem Manifest. Metadaten zu Quelle, Transformation und verantwortlicher Person werden gemäß dem PROV-Standard des World Wide Web Consortiums (W3C) erfasst, der Provenienz über Entitäten, Aktivitäten und Agenten modelliert [[3]](#src-3).
@@ -339,7 +339,7 @@ Ein kleiner Gold-Standard-Datensatz (*Gold Set*) eignet sich als schneller Regre
 p_{\text{Ausfall}}\lesssim\frac{3}{n}=\frac{3}{30}=0{,}10.
 ```
 
-- In der Dreierregel ist $`p_{\text{Ausfall}}`$ die approximierte Obergrenze der Ausfallrate;
+- In der Dreierregel ist $p_{\text{Ausfall}}$ die approximierte Obergrenze der Ausfallrate;
 - $n$ ist die Anzahl unabhängig geprüfter Testfälle ($n = 30$), und der Zähler 3 entspricht der Approximation für null beobachtete Fehler;
 - $\lesssim$ bedeutet „ungefähr kleiner oder gleich“, $=$ steht für Gleichheit, und $0{,}10$ entspricht einem Anteil von 10 %;
 - Die Schätzung gilt als approximative einseitige 95%-Grenze unter der Prämisse unabhängiger Testfälle ohne beobachtete Ausfälle in der Stichprobe.
@@ -401,9 +401,9 @@ F_\beta=(1+\beta^2)\,
 ```
 
 - Der Parameter $\beta$ gewichtet Recall gegenüber Precision; $\beta > 1$ verleiht der Vollständigkeit höheres Gewicht;
-- $`F_\beta`$ bildet das gewichtete harmonische Mittel im Wertebereich $[0, 1]$.
+- $F_\beta$ bildet das gewichtete harmonische Mittel im Wertebereich $[0, 1]$.
 
-Für dieselben Werte und $\beta = 1$ ergibt sich $`F_1 = 2 \cdot 0{,}8 \cdot 0{,}8 / (0{,}8 + 0{,}8) = 0{,}8`$. Ist das Übersehen einer Sicherheitsanforderung gravierender als ein Fehlalarm, verstärkt $\beta > 1$ das Gewicht des Recalls; dies ersetzt jedoch niemals separate Prüfungen für blockierende Sicherheitsfälle. Für das Retrieval mit relevanter Dokumentenmenge $`G_q`$ zu Anfrage $q$ wird der Recall über die Top-$k$-Treffer ermittelt:
+Für dieselben Werte und $\beta = 1$ ergibt sich $F_1 = 2 \cdot 0{,}8 \cdot 0{,}8 / (0{,}8 + 0{,}8) = 0{,}8$. Ist das Übersehen einer Sicherheitsanforderung gravierender als ein Fehlalarm, verstärkt $\beta > 1$ das Gewicht des Recalls; dies ersetzt jedoch niemals separate Prüfungen für blockierende Sicherheitsfälle. Für das Retrieval mit relevanter Dokumentenmenge $G_q$ zu Anfrage $q$ wird der Recall über die Top-$k$-Treffer ermittelt:
 
 ```math
 \mathrm{Recall@}k=
@@ -412,15 +412,15 @@ Für dieselben Werte und $\beta = 1$ ergibt sich $`F_1 = 2 \cdot 0{,}8 \cdot 0{,
 ```
 
 - $\mathrm{Recall@}k$ ist der mittlere Anteil relevanter Evidenzen in den ersten $k$ Suchergebnissen;
-- $Q$ ist die Anfragemenge, $`|Q|`$ ihre Mächtigkeit;
-- $`G_q`$ ist die Menge aller relevanten Dokumente zu $q$, $`\mathrm{Top}_k(q)`$ umfasst die ersten $k$ Treffer;
-- $\cap$ bezeichnet die Schnittmenge, $`|\cdot|`$ die Mengenmächtigkeit, $\sum$ mittelt über alle Anfragen.
+- $Q$ ist die Anfragemenge, $|Q|$ ihre Mächtigkeit;
+- $G_q$ ist die Menge aller relevanten Dokumente zu $q$, $\mathrm{Top}_k(q)$ umfasst die ersten $k$ Treffer;
+- $\cap$ bezeichnet die Schnittmenge, $|\cdot|$ die Mengenmächtigkeit, $\sum$ mittelt über alle Anfragen.
 
 Ergänzend werden Ranking-Güte (nDCG, MRR; siehe [Kapitel 16](ch16-expert-systems-architecture.md)), exakte ID-Treffer, Zugriffskontrollverletzungen (ACL-Leakage) und die Zitationsgenauigkeit gemessen. Ein hoher $\mathrm{Recall@}k$ kompensiert keineswegs das Zitieren einer veralteten Baseline.
 
 ### 7.3. Das Release-Gate: Paargepaarter Vergleich von Kandidat und Produktivversion
 
-Der Vergleich muss strikt gepaart erfolgen: Identische Testfälle werden auf $`\mathcal{S}_v`$ und $`\mathcal{S}_{v+1}^{\text{cand}}`$ ausgeführt; bei stochastischen Komponenten werden Decoding-Parameter fixiert und mehrere Seeds evaluiert. Für Metrik $m$ auf Slice $s$ beträgt die Differenz:
+Der Vergleich muss strikt gepaart erfolgen: Identische Testfälle werden auf $\mathcal{S}_v$ und $\mathcal{S}_{v+1}^{\text{cand}}$ ausgeführt; bei stochastischen Komponenten werden Decoding-Parameter fixiert und mehrere Seeds evaluiert. Für Metrik $m$ auf Slice $s$ beträgt die Differenz:
 
 ```math
 \Delta_{m,s}=
@@ -429,8 +429,8 @@ m(\mathcal{S}_{v+1}^{\text{cand}},s)
 ```
 
 - $m$ ist die Zielmetrik, $s$ der evaluierte Test-Slice;
-- $`\mathcal{S}_{v+1}^{\text{cand}}`$ ist der Versionskandidat, $`\mathcal{S}_v`$ die Produktivversion;
-- $`\Delta_{m,s}`$ quantifiziert den relativen Zuwachs oder Verlust.
+- $\mathcal{S}_{v+1}^{\text{cand}}$ ist der Versionskandidat, $\mathcal{S}_v$ die Produktivversion;
+- $\Delta_{m,s}$ quantifiziert den relativen Zuwachs oder Verlust.
 
 Ein vorab deklariertes Release-Gate lässt sich formal ausdrücken:
 
@@ -445,9 +445,9 @@ Ein vorab deklariertes Release-Gate lässt sich formal ausdrücken:
 ```
 
 - Die Regel $\mathrm{Promote}$ erteilt die Release-Freigabe nur bei Erfüllung aller Konjunktionsglieder;
-- $C$ ist die Menge kritischer Slices, $`\Delta_{m,s}`$ die gepaarte Differenz;
-- $`\mathrm{LCB}_{95\%}`$ bezeichnet die untere 95%-Konfidenzgrenze (*Lower Confidence Bound*) der gepaarten Differenz, $`\delta_s`$ die maximal tolerierbare Regression auf Slice $s$;
-- $`N_{\text{Block}}`$ ist die Anzahl gescheiterter blockierender Testfälle und muss zwingend null sein;
+- $C$ ist die Menge kritischer Slices, $\Delta_{m,s}$ die gepaarte Differenz;
+- $\mathrm{LCB}_{95\%}$ bezeichnet die untere 95%-Konfidenzgrenze (*Lower Confidence Bound*) der gepaarten Differenz, $\delta_s$ die maximal tolerierbare Regression auf Slice $s$;
+- $N_{\text{Block}}$ ist die Anzahl gescheiterter blockierender Testfälle und muss zwingend null sein;
 - Die letzte Bedingung garantiert die Einhaltung nichtfunktionaler Schranken bezüglich Latenz, Betriebskosten, Speicherauslastung und Datenschutz.
 
 Konfidenzintervalle werden über Bootstrapping nach Bradley Efron geschätzt [[14]](#src-14). Für gepaarte Binärdaten ist der exakte Test nach Quinn McNemar indiziert, der ausschließlich diskordante Paare auswertet, bei denen eine Version korrekt und die andere fehlerhaft urteilte [[15]](#src-15). Signifikanzniveaus, Bootstrap-Iterationen und Schwellenwerte werden vorab fixiert.
@@ -590,7 +590,7 @@ Entscheidung: ZULASSEN für Shadow-Deployment
 
 </details>
 
-Kandidat A steigert den Gesamtanteil korrekter Urteile von 0,830 auf 0,876. Bei den allgemeinen Anfragen ist die Verbesserung statistisch signifikant: Der McNemar-Test ergibt $`p = 0{,}002`$, und die untere Intervallgrenze von $+0{,}027$ liegt oberhalb der tolerierbaren Regression von $-0{,}02$. Dennoch scheitert Kandidat A an vier von vierzig blockierenden Sicherheitsfällen, welche die Produktivversion meisterte – das Release-Gate weist ihn folgerichtig ab. Der McNemar-Test auf dem Sicherheits-Slice ergibt $`p = 0{,}125`$: Vier diskordante Paare reichen statistisch nicht aus, um die Regression als „signifikant“ auszuweisen. Hieraus folgt eine fundamentale ingenieurtechnische Regel: Das Fehlen einer statistisch signifikanten Regression beweist keineswegs die Abwesenheit einer realen Regression; blockierende Fälle müssen daher zwingend stückweise auditiert werden. Kandidat B weist dieselben Verbesserungen ohne jeglichen Sicherheitsfehlwurf auf und rückt in das Shadow-Deployment vor. Die Abschlusszeile demonstriert die Grenzen dieses Erfolgs: Vierzig fehlerfreie blockierende Fälle implizieren eine obere Ausfallgrenze von ca. 7 %, weshalb Shadow- und Canary-Releases unverzichtbare Pflichtstufen bleiben.
+Kandidat A steigert den Gesamtanteil korrekter Urteile von 0,830 auf 0,876. Bei den allgemeinen Anfragen ist die Verbesserung statistisch signifikant: Der McNemar-Test ergibt $p = 0{,}002$, und die untere Intervallgrenze von $+0{,}027$ liegt oberhalb der tolerierbaren Regression von $-0{,}02$. Dennoch scheitert Kandidat A an vier von vierzig blockierenden Sicherheitsfällen, welche die Produktivversion meisterte – das Release-Gate weist ihn folgerichtig ab. Der McNemar-Test auf dem Sicherheits-Slice ergibt $p = 0{,}125$: Vier diskordante Paare reichen statistisch nicht aus, um die Regression als „signifikant“ auszuweisen. Hieraus folgt eine fundamentale ingenieurtechnische Regel: Das Fehlen einer statistisch signifikanten Regression beweist keineswegs die Abwesenheit einer realen Regression; blockierende Fälle müssen daher zwingend stückweise auditiert werden. Kandidat B weist dieselben Verbesserungen ohne jeglichen Sicherheitsfehlwurf auf und rückt in das Shadow-Deployment vor. Die Abschlusszeile demonstriert die Grenzen dieses Erfolgs: Vierzig fehlerfreie blockierende Fälle implizieren eine obere Ausfallgrenze von ca. 7 %, weshalb Shadow- und Canary-Releases unverzichtbare Pflichtstufen bleiben.
 
 Die Funktion `evaluate` verwirft Prüfungen, denen ein deklarierter Slice fehlt; `pairs` fängt ungültige Zahlenwerte ab. Ohne diese Validierung würde ein unterschlagener Sicherheits-Slice null Fehler vortäuschen und den Kandidaten ungeprüft passieren lassen. Drei separate 95%-Intervalle begründen zudem keine gemeinsame 95%-Konfidenz über alle Slices; wird diese gefordert, ist vorab eine Korrektur für multiples Testen festzulegen. Bei geclusterten Daten (Rephrasings, Dokumentrevisionen) erfolgt das Resampling blockweise ([Kapitel 12](ch12-linguistic-analysis-and-local-models.md)).
 
@@ -640,7 +640,7 @@ Chuan Guo et al. demonstrierten an modernen tiefen neuronalen Netzen, dass hohe 
 | Unscharfer Zugehörigkeitsgrad (Fuzzy Membership) | Grad der Mengenzugehörigkeit | Nein; Zugehörigkeit von 0,8 bedeutet keine 80%ige Ereignishäufigkeit |
 | Fallähnlichkeit im Case-Based Reasoning | Domänengewichtete Analogie | Nein; Erfolgswahrscheinlichkeit einer Falladaption ist gesondert zu ermitteln |
 
-Für binäre probabilistische Vorhersagen mit Einteilung in Konfidenzintervalle $`B_1,\ldots,B_M`$ ist der Expected Calibration Error (ECE) ein etabliertes Standardmaß [[17]](#src-17):
+Für binäre probabilistische Vorhersagen mit Einteilung in Konfidenzintervalle $B_1,\ldots,B_M$ ist der Expected Calibration Error (ECE) ein etabliertes Standardmaß [[17]](#src-17):
 
 ```math
 \mathrm{ECE}=
@@ -648,9 +648,9 @@ Für binäre probabilistische Vorhersagen mit Einteilung in Konfidenzintervalle 
 \left|\mathrm{acc}(B_m)-\mathrm{conf}(B_m)\right|.
 ```
 
-- $\mathrm{ECE}$ ist der erwartete Kalibrierungsfehler; $`B_m`$ ist das $m$-te Konfidenzintervall;
-- $M$ ist die Intervallanzahl, $N$ die Gesamtzahl der Fälle; $`|B_m| / N`$ der Anteil der Stichproben in Intervall $m$;
-- $`\mathrm{acc}(B_m)`$ ist die empirische Genauigkeit, $`\mathrm{conf}(B_m)`$ die mittlere vorhergesagte Konfidenz im Intervall;
+- $\mathrm{ECE}$ ist der erwartete Kalibrierungsfehler; $B_m$ ist das $m$-te Konfidenzintervall;
+- $M$ ist die Intervallanzahl, $N$ die Gesamtzahl der Fälle; $|B_m| / N$ der Anteil der Stichproben in Intervall $m$;
+- $\mathrm{acc}(B_m)$ ist die empirische Genauigkeit, $\mathrm{conf}(B_m)$ die mittlere vorhergesagte Konfidenz im Intervall;
 - Kleinere Werte signalisieren eine überlegene Kalibrierung im Bereich $[0, 1]$.
 
 Da der ECE von Intervallgrenzen abhängt, muss stets ein Zuverlässigkeitsdiagramm (*Reliability Diagram*) beigelegt werden. Der Brier-Score misst die mittlere quadratische Abweichung unabhängig von Bins [[18]](#src-18):
@@ -661,11 +661,11 @@ Da der ECE von Intervallgrenzen abhängt, muss stets ein Zuverlässigkeitsdiagra
 ```
 
 - $\mathrm{BS}$ ist der Brier-Score; $N$ die Stichprobengröße;
-- $`p_i`$ ist die prognostizierte Wahrscheinlichkeit des Ereignisses, $`y_i`$ das reale binäre Ergebnis ($`y_i \in \{0, 1\}`$).
+- $p_i$ ist die prognostizierte Wahrscheinlichkeit des Ereignisses, $y_i$ das reale binäre Ergebnis ($y_i \in \{0, 1\}$).
 
 Verfahren zur Nachkalibrierung wie Temperature Scaling, Platt Scaling oder isotonische Regression [[17]](#src-17) dürfen **ausschließlich auf dem Kalibrierungsdatensatz** trainiert werden.
 
-Für Systeme mit Antwortverweigerungsoption ist die Selektiv-Risiko-Kurve (*Risk-Coverage Curve*) nach Yonatan Geifman und Ran El-Yaniv maßgeblich [[19]](#src-19). Bei Konfidenz $`c_i`$, Verlust $`\ell_i`$ und Schwellenwert $\tau$:
+Für Systeme mit Antwortverweigerungsoption ist die Selektiv-Risiko-Kurve (*Risk-Coverage Curve*) nach Yonatan Geifman und Ran El-Yaniv maßgeblich [[19]](#src-19). Bei Konfidenz $c_i$, Verlust $\ell_i$ und Schwellenwert $\tau$:
 
 ```math
 \mathrm{Coverage}(\tau)=
@@ -677,8 +677,8 @@ Für Systeme mit Antwortverweigerungsoption ist die Selektiv-Risiko-Kurve (*Risk
 ```
 
 - $\tau$ ist der Schwellenwert für die Annahme einer Antwort; $N$ die Gesamtzahl der Anfragen;
-- $`c_i`$ ist die Konfidenz von Fall $i$; $`\mathbf{1}[c_i \ge \tau]`$ ist die Indikatorfunktion (1 bei Annahme, 0 bei Verweigerung);
-- $\mathrm{Coverage}(\tau)$ ist die Abdeckungsrate; $`\ell_i`$ der Verlust;
+- $c_i$ ist die Konfidenz von Fall $i$; $\mathbf{1}[c_i \ge \tau]$ ist die Indikatorfunktion (1 bei Annahme, 0 bei Verweigerung);
+- $\mathrm{Coverage}(\tau)$ ist die Abdeckungsrate; $\ell_i$ der Verlust;
 - $\mathrm{SelectiveRisk}(\tau)$ quantifiziert den mittleren Verlust unter den akzeptierten Vorhersagen.
 
 Ein höherer Schwellenwert $\tau$ reduziert das Risiko, erzwingt jedoch mehr manuelle Fachexperten-Reviews. Der Schwellenwert wird anhand formaler Kosten-Risiko-Richtlinien gewählt, nicht anhand optischer Gefälligkeit im Nachhinein. Zur statistisch garantierten Schwellenwertbestimmung unter endlichen Stichproben überführt das Framework *Learn then Test* von Anastasios Angelopoulos et al. die Schwellenwertwahl in ein multiples Hypothesentestproblem [[20]](#src-20).
@@ -704,7 +704,7 @@ Bei uneindeutigen Annotationen wird die Inter-Annotator-Agreement-Rate bestimmt,
 \kappa=\frac{p_o-p_e}{1-p_e}.
 ```
 
-- $`p_o`$ ist die beobachtete Übereinstimmungsrate, $`p_e`$ die hypothetische Zufallsübereinstimmung;
+- $p_o$ ist die beobachtete Übereinstimmungsrate, $p_e$ die hypothetische Zufallsübereinstimmung;
 - $\kappa$ normiert die Übereinstimmung bezüglich des Zufalls im Wertebereich $[-1, 1]$.
 
 Niedrige Kappa-Werte offenbaren vage Annotationsrichtlinien. Ein hohes Kappa beweist hingegen keine objektive Wahrheit, da zwei Annotatoren systematisch demselben Irrtum unterliegen können.
@@ -774,7 +774,7 @@ Zuerst wird die Art der Intervention bestimmt, nicht das Trainingswerkzeug:
 | Ausgaben sind zu apodiktisch oder verletzen Ablehnungsregeln | Präferenzoptimierung (DPO) nach SFT | Präferenzpaare etablieren keine neuen Fakten |
 | Optimierung auf automatisch verifizierbare Belohnung | Reinforcement Learning in isolierter Sandbox | Reward Hacking erfordert rigide adversarielle Verifikation |
 
-Full Fine-Tuning modifiziert sämtliche Modellgewichte und erfordert immense Rechen- und Speicherressourcen. Für Unternehmensanwendungen bildet Parameter-Efficient Fine-Tuning (PEFT) den pragmatischen Standard. Low-Rank Adaptation (LoRA) nach Edward Hu et al. friert die Gewichte des Basismodells ein und trainiert niederdimensionale Matrizen [[23]](#src-23). Statt der vollen Matrix $`W_0 \in \mathbb{R}^{d_{\mathrm{out}} \times d_{in}}`$ lernt LoRA eine additive Korrektur:
+Full Fine-Tuning modifiziert sämtliche Modellgewichte und erfordert immense Rechen- und Speicherressourcen. Für Unternehmensanwendungen bildet Parameter-Efficient Fine-Tuning (PEFT) den pragmatischen Standard. Low-Rank Adaptation (LoRA) nach Edward Hu et al. friert die Gewichte des Basismodells ein und trainiert niederdimensionale Matrizen [[23]](#src-23). Statt der vollen Matrix $W_0 \in \mathbb{R}^{d_{\mathrm{out}} \times d_{in}}$ lernt LoRA eine additive Korrektur:
 
 ```math
 W'=W_0+\frac{\alpha}{r}BA,
@@ -783,14 +783,14 @@ B\in\mathbb{R}^{d_{\mathrm{out}}\times r},\quad
 A\in\mathbb{R}^{r\times d_{in}}.
 ```
 
-- $W'$ ist die adaptierte Gewichtsmatrix, $`W_0`$ die eingefrorene Basis;
-- $A$ und $B$ sind trainierbare Matrizen vom Rang $`r \ll \min(d_{\mathrm{out}}, d_{in})`$;
+- $W'$ ist die adaptierte Gewichtsmatrix, $W_0$ die eingefrorene Basis;
+- $A$ und $B$ sind trainierbare Matrizen vom Rang $r \ll \min(d_{\mathrm{out}}, d_{in})$;
 - $\alpha$ ist ein konstanter Skalierungsfaktor;
 - Für eine Schicht der Dimension $4096 \times 4096$ mit Rang $r = 16$ reduziert sich die Anzahl trainierbarer Parameter von $16\,777\,216$ auf $16 \cdot 8192 = 131\,072$ (0,78 %).
 
 QLoRA von Tim Dettmers et al. quantisiert das Basismodell auf 4-Bit NormalFloat (NF4), nutzt doppelte Quantisierung und paged Optimizers, wodurch sich 65B-Modelle auf einer einzelnen 48-GB-GPU feintunen lassen [[24]](#src-24).
 
-Supervised Fine-Tuning (SFT) minimiert auf Anfrage $x$ und Zielsequenz $`y_1,\ldots,y_T`$ den maskierten Cross-Entropy-Verlust:
+Supervised Fine-Tuning (SFT) minimiert auf Anfrage $x$ und Zielsequenz $y_1,\ldots,y_T$ den maskierten Cross-Entropy-Verlust:
 
 ```math
 \mathcal{L}_{\text{SFT}}(\theta)=
@@ -799,9 +799,9 @@ Supervised Fine-Tuning (SFT) minimiert auf Anfrage $x$ und Zielsequenz $`y_1,\ld
 ```
 
 - $\theta$ bezeichnet die Modellparameter;
-- $`m_t \in \{0, 1\}`$ ist die Verlustmaske: System- und Benutzerprompts werden ausmaskiert ($`m_t = 0`$), nur die Antwort des Assistenten wird trainiert ($`m_t = 1`$) [[25]](#src-25).
+- $m_t \in \{0, 1\}$ ist die Verlustmaske: System- und Benutzerprompts werden ausmaskiert ($m_t = 0$), nur die Antwort des Assistenten wird trainiert ($m_t = 1$) [[25]](#src-25).
 
-Direct Preference Optimization (DPO) nach Rafael Rafailov et al. operiert auf Präferenztripeln $`(x, y_w, y_l)`$, wobei $`y_w`$ die überlegene und $`y_l`$ die unterlegene Antwort darstellt [[26]](#src-26):
+Direct Preference Optimization (DPO) nach Rafael Rafailov et al. operiert auf Präferenztripeln $(x, y_w, y_l)$, wobei $y_w$ die überlegene und $y_l$ die unterlegene Antwort darstellt [[26]](#src-26):
 
 ```math
 \mathcal{L}_{\text{DPO}}(\theta)=
@@ -813,7 +813,7 @@ Direct Preference Optimization (DPO) nach Rafael Rafailov et al. operiert auf Pr
 \right]\right).
 ```
 
-- $`\pi_\theta`$ ist das trainierte Modell, $`\pi_{\text{ref}}`$ das Referenzmodell;
+- $\pi_\theta$ ist das trainierte Modell, $\pi_{\text{ref}}$ das Referenzmodell;
 - $\beta$ steuert die Regularisierungsstärke bezüglich des Referenzmodells; $\sigma$ ist die logistische Sigmoide.
 
 DPO optimiert relative Präferenzen, prüft jedoch keine faktische Korrektheit. Für Expertensysteme dürfen sich Paare ausschließlich in einer definierten Eigenschaft unterscheiden (z. B. Zitationsstriktheit, Verweigerungsdisziplin).
@@ -845,7 +845,7 @@ M_{\text{act}}+M_{\text{temp}}
 \approx 16P+M_{\text{act}}+M_{\text{temp}}\ \text{Bytes}.
 ```
 
-- $`M_{\text{full}}`$ ist der Gesamtspeicherbedarf, $P$ die Parameteranzahl;
+- $M_{\text{full}}$ ist der Gesamtspeicherbedarf, $P$ die Parameteranzahl;
 - Für ein 7B-Modell beanspruchen die Modellzustände bereits $16 \cdot 7 \cdot 10^9 \approx 112\ \text{GB}$ vor Aktivierungsspeichern.
 
 Für QLoRA dekomponiert sich der Speicherbedarf wie folgt:
@@ -857,8 +857,8 @@ M_{\text{act}}+M_{\text{quant}}+M_{\text{temp}},
 \qquad q\approx4,\quad P_A\ll P.
 ```
 
-- $q \approx 4$ Bits pro Basisparameter; $`P_A`$ ist die Parameterzahl der LoRA-Adapter;
-- Für 7B belegt die 4-Bit-Basis ca. 3,5 GB; Aktivierungsspeicher ($`M_{\text{act}}`$) skalieren jedoch weiterhin mit Sequenzlänge und Batch-Größe. Gradient Checkpointing reduziert $`M_{\text{act}}`$ durch Neuberechnung während des Backward-Passes [[35]](#src-35).
+- $q \approx 4$ Bits pro Basisparameter; $P_A$ ist die Parameterzahl der LoRA-Adapter;
+- Für 7B belegt die 4-Bit-Basis ca. 3,5 GB; Aktivierungsspeicher ($M_{\text{act}}$) skalieren jedoch weiterhin mit Sequenzlänge und Batch-Größe. Gradient Checkpointing reduziert $M_{\text{act}}$ durch Neuberechnung während des Backward-Passes [[35]](#src-35).
 
 | Plattform | Vorzüge | Zu prüfende Randbedingungen |
 | --- | --- | --- |
@@ -881,7 +881,7 @@ Jeder Versionskandidat verlangt ein unveränderliches Release-Manifest:
 - Versionen von Dev-, Kalibrierungs-, Regressions- und versiegelten Bestätigungs-Sets;
 - Slice-spezifische Prüfberichte, bekannte Grenzen, Zeichnungsberechtigte und Rollback-Snapshot.
 
-Das Manifest bindet das Modell an den System-Snapshot $`\mathcal{S}_v`$. Ein Adapter darf niemals isoliert von Tokenizer, Prompt-Template und Inferenzregeln freigegeben werden.
+Das Manifest bindet das Modell an den System-Snapshot $\mathcal{S}_v$. Ein Adapter darf niemals isoliert von Tokenizer, Prompt-Template und Inferenzregeln freigegeben werden.
 
 Da aus generativen Modellen Trainingsdaten rekonstruiert werden können [[39]](#src-39) (vom NIST AI RMF als fundamentales Datenschutzrisiko eingestuft [[40]](#src-40)), sind vor dem Release gezielte Extraktionstests mit synthetischen Test-Tokens (Canary Tokens) durchzuführen.
 
@@ -921,7 +921,7 @@ flowchart LR
     class KB,SIM comp;
 ```
 
-Vertrauliche Daten verlassen die lokale Sicherheitszone zu keinem Zeitpunkt. Der Runner lädt den Kandidaten-Snapshot $`\mathcal{S}_{v+1}^{\text{cand}}`$, vollzieht die Prüfungsmatrix, verifiziert Invarianten und übermittelt lediglich das aggregierte Gate-Urteil nach außen.
+Vertrauliche Daten verlassen die lokale Sicherheitszone zu keinem Zeitpunkt. Der Runner lädt den Kandidaten-Snapshot $\mathcal{S}_{v+1}^{\text{cand}}$, vollzieht die Prüfungsmatrix, verifiziert Invarianten und übermittelt lediglich das aggregierte Gate-Urteil nach außen.
 
 ## 11. Werkzeuge für Prüfungsaudits, Regressionsdiagnose und Auffinden schwacher Slices
 
@@ -944,12 +944,12 @@ Ein Team kann Fakten, Regeln, Traceability und Retrieval kontrolliert aktualisie
 
 1. **Geltungsbereich festlegen:** Eine spezifische Funktion oder Urteilsklasse isolieren und Systemgrenzen definieren. Ergebnis: Eindeutige Funktionsspezifikation.
 2. **Prüfungsmatrix aufbauen:** Regressionssuite aus 20–30 repräsentativen Testfällen samt Pflichtverweigerungen konstruieren. Zielurteil, Quellen und Ablehnungsgründe dokumentieren. Größeres versiegeltes Testset vorplanen. Ergebnis: Versionierte Testsuite für bekannte Kernrisiken.
-3. **Produktivstand fixieren:** Versionen von Fakten, Regeln, Indizes, Prompts und Modellen als Baseline $`\mathcal{S}_v`$ erfassen. Ergebnis: Rollback-fähiger Referenzzustand.
+3. **Produktivstand fixieren:** Versionen von Fakten, Regeln, Indizes, Prompts und Modellen als Baseline $\mathcal{S}_v$ erfassen. Ergebnis: Rollback-fähiger Referenzzustand.
 4. **Änderungskandidaten erfassen:** Fehler, Neufakten oder Expertenvoten als strukturierten Kandidaten mit Schicht, Quelle und Geltungsbereich registrieren. Ergebnis: Eindeutig auditierbares Änderungsticket.
 5. **Fachexperten-Review durchführen:** Prüfung durch den zuständigen Domänenverantwortlichen. Ergebnis: Inhaltliche Freigabe oder begründete Abweisung.
 6. **Kandidaten anwenden und Leckage prüfen:** Änderung in Testinstanz einspielen; Datensätze strikt nach Gruppe, Zeit und Quelle trennen; Duplikate ausschließen. Ergebnis: Verifizierter Leckage-Auditbericht.
 7. **Gepaarte Prüfung durchführen:** Kandidat und Basisversion auf identischen Fällen testen; Konfidenzintervalle auf Slices berechnen; bei Score-Verschiebungen neu kalibrieren. Ergebnis: Detailliertes Prüfprotokoll mit Slice-Metriken und Unsicherheitsgrenzen.
-8. **Release-Gate auswerten:** Bei Erfüllung aller Schranken Übergang in Shadow-/Canary-Betrieb mit vorbereitetem Rollback; andernfalls Abweisung. Ergebnis: Atomar veröffentlichter Snapshot $`\mathcal{S}_{v+1}`$ oder dokumentierte Zurückweisung.
+8. **Release-Gate auswerten:** Bei Erfüllung aller Schranken Übergang in Shadow-/Canary-Betrieb mit vorbereitetem Rollback; andernfalls Abweisung. Ergebnis: Atomar veröffentlichter Snapshot $\mathcal{S}_{v+1}$ oder dokumentierte Zurückweisung.
 
 Im automobilen Umfeld wird dieser Zyklus exemplarisch für das Secure Firmware Update etabliert. Die Benchmark umfasst die Kette SWE.1–SWE.6, eine Baseline, Problemberichte, Change Requests, TARA-Bedrohungen und unvollständige Nachweispfade. Die Fokussierung auf diesen überschaubaren Schnitt ermöglicht die lückenlose manuelle Verifikation jedes Urteils.
 
@@ -969,7 +969,7 @@ Zur virtuellen intellektuellen Fachdiskussion sind der anerkannte Klassiker des 
 
 **Fortsetzung des Dialogs mit Tom Mitchell: Aufgabenübergreifender Wissenstransfer und Verzerrung fixer Prüfdatensätze**
 
-- **Tom Mitchell:** Im Paradigma des lebenslangen Lernens sollte die beim Lösen einer Aufgabe gewonnene Erfahrung das Lernen in verwandten Domänen durch aufgabenübergreifenden Transfer (Cross-Task Transfer) beschleunigen. Das Festfrieren eines Expertensystems in atomaren Snapshots $`\mathcal{S}_v`$ und die Bewertung anhand starrer Slices birgt das Risiko konservativer Überanpassung an vergangene Tests: Das System wird zum perfekten Absolventen historischer Prüfungen, verliert jedoch seine Generalisierungsfähigkeit gegenüber neuartigen Architekturen oder Bedrohungsvektoren. Wie balanciert Ihr Modell den Regressionsschutz gegen synergistischen Wissenstransfer auf neue Produktlinien aus?
+- **Tom Mitchell:** Im Paradigma des lebenslangen Lernens sollte die beim Lösen einer Aufgabe gewonnene Erfahrung das Lernen in verwandten Domänen durch aufgabenübergreifenden Transfer (Cross-Task Transfer) beschleunigen. Das Festfrieren eines Expertensystems in atomaren Snapshots $\mathcal{S}_v$ und die Bewertung anhand starrer Slices birgt das Risiko konservativer Überanpassung an vergangene Tests: Das System wird zum perfekten Absolventen historischer Prüfungen, verliert jedoch seine Generalisierungsfähigkeit gegenüber neuartigen Architekturen oder Bedrohungsvektoren. Wie balanciert Ihr Modell den Regressionsschutz gegen synergistischen Wissenstransfer auf neue Produktlinien aus?
 
 - **Mykola Fedchyk:** Herr Mitchell, synergistischer Wissenstransfer erfolgt in unserer Architektur auf der Ebene deduktiver ontologischer Gitter und verifizierter Metaregeln, nicht durch diffuse Parameterüberlagerung. Fundamentale Prinzipien funktionaler Sicherheit (wie ASIL-Invarianten nach ISO 26262) bilden einen unerschütterlichen Wissenskern, der von neuen Subsystemen über typisierte Schnittstellen automatisch geerbt wird. Hinsichtlich des Risikos einer Prüfungsüberanpassung: Unsere Prüfmatrix ist kein statisches Archiv. Sie wird dynamisch durch einen Generator popper'scher Gegenbeispiele (Popperian Red-Teaming) angereichert, der Anforderungsgrenzen systematisch mutiert und Grenzfall-Stresstests synthetisiert. Ein Release-Kandidat wird somit nicht nur an bekannten historischen Fällen geprüft, sondern auch an frisch generierten widersprüchlichen Eingaben, was echte Robustheit statt mechanischem Auswendiglernen garantiert.
 
@@ -999,7 +999,7 @@ Die Grenzen des Kapitels sind evident: Zahlenwerte dienen didaktischen Zwecken. 
 
 ## Fragen zur Selbstüberprüfung
 
-1. Warum wird die Version eines Expertensystems als Snapshot $`\mathcal{S}_v`$ aus zehn Komponenten beschrieben und nicht über den Modellbezeichner? Nennen Sie eine Änderung, die den Rebuild einer anderen Komponente erzwingt.
+1. Warum wird die Version eines Expertensystems als Snapshot $\mathcal{S}_v$ aus zehn Komponenten beschrieben und nicht über den Modellbezeichner? Nennen Sie eine Änderung, die den Rebuild einer anderen Komponente erzwingt.
 2. Ein Anwender bemängelt: „Das Expertensystem stützt sich auf den Prüfbericht einer falschen Board-Revision.“ Welche Schicht muss primär modifiziert werden, und warum kann Fine-Tuning des Sprachmodells diesen Fehler nicht beheben?
 3. Worin unterscheiden sich die Rollen von Automotive SPICE 4.0, ISO 26262 und ISO/SAE 21434 bei der Nachweisprüfung für Firmware-Updates?
 4. Warum muss eine TARA-Zeile ohne Pfad zu einem Testfall das Urteil „Evidenzlücke“ auslösen statt „Maßnahme umgesetzt“?

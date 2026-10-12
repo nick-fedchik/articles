@@ -16,7 +16,7 @@ Jede reale Wissensbasis sieht sich mit dem fundamentalen Problem der epistemisch
 - **Generative Sprachmodelle (LLMs):** füllen solche Leerstellen mit unkontrollierten, plausibel klingenden Konfabulationen (Halluzinationen) und verzerren dadurch Sicherheitsstandards und Normvorgaben.
 - **Klassische deduktive Systeme unter der Closed-World-Assumption (CWA):** verharren in einer kategorischen Verweigerung (*Fail-Closed Nonanswer / Refusal*) und lassen den Ingenieur oder Operator ohne jeglichen Anhaltspunkt für die weitere Untersuchung zurück.
 
-Dieses Kapitel behandelt den methodischen Durchbruch evidenzbasierter Expertensysteme: die Synthese aus strikter deterministischer relationaler Analyse, abduktiver Konstruktion von Arbeitshypothesen und interaktivem sokratischem Dialog. Zunächst formalisiert das Kapitel die klassische logische Denktriade: **Begriffe (Concepts) → Urteile (Judgments) → Schlüsse (Conclusions)**, die die Wissensrepräsentation unabhängig von der jeweiligen Fachdomäne (Netzwerkprotokolle, Gesetzgebung, funktionale Sicherheitsnormen wie ISO 26262 / ISO/SAE 21434) vereinheitlicht. Anschließend wird ein Algorithmus zur bidirektionalen beschränkten Pfadsuche (Bidirectional Bounded Path Discovery, $`k \le 6`$) mit zusammengesetzten bytegenauen Evidenzketten sowie ein Verfahren zur Induktion von Assoziationsregeln nach den Metriken von AMIE PCA vorgestellt.
+Dieses Kapitel behandelt den methodischen Durchbruch evidenzbasierter Expertensysteme: die Synthese aus strikter deterministischer relationaler Analyse, abduktiver Konstruktion von Arbeitshypothesen und interaktivem sokratischem Dialog. Zunächst formalisiert das Kapitel die klassische logische Denktriade: **Begriffe (Concepts) → Urteile (Judgments) → Schlüsse (Conclusions)**, die die Wissensrepräsentation unabhängig von der jeweiligen Fachdomäne (Netzwerkprotokolle, Gesetzgebung, funktionale Sicherheitsnormen wie ISO 26262 / ISO/SAE 21434) vereinheitlicht. Anschließend wird ein Algorithmus zur bidirektionalen beschränkten Pfadsuche (Bidirectional Bounded Path Discovery, $k \le 6$) mit zusammengesetzten bytegenauen Evidenzketten sowie ein Verfahren zur Induktion von Assoziationsregeln nach den Metriken von AMIE PCA vorgestellt.
 
 Die folgenden Abschnitte widmen sich dem Mechanismus der symbolischen Abduktion nach Charles Sanders Peirce als methodisch fundierter Quelle valider Arbeitshypothesen: Das System analysiert die Topologie von Kettenspaltungen, gemeinsame Kontexte sowie Taxonomien und generiert begründete Vermutungen unter zwingender Ausweisung der **fehlenden Prämisse (Missing Premise)**. Die Invariante der epistemischen Hygiene garantiert hierbei, dass keine Hypothese jemals den Status eines kategorischen Faktums erlangt. Abschließend wird die Architektur eines sokratischen Befragers dargelegt, der Unvollständigkeiten in typisierte Handlungsoptionen für den Operator überführt, ergänzt durch eine vollständige, praxistaugliche Referenzimplementierung in Go.
 
@@ -53,8 +53,8 @@ flowchart TD
     class REF ref;
 ```
 
-1. **Vollständige deduktive Kette (Deductive Closure):** Es existiert eine Sequenz normativer Aussagen $`A \xrightarrow{r_1} X_1 \xrightarrow{r_2} \dots \xrightarrow{r_k} B`$, bei der jede Kante durch ein bytegenaues Primärquellenzitat belegt ist. Das System generiert eine kategorische Antwort `KindAnswer` mit einer zusammengesetzten Evidenzkette ([Kapitel 19](ch19-from-question-to-evidence.md)).
-2. **Kettenspaltung bei kontextueller Überlappung (Epistemic Gap):** Die Entitäten $`A`$ und $`B`$ sind dem System bekannt, werden in gemeinsamen normativen Rechtsakten oder Standards erwähnt oder besitzen gemeinsame Nachbarknoten $`M`$, es existiert jedoch keine unmittelbare normative Kante zwischen ihnen.
+1. **Vollständige deduktive Kette (Deductive Closure):** Es existiert eine Sequenz normativer Aussagen $A \xrightarrow{r_1} X_1 \xrightarrow{r_2} \dots \xrightarrow{r_k} B$, bei der jede Kante durch ein bytegenaues Primärquellenzitat belegt ist. Das System generiert eine kategorische Antwort `KindAnswer` mit einer zusammengesetzten Evidenzkette ([Kapitel 19](ch19-from-question-to-evidence.md)).
+2. **Kettenspaltung bei kontextueller Überlappung (Epistemic Gap):** Die Entitäten $A$ und $B$ sind dem System bekannt, werden in gemeinsamen normativen Rechtsakten oder Standards erwähnt oder besitzen gemeinsame Nachbarknoten $M$, es existiert jedoch keine unmittelbare normative Kante zwischen ihnen.
 3. **Vollständige Disjunktion (Complete Disconnection):** Die Entitäten gehören zu disjunkten semantischen Räumen, oder mindestens eine von ihnen ist in den verifizierten Quellen überhaupt nicht verzeichnet.
 
 Im Zustand 2 neigen probabilistische große Sprachmodelle (LLMs) zu folgenschweren Halluzinationen: Sie formulieren flüssige, hochgradig autoritativ wirkende Texte, erfinden dabei jedoch nicht existente Normabschnitte oder Gesetzesparagrafen. Auf der anderen Seite quittierten traditionelle Regelsysteme früherer Generationen solche Situationen mit einem unergiebigen `refusal` („Keine Daten vorhanden“), was den Ingenieur dazu zwang, Gigabytes an Dokumentationen manuell zu durchforsten.
@@ -123,23 +123,23 @@ Ein **Urteil** bildet die kleinste atomare Wahrheitseinheit in der Wissensbasis.
 J = \langle S, R, V, \text{DocID}, [\beta_{\text{start}}, \beta_{\text{end}}], \text{SHA256}_{\text{quote}}, \mathcal{M} \rangle
 ```
 
-wobei $`S`$ der Subjektbegriff, $`R`$ die normative Relation, $`V`$ der Objektbegriff bzw. normative Wert, $`\text{DocID}`$ das unveränderliche Quelldokument, $`[\beta_{\text{start}}, \beta_{\text{end}}]`$ die exakten physischen Byte-Offsets in der Datei und $`\mathcal{M}`$ die deontische Modalität (MUST, SHALL, MAY) ist. Jedes Urteil ohne bytegenauen Primärquellennachweis wird durch die Eingangskontrollschleuse verworfen.
+wobei $S$ der Subjektbegriff, $R$ die normative Relation, $V$ der Objektbegriff bzw. normative Wert, $\text{DocID}$ das unveränderliche Quelldokument, $[\beta_{\text{start}}, \beta_{\text{end}}]$ die exakten physischen Byte-Offsets in der Datei und $\mathcal{M}$ die deontische Modalität (MUST, SHALL, MAY) ist. Jedes Urteil ohne bytegenauen Primärquellennachweis wird durch die Eingangskontrollschleuse verworfen.
 
 ### 2.3. Schlüsse (Inferences / Conclusions)
 Ein **Schluss** ist das Resultat der Ausführung deterministischer Regeln über einer Menge von Prämissenurteilen. In Abhängigkeit von der Informationsvollständigkeit und der Natur des Zusammenhangs werden drei Schlussarten unterschieden:
-1. **Deduktiver Schluss** ($`\text{Confidence} = 1.0`$): die logisch zwingende Konsequenz der Prämissen (Syllogismus, transitive Hülle, bewiesener Pfad).
-2. **Abduktiver Schluss** ($`0.0 < \text{Confidence} < 1.0`$): die Aufstellung einer plausiblen Arbeitshypothese zur Erklärung einer beobachteten Lücke zwischen Fakten.
-3. **Induktiver Schluss** ($`0.0 < \text{Confidence} < 1.0`$): die Verallgemeinerung statistischer Regularitäten innerhalb der Faktenbasis in Form von Assoziationsregeln.
+1. **Deduktiver Schluss** ($\text{Confidence} = 1.0$): die logisch zwingende Konsequenz der Prämissen (Syllogismus, transitive Hülle, bewiesener Pfad).
+2. **Abduktiver Schluss** ($0.0 < \text{Confidence} < 1.0$): die Aufstellung einer plausiblen Arbeitshypothese zur Erklärung einer beobachteten Lücke zwischen Fakten.
+3. **Induktiver Schluss** ($0.0 < \text{Confidence} < 1.0$): die Verallgemeinerung statistischer Regularitäten innerhalb der Faktenbasis in Form von Assoziationsregeln.
 
 ---
 
 ## 3. Deterministische mehrstufige relationale Analyse
 
-Um die Frage „Wie stehen Entität $`A`$ und Entität $`B`$ zueinander in Beziehung?“ zu beantworten, wird die Wissensbasis als gerichteter Multigraph $`\mathcal{G} = (\mathcal{V}, \mathcal{E})`$ modelliert, dessen Knoten $`\mathcal{V}`$ Begriffe und normalisierte Werte und dessen Kanten $`\mathcal{E}`$ verifizierte Prädikatenurteile darstellen.
+Um die Frage „Wie stehen Entität $A$ und Entität $B$ zueinander in Beziehung?“ zu beantworten, wird die Wissensbasis als gerichteter Multigraph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ modelliert, dessen Knoten $\mathcal{V}$ Begriffe und normalisierte Werte und dessen Kanten $\mathcal{E}$ verifizierte Prädikatenurteile darstellen.
 
 ### 3.1. Bidirektionale beschränkte Breitensuche (Bidirectional Bounded BFS)
 
-Eine naive Vorwärts-Breitensuche in Graphen mit hohem Verzweigungsgrad leidet unter der kombinatorischen Explosion der Komplexität $`\mathcal{O}(b^d)`$. Die Referenzarchitektur setzt daher eine **bidirektionale beschränkte Breitensuche (Bidirectional Bounded BFS)** ein, bei der die Suchfront von Knoten $`A`$ und die Rückwärtsfront von Knoten $`B`$ simultan expandiert werden, begrenzt durch ein striktes Tiefenlimit von $`k \le 6`$:
+Eine naive Vorwärts-Breitensuche in Graphen mit hohem Verzweigungsgrad leidet unter der kombinatorischen Explosion der Komplexität $\mathcal{O}(b^d)$. Die Referenzarchitektur setzt daher eine **bidirektionale beschränkte Breitensuche (Bidirectional Bounded BFS)** ein, bei der die Suchfront von Knoten $A$ und die Rückwärtsfront von Knoten $B$ simultan expandiert werden, begrenzt durch ein striktes Tiefenlimit von $k \le 6$:
 
 ```mermaid
 flowchart LR
@@ -167,12 +167,12 @@ flowchart LR
 
 Der Algorithmus garantiert zwingend folgende Invarianten:
 1. **Invariante des Zyklenschutzes (Cycle Guard Invariant):** Der Zustand der Suchwarteschlange führt eine Bitmaske oder Hash-Tabelle der bereits besuchten Knoten des aktuellen Pfades. Jeder Übergang, der zu einem bereits traversierten Knoten führen würde, wird unmittelbar abgeschnitten.
-2. **Invariante der Relationensymmetrie (Inverse Traversal Invariant):** Ist in der Wissensbasis das Faktum $`J = (S, R, V)`$ hinterlegt, gestattet der Graph in Rückwärtsrichtung den Übergang von $`V`$ zu $`S`$ mit dem inversen Prädikat `inverse_of(R)`. Dies ermöglicht das Auffinden von Verknüpfungen, wenn beide Entitäten als Werte eines gemeinsamen Subjekts fungieren oder umgekehrt.
+2. **Invariante der Relationensymmetrie (Inverse Traversal Invariant):** Ist in der Wissensbasis das Faktum $J = (S, R, V)$ hinterlegt, gestattet der Graph in Rückwärtsrichtung den Übergang von $V$ zu $S$ mit dem inversen Prädikat `inverse_of(R)`. Dies ermöglicht das Auffinden von Verknüpfungen, wenn beide Entitäten als Werte eines gemeinsamen Subjekts fungieren oder umgekehrt.
 3. **Invariante der deterministischen Ordnung (Deterministic Ordering Invariant):** Ermittelte Pfade werden primär aufsteigend nach ihrer Länge (Kantenanzahl) sortiert; Pfade identischer Länge werden deterministisch lexikografisch anhand der Sequenz der Relationsbezeichner und Quell-IDs geordnet.
 
 ### 3.2. Zusammengesetzte Evidenzkette (Composite Path Evidence)
 
-Ein gefundener Pfad $`\mathcal{P} = (h_1, h_2, \dots, h_m)`$ der Länge $`m`$ ist genau dann gültig, wenn jede einzelne Kante $`h_i`$ autonom die Invariante bytegenauer Beweisbarkeit erfüllt. Das System erzeugt ein zusammengesetztes Zitationsobjekt, das einen Vektor atomarer Zitate kapselt:
+Ein gefundener Pfad $\mathcal{P} = (h_1, h_2, \dots, h_m)$ der Länge $m$ ist genau dann gültig, wenn jede einzelne Kante $h_i$ autonom die Invariante bytegenauer Beweisbarkeit erfüllt. Das System erzeugt ein zusammengesetztes Zitationsobjekt, das einen Vektor atomarer Zitate kapselt:
 
 ```math
 \text{EvidenceChain}(\mathcal{P}) = \left[ \text{Cite}(J_1), \text{Cite}(J_2), \dots, \text{Cite}(J_m) \right]
@@ -208,51 +208,51 @@ r_1(X, Y) \land r_2(Y, Z) \implies r_3(X, Z)
 
 *(Beispiel: „Wenn Funktion X zu Subsystem Y gehört und Y nach Standard Z zertifiziert ist, so unterliegt X der Regulierung durch Z“)*
 
-Die klassische Closed-World-Assumption (CWA) stuft jedes nicht explizit verzeichnete Faktum als falsch ein, was für reale Wissensbasen unzutreffend ist. Die PCA-Annahme besagt demgegenüber: *Existiert für eine Entität $`X`$ und eine Relation $`r`$ in der Wissensbasis mindestens ein Wert $`Y`$, sodass $`r(X, Y)`$ wahr ist, so enthält die Wissensbasis alle gültigen Werte für das Paar $`(X, r)`$*.
+Die klassische Closed-World-Assumption (CWA) stuft jedes nicht explizit verzeichnete Faktum als falsch ein, was für reale Wissensbasen unzutreffend ist. Die PCA-Annahme besagt demgegenüber: *Existiert für eine Entität $X$ und eine Relation $r$ in der Wissensbasis mindestens ein Wert $Y$, sodass $r(X, Y)$ wahr ist, so enthält die Wissensbasis alle gültigen Werte für das Paar $(X, r)$*.
 
 ### 4.2. Qualitätsmetriken induzierter Regeln
 
-Die Güte einer induzierten logischen Regel $`\mathcal{R}: \mathcal{B} \implies r(X, Y)`$ wird über drei deterministische Kennzahlen quantifiziert:
+Die Güte einer induzierten logischen Regel $\mathcal{R}: \mathcal{B} \implies r(X, Y)$ wird über drei deterministische Kennzahlen quantifiziert:
 
 #### 4.2.1. Absolute Unterstützung (Absolute Support)
 
-Die Anzahl eindeutiger Paare $`(X, Y)`$, für die im Wissensgraphen sowohl der Regelkörper $`\mathcal{B}`$ als auch der Regelkopf $`r(X, Y)`$ simultan erfüllt sind:
+Die Anzahl eindeutiger Paare $(X, Y)$, für die im Wissensgraphen sowohl der Regelkörper $\mathcal{B}$ als auch der Regelkopf $r(X, Y)$ simultan erfüllt sind:
 
 ```math
 \mathrm{Supp}(\mathcal{R}) = \lvert \{ (X, Y) : \mathcal{B} \land r(X, Y) \} \rvert
 ```
 
-wobei $`\lvert \{ (X, Y) \} \rvert`$ die Kardinalität der Menge verknüpfter Entitätenpaare als nicht-negative ganze Zahl darstellt ($`\mathrm{Supp}(\mathcal{R}) \in \mathbb{N}_0`$).
+wobei $\lvert \{ (X, Y) \} \rvert$ die Kardinalität der Menge verknüpfter Entitätenpaare als nicht-negative ganze Zahl darstellt ($\mathrm{Supp}(\mathcal{R}) \in \mathbb{N}_0$).
 
 #### 4.2.2. PCA-Konfidenz (PCA Confidence)
 
-Unter der Annahme partieller Vollständigkeit (PCA) berücksichtigt der Nenner ausschließlich jene Fälle, in denen für das Subjekt $`X`$ mindestens ein bestätigter Wert für die Zielrelation $`r`$ in der Wissensbasis existiert:
+Unter der Annahme partieller Vollständigkeit (PCA) berücksichtigt der Nenner ausschließlich jene Fälle, in denen für das Subjekt $X$ mindestens ein bestätigter Wert für die Zielrelation $r$ in der Wissensbasis existiert:
 
 ```math
 \mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) = \frac{\lvert \{ (X, Y) : \mathcal{B} \land r(X, Y) \} \rvert}{\lvert \{ (X, Y) : \mathcal{B} \land \exists Y' (r(X, Y')) \} \rvert}
 ```
 
-wobei $`\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) \in [0, 1]`$ ein normiertes Maß für die statistische Validität der Verknüpfung bei unvollständiger, aber konsistenter Information ist.
+wobei $\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) \in [0, 1]$ ein normiertes Maß für die statistische Validität der Verknüpfung bei unvollständiger, aber konsistenter Information ist.
 
 #### 4.2.3. Kopf-Abdeckung (Head Coverage)
 
-Der Anteil der in der Wissensbasis bekannten Fakten der Relation $`r`$, die durch diese Regel abgeleitet oder erklärt werden können:
+Der Anteil der in der Wissensbasis bekannten Fakten der Relation $r$, die durch diese Regel abgeleitet oder erklärt werden können:
 
 ```math
 \mathrm{HC}(\mathcal{R}) = \frac{\mathrm{Supp}(\mathcal{R})}{\lvert \{ (X, Y) : r(X, Y) \} \rvert}
 ```
 
-wobei $`\mathrm{HC}(\mathcal{R}) \in [0, 1]`$ die Generalisierungsfähigkeit der induzierten Regel widerspiegelt.
+wobei $\mathrm{HC}(\mathcal{R}) \in [0, 1]$ die Generalisierungsfähigkeit der induzierten Regel widerspiegelt.
 
 #### 4.2.4. Geschlossener Entscheidungszyklus (Closed-Loop Decision)
 
 - **Entscheidungskriterien und automatische Zertifizierung von Regeln:**
-  - $`\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) \ge 0{,}90`$ bei $`\mathrm{Supp}(\mathcal{R}) \ge 10`$: **Automatische Induktion**. Die Regel wird automatisch in die abgeleitete Schicht der Wissensbasis (`INFERRED_RULE`) mit dem Status `VerifiedCandidate` übernommen und für operative Inferenzanfragen freigegeben;
-  - $`0{,}70 \le \mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) < 0{,}90`$ (bei $`\mathrm{Supp}(\mathcal{R}) \ge 3`$): **Quarantäne-Hypothese**. Die Regel erhält den Status `QUARANTINE_HYPOTHESIS` und wird in einer sokratischen Dialogsitzung dem Domänenexperten vorgelegt oder erfordert eine abduktive Bestätigung;
-  - $`\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) < 0{,}70`$ oder $`\mathrm{Supp}(\mathcal{R}) < 3`$: **Bedingungslose Zurückweisung**. Der Regelkandidat wird als statistisches Rauschen oder Artefakt unvollständiger Daten eingestuft und aus der Kandidatenwarteschlange gelöscht.
+  - $\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) \ge 0{,}90$ bei $\mathrm{Supp}(\mathcal{R}) \ge 10$: **Automatische Induktion**. Die Regel wird automatisch in die abgeleitete Schicht der Wissensbasis (`INFERRED_RULE`) mit dem Status `VerifiedCandidate` übernommen und für operative Inferenzanfragen freigegeben;
+  - $0{,}70 \le \mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) < 0{,}90$ (bei $\mathrm{Supp}(\mathcal{R}) \ge 3$): **Quarantäne-Hypothese**. Die Regel erhält den Status `QUARANTINE_HYPOTHESIS` und wird in einer sokratischen Dialogsitzung dem Domänenexperten vorgelegt oder erfordert eine abduktive Bestätigung;
+  - $\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) < 0{,}70$ oder $\mathrm{Supp}(\mathcal{R}) < 3$: **Bedingungslose Zurückweisung**. Der Regelkandidat wird als statistisches Rauschen oder Artefakt unvollständiger Daten eingestuft und aus der Kandidatenwarteschlange gelöscht.
 - **Hardware-Dimensionierung und Ressourcen für Hintergrundberechnungen:**
-  - Der AMIE-Mining-Algorithmus besitzt eine kombinatorische Komplexität von $`\mathcal{O}(\lvert\mathcal{E}\rvert \cdot d_{\max}^{k-1})`$, wobei $`\lvert\mathcal{E}\rvert`$ die Kantenanzahl, $`d_{\max}`$ den maximalen Knotengrad und $`k`$ die maximale Regellänge bezeichnet;
-  - Zur Vermeidung von Speichererschöpfung wird die Regellänge strikt auf $`k \le 3`$ begrenzt, das Worker-Timeout auf $`300\,\text{s}`$ pro Zielrelation $`r`$ limitiert und der Speicherpool für den Graphindex auf $`4\,\text{GB}`$ RAM gedeckelt.
+  - Der AMIE-Mining-Algorithmus besitzt eine kombinatorische Komplexität von $\mathcal{O}(\lvert\mathcal{E}\rvert \cdot d_{\max}^{k-1})$, wobei $\lvert\mathcal{E}\rvert$ die Kantenanzahl, $d_{\max}$ den maximalen Knotengrad und $k$ die maximale Regellänge bezeichnet;
+  - Zur Vermeidung von Speichererschöpfung wird die Regellänge strikt auf $k \le 3$ begrenzt, das Worker-Timeout auf $300\,\text{s}$ pro Zielrelation $r$ limitiert und der Speicherpool für den Graphindex auf $4\,\text{GB}$ RAM gedeckelt.
 - **Praktisches Zahlenbeispiel:**
   Betrachtet wird eine transitive Regel über einem Zertifizierungsgraphen:
 
@@ -260,9 +260,9 @@ wobei $`\mathrm{HC}(\mathcal{R}) \in [0, 1]`$ die Generalisierungsfähigkeit der
 \mathrm{HasSubsystem}(X, Y) \land \mathrm{CompliesWith}(Y, Z) \implies \mathrm{RequiresAudit}(X, Z)
 ```
 
-  Erfasste Kennzahlen: $`\mathrm{Supp}(\mathcal{R}) = 18`$ Systeme erfüllen beide Bedingungen. Die Gesamtzahl der Systeme mit Komponenten, für die in der Wissensbasis überhaupt Audit-Vorgaben $`\exists Z' (\mathrm{RequiresAudit}(X, Z'))`$ hinterlegt sind, beträgt $`20`$.
-  Berechnung: $`\mathrm{Conf}_{\mathrm{PCA}} = 18 / 20 = 0{,}90 \ge 0{,}90`$, $`\mathrm{Supp}(\mathcal{R}) = 18 \ge 10`$.
-  **Systemaktion:** Die Regel überschreitet den Schwellenwert der automatischen Verifikation und wird mit einem Konfidenzgewicht von $`0{,}90`$ in die Inferenzmaschine aufgenommen.
+  Erfasste Kennzahlen: $\mathrm{Supp}(\mathcal{R}) = 18$ Systeme erfüllen beide Bedingungen. Die Gesamtzahl der Systeme mit Komponenten, für die in der Wissensbasis überhaupt Audit-Vorgaben $\exists Z' (\mathrm{RequiresAudit}(X, Z'))$ hinterlegt sind, beträgt $20$.
+  Berechnung: $\mathrm{Conf}_{\mathrm{PCA}} = 18 / 20 = 0{,}90 \ge 0{,}90$, $\mathrm{Supp}(\mathcal{R}) = 18 \ge 10$.
+  **Systemaktion:** Die Regel überschreitet den Schwellenwert der automatischen Verifikation und wird mit einem Konfidenzgewicht von $0{,}90$ in die Inferenzmaschine aufgenommen.
 
 ---
 
@@ -278,7 +278,7 @@ Der amerikanische Philosoph und Logiker Charles Sanders Peirce definierte die Ab
 \frac{\text{Tatsache } C \text{ wird beobachtet}; \quad \text{Wäre Hypothese } H \text{ wahr, so wäre } C \text{ eine Selbstverständlichkeit}}{\text{Es besteht Grund zu der Annahme, dass } H \text{ wahr ist}}
 ```
 
-In Expertensystemen entspricht die beobachtete Tatsache $`C`$ dem Vorliegen einer semantischen Anfrage nach einer Verknüpfung zwischen $`A`$ und $`B`$ bei gleichzeitigem Vorhandensein partieller Fakten; die Hypothese $`H`$ repräsentiert die Existenz einer fehlenden intermediären Prämisse.
+In Expertensystemen entspricht die beobachtete Tatsache $C$ dem Vorliegen einer semantischen Anfrage nach einer Verknüpfung zwischen $A$ und $B$ bei gleichzeitigem Vorhandensein partieller Fakten; die Hypothese $H$ repräsentiert die Existenz einer fehlenden intermediären Prämisse.
 
 ```mermaid
 flowchart TD
@@ -305,29 +305,29 @@ flowchart TD
 ### 5.2. Topologische Heuristiken zur Hypothesengenerierung
 
 #### 5.2.1. Strategie des gemeinsamen Vermittlers (Shared Neighbor / Bridge Entity)
-Das System sucht nach einem Knoten $`M \in \mathcal{V}`$, sodass gilt:
+Das System sucht nach einem Knoten $M \in \mathcal{V}$, sodass gilt:
 
 ```math
 (A \leftrightarrow M) \in \mathcal{E} \quad \land \quad (M \leftrightarrow B) \in \mathcal{E}
 ```
 
-Tritt die Entität $`M`$ als Vermittler auf, wird folgende Hypothese formuliert:
-*„Vermutlich wird die Beziehung zwischen A und B über die Entität M vermittelt. Für einen kategorischen Schluss fehlt eine explizite normative Transitivitätsregel der Relationen $`r_1`$ und $`r_2`$ über dem Begriff M“*.
-Der Plausibilitätswert einer solchen Hypothese wird auf $`\text{Confidence} \approx 0{,}75`$ angesetzt.
+Tritt die Entität $M$ als Vermittler auf, wird folgende Hypothese formuliert:
+*„Vermutlich wird die Beziehung zwischen A und B über die Entität M vermittelt. Für einen kategorischen Schluss fehlt eine explizite normative Transitivitätsregel der Relationen $r_1$ und $r_2$ über dem Begriff M“*.
+Der Plausibilitätswert einer solchen Hypothese wird auf $\text{Confidence} \approx 0{,}75$ angesetzt.
 
 #### 5.2.2. Strategie der gemeinsamen Primärquelle (Document Co-occurrence)
-Existieren keine gemeinsamen Nachbarknoten, prüft das System, ob $`A`$ und $`B`$ in Fakten desselben normativen Dokuments $`\mathcal{D}`$ vorkommen:
+Existieren keine gemeinsamen Nachbarknoten, prüft das System, ob $A$ und $B$ in Fakten desselben normativen Dokuments $\mathcal{D}$ vorkommen:
 
 ```math
 \exists J_1, J_2 : J_1.\text{Subject} = A \land J_2.\text{Subject} = B \land J_1.\text{Source} = J_2.\text{Source} = \mathcal{D}
 ```
 
 Hierbei wird folgende Hypothese generiert:
-*„Die Entitäten A und B werden im selben Dokument $`\mathcal{D}`$ erwähnt, zwischen ihnen wurde jedoch keine direkte relationale Beziehung extrahiert. Die Verknüpfungen zwischen den Artikeln oder Abschnitten von $`\mathcal{D}`$ müssen analysiert werden“*.
-Plausibilitätsbewertung: $`\text{Confidence} \approx 0{,}60`$.
+*„Die Entitäten A und B werden im selben Dokument $\mathcal{D}$ erwähnt, zwischen ihnen wurde jedoch keine direkte relationale Beziehung extrahiert. Die Verknüpfungen zwischen den Artikeln oder Abschnitten von $\mathcal{D}$ müssen analysiert werden“*.
+Plausibilitätsbewertung: $\text{Confidence} \approx 0{,}60$.
 
 #### 5.2.3. Taxonomische Vererbung (Hypernymy Fallback)
-Ist $`A`$ eine Unterart des Begriffs $`P`$ ($`A \xrightarrow{\text{is-a}} P`$) und existiert für $`P`$ ein bewiesener Pfad zu $`B`$, wird mangels gegenteiliger Ausnahmen eine Hypothese über die standardmäßige Eigenschaftsvererbung aufgestellt ([Kapitel 31](ch31-syllogistic-reasoning-and-relation-lattices.md)).
+Ist $A$ eine Unterart des Begriffs $P$ ($A \xrightarrow{\text{is-a}} P$) und existiert für $P$ ein bewiesener Pfad zu $B$, wird mangels gegenteiliger Ausnahmen eine Hypothese über die standardmäßige Eigenschaftsvererbung aufgestellt ([Kapitel 31](ch31-syllogistic-reasoning-and-relation-lattices.md)).
 
 ### 5.3. Invariante der epistemischen Hygiene (Hypothesis Isolation Invariant)
 
@@ -339,7 +339,7 @@ Die fundamentale Gefahr der Hypothesengenerierung liegt im Risiko, dass Benutzer
 > 2. Hypothesen werden ausnahmslos in typisierten Nachrichten der Form `KindQualifiedNonanswer` oder `KindClarification` übermittelt.
 > 3. Der Antworttext muss zwingend den standardisierten Warnhinweis enthalten:
 >    `--- [HYPOTHESE (ARBEITSHYPOTHESE)] ---`
-> 4. Jede Hypothese muss ihren numerischen Plausibilitätsgrad ($`\text{Confidence} < 1.0`$) sowie die **fehlende Prämisse (Missing Premise)** explizit deklarieren, ohne deren Verifikation die Hypothese niemals zu einem Faktum werden kann.
+> 4. Jede Hypothese muss ihren numerischen Plausibilitätsgrad ($\text{Confidence} < 1.0$) sowie die **fehlende Prämisse (Missing Premise)** explizit deklarieren, ohne deren Verifikation die Hypothese niemals zu einem Faktum werden kann.
 
 ---
 
@@ -875,7 +875,7 @@ Zu diesem virtuellen intellektuellen Fachdialog sind Titanen der theoretischen k
 ## Fazit
 1. **Überwindung des Unvollständigkeitsdilemmas:** Reale Expertensysteme müssen weder in die Halluzinationen generativer Modelle verfallen noch in der hilflosen Verweigerung geschlossener Regelsysteme erstarren. Die symbolische Abduktion stellt ein mathematisch fundiertes Werkzeug zur kontrollierten Hypothesenbildung bereit.
 2. **Ontologische Erkenntnistriade:** Die Formalisierung von Begriffen, bytegenau verifizierten Urteilen und typisierten Schlüssen gewährleistet die universelle Funktionsfähigkeit der Systemlaufzeit unabhängig von der jeweiligen Fachdomäne (Netzwerkprotokolle, Rechtsprechung, funktionale Sicherheit im Automobilbereich).
-3. **Deterministische relationale Analyse:** Die bidirektionale beschränkte Breitensuche ($`k \le 6`$) mit Zyklenschutz und zusammengesetzten Zitationsketten ermöglicht die Entdeckung verborgener mehrstufiger Abhängigkeiten bei vollständiger Nachvollziehbarkeit.
+3. **Deterministische relationale Analyse:** Die bidirektionale beschränkte Breitensuche ($k \le 6$) mit Zyklenschutz und zusammengesetzten Zitationsketten ermöglicht die Entdeckung verborgener mehrstufiger Abhängigkeiten bei vollständiger Nachvollziehbarkeit.
 4. **Induktion von Assoziationsregeln (AMIE PCA):** Die Auswertung der Faktenbasis unter der Annahme partieller Vollständigkeit deckt verborgene transitive Regelmäßigkeiten auf, ohne dass tausende Produktionsregeln manuell formuliert werden müssen.
 5. **Invariante der epistemischen Hygiene:** Eine Arbeitshypothese wird niemals als kategorischer Fakt deklariert. Sie wird ausnahmslos als `KindQualifiedNonanswer` typisiert und weist die fehlende Prämisse (`Missing Premise`) sowie ein normiertes Plausibilitätsmaß explizit aus.
 6. **Sokratischer Dialog und gemischte Initiative:** Typisierte Klärungsrahmen (`ClarificationFrame`) wandeln eine Antwortverweigerung in einen konstruktiven Dialog um, sodass der Operator mit einem einzigen Klick die Untersuchung einer vorgeschlagenen hypothetischen Brücke einleiten oder den Kontext schärfen kann.

@@ -319,15 +319,15 @@ end
 ```
 
 wobei:
-- $`\mathrm{ZF}`$ (Zero/Range Flag) — Flag für das Verlassen des zulässigen Normintervalls $[Min, Max]$ durch die überwachte Messgröße;
-- $`\mathrm{DF}`$ (Defeater Flag) — Flag für die Aktivierung einer Ausnahme- oder Widerlegungsbedingung der Norm;
-- $`\mathrm{UF}`$ (Unit Flag) — Flag für Dimensionsinkonsistenzen physikalischer Größen nach dem SI/UCUM-System;
-- $`\mathrm{OF}`$ (Overflow Flag) — Flag für arithmetischen Überlauf oder Genauigkeitsverlust bei Festkomma-Arithmetik (Q16.16);
-- $`\mathrm{StickyFail}`$ — nicht-amnesischer verriegelter Status der Evidenzkette oder eines Ausfalls der SHA-256-Pipeline.
+- $\mathrm{ZF}$ (Zero/Range Flag) — Flag für das Verlassen des zulässigen Normintervalls $[Min, Max]$ durch die überwachte Messgröße;
+- $\mathrm{DF}$ (Defeater Flag) — Flag für die Aktivierung einer Ausnahme- oder Widerlegungsbedingung der Norm;
+- $\mathrm{UF}$ (Unit Flag) — Flag für Dimensionsinkonsistenzen physikalischer Größen nach dem SI/UCUM-System;
+- $\mathrm{OF}$ (Overflow Flag) — Flag für arithmetischen Überlauf oder Genauigkeitsverlust bei Festkomma-Arithmetik (Q16.16);
+- $\mathrm{StickyFail}$ — nicht-amnesischer verriegelter Status der Evidenzkette oder eines Ausfalls der SHA-256-Pipeline.
 
 3. **Hardware-Invariante Fail-Closed:**
    Die Erzeugung der Steuerausgangssignale unterliegt der fundamentalen Invariante:
-   $`\mathrm{disp\_accept} = \lnot \mathrm{Violation} \land \mathrm{ProofValid}`$, während $`\mathrm{disp\_refuse} = \mathrm{Violation} \lor \lnot \mathrm{ProofValid}`$. Ein Zurücksetzen des verriegelten Fehlerzustands ist ausschließlich über einen autorisierten vollständigen Hardware-Reset des geschützten Zustands oder über ein separates, verifiziertes Signal eines externen, unabhängigen Schiedsrichtersubsystems möglich, was die Maskierung von Fehlern innerhalb des ausgeführten Regelflusses vollständig ausschließt.
+   $\mathrm{disp\_accept} = \lnot \mathrm{Violation} \land \mathrm{ProofValid}$, während $\mathrm{disp\_refuse} = \mathrm{Violation} \lor \lnot \mathrm{ProofValid}$. Ein Zurücksetzen des verriegelten Fehlerzustands ist ausschließlich über einen autorisierten vollständigen Hardware-Reset des geschützten Zustands oder über ein separates, verifiziertes Signal eines externen, unabhängigen Schiedsrichtersubsystems möglich, was die Maskierung von Fehlern innerhalb des ausgeführten Regelflusses vollständig ausschließt.
 
 #### 4.6.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der nicht-amnesischen Fixierung (Actionable Closed Loop)
 
@@ -337,13 +337,13 @@ wobei:
    - Versuche des Hosts, ohne vollständigen Hardware-Reset (`PRESETn`) einen neuen Beweis zu initiieren, werden mit dem Busfehlerstatus `PSLVERR = 1` abgewiesen.
 2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
    - Jedes nicht-amnesische Verstoß-Flipflop wird auf exakt $1$ LUT2-Zelle und $1$ D-Flipflop mit asynchroner Reset-Leitung realisiert;
-   - Die kombinatorische Signallaufzeit der Disjunktion beträgt $`t_{\mathrm{comb}} \le 0{,}42\,\text{ns}`$, was weniger als $15\,\%$ der Taktperiode des Kerns bei einer Frequenz von $350\,\text{MHz}$ ($`T_{\mathrm{clk}} = 2{,}85\,\text{ns}`$) ausmacht;
+   - Die kombinatorische Signallaufzeit der Disjunktion beträgt $t_{\mathrm{comb}} \le 0{,}42\,\text{ns}$, was weniger als $15\,\%$ der Taktperiode des Kerns bei einer Frequenz von $350\,\text{MHz}$ ($T_{\mathrm{clk}} = 2{,}85\,\text{ns}$) ausmacht;
    - Der resultierende Worst Negative Slack bleibt strikt positiv ($WNS = +0{,}68\,\text{ns}$), wodurch Verletzungen der Setup-Zeiten sicher vermieden werden.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   In einem automobilen Traktionsinverter-Steuerungssubsystem wird eine Kette aus $12$ aufeinanderfolgenden Sicherheitsprüfungen abgearbeitet. Bei Schritt $3$ registriert die Instruktion `OP_ASSERT_RANGE` eine Überhitzung der Statorwicklung ($`T_{\mathrm{stator}} = 148^\circ\text{C} > 140^\circ\text{C}`$) und setzt das Signal $`\mathrm{cond\_violation} = 1`$. Die nachfolgenden $9$ Überprüfungen (Öldruck, Isolationswiderstand, DC-Zwischenkreisspannung) verlaufen nominal erfolgreich.
-   - Bei einer naiven Prozessorarchitektur würde das Flag-Register durch den letzten erfolgreichen Prüfschritt überschrieben und fälschlicherweise das Freigabesignal $`\mathrm{disp\_accept} = 1`$ ausgegeben;
-   - In der EPU-Architektur verriegelt das nicht-amnesische Latch $`\mathrm{StickyFail} = 1`$ innerhalb von $1$ Takt ($2{,}85\,\text{ns}$) und hält die Leitung $`\mathrm{Violation} = 1`$ bis zum Ende der Sitzung aufrecht;
-   - **Entscheidung:** Das Expertensystem aktiviert auf Hardwareebene $`\mathrm{disp\_refuse} = 1`$ mit dem Fehlercode `0x422` (`REFUSAL_UNSATISFIABLE`), wodurch eine thermische Zerstörung des Elektromotors bei hoher Fahrgeschwindigkeit zuverlässig verhindert wird.
+   In einem automobilen Traktionsinverter-Steuerungssubsystem wird eine Kette aus $12$ aufeinanderfolgenden Sicherheitsprüfungen abgearbeitet. Bei Schritt $3$ registriert die Instruktion `OP_ASSERT_RANGE` eine Überhitzung der Statorwicklung ($T_{\mathrm{stator}} = 148^\circ\text{C} > 140^\circ\text{C}$) und setzt das Signal $\mathrm{cond\_violation} = 1$. Die nachfolgenden $9$ Überprüfungen (Öldruck, Isolationswiderstand, DC-Zwischenkreisspannung) verlaufen nominal erfolgreich.
+   - Bei einer naiven Prozessorarchitektur würde das Flag-Register durch den letzten erfolgreichen Prüfschritt überschrieben und fälschlicherweise das Freigabesignal $\mathrm{disp\_accept} = 1$ ausgegeben;
+   - In der EPU-Architektur verriegelt das nicht-amnesische Latch $\mathrm{StickyFail} = 1$ innerhalb von $1$ Takt ($2{,}85\,\text{ns}$) und hält die Leitung $\mathrm{Violation} = 1$ bis zum Ende der Sitzung aufrecht;
+   - **Entscheidung:** Das Expertensystem aktiviert auf Hardwareebene $\mathrm{disp\_refuse} = 1$ mit dem Fehlercode `0x422` (`REFUSAL_UNSATISFIABLE`), wodurch eine thermische Zerstörung des Elektromotors bei hoher Fahrgeschwindigkeit zuverlässig verhindert wird.
 
 ### 4.7. Schaltungstechnischer Schutz des Wissensprozessors gegen Seitenkanalangriffe und Fehlerinjektionen (FIPS 140-3)
 
@@ -360,15 +360,15 @@ Zum Schutz des Wissensprozessors gemäß den höchsten Anforderungen des Standar
 \Delta t_{\mathrm{exec}}(I, D_1) = \Delta t_{\mathrm{exec}}(I, D_2) = \mathrm{const}
 ```
 
-wobei $I$ einen beliebigen Befehl des EISA-Satzes repräsentiert und $`D_1, D_2`$ beliebige Eingangsdatensätze darstellen (nominal oder anomal). Durch den Verzicht auf dynamische Verzweigungen und datenabhängige Schleifen wird jeglicher zeitliche Jitter eliminiert ($`\Delta t_{\mathrm{jitter}} = 0`$), was zeitbasierte Seitenkanalangriffe (Time-Attacks) unmöglich macht.
+wobei $I$ einen beliebigen Befehl des EISA-Satzes repräsentiert und $D_1, D_2$ beliebige Eingangsdatensätze darstellen (nominal oder anomal). Durch den Verzicht auf dynamische Verzweigungen und datenabhängige Schleifen wird jeglicher zeitliche Jitter eliminiert ($\Delta t_{\mathrm{jitter}} = 0$), was zeitbasierte Seitenkanalangriffe (Time-Attacks) unmöglich macht.
 
 2. **Dual-Rail-Vorladelogik (Dual-Rail Precharge Logic / DRL):**
    Kritische digitale ALU-Komparatoren und die SHA-256-Custody-Hash-Pfade sind in differentieller Logik mit komplementären Signalpaaren ($Q$ und $\overline{Q}$) implementiert. Jeder logische Übergang erzwingt das Umschalten genau eines der beiden Signale unabhängig vom Bitwert ($0 \to 1$ oder $1 \to 0$), wodurch das dynamische Stromaufnahmeprofil geglättet und Korrelationsspitzen bei DPA/CPA auf das Niveau thermischen Rauschens abgesenkt werden.
 
 3. **On-Chip-Spannungs- und Takt-Glitch-Detektoren:**
    Auf dem FPGA-Die sind ultraschnelle Sensorelemente integriert:
-   - Der Kernspannungs-Komparator registriert Abweichungen von mehr als $`\Delta V_{\mathrm{core}} > 12\,\%`$ von der Nennspannung ($`V_{\mathrm{core}} = 0{,}85\,\text{V}`$ für FinFET UltraScale+);
-   - Der Taktpuls-Detektor erfasst unzulässige Verkürzungen der Halbperiode ($`T_{\mathrm{pulse}} < 0{,}6 \cdot T_{\mathrm{nom}}`$).
+   - Der Kernspannungs-Komparator registriert Abweichungen von mehr als $\Delta V_{\mathrm{core}} > 12\,\%$ von der Nennspannung ($V_{\mathrm{core}} = 0{,}85\,\text{V}$ für FinFET UltraScale+);
+   - Der Taktpuls-Detektor erfasst unzulässige Verkürzungen der Halbperiode ($T_{\mathrm{pulse}} < 0{,}6 \cdot T_{\mathrm{nom}}$).
    Jeder detektierte Glitch versetzt die Hardwareverriegelung innerhalb von $1$ Takt ($2{,}85\,\text{ns}$) in den Schutzmodus `TAMPER_LOCKOUT`, löscht den Inhalt der Arbeitsregister `%er0..%er7` und erzwingt dauerhaft `disp_refuse = 1`.
 
 4. **PUF-basierte Schlüsselverwahrung (Physically Unclonable Functions):**
@@ -382,11 +382,11 @@ wobei $I$ einen beliebigen Befehl des EISA-Satzes repräsentiert und $`D_1, D_2`
    - Die Rückkehr in den Normalbetrieb erfordert eine vollständige, authentifizierte Reinitialisierungssequenz durch den übergeordneten Sicherheitsprozessor des Hosts (Root of Trust).
 2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
    - Die Implementierung der DRL-Inverslogik und der chipinternen Glitch-Detektoren erhöht die Logikzellenauslastung des Kerns um weniger als $3{,}5\,\%$ (zusätzlich $\sim 60$ LUTs pro `evm_core`);
-   - Der Spannungsdetektor gewährleistet eine Reaktionszeit von $`t_{\mathrm{detect}} \le 0{,}8\,\text{ns}`$, was die typische Pulsdauer von Injektionsglitches ($2–10\,\text{ns}$) zuverlässig abfängt;
+   - Der Spannungsdetektor gewährleistet eine Reaktionszeit von $t_{\mathrm{detect}} \le 0{,}8\,\text{ns}$, was die typische Pulsdauer von Injektionsglitches ($2–10\,\text{ns}$) zuverlässig abfängt;
    - Die Schaltung ist für den erweiterten automobilen Temperaturbereich von $-40^\circ\text{C}$ bis $+125^\circ\text{C}$ (AEC-Q100 Grade 1) spezifiziert und verifiziert.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   Ein Angreifer versucht, das nicht-amnesische Verstoß-Latch während der Ausführung einer kritischen Sicherheitsnorm zurückzusetzen, indem er über eine Nadelsonde einen negativen Spannungsimpuls von $\Delta V = -250\,\text{mV}$ mit einer Dauer von $4{,}5\,\text{ns}$ auf die Kernversorgungsleitung $`V_{\mathrm{core}} = 0{,}85\,\text{V}`$ injiziert.
-   - Die Versorgungsspannung bricht auf $0{,}60\,\text{V}$ ein und unterschreitet den Schwellenwert von $12\,\%$ ($`V_{\mathrm{thresh}} = 0{,}748\,\text{V}`$) deutlich;
+   Ein Angreifer versucht, das nicht-amnesische Verstoß-Latch während der Ausführung einer kritischen Sicherheitsnorm zurückzusetzen, indem er über eine Nadelsonde einen negativen Spannungsimpuls von $\Delta V = -250\,\text{mV}$ mit einer Dauer von $4{,}5\,\text{ns}$ auf die Kernversorgungsleitung $V_{\mathrm{core}} = 0{,}85\,\text{V}$ injiziert.
+   - Die Versorgungsspannung bricht auf $0{,}60\,\text{V}$ ein und unterschreitet den Schwellenwert von $12\,\%$ ($V_{\mathrm{thresh}} = 0{,}748\,\text{V}$) deutlich;
    - Der chipinterne analoge Sensor detektiert den Einbruch in $0{,}8\,\text{ns}$ und aktiviert die Hardware-Interruptleitung `TAMPER_TRIP`;
    - Noch bevor der Spannungseinbruch ein Umkippen der D-Flipflops auslösen kann, erzwingt die Schutzlogik `disp_accept = 0` und verriegelt `disp_refuse = 1`;
    - **Entscheidung:** Der physische Manipulationsversuch des Siliziumkerns wird erfolgreich abgewehrt; die Urteilssicherheit des Expertensystems bleibt ohne Risiko eines unerkannten Gefahrenzustands vollumfänglich gewahrt.
@@ -438,7 +438,7 @@ Der Einzelkern ist bereits synthetisiert. Das zentrale wissenschaftliche Ziel de
 1. **Zero-Copy On-Chip Knowledge Pack:** Laden des binären Wissenspakets (Größe 2 MB bis 64 MB) direkt in den internen Block-RAM (BRAM) und UltraRAM (URAM) des Bausteins. Erzielung einer Normenabrufzeit von exakt **1 Maschinentakt (2{,}5–3{,}3 ns)** ohne jegliche externe Busverzögerungen (Zero Wait-States).
 2. **Parallele Verifikation von Beweisbäumen (Proof Trees):** Prüft das System komplexe normative Zusammenhänge (etwa die Kompatibilität des Fehlertoleranz-Zeitintervalls $FTTI$ mit Notfall-Übergangsstrategien nach ISO 26262), umfasst der Beweisbaum Dutzende interdependenter Zweige. Ein Hardware-Dispatcher verteilt diese Zweige auf freie EVM-Kerne, was die Gesamtinferenzzeit von Millisekunden auf wenige Dutzend Nanosekunden senkt.
 3. **Hardware-Pipeline SHA-256 mit 64 Stufen (%ebx):** Die Prüfung der Zitatunveränderlichkeit erfolgt parallel zur logischen Inferenz in exakt 64 Hardwaretakten und gewährleistet physischen Manipulationsschutz.
-4. **Durchgängiger PCIe-DMA-Interconnect (XDMA / QDMA):** Vermessung der vollständigen Transferzeit eines Anforderungsdeskriptors vom Linux-Softwarehost zum FPGA und des Rücktransfers des verifizierten Urteils (Round-Trip Time). Zielwert: **$`T_{\mathrm{roundtrip}} < 1{,}5\ \mu\text{s}`$**.
+4. **Durchgängiger PCIe-DMA-Interconnect (XDMA / QDMA):** Vermessung der vollständigen Transferzeit eines Anforderungsdeskriptors vom Linux-Softwarehost zum FPGA und des Rücktransfers des verifizierten Urteils (Round-Trip Time). Zielwert: **$T_{\mathrm{roundtrip}} < 1{,}5\ \mu\text{s}$**.
 
 ---
 
@@ -447,7 +447,7 @@ Der Einzelkern ist bereits synthetisiert. Das zentrale wissenschaftliche Ziel de
 Damit der FPGA-Experte die benötigten Ressourcen präzise bewerten und eine fundierte Entscheidung zur Bereitstellung eines Prüfstands treffen kann, wird die folgende Anforderungsspezifikation in drei Leistungsklassen unterteilt:
 
 ### Ebene 1: Mindestanforderungen (Minimum Baseline / Proof-of-Concept)
-* **Zweck:** Verifikation eines einzelnen EVM-Kerns mit APB3 / AXI-Lite-Bus auf realem Silizium, Nachweis der Taktfrequenz $`F_{\max} \ge 100\ \text{MHz}`$ und elementare Host-Kommunikation über UART oder SPI.
+* **Zweck:** Verifikation eines einzelnen EVM-Kerns mit APB3 / AXI-Lite-Bus auf realem Silizium, Nachweis der Taktfrequenz $F_{\max} \ge 100\ \text{MHz}$ und elementare Host-Kommunikation über UART oder SPI.
 * **Logikressourcen (Logic Cells):** **30 000 bis 100 000 LUTs**, ab 20 000 DFFs.
 * **Interner Speicher (On-Chip Memory):** **2 bis 8 MB BRAM** (zur Unterbringung eines kompakten Knowledge Packs mit 500–1 000 Normen).
 * **DSP-Blöcke:** Unkritisch (ab 20 DSP-Slices).
@@ -460,7 +460,7 @@ Damit der FPGA-Experte die benötigten Ressourcen präzise bewerten und eine fun
 * **Interner Speicher (On-Chip Memory):** **20 bis 45 MB** gesamt (Kombination aus Block-RAM 36Kb und UltraRAM 288Kb für Ein-Takt-Zugriff).
 * **DSP-Blöcke:** **500 bis 1 500 DSP48E2**-Slices (zur Pipelining-Optimierung der Hashfunktionen und Dimensionsarithmetik).
 * **Host-Schnittstelle:** **PCI Express Gen3 x8 / Gen4 x8 (oder x16)** mit Unterstützung für Xilinx XDMA / QDMA.
-* **Logiktaktfrequenz:** Stabiler Betrieb bei $`F_{\mathrm{core}} \ge 250–350\ \text{MHz}`$.
+* **Logiktaktfrequenz:** Stabiler Betrieb bei $F_{\mathrm{core}} \ge 250–350\ \text{MHz}$.
 * **Empfohlene Boards:**
   - **AMD / Xilinx Kintex UltraScale+** (KU5P / KU11P, z. B. KCU116);
   - **AMD / Xilinx Zynq UltraScale+ MPSoC** (ZCU102, ZCU106 — Verbund aus ARM Cortex-A53-Kernen und leistungsfähiger FPGA-Matrix);
@@ -489,7 +489,7 @@ Damit der FPGA-Experte die benötigten Ressourcen präzise bewerten und eine fun
 | **On-Chip-SRAM** | 2 – 8 MB (BRAM) | **20 – 45 MB (BRAM + UltraRAM)** | **30 – 90 MB URAM + 8–16 GB HBM2** |
 | **Speicherbandbreite** | $\sim 5–10\ \text{GB/s}$ | **$> 100\ \text{GB/s}$ (Zero Wait-State)** | **$460–820\ \text{GB/s}$ (HBM2-Bus)** |
 | **Schnittstelle zum Linux-Host** | UART / SPI / PCIe Gen2 x1 | **PCIe Gen3/Gen4 x8 (XDMA)** | **PCIe Gen4/Gen5 x16 (QDMA / CXL)** |
-| **Erwartete Inferenzlatenz $`T_{\mathrm{eval}}`$** | $\sim 500\ \text{ns}$ | **$< 50\ \text{ns}$ (Hardware-Beweis)** | **$< 10\ \text{ns}$ (systolische Parallelität)** |
+| **Erwartete Inferenzlatenz $T_{\mathrm{eval}}$** | $\sim 500\ \text{ns}$ | **$< 50\ \text{ns}$ (Hardware-Beweis)** | **$< 10\ \text{ns}$ (systolische Parallelität)** |
 | **Ende-zu-Ende Round-Trip-Latenz** | $50–200\ \mu\text{s}$ | **$< 1{,}5\ \mu\text{s}$** | **$< 0{,}8\ \mu\text{s}$** |
 | **Empfohlene Bausteine** | Artix-7, ECP5 | **Kintex US+, Zynq US+, Alveo U50** | **Virtex US+ HBM, Alveo U280/U55C** |
 
@@ -766,7 +766,7 @@ sequenceDiagram
 1. **Phase 1: Synthese des Einzelkerns und Timing-Closure:**
    - Portierung des vorhandenen RTL-Codes `evm_core.v` in **AMD Vivado ML Enterprise**;
    - Analyse der Timing-Reports (Static Timing Analysis), Identifikation des kritischen Pfads in der Flag-ALU, Optimierung der Registerstufen;
-   - Sicherstellung der Ziel-Taktfrequenz $`F_{\max} \ge 250–350\ \text{MHz}`$ mit positivem Timing-Puffer (Worst Negative Slack $WNS > 0$).
+   - Sicherstellung der Ziel-Taktfrequenz $F_{\max} \ge 250–350\ \text{MHz}$ mit positivem Timing-Puffer (Worst Negative Slack $WNS > 0$).
 2. **Phase 2: Integration des On-Chip-Speichercontrollers für BRAM/UltraRAM:**
    - Entwurf eines Hardwaremoduls zur Adressabbildung der ZKP4.1-Sektionen auf 64-Byte-Speicherzeilen des UltraRAMs;
    - Taktgenaue Messung der Leselatenz normativer Regeln unter wechselnden Zugriffsmustern (Bestätigung von 1 Takt Latenz).

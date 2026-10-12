@@ -26,13 +26,13 @@ Ashby defined the variety of a finite state set $\Omega$ as the number of its di
 V(\Omega) = \log_2 \lvert \Omega \rvert
 ```
 
-- To quantify variety, $\Omega$ denotes a finite set of states, and $`\lvert \Omega \rvert`$ is the count of its distinguishable elements;
-- $`\log_2`$ denotes the base-2 logarithm, and $V(\Omega)$ is measured in bits;
+- To quantify variety, $\Omega$ denotes a finite set of states, and $\lvert \Omega \rvert$ is the count of its distinguishable elements;
+- $\log_2$ denotes the base-2 logarithm, and $V(\Omega)$ is measured in bits;
 - The equality defines the number of bits required to distinguish the states of the set under this model.
 
-If a set contains 1,024 states, then $`V(\Omega)=\log_2(1024)=10`$ bits. This metric strictly counts the number of distinguishable states rather than the internal complexity or probability distribution of any individual state.
+If a set contains 1,024 states, then $V(\Omega)=\log_2(1024)=10$ bits. This metric strictly counts the number of distinguishable states rather than the internal complexity or probability distribution of any individual state.
 
-Ashby's Law of Requisite Variety states that the variety of outcomes $`V_O`$ cannot be less than the variety of disturbances $`V_D`$ minus the variety of regulator responses $`V_R`$:
+Ashby's Law of Requisite Variety states that the variety of outcomes $V_O$ cannot be less than the variety of disturbances $V_D$ minus the variety of regulator responses $V_R$:
 
 ```math
 V_O \geq V_D - V_R
@@ -40,11 +40,11 @@ V_O \geq V_D - V_R
 
 The bounding law dictates:
 
-- $`V_O`$ denotes the variety of outcomes, $`V_D`$ is the variety of disturbances, and $`V_R`$ is the variety of regulator responses;
+- $V_O$ denotes the variety of outcomes, $V_D$ is the variety of disturbances, and $V_R$ is the variety of regulator responses;
 - Each quantity is measured in bits within the scope of the same state model;
 - $\geq$ signifies "not less than," and the subtraction operator $-$ deducts the regulator's capacity to absorb disturbances from the variety of the disturbances themselves.
 
-In the numerical example considered below, $`V_D = 10`$ bits and $`V_R = 1`$ bit; consequently, the unmitigated variety of outcomes cannot be less than $9$ bits. This inequality establishes a theoretical lower bound; it does not by itself dictate which specific responses guarantee safe physical behavior.
+In the numerical example considered below, $V_D = 10$ bits and $V_R = 1$ bit; consequently, the unmitigated variety of outcomes cannot be less than $9$ bits. This inequality establishes a theoretical lower bound; it does not by itself dictate which specific responses guarantee safe physical behavior.
 
 Under the pedagogical assumption that 1,024 distinct disturbances each require distinct operational responses, a regulator possessing only two possible actions is mathematically inadequate. However, the number of labels in a classification model does not automatically equal the variety of available control actions. The inequality bounds the count of distinguishable outcomes without automatically classifying them into safe or hazardous states. A single failsafe protective action (such as emergency power cutoff) may be entirely appropriate across dozens of distinct failure modes. While an engineering ontology helps resolve operational context, without system observability and available actuators, ontology alone cannot expand regulatory capability.
 
@@ -106,10 +106,10 @@ Consider a thermal protection rule designed to safeguard power MOSFETs within an
 T > 85^\circ\mathrm{C} \;\land\; \frac{dT}{dt} > 2{,}5^\circ\mathrm{C/s} \;\Rightarrow\; \mathrm{DeratePower}(50\,\%)
 ```
 
-- The thermal protection rule incorporates $T$, the current transistor temperature in degrees Celsius, against a threshold of $`85^\circ\mathrm{C}`$;
-- $\frac{dT}{dt}$ denotes the rate of temperature change in degrees Celsius per second, with $`2{,}5^\circ\mathrm{C/s}`$ serving as the heating rate threshold;
+- The thermal protection rule incorporates $T$, the current transistor temperature in degrees Celsius, against a threshold of $85^\circ\mathrm{C}$;
+- $\frac{dT}{dt}$ denotes the rate of temperature change in degrees Celsius per second, with $2{,}5^\circ\mathrm{C/s}$ serving as the heating rate threshold;
 - $>$ denotes "strictly greater than," while $\land$ requires the simultaneous satisfaction of both propositions;
-- $\Rightarrow$ denotes that upon satisfaction of the antecedent, the protective action $`\mathrm{DeratePower}(50\,\%)`$ is dispatched, reducing output power to 50%.
+- $\Rightarrow$ denotes that upon satisfaction of the antecedent, the protective action $\mathrm{DeratePower}(50\,\%)$ is dispatched, reducing output power to 50%.
 
 Consequently, the rule derates power only when the temperature has already exceeded 85 °C and continues to climb faster than the specified threshold. Crucially, the derivative must be estimated with due consideration of sensor noise and sampling jitter; otherwise, random noise spikes will trigger spurious tripping.
 
@@ -290,11 +290,11 @@ For a single fixed random seed, the naive derivative produced 520 true evaluatio
 
 ### 3.1. Operating Envelope and Thermal Derating via Fixed-Point Arithmetic (Q16.16)
 
-Filtering noise from an isolated temperature signal eliminates spurious tripping; however, in mission-critical power microelectronics (electric vehicle traction inverters, battery management systems [BMS], Infineon AURIX controllers rated at ISO 26262 ASIL D), physical safety boundaries are never governed by uncoupled, one-dimensional thresholds. The plant's safe operational workspace constitutes a coupled, multidimensional hypervolume (*Operating Envelope*), where maximum permissible core voltage $`V_{\mathrm{core}}`$ is tightly constrained by instantaneous junction temperature $`T_j`$, operational CPU clock frequency $`F_{\mathrm{cpu}}`$, and pin injection currents $`I_{\mathrm{inj}}`$.
+Filtering noise from an isolated temperature signal eliminates spurious tripping; however, in mission-critical power microelectronics (electric vehicle traction inverters, battery management systems [BMS], Infineon AURIX controllers rated at ISO 26262 ASIL D), physical safety boundaries are never governed by uncoupled, one-dimensional thresholds. The plant's safe operational workspace constitutes a coupled, multidimensional hypervolume (*Operating Envelope*), where maximum permissible core voltage $V_{\mathrm{core}}$ is tightly constrained by instantaneous junction temperature $T_j$, operational CPU clock frequency $F_{\mathrm{cpu}}$, and pin injection currents $I_{\mathrm{inj}}$.
 
 Attempting to compute nonlinear safety hypersurfaces in software on a general-purpose CPU encounters two fatal engineering roadblocks:
-1. **Unacceptable Non-Deterministic Latency:** Floating-point operations (FP32/FP64) introduce execution jitter and tens of microseconds of latency, rendering deterministic tripping within sub-microsecond protection loops ($`< 1\,\mu\text{s}`$) physically impossible.
-2. **Catastrophic Envelope Inversion Fault:** When transitioning to hardware fixed-point arithmetic in silicon (specifically Q16.16), multiplying a large temperature delta ($`\Delta T = 125^\circ\text{C} - 25^\circ\text{C} = 100^\circ\text{C}`$) by a steep derating slope causes an integer overflow of the most significant bits in the 64-bit product. Mechanically truncating bits without saturation arithmetic (`prod[47:16]`) flips the sign bit: the computed derating term abruptly turns negative, artificially **expanding** the permissible power envelope during thermal runaway instead of collapsing it, causing the catastrophic physical explosion of the power stage.
+1. **Unacceptable Non-Deterministic Latency:** Floating-point operations (FP32/FP64) introduce execution jitter and tens of microseconds of latency, rendering deterministic tripping within sub-microsecond protection loops ($< 1\,\mu\text{s}$) physically impossible.
+2. **Catastrophic Envelope Inversion Fault:** When transitioning to hardware fixed-point arithmetic in silicon (specifically Q16.16), multiplying a large temperature delta ($\Delta T = 125^\circ\text{C} - 25^\circ\text{C} = 100^\circ\text{C}$) by a steep derating slope causes an integer overflow of the most significant bits in the 64-bit product. Mechanically truncating bits without saturation arithmetic (`prod[47:16]`) flips the sign bit: the computed derating term abruptly turns negative, artificially **expanding** the permissible power envelope during thermal runaway instead of collapsing it, causing the catastrophic physical explosion of the power stage.
 
 To unconditionally eliminate this vulnerability at the silicon level, hardware deploys a pipelined hypervolume limiter coprocessor utilizing Q16.16 saturation arithmetic:
 
@@ -315,13 +315,13 @@ X[47:16], & \text{otherwise}.
 ```
 
 Parameters of the hardware derating equations:
-- $`T_{\mathrm{sensor}}`$ — instantaneous sensor temperature in Q16.16 format, range $`[-40.0, +175.0]^\circ\text{C}`$;
-- $`T_{\mathrm{ref}}`$ — baseline thermal derating onset threshold (e.g., $`+85.0^\circ\text{C}`$);
-- $`\Delta T`$ — positive temperature excess above threshold;
-- $`K_{\mathrm{derate}}`$ — derating coefficient ($\text{W/}^\circ\text{C}$ in Q16.16 format);
-- $`P_{\mathrm{max\_nominal}}`$ — nameplate nominal power in the cold operating zone ($\text{W}$ in Q16.16);
-- $`P_{\mathrm{derated}}`$ — dynamically calculated instantaneous permissible power ceiling;
-- $`\mathrm{SaturateQ16}`$ — hardware saturation operator that evaluates the 17 most significant bits of 64-bit product $`X`$ to clamp signed overflow.
+- $T_{\mathrm{sensor}}$ — instantaneous sensor temperature in Q16.16 format, range $[-40.0, +175.0]^\circ\text{C}$;
+- $T_{\mathrm{ref}}$ — baseline thermal derating onset threshold (e.g., $+85.0^\circ\text{C}$);
+- $\Delta T$ — positive temperature excess above threshold;
+- $K_{\mathrm{derate}}$ — derating coefficient ($\text{W/}^\circ\text{C}$ in Q16.16 format);
+- $P_{\mathrm{max\_nominal}}$ — nameplate nominal power in the cold operating zone ($\text{W}$ in Q16.16);
+- $P_{\mathrm{derated}}$ — dynamically calculated instantaneous permissible power ceiling;
+- $\mathrm{SaturateQ16}$ — hardware saturation operator that evaluates the 17 most significant bits of 64-bit product $X$ to clamp signed overflow.
 
 ```mermaid
 flowchart LR
@@ -351,19 +351,19 @@ flowchart LR
 #### 3.1.1. Actionable Closed Loop of Operating Envelope Derating
 
 1. **Control Flow & Runtime Decisions:**
-   At stage 4 of the pipeline, the hardware comparator compares the active load vector against dynamic ceiling $`P_{\mathrm{derated}}`$. If $`P_{\mathrm{actual}} \le P_{\mathrm{derated}}`$, status bit $`\mathrm{flag\_zf}`$ is asserted to 1, and the gating PWM signal propagates to transistor gates without delay. If the limit is exceeded or if $`P_{\mathrm{derated}} < P_{\mathrm{min\_safe}}`$ (validity window collapse), logic asserts underflow flag $`\mathrm{flag\_uf} = 1`$ and immediately triggers direct hardware signal `HARD_INTERLOCK`, driving bridge gate drivers into failsafe isolation within 1 clock cycle ($`5\,\text{ns}`$) without operating system intervention.
+   At stage 4 of the pipeline, the hardware comparator compares the active load vector against dynamic ceiling $P_{\mathrm{derated}}$. If $P_{\mathrm{actual}} \le P_{\mathrm{derated}}$, status bit $\mathrm{flag\_zf}$ is asserted to 1, and the gating PWM signal propagates to transistor gates without delay. If the limit is exceeded or if $P_{\mathrm{derated}} < P_{\mathrm{min\_safe}}$ (validity window collapse), logic asserts underflow flag $\mathrm{flag\_uf} = 1$ and immediately triggers direct hardware signal `HARD_INTERLOCK`, driving bridge gate drivers into failsafe isolation within 1 clock cycle ($5\,\text{ns}$) without operating system intervention.
 2. **Hardware Dimensioning:**
    - The pipeline synthesizes onto 4 register stages in FPGA/ASIC fabrics, consuming under 380 LUTs and exactly 1 dedicated DSP48E2 multiplier slice on Xilinx UltraScale+ devices;
-   - At a $`200\,\text{MHz}`$ clock frequency, total pipeline latency is fixed at $`4 \times 5\,\text{ns} = 20\,\text{ns}`$ with zero jitter ($`\mathrm{Jitter} = 0`$), outperforming RTOS software timers ($`10\text{–}50\,\mu\text{s}`$) by three orders of magnitude.
+   - At a $200\,\text{MHz}$ clock frequency, total pipeline latency is fixed at $4 \times 5\,\text{ns} = 20\,\text{ns}$ with zero jitter ($\mathrm{Jitter} = 0$), outperforming RTOS software timers ($10\text{–}50\,\mu\text{s}$) by three orders of magnitude.
 3. **Worked Numerical Example:**
-   Consider an electric vehicle traction inverter with nominal power rating $`P_{\mathrm{max\_nominal}} = 150\,\text{kW}`$ (in Q16.16: `0x0096_0000`), derating onset threshold $`T_{\mathrm{ref}} = 85^\circ\text{C}`$, and derating coefficient $`K_{\mathrm{derate}} = 2.5\,\text{kW/}^\circ\text{C}`$ (in Q16.16: `0x0002_8000`).
-   Under an emergency sensor temperature spike to $`T_{\mathrm{sensor}} = 135^\circ\text{C}`$:
-   - $`\Delta T = 135 - 85 = 50^\circ\text{C}`$ (`0x0032_0000`);
-   - Product $`\Delta T \cdot K_{\mathrm{derate}} = 50 \times 2.5 = 125\,\text{kW}`$;
-   - $`P_{\mathrm{derated}} = 150 - 125 = 25\,\text{kW}`$.
+   Consider an electric vehicle traction inverter with nominal power rating $P_{\mathrm{max\_nominal}} = 150\,\text{kW}$ (in Q16.16: `0x0096_0000`), derating onset threshold $T_{\mathrm{ref}} = 85^\circ\text{C}$, and derating coefficient $K_{\mathrm{derate}} = 2.5\,\text{kW/}^\circ\text{C}$ (in Q16.16: `0x0002_8000`).
+   Under an emergency sensor temperature spike to $T_{\mathrm{sensor}} = 135^\circ\text{C}$:
+   - $\Delta T = 135 - 85 = 50^\circ\text{C}$ (`0x0032_0000`);
+   - Product $\Delta T \cdot K_{\mathrm{derate}} = 50 \times 2.5 = 125\,\text{kW}$;
+   - $P_{\mathrm{derated}} = 150 - 125 = 25\,\text{kW}$.
 
-   If current motor demand is $`80\,\text{kW}`$, within $`20\,\text{ns}`$ the pipeline asserts the threshold violation ($`80 > 25`$), raises $`\mathrm{flag\_uf} = 1`$, and trips the inverter into regenerative braking with bounded power, safeguarding the power IGBT modules from thermal breakdown.
-   Likewise, in an edge power distribution unit operating at ambient temperature $`T_{\mathrm{amb}} = 65^\circ\text{C}`$ with derated threshold $`P_{\mathrm{derated}} = 1200\,\text{W}`$, an incoming actuator request of $`P_{\mathrm{req}} = 1800\,\text{W}`$ results in an immediate $`1800 > 1200`$ violation, tripping $`\mathrm{flag\_uf} = 1`$ and issuing a deterministic `HARD_INTERLOCK` refusal verdict.
+   If current motor demand is $80\,\text{kW}$, within $20\,\text{ns}$ the pipeline asserts the threshold violation ($80 > 25$), raises $\mathrm{flag\_uf} = 1$, and trips the inverter into regenerative braking with bounded power, safeguarding the power IGBT modules from thermal breakdown.
+   Likewise, in an edge power distribution unit operating at ambient temperature $T_{\mathrm{amb}} = 65^\circ\text{C}$ with derated threshold $P_{\mathrm{derated}} = 1200\,\text{W}$, an incoming actuator request of $P_{\mathrm{req}} = 1800\,\text{W}$ results in an immediate $1800 > 1200$ violation, tripping $\mathrm{flag\_uf} = 1$ and issuing a deterministic `HARD_INTERLOCK` refusal verdict.
 
 ---
 
@@ -416,8 +416,8 @@ F = \mathbb{E}_{q(\vartheta)}\left[\ln q(\vartheta) - \ln p(\tilde{y}, \vartheta
 
 - In the free energy formulation, $F$ is a scalar quantity, and $\vartheta$ denotes the hidden state of the plant;
 - $q(\vartheta)$ represents the approximate posterior belief distribution of the adaptive model, while $p(\tilde{y},\vartheta)$ is the joint distribution of observation $\tilde{y}$ and state $\vartheta$ under generative model $p$;
-- $`\mathbb{E}_{q(\vartheta)}`$ denotes the mathematical expectation under distribution $q$, and $\ln$ is the natural logarithm;
-- $`p(\vartheta\mid\tilde{y})`$ represents the true posterior distribution over hidden states conditioned on observation, while $`\mathrm{KL}[q\|p]`$ denotes the Kullback-Leibler divergence between the distributions;
+- $\mathbb{E}_{q(\vartheta)}$ denotes the mathematical expectation under distribution $q$, and $\ln$ is the natural logarithm;
+- $p(\vartheta\mid\tilde{y})$ represents the true posterior distribution over hidden states conditioned on observation, while $\mathrm{KL}[q\|p]$ denotes the Kullback-Leibler divergence between the distributions;
 - $p(\tilde{y})$ is the marginal probability of the observation, and the equality establishes the equivalence between the expected energy formulation and the KL-divergence form augmented by $-\ln p(\tilde{y})$;
 - With the natural logarithm, information-theoretic quantities are measured in nats.
 
@@ -425,7 +425,7 @@ Variational free energy $F$ can be minimized along two distinct pathways: updati
 
 > [!NOTE]
 > **Two Facets of Engineering Active Inference Interpreted by the Author**
-> 1. Perception: the system recursively updates its internal posterior belief distribution $q(\vartheta)$ (Kalman filter state or Bayesian network beliefs) to minimize divergence $`\mathrm{KL}[q \| p]`$ as passive model alignment with sensor telemetry.
+> 1. Perception: the system recursively updates its internal posterior belief distribution $q(\vartheta)$ (Kalman filter state or Bayesian network beliefs) to minimize divergence $\mathrm{KL}[q \| p]$ as passive model alignment with sensor telemetry.
 > 2. Action: upon detecting critical deviation, the controller issues deterministic actuation commands to servomotors or PWM inverters, compelling the physical plant toward safe setpoints to minimize informational surprise $-\ln p(\tilde{y})$.
 > *Runtime Management:* Minimizing variational free energy maps directly to alternating hardware state estimation and compensatory actuation cycles.
 
@@ -467,11 +467,11 @@ The variance of physical measurements increases dramatically because the weakene
 ```
 
 **Runtime Control and Preemptive Arbitration:**
-- **Critical Slowing Down Alarm (CSD Alarm):** if, within a sliding observation window, both conditions $`\rho_1 \ge \tau_{\rho} = 0.85`$ and $`\mathrm{Var}(x) / \sigma_0^2 \ge 3.0`$ are simultaneously satisfied (variance triples relative to baseline noise variance $`\sigma_0^2`$), the system flags an imminent loss of dynamic stability;
+- **Critical Slowing Down Alarm (CSD Alarm):** if, within a sliding observation window, both conditions $\rho_1 \ge \tau_{\rho} = 0.85$ and $\mathrm{Var}(x) / \sigma_0^2 \ge 3.0$ are simultaneously satisfied (variance triples relative to baseline noise variance $\sigma_0^2$), the system flags an imminent loss of dynamic stability;
 - **Expert Core Action:** the symbolic reasoning engine overrides the nominal linear regulator and triggers a preemptive fail-safe protocol (`PREEMPTIVE_FAIL_SAFE`), forcing a reduction in turbine RPM or shedding load from the power bus prior to crossing the destructive bifurcation boundary.
 
 **Numerical Example of Bifurcation Detection:**
-A temperature sensor on a high-voltage power inverter sampled at $\Delta t = 0.5\,\text{s}$ detects cooling degradation. The recovery rate deteriorates to $\lambda = 0.1\,\text{s}^{-1}$ under noise intensity $\sigma = 0.2\,^\circ\text{C}$ (baseline variance $`\sigma_0^2 = 0.04`$):
+A temperature sensor on a high-voltage power inverter sampled at $\Delta t = 0.5\,\text{s}$ detects cooling degradation. The recovery rate deteriorates to $\lambda = 0.1\,\text{s}^{-1}$ under noise intensity $\sigma = 0.2^\circ\text{C}$ (baseline variance $\sigma_0^2 = 0.04$):
 
 ```math
 \rho_1 = e^{-0{,}1 \cdot 0{,}5} = e^{-0{,}05} \approx 0{,}951 \ge 0{,}85
@@ -495,7 +495,7 @@ flowchart LR
     EXP --> ACT["Safe State (Fail-Safe)<br/>speed reduction, power cutoff"]
 ```
 
-For the expert system, this unlocks a novel category of rules: **preemptive pre-bifurcation safety rules**. Instead of passively waiting until temperature crosses a catastrophic ceiling or a drone completely loses aerodynamic control, the system interprets synergetic markers of critical slowing down ($`(\rho_1 \uparrow, \mathrm{Var} \uparrow)`$) as an active defeater against nominal operating mode, safely intervening while the system remains within its linear controllability envelope.
+For the expert system, this unlocks a novel category of rules: **preemptive pre-bifurcation safety rules**. Instead of passively waiting until temperature crosses a catastrophic ceiling or a drone completely loses aerodynamic control, the system interprets synergetic markers of critical slowing down ($(\rho_1 \uparrow, \mathrm{Var} \uparrow)$) as an active defeater against nominal operating mode, safely intervening while the system remains within its linear controllability envelope.
 
 ## 6. Hierarchy of Time Horizons L0–L4
 
@@ -634,18 +634,18 @@ The telemetry contracts formalized in Sections 7.1 and 7.2 presume the availabil
 
 This paradigm builds upon software-defined radio (SDR) and **AI-RAN (Open RAN accelerated via GPU cuPHY pipelines)**. Unlike fixed ASICs, cuPHY migrates raw in-phase and quadrature (I/Q) sample processing onto massively parallel tensor cores. This enables baseband processing to concurrently compute RF spectral metrics during symbol demodulation, translating them directly into symbolic Datalog predicates in real time.
 
-The principal metric of channel integrity is the Jamming Index ($`\mathrm{JammingIndex}`$, or $`\mathrm{JI}`$):
+The principal metric of channel integrity is the Jamming Index ($\mathrm{JammingIndex}$, or $\mathrm{JI}$):
 
 ```math
 \mathrm{JammingIndex} = \frac{P_{\mathrm{total}} - P_{\mathrm{pilot}}}{N_0 \cdot B_{\mathrm{channel}}}.
 ```
 
 Parameters of the Jamming Index equation:
-- $`P_{\mathrm{total}}`$ — total integrated RF power within the active channel bandwidth (measured in dBm or watts);
-- $`P_{\mathrm{pilot}}`$ — coherent received power of base station reference pilot symbols (DMRS / SSB) extracted following correlation;
-- $`N_0`$ — power spectral density of receiver thermal noise floor ($\text{W/Hz}$);
-- $`B_{\mathrm{channel}}`$ — effective RF channel bandwidth ($\text{Hz}$);
-- $`\mathrm{JammingIndex}`$ — dimensionless ratio quantifying the magnitude of artificial jamming power relative to the natural thermal background.
+- $P_{\mathrm{total}}$ — total integrated RF power within the active channel bandwidth (measured in dBm or watts);
+- $P_{\mathrm{pilot}}$ — coherent received power of base station reference pilot symbols (DMRS / SSB) extracted following correlation;
+- $N_0$ — power spectral density of receiver thermal noise floor ($\text{W/Hz}$);
+- $B_{\mathrm{channel}}$ — effective RF channel bandwidth ($\text{Hz}$);
+- $\mathrm{JammingIndex}$ — dimensionless ratio quantifying the magnitude of artificial jamming power relative to the natural thermal background.
 
 ```mermaid
 flowchart LR
@@ -677,14 +677,14 @@ flowchart LR
 
 1. **Control Flow & Runtime Decisions:**
    Streaming RF metrics are evaluated directly by safety rules:
-   - If $`\mathrm{JammingIndex} \le 3.0`$ (nominal background), the RF link is certified as trusted, and inbound telemetry is marked as `PHYS_TRANSPORT_VALID`;
-   - If $`3.0 < \mathrm{JammingIndex} \le 12.0`$, the supervisory engine commands an immediate pseudorandom frequency hop (FHSS) or downshifts the modulation and coding scheme (MCS) to maximal direct-sequence spread spectrum (DSSS);
-   - If $`\mathrm{JammingIndex} > 12.0`$ or if non-coherent Doppler drift is detected across the GNSS constellation, the inference engine immediately emits the logical fact `gnss_unreliable` and interlocks satellite positioning. The autonomous vehicle transitions deterministically to dead reckoning via inertial odometry and optical flow (Fail-Closed with respect to GNSS), completely precluding spoofing takeovers.
+   - If $\mathrm{JammingIndex} \le 3.0$ (nominal background), the RF link is certified as trusted, and inbound telemetry is marked as `PHYS_TRANSPORT_VALID`;
+   - If $3.0 < \mathrm{JammingIndex} \le 12.0$, the supervisory engine commands an immediate pseudorandom frequency hop (FHSS) or downshifts the modulation and coding scheme (MCS) to maximal direct-sequence spread spectrum (DSSS);
+   - If $\mathrm{JammingIndex} > 12.0$ or if non-coherent Doppler drift is detected across the GNSS constellation, the inference engine immediately emits the logical fact `gnss_unreliable` and interlocks satellite positioning. The autonomous vehicle transitions deterministically to dead reckoning via inertial odometry and optical flow (Fail-Closed with respect to GNSS), completely precluding spoofing takeovers.
 2. **Hardware Dimensioning:**
-   - Ingesting a $`100\,\text{MHz}`$ I/Q stream under cuPHY on NVIDIA Jetson AGX Orin or RTX 6000 Ada accelerators requires sustained memory bandwidth $`B_{\mathrm{mem}} \ge 1.6\,\text{GB/s}`$ under 16-bit quantization;
-   - Computing a 4096-point FFT alongside $`\mathrm{JammingIndex}`$ estimation executes in $`18\,\mu\text{s}`$ on tensor cores, detecting hostile jamming long before socket-level TCP/IP buffers experience timeout collapse.
+   - Ingesting a $100\,\text{MHz}$ I/Q stream under cuPHY on NVIDIA Jetson AGX Orin or RTX 6000 Ada accelerators requires sustained memory bandwidth $B_{\mathrm{mem}} \ge 1.6\,\text{GB/s}$ under 16-bit quantization;
+   - Computing a 4096-point FFT alongside $\mathrm{JammingIndex}$ estimation executes in $18\,\mu\text{s}$ on tensor cores, detecting hostile jamming long before socket-level TCP/IP buffers experience timeout collapse.
 3. **Worked Numerical Example:**
-   Aboard an autonomous warehouse robot, the receiver detects an integrated $`2.4\,\text{GHz}`$ band power surge to $`P_{\mathrm{total}} = -45\,\text{dBm}`$ ($`31.6\,\text{nW}`$), while received base station pilot power collapses to $`P_{\mathrm{pilot}} = -82\,\text{dBm}`$ ($`6.3\,\text{pW}`$). Across bandwidth $`B = 20\,\text{MHz}`$ with thermal floor $`N_0 \cdot B = -101\,\text{dBm}`$ ($`0.08\,\text{pW}`$):
+   Aboard an autonomous warehouse robot, the receiver detects an integrated $2.4\,\text{GHz}$ band power surge to $P_{\mathrm{total}} = -45\,\text{dBm}$ ($31.6\,\text{nW}$), while received base station pilot power collapses to $P_{\mathrm{pilot}} = -82\,\text{dBm}$ ($6.3\,\text{pW}$). Across bandwidth $B = 20\,\text{MHz}$ with thermal floor $N_0 \cdot B = -101\,\text{dBm}$ ($0.08\,\text{pW}$):
 
 ```math
 \mathrm{JammingIndex} = \frac{31{,}6 \times 10^{-9} - 0{,}0063 \times 10^{-9}}{0{,}08 \times 10^{-12}} \approx 395 \gg 12{,}0.
@@ -820,13 +820,13 @@ where the machine inference state is defined by the tuple:
 ```
 
 Parameters of the cross-architectural isomorphism criterion:
-- $`\mathcal{P}`$ — compiled EISA rule program or bundle;
-- $`\mathbf{X}`$ — normalized input vector of telemetry and facts;
-- $`\mathcal{A}_1, \mathcal{A}_2`$ — arbitrary distinct physical execution platforms (e.g., x86-64 and RISC-V);
-- $`R_0 \dots R_7`$ — 64-bit general-purpose registers of the EISA interpreter;
-- $`\mathrm{EIR}`$ — Epistemic Instruction Register (program counter);
-- $`\mathrm{EFLAGS}`$ — condition status register (`flag_zf`, `flag_uf`, `flag_cf`);
-- $`\mathrm{ProofTreeHash}`$ — cryptographic SHA-256 digest of the entire proof tree capturing the complete chain of applied rules.
+- $\mathcal{P}$ — compiled EISA rule program or bundle;
+- $\mathbf{X}$ — normalized input vector of telemetry and facts;
+- $\mathcal{A}_1, \mathcal{A}_2$ — arbitrary distinct physical execution platforms (e.g., x86-64 and RISC-V);
+- $R_0 \dots R_7$ — 64-bit general-purpose registers of the EISA interpreter;
+- $\mathrm{EIR}$ — Epistemic Instruction Register (program counter);
+- $\mathrm{EFLAGS}$ — condition status register (`flag_zf`, `flag_uf`, `flag_cf`);
+- $\mathrm{ProofTreeHash}$ — cryptographic SHA-256 digest of the entire proof tree capturing the complete chain of applied rules.
 
 ```mermaid
 flowchart TB
@@ -866,13 +866,13 @@ flowchart TB
    Upon loading an EISA rule bundle, the loader verifies three architectural invariants:
    - Natural 64-bit alignment: all 64-bit fields and instructions are aligned to 8-byte boundaries (`offset % 8 == 0`), and 32-bit fields to 4-byte boundaries; raw pointer casting is prohibited by compilation semantics;
    - Standard Little-Endian (LE) byte ordering: on Big-Endian processors, loads and stores execute exclusively via hardware byte-swap intrinsics (`__builtin_bswap64`);
-   - Numerical weights are quantized to integer ranges $`[0, 65535]`$ (or Q16.16), completely eliminating floating-point non-determinism from critical inference paths.
-   If during regression verification even a single bit diverges in $`\mathrm{ProofTreeHash}`$, the node's attestation certificate is revoked and the system enters a fail-closed state emitting `REFUSAL_ARITHMETIC_DIVERGENCE`.
+   - Numerical weights are quantized to integer ranges $[0, 65535]$ (or Q16.16), completely eliminating floating-point non-determinism from critical inference paths.
+   If during regression verification even a single bit diverges in $\mathrm{ProofTreeHash}$, the node's attestation certificate is revoked and the system enters a fail-closed state emitting `REFUSAL_ARITHMETIC_DIVERGENCE`.
 2. **Hardware Dimensioning:**
-   - Natural alignment eliminates split-lock memory bus penalties on x86 and alignment traps on ARM/RISC-V, guaranteeing single-cycle AXI bus access ($`5\,\text{ns}`$ at $`200\,\text{MHz}`$);
-   - Byte padding overhead is strictly bounded below $`3.2\,\%`$ of total knowledge bundle memory footprint.
+   - Natural alignment eliminates split-lock memory bus penalties on x86 and alignment traps on ARM/RISC-V, guaranteeing single-cycle AXI bus access ($5\,\text{ns}$ at $200\,\text{MHz}$);
+   - Byte padding overhead is strictly bounded below $3.2\,\%$ of total knowledge bundle memory footprint.
 3. **Worked Numerical Example:**
-   During DO-178C Level A qualification, an expert suite of 1,024 rules was executed concurrently on x86-64 (Intel Xeon), ARM64 (Cortex-A78AE), and RISC-V (SiFive U74). Evaluating identical 64-element telemetry vectors $`\mathbf{X}`$, all three engines converged in exactly 256 EISA instructions with matching final proof hashes `0x8F4A2C19...` and status flag `flag_zf = 1`. **Action:** Cross-architectural isomorphism is certified at 100%, and the bundle is authorized for deployment across the heterogeneous cluster.
+   During DO-178C Level A qualification, an expert suite of 1,024 rules was executed concurrently on x86-64 (Intel Xeon), ARM64 (Cortex-A78AE), and RISC-V (SiFive U74). Evaluating identical 64-element telemetry vectors $\mathbf{X}$, all three engines converged in exactly 256 EISA instructions with matching final proof hashes `0x8F4A2C19...` and status flag `flag_zf = 1`. **Action:** Cross-architectural isomorphism is certified at 100%, and the bundle is authorized for deployment across the heterogeneous cluster.
 
 ---
 
@@ -925,13 +925,13 @@ The father of cybernetics Norbert Wiener (Professor at MIT, pioneer of feedback 
 
 - **Norbert Wiener:** Consider the internal plant model. According to the Conant-Ashby theorem, every good regulator of a system must be a model of that system. In your Section 7, continuous sensor telemetry is quantized into discrete semantic event contracts. Yet any coarse quantization of a continuous phase space inevitably destroys Shannon-Wiener mutual information. When a physical plant approaches critical slowing down or a bifurcation point (Section 5), variance fluctuations and lag-1 autocorrelation diverge exponentially. If the L2/L3 edge node operates on impoverished discrete categories, will its internal model not lose fidelity at the exact moment of phase transition, inducing catastrophic regulatory blindness?
 
-- **Mykola Fedchyk:** Norbert Wiener, the Conant-Ashby theorem in our architecture is realized via multi-tier state observation, where quantization is never a naive scalar threshold trip. At tier L2, the state estimator (Kalman filter or alpha-beta observer) continuously tracks the latent dynamic state vector $`\mathbf{x}_k`$ and the error covariance matrix $`\mathbf{P}_k`$. Quantization into event contracts is driven not by raw sensor readings, but by Kalman innovation residuals and Chi-squared ($`\chi^2`$) hypothesis testing. Furthermore, synergetic indicators of critical slowing down—surging moving variance $`\sigma^2`$ and lag-1 autocorrelation $`\mathrm{AC}(1)`$—are computed as continuous temporal metrics directly in hardware registers. The discrete semantic fact "phase transition imminent" is asserted only when an informational entropy barrier is crossed with mathematical certainty. Consequently, the edge node's internal model preserves continuous topological fidelity with physical reality through critical bifurcation points.
+- **Mykola Fedchyk:** Norbert Wiener, the Conant-Ashby theorem in our architecture is realized via multi-tier state observation, where quantization is never a naive scalar threshold trip. At tier L2, the state estimator (Kalman filter or alpha-beta observer) continuously tracks the latent dynamic state vector $\mathbf{x}_k$ and the error covariance matrix $\mathbf{P}_k$. Quantization into event contracts is driven not by raw sensor readings, but by Kalman innovation residuals and Chi-squared ($\chi^2$) hypothesis testing. Furthermore, synergetic indicators of critical slowing down—surging moving variance $\sigma^2$ and lag-1 autocorrelation $\mathrm{AC}(1)$—are computed as continuous temporal metrics directly in hardware registers. The discrete semantic fact "phase transition imminent" is asserted only when an informational entropy barrier is crossed with mathematical certainty. Consequently, the edge node's internal model preserves continuous topological fidelity with physical reality through critical bifurcation points.
 
 **Dialogue with Edward Lee: Determinism of Multithreaded Software Pipelines and Hardware Timing Support**
 
 - **Edward A. Lee:** Mykola Fedchyk, standard software abstractions in contemporary operating systems—threads, mutexes, task queues, and Go channels—are fundamentally non-deterministic with respect to physical time. In your chapter, sensory data ingestion, digital filtering, and state estimation are modeled using software goroutines. Yet general-purpose OS schedulers and language garbage collectors provide no Worst-Case Execution Time (WCET) guarantees. Without precision-timed architectures (PRET) and synchronous-reactive semantics, your temporal event contracts and logical clocks are mere polite fictions of punctuality that cannot withstand certification under rigorous cyber-physical standards.
 
-- **Mykola Fedchyk:** Edward A. Lee, your critique of standard concurrency models and the absence of temporal semantics in mainstream programming languages is entirely justified. That is why in our monograph, the high-level Go pipeline is restricted exclusively to the analytical and cognitive tiers L2–L3 (state estimation, audit logging, and rule caching), where the system operates on logical timestamps and sliding event horizons rather than hard microsecond deadlines. Mission-critical actuation at L0–L1 is assigned to dedicated microcontrollers (such as ARM Cortex-R or Infineon AURIX lockstep cores) running formally verified microkernels (such as seL4) with hardware-anchored clock synchronization. At the boundary between physical sensors and software ingestion, an admission gate is enforced: if an incoming telemetry frame exhibits jitter exceeding the certified threshold $`\Delta t_{\mathrm{max}}`$, it is excluded from active state updates and routed to an anomaly log, preventing stale observations from corrupting the plant model.
+- **Mykola Fedchyk:** Edward A. Lee, your critique of standard concurrency models and the absence of temporal semantics in mainstream programming languages is entirely justified. That is why in our monograph, the high-level Go pipeline is restricted exclusively to the analytical and cognitive tiers L2–L3 (state estimation, audit logging, and rule caching), where the system operates on logical timestamps and sliding event horizons rather than hard microsecond deadlines. Mission-critical actuation at L0–L1 is assigned to dedicated microcontrollers (such as ARM Cortex-R or Infineon AURIX lockstep cores) running formally verified microkernels (such as seL4) with hardware-anchored clock synchronization. At the boundary between physical sensors and software ingestion, an admission gate is enforced: if an incoming telemetry frame exhibits jitter exceeding the certified threshold $\Delta t_{\mathrm{max}}$, it is excluded from active state updates and routed to an anomaly log, preventing stale observations from corrupting the plant model.
 
 **Continued Dialogue with Edward Lee: Physical Time Semantics in State Reconciliation and Thermodynamic Irreversibility**
 
@@ -967,11 +967,11 @@ Proceeding in thematic sequence, [Chapter 23](ch23-knowledge-base-verification.m
 6. What architectural mechanisms prevent an edge node from accumulating unrecoverable drift or error while operating in `DegradedLocalOnly` mode?
 7. How is an operational conflict resolved when an edge node activates a motor safety interlock during offline operation, while the central backend concurrently schedules a job run?
 8. Why does updating neural network weights on an edge accelerator require the exact same cryptographic signing and threshold verification lifecycle as updating symbolic rules?
-9. How do the synergetic markers of Critical Slowing Down (CSD)—first-order autocorrelation $`\rho_1`$ and variance inflation $\mathrm{Var}(x)$—enable the detection of imminent bifurcation before the plant physically exceeds emergency thresholds?
+9. How do the synergetic markers of Critical Slowing Down (CSD)—first-order autocorrelation $\rho_1$ and variance inflation $\mathrm{Var}(x)$—enable the detection of imminent bifurcation before the plant physically exceeds emergency thresholds?
 10. How does Lamport's concept of logical clocks differ from physical astronomical time, and why are both timestamp modalities indispensable for safe state reconciliation upon link restoration?
-11. How does a hardware operating envelope limiter utilizing Q16.16 saturation arithmetic prevent power stage thermal runaway and guarantee the safety invariant $`P_{\mathrm{actual}} \le P_{\mathrm{derated}}`$ in $O(1)$ clock cycles?
-12. In what way does an AI-RAN / cuPHY software-defined physical layer convert raw RF spectrum metrics and Jamming Index $`J_I`$ into structured Datalog sensory evidence, eliminating the non-determinism of probabilistic classifiers?
-13. Why is cross-architectural isomorphism of EISA interpreters critical for expert systems, and how do natural data alignment and the elimination of hardware floating-point operations guarantee bit-level equivalence $`\mathrm{State}(\mathcal{A}_1) \equiv \mathrm{State}(\mathcal{A}_2)`$ across x86-64, ARM64, and RISC-V?
+11. How does a hardware operating envelope limiter utilizing Q16.16 saturation arithmetic prevent power stage thermal runaway and guarantee the safety invariant $P_{\mathrm{actual}} \le P_{\mathrm{derated}}$ in $O(1)$ clock cycles?
+12. In what way does an AI-RAN / cuPHY software-defined physical layer convert raw RF spectrum metrics and Jamming Index $J_I$ into structured Datalog sensory evidence, eliminating the non-determinism of probabilistic classifiers?
+13. Why is cross-architectural isomorphism of EISA interpreters critical for expert systems, and how do natural data alignment and the elimination of hardware floating-point operations guarantee bit-level equivalence $\mathrm{State}(\mathcal{A}_1) \equiv \mathrm{State}(\mathcal{A}_2)$ across x86-64, ARM64, and RISC-V?
 
 ## Glossary
 

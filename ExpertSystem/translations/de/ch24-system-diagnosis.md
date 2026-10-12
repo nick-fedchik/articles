@@ -31,7 +31,7 @@ Das Kapitel beschreibt ein didaktisches Referenzmodell und kein universell vorze
 | Fehlersuche (*Troubleshooting*) | Was muss als Nächstes geprüft oder repariert werden? | Prüfrichtlinie und Reparaturplan |
 | Prognose (*Prognostics*) | Wie und wann wird sich der Systemzustand verschlechtern? | Zustandstrajektorie, Restlebensdauer (*RUL*) |
 
-Die Tabelle verdeutlicht den Irrtum aus der Einleitung: Der Klassifikator löste die zweite Aufgabe, während der Ingenieur Antworten auf die dritte und fünfte Aufgabe benötigte. Die Vorhersage eines Klassifikators kann eine nützliche Heuristik darstellen; eine Punktschätzung von $`P(\text{clock\_fault} \mid \text{trace}) = 0{,}72`$ erklärt jedoch keineswegs, warum der Versorgungsspannungseinbruch zeitlich vor dem Taktverlust auftrat. Eine Grundursache lässt sich nicht daraus ableiten, dass ein Merkmal das höchste Gewicht im Klassifikationsmodell besitzt. Ebenso wenig beweist eine erfolgreiche Einmal-Reparatur die tatsächliche Ursache: Der Eingriff könnte flüchtige Zustände zurückgesetzt oder mehrere physikalische Variablen zugleich verändert haben. Das folgende Diagramm veranschaulicht den vollständigen diagnostischen Zyklus.
+Die Tabelle verdeutlicht den Irrtum aus der Einleitung: Der Klassifikator löste die zweite Aufgabe, während der Ingenieur Antworten auf die dritte und fünfte Aufgabe benötigte. Die Vorhersage eines Klassifikators kann eine nützliche Heuristik darstellen; eine Punktschätzung von $P(\text{clock\_fault} \mid \text{trace}) = 0{,}72$ erklärt jedoch keineswegs, warum der Versorgungsspannungseinbruch zeitlich vor dem Taktverlust auftrat. Eine Grundursache lässt sich nicht daraus ableiten, dass ein Merkmal das höchste Gewicht im Klassifikationsmodell besitzt. Ebenso wenig beweist eine erfolgreiche Einmal-Reparatur die tatsächliche Ursache: Der Eingriff könnte flüchtige Zustände zurückgesetzt oder mehrere physikalische Variablen zugleich verändert haben. Das folgende Diagramm veranschaulicht den vollständigen diagnostischen Zyklus.
 
 ```mermaid
 flowchart LR
@@ -237,7 +237,7 @@ Der erste Fall betrifft Versionierungsinkompatibilitäten. Implementiert eine Ge
 - $\mathrm{Obsoletes}(D_2, D_1)$ drückt aus, dass Dokument $D_2$ das Dokument $D_1$ formell außer Kraft setzt;
 - $\Rightarrow$ ist die logische Implikation, $\mathrm{Status}$ ermittelt den normativen Status, und $\mathrm{Superseded}$ markiert die Norm als abgelöst.
 
-Der zweite Fall betrifft deontische Normkollisionen. Sind beide Dokumente formal gültig, schreibt jedoch eines das Verhalten $p$ zwingend vor, während das andere es untersagt ($`\mathcal{O}(p)`$ versus $`\mathcal{F}(p)`$), generiert das Expertensystem einen Bericht über normative Kollisionen mit exakten Byte-Zitaten beider Quellen, wie in [Kapitel 15](ch15-knowledge-extraction-and-kb-construction.md) dargelegt. Der dritte Fall betrifft Ausnahmebedingungen: Weist eine Regel Klauseln wie „sofern Bedingung nicht erfüllt“ auf, prüft die Diagnosemaschine anhand der Telemetriedaten, ob der Verbindungsabbruch eine spezifikationsgerechte Ausnahmereaktion darstellte.
+Der zweite Fall betrifft deontische Normkollisionen. Sind beide Dokumente formal gültig, schreibt jedoch eines das Verhalten $p$ zwingend vor, während das andere es untersagt ($\mathcal{O}(p)$ versus $\mathcal{F}(p)$), generiert das Expertensystem einen Bericht über normative Kollisionen mit exakten Byte-Zitaten beider Quellen, wie in [Kapitel 15](ch15-knowledge-extraction-and-kb-construction.md) dargelegt. Der dritte Fall betrifft Ausnahmebedingungen: Weist eine Regel Klauseln wie „sofern Bedingung nicht erfüllt“ auf, prüft die Diagnosemaschine anhand der Telemetriedaten, ob der Verbindungsabbruch eine spezifikationsgerechte Ausnahmereaktion darstellte.
 
 ## 5. Probabilistisches Ranking konsistenter Diagnosen
 
@@ -252,7 +252,7 @@ P(H_i \mid E) = \frac{P(E \mid H_i)\, P(H_i)}{\sum_j P(E \mid H_j)\, P(H_j)}
 - $P(H_i \mid E)$ ist die A-posteriori-Wahrscheinlichkeit nach Einbeziehung der Beobachtungen; alle Wahrscheinlichkeiten liegen im Intervall $[0, 1]$;
 - $\sum_j$ summiert über alle Hypothesen $H_j$ und normalisiert die Werte zu einer echten Wahrscheinlichkeitsverteilung.
 
-Illustratives Rechenbeispiel: Gelte $`P(H) = 0{,}1`$, $`P(E \mid H) = 0{,}8`$, $`P(\neg H) = 0{,}9`$ und $`P(E \mid \neg H) = 0{,}2`$. Dann ergibt sich $`P(H \mid E) = 0{,}08 / (0{,}08 + 0{,}18) \approx 0{,}308`$. Die Beobachtung $E$ erhöht die Wahrscheinlichkeit der Hypothese von 0,1 auf etwa 0,308.
+Illustratives Rechenbeispiel: Gelte $P(H) = 0{,}1$, $P(E \mid H) = 0{,}8$, $P(\neg H) = 0{,}9$ und $P(E \mid \neg H) = 0{,}2$. Dann ergibt sich $P(H \mid E) = 0{,}08 / (0{,}08 + 0{,}18) \approx 0{,}308$. Die Beobachtung $E$ erhöht die Wahrscheinlichkeit der Hypothese von 0,1 auf etwa 0,308.
 
 Ausfallraten anderer Baugruppenrevisionen oder abweichender Einsatzbedingungen dürfen nicht unkritisch als A-priori-Werte übernommen werden. Bei simultanen Mehrfachfehlern erfordert die stochastische Unabhängigkeit:
 
@@ -264,7 +264,7 @@ P(H_a \land H_b) = P(H_a)\, P(H_b)
 - $\land$ bezeichnet das gemeinsame Eintreten beider Ereignisse, und $P(\cdot)$ ist das Wahrscheinlichkeitsmaß;
 - $=$ gilt strikt nur bei stochastischer Unabhängigkeit.
 
-Für unabhängige Wahrscheinlichkeiten $`P(H_a) = 0{,}1`$ und $`P(H_b) = 0{,}2`$ beträgt die Verbundwahrscheinlichkeit $`0{,}1 \cdot 0{,}2 = 0{,}02`$. Dies bleibt eine Modellannahme: Gemeinsame Ursachen (*Common Cause Failures*) wie Feuchtigkeit, Einschaltstromspitzen oder fehlerhafte Bauteilchargen induzieren signifikante stochastische Abhängigkeiten.
+Für unabhängige Wahrscheinlichkeiten $P(H_a) = 0{,}1$ und $P(H_b) = 0{,}2$ beträgt die Verbundwahrscheinlichkeit $0{,}1 \cdot 0{,}2 = 0{,}02$. Dies bleibt eine Modellannahme: Gemeinsame Ursachen (*Common Cause Failures*) wie Feuchtigkeit, Einschaltstromspitzen oder fehlerhafte Bauteilchargen induzieren signifikante stochastische Abhängigkeiten.
 
 ### 5.1. Diagnose unter Berücksichtigung von Messkanalfehlern und Sensorausfällen
 
@@ -299,7 +299,7 @@ Größen und Wertebereiche:
    - **$BS \le 0{,}10$ (Hohe Kalibrierungsgüte):** Die Wahrscheinlichkeitsausgabe ist validiert; das System darf gerankte Wahrscheinlichkeitswerte autonom an das Leitstandpersonal ausgeben;
    - **$0{,}10 < BS \le 0{,}25$ (Moderate Abweichung):** Bedingte Freigabe; das System schaltet automatisch eine Kalibrierungsschicht (Isotonische Regression oder Platt-Skalierung) vor, bevor Wahrscheinlichkeiten an Planungsmodule übergeben werden;
    - **$BS > 0{,}25$ (Unkalibriert oder irreführend):** Numerische Wahrscheinlichkeitsanzeigen werden gesperrt; das System wechselt zwingend in den konservativen Modus einer rein qualitativen, deterministischen Konfliktaufzählung ohne Vertrauensgewichte.
-2. **Praktisches Zahlenbeispiel (Worked Numerical Example):** Für einen Testfall mit zwei alternativen Diagnosen und der Vorhersage $(0{,}80; 0{,}20)$ bei tatsächlichem Ground-Truth-Zustand $(1; 0)$ beträgt der Score $`(0{,}80 - 1)^2 + (0{,}20 - 0)^2 = 0{,}04 + 0{,}04 = 0{,}08 \le 0{,}10`$. **Systemaktion:** Der Messkanal gilt als hinreichend kalibriert; die Schwelle für den autonomen Diagnosebetrieb ist erfüllt.
+2. **Praktisches Zahlenbeispiel (Worked Numerical Example):** Für einen Testfall mit zwei alternativen Diagnosen und der Vorhersage $(0{,}80; 0{,}20)$ bei tatsächlichem Ground-Truth-Zustand $(1; 0)$ beträgt der Score $(0{,}80 - 1)^2 + (0{,}20 - 0)^2 = 0{,}04 + 0{,}04 = 0{,}08 \le 0{,}10$. **Systemaktion:** Der Messkanal gilt als hinreichend kalibriert; die Schwelle für den autonomen Diagnosebetrieb ist erfüllt.
 
 Der Brier-Score misst die Kalibrierung innerhalb bekannter Klassen, garantiert jedoch nicht die Vollständigkeit des Modells: Ein System kann exzellent kalibriert sein und dennoch an einer unberücksichtigten Fehlerklasse scheitern.
 
@@ -371,7 +371,7 @@ H(\mathcal{H} \mid E) = -\sum_i P(H_i \mid E) \log_2 P(H_i \mid E)
 - $P(H_i \mid E)$ ist die A-posteriori-Wahrscheinlichkeit der Hypothese $H_i$, und $\sum_i$ summiert über alle Hypothesen;
 - $\log_2$ ist der Logarithmus zur Basis 2; das negative Vorzeichen sichert die Nichtnegativität; das Ergebnis liegt zwischen 0 und $\log_2|\mathcal{H}|$ Bit.
 
-Rechenbeispiel: Zwei gleich wahrscheinliche Hypothesen mit je $P = 0{,}5$ besitzen eine Entropie von $`-2 \cdot 0{,}5 \log_2(0{,}5) = 1`$ Bit.
+Rechenbeispiel: Zwei gleich wahrscheinliche Hypothesen mit je $P = 0{,}5$ besitzen eine Entropie von $-2 \cdot 0{,}5 \log_2(0{,}5) = 1$ Bit.
 
 Der erwartete Informationsgewinn (*Information Gain*, IG) einer Prüfung $T$ mit möglichen Ausgängen $o$ entspricht der erwarteten Entropiereduktion:
 
@@ -384,7 +384,7 @@ IG(T) = H(\mathcal{H} \mid E) - \sum_o P(o \mid E, T)\, H(\mathcal{H} \mid E, o,
 - $H(\mathcal{H} \mid E)$ ist die aktuelle Systementropie, und $H(\mathcal{H} \mid E, o, T)$ ist die Restentropie nach Eintreffen des Prüfergebnisses $o$;
 - $\sum_o$ ermittelt die erwartete Restentropie, die von der Ausgangsentropie subtrahiert wird.
 
-Beispiel: Beträgt die Ausgangsentropie 1 Bit und diskriminiert ein idealer Test die beiden Hypothesen fehlerfrei (Restentropie 0), beträgt der Informationsgewinn $`1 - 0 = 1`$ Bit.
+Beispiel: Beträgt die Ausgangsentropie 1 Bit und diskriminiert ein idealer Test die beiden Hypothesen fehlerfrei (Restentropie 0), beträgt der Informationsgewinn $1 - 0 = 1$ Bit.
 
 Die Prüfung mit dem höchsten theoretischen Informationsgewinn kann jedoch übermäßig teuer, zeitaufwendig oder riskant sein. Die reale Nützlichkeit (*Utility*) balanciert Informationsgewinn gegen Zeit-, Finanz-, Risiko- und Evidenzverlustkosten aus:
 
@@ -875,7 +875,7 @@ Zur virtuellen intellektuellen Fachdiskussion sind der Begründer der Theorie de
 
 - **Raymond Reiter:** In der klassischen First-Principles-Diagnose gelten Beobachtungen $OBS$ als gesicherte Wahrheiten über die physikalische Welt. In der Realität driften jedoch Sensoren, Rauschen verfälscht Telemetrie, und viele Komponenten sind sensorisch gar nicht erfasst. Wenn der Beobachtungsvektor allen bekannten Einzel- und Doppelfehlern widerspricht, liefert die Hitting-Set-Suche die leere Menge oder degeneriert zu einer absurden Hypothese, wonach alle Komponenten gleichzeitig defekt seien. Wie verhindert Ihre Diagnose-Engine eine solche Überanpassung an unvollständige Daten ohne willkürliche Strafheuristiken?
 
-- **Mykola Fedchyk:** Herr Reiter, exakt dafür haben wir den Mechanismus der algorithmischen Verweigerung (Epistemic Refusal) mit Ausweis von Beweisdefiziten eingeführt. Ergibt die Hitting-Set-Suche keinen Kandidaten innerhalb der zulässigen Kardinalität oder unterschreitet die A-posteriori-Wahrscheinlichkeit des Spitzenkandidaten die Zertifizierungsschranke $`\tau_{\mathrm{diag}}`$, konstruiert das System keine künstlichen Mehrfachfehler. Stattdessen triggert es ein Unterscheidbarkeitsprotokoll (Distinguishability Query): Auf Basis Ihres Konsistenzkriteriums berechnet es exakt jene Messung, die geeignet ist, die Hypothese eines Sensorfehlers gegen einen echten Anlagenfehler zu falsifizieren. Ist eine physikalische Messung unmöglich, ergeht das Urteil `REFUSAL_INSUFFICIENT_EVIDENCE` mit lückenloser Spezifikation der fehlenden Parameter. Dies wandelt logische Unvollständigkeit in eine kontrollierte Sicherheitsbarriere.
+- **Mykola Fedchyk:** Herr Reiter, exakt dafür haben wir den Mechanismus der algorithmischen Verweigerung (Epistemic Refusal) mit Ausweis von Beweisdefiziten eingeführt. Ergibt die Hitting-Set-Suche keinen Kandidaten innerhalb der zulässigen Kardinalität oder unterschreitet die A-posteriori-Wahrscheinlichkeit des Spitzenkandidaten die Zertifizierungsschranke $\tau_{\mathrm{diag}}$, konstruiert das System keine künstlichen Mehrfachfehler. Stattdessen triggert es ein Unterscheidbarkeitsprotokoll (Distinguishability Query): Auf Basis Ihres Konsistenzkriteriums berechnet es exakt jene Messung, die geeignet ist, die Hypothese eines Sensorfehlers gegen einen echten Anlagenfehler zu falsifizieren. Ist eine physikalische Messung unmöglich, ergeht das Urteil `REFUSAL_INSUFFICIENT_EVIDENCE` mit lückenloser Spezifikation der fehlenden Parameter. Dies wandelt logische Unvollständigkeit in eine kontrollierte Sicherheitsbarriere.
 
 **Dialog mit Peter Struss: Diskrete Logik und qualitative physikalische Modelle in der Diagnose**
 
@@ -887,7 +887,7 @@ Zur virtuellen intellektuellen Fachdiskussion sind der Begründer der Theorie de
 
 - **Peter Struss:** Cyber-physische Großanlagen weisen tiefe strukturelle Hierarchien auf: Ein Halbleiter sitzt auf einer Platine, die Platine in einem Steuergerät, das Steuergerät regelt ein Antriebsaggregat. Tritt ein hochfrequenter transienter Vorgang auf — etwa ein Windungsschluss einer Induktivität —, erzeugt er thermischen Stress in einem Leistungsschalter, der Minuten später zu einem Mikrocontroller-Brownout führt. Betrachtet eine Diagnose-Engine alle Komponenten auf einem flachen Konfliktgraphen, unterliegt sie dem Diagnose-Aliasing: Sie verwechselt kaskadierende Sekundäreffekte mit der Primärursache. Wie bildet Ihr Modell zeitlich abhängige Kaskadenfehler ab?
 
-- **Mykola Fedchyk:** Herr Struss, kaskadierende Fehlerausbreitung beherrschen wir durch temporale Constraint-Netzwerke (Temporal Constraint Networks) in Kombination mit struktureller Raum-Zeit-Hierarchie. Jede Komponente in der Wissensbasis definiert neben Erhaltungsgleichungen auch physikalische Ausbreitungsschranken $`\Delta t_{\mathrm{prop}}`$. Wird zur Zeit $t$ ein Konflikt registriert, traversiert der Konfliktsuchalgorithmus den Kausalkegel rückwärts in der Zeit, um den frühesten nicht-ausgeglichenen Energie- oder Massenfluss zu isolieren. Sekundäre Symptome innerhalb des berechneten Ausbreitungshorizonts werden als induzierte Folgeeffekte markiert und nicht als unabhängige Ausfälle in minimale Hitting-Sets aufgenommen. So isoliert das Diagnoseurteil den auslösenden Impuls verlässlich von der Lawine sekundärer Alarmsignaturen.
+- **Mykola Fedchyk:** Herr Struss, kaskadierende Fehlerausbreitung beherrschen wir durch temporale Constraint-Netzwerke (Temporal Constraint Networks) in Kombination mit struktureller Raum-Zeit-Hierarchie. Jede Komponente in der Wissensbasis definiert neben Erhaltungsgleichungen auch physikalische Ausbreitungsschranken $\Delta t_{\mathrm{prop}}$. Wird zur Zeit $t$ ein Konflikt registriert, traversiert der Konfliktsuchalgorithmus den Kausalkegel rückwärts in der Zeit, um den frühesten nicht-ausgeglichenen Energie- oder Massenfluss zu isolieren. Sekundäre Symptome innerhalb des berechneten Ausbreitungshorizonts werden als induzierte Folgeeffekte markiert und nicht als unabhängige Ausfälle in minimale Hitting-Sets aufgenommen. So isoliert das Diagnoseurteil den auslösenden Impuls verlässlich von der Lawine sekundärer Alarmsignaturen.
 
 **Synthese:** Modellbasierte Diagnose in beweisgestützten Expertensystemen verbindet die kompromisslose mathematische Strenge von Reiters ersten Prinzipien mit dem ingenieurtechnischen Realismus von Struss' qualitativer Physik. Der deduktive Kern schließt physikalisch unmögliche Fehlerkombinationen über Erhaltungssätze aus, qualitative Physik und temporale Netzwerke entflechten kaskadierende Degradationsketten, und bayesianische Informationswert-Optimierung (VOI) führt den Ingenieur mit minimalem Aufwand und maximaler Sicherheit zur echten Primärursache.
 
@@ -901,7 +901,7 @@ Die Grenzen dieses Kapitels sind methodisch vorgegeben: Logische Konsistenz mit 
 
 ## Fragen zur Selbstüberprüfung
 
-1. Worin unterscheidet sich technische Diagnose grundlegend von statistischer Klassifikation, und warum ist eine Konfidenzangabe $`P(\text{clock\_fault} \mid \text{trace}) = 0{,}72`$ keine Diagnose?
+1. Worin unterscheidet sich technische Diagnose grundlegend von statistischer Klassifikation, und warum ist eine Konfidenzangabe $P(\text{clock\_fault} \mid \text{trace}) = 0{,}72$ keine Diagnose?
 2. Welche Attribute muss ein Beobachtungsdatensatz zwingend enthalten, um Ereignisabfolgen zeitlich zu rekonstruieren und Schwellenwertvergleiche physikalisch zu validieren?
 3. Was beweist – und was beweist nicht – die logische Konsistenz einer Diagnose mit dem Systemmodell nach Reiter?
 4. Warum existiert für die Konflikte $C_1$, $C_2$ und $C_3$ keine Einzelfehlerdiagnose, und wie werden minimale Überdeckungsmengen berechnet?

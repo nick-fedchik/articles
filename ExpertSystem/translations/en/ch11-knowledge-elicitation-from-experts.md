@@ -122,7 +122,7 @@ The protocol analysis framework established by Ericsson and Simon treats verbal 
 
 ### 3.1. Kelly's Repertory Grid Technique: Triadic Distinction Analysis
 
-Within the knowledge base of an expert system, diagnostic predicates require unambiguous bipolar distinctions. However, directly querying an expert ("how do you differentiate a nominal startup from a faulty one?") typically induces retrospective rationalization: the specialist recites textbook generalities from official specifications, omitting the subtle, tacit empirical cues relied upon in practice. If the knowledge base incorporates only these superficial predicates, the inference engine generates false alarms in boundary regimes, triggering unnecessary equipment shutdowns in mission-critical deployments. George Kelly's repertory grid technique bypasses this barrier through structured triadic comparisons of concrete operational exemplars or artifacts $`(e_1, e_2, e_3)`$.
+Within the knowledge base of an expert system, diagnostic predicates require unambiguous bipolar distinctions. However, directly querying an expert ("how do you differentiate a nominal startup from a faulty one?") typically induces retrospective rationalization: the specialist recites textbook generalities from official specifications, omitting the subtle, tacit empirical cues relied upon in practice. If the knowledge base incorporates only these superficial predicates, the inference engine generates false alarms in boundary regimes, triggering unnecessary equipment shutdowns in mission-critical deployments. George Kelly's repertory grid technique bypasses this barrier through structured triadic comparisons of concrete operational exemplars or artifacts $(e_1, e_2, e_3)$.
 
 The knowledge engineer presents three actual hardware startup traces to the expert and asks a fixed methodological question: "Which two of these traces are similar to each other yet distinct from the third, and what specific physical characteristic separates them?" This cognitive constraint forces the specialist to formulate an underlying bipolar construct, such as: *"oscillator begins toggling prior to power rail stabilization"* $\longleftrightarrow$ *"oscillator begins toggling after stabilization"*. This diagnostic predicate was absent from the formal interface specification, yet it represents the decisive physical factor distinguishing startup failure modes. Next, the knowledge engineer grounds this construct in quantifiable physical metrics (measurement units, tolerance intervals $\Delta t$, voltage trip levels) and validates the synthesized bipolar rule against an independent suite of waveforms.
 
@@ -254,12 +254,12 @@ Beta Distribution Parameters:
 - $p \in [0, 1]$ is the continuous random variable representing the true latent failure probability;
 - $\alpha > 0$ and $\beta > 0$ are dimensionless pseudo-count hyperparameters of the prior distribution;
 - $\mathrm{Beta}(\alpha+k,\beta+n-k)$ represents the posterior probability density conditioned on $k$ positive instances and $n-k$ counterexamples;
-- the symbols $`\mid`$ and $\sim$ denote conditional dependence and distribution conformity, respectively.
+- the symbols $\mid$ and $\sim$ denote conditional dependence and distribution conformity, respectively.
 
 Operational Application and Gating Criteria:
-The posterior density allows the inference engine to compute a 95% Bayesian credible interval $`[p_{\mathrm{low}}, p_{\mathrm{high}}]`$ via quantile integration: $`\int_0^{p_{\mathrm{low}}} \mathrm{Beta} = 0.025`$ and $`\int_0^{p_{\mathrm{high}}} \mathrm{Beta} = 0.975`$.
-- If the credible interval width $`\Delta p = p_{\mathrm{high}} - p_{\mathrm{low}} \le 0.15`$, the rule is considered statistically mature and admitted into the active production knowledge base.
-- If the interval width $`\Delta p > 0.30`$ (for instance, with $k = 7, n = 10$, where $\mathrm{Beta}(8, 4)$ yields a 95% interval of approximately $[0.39, 0.89]$), parameter uncertainty remains unacceptable for mission-critical decisions. The expert system transitions into a fail-safe hold state, suppressing autonomous actuation and escalating to a conservative fallback rule or human operator intervention.
+The posterior density allows the inference engine to compute a 95% Bayesian credible interval $[p_{\mathrm{low}}, p_{\mathrm{high}}]$ via quantile integration: $\int_0^{p_{\mathrm{low}}} \mathrm{Beta} = 0.025$ and $\int_0^{p_{\mathrm{high}}} \mathrm{Beta} = 0.975$.
+- If the credible interval width $\Delta p = p_{\mathrm{high}} - p_{\mathrm{low}} \le 0.15$, the rule is considered statistically mature and admitted into the active production knowledge base.
+- If the interval width $\Delta p > 0.30$ (for instance, with $k = 7, n = 10$, where $\mathrm{Beta}(8, 4)$ yields a 95% interval of approximately $[0.39, 0.89]$), parameter uncertainty remains unacceptable for mission-critical decisions. The expert system transitions into a fail-safe hold state, suppressing autonomous actuation and escalating to a conservative fallback rule or human operator intervention.
 
 When test cases are evaluated by multiple experts, simple percentage agreement produces inflated reliability estimates if one diagnostic category predominates. Cohen's kappa coefficient ($\kappa$) corrects for chance agreement between two independent raters [[13]](#src-13):
 
@@ -269,8 +269,8 @@ When test cases are evaluated by multiple experts, simple percentage agreement p
 
 Kappa Components and Normalization:
 
-- $`p_o`$ is the observed proportion of concordant ratings between two experts across the calibration dataset;
-- $`p_e`$ is the hypothetical expected proportion of chance agreement under fixed marginal category distributions ($`p_e < 1`$);
+- $p_o$ is the observed proportion of concordant ratings between two experts across the calibration dataset;
+- $p_e$ is the hypothetical expected proportion of chance agreement under fixed marginal category distributions ($p_e < 1$);
 - $\kappa$ is the dimensionless inter-rater agreement coefficient spanning the theoretical range $[-1, 1]$.
 
 Engineering Thresholds for Knowledge Base Admission:
@@ -279,7 +279,7 @@ The computed $\kappa$ metric serves as a deterministic validation gate within th
 2. **$0.40 \le \kappa < 0.75$ (Moderate Agreement):** Indicates latent semantic conflict or unmodeled boundary conditions; triggers a mandatory defeater elicitation session to partition the candidate into two context-specialized sub-rules;
 3. **$\kappa < 0.40$ (Critical Disagreement or Inconsistency):** Reflects fundamentally divergent mental models or contradictory definitions; automated rule synthesis is halted, and the candidate is moved to quarantine alongside a formal collision report submitted to the knowledge governance board.
 
-For multi-rater cohorts exceeding two experts or datasets with missing annotations, Krippendorff's alpha is applied using a predefined difference metric [[14]](#src-14). If $`p_e = 1`$, the denominator evaluates to zero and kappa is undefined: this represents a degenerate edge case rather than perfect agreement.
+For multi-rater cohorts exceeding two experts or datasets with missing annotations, Krippendorff's alpha is applied using a predefined difference metric [[14]](#src-14). If $p_e = 1$, the denominator evaluates to zero and kappa is undefined: this represents a degenerate edge case rather than perfect agreement.
 
 > [!NOTE]
 > **Three-Tier Mathematical Admission Gate for Inter-Expert Agreement via Cohen's Kappa ($\kappa$)**
@@ -299,8 +299,8 @@ IG(q)=H(\Theta\mid D)-\mathbb E_{a\sim P(a\mid q,D)}\bigl[H(\Theta\mid D,q,a)\bi
 Information Gain Parameters:
 
 - $\Theta$ represents the unknown model parameters or hypotheses, $D$ denotes historical observations, and $q$ represents a candidate probe question;
-- $a$ is a possible answer, $`P(a\mid q,D)`$ is the predictive response distribution given question $q$ and data $D$, and $\mathbb E$ denotes mathematical expectation over this distribution;
-- $`H(\Theta\mid D)`$ is the Shannon entropy (uncertainty) prior to querying, and $`H(\Theta\mid D,q,a)`$ is the posterior entropy following answer $a$;
+- $a$ is a possible answer, $P(a\mid q,D)$ is the predictive response distribution given question $q$ and data $D$, and $\mathbb E$ denotes mathematical expectation over this distribution;
+- $H(\Theta\mid D)$ is the Shannon entropy (uncertainty) prior to querying, and $H(\Theta\mid D,q,a)$ is the posterior entropy following answer $a$;
 - subtracting expected posterior entropy from current entropy yields the expected reduction in epistemic uncertainty.
 
 Under a consistent probabilistic model, $IG(q) \ge 0$: a value of zero indicates that the expert's response will provide no discriminatory utility, while larger values indicate substantial expected uncertainty reduction. Units are measured in bits (for base-2 logarithms) or nats (for natural logarithms). Claude Shannon defined the entropy of a discrete random variable as [[15]](#src-15):
@@ -311,14 +311,14 @@ H(\Theta)=-\sum_i P(\theta_i)\log_2 P(\theta_i).
 
 Entropy Terms:
 
-- $\Theta$ is a discrete random variable, $`\theta_i`$ is a possible realization, and $`P(\theta_i)`$ is its probability mass;
-- index $i$ sums over all mutually exclusive outcomes, while $`\log_2`$ denotes the base-2 logarithm;
+- $\Theta$ is a discrete random variable, $\theta_i$ is a possible realization, and $P(\theta_i)$ is its probability mass;
+- index $i$ sums over all mutually exclusive outcomes, while $\log_2$ denotes the base-2 logarithm;
 - $H(\Theta)$ is measured in bits, evaluating to zero for a deterministic outcome and reaching its maximum when probability mass is uniformly distributed.
 
-For two equiprobable hypotheses, $`H = -2(0.5 \log_2 0.5) = 1\ \text{bit}`$.
+For two equiprobable hypotheses, $H = -2(0.5 \log_2 0.5) = 1\ \text{bit}$.
 
 Active Elicitation Termination Criterion:
-The algorithmic generation of probe questions halts according to an information gain convergence threshold: if for all candidate inquiries $q \in Q$ the condition $`\max_q IG(q) < \epsilon_{\mathrm{stop}}`$ holds (with stopping threshold configured to $`\epsilon_{\mathrm{stop}} = 0.05\ \text{bits}`$), further elicitation is deemed non-informative. The session transitions immediately to formal candidate synthesis, mitigating expert cognitive fatigue.
+The algorithmic generation of probe questions halts according to an information gain convergence threshold: if for all candidate inquiries $q \in Q$ the condition $\max_q IG(q) < \epsilon_{\mathrm{stop}}$ holds (with stopping threshold configured to $\epsilon_{\mathrm{stop}} = 0.05\ \text{bits}$), further elicitation is deemed non-informative. The session transitions immediately to formal candidate synthesis, mitigating expert cognitive fatigue.
 
 Selecting questions via information gain shares foundations with active learning, surveyed by Burr Settles [[16]](#src-16). However, the inquiry yielding the highest uncertainty reduction may carry negligible operational consequence. Ronald Howard's Value of Information (VOI) framework evaluates data specifically by how significantly it improves operational decisions [[17]](#src-17). Practical prioritization balances decision risk, expected loss reduction, and elicitation cost:
 
@@ -329,14 +329,14 @@ q^*=\arg\max_q\frac{\mathbb E\bigl[L(a_0)-L(a_q)\bigr]}{C_{\mathrm{expert}}(q)+C
 Probe Selection Criterion:
 
 - $q$ is a candidate question, and $q^*$ is the inquiry maximizing the ratio of expected loss reduction to operational expenditure;
-- $`a_0`$ is the optimal decision under current knowledge, $`a_q`$ is the decision adopted after receiving answer $a$, and $L(a)$ is the loss associated with action $a$;
-- $`\mathbb E[L(a_0)-L(a_q)]`$ denotes the expected risk reduction averaged over possible answers;
-- $`C_{\mathrm{expert}}(q)`$ represents the cost of the expert's time, $`C_{\mathrm{validation}}(q)`$ is the empirical verification cost, and their sum must be strictly positive;
+- $a_0$ is the optimal decision under current knowledge, $a_q$ is the decision adopted after receiving answer $a$, and $L(a)$ is the loss associated with action $a$;
+- $\mathbb E[L(a_0)-L(a_q)]$ denotes the expected risk reduction averaged over possible answers;
+- $C_{\mathrm{expert}}(q)$ represents the cost of the expert's time, $C_{\mathrm{validation}}(q)$ is the empirical verification cost, and their sum must be strictly positive;
 - costs and loss metrics must be expressed in compatible units to yield a meaningful return-on-investment ratio.
 
 Economic and Safety Feasibility Bound:
 The numerator models expected loss mitigation (expressed in financial risk or safety penalty units), while the denominator models direct labor and bench testing costs.
-- If $`\max_q \mathbb E[L(a_0)-L(a_q)] \le C_{\mathrm{expert}}(q) + C_{\mathrm{validation}}(q)`$, the operational value of querying is exhausted. The system ceases active probing, designates remaining uncertainty as an irreducible "known unknown" ($UNK$), and compiles it as a protective safety constraint within the expert system runtime.
+- If $\max_q \mathbb E[L(a_0)-L(a_q)] \le C_{\mathrm{expert}}(q) + C_{\mathrm{validation}}(q)$, the operational value of querying is exhausted. The system ceases active probing, designates remaining uncertainty as an irreducible "known unknown" ($UNK$), and compiles it as a protective safety constraint within the expert system runtime.
 
 ```mermaid
 flowchart TD
@@ -446,12 +446,12 @@ For rule $r$ evaluated across an annotated test suite, standard precision and re
 Mean Rule Loss Formulation:
 
 - $r$ is the candidate rule under evaluation, $N > 0$ is the total number of test instances, and index $i$ references a specific case;
-- $`x_i`$ is the case input vector, $`y_i`$ is the ground-truth target, and $`r(x_i)`$ is the verdict produced by the rule;
-- $`L(r(x_i),y_i;\ \mathrm{context}_i)`$ represents the operational cost of error or correct classification conditioned on operational regime $`\mathrm{context}_i`$; the semicolon separates inputs from contextual parameters;
+- $x_i$ is the case input vector, $y_i$ is the ground-truth target, and $r(x_i)$ is the verdict produced by the rule;
+- $L(r(x_i),y_i;\ \mathrm{context}_i)$ represents the operational cost of error or correct classification conditioned on operational regime $\mathrm{context}_i$; the semicolon separates inputs from contextual parameters;
 - the summation aggregates losses across all benchmark cases, and division by $N$ yields the mean empirical risk in cost-matrix units.
 
 Engineering Acceptance Criteria and Risk Stratification:
-A rule is admitted to production release only when empirical risk across the global test benchmark remains below the regulatory safety budget: $`\widehat R(r) \le \tau_{\mathrm{risk}}`$ (where for ASIL D mission-critical functions, the threshold is configured to $`\tau_{\mathrm{risk}} = 0.001`$). Additionally, stratified loss analysis is conducted across operational slices: if on any safety-critical subset (such as cold boot at $T < -10^\circ\mathrm{C}$) the localized loss $`L_{\mathrm{slice}} > 0`$ (indicating an undetected critical failure), the rule is unconditionally rejected, regardless of an exemplary global average. For example, hypothetical losses of 0, 1, and 2 across three test cases yield a mean loss of $(0+1+2)/3=1$. An aggregate average must never obscure a fatal failure in a boundary operational regime.
+A rule is admitted to production release only when empirical risk across the global test benchmark remains below the regulatory safety budget: $\widehat R(r) \le \tau_{\mathrm{risk}}$ (where for ASIL D mission-critical functions, the threshold is configured to $\tau_{\mathrm{risk}} = 0.001$). Additionally, stratified loss analysis is conducted across operational slices: if on any safety-critical subset (such as cold boot at $T < -10^\circ\mathrm{C}$) the localized loss $L_{\mathrm{slice}} > 0$ (indicating an undetected critical failure), the rule is unconditionally rejected, regardless of an exemplary global average. For example, hypothetical losses of 0, 1, and 2 across three test cases yield a mean loss of $(0+1+2)/3=1$. An aggregate average must never obscure a fatal failure in a boundary operational regime.
 
 ## 11. Anti-Patterns and Common Pitfalls in Cognitive Knowledge Engineering
 

@@ -29,13 +29,13 @@ P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1}),\qquad \hat{w}_{1:N}=\operatorname*{a
 Bezeichnungen:
 
 - $\mathcal{M}$ bezeichnet das Sprachmodell;
-- $`w_t`$ ist das Token an Position $t$, und $`w_1,\dots,w_{t-1}`$ sind die vorhergehenden Kontext-Token;
-- $`P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1})`$ ist die bedingte Wahrscheinlichkeit des Folgetokens im Bereich $[0, 1]$;
-- $N$ ist die Sequenzlänge, und $`w_{1:N}`$ bezeichnet die vollständige Sequenz;
-- $`w_{1:t-1}`$ (oder $`w_{<t}`$) steht kurz für alle Token vor Position $t$;
-- $`\prod_{t=1}^{N}`$ bezeichnet das Produkt der Wahrscheinlichkeiten von Position 1 bis $N$;
-- $`\operatorname*{arg\,max}_{w_{1:N}}`$ wählt die Sequenz mit dem maximalen Wahrscheinlichkeitsprodukt;
-- $`\hat{w}_{1:N}`$ ist die gewählte Tokensequenz.
+- $w_t$ ist das Token an Position $t$, und $w_1,\dots,w_{t-1}$ sind die vorhergehenden Kontext-Token;
+- $P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1})$ ist die bedingte Wahrscheinlichkeit des Folgetokens im Bereich $[0, 1]$;
+- $N$ ist die Sequenzlänge, und $w_{1:N}$ bezeichnet die vollständige Sequenz;
+- $w_{1:t-1}$ (oder $w_{<t}$) steht kurz für alle Token vor Position $t$;
+- $\prod_{t=1}^{N}$ bezeichnet das Produkt der Wahrscheinlichkeiten von Position 1 bis $N$;
+- $\operatorname*{arg\,max}_{w_{1:N}}$ wählt die Sequenz mit dem maximalen Wahrscheinlichkeitsprodukt;
+- $\hat{w}_{1:N}$ ist die gewählte Tokensequenz.
 
 Das Modell ermittelt das Maximum statistischer Plausibilität unter Kandidatensequenzen, nicht die Wahrscheinlichkeit empirischer Wahrheit.
 
@@ -159,7 +159,7 @@ In **AlphaProof** kombinierte Google DeepMind ein auf formale Beweise abgestimmt
 
 > **Lehre für beweisgestützte Systeme:** Die Entkopplung *„LLM schlägt Taktik vor → formaler Kern verifiziert“* setzt Zuverlässigkeitsstandards.
 > 
-> **Einsatzgrenze:** Lean 4 wurde für Mathematiker entwickelt. Ein Beweisprozess erfordert Sekunden bis Minuten. In eingebetteten Automobilsystemen (ISO 26262 ASIL D) oder der Luftfahrt (DO-178C DAL A) mit Reaktionszeitbudgets von $`< 100\,\mu\text{s}`$ ist dieser Overhead untragbar. Echtzeitsysteme verlangen spezialisierte symbolische Kerne mit deterministischer Ausführungszeit und Zero-Allocation.
+> **Einsatzgrenze:** Lean 4 wurde für Mathematiker entwickelt. Ein Beweisprozess erfordert Sekunden bis Minuten. In eingebetteten Automobilsystemen (ISO 26262 ASIL D) oder der Luftfahrt (DO-178C DAL A) mit Reaktionszeitbudgets von $< 100\,\mu\text{s}$ ist dieser Overhead untragbar. Echtzeitsysteme verlangen spezialisierte symbolische Kerne mit deterministischer Ausführungszeit und Zero-Allocation.
 
 ### 4.2. OpenAI: Prozessbelohnungen (PRM) und die Grenzen latenter Begründungen
 

@@ -535,7 +535,7 @@ An expert system differs fundamentally from search and language models in that i
 - **Mykola Fedchyk:**  
   *“Professor Deutsch, that draws an essential distinction between regulatory justification and causal physical explanation.  
   This is precisely why our architecture enforces a clean separation between reference retrieval of statutory clauses and the runtime evaluation of engineering case predicates.  
-  A Justification Bundle does not merely cite standard paragraphs: it synthesizes a formal proof of physical contract satisfaction. Each predicate binds directly to measured testbench physical metrics ($`T_{\mathrm{case}}`$, current, voltage, transient settling times) and explicitly computes the margin to physical failure limits.  
+  A Justification Bundle does not merely cite standard paragraphs: it synthesizes a formal proof of physical contract satisfaction. Each predicate binds directly to measured testbench physical metrics ($T_{\mathrm{case}}$, current, voltage, transient settling times) and explicitly computes the margin to physical failure limits.  
   Furthermore, when operational boundaries are violated, the engine produces neither fabulation nor speculative hypotheses, but emits a Minimal Unsatisfiable Core (MUC) isolating the exact physical precondition that failed. This transforms an administrative citation chain into a functional engineering explanation that pinpoints the root cause behind actuation refusal.”*
 
 **Dialogue with Bertrand Meyer: Contractual Rigor and Operational Autonomy Boundaries**

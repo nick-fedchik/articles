@@ -91,7 +91,7 @@ flowchart TB
     class TE,X,T tok;
 ```
 
-Jede Transformation erzeugt eine neue Textrepräsentation sowie eine Provenienzrelation. Sei $`R_{X\leftarrow Y}\subseteq X\times Y`$ eine Relation, die ein Fragment der abgeleiteten Repräsentation $Y$ auf die korrespondierenden Bereiche der Eltern-Repräsentation $X$ abbildet, und sei $`T_E\subseteq T`$ die Menge der Modell-Token, die originär aus dem Nachweis stammen. Dann ist die Kopplung eines Nachweis-Tokens an die Quell-Bytes die Komposition der Relationen:
+Jede Transformation erzeugt eine neue Textrepräsentation sowie eine Provenienzrelation. Sei $R_{X\leftarrow Y}\subseteq X\times Y$ eine Relation, die ein Fragment der abgeleiteten Repräsentation $Y$ auf die korrespondierenden Bereiche der Eltern-Repräsentation $X$ abbildet, und sei $T_E\subseteq T$ die Menge der Modell-Token, die originär aus dem Nachweis stammen. Dann ist die Kopplung eines Nachweis-Tokens an die Quell-Bytes die Komposition der Relationen:
 
 ```math
 R_{B\leftarrow T_E}=R_{B\leftarrow C}\circ R_{C\leftarrow N}\circ R_{N\leftarrow T_E}.
@@ -339,7 +339,7 @@ Wird beispielsweise eine Textprobe von 800 Wörtern in 1.200 Token zerlegt, betr
 
 Petrov, La Malfa und Torr stellten fest, dass identischer Text, in verschiedene Sprachen übersetzt, eine bis zu 15-fach abweichende Token-Länge aufweisen kann; diese Disparität verringert den effektiven Informationsgehalt im Kontextfenster drastisch und erhöht Inferenzkosten sowie Latenzen [[11]](#src-11). Die Vokabulargröße beeinflusst diese Ungleichheit signifikant: Frühe LLaMA-Modelle [[12]](#src-12) und Mistral 7B [[13]](#src-13) nutzten ein Vokabular von 32.000 Token, während Gemma ein Vokabular von 256.000 Token umfasst [[14]](#src-14). Ein exemplarisches Anpassungsprojekt für das Ukrainische stellt Lapa LLM auf Basis von Gemma 3 12B dar: Nach Angaben der Autoren wurden über 80.000 Token selten genutzter Schriftsysteme durch ukrainische Lexeme ersetzt, wodurch das Modell für ukrainische Fachtexte rund 1,5-mal weniger Token benötigt als das ursprüngliche Basismodell [[15]](#src-15).
 
-Für das Expertensystem resultieren daraus drei ingenieurtechnische Konsequenzen: Erstens hängt die Anzahl der Dokumente, die in $C_{\mathrm{runtime}}$ platziert werden können, direkt von der Tokenizer-Fertilität auf dem unternehmenseigenen Korpus ab; sie muss folglich an realen Dokumenten gemessen werden. Zweitens beanspruchen längere Sequenzen überproportional viel Speicher im Key-Value-Cache und erhöhen den Aufwand der Attention-Berechnung. Drittens beschreibt die Alignment-Map $`R_{N\leftarrow T_E}`$ die Token des eingehenden Beweistextes und erfordert gründliche Tests bei nicht-lateinischen Schriftsystemen. Ein generiertes Token besitzt keine automatische Byte-Adresse in der Primärquelle. Der Extraktor muss das selektierte Textfragment oder einen Zeiger auf den Eingabebereich explizit zurückgeben, woraufhin der Verifizierer das Zitat über die Quell-Map rekonstruiert.
+Für das Expertensystem resultieren daraus drei ingenieurtechnische Konsequenzen: Erstens hängt die Anzahl der Dokumente, die in $C_{\mathrm{runtime}}$ platziert werden können, direkt von der Tokenizer-Fertilität auf dem unternehmenseigenen Korpus ab; sie muss folglich an realen Dokumenten gemessen werden. Zweitens beanspruchen längere Sequenzen überproportional viel Speicher im Key-Value-Cache und erhöhen den Aufwand der Attention-Berechnung. Drittens beschreibt die Alignment-Map $R_{N\leftarrow T_E}$ die Token des eingehenden Beweistextes und erfordert gründliche Tests bei nicht-lateinischen Schriftsystemen. Ein generiertes Token besitzt keine automatische Byte-Adresse in der Primärquelle. Der Extraktor muss das selektierte Textfragment oder einen Zeiger auf den Eingabebereich explizit zurückgeben, woraufhin der Verifizierer das Zitat über die Quell-Map rekonstruiert.
 
 ### 5.2. Verteilungsverschiebung von Daten (Out-of-Distribution Shift)
 
@@ -724,8 +724,8 @@ Die Lösung dieses Akzeptanzproblems liegt im Prinzip **„Show, Don't Tell“**
 
 1. **Lexiko-syntaktische Dekomposition:**  
    Der Gutachter beobachtet, in welche Fragmente und Sätze der syntaktische Segmentierer den Text zerlegt, wie unumstößliche Byte-Koordinaten `[byte_start, byte_end]` bewahrt werden und welche linguistischen Kennzahlen das Dokument charakterisieren:
-   - Vokabularumfang und Type-Token-Ratio ($`TTR = N_{\text{unique}} / N_{\text{tokens}}`$);
-   - Shannon-Entropie ($`H = -\sum p_i \log_2 p_i`$), die Aufschluss über die informationstheoretische und stilistische Komplexität gibt;
+   - Vokabularumfang und Type-Token-Ratio ($TTR = N_{\text{unique}} / N_{\text{tokens}}$);
+   - Shannon-Entropie ($H = -\sum p_i \log_2 p_i$), die Aufschluss über die informationstheoretische und stilistische Komplexität gibt;
    - Verteilung der Satzlängen.
 
 2. **Deterministische Extraktion deontischer Normen:**  
@@ -760,7 +760,7 @@ Das Resultat dieser Prozedur für jedes Einzeldokument ist ein formales **MKA-Wi
    - Anzahl der Sätze, Token und Wörter;  
    - Lexikalische Diversität ($TTR$) und Shannon-Entropie ($H$), welche die begriffliche Dichte des Textes belegen.  
 3. **Deontische Balance und normative Dichte:**  
-   - Normative Dichte ($`ND = \frac{N_{\text{norms}}}{N_{\text{words}}} \times 1000`$);  
+   - Normative Dichte ($ND = \frac{N_{\text{norms}}}{N_{\text{words}}} \times 1000$);  
    - Exaktes Verhältnis von Verpflichtungen ($MUST$), Verboten ($MUST\ NOT$), Empfehlungen ($SHOULD$) und Berechtigungen ($MAY$).  
 4. **Register entdeckter Entitäten (Discovered Entities & Actor Profiles):**  
    - Verzeichnis sämtlicher identifizierter Akteure und Systemkomponenten;  
@@ -876,7 +876,7 @@ Der linguistische Trakt eines evidenzbasierten Expertensystems muss kompakte lok
 - **Mykola Fedchyk:**  
   *„Herr Professor Christopher Manning, Instruction-Tuning und Prompting sind hervorragende empirische Heuristiken für Konversationsassistenten, sie bieten jedoch rein probabilistische Garantien. Bei einem SLM mit 99,9% syntaktischer Konformität verbleibt eine Wahrscheinlichkeit von $0{,}1\%$, ein Sonderzeichen unmaskiert auszugeben, eine Klammer zu vergessen oder das JSON-Schema zu verletzen. In einem nach ASIL-D oder DO-178C zertifizierten cyber-physischen Steuergerät ist eine Syntaxfehlerrate von $0{,}1\%$ eine unerträgliche Katastrophe.  
   Zudem kann ein unkontrollierter Transformer bei Zeilenumbrüchen in unsauber formatierten PDFs den Ausdruck `MUST NOT` trennen und eine verheerende Polaritätsinversion erzeugen, die ein striktes Verbot in eine Erlaubnis verkehrt!  
-  Unsere grammatikgesteuerte Generierung (GBNF) trainiert das Modell nicht neu: Sie agiert als externer endlicher Automat, der bei jedem autoregressiven Schritt eine dynamische Maske über den Logit-Vektor $`\mathbf{z}_t`$ legt. Jedes Token, das gegen die Grammatik oder das Ziel-AST-Schema verstößt, wird vor der Softmax-Berechnung auf die Wahrscheinlichkeit Null gesetzt. Das Modell kann physikalisch keine strukturelle Halluzination generieren und behält den vollen Durchsatz auf lokalen ARM-Kernen bei.“*
+  Unsere grammatikgesteuerte Generierung (GBNF) trainiert das Modell nicht neu: Sie agiert als externer endlicher Automat, der bei jedem autoregressiven Schritt eine dynamische Maske über den Logit-Vektor $\mathbf{z}_t$ legt. Jedes Token, das gegen die Grammatik oder das Ziel-AST-Schema verstößt, wird vor der Softmax-Berechnung auf die Wahrscheinlichkeit Null gesetzt. Das Modell kann physikalisch keine strukturelle Halluzination generieren und behält den vollen Durchsatz auf lokalen ARM-Kernen bei.“*
 
 **Fortsetzung des Dialogs mit Christopher Manning: Gedankengänge und Hardware-GBNF-Logit-Masken**
 
@@ -896,7 +896,7 @@ Der linguistische Trakt eines evidenzbasierten Expertensystems muss kompakte lok
 - **Mykola Fedchyk:**  
   *„Herr Professor Noam Chomsky, ich teile Ihre erkenntnistheoretische Position vollkommen: Ein statistisches neuronales Netz besitzt keine logische Kompetenz und darf niemals als Quelle ingenieurtechnischer Wahrheit dienen. Genau aus diesem Grund ist das lokale SLM in unserer Architektur vollkommen entmachtet: Es besitzt keinerlei Autorität, Wahrheitswerte zu deklarieren!  
   Das Sprachmodell fungiert ausschließlich als perzeptiver Wandler: Es überführt die hochgradig variable, mehrdeutige Oberflächenstruktur menschlicher Sprache in eine formalisierte Tiefenstruktur aus Prädikatskandidaten.  
-  Die Befugnis, diesen Kandidaten als valides Wissen zuzulassen, liegt jedoch ausschließlich bei einem deterministischen symbolischen Verifizierer (einem Automaten vom Chomsky-Typ 0 bzw. Typ 2). Dieser verankert das Prädikat über das Erdungstupel $`\mathcal{G}`$ in den physikalischen Originalbytes, validiert physikalische Einheiten gegen den UCUM-Standard und führt den logischen Beweis im isolierten EVM-Kern. Wir nutzen die Statistik allein, um die Varianz menschlicher Sprache abzufangen – vertrauen ihr jedoch niemals operative Entscheidungen an.“*
+  Die Befugnis, diesen Kandidaten als valides Wissen zuzulassen, liegt jedoch ausschließlich bei einem deterministischen symbolischen Verifizierer (einem Automaten vom Chomsky-Typ 0 bzw. Typ 2). Dieser verankert das Prädikat über das Erdungstupel $\mathcal{G}$ in den physikalischen Originalbytes, validiert physikalische Einheiten gegen den UCUM-Standard und führt den logischen Beweis im isolierten EVM-Kern. Wir nutzen die Statistik allein, um die Varianz menschlicher Sprache abzufangen – vertrauen ihr jedoch niemals operative Entscheidungen an.“*
 
 **Fortsetzung des Dialogs mit Noam Chomsky: Armut des Stimulus und Grenzen der semantischen Erdung von Symbolen**
 

@@ -91,7 +91,7 @@ flowchart TB
     class TE,X,T tok;
 ```
 
-Every transformation generates a new textual representation alongside an explicit provenance relation. Let $`R_{X\leftarrow Y}\subseteq X\times Y`$ denote the relation mapping a fragment of derived representation $Y$ back to corresponding spans in parent representation $X$, and let $`T_E\subseteq T`$ denote model tokens originating strictly from evidence. The mapping of an evidence token back to raw bytes is defined as the relational composition:
+Every transformation generates a new textual representation alongside an explicit provenance relation. Let $R_{X\leftarrow Y}\subseteq X\times Y$ denote the relation mapping a fragment of derived representation $Y$ back to corresponding spans in parent representation $X$, and let $T_E\subseteq T$ denote model tokens originating strictly from evidence. The mapping of an evidence token back to raw bytes is defined as the relational composition:
 
 ```math
 R_{B\leftarrow T_E}=R_{B\leftarrow C}\circ R_{C\leftarrow N}\circ R_{N\leftarrow T_E}.
@@ -99,7 +99,7 @@ R_{B\leftarrow T_E}=R_{B\leftarrow C}\circ R_{C\leftarrow N}\circ R_{N\leftarrow
 
 - In this formulation, $T_E$ is the set of model tokens originating from evidence;
 - $B$, $C$, and $N$ denote byte, character (code point), and normalized representations, respectively;
-- $`R_{X\leftarrow Y}`$ is the provenance relation mapping elements of representation $Y$ to their corresponding elements in representation $X$;
+- $R_{X\leftarrow Y}$ is the provenance relation mapping elements of representation $Y$ to their corresponding elements in representation $X$;
 - The operator $\circ$ denotes relational composition, tracing tokens sequentially through normalized text and Unicode code points back to raw source bytes.
 
 Operationally, this guarantees that for every evidence token, an unambiguous path back to source bytes can be verified. The mapping may be non-injective: a single token can span multiple code points, or multiple characters may have fused during normalization.
@@ -339,7 +339,7 @@ For instance, if an 800-word excerpt tokenizes into 1,200 subword tokens, fertil
 
 Petrov, La Malfa, and Torr demonstrated that identical semantic text translated across languages can exhibit up to a 15-fold disparity in token length, directly curtailing effective context capacity while inflating computational latency and inference costs [[11]](#src-11). Vocabulary size directly governs this disparity: early LLaMA [[12]](#src-12) and Mistral 7B [[13]](#src-13) architectures utilized 32,000-token vocabularies, whereas Gemma expanded its vocabulary to 256,000 tokens [[14]](#src-14). An exemplar of domain adaptation is the Lapa LLM project based on Gemma 3 12B: its developers replaced over 80,000 underutilized non-Cyrillic tokens with dedicated Ukrainian subwords while preserving overall vocabulary dimensions, reducing token consumption on Ukrainian corpora by approximately 1.5× relative to baseline Gemma 3 [[15]](#src-15).
 
-For expert system engineering, three operational imperatives follow. First: the volume of evidence packable into $C_{\mathrm{runtime}}$ depends on corpus-specific tokenizer fertility; hence, fertility must be benchmarked on actual production documentation rather than inferred from upstream vendor cards. Second: inflated sequence lengths quadratically expand key-value cache memory and attention computation. Third: the alignment map $`R_{N\leftarrow T_E}`$ operates over evidence tokens and requires explicit validation on Cyrillic text. A generated token does not possess an inherent address within the source file. The extraction layer must emit explicit passage spans or input coordinate pointers, allowing the host verifier to reconstruct the citation via the verified source map.
+For expert system engineering, three operational imperatives follow. First: the volume of evidence packable into $C_{\mathrm{runtime}}$ depends on corpus-specific tokenizer fertility; hence, fertility must be benchmarked on actual production documentation rather than inferred from upstream vendor cards. Second: inflated sequence lengths quadratically expand key-value cache memory and attention computation. Third: the alignment map $R_{N\leftarrow T_E}$ operates over evidence tokens and requires explicit validation on Cyrillic text. A generated token does not possess an inherent address within the source file. The extraction layer must emit explicit passage spans or input coordinate pointers, allowing the host verifier to reconstruct the citation via the verified source map.
 
 ### 5.2. Out-of-Distribution Shift
 
@@ -875,7 +875,7 @@ The linguistic pipeline of an evidence-governed expert system must couple compac
 - **Mykola Fedchyk:**  
   *“Professor Christopher Manning, instruction tuning and in-context prompting are effective empirical heuristics for conversational assistants, but they provide purely probabilistic guarantees. In an SLM with 99.9% syntactic compliance, there remains a $0.1\%$ probability of emitting an unescaped character, an unclosed delimiter, or a malformed JSON schema. In an ASIL-D or DO-178C safety-critical cyber-physical controller, a $0.1\%$ syntax failure rate is an unmitigated disaster.  
   Moreover, across noisy PDF line breaks, an unconstrained transformer easily splits the phrase `MUST NOT`, triggering a catastrophic polarity inversion that flips a strict prohibition into an active permission!  
-  Our Grammar-Guided Generation (GBNF) does not retrain or degrade the model: it operates as an external pushdown automaton that dynamically applies a boolean mask over the raw logit vector $`\mathbf{z}_t`$ at each autoregressive generation step. Any token that would violate the formal grammar or the target AST schema is forced to probability zero prior to the softmax calculation. The model physically cannot emit a structural hallucination, while maintaining full local execution throughput on embedded ARM silicon.”*
+  Our Grammar-Guided Generation (GBNF) does not retrain or degrade the model: it operates as an external pushdown automaton that dynamically applies a boolean mask over the raw logit vector $\mathbf{z}_t$ at each autoregressive generation step. Any token that would violate the formal grammar or the target AST schema is forced to probability zero prior to the softmax calculation. The model physically cannot emit a structural hallucination, while maintaining full local execution throughput on embedded ARM silicon.”*
 
 **Continued Dialogue with Christopher Manning: Chains of Thought and Hardware GBNF Logit Masks**
 
@@ -895,7 +895,7 @@ The linguistic pipeline of an evidence-governed expert system must couple compac
 - **Mykola Fedchyk:**  
   *“Professor Noam Chomsky, I completely endorse your epistemological critique: statistical neural networks possess zero deductive competence and must never be treated as authoritative arbiters of scientific or engineering truth. This is precisely why in our architecture, the local SLM is entirely stripped of the authority to declare truth!  
   The language model operates exclusively as a perceptual transducer: it projects the high-entropy, ambiguous surface structure of human prose into a formalized deep structure of candidate predicates.  
-  However, the authority to admit that statement into corporate memory is retained exclusively by a deterministic symbolic verifier operating as a Chomsky Type-0 / Type-2 automaton. This verifier anchors the predicate to immutable source bytes via the span grounding tuple $`\mathcal{G}`$, mathematically verifies physical units against the UCUM standard, and executes deductive proofs within the isolated EVM core. We leverage statistical neural representations solely to absorb the noise of natural language variability, while entrusting zero decision-making authority to stochastic processes.”*
+  However, the authority to admit that statement into corporate memory is retained exclusively by a deterministic symbolic verifier operating as a Chomsky Type-0 / Type-2 automaton. This verifier anchors the predicate to immutable source bytes via the span grounding tuple $\mathcal{G}$, mathematically verifies physical units against the UCUM standard, and executes deductive proofs within the isolated EVM core. We leverage statistical neural representations solely to absorb the noise of natural language variability, while entrusting zero decision-making authority to stochastic processes.”*
 
 **Continued Dialogue with Noam Chomsky: Poverty of the Stimulus and Limits of Symbol Grounding**
 

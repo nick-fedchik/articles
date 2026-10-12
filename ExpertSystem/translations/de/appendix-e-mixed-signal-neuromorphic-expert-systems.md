@@ -12,7 +12,7 @@
 
 In industriellen Schwingungsüberwachungs-, Gasprüf- und autonomen Infrastrukturkontrollsystemen erschöpft der permanente Betrieb des digitalen Erfassungsstrangs (Analog-Digital-Wandler + Mikrocontroller) rasch die Batteriereserven und schließt einen mehrjährigen wartungsfreien Feldeinsatz aus. Der Einsatz extrem energiesparender analoger oder neuromorpher Detektoren als asynchrone Aufwach-Trigger (*wake-up trigger*) birgt jedoch eine gravierende, oft unterschätzte Gefahr: Infolge von Rauschen, Nichtlinearitäten und Bauteilstreuung kann die analoge Schaltung die beginnende Degradation eines Wälzlagers oder eine Gasleckage lautlos übersehen. Das digitale Expertensystem erfährt von dieser Katastrophe nichts, da die bitgenaue Reproduzierbarkeit der Evidenzkette abreißt.
 
-Dieser Anhang etabliert eine methodische Lösung zur lückenlosen Wahrung der Verifizierbarkeit und Zuverlässigkeit in gemischt analog-digitalen Architekturen. Der Autor untersucht zwei komplementäre Integrationspfade (Analog → Digital sowie Digital → Analog) und formalisiert den **Evidenzkontrakt gemischtsignaliger Berechnungen**: ein mathematisches Modell von Berechnungsfehlern und Temperaturdrift, ein formales Margen-Gateway ($`M(\mathbf{x}) \ge \gamma_{\text{margin}}`$), eine deterministische Nachrechnungspolice im Unsicherheitsbereich sowie ein statistisches Miss-Audit (Doppelmessungs-Protokoll), das die Einhaltung höchster Sicherheits-Integritätslevel bei drastischer Reduktion der Leistungsaufnahme garantiert.
+Dieser Anhang etabliert eine methodische Lösung zur lückenlosen Wahrung der Verifizierbarkeit und Zuverlässigkeit in gemischt analog-digitalen Architekturen. Der Autor untersucht zwei komplementäre Integrationspfade (Analog → Digital sowie Digital → Analog) und formalisiert den **Evidenzkontrakt gemischtsignaliger Berechnungen**: ein mathematisches Modell von Berechnungsfehlern und Temperaturdrift, ein formales Margen-Gateway ($M(\mathbf{x}) \ge \gamma_{\text{margin}}$), eine deterministische Nachrechnungspolice im Unsicherheitsbereich sowie ein statistisches Miss-Audit (Doppelmessungs-Protokoll), das die Einhaltung höchster Sicherheits-Integritätslevel bei drastischer Reduktion der Leistungsaufnahme garantiert.
 
 ---
 
@@ -95,10 +95,10 @@ Hierbei bezeichnen:
 - $\mathbf{x}$ den Merkmalsvektor des Eingangssignals, beispielsweise Schwingungsamplitude und Gehäusetemperatur;
 - $x_j$ den Messwert des $j$-ten Merkmals;
 - $d$ die Gesamtzahl der Merkmale;
-- $`l_{rj}`$ und $`u_{rj}`$ die untere bzw. obere Intervallgrenze des $j$-ten Merkmals in Regelzeile $r$;
+- $l_{rj}$ und $u_{rj}$ die untere bzw. obere Intervallgrenze des $j$-ten Merkmals in Regelzeile $r$;
 - $\bigwedge_{j=1}^{d}$ die logische Konjunktion (UND-Verknüpfung) über alle $d$ Merkmale: Die Regel feuert ausschließlich dann, wenn sämtliche Teilbedingungen simultan erfüllt sind.
 
-Für die vorstehende Lagerregel gilt $d=2$: Für die Schwingungsamplitude ist $`l_{r1}=0{,}8\ \text{g}`$ und $`u_{r1}=1{,}5\ \text{g}`$; für die Gehäusetemperatur ist $`l_{r2}=70\ ^\circ\text{C}`$, während $`u_{r2}`$ dem Maximalwert des Sensors entspricht. Da diese Schwellen als physikalische Leitwerte einprogrammiert sind, verschiebt die Leitwertdrift die Intervallgrenzen im Laufe der Zeit. Das digitale Subsystem muss daher in periodischen Abständen verifizieren, ob die physikalischen Schwellenwerte noch mit den autorisierten Werten der Wissensbasis übereinstimmen; andernfalls divergiert die physische Inferenz unbemerkt vom versionierten Git-Repository der Regeln.
+Für die vorstehende Lagerregel gilt $d=2$: Für die Schwingungsamplitude ist $l_{r1}=0{,}8\ \text{g}$ und $u_{r1}=1{,}5\ \text{g}$; für die Gehäusetemperatur ist $l_{r2}=70\ ^\circ\text{C}$, während $u_{r2}$ dem Maximalwert des Sensors entspricht. Da diese Schwellen als physikalische Leitwerte einprogrammiert sind, verschiebt die Leitwertdrift die Intervallgrenzen im Laufe der Zeit. Das digitale Subsystem muss daher in periodischen Abständen verifizieren, ob die physikalischen Schwellenwerte noch mit den autorisierten Werten der Wissensbasis übereinstimmen; andernfalls divergiert die physische Inferenz unbemerkt vom versionierten Git-Repository der Regeln.
 
 ### 3.3. Bayessche Inferenz
 
@@ -135,7 +135,7 @@ Die letzte Spalte dieser Tabelle ist für die Systemsicherheit entscheidender al
 
 Untersuchen wir die physikalischen Mechanismen, die an der Schnittstelle zwischen analoger und digitaler Domäne Fehler induzieren, sowie den energetischen Mehraufwand für gesteigerte Konvertierungsgenauigkeit. Analoge In-Memory-Berechnungen approximieren die Matrix-Vektor-Multiplikation lediglich, da analoge Nichtidealitäten typischerweise nichtdeterministischer oder nichtlinearer Natur sind [[19]](#src-19). Rasch et al. wiesen bei hardware-bewusstem Training (*Hardware-Aware Training*) einen grundlegenden Sachverhalt nach: Den stärksten Einfluss auf den Genauigkeitsverlust übt das additive Rauschen an den Eingängen und Ausgängen der Kreuzschiene aus – nicht das Rauschen innerhalb der Leitwertgewichte selbst [[19]](#src-19). Da Eingänge und Ausgänge zwingend DACs und ADCs durchlaufen müssen, stellt die Domänenschnittstelle nicht etwa ein vernachlässigbares Randdetail dar, sondern den primären Entstehungsort von Berechnungsfehlern.
 
-Die erste fundamentale Fehlerquelle an der Schnittstelle ist die Quantisierung. Ein Analog-Digital-Wandler mit einer Auflösung von $b$ Bits und einem Arbeitsbereich von $[-R, R)$ weist eine Quantisierungsstufe $q$ sowie eine standardmäßige Quantisierungsrauschvarianz $`\sigma_q`$ auf:
+Die erste fundamentale Fehlerquelle an der Schnittstelle ist die Quantisierung. Ein Analog-Digital-Wandler mit einer Auflösung von $b$ Bits und einem Arbeitsbereich von $[-R, R)$ weist eine Quantisierungsstufe $q$ sowie eine standardmäßige Quantisierungsrauschvarianz $\sigma_q$ auf:
 
 ```math
 q=\frac{2R}{2^{b}},\qquad \sigma_q=\frac{q}{\sqrt{12}}.
@@ -147,10 +147,10 @@ Hierbei bezeichnen:
 - $R$ den halben Aussteuerungsbereich des Wandlers, der Werte im Intervall von $-R$ bis $R$ erfasst;
 - $b$ die Auflösung des ADC in Bit;
 - $2^{b}$ die Gesamtzahl der diskreten Quantisierungsstufen;
-- $`\sigma_q`$ die Standardabweichung des Quantisierungsfehlers unter der Standardannahme einer Gleichverteilung des Fehlers innerhalb eines LSB-Intervalls;
+- $\sigma_q$ die Standardabweichung des Quantisierungsfehlers unter der Standardannahme einer Gleichverteilung des Fehlers innerhalb eines LSB-Intervalls;
 - $\sqrt{12}$ den Nenner aus der Varianz einer stetigen Gleichverteilung über ein Intervall der Länge $q$, gegeben durch $q^{2}/12$.
 
-Für $R=12$ und $b=6$ Bit beträgt die Schrittweite $q=0{,}375$, was einer Standardabweichung von $`\sigma_q\approx0{,}108`$ Einheiten der Risikobewertung entspricht. Diese Werte fließen in das nachfolgende quantitative Implementierungsbeispiel ein.
+Für $R=12$ und $b=6$ Bit beträgt die Schrittweite $q=0{,}375$, was einer Standardabweichung von $\sigma_q\approx0{,}108$ Einheiten der Risikobewertung entspricht. Diese Werte fließen in das nachfolgende quantitative Implementierungsbeispiel ein.
 
 Vordergründig ließe sich der Quantisierungsfehler durch einfache Erhöhung der Bitbreite minimieren. In der physikalischen Schaltungsrealität ist jedoch jedes zusätzliche Bit extrem teuer. Die Abtastspannung auf der Sampling-Kapazität eines ADC unterliegt unvermeidbarem thermischen Rauschen (Johnson-Nyquist-Rauschen) mit einer Varianz von:
 
@@ -160,8 +160,8 @@ Vordergründig ließe sich der Quantisierungsfehler durch einfache Erhöhung der
 
 Hierbei bezeichnen:
 
-- $`\overline{v_n^{2}}`$ das mittlere Spannungsrauschquadrat (Rauschvarianz) am Kondensator in $\text{V}^{2}$;
-- $`k_B`$ die Boltzmann-Konstante mit ca. $1{,}38\cdot10^{-23}\ \text{J/K}$;
+- $\overline{v_n^{2}}$ das mittlere Spannungsrauschquadrat (Rauschvarianz) am Kondensator in $\text{V}^{2}$;
+- $k_B$ die Boltzmann-Konstante mit ca. $1{,}38\cdot10^{-23}\ \text{J/K}$;
 - $T$ die absolute Temperatur in Kelvin ($\text{K}$);
 - $C$ die Kapazität des Sampling-Kondensators im ADC in Farad ($\text{F}$).
 
@@ -179,7 +179,7 @@ Die Parameter des Driftmodells [[23]](#src-23):
 
 - $G(t)$ der elektrische Leitwert der PCM-Zelle zum Zeitpunkt $t$ in Siemens ($\text{S}$);
 - $t$ die verstrichene Zeit seit dem Programmierpuls;
-- $`t_0`$ der Referenzzeitpunkt nach der Programmierung, an dem der initiale Leitwert $`G(t_0)`$ vermessen wurde;
+- $t_0$ der Referenzzeitpunkt nach der Programmierung, an dem der initiale Leitwert $G(t_0)$ vermessen wurde;
 - $\nu$ der materialspezifische Driftkoeffizient: Je höher $\nu$, desto rapider sinkt der Leitwert;
 - der Exponent $-\nu$ repräsentiert einen Potenzabfall: Der Leitwert relaxiert unmittelbar nach dem Schreiben sehr rasch und flacht mit zunehmender Betriebsdauer logarithmisch ab.
 
@@ -209,7 +209,7 @@ Hierbei bezeichnen:
 
 - $\tilde s$ den vom analogen Beschleuniger zurückgemeldeten Messwert (Approximationswert der Risikobewertung inklusive Fehlerterm);
 - $\theta$ den Schwellenwert der Inferenzregel;
-- $`\lvert\tilde s-\theta\rvert`$ den absoluten Abstand des analogen Werts zur Schaltschwelle, mithin den Sicherheitsabstand (*Margin*);
+- $\lvert\tilde s-\theta\rvert$ den absoluten Abstand des analogen Werts zur Schaltschwelle, mithin den Sicherheitsabstand (*Margin*);
 - $\sigma$ die Standardabweichung des analogen Berechnungsfehlers in denselben Einheiten wie $s$;
 - $k$ den Sicherheitskoeffizienten in Einheiten von Standardabweichungen: Je größer $k$ gewählt wird, desto geringer ist das Risiko einer Falschentscheidung, desto häufiger muss jedoch digital nachgerechnet werden.
 
@@ -228,7 +228,7 @@ Hierbei bezeichnen:
 - $\Phi$ die kumulierte Verteilungsfunktion der Standardnormalverteilung $\mathcal{N}(0, 1)$;
 - $\Phi(-k)$ die Wahrscheinlichkeit, dass eine standardnormalverteilte Zufallsvariable einen Wert kleiner als $-k$ annimmt.
 
-Für einen Sicherheitskoeffizienten von $k=3$ resultiert eine theoretische Fehlerobergrenze von $\Phi(-3)\approx1{,}35\cdot10^{-3}$; für Messwerte, die weit von der Schwelle entfernt liegen, ist die reale Fehlerwahrscheinlichkeit drastisch geringer. Unterschreitet der Abstand jedoch das Sicherheitsband ($`\lvert\tilde s-\theta\rvert < k\sigma`$), verweigert das Expertensystem die Übernahme des analogen Urteils: Es erzwingt eine präzise digitale Nachrechnung auf dem Mikrocontroller, veranlasst eine Wiederholungsmessung oder gibt den Status «Inferenz unentscheidbar / Datenbasis unzureichend» aus.
+Für einen Sicherheitskoeffizienten von $k=3$ resultiert eine theoretische Fehlerobergrenze von $\Phi(-3)\approx1{,}35\cdot10^{-3}$; für Messwerte, die weit von der Schwelle entfernt liegen, ist die reale Fehlerwahrscheinlichkeit drastisch geringer. Unterschreitet der Abstand jedoch das Sicherheitsband ($\lvert\tilde s-\theta\rvert < k\sigma$), verweigert das Expertensystem die Übernahme des analogen Urteils: Es erzwingt eine präzise digitale Nachrechnung auf dem Mikrocontroller, veranlasst eine Wiederholungsmessung oder gibt den Status «Inferenz unentscheidbar / Datenbasis unzureichend» aus.
 
 Die obere Schranke $\Phi(-k)$ setzt eine verlässlich bekannte Standardabweichung $\sigma$ voraus. Da $\sigma$ infolge von Alterung und Temperatur fluktuiert, darf dieser Wert niemals als statische Konstante im Code hinterlegt werden. Stattdessen wird $\sigma$ im laufenden Betrieb über **Canary-Berechnungen** kontinuierlich geschätzt: Der analoge Beschleuniger verarbeitet in regelmäßigen Zyklen $m$ vordefinierte Kontrollvektoren, deren mathematisch exakte Sollwerte dem digitalen Subsystem bekannt sind. Die Inferenz-Engine berechnet daraus die empirische Streuung:
 
@@ -240,11 +240,11 @@ Hierbei bezeichnen:
 
 - $\hat\sigma$ den Schätzwert der Standardabweichung des Approximationsfehlers aus den Kontrollmessungen;
 - $m$ die Stichprobengröße der Canary-Stimuli;
-- $`\tilde s_i`$ das analoge Rechenergebnis für den $i$-ten Kontrollvektor;
-- $`s_i`$ den exakten digitalen Referenzwert für denselben Vektor;
+- $\tilde s_i$ das analoge Rechenergebnis für den $i$-ten Kontrollvektor;
+- $s_i$ den exakten digitalen Referenzwert für denselben Vektor;
 - $\sum_{i=1}^{m}$ die Summationsvorschrift über alle $m$ Testvektoren.
 
-Diese Formel entspricht dem quadratischen Mittelwert des Fehlers (Root Mean Square Error, RMSE). Weisen beispielsweise $m=4$ Testvektoren die Differenzen $`\tilde s_i-s_i`$ von $0{,}2$, $-0{,}3$, $0{,}1$ und $-0{,}4$ auf, so berechnet sich $\hat\sigma=\sqrt{(0{,}04+0{,}09+0{,}01+0{,}16)/4}=\sqrt{0{,}075}\approx0{,}27$. In realen Systemen werden typischerweise $m=512$ Testvektoren herangezogen, um eine statistisch hochgradig belastbare Schätzung zu garantieren.
+Diese Formel entspricht dem quadratischen Mittelwert des Fehlers (Root Mean Square Error, RMSE). Weisen beispielsweise $m=4$ Testvektoren die Differenzen $\tilde s_i-s_i$ von $0{,}2$, $-0{,}3$, $0{,}1$ und $-0{,}4$ auf, so berechnet sich $\hat\sigma=\sqrt{(0{,}04+0{,}09+0{,}01+0{,}16)/4}=\sqrt{0{,}075}\approx0{,}27$. In realen Systemen werden typischerweise $m=512$ Testvektoren herangezogen, um eine statistisch hochgradig belastbare Schätzung zu garantieren.
 
 Die Metapher geht historisch auf die Kanarienvögel im Bergbau zurück, die Bergleute als Frühwarnindikatoren vor Grubengasen schützten: Die Canary-Berechnung schlägt als Erste Alarm, wenn die physikalische Hardware ihre Kalibrierungsgrenzen verlässt.
 
@@ -257,11 +257,11 @@ Um die Wirksamkeit des Margen-Gateways sowie die Konsequenzen veralteter Kalibri
 Hierbei bezeichnen:
 
 - $\sigma^{2}$ die Gesamtvarianz des analogen Skalarproduktfehlers;
-- $`\sigma_w`$ die Standardabweichung des Leitwertrauschens bezogen auf den Vollbereich des Gewichts ($`\sigma_w=0{,}05`$);
+- $\sigma_w$ die Standardabweichung des Leitwertrauschens bezogen auf den Vollbereich des Gewichts ($\sigma_w=0{,}05$);
 - $x_j$ das $j$-te Merkmal des Eingangsvektors;
 - $n=64$ die Dimension des Merkmalsraums;
-- $\sum_{j=1}^{n}x_j^{2}$ die Summe der quadrierten Merkmalskomponenten: Je größer die Vektornorm, desto höher das akkumulierte Rauschen; für gleichverteilte Merkmale in $[-1, 1]$ beträgt der Erwartungswert $`\mathbb{E}[x_j^{2}]=1/3`$, die Summe somit ca. $64/3$;
-- $`\sigma_q`$ die Standardabweichung des ADC-Quantisierungsfehlers aus der vorherigen Formel ($0{,}108$).
+- $\sum_{j=1}^{n}x_j^{2}$ die Summe der quadrierten Merkmalskomponenten: Je größer die Vektornorm, desto höher das akkumulierte Rauschen; für gleichverteilte Merkmale in $[-1, 1]$ beträgt der Erwartungswert $\mathbb{E}[x_j^{2}]=1/3$, die Summe somit ca. $64/3$;
+- $\sigma_q$ die Standardabweichung des ADC-Quantisierungsfehlers aus der vorherigen Formel ($0{,}108$).
 
 Hieraus folgt ein theoretisches Rauschen von $\sigma\approx0{,}26$ für einen frisch kalibrierten Chip. Das folgende Go-Programm simuliert fünf Szenarien mit jeweils einer Million Testvektoren. Es nutzt ausschließlich die Standardbibliothek und lässt sich direkt mittels `go run main.go` ausführen.
 
@@ -402,7 +402,7 @@ Ohne Gateway unterlaufen dem rein analogen Pfad 6.718 Fehlentscheidungen pro Mil
 
 Wird im nächsten Schritt eine Leitwertdrift durch Verdopplung des Rauschens simuliert, explodiert die Fehlerzahl im ungefilterten Pfad auf 11.960. Wird das Gateway mit den veralteten Kalibrierdaten weiterbetrieben, verbleiben 235 Fehler pro Million: Das Gateway greift zwar, bricht jedoch die geforderte statistische Garantie, da die Schranke $\Phi(-3)$ von der wahren Standardabweichung abhängt, die nunmehr doppelt so hoch ist. Erst die Rekalibrierung über frische Canary-Vektoren ($\hat\sigma\approx0{,}467$) stellt die Sicherheit wieder her und reduziert die Fehlerzahl auf 25 pro Million – bei einem Nachrechnungsanteil von 8,1 %.
 
-Die verbleibenden 25 Fehler resultieren daraus, dass das Rauschen über den Term $\sum x_j^{2}$ von der individuellen Vektornorm abhängt, während das Gateway mit einem skalaren Mittelwert $\hat\sigma$ operiert. Für Vektoren mit extremer Norm greift die statische Schranke zu kurz. Ein adaptives Gateway modelliert $`\sigma(\mathbf{x})`$ dynamisch als Funktion des Eingangsvektors. Die zentrale Erkenntnis lautet: **Die formale Sicherheitsgarantie des Gateways gilt exakt so lange, wie die Kalibrierdaten gültig sind; Canary-Prüfungen sind daher ein integraler Bestandteil des Inferenzprozesses und keine bloße Offline-Wartungsaufgabe.**
+Die verbleibenden 25 Fehler resultieren daraus, dass das Rauschen über den Term $\sum x_j^{2}$ von der individuellen Vektornorm abhängt, während das Gateway mit einem skalaren Mittelwert $\hat\sigma$ operiert. Für Vektoren mit extremer Norm greift die statische Schranke zu kurz. Ein adaptives Gateway modelliert $\sigma(\mathbf{x})$ dynamisch als Funktion des Eingangsvektors. Die zentrale Erkenntnis lautet: **Die formale Sicherheitsgarantie des Gateways gilt exakt so lange, wie die Kalibrierdaten gültig sind; Canary-Prüfungen sind daher ein integraler Bestandteil des Inferenzprozesses und keine bloße Offline-Wartungsaufgabe.**
 
 Das Margen-Gateway repräsentiert einen Spezialfall des Prinzips gemischter Genauigkeit (*Mixed-Precision Computing*). Le Gallo et al. demonstrierten In-Memory-Computing mit gemischter Genauigkeit: Eine analoge PCM-Kreuzschiene berechnet die Hauptlast, während ein digitaler Standardprozessor die Lösung iterativ verfeinert; auf diese Weise lösten die Autoren ein lineares Gleichungssystem mit 5.000 Variablen exakt unter Einsatz von 998.752 PCM-Zellen [[25]](#src-25). Das Margen-Gateway überträgt diese Arbeitsteilung auf symbolische Inferenzentscheidungen: Das analoge Rechenwerk verarbeitet die überwältigende Masse der Standardfälle, während der Digitalprozessor ausschließlich in Grenzfällen interveniert, in denen die analoge Approximation das Entscheidungsergebnis verfälschen könnte.
 
@@ -414,8 +414,8 @@ Diese Sicherheitsarchitektur verursacht Kosten, weshalb der energetische Systemg
 
 Hierbei bezeichnen:
 
-- $`E_{\text{an}}`$ den Gesamtenergieaufwand einer analogen Inferenz inklusive DAC- und ADC-Wandlung in Joule;
-- $`E_{\text{dig}}`$ den Energieaufwand einer vollständig digitalen Inferenz auf demselben Eingangsvektor in Joule;
+- $E_{\text{an}}$ den Gesamtenergieaufwand einer analogen Inferenz inklusive DAC- und ADC-Wandlung in Joule;
+- $E_{\text{dig}}$ den Energieaufwand einer vollständig digitalen Inferenz auf demselben Eingangsvektor in Joule;
 - $r$ den Anteil der Entscheidungen, die vom Gateway zur digitalen Nachrechnung eskaliert werden ($r \in [0, 1]$);
 - $c$ das Verhältnis von Canary-Testzyklen zu Nutzzyklen (z. B. $c=0{,}01$, wenn auf 100 Nutzinferenzen eine Kontrollmessung entfällt);
 - die linke Seite den mittleren Energieverbrauch des gemischtsignaligen Pfads pro Entscheidung; die rechte Seite den Energieverbrauch der rein digitalen Referenzarchitektur.
@@ -529,7 +529,7 @@ Ein Release eines gemischtsignaligen Expertensystems umfasst folglich nicht nur 
 Die Validierung eines gemischtsignaligen Expertensystems unterscheidet sich grundlegend vom rein digitalen Softwaretest, da derselbe physikalische Eingangsreiz infolge von Rauschen stochastisch variierende Ausgänge erzeugt. Das Testverfahren gliedert sich in eine fünfstufige Verifikationskaskade:
 
 1. **Differentielles Testen (Differential Testing):** Identische Testvektorsätze werden simultan über den analogen Hardwarepfad und den digitalen Goldstandard geleitet. Die Differenzenverteilung liefert das empirische Fehlermodell: Erwartungswert, Standardabweichung, Verteilungsschiefe (*heavy tails*) und die Abhängigkeit von der Eingangsnorm.
-2. **Grenz- und Umweltprüfungen (Corner Cases):** Das Fehlermodell wird unter extremen Temperaturbedingungen, Versorgungsspannungsschwankungen und variierenden Alterungszuständen vermessen, da die Leitwertdrift zeitabhängig ist [[23]](#src-23). Das Resultat ist kein statischer Skalar $\sigma$, sondern eine mehrdimensionale Kennlinie $`\sigma(T, V_{\text{dd}}, t_{\text{age}})`$.
+2. **Grenz- und Umweltprüfungen (Corner Cases):** Das Fehlermodell wird unter extremen Temperaturbedingungen, Versorgungsspannungsschwankungen und variierenden Alterungszuständen vermessen, da die Leitwertdrift zeitabhängig ist [[23]](#src-23). Das Resultat ist kein statischer Skalar $\sigma$, sondern eine mehrdimensionale Kennlinie $\sigma(T, V_{\text{dd}}, t_{\text{age}})$.
 3. **Fehlerinjektion (Fault Injection):** In Hardware-Prüfständen werden gezielt defekte Speicherzellen (*stuck-at faults*), ADC-Nichtlinearitäten und thermisches Rauschen injiziert. Das System muss beweisen, dass die Canary-Überwachung den Fehlerzustand zuverlässig detektiert und den Fail-Safe-Fallback auf den digitalen Pfad erzwingt, anstelle fehlerhafte Urteile zu emittieren.
 4. **Statistische Konformitätsprüfung:** Falschakzeptanzraten und Detektorauslassungen werden mit statistischen Konfidenzgrenzen belegt; bei Nullfehlern kommt das «Rule of Three»-Kriterium zur Anwendung [[26]](#src-26).
 5. **Gewaltenteilung und Sicherheitskontrakte:** Ein analoges oder neuromorphes Teilergebnis darf unter keinen Umständen unmittelbar eine irreversible physische Schutzaktion auslösen, ohne die digitale Verifikationsschleife passiert zu haben. Formale Aktionskontrakte werden in [Kapitel 21](ch21-from-recommendation-to-action.md) spezifiziert; [Kapitel 27](ch27-safety-case-gsn-synthesis.md) beschreibt die Integration von Fehlermodellen und Kalibrierzertifikaten in Safety Cases nach der GSN-Notation (*Goal Structuring Notation*).
@@ -547,7 +547,7 @@ Die experimentelle Erforschung unkonventioneller Rechenwerke als ultraschnelle H
    * Erforschung der Detektion transienter physikalischer Anomalien (Kontaktabbrand, Flammenabriss, hochfrequente Wälzlagerschwingungen) in unter **$1\ \text{ms}$** bei einer Leistungsaufnahme im einstelligen Milliwattbereich.
 2. **Memristive Kreuzschienen für analoges In-Memory-Computing (RRAM/PCM):**
    * Quantifizierung der Energiebilanz der Matrix-Vektor-Multiplikation im Vergleich zu klassischen Von-Neumann-Architekturen unter Nutzung des IBM Analog Hardware Acceleration Kits.
-   * Analyse der Genauigkeitsdegradation durch Ausleserauschen (*read noise*), Random Telegraph Noise (RTN) und strukturelle Leitwertdrift über der Zeit ($`G(t) \propto t^{-\nu}`$).
+   * Analyse der Genauigkeitsdegradation durch Ausleserauschen (*read noise*), Random Telegraph Noise (RTN) und strukturelle Leitwertdrift über der Zeit ($G(t) \propto t^{-\nu}$).
 
 > [!NOTE]
 > **Theoretische und ingenieurtechnische Fundierung neuromorpher Rechenkerne im Buch:**

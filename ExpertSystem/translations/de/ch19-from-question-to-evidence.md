@@ -247,22 +247,22 @@ Zur quantitativen Verifikation, dass eine extrahierte Behauptung vollständig au
 
 wobei:
 - $\mathrm{Comp}(C)$ — skalarer Indikator der Bindungsvollständigkeit der Behauptung $C$, definiert im normierten Intervall $[0, 1]$;
-- $`A_m(C)`$ — endliche Menge materieller Atome der Behauptung, deren Fehlen den Sinn der Ingenieurregel entstellt ($`A_m(C) = \{\text{subject}, \text{relation}, \text{value}, \text{unit}\}`$);
-- $a$ — einzelnes materielles Atom aus der Menge $`A_m(C)`$;
-- $`w_a`$ — Gewichtungskoeffizient der Kritizität des Atoms ($`w_a > 0`$, reelle Zahl; in kalibrierter Konfiguration $`w_{\text{subject}} = 0{,}1`$, $`w_{\text{relation}} = 0{,}2`$, $`w_{\text{value}} = 0{,}4`$, $`w_{\text{unit}} = 0{,}3`$);
+- $A_m(C)$ — endliche Menge materieller Atome der Behauptung, deren Fehlen den Sinn der Ingenieurregel entstellt ($A_m(C) = \{\text{subject}, \text{relation}, \text{value}, \text{unit}\}$);
+- $a$ — einzelnes materielles Atom aus der Menge $A_m(C)$;
+- $w_a$ — Gewichtungskoeffizient der Kritizität des Atoms ($w_a > 0$, reelle Zahl; in kalibrierter Konfiguration $w_{\text{subject}} = 0{,}1$, $w_{\text{relation}} = 0{,}2$, $w_{\text{value}} = 0{,}4$, $w_{\text{unit}} = 0{,}3$);
 - $b(a)$ — halboffenes Byte-Offset-Intervall $[s, e)$, das das Vorkommen des Textankers des Atoms im normalisierten Primärquellentext eindeutig identifiziert, oder $\varnothing$, falls der Anker nicht oder mehrdeutig gefunden wurde;
-- $`\mathbb{I}[b(a) \neq \varnothing]`$ — Indikatorfunktion, die den Wert 1 annimmt, wenn das Atom $a$ genau ein konsistentes Vorkommen im Byte-Bereich aufweist, und 0 im Fall des Status $`\text{NOT\_FOUND}`$ oder $`\text{AMBIGUOUS\_SPAN}`$.
+- $\mathbb{I}[b(a) \neq \varnothing]$ — Indikatorfunktion, die den Wert 1 annimmt, wenn das Atom $a$ genau ein konsistentes Vorkommen im Byte-Bereich aufweist, und 0 im Fall des Status $\text{NOT\_FOUND}$ oder $\text{AMBIGUOUS\_SPAN}$.
 
 **Praktische Anwendung und ingenieurtechnische Konsequenzen:**
 1. Die Berechnung wird durch den deterministischen Binder für jede vom Sprachmodell vorgeschlagene Behauptung durchgeführt, bevor das Ergebnis an die logische Inferenz-Engine übergeben wird.
 2. **Numerischer Schwellenwert der Zulassung (Abschneidekriterium):**
    - $\mathrm{Comp}(C) = 1{,}00$: **VOLLSTÄNDIGE BINDUNG (GROUNDED / Green Gate)**. Alle materiellen Atome wurden erfolgreich an physische Bytes gebunden; die Behauptung wird zur semantischen Implikationsprüfung zugelassen;
-   - $`0{,}70 \le \mathrm{Comp}(C) < 1{,}00`$: **UNVOLLSTÄNDIGE BEHAUPTUNG (INCOMPLETE_CLAIM / Fail-Closed)**. Ein kritisches Atom (etwa die Maßeinheit oder eine einschränkende Bedingung) ging verloren oder wurde verfälscht. Die Behauptung wird bedingungslos abgewiesen. In technischen Systemen ist partielle Genauigkeit inakzeptabel: Das Wissen, dass eine Verzögerung „8“ beträgt, ohne Bindung der Maßeinheit (`ms` oder `µs`), stellt ein unmittelbares Havarierisiko dar;
+   - $0{,}70 \le \mathrm{Comp}(C) < 1{,}00$: **UNVOLLSTÄNDIGE BEHAUPTUNG (INCOMPLETE_CLAIM / Fail-Closed)**. Ein kritisches Atom (etwa die Maßeinheit oder eine einschränkende Bedingung) ging verloren oder wurde verfälscht. Die Behauptung wird bedingungslos abgewiesen. In technischen Systemen ist partielle Genauigkeit inakzeptabel: Das Wissen, dass eine Verzögerung „8“ beträgt, ohne Bindung der Maßeinheit (`ms` oder `µs`), stellt ein unmittelbares Havarierisiko dar;
    - $\mathrm{Comp}(C) < 0{,}70$: **MODELLHALLUZINATION (UNGROUNDED / Red Gate)**. Die Behauptung wird unter Erzeugung eines Eintrags im Telemetrie- und Audit-Log abgewiesen.
 
 **Numerisches Rechenbeispiel:**
 Aus einer Normvorschrift wurde folgende Behauptung extrahiert: „Der maximale Ansprechstrom beträgt 25 A bei einer Spannung von 12 V“. Materielle Atome: Subjekt ($w = 0{,}1$), Relation ($w = 0{,}2$), numerischer Wert ($w = 0{,}4$), Maßeinheit ($w = 0{,}3$).
-Besteht die Maßeinheit „A“ in der Primärquelle die Byte-Offset-Prüfung infolge einer Zeichenkodierungsverzerrung nicht ($`\mathbb{I}[b(\text{unit}) \neq \varnothing] = 0`$):
+Besteht die Maßeinheit „A“ in der Primärquelle die Byte-Offset-Prüfung infolge einer Zeichenkodierungsverzerrung nicht ($\mathbb{I}[b(\text{unit}) \neq \varnothing] = 0$):
 
 ```math
 \mathrm{Comp}(C) = \frac{0{,}1 \cdot 1 + 0{,}2 \cdot 1 + 0{,}4 \cdot 1 + 0{,}3 \cdot 0}{0{,}1 + 0{,}2 + 0{,}4 + 0{,}3} = \frac{0{,}70}{1{,}0} = 0{,}70
@@ -557,15 +557,15 @@ wobei:
 - $\text{document-id}$ — kanonischer Identifikator des normativen Dokuments (beispielsweise persistenter URN `urn:ietf:rfc:768`);
 - $\text{revision}$ — unveränderlicher Git-Revisions-Hash oder offizielle digitale Signatur der Standardausgabe;
 - $\text{transform-chain}$ — formalisierter Deskriptor der angewandten Vorverarbeitungs- und Normalisierungsschritte (beispielsweise `norm:v2.1|chunk:fields_v7`);
-- $\text{byte-start}, \text{byte-end}$ — exakte halboffene Byte-Offset-Koordinaten $[s, e)$ im normalisierten Binärdatenstrom ($`0 \le s < e`$);
+- $\text{byte-start}, \text{byte-end}$ — exakte halboffene Byte-Offset-Koordinaten $[s, e)$ im normalisierten Binärdatenstrom ($0 \le s < e$);
 - $\text{bytes}$ — tatsächliche binäre Bytesequenz des Chunks;
-- $`\|`$ — eindeutige kanonische Feldkodierung (beispielsweise längenpräfigiertes TLV oder Protocol Buffers), die Kollisionen durch Zusammenfügen von Feldgrenzen ausschließt.
+- $\|$ — eindeutige kanonische Feldkodierung (beispielsweise längenpräfigiertes TLV oder Protocol Buffers), die Kollisionen durch Zusammenfügen von Feldgrenzen ausschließt.
 
 **Praktische Anwendung und ingenieurtechnische Konsequenzen:**
 1. Die Berechnung erfolgt vollautomatisch während der Hintergrundindexierung des Wissens und wird bei jeder Anfrageausführung revalidiert.
 2. **Kriterium der Integritätsprüfung:**
-   - Ergibt der neu berechnete Hash $`H' = \text{passage-id}`$: **UNANFECHTBARE PRIMÄRQUELLE (VERIFIED / Green Gate)**. Die vollständige Byte-Authentizität des Chunks ist bestätigt;
-   - Ergibt $`H' \ne \text{passage-id}`$: **DATENKORRUPTION ODER DESYNCHRONISATION (TAMPER_DETECTED / Red Gate / Fail-Closed)**. Es liegt eine Versionsabweichung oder unautorisierte Textänderung vor; der Chunk wird sofort aus dem operativen Cache entfernt, ein Audit-Alarm ausgelöst und die Anfrage auf das Primärarchiv des Originals umgeleitet.
+   - Ergibt der neu berechnete Hash $H' = \text{passage-id}$: **UNANFECHTBARE PRIMÄRQUELLE (VERIFIED / Green Gate)**. Die vollständige Byte-Authentizität des Chunks ist bestätigt;
+   - Ergibt $H' \ne \text{passage-id}$: **DATENKORRUPTION ODER DESYNCHRONISATION (TAMPER_DETECTED / Red Gate / Fail-Closed)**. Es liegt eine Versionsabweichung oder unautorisierte Textänderung vor; der Chunk wird sofort aus dem operativen Cache entfernt, ein Audit-Alarm ausgelöst und die Anfrage auf das Primärarchiv des Originals umgeleitet.
 
 ## 8. Intermediäre Repräsentation der Behauptung mit Beweis
 
@@ -780,7 +780,7 @@ Die Formulierung einer autoritativen Antwort auf eine technische Anfrage erforde
 
 - **Mykola Fedchyk:**  
   *„Herr Dr. Kelvin Guu, unser deterministischer Grounder hat niemals verlangt, dass alle Atome einer Aussage innerhalb einer einzigen monolithischen Byte-Spanne liegen müssen!  
-  Das Beweistupel einer Aussage $\mathcal{E}$ ist als Menge unabhängiger geerdeter Spannen definiert: Jedes konstituierende Feld (Subjekt, Prädikat, Wert, Einheit) besitzt eigene diskrete Start- und End-Byte-Offsets $`[S_i, E_i]`$, die aus unterschiedlichen Absätzen, Tabellen oder separaten Anhängen der Norm stammen können.  
+  Das Beweistupel einer Aussage $\mathcal{E}$ ist als Menge unabhängiger geerdeter Spannen definiert: Jedes konstituierende Feld (Subjekt, Prädikat, Wert, Einheit) besitzt eigene diskrete Start- und End-Byte-Offsets $[S_i, E_i]$, die aus unterschiedlichen Absätzen, Tabellen oder separaten Anhängen der Norm stammen können.  
   Die Vollständigkeitsmetrik $\mathrm{Comp}(C)$ berechnet das Verhältnis formal geerdeter Felder zum obligatorischen ontologischen Vertrag. Zusammengesetzte Schlussfolgerungen — etwa die Berechnung der minimalen Nutzlast durch Subtraktion der Header-Länge von der Gesamtlänge — werden nicht diffusen Vektorräumen überlassen, sondern formalen prädikatenlogischen Inferenzregeln über verifizierten Fakten.  
   Kompositionalität wird somit durch transparente symbolische Deduktion erreicht, bei der jede elementare Prämisse über eine unzerstörbare Byte-Adresse verfügt, anstatt durch stochastische Aufmerksamkeitsverteilungen in neuronalen Gewichten.“*
 

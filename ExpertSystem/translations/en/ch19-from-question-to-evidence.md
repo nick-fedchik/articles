@@ -12,7 +12,7 @@
 
 ## Abstract
 
-This chapter examines the transition from an unstructured engineering inquiry to a strictly verified evidence pack within the architecture of evidence-governed expert systems. It analyzes the ill-structured nature of natural language and formalizes an algorithm for the semantic decomposition of user utterances into subject, relation, and speech act using typed JSON Schema contracts to ensure safe query routing to the knowledge base. A four-stage query transformation pipeline is investigated: detection, extraction, byte-level grounding, and semantic entailment verification. A deterministic span binder is implemented to resolve material claim atoms against source bytes (RFC 768), calculating the grounding completeness metric $`\mathrm{Comp}(C)`$ and normalizing units of measure. A four-valued evidence verification gate is established (`ENTAILED`, `PARTIAL`, `CONTRADICTED`, `NOT_ENOUGH_EVIDENCE`), strictly preventing the emission of unconfirmed recommendations. Finally, the chapter formalizes regression evaluation methodologies and the knowledge object lifecycle—from transient query-time answers to long-term admission into the canonical fact base of an expert system.
+This chapter examines the transition from an unstructured engineering inquiry to a strictly verified evidence pack within the architecture of evidence-governed expert systems. It analyzes the ill-structured nature of natural language and formalizes an algorithm for the semantic decomposition of user utterances into subject, relation, and speech act using typed JSON Schema contracts to ensure safe query routing to the knowledge base. A four-stage query transformation pipeline is investigated: detection, extraction, byte-level grounding, and semantic entailment verification. A deterministic span binder is implemented to resolve material claim atoms against source bytes (RFC 768), calculating the grounding completeness metric $\mathrm{Comp}(C)$ and normalizing units of measure. A four-valued evidence verification gate is established (`ENTAILED`, `PARTIAL`, `CONTRADICTED`, `NOT_ENOUGH_EVIDENCE`), strictly preventing the emission of unconfirmed recommendations. Finally, the chapter formalizes regression evaluation methodologies and the knowledge object lifecycle—from transient query-time answers to long-term admission into the canonical fact base of an expert system.
 
 ---
 
@@ -239,40 +239,40 @@ flowchart TD
 
 ### 5.1. Grounding Completeness and Validity Criteria
 
-To quantitatively verify that an extracted claim is rooted in authoritative source text without hallucinated elements, the grounding completeness metric $`\mathrm{Comp}(C)`$ is defined. It quantifies the proportion of material knowledge components successfully bound to physical source coordinates:
+To quantitatively verify that an extracted claim is rooted in authoritative source text without hallucinated elements, the grounding completeness metric $\mathrm{Comp}(C)$ is defined. It quantifies the proportion of material knowledge components successfully bound to physical source coordinates:
 
 ```math
 \mathrm{Comp}(C) = \frac{\sum_{a \in A_m(C)} w_a \cdot \mathbb{I}[b(a) \neq \varnothing]}{\sum_{a \in A_m(C)} w_a}
 ```
 
 where:
-- $`\mathrm{Comp}(C)`$ is the scalar grounding completeness score for claim $C$, defined over the normalized range $[0, 1]$;
-- $`A_m(C)`$ is the finite set of material atoms comprising the claim, the omission of any one of which distorts the engineering semantics ($`A_m(C) = \{\text{subject}, \text{relation}, \text{value}, \text{unit}\}`$);
-- $a$ is an individual material atom belonging to $`A_m(C)`$;
-- $w_a$ is the criticality weight of atom $a$ ($w_a > 0$, real-valued; in the calibrated baseline configuration, $`w_{\text{subject}} = 0{,}1`$, $`w_{\text{relation}} = 0{,}2`$, $`w_{\text{value}} = 0{,}4`$, $`w_{\text{unit}} = 0{,}3`$);
+- $\mathrm{Comp}(C)$ is the scalar grounding completeness score for claim $C$, defined over the normalized range $[0, 1]$;
+- $A_m(C)$ is the finite set of material atoms comprising the claim, the omission of any one of which distorts the engineering semantics ($A_m(C) = \{\text{subject}, \text{relation}, \text{value}, \text{unit}\}$);
+- $a$ is an individual material atom belonging to $A_m(C)$;
+- $w_a$ is the criticality weight of atom $a$ ($w_a > 0$, real-valued; in the calibrated baseline configuration, $w_{\text{subject}} = 0{,}1$, $w_{\text{relation}} = 0{,}2$, $w_{\text{value}} = 0{,}4$, $w_{\text{unit}} = 0{,}3$);
 - $b(a)$ is the half-open byte offset span $[s, e)$ uniquely identifying the occurrence of the atom's text anchor in the normalized source text, or $\varnothing$ if the anchor is not found or is ambiguous;
-- $`\mathbb{I}[b(a) \neq \varnothing]`$ is an indicator function evaluating to 1 if atom $a$ possesses exactly one unambiguous span match, and 0 in the event of a $`\text{NOT\_FOUND}`$ or $`\text{AMBIGUOUS\_SPAN}`$ status.
+- $\mathbb{I}[b(a) \neq \varnothing]$ is an indicator function evaluating to 1 if atom $a$ possesses exactly one unambiguous span match, and 0 in the event of a $\text{NOT\_FOUND}$ or $\text{AMBIGUOUS\_SPAN}$ status.
 
 **Practical Application and Engineering Decisions:**
 1. Grounding completeness is computed by the deterministic binder for every candidate claim proposed by the language model prior to admitting the output into the symbolic reasoning engine.
 2. **Numerical Admission Thresholds (Cutoff Criteria):**
-   - $`\mathrm{Comp}(C) = 1{,}00`$: **GROUNDED (Green Gate)**. All material atoms are successfully anchored to physical bytes; the claim is admitted to semantic entailment verification;
-   - $`0{,}70 \le \mathrm{Comp}(C) < 1{,}00`$: **INCOMPLETE_CLAIM (Fail-Closed)**. A critical atom (such as a unit of measure or conditional constraint) is missing or unresolved. The claim is unconditionally rejected. In mission-critical engineering, partial accuracy is unacceptable: knowledge that a latency threshold is "8" without a verified unit (`ms` versus `μs`) represents an immediate hazard;
-   - $`\mathrm{Comp}(C) < 0{,}70`$: **UNGROUNDED (Red Gate)**. The claim is rejected, triggering an anomaly telemetry log entry.
+   - $\mathrm{Comp}(C) = 1{,}00$: **GROUNDED (Green Gate)**. All material atoms are successfully anchored to physical bytes; the claim is admitted to semantic entailment verification;
+   - $0{,}70 \le \mathrm{Comp}(C) < 1{,}00$: **INCOMPLETE_CLAIM (Fail-Closed)**. A critical atom (such as a unit of measure or conditional constraint) is missing or unresolved. The claim is unconditionally rejected. In mission-critical engineering, partial accuracy is unacceptable: knowledge that a latency threshold is "8" without a verified unit (`ms` versus `μs`) represents an immediate hazard;
+   - $\mathrm{Comp}(C) < 0{,}70$: **UNGROUNDED (Red Gate)**. The claim is rejected, triggering an anomaly telemetry log entry.
 
 **Worked Numerical Example:**
 Consider an extracted specification rule: "The maximum tripping current is 25 A at 12 V." The material atoms are configured as: subject ($w = 0{,}1$), relation ($w = 0{,}2$), numerical value ($w = 0{,}4$), and unit ($w = 0{,}3$).
-If the unit "A" in the primary source fails span matching due to encoding corruption ($`\mathbb{I}[b(\text{unit}) \neq \varnothing] = 0`$):
+If the unit "A" in the primary source fails span matching due to encoding corruption ($\mathbb{I}[b(\text{unit}) \neq \varnothing] = 0$):
 
 ```math
 \mathrm{Comp}(C) = \frac{0{,}1 \cdot 1 + 0{,}2 \cdot 1 + 0{,}4 \cdot 1 + 0{,}3 \cdot 0}{0{,}1 + 0{,}2 + 0{,}4 + 0{,}3} = \frac{0{,}70}{1{,}0} = 0{,}70
 ```
 
-Because $`\mathrm{Comp}(C) = 0{,}70 < 1{,}00`$, the admission gate immediately rejects the candidate fact with the status `INCOMPLETE_CLAIM: missing verified unit atom`, preventing an ambiguous value from propagating into the reasoning engine.
+Because $\mathrm{Comp}(C) = 0{,}70 < 1{,}00$, the admission gate immediately rejects the candidate fact with the status `INCOMPLETE_CLAIM: missing verified unit atom`, preventing an ambiguous value from propagating into the reasoning engine.
 
 > [!IMPORTANT]
-> **Why Mission-Critical Engineering Demands 100% Grounding ($`\mathrm{Comp}(C) = 1{,}0`$)**  
-> In consumer conversational agents, an answer exhibiting "partial accuracy" of 70% is often deemed acceptable. In avionics (DO-178C) or automotive controllers (ISO 26262), a claim with $`\mathrm{Comp}(C) = 0{,}7`$ is a direct precursor to a hazardous event. If a system extracts "minimum signal delay is 8" but fails to anchor the unit atom (`ms` vs `μs`) or drops a governing caveat ("at temperatures above 85°C"), this is not a minor inaccuracy—it is a false proposition capable of damaging hardware. Consequently, the expert system's admission gate enforces hard fail-closed behavior: any $`\mathrm{Comp}(C) < 1{,}0`$ triggers an immediate refusal identifying the exact ungrounded atom.
+> **Why Mission-Critical Engineering Demands 100% Grounding ($\mathrm{Comp}(C) = 1{,}0$)**  
+> In consumer conversational agents, an answer exhibiting "partial accuracy" of 70% is often deemed acceptable. In avionics (DO-178C) or automotive controllers (ISO 26262), a claim with $\mathrm{Comp}(C) = 0{,}7$ is a direct precursor to a hazardous event. If a system extracts "minimum signal delay is 8" but fails to anchor the unit atom (`ms` vs `μs`) or drops a governing caveat ("at temperatures above 85°C"), this is not a minor inaccuracy—it is a false proposition capable of damaging hardware. Consequently, the expert system's admission gate enforces hard fail-closed behavior: any $\mathrm{Comp}(C) < 1{,}0$ triggers an immediate refusal identifying the exact ungrounded atom.
 
 ### 5.2. Practical Implementation: Claim Grounding from RFC 768
 
@@ -560,13 +560,13 @@ where:
 - $\text{transform-chain}$ is a formal descriptor recording the sequence of preprocessing and normalization steps applied (e.g., `norm:v2.1|chunk:fields_v7`);
 - $\text{byte-start}, \text{byte-end}$ are the exact half-open byte offset coordinates $[s, e)$ within the normalized binary stream ($0 \le s < e$);
 - $\text{bytes}$ represents the raw binary byte sequence of the passage;
-- $`\|`$ denotes unambiguous canonical field serialization (such as length-prefixed TLV or Protocol Buffers) preventing field-boundary injection collisions.
+- $\|$ denotes unambiguous canonical field serialization (such as length-prefixed TLV or Protocol Buffers) preventing field-boundary injection collisions.
 
 **Practical Application and Engineering Decisions:**
 1. This hash computation is executed automatically during ingest-time indexing and re-verified at query execution time.
 2. **Integrity Verification Criteria:**
-   - If the recomputed hash $`H' = \text{passage-id}`$: **VERIFIED (Green Gate)**. Exact byte-level authenticity of the passage is confirmed;
-   - If $`H' \ne \text{passage-id}`$: **TAMPER_DETECTED (Red Gate / Fail-Closed)**. A version divergence or unauthorized content mutation is flagged; the passage is immediately evicted from the query cache, an audit alert is triggered, and retrieval falls back to the immutable primary storage archive.
+   - If the recomputed hash $H' = \text{passage-id}$: **VERIFIED (Green Gate)**. Exact byte-level authenticity of the passage is confirmed;
+   - If $H' \ne \text{passage-id}$: **TAMPER_DETECTED (Red Gate / Fail-Closed)**. A version divergence or unauthorized content mutation is flagged; the passage is immediately evicted from the query cache, an audit alert is triggered, and retrieval falls back to the immutable primary storage archive.
 
 ## 8. Intermediate Representation of an Evidenced Claim
 
@@ -781,7 +781,7 @@ Formulating an authoritative engineering verdict from natural language requires 
 
 - **Mykola Fedchyk:**  
   *“Dr. Kelvin Guu, our deterministic grounder never mandates that all assertion atoms reside within a single monolithic byte span!  
-  An assertion proof tuple $\mathcal{E}$ is defined as a set of independent grounded spans: each constituent field (Subject, Predicate, Value, Unit) possesses its own discrete start and end byte offsets $`[S_i, E_i]`$, which may originate from separate paragraphs, tables, or distinct appendixes within the specification.  
+  An assertion proof tuple $\mathcal{E}$ is defined as a set of independent grounded spans: each constituent field (Subject, Predicate, Value, Unit) possesses its own discrete start and end byte offsets $[S_i, E_i]$, which may originate from separate paragraphs, tables, or distinct appendixes within the specification.  
   The completeness metric $\mathrm{Comp}(C)$ evaluates the ratio of rigorously grounded fields against the mandatory ontological contract. Composite deductive inferences—such as computing minimum user payload by subtracting header length from total datagram length—are delegated not to opaque latent vector projections, but to formal first-order predicate deduction over verified facts.  
   Compositionality is thus achieved through transparent symbolic deduction where every atomic premise preserves an immutable byte-level provenance trail, rather than through stochastic cross-attention across latent weights.”*
 

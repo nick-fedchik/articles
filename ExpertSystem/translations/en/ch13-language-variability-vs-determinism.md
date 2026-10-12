@@ -134,10 +134,10 @@ A foundational technique within modular RAG architectures is RAG-Fusion, which e
 Parameters and measurable quantities of the formula:
 
 - $d \in D$ represents a candidate document or normative text chunk drawn from the global corpus $D$;
-- $M$ denotes the set of heterogeneous retrieval channels or query variants (e.g., $M = \{\text{dense}, \text{sparse}, \text{graph}\}$, where $`\lvert M \rvert \ge 2`$), with $m$ indexing an individual channel;
+- $M$ denotes the set of heterogeneous retrieval channels or query variants (e.g., $M = \{\text{dense}, \text{sparse}, \text{graph}\}$, where $\lvert M \rvert \ge 2$), with $m$ indexing an individual channel;
 - $r_m(d) \in \mathbb{N}_{\ge 1}$ denotes the ordinal rank of document $d$ within the result list of channel $m$ ($r_m(d) = 1$ for top rank; if document $d$ is absent from channel $m$'s returned set, $r_m(d) = \infty$, yielding $1/(k + \infty) = 0$);
 - $k \in \mathbb{N}_{> 0}$ is a positive smoothing constant, canonically parameterized as $k = 60$; this factor guarantees that an isolated outlier rank in a noisy channel does not overpower a stable consensus established in the upper tiers of other channels;
-- $`\mathrm{RRF}(d) \in (0, \frac{\lvert M \rvert}{k + 1}]`$ is a dimensionless integrated consensus ranking score.
+- $\mathrm{RRF}(d) \in (0, \frac{\lvert M \rvert}{k + 1}]$ is a dimensionless integrated consensus ranking score.
 
 Practical implementation and engineering conclusions:
 - **Pipeline Function:** The RRF score is utilized exclusively for coarse positional filtering of the candidate pool (typically bounded at $K_{\mathrm{pool}} = 50$), which is subsequently passed to high-latency cross-encoder re-ranking.
@@ -494,7 +494,7 @@ p_i = \frac{e^{z_i}}{\sum_{j \in V} e^{z_j}}
 
 Parameters and measurable characteristics of softmax:
 
-- $V$ denotes the complete fixed vocabulary of the tokenizer (typically $`\lvert V \rvert \in \{32000, 128000\}`$ tokens);
+- $V$ denotes the complete fixed vocabulary of the tokenizer (typically $\lvert V \rvert \in \{32000, 128000\}$ tokens);
 - $i, j \in \{1, \dots, \lvert V \rvert\}$ represent discrete token indices in the vocabulary;
 - $z_i \in \mathbb{R}$ is the unconstrained real logit for token $i$, output by the model's final linear projection layer;
 - $p_i \in (0, 1)$ is the posterior probability of selecting token $i$, satisfying $\sum_{j \in V} p_j = 1$.

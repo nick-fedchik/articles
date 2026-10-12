@@ -63,7 +63,7 @@ Hierbei bezeichnen:
 - $\mathbf{b}_g$ den verbleibenden Nullpunktfehler (Bias) des Gyroskops, d. h. eine fehlerhafte Winkelgeschwindigkeit, in rad/s;
 - $\mathbf{g}$ den Erdbeschleunigungsvektor mit einem Betrag von ca. $9{,}81$ m/s², nach unten gerichtet;
 - $\times$ das Vektorprodukt; der Term $\mathbf{b}_g\times\mathbf{g}$ liefert die scheinbare Horizontalbeschleunigung, die entsteht, wenn der Neigungswinkelfehler den Erdschwerevektor anteilig in die Horizontalebene projiziert;
-- die Faktoren $\tfrac12$ und $\tfrac16$ das Resultat der doppelten Zeitintegration: Eine konstante Größe $b$ ergibt nach zweifacher Integration $`b\,t^{2}/2`$, während eine linear anwachsende Scheinbeschleunigung $`c\,t`$ nach zweifacher Integration $`c\,t^{3}/6`$ ergibt.
+- die Faktoren $\tfrac12$ und $\tfrac16$ das Resultat der doppelten Zeitintegration: Eine konstante Größe $b$ ergibt nach zweifacher Integration $b\,t^{2}/2$, während eine linear anwachsende Scheinbeschleunigung $c\,t$ nach zweifacher Integration $c\,t^{3}/6$ ergibt.
 
 Diese Beziehung beschreibt die ungestützte Koppelnavigation bei konstanten Driftwerten und kleinen Winkeln. Ein realer Navigationsfilter schätzt diese Bias-Werte und kompensiert sie partiell; die Gleichung verdeutlicht daher die theoretische Fehlerwachstumsrate ohne externe Stützung und stellt keine deterministische Prognose für eine spezifische Flugbahn dar.
 
@@ -185,9 +185,9 @@ Hierbei bezeichnen:
 - $\mathbf{H}\mathbf{P}_k\mathbf{H}^{\top}+\mathbf{R}_k$ die Innovationskovarianz: Sie summiert die in den Messraum transformierte Filterunsicherheit und die Eigenunsicherheit der Messung;
 - $(\cdot)^{-1}$ die Matrixinversion; die Multiplikation mit der Inversen skaliert die metrische Abweichung anhand der statistischen Unsicherheitsmaße.
 
-Die praktische Tragweite dieser Formulierung ist fundamental: Eine Diskrepanz in Metern wird nicht isoliert bewertet, sondern stets relativ zu den deklarierten Unsicherheiten von Filter und Sensorik beurteilt. Sei beispielsweise eine Innovation $`\mathbf{y}_k=(12;\,5)`$ m gegeben und die Innovationskovarianz betrage $`\mathrm{diag}(25;\,25)`$ m², was einer Standardabweichung von 5 m pro Achse entspricht. Daraus folgt $d_M^{2}=12^{2}/25+5^{2}/25=6{,}76$. Wird die Messunsicherheit hingegen fälschlich mit nur $`\mathrm{diag}(4;\,4)`$ m² angegeben, ergibt sich $d_M^{2}=(144+25)/4=42{,}25$. Die geometrische Distanz ist in beiden Szenarien mit 13 m identisch, doch im ersten Fall ist die Abweichung statistisch konsistent, während sie im zweiten Fall als Ausreißer verworfen wird. (Zahlenwerte dienen der Anschauung).
+Die praktische Tragweite dieser Formulierung ist fundamental: Eine Diskrepanz in Metern wird nicht isoliert bewertet, sondern stets relativ zu den deklarierten Unsicherheiten von Filter und Sensorik beurteilt. Sei beispielsweise eine Innovation $\mathbf{y}_k=(12;\,5)$ m gegeben und die Innovationskovarianz betrage $\mathrm{diag}(25;\,25)$ m², was einer Standardabweichung von 5 m pro Achse entspricht. Daraus folgt $d_M^{2}=12^{2}/25+5^{2}/25=6{,}76$. Wird die Messunsicherheit hingegen fälschlich mit nur $\mathrm{diag}(4;\,4)$ m² angegeben, ergibt sich $d_M^{2}=(144+25)/4=42{,}25$. Die geometrische Distanz ist in beiden Szenarien mit 13 m identisch, doch im ersten Fall ist die Abweichung statistisch konsistent, während sie im zweiten Fall als Ausreißer verworfen wird. (Zahlenwerte dienen der Anschauung).
 
-Sofern das Fehlermodell korrekt kalibriert ist, folgt $d_M^{2}$ einer Chi-Quadrat-Verteilung ($\chi^2$), deren Freiheitsgrad der Dimension des Messvektors entspricht. Der Zulässigkeitsschwellenwert (*Gating Threshold*) wird daher als Quantil dieser Verteilung gewählt; dieses statistische Gating beschreiben Bar-Shalom, Li und Kirubarajan im Detail [[8]](#src-8). Für eine zweidimensionale Horizontalposition ($m=2$) beträgt der Schwellenwert bei einem Konfidenzniveau von 99 % $`\chi^{2}_{2;0{,}99}\approx9{,}21`$, für eine dreidimensionale Position ($m=3$) entsprechend $`\chi^{2}_{3;0{,}99}\approx11{,}34`$. Im obigen Rechenbeispiel passiert der erste Fall das Filter ($6{,}76 \le 9{,}21$), während der zweite Fall blockiert wird ($42{,}25 > 9{,}21$). Ein Messkandidat wird somit genau dann akzeptiert, wenn folgende Bedingung erfüllt ist:
+Sofern das Fehlermodell korrekt kalibriert ist, folgt $d_M^{2}$ einer Chi-Quadrat-Verteilung ($\chi^2$), deren Freiheitsgrad der Dimension des Messvektors entspricht. Der Zulässigkeitsschwellenwert (*Gating Threshold*) wird daher als Quantil dieser Verteilung gewählt; dieses statistische Gating beschreiben Bar-Shalom, Li und Kirubarajan im Detail [[8]](#src-8). Für eine zweidimensionale Horizontalposition ($m=2$) beträgt der Schwellenwert bei einem Konfidenzniveau von 99 % $\chi^{2}_{2;0{,}99}\approx9{,}21$, für eine dreidimensionale Position ($m=3$) entsprechend $\chi^{2}_{3;0{,}99}\approx11{,}34$. Im obigen Rechenbeispiel passiert der erste Fall das Filter ($6{,}76 \le 9{,}21$), während der zweite Fall blockiert wird ($42{,}25 > 9{,}21$). Ein Messkandidat wird somit genau dann akzeptiert, wenn folgende Bedingung erfüllt ist:
 
 ```math
 \text{ValidMeasurement}(\mathbf{z}_k)\iff d_M^{2}\le\chi^{2}_{m;1-\alpha}\ \land\ \left|h_{\text{baro}}-h_{\text{DEM}}(\mathbf{z}_k)-h_{\text{range}}\right|\le\epsilon_{\text{alt}}.
@@ -202,9 +202,9 @@ Hierbei bezeichnen:
 - $\chi^{2}_{m;1-\alpha}$ das Quantil der Chi-Quadrat-Verteilung mit $m$ Freiheitsgraden für das Konfidenzniveau $1-\alpha$, d. h. der Schwellenwert, den eine korrekte Messung nur mit der Irrtumswahrscheinlichkeit $\alpha$ überschreitet;
 - $m$ die Dimension des Messvektors (2 für die Horizontalebene, 3 für 3D-Koordinaten);
 - $\alpha$ das Signifikanzniveau, also der zulässige Anteil valider Messungen, die fälschlicherweise verworfen werden (Fehler 1. Art; für 99 % Konfidenz gilt $\alpha=0{,}01$);
-- $`h_{\text{baro}}`$ die barometrische Höhe der Plattform über Normalnull (ASL) in Metern;
-- $`h_{\text{DEM}}(\mathbf{z}_k)`$ die Geländehöhe an der Position des Kandidaten $\mathbf{z}_k$ laut digitalem Geländemodell (DEM) in Metern;
-- $`h_{\text{range}}`$ die vom Laser- oder Radaraltimeter gemessene Distanz über Grund (AGL) in Metern;
+- $h_{\text{baro}}$ die barometrische Höhe der Plattform über Normalnull (ASL) in Metern;
+- $h_{\text{DEM}}(\mathbf{z}_k)$ die Geländehöhe an der Position des Kandidaten $\mathbf{z}_k$ laut digitalem Geländemodell (DEM) in Metern;
+- $h_{\text{range}}$ die vom Laser- oder Radaraltimeter gemessene Distanz über Grund (AGL) in Metern;
 - $\epsilon_{\text{alt}}$ die zulässige Höhentoleranz in Metern, parametriert anhand der summierten Varianzen von Barometer, Altimeter und DEM;
 - $\lvert\cdot\rvert$ den Absolutbetrag.
 

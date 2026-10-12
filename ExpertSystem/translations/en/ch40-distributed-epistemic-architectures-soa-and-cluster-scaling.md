@@ -13,7 +13,7 @@
 
 All preceding chapters of this monograph have systematically established a fundamental thesis: a dependable expert system cannot rest upon stochastic generalizations of large language models or unverified fact bases. Genuine expertise demands mathematical determinism, formal deduction, byte-level custody of primary sources ($ZHR = 1.00$), and independent auditability. However, deploying the system beyond the research test bench into a real-world industrial R&D environment confronts the architect with a critical new challenge: **scalability, distribution, and ubiquitous availability**.
 
-This chapter concludes the theoretical cycle of the monograph by formulating for the reader a **reference architectural prototype of an industrial-grade evidence-governed expert system**. Abstracting away from proprietary silicon vendors and commercial hardware specifications, the chapter delineates the functional classes of hardware and software evaluators required to build a scalable architecture. It examines a three-tier Epistemic Service-Oriented Architecture (Epistemic SOA), wherein thin mobile clients (smartphones, engineering terminals) interact with a cluster of domain services through an intelligent semantic broker. A multi-tier memory hierarchy is formalized: the pipeline continuity condition and complete latency hiding ($`T_{\mathrm{refill}} \ll T_{\mathrm{execute}}`$) are mathematically proven via Active Working Sets (AWS) and symmetric double buffering (Ping-Pong Pipeline). To handle knowledge gaps across individual domain services, the chapter establishes a model for federated search (Scatter-Gather) and multi-source defeasible evidence aggregation (ASPIC+). Special emphasis is dedicated to distributed semantic triage of knowledge deficits based on 64-bit SimHash fingerprinting and Burkhard-Keller metric trees (BK-Trees), hardened by feature space degeneracy guards and autonomous local WAL buffers, as well as constructing an Immutable Decision Ledger over hierarchical Merkle trees with WORM anchoring to ensure legal and technical non-repudiation for ASIL D certification audits. Finally, an engineering technology selection matrix is presented, enabling the systems architect to deploy a functional prototype on available infrastructure aligned with project budget constraints.
+This chapter concludes the theoretical cycle of the monograph by formulating for the reader a **reference architectural prototype of an industrial-grade evidence-governed expert system**. Abstracting away from proprietary silicon vendors and commercial hardware specifications, the chapter delineates the functional classes of hardware and software evaluators required to build a scalable architecture. It examines a three-tier Epistemic Service-Oriented Architecture (Epistemic SOA), wherein thin mobile clients (smartphones, engineering terminals) interact with a cluster of domain services through an intelligent semantic broker. A multi-tier memory hierarchy is formalized: the pipeline continuity condition and complete latency hiding ($T_{\mathrm{refill}} \ll T_{\mathrm{execute}}$) are mathematically proven via Active Working Sets (AWS) and symmetric double buffering (Ping-Pong Pipeline). To handle knowledge gaps across individual domain services, the chapter establishes a model for federated search (Scatter-Gather) and multi-source defeasible evidence aggregation (ASPIC+). Special emphasis is dedicated to distributed semantic triage of knowledge deficits based on 64-bit SimHash fingerprinting and Burkhard-Keller metric trees (BK-Trees), hardened by feature space degeneracy guards and autonomous local WAL buffers, as well as constructing an Immutable Decision Ledger over hierarchical Merkle trees with WORM anchoring to ensure legal and technical non-repudiation for ASIL D certification audits. Finally, an engineering technology selection matrix is presented, enabling the systems architect to deploy a functional prototype on available infrastructure aligned with project budget constraints.
 
 ---
 
@@ -99,7 +99,7 @@ In software engineering, service-oriented architecture has traditionally address
 ### 2.1. Concept of the Thin Interaction Client
 
 The end-user client terminal (utilized by a quality engineer, developer, or compliance auditor) is architected as an **ultrathin interaction agent**:
-1. **Zero Knowledge Storage ($`S_{\mathrm{client}} = 0`$):** The client application retains no knowledge bases and never caches local copies of regulatory standards. This eliminates the risk of norm version drift across members of the engineering team.
+1. **Zero Knowledge Storage ($S_{\mathrm{client}} = 0$):** The client application retains no knowledge bases and never caches local copies of regulatory standards. This eliminates the risk of norm version drift across members of the engineering team.
 2. **Compute Agnosticism:** The client does not require neural processing units (NPU/GPU) or specialized hardware rule processors. Consequently, the expert system client interface runs seamlessly on standard smartphones under mobile operating systems, within modern web browsers via WebAssembly/PWA, or directly in an engineer's workstation command-line terminal.
 3. **Strict Query and Response Typing:** Communication executes via high-throughput binary RPC contracts (such as Protocol Buffers over gRPC or secure WebSockets):
    - Client request: a natural language query or structured engineering artifact identifier (payload size $\le 2\text{--}4\,\text{KB}$).
@@ -173,18 +173,18 @@ The Semantic Broker maintains an active in-memory registry of all domain service
 - **Evaluator Class:** Software CPU execution engine, vector processor array, or specialized deterministic hardware inference core;
 - **Throughput Metrics:** Current request queue depth and estimated evaluation latency.
 
-The Broker computes an affinity matching function between the query's ontological signature $`\mathcal{S}_{\mathrm{query}}`$ and the knowledge domain $`\mathcal{P}_{\mathrm{domain}}`$ declared in the service manifest $`\mathcal{P}_{\mathrm{service}}`$:
+The Broker computes an affinity matching function between the query's ontological signature $\mathcal{S}_{\mathrm{query}}$ and the knowledge domain $\mathcal{P}_{\mathrm{domain}}$ declared in the service manifest $\mathcal{P}_{\mathrm{service}}$:
 
 ```math
 \mathrm{Affinity}(\mathcal{S}_{\mathrm{query}}, \mathcal{P}_{\mathrm{service}}) = \frac{\lvert\mathcal{S}_{\mathrm{query}} \cap \mathcal{P}_{\mathrm{domain}}\rvert}{\lvert\mathcal{S}_{\mathrm{query}}\rvert}
 ```
 
 where:
-- $`\mathcal{S}_{\mathrm{query}}`$ is the set of ontological concepts and domain markers extracted from the engineer's query;
-- $`\mathcal{P}_{\mathrm{domain}}`$ is the set of supported standards and ontology versions declared in the manifest $`\mathcal{P}_{\mathrm{service}}`$;
-- $`\lvert \mathcal{S}_{\mathrm{query}} \cap \mathcal{P}_{\mathrm{domain}} \rvert`$ is the cardinality of the intersection of ontological signatures (number of matched concepts);
-- $`\lvert \mathcal{S}_{\mathrm{query}} \rvert`$ is the total count of ontological markers extracted from the input query;
-- $`\mathrm{Affinity}(\mathcal{S}_{\mathrm{query}}, \mathcal{P}_{\mathrm{service}}) \in [0, 1]`$ is the normalized semantic affinity coefficient (a value of $1.0$ indicates complete coverage of the query domain).
+- $\mathcal{S}_{\mathrm{query}}$ is the set of ontological concepts and domain markers extracted from the engineer's query;
+- $\mathcal{P}_{\mathrm{domain}}$ is the set of supported standards and ontology versions declared in the manifest $\mathcal{P}_{\mathrm{service}}$;
+- $\lvert \mathcal{S}_{\mathrm{query}} \cap \mathcal{P}_{\mathrm{domain}} \rvert$ is the cardinality of the intersection of ontological signatures (number of matched concepts);
+- $\lvert \mathcal{S}_{\mathrm{query}} \rvert$ is the total count of ontological markers extracted from the input query;
+- $\mathrm{Affinity}(\mathcal{S}_{\mathrm{query}}, \mathcal{P}_{\mathrm{service}}) \in [0, 1]$ is the normalized semantic affinity coefficient (a value of $1.0$ indicates complete coverage of the query domain).
 
 The service exhibiting the highest affinity score is designated as the primary evaluator (*Primary Evaluator*).
 
@@ -195,9 +195,9 @@ The service exhibiting the highest affinity score is designated as the primary e
 Any computational system is fundamentally constrained by the physical laws of signal propagation and memory hierarchy design [[3]](#src-3): **larger memory capacities incur higher access latencies, while ultra-fast memory integrated directly into compute logic possesses strictly bounded capacity**.
 
 In engineering expert systems, this disparity reaches critical proportions:
-1. **Macro-Volume of the Knowledge Repository ($`V_{\mathrm{corpus}}`$):** The complete regulatory corpus, encompassing verbatim primary sources, parse trees, and traceability matrices, spans $4\text{--}32\,\text{GB}$.
-2. **Micro-Capacity of Fast Rule Engine Memory ($`V_{\mathrm{local}}`$):** The on-chip memory of a dedicated rule processor (Block RAM in silicon accelerators or fast L1/L2 cache) typically does not exceed several hundred kilobytes ($256\text{--}512\,\text{KB}$).
-3. **Interconnect Channel Bandwidth ($`B_{\mathrm{channel}}`$):** Transferring the entire knowledge repository to the compute engine for each query introduces intolerable system stalls ($> 1$ minute), shattering the responsiveness required for interactive engineering dialogue ($0.5\text{--}2.0\,\text{s}$).
+1. **Macro-Volume of the Knowledge Repository ($V_{\mathrm{corpus}}$):** The complete regulatory corpus, encompassing verbatim primary sources, parse trees, and traceability matrices, spans $4\text{--}32\,\text{GB}$.
+2. **Micro-Capacity of Fast Rule Engine Memory ($V_{\mathrm{local}}$):** The on-chip memory of a dedicated rule processor (Block RAM in silicon accelerators or fast L1/L2 cache) typically does not exceed several hundred kilobytes ($256\text{--}512\,\text{KB}$).
+3. **Interconnect Channel Bandwidth ($B_{\mathrm{channel}}$):** Transferring the entire knowledge repository to the compute engine for each query introduces intolerable system stalls ($> 1$ minute), shattering the responsiveness required for interactive engineering dialogue ($0.5\text{--}2.0\,\text{s}$).
 
 ```mermaid
 flowchart TD
@@ -249,10 +249,10 @@ Rather than transferring the entire knowledge repository, the semantic dispatche
 ```
 
 where:
-- $`\mathcal{R}_{\mathrm{target}}`$ denotes the set of target rules activated by the query's ontological signature;
-- $`\mathrm{Prerequisites}(\mathcal{R}_{\mathrm{target}})`$ represents prerequisite predicates required for deterministic dependency resolution;
-- $`\mathrm{Defeaters}(\mathcal{R}_{\mathrm{target}})`$ is the set of associated defeaters (exceptions, rebuttals, and undercutting counter-rules);
-- $`\mathrm{AWS}`$ is the transitive deductive closure of rules stripped of verbatim textual source excerpts, optimized for instantaneous staging into local compute cache.
+- $\mathcal{R}_{\mathrm{target}}$ denotes the set of target rules activated by the query's ontological signature;
+- $\mathrm{Prerequisites}(\mathcal{R}_{\mathrm{target}})$ represents prerequisite predicates required for deterministic dependency resolution;
+- $\mathrm{Defeaters}(\mathcal{R}_{\mathrm{target}})$ is the set of associated defeaters (exceptions, rebuttals, and undercutting counter-rules);
+- $\mathrm{AWS}$ is the transitive deductive closure of rules stripped of verbatim textual source excerpts, optimized for instantaneous staging into local compute cache.
 
 The AWS retains only the mathematical skeleton of the rules: numeric bounds, logical conditions, defeater identifiers, and 256-bit citation hashes. Verbatim source texts remain in Level 0 storage. The footprint of the AWS shrinks to **$8\text{--}32\,\text{MB}$**, which transfers across standard industrial buses in fractions of a second.
 
@@ -260,17 +260,17 @@ The AWS retains only the mathematical skeleton of the rules: numeric bounds, log
 
 In deterministic expert systems, it is unacceptable for a high-performance compute core to stall while awaiting the next batch of rules from high-latency external memory. To eliminate transfer stalls, the rule processor's memory is organized into two symmetric, independent banks of identical capacity: Bank A and Bank B. While the processor evaluates rules staged in one bank, an autonomous Direct Memory Access (DMA) controller concurrently populates the alternate bank with the subsequent rule chunk in the background.
 
-The refill time required to populate a single bank from local system RAM ($`T_{\mathrm{refill}}`$) is governed by the ratio of bank capacity to the effective interconnect bus bandwidth:
+The refill time required to populate a single bank from local system RAM ($T_{\mathrm{refill}}$) is governed by the ratio of bank capacity to the effective interconnect bus bandwidth:
 
 ```math
 T_{\mathrm{refill}} = \frac{V_{\mathrm{bank}}}{B_{\mathrm{bus}}}
 ```
 
 where:
-- $`V_{\mathrm{bank}}`$ is the capacity of a single bank of fast on-chip memory (e.g., $256\,\text{KB}$ of Block RAM on an FPGA or dedicated on-die SRAM);
-- $`B_{\mathrm{bus}}`$ is the effective bandwidth of the internal rule streaming bus (e.g., $1.2\,\text{GB/s}$ for an AXI4-Stream / PCIe DMA interconnect);
-- $`T_{\mathrm{refill}}`$ is the calculated duration of background bank staging executed without rule processor intervention;
-- $`T_{\mathrm{execute}}`$ is the time required by the rule processor to perform complete systolic evaluation of the incoming requirement batch against the rule block of capacity $`V_{\mathrm{bank}}`$.
+- $V_{\mathrm{bank}}$ is the capacity of a single bank of fast on-chip memory (e.g., $256\,\text{KB}$ of Block RAM on an FPGA or dedicated on-die SRAM);
+- $B_{\mathrm{bus}}$ is the effective bandwidth of the internal rule streaming bus (e.g., $1.2\,\text{GB/s}$ for an AXI4-Stream / PCIe DMA interconnect);
+- $T_{\mathrm{refill}}$ is the calculated duration of background bank staging executed without rule processor intervention;
+- $T_{\mathrm{execute}}$ is the time required by the rule processor to perform complete systolic evaluation of the incoming requirement batch against the rule block of capacity $V_{\mathrm{bank}}$.
 
 **Latency Hiding Invariant Theorem:**  
 The inference pipeline operates at maximum computational utilization ($\eta = 1.00$) with zero processor wait-states if and only if the background refill latency does not exceed the execution time of the active rule chunk:
@@ -281,22 +281,22 @@ T_{\mathrm{refill}} \le T_{\mathrm{execute}}
 
 **Practical Engineering Application of the Calculation:**
 
-The computed value of $`T_{\mathrm{refill}}`$ and its relationship to $`T_{\mathrm{execute}}`$ serve not merely as an abstract theoretical bound, but as an **operational instrument for hardware dimensioning and dynamic scheduling**:
+The computed value of $T_{\mathrm{refill}}$ and its relationship to $T_{\mathrm{execute}}$ serve not merely as an abstract theoretical bound, but as an **operational instrument for hardware dimensioning and dynamic scheduling**:
 
 1. **Hardware Dimensioning:**  
-   The formula dictates the maximum allowable fast memory bank capacity $`V_{\mathrm{bank}}`$ during hardware architectural synthesis:
+   The formula dictates the maximum allowable fast memory bank capacity $V_{\mathrm{bank}}$ during hardware architectural synthesis:
 
 ```math
 V_{\mathrm{bank}} \le B_{\mathrm{bus}} \cdot T_{\mathrm{execute}}
 ```
 
-   If an architect erroneously provisions an oversized memory bank (e.g., $`V_{\mathrm{bank}} = 16\,\text{MB}`$), an interconnect bus operating at $1.2\,\text{GB/s}$ requires the following refill time:
+   If an architect erroneously provisions an oversized memory bank (e.g., $V_{\mathrm{bank}} = 16\,\text{MB}$), an interconnect bus operating at $1.2\,\text{GB/s}$ requires the following refill time:
 
 ```math
 T_{\mathrm{refill}} = \frac{16\,\text{MB}}{1.2\,\text{GB/s}} \approx 13.3\,\text{ms}
 ```
 
-   If the processor completes rule verification in $`T_{\mathrm{execute}} = 2.0\,\text{ms}`$, a severe pipeline stall (*Pipeline Stall*) occurs: the compute core is forced into an idle wait of $11.3\,\text{ms}$ awaiting bus transfer, causing processor core efficiency to plummet to:
+   If the processor completes rule verification in $T_{\mathrm{execute}} = 2.0\,\text{ms}$, a severe pipeline stall (*Pipeline Stall*) occurs: the compute core is forced into an idle wait of $11.3\,\text{ms}$ awaiting bus transfer, causing processor core efficiency to plummet to:
 
 ```math
 \eta = \frac{T_{\mathrm{execute}}}{T_{\mathrm{refill}}} = \frac{2.0\,\text{ms}}{13.3\,\text{ms}} \approx 0.15
@@ -305,17 +305,17 @@ T_{\mathrm{refill}} = \frac{16\,\text{MB}}{1.2\,\text{GB/s}} \approx 13.3\,\text
    (85% of the clock cycles of an expensive silicon core are squandered in idle states). The calculation demonstrates that to maintain uninterrupted pipeline throughput, the individual rule chunk size must not exceed $256\text{--}512\,\text{KB}$.
 
 2. **Adaptive Chunk Sizing in Software Runtime:**  
-   When assembling the Active Working Set (AWS), the semantic dispatcher dynamically assesses the computational complexity of rules within each batch. If the rules are computationally lightweight and predicted execution time contracts ($`T_{\mathrm{execute}} \to 0.5\,\text{ms}`$), the dispatcher automatically partitions rules into smaller chunks or enables DMA bus burst mode, preventing compute core stalls.
+   When assembling the Active Working Set (AWS), the semantic dispatcher dynamically assesses the computational complexity of rules within each batch. If the rules are computationally lightweight and predicted execution time contracts ($T_{\mathrm{execute}} \to 0.5\,\text{ms}$), the dispatcher automatically partitions rules into smaller chunks or enables DMA bus burst mode, preventing compute core stalls.
 
 3. **Operating Modes and System Engineering Decisions Based on Latency Ratios:**  
-   - **Optimal Deterministic Mode ($`T_{\mathrm{refill}} \ll T_{\mathrm{execute}}`$, margin $\ge 2\times$):**  
-     For a standard $256\,\text{KB}$ knowledge block, the staging latency is $`T_{\mathrm{refill}} = \frac{256\,\text{KB}}{1.2\,\text{GB/s}} \approx 218\,\mu\text{s}`$. Systolic evaluation of a complex engineering requirement batch against these rules requires $`T_{\mathrm{execute}} \approx 1.5\text{--}5.0\,\text{ms}`$, yielding a timing margin of $7\times$ to $23\times$.  
+   - **Optimal Deterministic Mode ($T_{\mathrm{refill}} \ll T_{\mathrm{execute}}$, margin $\ge 2\times$):**  
+     For a standard $256\,\text{KB}$ knowledge block, the staging latency is $T_{\mathrm{refill}} = \frac{256\,\text{KB}}{1.2\,\text{GB/s}} \approx 218\,\mu\text{s}$. Systolic evaluation of a complex engineering requirement batch against these rules requires $T_{\mathrm{execute}} \approx 1.5\text{--}5.0\,\text{ms}$, yielding a timing margin of $7\times$ to $23\times$.  
      **System Action:** The passive bank is guaranteed to be fully populated long before computation completes. When the processor completes evaluation, the hardware switch alternates the banks ($A \leftrightarrow B$) in **1 clock cycle**, delivering end-to-end efficiency $\eta = 1.00$ and strict worst-case execution time (WCET) determinism.
-   - **Marginal Bus Contention Zone ($`0.8 \cdot T_{\mathrm{execute}} < T_{\mathrm{refill}} \le T_{\mathrm{execute}}`$):**  
+   - **Marginal Bus Contention Zone ($0.8 \cdot T_{\mathrm{execute}} < T_{\mathrm{refill}} \le T_{\mathrm{execute}}$):**  
      The safety margin is minimal. Any transient collision on the internal bus (peripheral interrupts, concurrent memory transfers) risks violating the pipeline deadline.  
      **System Action:** The dispatcher elevates bus arbitration priority (*DMA Channel Priority / QoS*), allocating highest bus priority to the knowledge streaming channel over competing system tasks.
-   - **Emergency Bandwidth Deficit Mode ($`T_{\mathrm{refill}} > T_{\mathrm{execute}}`$):**  
-     **System Action:** A hardware watchdog timer detects compute pipeline stalls. The semantic dispatcher initiates graceful degradation: it temporarily restricts vector core parallelism or prunes optional second-order defeaters, restoring system operation to the stable invariant $`T_{\mathrm{refill}} \le T_{\mathrm{execute}}`$.
+   - **Emergency Bandwidth Deficit Mode ($T_{\mathrm{refill}} > T_{\mathrm{execute}}$):**  
+     **System Action:** A hardware watchdog timer detects compute pipeline stalls. The semantic dispatcher initiates graceful degradation: it temporarily restricts vector core parallelism or prunes optional second-order defeaters, restoring system operation to the stable invariant $T_{\mathrm{refill}} \le T_{\mathrm{execute}}$.
 
 ### 4.3. Systolic Batch Compliance Sweeps
 
@@ -378,23 +378,23 @@ During compliance audits of mission-critical systems (e.g., ISO 26262 ASIL-D [[5
 ```
 
 where:
-- $`\mathrm{Cred}(A_i) \in [0, 1)`$ denotes the discrete credibility level of evidence provided by domain service $`i`$ (governed by source authority and traceability depth);
-- $`\mathrm{Conf}(A_1 \cup A_2) \in [0, 1)`$ represents cumulative probabilistic confidence in the corroborated conclusion following aggregation of independent arguments $`A_1`$ and $`A_2`$.
+- $\mathrm{Cred}(A_i) \in [0, 1)$ denotes the discrete credibility level of evidence provided by domain service $i$ (governed by source authority and traceability depth);
+- $\mathrm{Conf}(A_1 \cup A_2) \in [0, 1)$ represents cumulative probabilistic confidence in the corroborated conclusion following aggregation of independent arguments $A_1$ and $A_2$.
 
 **Practical Application and Engineering Decisions from the Result:**
 1. **Lifecycle Invocation Point:** The computation executes within the Semantic Broker during the aggregation phase (Gather phase) whenever evidence dispatched by multiple nodes converges on an identical target predicate.
 2. **System Decision Criteria Governed by Numeric Thresholds:**
-   - **Automated Requirement Sign-Off Threshold ($`\mathrm{Conf} \ge \tau_{\mathrm{accept}} = 0.95`$):** Evidence is deemed exhaustive. The system automatically issues an `ACCEPT` verdict, affixes an Ed25519 cryptographic digital signature, and advances the verified artifact into the certification dossier without requiring human intervention.
-   - **Expert Escalation Zone ($`0.80 \le \mathrm{Conf} < 0.95`$):** The system emits a qualified verdict `QUALIFIED`. The evidential packet is flagged as conditionally acceptable and automatically escalated to the lead systems architect (Human-in-the-Loop) with byte-level annotations pinpointing evidential vulnerabilities.
-   - **Evidentiary Insufficiency Zone ($`\mathrm{Conf} < 0.80`$):** The system rejects verification with status `REFUSAL`. The query is declined due to inadequate grounding within the active knowledge corpus.
+   - **Automated Requirement Sign-Off Threshold ($\mathrm{Conf} \ge \tau_{\mathrm{accept}} = 0.95$):** Evidence is deemed exhaustive. The system automatically issues an `ACCEPT` verdict, affixes an Ed25519 cryptographic digital signature, and advances the verified artifact into the certification dossier without requiring human intervention.
+   - **Expert Escalation Zone ($0.80 \le \mathrm{Conf} < 0.95$):** The system emits a qualified verdict `QUALIFIED`. The evidential packet is flagged as conditionally acceptable and automatically escalated to the lead systems architect (Human-in-the-Loop) with byte-level annotations pinpointing evidential vulnerabilities.
+   - **Evidentiary Insufficiency Zone ($\mathrm{Conf} < 0.80$):** The system rejects verification with status `REFUSAL`. The query is declined due to inadequate grounding within the active knowledge corpus.
 3. **Worked Numerical Example:**  
-   Suppose the architectural pattern analysis node returns assertion $`A_1`$ with credibility $`\mathrm{Cred}(A_1) = 0.85`$ (individually insufficient for automated ASIL-D certification, which mandates a $0.95$ threshold). A peer memory audit node independently substantiates the safety of the identical code construct via argument $`A_2`$ with credibility $`\mathrm{Cred}(A_2) = 0.80`$. The aggregated confidence is:
+   Suppose the architectural pattern analysis node returns assertion $A_1$ with credibility $\mathrm{Cred}(A_1) = 0.85$ (individually insufficient for automated ASIL-D certification, which mandates a $0.95$ threshold). A peer memory audit node independently substantiates the safety of the identical code construct via argument $A_2$ with credibility $\mathrm{Cred}(A_2) = 0.80$. The aggregated confidence is:
 
 ```math
 \mathrm{Conf}(A_1 \cup A_2) = 1 - (1 - 0.85) \cdot (1 - 0.80) = 1 - (0.15 \cdot 0.20) = 1 - 0.03 = 0.97
 ```
 
-   Because $`0.97 \ge \tau_{\mathrm{accept}} = 0.95`$, mutual corroboration between two independent sources successfully surpasses the automated acceptance threshold, eliminating the requirement for manual review.
+   Because $0.97 \ge \tau_{\mathrm{accept}} = 0.95$, mutual corroboration between two independent sources successfully surpasses the automated acceptance threshold, eliminating the requirement for manual review.
 
 #### 5.2.2. Undercutting Defeat of Weak Arguments
 
@@ -415,44 +415,44 @@ Under such conditions, conforming to the guidelines of trustworthy artificial in
 
 ## 6. Distributed Knowledge Gap Triage and Message Queue Hardening
 
-In a distributed architecture of evidence-governed expert systems, where every node operates under the uncompromising Fail-Closed principle under epistemic incompleteness ($`\mathrm{ZHR} = 1.00`$), any missing fact, unresolved normative ambiguity, or conflicting rule immediately triggers an automated Knowledge Gap Ticket. In large-scale industrial deployments (hundreds of embedded controllers or thousands of continuous CI/CD compliance audit agents), a systemic threat emerges: an avalanche **Knowledge Gap Ticket Storm**. Naive linear query aggregation under global locks exhausts message broker thread pools, overflows operating memory queues, and precipitates a Denial of Memory outage. To mitigate this vulnerability, the distributed knowledge platform relies on a three-tier semantic triage subsystem.
+In a distributed architecture of evidence-governed expert systems, where every node operates under the uncompromising Fail-Closed principle under epistemic incompleteness ($\mathrm{ZHR} = 1.00$), any missing fact, unresolved normative ambiguity, or conflicting rule immediately triggers an automated Knowledge Gap Ticket. In large-scale industrial deployments (hundreds of embedded controllers or thousands of continuous CI/CD compliance audit agents), a systemic threat emerges: an avalanche **Knowledge Gap Ticket Storm**. Naive linear query aggregation under global locks exhausts message broker thread pools, overflows operating memory queues, and precipitates a Denial of Memory outage. To mitigate this vulnerability, the distributed knowledge platform relies on a three-tier semantic triage subsystem.
 
 ### 6.1. SimHash Fingerprinting and Burkhard-Keller Metric Trees (BK-Tree)
 
 To eliminate redundant ticket duplication and coalesce identical knowledge deficits into unified engineering action items, each incoming deficit ticket is tokenized and folded into a 64-bit Locality-Sensitive Hash (LSH) using the SimHash algorithm [[8]](#src-8). Unlike cryptographic hash functions (such as SHA-256), where a single bit alteration induces a radical avalanche effect across the entire digest, SimHash preserves the topological proximity of input feature vectors within Hamming space: semantically similar deficit formulations yield proximate binary vectors.
 
-Each $`i`$-th bit of the 64-bit fingerprint $`h(\mathbf{t}) \in \{0, 1\}^{64}`$ for ticket $`\mathbf{t}`$ is computed as a weighted projection of its constituent features:
+Each $i$-th bit of the 64-bit fingerprint $h(\mathbf{t}) \in \{0, 1\}^{64}$ for ticket $\mathbf{t}$ is computed as a weighted projection of its constituent features:
 
 ```math
 h_i(\mathbf{t}) = \frac{1 + \mathrm{sign}\left(\sum_{w \in \mathbf{t}} \mathrm{weight}(w) \cdot \bigl(2 \cdot b_i(w) - 1\bigr)\right)}{2}, \quad i \in [0, 63]
 ```
 
 where:
-- $`\mathbf{t} = \{w_1, w_2, \dots, w_k\}`$ is the multiset of extracted tokens (predicates, regulatory standard identifiers, semantic context lexemes of the knowledge deficit);
-- $`\mathrm{weight}(w)`$ is the feature weight coefficient (e.g., TF-IDF score or ontological concept information weight, $`\mathrm{weight}(w) > 0`$);
-- $`b_i(w) \in \{0, 1\}`$ is the $`i`$-th bit of the 64-bit base hash of token $`w`$ (generated via a fast non-cryptographic hash function such as xxHash64);
-- $`\mathrm{sign}(x)`$ is the signum function ($`+1`$ for $`x \ge 0`$ and $`-1`$ for $`x < 0`$).
+- $\mathbf{t} = \{w_1, w_2, \dots, w_k\}$ is the multiset of extracted tokens (predicates, regulatory standard identifiers, semantic context lexemes of the knowledge deficit);
+- $\mathrm{weight}(w)$ is the feature weight coefficient (e.g., TF-IDF score or ontological concept information weight, $\mathrm{weight}(w) > 0$);
+- $b_i(w) \in \{0, 1\}$ is the $i$-th bit of the 64-bit base hash of token $w$ (generated via a fast non-cryptographic hash function such as xxHash64);
+- $\mathrm{sign}(x)$ is the signum function ($+1$ for $x \ge 0$ and $-1$ for $x < 0$).
 
-Two knowledge deficit tickets $`\mathbf{t}_1`$ and $`\mathbf{t}_2`$ are assigned to the same structural deficit cluster if their bitwise Hamming distance does not exceed the clustering threshold:
+Two knowledge deficit tickets $\mathbf{t}_1$ and $\mathbf{t}_2$ are assigned to the same structural deficit cluster if their bitwise Hamming distance does not exceed the clustering threshold:
 
 ```math
 D_{\mathrm{Hamming}}\bigl(h(\mathbf{t}_1), h(\mathbf{t}_2)\bigr) = \sum_{i=0}^{63} \Bigl(h_i(\mathbf{t}_1) \oplus h_i(\mathbf{t}_2)\Bigr) \le \tau_{\mathrm{gap\_cluster}} = 3
 ```
 
-where $`\oplus`$ denotes the bitwise exclusive OR (XOR) operation, and the threshold $`\tau_{\mathrm{gap\_cluster}} = 3`$ corresponds to a semantic content similarity exceeding $`95\%`$.
+where $\oplus$ denotes the bitwise exclusive OR (XOR) operation, and the threshold $\tau_{\mathrm{gap\_cluster}} = 3$ corresponds to a semantic content similarity exceeding $95\%$.
 
-To avoid linear scanning across all existing clusters ($`O(N)`$), which would induce pipeline stalls during ticket storms, persisted cluster fingerprints are indexed in a Burkhard-Keller metric tree (**BK-Tree**) [[9]](#src-9). Because the Hamming distance strictly satisfies all metric axioms (specifically the triangle inequality), querying for the nearest cluster executes in logarithmic time $`O(\log N)`$, reducing computational overhead by three orders of magnitude.
+To avoid linear scanning across all existing clusters ($O(N)$), which would induce pipeline stalls during ticket storms, persisted cluster fingerprints are indexed in a Burkhard-Keller metric tree (**BK-Tree**) [[9]](#src-9). Because the Hamming distance strictly satisfies all metric axioms (specifically the triangle inequality), querying for the nearest cluster executes in logarithmic time $O(\log N)$, reducing computational overhead by three orders of magnitude.
 
 #### 6.1.1. Actionable Closed Loop of Knowledge Deficit Triage
 
 1. **Control Flow & Runtime Decisions:**
-   - When an audit agent detects a missing rule, it constructs a deficit ticket and dispatches it to the local triage module. If $`D_{\mathrm{Hamming}}(h(\mathbf{t}), h_{\mathrm{existing}}) \le 3`$, the new ticket is not published to the central NATS event bus; instead, it is aggregated locally by incrementing an incident occurrence counter (`IncClusterHit(ClusterID)`);
-   - If the Hamming distance to all existing nodes in the BK-Tree satisfies $`D_{\mathrm{Hamming}} > 3`$, the system registers a novel, unique knowledge deficit cluster, inserts it into the BK-Tree, and publishes a `vida.gap.discovered` event to the NATS bus for investigation by knowledge engineers.
+   - When an audit agent detects a missing rule, it constructs a deficit ticket and dispatches it to the local triage module. If $D_{\mathrm{Hamming}}(h(\mathbf{t}), h_{\mathrm{existing}}) \le 3$, the new ticket is not published to the central NATS event bus; instead, it is aggregated locally by incrementing an incident occurrence counter (`IncClusterHit(ClusterID)`);
+   - If the Hamming distance to all existing nodes in the BK-Tree satisfies $D_{\mathrm{Hamming}} > 3$, the system registers a novel, unique knowledge deficit cluster, inserts it into the BK-Tree, and publishes a `vida.gap.discovered` event to the NATS bus for investigation by knowledge engineers.
 2. **Hardware Dimensioning:**
-   - Each BK-Tree node occupies $`64\,\text{bytes}`$ in operating memory (64-bit key, hit counter, child pointers for distances $`0`$ to $`64`$). For a pool of $`100\,000`$ unique deficit clusters, the entire BK-Tree requires merely $`6.4\,\text{MB}`$ of RAM. This compact footprint allows it to reside permanently within processor L3 cache, eliminating DRAM access latency.
+   - Each BK-Tree node occupies $64\,\text{bytes}$ in operating memory (64-bit key, hit counter, child pointers for distances $0$ to $64$). For a pool of $100\,000$ unique deficit clusters, the entire BK-Tree requires merely $6.4\,\text{MB}$ of RAM. This compact footprint allows it to reside permanently within processor L3 cache, eliminating DRAM access latency.
 3. **Worked Numerical Example:**
-   - During a nightly testing sweep of an autonomous maneuvering subsystem, $`1\,000`$ virtual agents generated $`50\,000`$ deficit tickets due to an unmodeled cornering deceleration specification on black ice.
-   - By evaluating $`D_{\mathrm{Hamming}} \le 3`$ across the BK-Tree, the system collapsed the $`50\,000`$ incoming requests into exactly $`2`$ root deficit clusters (a deduplication ratio of $`99.996\%`$). Message bus traffic plummeted from $`50\,000`$ to $`2`$ discrete messages, preventing task queue collapse.
+   - During a nightly testing sweep of an autonomous maneuvering subsystem, $1\,000$ virtual agents generated $50\,000$ deficit tickets due to an unmodeled cornering deceleration specification on black ice.
+   - By evaluating $D_{\mathrm{Hamming}} \le 3$ across the BK-Tree, the system collapsed the $50\,000$ incoming requests into exactly $2$ root deficit clusters (a deduplication ratio of $99.996\%$). Message bus traffic plummeted from $50\,000$ to $2$ discrete messages, preventing task queue collapse.
 
 ### 6.2. Ingress Validation: Feature Space Degeneracy Guard and Strict Unmarshaling
 
@@ -464,7 +464,7 @@ The text vectorizer subsequently receives empty input. The SimHash algorithm eva
 \mathrm{SimHash}(\emptyset) = \mathrm{0x0000000000000000}
 ```
 
-Consequently, disparate knowledge deficits from completely unrelated subsystems (ranging from a current sensor calibration fault to a legal conflict across directives) all receive the identical fingerprint `0x0000000000000000`. Since the Hamming distance between them is $`D_{\mathrm{Hamming}} = 0 \le 3`$, the system merges completely unrelated anomalies into a single degenerate pseudo-cluster, paralyzing the triage queue.
+Consequently, disparate knowledge deficits from completely unrelated subsystems (ranging from a current sensor calibration fault to a legal conflict across directives) all receive the identical fingerprint `0x0000000000000000`. Since the Hamming distance between them is $D_{\mathrm{Hamming}} = 0 \le 3$, the system merges completely unrelated anomalies into a single degenerate pseudo-cluster, paralyzing the triage queue.
 
 To eliminate this vulnerability, a multi-layer architectural guard (*Degeneracy Guard*) is enforced:
 
@@ -475,7 +475,7 @@ To eliminate this vulnerability, a multi-layer architectural guard (*Degeneracy 
 \mathrm{DistinctTokens}(T) \ge K_{\mathrm{min}} \quad (K_{\mathrm{min}} = 2)
 ```
 
-   If the count of unique semantic tokens satisfies $`\mathrm{DistinctTokens}(T) < 2`$ or the input string length is zero, execution immediately halts with an `ErrDegenerateFeatureSpace` fault. The values `0x0000000000000000` and `0xFFFFFFFFFFFFFFFF` are permanently reserved as anomaly markers and hardware-blocked from insertion into the BK-Tree;
+   If the count of unique semantic tokens satisfies $\mathrm{DistinctTokens}(T) < 2$ or the input string length is zero, execution immediately halts with an `ErrDegenerateFeatureSpace` fault. The values `0x0000000000000000` and `0xFFFFFFFFFFFFFFFF` are permanently reserved as anomaly markers and hardware-blocked from insertion into the BK-Tree;
 
 2. **Strict Schema Unmarshaling (Strict Unmarshal):**
    Distributed bus deserializers are configured to strictly prohibit unknown or omitted mandatory fields:
@@ -495,21 +495,21 @@ To eliminate this vulnerability, a multi-layer architectural guard (*Degeneracy 
 #### 6.2.1. Actionable Closed Loop of Ingress Contract Verification
 
 1. **Control Flow & Runtime Decisions:**
-   - If an incoming payload violates schema contracts or exhibits $`\mathrm{DistinctTokens} < 2`$, the triage module emits an `ALERT_CONTRACT_DEGENERACY` event and drops the ticket into the DLQ. Execution terminates before malformed data reaches the BK-Tree;
-   - If the payload is schema-valid and $`\mathrm{DistinctTokens} \ge 2`$, the engine calculates the full 64-bit SimHash digest and proceeds to metric clustering.
+   - If an incoming payload violates schema contracts or exhibits $\mathrm{DistinctTokens} < 2$, the triage module emits an `ALERT_CONTRACT_DEGENERACY` event and drops the ticket into the DLQ. Execution terminates before malformed data reaches the BK-Tree;
+   - If the payload is schema-valid and $\mathrm{DistinctTokens} \ge 2$, the engine calculates the full 64-bit SimHash digest and proceeds to metric clustering.
 2. **Hardware Dimensioning:**
-   - The DLQ quarantine buffer is provisioned on dedicated NVMe/SSD storage with a strict quota of $`10\,\text{GB}`$, triggering paging alerts when capacity exceeds $`50\%`$;
-   - The `DisallowUnknownFields` verification adds no more than $`1.2\,\mu\text{s}`$ per message, maintaining node throughput above $`80\,000`$ messages/sec on a single CPU core.
+   - The DLQ quarantine buffer is provisioned on dedicated NVMe/SSD storage with a strict quota of $10\,\text{GB}$, triggering paging alerts when capacity exceeds $50\%$;
+   - The `DisallowUnknownFields` verification adds no more than $1.2\,\mu\text{s}$ per message, maintaining node throughput above $80\,000$ messages/sec on a single CPU core.
 3. **Worked Numerical Example:**
    - Following a firmware update to a flight controller sensor module, a context field was inadvertently renamed from `context_spec` to `ctx_spec`.
-   - The `decoder.DisallowUnknownFields()` gateway flagged the unknown field `ctx_spec` within $`0.8\,\mu\text{s}`$ and routed the payload to the DLQ with an error trace. This prevented the catastrophic collapse of $`15\,000`$ subsequent deficit tickets into the null fingerprint `0x0`, preserving the integrity of the enterprise knowledge index.
+   - The `decoder.DisallowUnknownFields()` gateway flagged the unknown field `ctx_spec` within $0.8\,\mu\text{s}$ and routed the payload to the DLQ with an error trace. This prevented the catastrophic collapse of $15\,000$ subsequent deficit tickets into the null fingerprint `0x0`, preserving the integrity of the enterprise knowledge index.
 
 ### 6.3. Autonomous Local WAL Buffer and Lame Duck Graceful Degradation
 
 In industrial distributed deployments, network partitions between peripheral nodes (edge workstations, on-board computers) and the central knowledge broker are inevitable due to electromagnetic interference, physical reconnection, or maintenance windows. If an edge agent detects a knowledge gap during network isolation, an unbuffered architecture either hangs the execution thread or silently drops safety-critical gap tickets.
 
 To preserve continuous auditing under the CAP theorem constraints, the edge node is fortified with an autonomous Write-Ahead Log (**WAL**):
-1. **Ring Encrypted WAL Buffer:** Deficit tickets are immediately flushed to an append-only local disk log encrypted with the session asymmetric key. The log is constrained by a fixed storage quota (e.g., $`500\,\text{MB}`$). Upon reaching quota limits, ring rotation evicts redundant duplicate entries while preserving distinct high-severity verdicts;
+1. **Ring Encrypted WAL Buffer:** Deficit tickets are immediately flushed to an append-only local disk log encrypted with the session asymmetric key. The log is constrained by a fixed storage quota (e.g., $500\,\text{MB}$). Upon reaching quota limits, ring rotation evicts redundant duplicate entries while preserving distinct high-severity verdicts;
 2. **Connection Recovery and FIFO Drain:** Once the network stack detects re-established connectivity with the knowledge broker, a background worker performs sequential replay of the local WAL, batch-publishing accumulated tickets under a FIFO discipline without stalling primary inference pipelines;
 3. **Controlled Decommissioning Protocol (Lame Duck Mode):**
    During scheduled node maintenance or cluster scaling events, a graceful shutdown protocol is executed:
@@ -595,12 +595,12 @@ Prior to returning a deduction result to an external consumer, every inference e
 ```
 
 where:
-- $`H(I)`$ is the SHA-256 cryptographic digest of the input observation vector, telemetry payload, or regulatory query text $`I`$;
-- $`H(V_{\mathrm{KB}})`$ is the digest of the active knowledge base version, regulatory ontologies, and defeater tables (enforcing byte-level custody of the rule state at execution time);
-- $`H(G_{\mathrm{proof}})`$ is the structural digest of the ASPIC+ argumentation graph or GSN goal structuring tree (encompassing all evaluated predicates and defeated branches);
-- $`H(\mathrm{Verdict})`$ is the digest of the emitted verdict (`ACCEPT`, `REFUSAL`, `QUALIFIED`);
-- $`\mathbin{\Vert}`$ denotes binary concatenation;
-- $`\mathrm{Sign}_{\mathrm{Ed25519}}`$ represents the digital signature executed using the computing node's private asymmetric key under Ed25519 (RFC 8032).
+- $H(I)$ is the SHA-256 cryptographic digest of the input observation vector, telemetry payload, or regulatory query text $I$;
+- $H(V_{\mathrm{KB}})$ is the digest of the active knowledge base version, regulatory ontologies, and defeater tables (enforcing byte-level custody of the rule state at execution time);
+- $H(G_{\mathrm{proof}})$ is the structural digest of the ASPIC+ argumentation graph or GSN goal structuring tree (encompassing all evaluated predicates and defeated branches);
+- $H(\mathrm{Verdict})$ is the digest of the emitted verdict (`ACCEPT`, `REFUSAL`, `QUALIFIED`);
+- $\mathbin{\Vert}$ denotes binary concatenation;
+- $\mathrm{Sign}_{\mathrm{Ed25519}}$ represents the digital signature executed using the computing node's private asymmetric key under Ed25519 (RFC 8032).
 
 This cryptographic binding provides mathematical proof: neither the input parameters, nor the applied rule versions, nor the emitted verdict can be altered without invalidating the digital signature.
 
@@ -612,23 +612,23 @@ To sustain high throughput, individual evidence bundles are not committed one-by
 \mathrm{Root}_{\mathrm{Merkle}} = \mathrm{Hash}\bigl(\mathrm{Node}_{\mathrm{left}} \mathbin{\Vert} \mathrm{Node}_{\mathrm{right}}\bigr)
 ```
 
-Every $`T_{\mathrm{epoch}}`$ seconds (or upon accumulating $`K_{\mathrm{batch}}`$ decisions, e.g., $`1\,000`$ bundles), the computed root $`\mathrm{Root}_{\mathrm{Merkle}}`$ is committed to Write-Once-Read-Many (**WORM**) storage (optical media or cloud object stores configured with S3 Object Lock compliance retention) or published to an enterprise consortium distributed ledger.
+Every $T_{\mathrm{epoch}}$ seconds (or upon accumulating $K_{\mathrm{batch}}$ decisions, e.g., $1\,000$ bundles), the computed root $\mathrm{Root}_{\mathrm{Merkle}}$ is committed to Write-Once-Read-Many (**WORM**) storage (optical media or cloud object stores configured with S3 Object Lock compliance retention) or published to an enterprise consortium distributed ledger.
 
-To prove the authenticity of any individual historical decision, an auditor requires only a compact **Merkle Audit Trail** of length $`\lceil \log_2 N \rceil`$ hashes. The auditor validates the hash chain from the leaf bundle to the publicly anchored root in microseconds, without needing to ingest or read the entire repository of historical decisions.
+To prove the authenticity of any individual historical decision, an auditor requires only a compact **Merkle Audit Trail** of length $\lceil \log_2 N \rceil$ hashes. The auditor validates the hash chain from the leaf bundle to the publicly anchored root in microseconds, without needing to ingest or read the entire repository of historical decisions.
 
 #### 7.2.1. Actionable Closed Loop of Decision Ledger Verification
 
 1. **Control Flow & Runtime Decisions:**
    - Upon synthesizing a verdict, the knowledge service creates an `EvidenceBundle` and inserts it as a leaf in the current epoch tree;
-   - If historical validation computes $`\mathrm{Root}_{\mathrm{computed}} \ne \mathrm{Root}_{\mathrm{WORM}}`$, the runtime triggers a priority-1 `AUDIT_CORRUPTION_DETECTED` alarm and revokes the node's certification status until the forensic investigation concludes;
+   - If historical validation computes $\mathrm{Root}_{\mathrm{computed}} \ne \mathrm{Root}_{\mathrm{WORM}}$, the runtime triggers a priority-1 `AUDIT_CORRUPTION_DETECTED` alarm and revokes the node's certification status until the forensic investigation concludes;
    - If the roots match identically, the verification inspector issues a non-repudiation certificate (`NON_REPUDIATION_VERIFIED`).
 2. **Hardware Dimensioning:**
-   - Evaluating a tree node using SHA-256 or BLAKE3 consumes less than $`0.15\,\mu\text{s}`$ on modern CPUs equipped with SHA-NI hardware instructions;
-   - For a cluster processing $`10\,000`$ decisions/sec, an epoch duration of $`T_{\mathrm{epoch}} = 10\,\text{s}`$ aggregates $`100\,000`$ leaves into a single Merkle tree. The audit path comprises merely $`\lceil \log_2 100\,000 \rceil = 17`$ hashes ($`17 \times 32 = 544\,\text{bytes}`$), minimizing regulatory audit network overhead.
+   - Evaluating a tree node using SHA-256 or BLAKE3 consumes less than $0.15\,\mu\text{s}$ on modern CPUs equipped with SHA-NI hardware instructions;
+   - For a cluster processing $10\,000$ decisions/sec, an epoch duration of $T_{\mathrm{epoch}} = 10\,\text{s}$ aggregates $100\,000$ leaves into a single Merkle tree. The audit path comprises merely $\lceil \log_2 100\,000 \rceil = 17$ hashes ($17 \times 32 = 544\,\text{bytes}$), minimizing regulatory audit network overhead.
 3. **Worked Numerical Example:**
    - During an ISO 26262 ASIL D audit of an automotive platform, an emergency automated braking verdict rendered 6 months prior was called into question.
    - The expert system furnished the Decision Evidence Bundle alongside 17 hashes constituting the Merkle audit trail.
-   - An independent verifier reconstructed the tree root across 17 hash operations ($`2.5\,\mu\text{s}`$) and cross-checked it against the root anchored in WORM storage on that date. The exact match byte-for-byte proved that neither the vehicle telemetry nor the braking rules had been modified ex post facto, shielding the manufacturer from liability exposure.
+   - An independent verifier reconstructed the tree root across 17 hash operations ($2.5\,\mu\text{s}$) and cross-checked it against the root anchored in WORM storage on that date. The exact match byte-for-byte proved that neither the vehicle telemetry nor the braking rules had been modified ex post facto, shielding the manufacturer from liability exposure.
 
 ---
 
@@ -650,7 +650,7 @@ Distinguished architects of distributed systems whose foundational theorems and 
 
 *Disclaimer:* This discussion is a heuristic virtual simulation conducted exclusively within the monograph's scholarly and pedagogical context. The opponents' arguments and stances are synthesized from their published works, academic papers, and monographs; they do not claim to be verbatim real-world quotes and serve critical rationalism (Popperian falsification) of the author's engineering hypotheses.
 
-**Chapter Thesis.** Scaling an evidence-governed industrial expert system beyond the research laboratory mandates transitioning to a three-tier Epistemic Service-Oriented Architecture (Epistemic SOA) comprising thin clients ($`S_{\mathrm{client}} = 0`$), an intelligent semantic broker, and distributed domain knowledge clusters. The fundamental trade-offs of distributed computing are resolved mathematically: the latency-hiding condition ($`T_{\mathrm{refill}} \ll T_{\mathrm{execute}}`$) eliminates BRAM/DMA pipeline stalls; multi-source ASPIC+/Dung defeasible aggregation decentralizes argumentation; 64-bit SimHash and BK-trees execute distributed knowledge deficit triage; the CAP theorem is governed by Safety-First Partitioning (strict CP mode for ASIL D and local epoch certificates for edge nodes); and an Immutable Decision Ledger on Merkle trees with WORM anchoring ensures lifelong, legally unassailable auditability without retroactive state distortion.
+**Chapter Thesis.** Scaling an evidence-governed industrial expert system beyond the research laboratory mandates transitioning to a three-tier Epistemic Service-Oriented Architecture (Epistemic SOA) comprising thin clients ($S_{\mathrm{client}} = 0$), an intelligent semantic broker, and distributed domain knowledge clusters. The fundamental trade-offs of distributed computing are resolved mathematically: the latency-hiding condition ($T_{\mathrm{refill}} \ll T_{\mathrm{execute}}$) eliminates BRAM/DMA pipeline stalls; multi-source ASPIC+/Dung defeasible aggregation decentralizes argumentation; 64-bit SimHash and BK-trees execute distributed knowledge deficit triage; the CAP theorem is governed by Safety-First Partitioning (strict CP mode for ASIL D and local epoch certificates for edge nodes); and an Immutable Decision Ledger on Merkle trees with WORM anchoring ensures lifelong, legally unassailable auditability without retroactive state distortion.
 
 **Dialogue with Martin Kleppmann: Performance of Distributed Immutable Decision Ledgers on Merkle Trees**
 
@@ -684,13 +684,13 @@ Distinguished architects of distributed systems whose foundational theorems and 
 ## Conclusions
 
 1. **Isolation of Responsibility Tiers in Epistemic SOA:** The distributed architecture of an evidence-governed expert system resolves the fundamental dilemma of scalability. Segregating the system into an interaction tier of thin clients, a semantic coordination broker, and federated domain services isolates truth contexts and decouples performance from the hardware limitations of the user terminal.
-2. **Guarantee of the $`ZHR = 1.00`$ Invariant on Thin Clients:** The interaction client retains no local knowledge bases ($`S_{\mathrm{client}} = 0`$) and performs no logical inference. Its function is strictly confined to rendering the cryptographically signed evidential tuple $\langle\text{Verdict}, \text{EvidenceMap}, \text{Signature}\rangle$, ensuring legal standing and zero hallucinations even on mobile devices.
-3. **Ontological Query Routing:** The semantic broker supersedes naive URL routing with deep content-based analysis. The syntactic-lexical preprocessor extracts domain markers, while the dynamic service registry designates the primary evaluator by computing the normalized affinity coefficient $`\mathrm{Affinity}(\mathcal{S}_{\mathrm{query}}, \mathcal{P}_{\mathrm{service}})`$.
-4. **Bridging the Memory Capacity Gap:** Separating static citations from the mathematical skeleton of rules shrinks the working footprint to a compact Active Working Set ($`\mathrm{AWS} \le 32\,\text{MB}`$). Two-bank pipelined double buffering (Ping-Pong Pipeline) achieves complete latency hiding by enforcing the invariant $`T_{\mathrm{refill}} \ll T_{\mathrm{execute}}`$, eliminating rule processor stalls ($\eta = 1.00$).
+2. **Guarantee of the $ZHR = 1.00$ Invariant on Thin Clients:** The interaction client retains no local knowledge bases ($S_{\mathrm{client}} = 0$) and performs no logical inference. Its function is strictly confined to rendering the cryptographically signed evidential tuple $\langle\text{Verdict}, \text{EvidenceMap}, \text{Signature}\rangle$, ensuring legal standing and zero hallucinations even on mobile devices.
+3. **Ontological Query Routing:** The semantic broker supersedes naive URL routing with deep content-based analysis. The syntactic-lexical preprocessor extracts domain markers, while the dynamic service registry designates the primary evaluator by computing the normalized affinity coefficient $\mathrm{Affinity}(\mathcal{S}_{\mathrm{query}}, \mathcal{P}_{\mathrm{service}})$.
+4. **Bridging the Memory Capacity Gap:** Separating static citations from the mathematical skeleton of rules shrinks the working footprint to a compact Active Working Set ($\mathrm{AWS} \le 32\,\text{MB}$). Two-bank pipelined double buffering (Ping-Pong Pipeline) achieves complete latency hiding by enforcing the invariant $T_{\mathrm{refill}} \ll T_{\mathrm{execute}}$, eliminating rule processor stalls ($\eta = 1.00$).
 5. **Multi-Source Argumentative Arbitration:** When knowledge deficits are identified, the Scatter-Gather pattern aggregates evidence across peer cluster services within the ASPIC+ formalism. The system amplifies confidence via evidence corroboration, deterministically undercuts weak recommendations using superior imperative norms, and trips a *Fail-Closed* safety gate upon encountering unresolvable normative collisions.
 6. **Practical Evolution Aligned with Project Budget:** The proposed prototype establishes a conceptual developmental roadmap, scaling seamlessly from a single-machine laboratory test bench (Tier 1) to a collaborative R&D cluster (Tier 2) and an industrial-grade hardware-deterministic complex certified for ASIL-D environments (Tier 3).
 7. **Knowledge Gap Triage and SimHash Clustering:** Decentralized handling of detected knowledge deficits via 64-bit SimHash and BK-Trees eliminates avalanche storms of redundant queries and service overload. A local WAL buffer with a strict disk quota guarantees the persistence of identified gaps even during network partitions from the central broker, while transitioning into Lame Duck mode prevents the emission of unproven claims.
-8. **Feature Space Guard and Immutable Decision Ledger:** Token degeneracy in incoming requests and schema drift anomalies are blocked at the ingress boundary by strict deserialization (`DisallowUnknownFields`) and the $`\mathrm{DistinctTokens}(T) \ge 2`$ invariant. All synthesized decision evidence bundles are irreversibly anchored into Merkle trees and WORM storage, establishing an unforgeable, legally binding audit trail with cryptographic binding across input conditions, the emitted verdict, and knowledge base versions.
+8. **Feature Space Guard and Immutable Decision Ledger:** Token degeneracy in incoming requests and schema drift anomalies are blocked at the ingress boundary by strict deserialization (`DisallowUnknownFields`) and the $\mathrm{DistinctTokens}(T) \ge 2$ invariant. All synthesized decision evidence bundles are irreversibly anchored into Merkle trees and WORM storage, establishing an unforgeable, legally binding audit trail with cryptographic binding across input conditions, the emitted verdict, and knowledge base versions.
 
 ---
 
@@ -719,14 +719,14 @@ Distinguished architects of distributed systems whose foundational theorems and 
 | Content-Based Semantic Routing | Маршрутизація за змістом | Dispatching queries to domain knowledge services based on extracted ontological signatures and target standard profiles |
 | Active Working Set (AWS) | Активний робочий набір | Compact transitive logical closure of target rules and defeaters stripped of verbatim textual source excerpts |
 | Ping-Pong Double Buffering | Подвійна буферизація Ping-Pong | Symmetric memory architecture alternating background staging in one bank with parallel rule execution in the other |
-| Latency Hiding | Приховування затримок | Pipeline operational state ($`T_{\mathrm{refill}} \le T_{\mathrm{execute}}`$) where background memory transfer latency is completely masked by compute duration |
+| Latency Hiding | Приховування затримок | Pipeline operational state ($T_{\mathrm{refill}} \le T_{\mathrm{execute}}$) where background memory transfer latency is completely masked by compute duration |
 | Scatter-Gather Pattern | Шаблон Scatter-Gather | Parallel broadcasting of queries across a distributed service cluster followed by aggregation of results into a unified argumentative verdict |
 | Corroboration | Короборація свідчень | Mathematical amplification of cumulative confidence resulting from convergent evidence provided by independent sources |
 | Undercutting Defeat | Анулювання правила | Non-monotonic reasoning mechanism wherein a mandatory norm of superior rank invalidates a conflicting advisory recommendation |
 | Fail-Closed Qualified Conflict Gate | Кваліфікована колізія Fail-Closed | Protective suspension of automated compromise under mutually exclusive equal-rank norms, triggering mandatory escalation to the lead architect |
 | Knowledge Gap Triage | Тріаж дефіциту знань | Algorithmic clustering and deduplication of detected missing facts in a distributed environment |
 | SimHash Fingerprint | Відбиток SimHash | 64-bit locality-sensitive hash for measuring semantic Hamming distance |
-| Burkhard-Keller Tree (BK-Tree) | Дерево Буркхарда-Келлера | Metric tree enabling discrete logarithmic $`O(\log N)`$ search for nearest knowledge vectors |
+| Burkhard-Keller Tree (BK-Tree) | Дерево Буркхарда-Келлера | Metric tree enabling discrete logarithmic $O(\log N)$ search for nearest knowledge vectors |
 | Feature Degeneracy Guard | Бар'єр дегенерації ознак | Ingress stream validation mechanism filtering trivial and anomalous vectors based on entropy thresholds |
 | Decision Evidence Bundle | Доказовий пакет рішення | Cryptographic tuple comprising hashes of input data, knowledge base version, proof graph, and an Ed25519 signature |
 | Immutable Decision Ledger | Незмінний реєстр рішень | Distributed structure based on Merkle trees and WORM storage for non-repudiable audit of system verdicts |

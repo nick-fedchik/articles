@@ -124,7 +124,7 @@ A higher tier does not supersede a lower tier. High historical accuracy on regre
 \mathrm{valid\_test} \land \mathrm{signed} \land \neg \mathrm{blocker} \rightarrow \mathrm{allow}
 ```
 
-- In this rule, $`\mathrm{valid\_test}`$ denotes that the safety test is valid and active;
+- In this rule, $\mathrm{valid\_test}$ denotes that the safety test is valid and active;
 - $\mathrm{signed}$ asserts that the required cryptographic signature is present;
 - $\mathrm{blocker}$ denotes the existence of a blocking defect, and $\neg$ negates its presence;
 - $\land$ denotes logical conjunction ("AND"), while $\rightarrow$ denotes logical implication ("then allow");
@@ -142,17 +142,17 @@ C_{\text{fire}} = \frac{\lvert R_f \rvert}{\lvert R \rvert}
 
 Components of the formula:
 
-- $`C_{\text{fire}}`$ is the firing coverage ratio within the range $[0, 1]$;
-- $R$ represents the total set of rules included in the release candidate, and $`R_f`$ is the subset of rules that fired at least once during test suite execution;
+- $C_{\text{fire}}$ is the firing coverage ratio within the range $[0, 1]$;
+- $R$ represents the total set of rules included in the release candidate, and $R_f$ is the subset of rules that fired at least once during test suite execution;
 - The vertical bars $\lvert\cdot\rvert$ denote set cardinality, and the fraction divides the count of fired rules by the total rule count.
 
 **Actionable Engineering Decisions (Closed-Loop Decision):**
 1. **CI/CD Quality Gate Criteria:**
-   - **$`C_{\text{fire}} = 1.00`$ (100% Rule Coverage):** Green build status. The knowledge base artifact is approved for progression to integration and regression testing;
-   - **$`C_{\text{fire}} < 1.00`$:** The knowledge base build is unconditionally blocked. The verification framework generates the set of unactivated rules $`R \setminus R_f`$, mandating that each unactivated rule either receive dedicated verification test cases or be formally marked `deprecated` under the cryptographic signature of the system architect.
-2. **Worked Numerical Example:** If a release candidate contains $\lvert R \rvert = 120$ rules, and dynamic testing activates $`\lvert R_f \rvert = 118`$ rules, the firing coverage evaluates to $`C_{\text{fire}} = 118 / 120 \approx 0.983 < 1.00`$. **System Action:** Deployment is blocked; an automated audit report flags the two "dead" rules and requires expansion of the verification test bench.
+   - **$C_{\text{fire}} = 1.00$ (100% Rule Coverage):** Green build status. The knowledge base artifact is approved for progression to integration and regression testing;
+   - **$C_{\text{fire}} < 1.00$:** The knowledge base build is unconditionally blocked. The verification framework generates the set of unactivated rules $R \setminus R_f$, mandating that each unactivated rule either receive dedicated verification test cases or be formally marked `deprecated` under the cryptographic signature of the system architect.
+2. **Worked Numerical Example:** If a release candidate contains $\lvert R \rvert = 120$ rules, and dynamic testing activates $\lvert R_f \rvert = 118$ rules, the firing coverage evaluates to $C_{\text{fire}} = 118 / 120 \approx 0.983 < 1.00$. **System Action:** Deployment is blocked; an automated audit report flags the two "dead" rules and requires expansion of the verification test bench.
 
-A high $`C_{\text{fire}}`$ does not imply that all antecedent conditions have been tested: for a rule with $m$ antecedents, test cases must probe each individual condition and each boundary threshold. Conversely, low coverage may indicate a dead rule, an unrepresented rare hazard, or an ineffective test generator—three distinct root causes requiring different remedies. Far more informative than raw coverage is a traceability matrix linking hazards to rules, test cases, and designated owners:
+A high $C_{\text{fire}}$ does not imply that all antecedent conditions have been tested: for a rule with $m$ antecedents, test cases must probe each individual condition and each boundary threshold. Conversely, low coverage may indicate a dead rule, an unrepresented rare hazard, or an ineffective test generator—three distinct root causes requiring different remedies. Far more informative than raw coverage is a traceability matrix linking hazards to rules, test cases, and designated owners:
 
 | Requirement or Hazard | Rule | Positive Test | Negative and Boundary Tests | Owner |
 |---|---|---|---|---|
@@ -186,7 +186,7 @@ Subsequent properties must likewise be evaluated as distinct formal invariants:
 where:
 
 - $\mathrm{decision}(s)$ is the expert system's authoritative decision in state $s$, with $\mathrm{ALLOW}$ granting action authorization;
-- $`\mathrm{valid\_test}(s)`$ asserts the presence of an active, valid test, and $`\mathrm{authorized\_waiver}(s)`$ asserts a formally authorized exception waiver;
+- $\mathrm{valid\_test}(s)$ asserts the presence of an active, valid test, and $\mathrm{authorized\_waiver}(s)$ asserts a formally authorized exception waiver;
 - $\lor$ denotes logical disjunction ("OR"), and $\Rightarrow$ denotes implication: release is permissible only when supported by a valid test or an authorized waiver.
 
 Thus, the rule prohibits authorization in the absence of a valid test unless an authorized waiver is present.
@@ -230,16 +230,16 @@ MS = \frac{M_{\text{killed}}}{M_{\text{total}} - M_{\text{equivalent}}}
 Breakdown of variables:
 
 - $MS$ represents the mutation score, a dimensionless ratio within the range $[0, 1]$;
-- $`M_{\text{killed}}`$ denotes the number of mutants on which at least one test detected a defect (killed mutants);
-- $`M_{\text{total}}`$ is the total number of synthesized mutants, and $`M_{\text{equivalent}}`$ is the number of equivalent mutants that do not alter rule semantics;
+- $M_{\text{killed}}$ denotes the number of mutants on which at least one test detected a defect (killed mutants);
+- $M_{\text{total}}$ is the total number of synthesized mutants, and $M_{\text{equivalent}}$ is the number of equivalent mutants that do not alter rule semantics;
 - The denominator excludes equivalent mutants, which cannot be detected by any valid test oracle.
 
 **Actionable Engineering Decisions (Closed-Loop Decision):**
 1. **Mutation Score Gate Criteria:**
-   - **$`MS \ge \tau_{\mathrm{mut}} = 0.95`$ with zero surviving mutants across critical safety invariants:** The test suite is certified for safety-critical deployment under functional safety standards (ISO 26262 ASIL-D, DO-178C DAL A);
-   - **$`0.85 \le MS < 0.95`$:** Permissible for general industrial and advisory systems (SIL 1/2); however, a prioritized defect backlog of surviving mutants is generated to expand the test bench;
-   - **$`MS < 0.85`$ or a single surviving mutant in a safety-critical rule (e.g., bypassing authorization check `signer == safety_owner`):** Knowledge base release is unconditionally blocked regardless of aggregate $MS$.
-2. **Worked Numerical Example:** An automated generator synthesizes $`M_{\text{total}} = 150`$ mutants. Formal analysis proves the semantic equivalence of $`M_{\text{equivalent}} = 30`$ mutants. The test suite detects defects in $`M_{\text{killed}} = 115`$ mutants. Calculation: $`MS = 115 / (150 - 30) = 115 / 120 \approx 0.958 = 95.8\% \ge 95\%`$. **System Action:** In the absence of surviving critical mutations, the release candidate is approved for certification audit.
+   - **$MS \ge \tau_{\mathrm{mut}} = 0.95$ with zero surviving mutants across critical safety invariants:** The test suite is certified for safety-critical deployment under functional safety standards (ISO 26262 ASIL-D, DO-178C DAL A);
+   - **$0.85 \le MS < 0.95$:** Permissible for general industrial and advisory systems (SIL 1/2); however, a prioritized defect backlog of surviving mutants is generated to expand the test bench;
+   - **$MS < 0.85$ or a single surviving mutant in a safety-critical rule (e.g., bypassing authorization check `signer == safety_owner`):** Knowledge base release is unconditionally blocked regardless of aggregate $MS$.
+2. **Worked Numerical Example:** An automated generator synthesizes $M_{\text{total}} = 150$ mutants. Formal analysis proves the semantic equivalence of $M_{\text{equivalent}} = 30$ mutants. The test suite detects defects in $M_{\text{killed}} = 115$ mutants. Calculation: $MS = 115 / (150 - 30) = 115 / 120 \approx 0.958 = 95.8\% \ge 95\%$. **System Action:** In the absence of surviving critical mutations, the release candidate is approved for certification audit.
 
 In practice, a higher score demonstrates that a test suite catches a larger fraction of meaningful rule mutations, but does not prove the total absence of defects. In their survey, Jia and Harman emphasize that identifying equivalent mutants remains one of the fundamental challenges of mutation testing, as determining semantic equivalence is undecidable in the general case [[8]](#src-8). Consequently, claiming 100% mutation coverage without an explicit engineering triage process for surviving mutants is invalid, and any surviving critical mutant—such as one dropping the authorization check on a waiver signatory—unconditionally blocks deployment regardless of aggregate score. The diagram below illustrates this workflow.
 
@@ -247,7 +247,7 @@ The formula is meaningful only when the denominator is strictly positive and mut
 
 > [!WARNING] Semantic Trap of Equivalent Mutants in Certification
 > Determining whether a surviving mutant is semantically equivalent (i.e., behaves identically across all admissible inputs) is undecidable in the general case (reducing to the halting problem or first-order validity).
-> During safety certification under ISO 26262 ASIL-D or DO-178C DAL A, it is impermissible to dismiss unkilled mutants as "equivalent" merely to artificially achieve $`MS = 100\%`$:
+> During safety certification under ISO 26262 ASIL-D or DO-178C DAL A, it is impermissible to dismiss unkilled mutants as "equivalent" merely to artificially achieve $MS = 100\%$:
 > - If changing `signer == safety_owner` to `signer != nil` fails to trigger a test failure, this is not an equivalence; it represents a critical defect in the test suite permitting unauthorized releases.
 > - Every surviving mutant must undergo formal engineering triage: either formal equivalence is proven via an SMT solver, or a new targeted test case must be added to the suite.
 
@@ -501,7 +501,7 @@ Regression test suites expand with every resolved defect, making complete test s
 Minimization qualification conditions:
 
 - $T$ represents the comprehensive regression test suite, and $T'$ is the candidate minimized suite;
-- $`T_{\mathrm{crit}}`$ designates critical test cases that are never pruned: safety invariants, verified incident reproductions, and topological cluster outliers;
+- $T_{\mathrm{crit}}$ designates critical test cases that are never pruned: safety invariants, verified incident reproductions, and topological cluster outliers;
 - $\mathrm{Killed}(T)$ is the set of non-equivalent mutants detected by test suite $T$;
 - $\subseteq$ denotes subset inclusion, $\land$ denotes logical conjunction, and $\iff$ denotes logical equivalence ("if and only if").
 
@@ -518,7 +518,7 @@ F(\mathrm{permute}_{\text{irrelevant}}(x)) = F(x)
 ```
 
 - $x$ represents the evidence set, and $F$ denotes the expert system's decision function;
-- $`\mathrm{permute}_{\text{irrelevant}}`$ permutes non-relevant evidence items without modifying their composition;
+- $\mathrm{permute}_{\text{irrelevant}}$ permutes non-relevant evidence items without modifying their composition;
 - The equality operator $=$ mandates that the decision remain identical before and after permutation.
 
 Thus, the ordering of irrelevant evidence must not influence the final decision.
@@ -543,7 +543,7 @@ Under role-based access control, degrading access privileges must never yield a 
 \mathrm{ACL}(u_2) \subseteq \mathrm{ACL}(u_1) \Rightarrow \mathrm{disclosure}(u_2, x) \subseteq \mathrm{disclosure}(u_1, x)
 ```
 
-- $`u_1`$ and $`u_2`$ represent distinct users, and $x$ is the input query context;
+- $u_1$ and $u_2$ represent distinct users, and $x$ is the input query context;
 - $\mathrm{ACL}(u)$ denotes the access permission set of user $u$, where $\subseteq$ signifies subset inclusion;
 - $\mathrm{disclosure}(u,x)$ is the set of confidential facts disclosed in the response to user $u$ for query $x$;
 - $\Rightarrow$ asserts that diminished privileges cannot lead to expanded disclosure.
@@ -654,7 +654,7 @@ In this temporal specification:
 
 - $\Box$ denotes "always" across all future execution states, and $\Diamond$ denotes "eventually in the future";
 - $a$ is an action identifier, and $\forall a$ enforces the property across all actions;
-- $\mathrm{committed}(a)$ asserts that action $a$ has been committed, $\mathrm{verified}(a)$ denotes confirmed successful execution of that specific action, and $`\mathrm{safe\_hold}(a)`$ denotes transition into a safe hold state without further autonomous mutations;
+- $\mathrm{committed}(a)$ asserts that action $a$ has been committed, $\mathrm{verified}(a)$ denotes confirmed successful execution of that specific action, and $\mathrm{safe\_hold}(a)$ denotes transition into a safe hold state without further autonomous mutations;
 - $\Rightarrow$ denotes implication, and $\lor$ denotes disjunction.
 
 Once committed, every action must eventually be verified or safely suspended; progress on a different action cannot satisfy this obligation. TLA+ [[15]](#src-15) provides a formal specification framework for model-checking these state transitions. A local watchdog timer can enforce transition into `safe_hold` even during persistent external network outages, provided the local execution supervisor and audit log remain functional. Consequently, fairness and availability assumptions must be formulated per communication route rather than assuming universal external service liveness. The formula does not bound the duration required to achieve `safe_hold`, nor does it verify the physical safety of the hold state; both properties require separate verification.
@@ -730,16 +730,16 @@ R_{\mathrm{div}} = \frac{N_{\mathrm{div}}}{N_{\mathrm{exact}} + N_{\mathrm{equiv
 
 Breakdown of the divergence rate:
 
-- $`N_{\mathrm{exact}}`$ denotes the number of test runs yielding an exact output match;
-- $`N_{\mathrm{equiv}}`$ denotes the number of test runs yielding semantically equivalent answers;
-- $`N_{\mathrm{div}}`$ denotes the number of test runs yielding divergent decisions or mismatched evidence;
-- $`R_{\mathrm{div}}`$ is the divergence rate within the range $[0, 1]$.
+- $N_{\mathrm{exact}}$ denotes the number of test runs yielding an exact output match;
+- $N_{\mathrm{equiv}}$ denotes the number of test runs yielding semantically equivalent answers;
+- $N_{\mathrm{div}}$ denotes the number of test runs yielding divergent decisions or mismatched evidence;
+- $R_{\mathrm{div}}$ is the divergence rate within the range $[0, 1]$.
 
 **Actionable Engineering Decisions (Closed-Loop Decision):**
 1. **Operational Mode Quality Gate Criteria:**
-   - **Strict Deterministic Citation Mode:** Mandates an absolute zero divergence rate: $`R_{\mathrm{div}} = 0.000`$. Any non-zero divergence ($`R_{\mathrm{div}} > 0`$) blocks deployment, requiring strict PRNG seeding or elimination of hardware accelerator driver non-determinism;
-   - **Advisory Assistance Mode:** Permits an upper bound of $`R_{\mathrm{div}} \le \tau_{\mathrm{div}} = 0.020`$ (up to 2% stylistic variability, provided normative citations and statutory references remain completely identical).
-2. **Worked Numerical Example:** Across 500 audit re-executions, 430 match exactly, 62 are verified equivalent, and 8 diverge in decision outcomes or cited evidence. Calculation: $`R_{\mathrm{div}} = 8 / (430 + 62 + 8) = 8 / 500 = 0.016 = 1.6\%`$. **System Action:** In an advisory deployment, the release passes ($`1.6\% \le 2.0\%`$); for a strict regulatory compliance pipeline, an unconditional blocking defect `ERR_NON_DETERMINISTIC_REPRODUCIBILITY` is raised.
+   - **Strict Deterministic Citation Mode:** Mandates an absolute zero divergence rate: $R_{\mathrm{div}} = 0.000$. Any non-zero divergence ($R_{\mathrm{div}} > 0$) blocks deployment, requiring strict PRNG seeding or elimination of hardware accelerator driver non-determinism;
+   - **Advisory Assistance Mode:** Permits an upper bound of $R_{\mathrm{div}} \le \tau_{\mathrm{div}} = 0.020$ (up to 2% stylistic variability, provided normative citations and statutory references remain completely identical).
+2. **Worked Numerical Example:** Across 500 audit re-executions, 430 match exactly, 62 are verified equivalent, and 8 diverge in decision outcomes or cited evidence. Calculation: $R_{\mathrm{div}} = 8 / (430 + 62 + 8) = 8 / 500 = 0.016 = 1.6\%$. **System Action:** In an advisory deployment, the release passes ($1.6\% \le 2.0\%$); for a strict regulatory compliance pipeline, an unconditional blocking defect `ERR_NON_DETERMINISTIC_REPRODUCIBILITY` is raised.
 
 For high-risk artificial intelligence systems, the EU Artificial Intelligence Act (Regulation (EU) 2024/1689) mandates automated event logging across the entire operational lifecycle (Article 12) [[16]](#src-16). The answer run manifest represents the concrete technical realization of such logging within evidence-governed expert systems, though the manifest itself does not automatically guarantee statutory compliance.
 
@@ -761,7 +761,7 @@ Criteria breakdown:
 
 This reads: a release candidate is approved for deployment if and only if every verification check passes and zero blocking regressions exist.
 
-For continuous statistical metrics, evaluation examines paired differences $`\Delta = m_{\text{candidate}} - m_{\text{baseline}}`$ against confidence intervals, bounded by a predefined non-inferiority margin (*non-inferiority margin*). Dror et al. demonstrated that in natural language processing, statistical significance testing is frequently neglected or executed using inappropriate tests, formulating rigorous selection guidelines [[17]](#src-17). Crucially, statistical confidence intervals never override zero-tolerance safety policies: a single verified cross-tenant credential leak or unauthorized physical actuation unconditionally blocks release regardless of statistical margins.
+For continuous statistical metrics, evaluation examines paired differences $\Delta = m_{\text{candidate}} - m_{\text{baseline}}$ against confidence intervals, bounded by a predefined non-inferiority margin (*non-inferiority margin*). Dror et al. demonstrated that in natural language processing, statistical significance testing is frequently neglected or executed using inappropriate tests, formulating rigorous selection guidelines [[17]](#src-17). Crucially, statistical confidence intervals never override zero-tolerance safety policies: a single verified cross-tenant credential leak or unauthorized physical actuation unconditionally blocks release regardless of statistical margins.
 
 ## 12. Regression Testing on Historical Precedents and Leakage Control
 
@@ -851,7 +851,7 @@ The table below catalogs widespread fallacies regarding knowledge base verificat
 
 When knowledge engineers transition from manual test authoring to automated template-driven generation (*Matrix Template Generation*), a systemic testing artifact emerges known as **the keyword-cheating illusion (The Keyword-Cheating Illusion)**.
 
-If a template synthesizes questions by mechanically interpolating terminology from a specification (e.g., *"Is a 206 response required to generate 'multipart/byteranges' content pursuant to RFC 9110?"*), up to 90% of the query tokens mirror the normative text verbatim. In this regime, even primitive lexical retrievers or surface classifiers report near-perfect accuracy ($`F_1 \approx 0.99`$) because they latch onto rare token overlaps rather than evaluating deontic semantics (obligation versus permission) or relational context. This synthetic suite fosters an illusion of robustness that collapses when human practitioners query the system using domain synonyms or describe ambiguous real-world operational scenarios.
+If a template synthesizes questions by mechanically interpolating terminology from a specification (e.g., *"Is a 206 response required to generate 'multipart/byteranges' content pursuant to RFC 9110?"*), up to 90% of the query tokens mirror the normative text verbatim. In this regime, even primitive lexical retrievers or surface classifiers report near-perfect accuracy ($F_1 \approx 0.99$) because they latch onto rare token overlaps rather than evaluating deontic semantics (obligation versus permission) or relational context. This synthetic suite fosters an illusion of robustness that collapses when human practitioners query the system using domain synonyms or describe ambiguous real-world operational scenarios.
 
 To eliminate this illusion, an evidence-governed verification pipeline deploys a **neuro-symbolic test generation tandem**:
 
@@ -880,7 +880,7 @@ flowchart LR
 1. **System 1 (Stochastic Formulator):** A specialized local small language model (SLM) fine-tuned on the target domain (`znavets-rfc:7b`) ingests raw normative provisions and synthesizes varied queries from the perspective of an auditor or systems architect. It paraphrases requirements, models consequences of non-compliance, injects practitioner slang, and inverts sentence structures.
 2. **System 2 (Deterministic Oracle):** The symbolic core of the expert system derives the ground-truth benchmark not from the generative output (eliminating oracle hallucinations), but directly from the immutable byte offsets (`byte_start`, `byte_end`) and cryptographic SHA-256 hashes of the source citation embedded within the binary knowledge pack.
 
-This architecture decouples oracle integrity from linguistic phrasing: queries rigorously evaluate semantic inference under lexical noise, while verification retains the mathematical certainty of formal ground truth with zero tolerance for hallucinations ($`ZHR = 1.00`$).
+This architecture decouples oracle integrity from linguistic phrasing: queries rigorously evaluate semantic inference under lexical noise, while verification retains the mathematical certainty of formal ground truth with zero tolerance for hallucinations ($ZHR = 1.00$).
 
 ### 15.2. Knowledge Base Technical Debt Rubric
 
@@ -919,7 +919,7 @@ World-renowned author of Design by Contract Bertrand Meyer (creator of the Eiffe
 
 **Dialogue with Bertrand Meyer: Contractual Knowledge Invariants and Empirical Mutation Testing**
 
-- **Bertrand Meyer:** Mykola Fedchyk, all testing—even if you label it mutation testing and measure a mutation score of $`MS \ge 0.95`$—is fundamentally inferior to rigorous Design by Contract. As Edsger Dijkstra famously remarked, testing can only demonstrate the presence of bugs, never their absence. Synthesizing hundreds of artificial syntactic mutants squanders computing resources on detecting trivial errors. Instead of empirically slaughtering mutants, why do you not formulate knowledge rules strictly via axiomatic preconditions, postconditions, and class invariants that the compiler can verify statically at build time?
+- **Bertrand Meyer:** Mykola Fedchyk, all testing—even if you label it mutation testing and measure a mutation score of $MS \ge 0.95$—is fundamentally inferior to rigorous Design by Contract. As Edsger Dijkstra famously remarked, testing can only demonstrate the presence of bugs, never their absence. Synthesizing hundreds of artificial syntactic mutants squanders computing resources on detecting trivial errors. Instead of empirically slaughtering mutants, why do you not formulate knowledge rules strictly via axiomatic preconditions, postconditions, and class invariants that the compiler can verify statically at build time?
 
 - **Mykola Fedchyk:** Bertrand Meyer, your Design by Contract framework is the bedrock of our architecture: every action contract and production rule in our system possesses explicitly bounded preconditions and postconditions (Section 6 explicitly illustrates state invariant verification). However, in mission-critical industrial knowledge bases (such as nuclear power plant control or avionics), contracts themselves are drafted by fallible human domain experts, meaning they can harbor epistemic gaps, tautological premises, or brittle assumptions. In our framework, mutation testing does not replace contracts; rather, it acts as an empirical meta-verifier of the test suite and contract assertions themselves. By simulating subtle semantic defects (such as boundary condition inversion or premise omission), mutation analysis mathematically proves that the encoded invariants possess sufficient diagnostic sensitivity to catch expert mistakes before runtime.
 
@@ -927,13 +927,13 @@ World-renowned author of Design by Contract Bertrand Meyer (creator of the Eiffe
 
 - **Bertrand Meyer:** In Design by Contract, a class invariant is strictly inviolable: no method may ever leave an object in a state violating the invariant. Yet in your Section 8, you discuss "safety exceptions" signed by a functional safety manager that substitute for a passing test. Introducing exception paths into a rule base is a classic trap violating behavioral subtyping (the Liskov Substitution Principle). If you permit local exception rules to bypass global interlocks, how does your contract framework prevent leaky side effects that compromise global system safety without requiring global recompilation of all contracts?
 
-- **Mykola Fedchyk:** Bertrand Meyer, you identify a crucial challenge in knowledge base contract evolution. In our architecture, a safety exception is never an arbitrary invariant override or an unconstrained loophole. We enforce strict behavioral contract inheritance with SMT-verified monotonic safety contraction. An exception rule cannot weaken a postcondition: it requires a cryptographic authorization token as a non-forgeable precondition $`\mathrm{Pre}_{\mathrm{base}} \land \mathrm{Token}_{\mathrm{auth}} \implies \mathrm{Pre}_{\mathrm{exception}}`$, while its postcondition is constrained to guarantee safe state transitions $`\mathrm{Post}_{\mathrm{exception}} \implies \mathrm{Post}_{\mathrm{safe}}`$. An SMT solver formally proves that no combination of input telemetry without a valid cryptographic signature can activate this branch. Thus, an exception is not an invariant bypass, but a modular, certified transition into a formal graceful degradation mode.
+- **Mykola Fedchyk:** Bertrand Meyer, you identify a crucial challenge in knowledge base contract evolution. In our architecture, a safety exception is never an arbitrary invariant override or an unconstrained loophole. We enforce strict behavioral contract inheritance with SMT-verified monotonic safety contraction. An exception rule cannot weaken a postcondition: it requires a cryptographic authorization token as a non-forgeable precondition $\mathrm{Pre}_{\mathrm{base}} \land \mathrm{Token}_{\mathrm{auth}} \implies \mathrm{Pre}_{\mathrm{exception}}$, while its postcondition is constrained to guarantee safe state transitions $\mathrm{Post}_{\mathrm{exception}} \implies \mathrm{Post}_{\mathrm{safe}}$. An SMT solver formally proves that no combination of input telemetry without a valid cryptographic signature can activate this branch. Thus, an exception is not an invariant bypass, but a modular, certified transition into a formal graceful degradation mode.
 
 **Dialogue with Edmund Clarke: Scalability of Exhaustive State Space Search and SMT Solvers**
 
-- **Edmund M. Clarke:** Mykola Fedchyk, the state-space explosion problem remains the fundamental barrier of model checking. In this chapter, you demonstrate an exhaustive enumeration across 36 toy states alongside basic SMT instances. But in industrial-scale expert systems, knowledge bases incorporate tens of thousands of interacting rules parameterized by real-valued intervals and temporal logic constraints. The state spaces of such systems easily surpass $`2^{1000}`$. Your claim that you can formally prove complete non-contradiction and unreachable hazard states prior to every rule-pack release collides directly with the $NP$-completeness of SMT solving: either your compilation pipeline hangs indefinitely, or you are forced to castrate rule expressivity down to trivial propositional logic.
+- **Edmund M. Clarke:** Mykola Fedchyk, the state-space explosion problem remains the fundamental barrier of model checking. In this chapter, you demonstrate an exhaustive enumeration across 36 toy states alongside basic SMT instances. But in industrial-scale expert systems, knowledge bases incorporate tens of thousands of interacting rules parameterized by real-valued intervals and temporal logic constraints. The state spaces of such systems easily surpass $2^{1000}$. Your claim that you can formally prove complete non-contradiction and unreachable hazard states prior to every rule-pack release collides directly with the $NP$-completeness of SMT solving: either your compilation pipeline hangs indefinitely, or you are forced to castrate rule expressivity down to trivial propositional logic.
 
-- **Mykola Fedchyk:** Edmund M. Clarke, your foundational breakthroughs in symbolic model checking and Binary Decision Diagrams (BDD) illuminate the exact pathway around this wall. Our architecture averts combinatorial explosion through compositional verification and stratified logic modularization. First, rules in our architecture are strictly constrained to decidable fragments: logical inference translates into linear Horn clauses and 2-SAT structures, while numerical boundary constraints are restricted to Quantifier-Free Linear Integer Arithmetic (QF-LIA), for which modern SMT solvers exhibit highly efficient polynomial heuristics. Non-linear physical dynamics are encapsulated into certified Look-Up Tables (LUTs). Second, the knowledge base is partitioned into independent functional shards: rather than analyzing a monolithic global state graph, the verifier proves compositional interface contracts between subsystems. This transforms an exponential barrier of $`O(2^N)`$ into a tractable sum of low-degree polynomials, enabling the compiler to emit a cryptographic proof certificate of non-contradiction in under a minute within standard CI/CD pipelines.
+- **Mykola Fedchyk:** Edmund M. Clarke, your foundational breakthroughs in symbolic model checking and Binary Decision Diagrams (BDD) illuminate the exact pathway around this wall. Our architecture averts combinatorial explosion through compositional verification and stratified logic modularization. First, rules in our architecture are strictly constrained to decidable fragments: logical inference translates into linear Horn clauses and 2-SAT structures, while numerical boundary constraints are restricted to Quantifier-Free Linear Integer Arithmetic (QF-LIA), for which modern SMT solvers exhibit highly efficient polynomial heuristics. Non-linear physical dynamics are encapsulated into certified Look-Up Tables (LUTs). Second, the knowledge base is partitioned into independent functional shards: rather than analyzing a monolithic global state graph, the verifier proves compositional interface contracts between subsystems. This transforms an exponential barrier of $O(2^N)$ into a tractable sum of low-degree polynomials, enabling the compiler to emit a cryptographic proof certificate of non-contradiction in under a minute within standard CI/CD pipelines.
 
 **Continued Dialogue with Edmund Clarke: Counterexample-Guided Abstraction Refinement (CEGAR) and Proof Incompleteness**
 

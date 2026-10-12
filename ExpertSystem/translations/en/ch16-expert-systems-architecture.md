@@ -12,7 +12,7 @@
 
 ## Abstract
 
-This chapter investigates the logical and functional architecture of an evidence-governed expert system, establishing a rigorous separation between the architectural core, proprietary functional subsystems, and replaceable adapters (LLMs, vector databases, search engines). The bifurcation of data flows into an asynchronous background fill path and a deterministic read-and-inference path is formally justified. The concept of operational engineering knowledge is formalized alongside a typology of persistence stores aligned with diverse consistency guarantees (ACID transactions, traceability graphs, W3C OWL ontologies, W3C PROV-O provenance chains). The mathematics of truth maintenance systems (JTMS and ATMS) is analyzed, demonstrating non-monotonic retraction dynamics when underlying facts mutate or are invalidated. In addition, inter-subsystem data contracts (OpenAPI, AsyncAPI, JSON Schema, Pact) are defined. Quantitative quality and reliability metrics ($`\mathrm{Recall@}k`$, MRR, nDCG, ECE) are established to systematically prevent silent failure modes and model overconfidence in safety-critical engineering domains.
+This chapter investigates the logical and functional architecture of an evidence-governed expert system, establishing a rigorous separation between the architectural core, proprietary functional subsystems, and replaceable adapters (LLMs, vector databases, search engines). The bifurcation of data flows into an asynchronous background fill path and a deterministic read-and-inference path is formally justified. The concept of operational engineering knowledge is formalized alongside a typology of persistence stores aligned with diverse consistency guarantees (ACID transactions, traceability graphs, W3C OWL ontologies, W3C PROV-O provenance chains). The mathematics of truth maintenance systems (JTMS and ATMS) is analyzed, demonstrating non-monotonic retraction dynamics when underlying facts mutate or are invalidated. In addition, inter-subsystem data contracts (OpenAPI, AsyncAPI, JSON Schema, Pact) are defined. Quantitative quality and reliability metrics ($\mathrm{Recall@}k$, MRR, nDCG, ECE) are established to systematically prevent silent failure modes and model overconfidence in safety-critical engineering domains.
 
 ---
 
@@ -558,7 +558,7 @@ When an expert system's domain vocabulary is enriched, an inference rule added, 
 
 **Rule Regression Testing:** A suite of golden engineering test cases establishes mandatory triggered rules, derived facts, and definitive conclusions for each scenario. Any modification to the knowledge base triggers the entire test suite; any divergence from golden baselines halts the deployment pipeline.
 
-**Information Retrieval Evaluation:** Within the continuous integration (CI/CD) pipeline, regression testing of the hybrid retrieval layer (combining BM25 and HNSW) detects retrieval recall degradation over normative knowledge. The failure mode involves an updated embedding model or modified tokenization pipeline causing a critical functional safety requirement (e.g., a mandatory ISO 26262-8 clause or DO-178C objective) to fall outside the top-$k$ retrieved candidates, forcing the inference engine to operate on an incomplete evidentiary context. To evaluate retrieval completeness and ranking efficacy across a verified golden set of engineering queries $Q$, dimensionless metrics $`\mathrm{Recall@}k`$, $`\mathrm{Precision@}k`$, and Mean Reciprocal Rank ($`\mathrm{MRR}`$) are computed:
+**Information Retrieval Evaluation:** Within the continuous integration (CI/CD) pipeline, regression testing of the hybrid retrieval layer (combining BM25 and HNSW) detects retrieval recall degradation over normative knowledge. The failure mode involves an updated embedding model or modified tokenization pipeline causing a critical functional safety requirement (e.g., a mandatory ISO 26262-8 clause or DO-178C objective) to fall outside the top-$k$ retrieved candidates, forcing the inference engine to operate on an incomplete evidentiary context. To evaluate retrieval completeness and ranking efficacy across a verified golden set of engineering queries $Q$, dimensionless metrics $\mathrm{Recall@}k$, $\mathrm{Precision@}k$, and Mean Reciprocal Rank ($\mathrm{MRR}$) are computed:
 
 ```math
 \mathrm{Recall@}k = \frac{\lvert\mathrm{Rel} \cap \mathrm{Top}_k\rvert}{\lvert\mathrm{Rel}\rvert}, \qquad
@@ -567,30 +567,30 @@ When an expert system's domain vocabulary is enriched, an inference rule added, 
 ```
 
 **Parameters and Admissible Ranges:**
-- $Q$ — golden evaluation benchmark of engineering queries with rigorously annotated relevance ($`\lvert Q \rvert \ge 100`$).
-- $`\mathrm{Rel} \subset \mathcal{D}`$ — set of knowledge base fragments strictly required to resolve query $q$ ($`\lvert\mathrm{Rel}\rvert \ge 1`$).
-- $`\mathrm{Top}_k \subset \mathcal{D}`$ — top-$k$ candidate fragments returned by the retrieval adapter ($`k \in \{5, 10, 20\}`$).
-- $`\lvert\cdot\rvert`$ — set cardinality; $\cap$ — set intersection operator.
-- $`\mathrm{rank}_q \in \{1, 2, \dots, \lvert\mathcal{D}\rvert\}`$ — rank position of the first relevant fragment returned for query $q$. If no relevant fragment appears within the cutoff, reciprocal rank $`1/\mathrm{rank}_q`$ is deterministically set to 0.
-- $`\mathrm{Recall@}k \in [0, 1]`$ — retrieval recall (fraction of required normative clauses successfully retrieved).
-- $`\mathrm{Precision@}k \in [0, 1]`$ — retrieval precision (fraction of retrieved candidates that are truly relevant).
-- $`\mathrm{MRR} \in [0, 1]`$ — Mean Reciprocal Rank, measuring accessibility speed to the first authoritative ground truth.
+- $Q$ — golden evaluation benchmark of engineering queries with rigorously annotated relevance ($\lvert Q \rvert \ge 100$).
+- $\mathrm{Rel} \subset \mathcal{D}$ — set of knowledge base fragments strictly required to resolve query $q$ ($\lvert\mathrm{Rel}\rvert \ge 1$).
+- $\mathrm{Top}_k \subset \mathcal{D}$ — top-$k$ candidate fragments returned by the retrieval adapter ($k \in \{5, 10, 20\}$).
+- $\lvert\cdot\rvert$ — set cardinality; $\cap$ — set intersection operator.
+- $\mathrm{rank}_q \in \{1, 2, \dots, \lvert\mathcal{D}\rvert\}$ — rank position of the first relevant fragment returned for query $q$. If no relevant fragment appears within the cutoff, reciprocal rank $1/\mathrm{rank}_q$ is deterministically set to 0.
+- $\mathrm{Recall@}k \in [0, 1]$ — retrieval recall (fraction of required normative clauses successfully retrieved).
+- $\mathrm{Precision@}k \in [0, 1]$ — retrieval precision (fraction of retrieved candidates that are truly relevant).
+- $\mathrm{MRR} \in [0, 1]$ — Mean Reciprocal Rank, measuring accessibility speed to the first authoritative ground truth.
 
 **Practical Application and Engineering Guidance:**
 - Metric evaluation executes automatically within nightly regression pipelines upon index updates or re-ranking parameter tuning.
-- Release Quality Gate: for safety-critical knowledge bases, minimum acceptance thresholds are enforced at $`\mathrm{Recall@}5 \ge 0{,}98`$ and $`\mathrm{MRR} \ge 0{,}85`$.
-- If $`\mathrm{Recall@}5 < 0{,}98`$, the deployment pipeline aborts with status `BUILD_BLOCKED_RETRIEVAL_REGRESSION`: deployment of the updated index is blocked, as the risk of omitting a mandatory safety standard exceeds acceptable risk limits for ASIL D systems.
+- Release Quality Gate: for safety-critical knowledge bases, minimum acceptance thresholds are enforced at $\mathrm{Recall@}5 \ge 0{,}98$ and $\mathrm{MRR} \ge 0{,}85$.
+- If $\mathrm{Recall@}5 < 0{,}98$, the deployment pipeline aborts with status `BUILD_BLOCKED_RETRIEVAL_REGRESSION`: deployment of the updated index is blocked, as the risk of omitting a mandatory safety standard exceeds acceptable risk limits for ASIL D systems.
 
 **Worked Numerical Example:**
-For an evaluation query concerning watchdog timer (WDT) hardware configuration, the standard specifies $`\lvert\mathrm{Rel}\rvert = 4`$ mandatory fragments. Within cutoff window $k = 5$, the engine returns 3 relevant fragments ($`\lvert\mathrm{Rel} \cap \mathrm{Top}_5\rvert = 3`$), with the first relevant fragment positioned at rank 2 ($`\mathrm{rank}_q = 2`$):
+For an evaluation query concerning watchdog timer (WDT) hardware configuration, the standard specifies $\lvert\mathrm{Rel}\rvert = 4$ mandatory fragments. Within cutoff window $k = 5$, the engine returns 3 relevant fragments ($\lvert\mathrm{Rel} \cap \mathrm{Top}_5\rvert = 3$), with the first relevant fragment positioned at rank 2 ($\mathrm{rank}_q = 2$):
 
 ```math
 \mathrm{Recall@}5 = \frac{3}{4} = 0{,}75, \qquad \mathrm{Precision@}5 = \frac{3}{5} = 0{,}60, \qquad \mathrm{RR}_q = \frac{1}{2} = 0{,}50
 ```
 
-Because $`\mathrm{Recall@}5 = 0{,}75 < 0{,}98`$, the quality gate halts index deployment, flagging the omission of a mandatory specification clause.
+Because $\mathrm{Recall@}5 = 0{,}75 < 0{,}98$, the quality gate halts index deployment, flagging the omission of a mandatory specification clause.
 
-When relevant fragments carry unequal normative and legal weight (mandatory safety standards versus recommended guidelines versus informative context), binary relevance labels prove insufficient. To accommodate graded relevance, Normalized Discounted Cumulative Gain ($`\mathrm{nDCG}`$), formulated by Järvelin and Kekäläinen, is employed [[20]](#src-20):
+When relevant fragments carry unequal normative and legal weight (mandatory safety standards versus recommended guidelines versus informative context), binary relevance labels prove insufficient. To accommodate graded relevance, Normalized Discounted Cumulative Gain ($\mathrm{nDCG}$), formulated by Järvelin and Kekäläinen, is employed [[20]](#src-20):
 
 ```math
 \mathrm{DCG@}k = \sum_{i=1}^{k} \frac{\mathrm{rel}_i}{\log_2(i+1)}, \qquad
@@ -599,16 +599,16 @@ When relevant fragments carry unequal normative and legal weight (mandatory safe
 
 **Parameters and Admissible Ranges:**
 - $i \in \{1, \dots, k\}$ — position rank within the retrieved candidate list.
-- $`\mathrm{rel}_i \in \{0, 1, 2, 3\}`$ — discrete relevance grade: 3 = mandatory safety invariant (violation inadmissible); 2 = recommended standard practice; 1 = informative context; 0 = irrelevant noise.
-- $`\log_2(i+1)`$ — logarithmic discount factor penalizing relevant fragments placed lower in the ranking.
-- $`\mathrm{DCG@}k \in [0, \infty)`$ — Discounted Cumulative Gain accumulated across the top-$k$ positions.
-- $`\mathrm{IDCG@}k \in (0, \infty)`$ — Ideal DCG, computed over the same relevance scores sorted in descending order. If $`\mathrm{IDCG@}k = 0`$, the metric defaults to 1 when $`\mathrm{DCG@}k = 0`$, and 0 otherwise.
-- $`\mathrm{nDCG@}k \in [0, 1]`$ — normalized ranking efficacy score.
+- $\mathrm{rel}_i \in \{0, 1, 2, 3\}$ — discrete relevance grade: 3 = mandatory safety invariant (violation inadmissible); 2 = recommended standard practice; 1 = informative context; 0 = irrelevant noise.
+- $\log_2(i+1)$ — logarithmic discount factor penalizing relevant fragments placed lower in the ranking.
+- $\mathrm{DCG@}k \in [0, \infty)$ — Discounted Cumulative Gain accumulated across the top-$k$ positions.
+- $\mathrm{IDCG@}k \in (0, \infty)$ — Ideal DCG, computed over the same relevance scores sorted in descending order. If $\mathrm{IDCG@}k = 0$, the metric defaults to 1 when $\mathrm{DCG@}k = 0$, and 0 otherwise.
+- $\mathrm{nDCG@}k \in [0, 1]$ — normalized ranking efficacy score.
 
 **Practical Application and Engineering Guidance:**
 - This metric verifies that auxiliary background notes do not displace mandatory safety invariants from top retrieval ranks.
-- Quality Gate Threshold: $`\mathrm{nDCG@}10 \ge 0{,}92`$.
-- If for any benchmark query in a safety-critical category a mandatory invariant ($`\mathrm{rel}_i = 3`$) falls below the third rank position ($i > 3$), the system flags an ordering priority violation and returns the retrieval encoder configuration for re-tuning.
+- Quality Gate Threshold: $\mathrm{nDCG@}10 \ge 0{,}92$.
+- If for any benchmark query in a safety-critical category a mandatory invariant ($\mathrm{rel}_i = 3$) falls below the third rank position ($i > 3$), the system flags an ordering priority violation and returns the retrieval encoder configuration for re-tuning.
 
 **Generation Quality Evaluation:** When a language model synthesizes explanatory narratives, three core metrics from the RAGAS framework are assessed [[21]](#src-21): faithfulness (verifying that every generated statement is strictly entailed by the retrieved context), answer relevance (evaluating alignment with the user query), and context relevance (measuring retrieved passage precision relative to the query).
 
@@ -622,10 +622,10 @@ When relevant fragments carry unequal normative and legal weight (mandatory safe
 - $M \in \mathbb{N}$ — number of equal-width probability bins partitioning $[0, 1]$ (standard engineering baseline: $M = 10$, bin width 0.1).
 - $m \in \{1, \dots, M\}$ — index of probability bin $I_m = \left(\frac{m-1}{M}, \frac{m}{M}\right]$.
 - $B_m$ — subset of evaluation samples whose predicted confidence falls within bin $I_m$.
-- $n$ — total sample size ($`n = \sum_{m=1}^M \lvert B_m \rvert`$).
-- $`\lvert B_m \rvert/n \in [0, 1]`$ — statistical weight of bin $m$.
-- $`\mathrm{acc}(B_m) = \frac{1}{\lvert B_m \rvert} \sum_{i \in B_m} \mathbf{1}(\hat y_i = y_i) \in [0, 1]`$ — empirical accuracy within bin $m$ ($\mathbf{1}$ denotes the indicator function).
-- $`\mathrm{conf}(B_m) = \frac{1}{\lvert B_m \rvert} \sum_{i \in B_m} \hat p_i \in [0, 1]`$ — mean model confidence within bin $m$.
+- $n$ — total sample size ($n = \sum_{m=1}^M \lvert B_m \rvert$).
+- $\lvert B_m \rvert/n \in [0, 1]$ — statistical weight of bin $m$.
+- $\mathrm{acc}(B_m) = \frac{1}{\lvert B_m \rvert} \sum_{i \in B_m} \mathbf{1}(\hat y_i = y_i) \in [0, 1]$ — empirical accuracy within bin $m$ ($\mathbf{1}$ denotes the indicator function).
+- $\mathrm{conf}(B_m) = \frac{1}{\lvert B_m \rvert} \sum_{i \in B_m} \hat p_i \in [0, 1]$ — mean model confidence within bin $m$.
 - $\mathrm{ECE} \in [0, 1]$ — Expected Calibration Error (expressed as a fraction or percentage).
 
 **Practical Application and Engineering Guidance:**
@@ -635,8 +635,8 @@ When relevant fragments carry unequal normative and legal weight (mandatory safe
 
 **Worked Numerical Calibration Example:**
 A test set of $n = 1\,000$ defect classifications is partitioned into two aggregated bins:
-- Bin 1 ($I_1$): $`\lvert B_1 \rvert = 600`$, mean confidence $`\mathrm{conf} = 0{,}92`$, empirical accuracy $`\mathrm{acc} = 0{,}90`$;
-- Bin 2 ($I_2$): $`\lvert B_2 \rvert = 400`$, mean confidence $`\mathrm{conf} = 0{,}70`$, empirical accuracy $`\mathrm{acc} = 0{,}68`$.
+- Bin 1 ($I_1$): $\lvert B_1 \rvert = 600$, mean confidence $\mathrm{conf} = 0{,}92$, empirical accuracy $\mathrm{acc} = 0{,}90$;
+- Bin 2 ($I_2$): $\lvert B_2 \rvert = 400$, mean confidence $\mathrm{conf} = 0{,}70$, empirical accuracy $\mathrm{acc} = 0{,}68$.
 
 ```math
 \mathrm{ECE} = \frac{600}{1000} \cdot \lvert 0{,}90 - 0{,}92 \rvert + \frac{400}{1000} \cdot \lvert 0{,}68 - 0{,}70 \rvert = 0{,}6 \cdot 0{,}02 + 0{,}4 \cdot 0{,}02 = 0{,}012 + 0{,}008 = 0{,}020

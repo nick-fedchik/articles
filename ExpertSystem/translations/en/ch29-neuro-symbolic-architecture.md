@@ -29,13 +29,13 @@ P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1}),\qquad \hat{w}_{1:N}=\operatorname*{a
 Notation:
 
 - $\mathcal{M}$ denotes the language model;
-- $`w_t`$ denotes the token at sequence position $t$, and $`w_1,\dots,w_{t-1}`$ denotes preceding tokens;
-- $`P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1})`$ is the probability of the next token given prior context, bounded in $[0, 1]$;
-- $N$ is the total token sequence length, with $`w_{1:N}`$ denoting the complete sequence from position 1 to $N$;
-- $`w_{1:t-1}`$ (or $`w_{<t}`$) represents the prefix sequence preceding position $t$;
-- $`\prod_{t=1}^{N}`$ denotes the product of token probabilities across positions 1 through $N$;
-- $`\operatorname*{arg\,max}_{w_{1:N}}`$ selects the sequence maximizing this joint probability product;
-- $`\hat{w}_{1:N}`$ represents the selected token sequence, where the circumflex denotes an estimated output.
+- $w_t$ denotes the token at sequence position $t$, and $w_1,\dots,w_{t-1}$ denotes preceding tokens;
+- $P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1})$ is the probability of the next token given prior context, bounded in $[0, 1]$;
+- $N$ is the total token sequence length, with $w_{1:N}$ denoting the complete sequence from position 1 to $N$;
+- $w_{1:t-1}$ (or $w_{<t}$) represents the prefix sequence preceding position $t$;
+- $\prod_{t=1}^{N}$ denotes the product of token probabilities across positions 1 through $N$;
+- $\operatorname*{arg\,max}_{w_{1:N}}$ selects the sequence maximizing this joint probability product;
+- $\hat{w}_{1:N}$ represents the selected token sequence, where the circumflex denotes an estimated output.
 
 The operational reality is clear: the model evaluates each candidate token relative to prior tokens, and decoding algorithms search for the sequence with the highest aggregate likelihood. This yields maximum statistical plausibility among candidate outputs, not the probability that the generated text corresponds to empirical truth.
 
@@ -161,7 +161,7 @@ In **AlphaProof**, Google DeepMind demonstrated a hybrid system capable of solvi
 
 > **Lesson for Evidence-Governed Systems:** Decoupling *“LLM proposes tactics → formal engine validates proofs”* represents the gold standard of architectural integrity.
 > 
-> **Operational Boundary:** Lean 4 was designed for interactive mathematicians, not embedded controllers. Generating a single proof requires seconds or minutes on high-end server clusters. In embedded automotive (ISO 26262 ASIL D) or avionics (DO-178C DAL A) controllers where hard deadline budgets require reaction times $`< 100\,\mu\text{s}`$, such architectures are unviable. Real-time expert systems demand ultra-fast specialized symbolic cores with deterministic execution latencies and zero dynamic heap allocations.
+> **Operational Boundary:** Lean 4 was designed for interactive mathematicians, not embedded controllers. Generating a single proof requires seconds or minutes on high-end server clusters. In embedded automotive (ISO 26262 ASIL D) or avionics (DO-178C DAL A) controllers where hard deadline budgets require reaction times $< 100\,\mu\text{s}$, such architectures are unviable. Real-time expert systems demand ultra-fast specialized symbolic cores with deterministic execution latencies and zero dynamic heap allocations.
 
 ### 4.2. The OpenAI Paradigm: Process Reward Models (PRM) and the Limits of Latent Reasoning
 

@@ -27,12 +27,12 @@ V(\Omega) = \log_2 \lvert \Omega \rvert
 ```
 
 - Zur Messung der Varietät ist $\Omega$ eine endliche Zustandsmenge und $\lvert \Omega \rvert$ die Anzahl ihrer unterscheidbaren Elemente;
-- $`\log_2`$ ist der Logarithmus zur Basis 2, und $V(\Omega)$ wird in Bit gemessen;
+- $\log_2$ ist der Logarithmus zur Basis 2, und $V(\Omega)$ wird in Bit gemessen;
 - Die Gleichung spezifiziert die Anzahl an Bits, die erforderlich ist, um die Zustände der Menge innerhalb dieses Modells eindeutig zu differenzieren.
 
-Umfasst eine Menge beispielsweise 1.024 Zustände, beträgt $`V(\Omega) = \log_2(1024) = 10\text{ Bit}`$. Diese Metrik erfasst ausschließlich die Anzahl diskreter Zustände, nicht jedoch deren interne Komplexität oder Auftretenswahrscheinlichkeit.
+Umfasst eine Menge beispielsweise 1.024 Zustände, beträgt $V(\Omega) = \log_2(1024) = 10\text{ Bit}$. Diese Metrik erfasst ausschließlich die Anzahl diskreter Zustände, nicht jedoch deren interne Komplexität oder Auftretenswahrscheinlichkeit.
 
-Das Gesetz der erforderlichen Varietät postuliert in dieser Form, dass die Varietät der resultierenden Ausgänge $`V_O`$ nicht geringer sein kann als die Varietät der Störungen $`V_D`$ abzüglich der Varietät der Reaktionen des Reglers $`V_R`$:
+Das Gesetz der erforderlichen Varietät postuliert in dieser Form, dass die Varietät der resultierenden Ausgänge $V_O$ nicht geringer sein kann als die Varietät der Störungen $V_D$ abzüglich der Varietät der Reaktionen des Reglers $V_R$:
 
 ```math
 V_O \geq V_D - V_R
@@ -40,11 +40,11 @@ V_O \geq V_D - V_R
 
 Gesetzliche Begrenzung:
 
-- $`V_O`$ bezeichnet die Varietät der Ergebnisse, $`V_D`$ die Varietät der Störungen und $`V_R`$ die Varietät der Reglerreaktionen;
+- $V_O$ bezeichnet die Varietät der Ergebnisse, $V_D$ die Varietät der Störungen und $V_R$ die Varietät der Reglerreaktionen;
 - Jede Größe wird in Bit innerhalb desselben Zustandsmodells gemessen;
 - $\geq$ bedeutet „nicht kleiner als“, und das Minuszeichen subtrahiert das Absorptionsvermögen des Reglers von der Varietät der Störungen selbst.
 
-Betragen in einem didaktischen Szenario beispielsweise $`V_D = 10\text{ Bit}`$ und $`V_R = 1\text{ Bit}`$, so muss die unregulierte Restvarietät der Ausgänge mindestens $9\text{ Bit}$ betragen. Diese Ungleichung definiert eine theoretische Untergrenze und legt für sich genommen noch nicht fest, welche konkreten Reaktionen ein sicheres Systemverhalten garantieren.
+Betragen in einem didaktischen Szenario beispielsweise $V_D = 10\text{ Bit}$ und $V_R = 1\text{ Bit}$, so muss die unregulierte Restvarietät der Ausgänge mindestens $9\text{ Bit}$ betragen. Diese Ungleichung definiert eine theoretische Untergrenze und legt für sich genommen noch nicht fest, welche konkreten Reaktionen ein sicheres Systemverhalten garantieren.
 
 Unter der Annahme, dass 1.024 Störfälle jeweils distinkte Gegenmaßnahmen erfordern, ist ein Regler mit lediglich zwei Reaktionen unzureichend. Die Zahl der Klassenbezeichnungen in einem Klassifikator ist jedoch nicht identisch mit der Varietät verfügbarer Steuerbefehle. Die Ungleichung limitiert die Anzahl unterscheidbarer Resultate, zählt aber nicht automatisch kritische oder „unkontrollierbare“ Zustände ab. Eine einzige robuste Schutzmaßnahme kann für eine Vielzahl unterschiedlicher Fehlzustände angemessen sein. Eine Ontologie unterstützt zwar die semantische Kontextdifferenzierung, erhöht jedoch ohne entsprechende Beobachtbarkeit und reale Stellglieder die Regelungskapazität des Systems nicht.
 
@@ -106,14 +106,14 @@ Betrachten wir eine thermische Schutzregel für Leistungstransistoren in einer S
 T > 85^\circ\mathrm{C} \;\land\; \frac{dT}{dt} > 2{,}5^\circ\mathrm{C/s} \;\Rightarrow\; \mathrm{DeratePower}(50\,\%)
 ```
 
-- Die Schutzregel nutzt $T$, die aktuelle Transistortemperatur in Grad Celsius, mit dem Schwellenwert $`85^\circ\mathrm{C}`$;
-- $\frac{dT}{dt}$ repräsentiert die Temperaturänderungsrate in Grad Celsius pro Sekunde, mit $`2{,}5^\circ\mathrm{C/s}`$ als Grenzwert der Erwärmungsgeschwindigkeit;
+- Die Schutzregel nutzt $T$, die aktuelle Transistortemperatur in Grad Celsius, mit dem Schwellenwert $85^\circ\mathrm{C}$;
+- $\frac{dT}{dt}$ repräsentiert die Temperaturänderungsrate in Grad Celsius pro Sekunde, mit $2{,}5^\circ\mathrm{C/s}$ als Grenzwert der Erwärmungsgeschwindigkeit;
 - $>$ bezeichnet „größer als“, $\land$ erfordert das gleichzeitige Erfülltsein beider Bedingungen;
-- $\Rightarrow$ signalisiert, dass bei Erfüllung der Prämissen die Aktion $`\mathrm{DeratePower}(50\,\%)`$ ausgelöst wird (Leistungsreduktion auf 50 %).
+- $\Rightarrow$ signalisiert, dass bei Erfüllung der Prämissen die Aktion $\mathrm{DeratePower}(50\,\%)$ ausgelöst wird (Leistungsreduktion auf 50 %).
 
 Die Regel reduziert die Leistung somit ausschließlich dann, wenn die Temperatur bereits $85^\circ\mathrm{C}$ überschritten hat und weiterhin mit einer Rate oberhalb der Warnschwelle ansteigt. Die Zeitableitung muss zwingend unter Berücksichtigung des Sensorrauschens und des Abtastintervalls geschätzt werden, da hochfrequentes Rauschen andernfalls massive Fehlauslösungen provoziert.
 
-Die Regel erscheint elementar, doch die Ableitung eines verrauschten Signals birgt erhebliche Risiken. Wird der Sensor alle $50\,\text{ms}$ abgetastet und weist das Messrauschen eine Standardabweichung von $0{,}5\,^\circ\mathrm{C}$ auf, so besitzt die Differenz zweier aufeinanderfolgender Messwerte, dividiert durch $0{,}05\,\text{s}$, ein Rauschen in der Größenordnung von $0{,}5 \cdot \sqrt{2} / 0{,}05 \approx 14\,^\circ\mathrm{C/s}$. Dieser Rauschpegel übersteigt den Regelschwellenwert um ein Vielfaches. Das folgende Go-Programm simuliert $60\,\text{Sekunden}$ Betrieb unter zwei Szenarien: Der Transistor ist heiß ($86\,^\circ\mathrm{C}$), erwärmt sich jedoch nicht weiter; im zweiten Szenario erwärmt er sich ausgehend von $80\,^\circ\mathrm{C}$ mit einer Rate von $3\,^\circ\mathrm{C/s}$. Die Ableitung wird auf zwei Arten ermittelt: naiv aus zwei aufeinanderfolgenden Messpunkten sowie über ein Alpha-Beta-Filter – den einfachsten Zustandsschätzer mit konstantem Geschwindigkeitsmodell, der Zustands- und Ratenschätzungen bei jedem Zeitschritt iterativ korrigiert.
+Die Regel erscheint elementar, doch die Ableitung eines verrauschten Signals birgt erhebliche Risiken. Wird der Sensor alle $50\,\text{ms}$ abgetastet und weist das Messrauschen eine Standardabweichung von $0{,}5^\circ\mathrm{C}$ auf, so besitzt die Differenz zweier aufeinanderfolgender Messwerte, dividiert durch $0{,}05\,\text{s}$, ein Rauschen in der Größenordnung von $0{,}5 \cdot \sqrt{2} / 0{,}05 \approx 14^\circ\mathrm{C/s}$. Dieser Rauschpegel übersteigt den Regelschwellenwert um ein Vielfaches. Das folgende Go-Programm simuliert $60\,\text{Sekunden}$ Betrieb unter zwei Szenarien: Der Transistor ist heiß ($86^\circ\mathrm{C}$), erwärmt sich jedoch nicht weiter; im zweiten Szenario erwärmt er sich ausgehend von $80^\circ\mathrm{C}$ mit einer Rate von $3^\circ\mathrm{C/s}$. Die Ableitung wird auf zwei Arten ermittelt: naiv aus zwei aufeinanderfolgenden Messpunkten sowie über ein Alpha-Beta-Filter – den einfachsten Zustandsschätzer mit konstantem Geschwindigkeitsmodell, der Zustands- und Ratenschätzungen bei jedem Zeitschritt iterativ korrigiert.
 
 <details>
 <summary>Beispiel in Go: Naive Ableitung und Alpha-Beta-Filter für Temperaturüberwachungsregeln</summary>
@@ -284,17 +284,17 @@ Alpha-Beta-Filter  | Fehlauslösungen in 60 s:    0 | Erste Auslösung bei Erwä
 
 </details>
 
-Bei einem festen Seed des Zufallsgenerators generierte die naive Ableitung im stationären Zustand 520 positive Regelauswertungen, während das Filter keine einzige Fehlauslösung verzeichnete. Dies entspricht nicht der Zahl separater Schutzaktionen und stellt keinen formalen Beweis einer Null-Fehlalarmrate dar: Das Programm modelliert nicht die thermische Gegenkopplung nach Leistungsdrosselung. Während der Erwärmungsphase wird die Temperaturschwelle von $85\,^\circ\mathrm{C}$ nach ca. $1{,}67\,\text{s}$ geschnitten; das Filter lieferte die erste Auslösung bei $1{,}80\,\text{s}$. Latenzen und Schätzfehler müssen über eine Vielzahl von Rauschrealisierungen, Signalsprüngen und Messausfällen verifiziert werden.
+Bei einem festen Seed des Zufallsgenerators generierte die naive Ableitung im stationären Zustand 520 positive Regelauswertungen, während das Filter keine einzige Fehlauslösung verzeichnete. Dies entspricht nicht der Zahl separater Schutzaktionen und stellt keinen formalen Beweis einer Null-Fehlalarmrate dar: Das Programm modelliert nicht die thermische Gegenkopplung nach Leistungsdrosselung. Während der Erwärmungsphase wird die Temperaturschwelle von $85^\circ\mathrm{C}$ nach ca. $1{,}67\,\text{s}$ geschnitten; das Filter lieferte die erste Auslösung bei $1{,}80\,\text{s}$. Latenzen und Schätzfehler müssen über eine Vielzahl von Rauschrealisierungen, Signalsprüngen und Messausfällen verifiziert werden.
 
 Das Flag `RateAvailable` indiziert lediglich, dass die Rate nach zwei gültigen Ereignissen berechnet werden konnte, garantiert jedoch nicht deren hinreichende Genauigkeit für Schutzfunktionen. Das Filter verarbeitet reale Zeitabstände, verwirft ungültige Zahlenwerte, Duplikate, zeitlich vertauschte Ereignisse sowie unzulässig große Messlücken ohne Statusänderung. Eine verworfene Messung versetzt die Beobachtung in einen degradierten Status; sie wird keinesfalls stillschweigend durch Null oder das Fehlen einer Bedrohung substituiert. Grenzintervalle und Filterkoeffizienten stellen Parameter dieses didaktischen Experiments dar und bilden kein validiertes Profil eines realen Leistungstransistors. Das Beispiel illustriert den Nutzen expliziter Rauschmodelle, beweist jedoch weder das Good-Regulator-Theorem noch die absolute Sicherheit eines geschlossenen Regelkreises.
 
 ### 3.1. Betriebshüllkurve (Operating Envelope) und thermisches Derating über Festkommaarithmetik (Q16.16)
 
-Das Filtern des Rauschens eines einzelnen Temperatursignals eliminiert zwar Fehlalarme, doch in sicherheitskritischen leistungselektronischen Systemen (Traktionswechselrichter in Elektrofahrzeugen, Batterie-Management-Systeme BMS, Steuergeräte auf Basis von Infineon AURIX gemäß ISO 26262 ASIL D) lassen sich physikalische Sicherheitsgrenzen niemals durch isolierte, eindimensionale Schwellenwerte abbilden. Der sichere Arbeitsbereich eines Systems bildet vielmehr eine mehrdimensionale gekoppelte Hyperfläche (*Operating Envelope*), in der die maximal zulässige Kernspannung $`V_{\mathrm{core}}`$ streng von der aktuellen Sperrschichttemperatur $`T_j`$, der Taktfrequenz $`F_{\mathrm{cpu}}`$ und den Injektionsströmen der I/O-Pins $`I_{\mathrm{inj}}`$ abhängt.
+Das Filtern des Rauschens eines einzelnen Temperatursignals eliminiert zwar Fehlalarme, doch in sicherheitskritischen leistungselektronischen Systemen (Traktionswechselrichter in Elektrofahrzeugen, Batterie-Management-Systeme BMS, Steuergeräte auf Basis von Infineon AURIX gemäß ISO 26262 ASIL D) lassen sich physikalische Sicherheitsgrenzen niemals durch isolierte, eindimensionale Schwellenwerte abbilden. Der sichere Arbeitsbereich eines Systems bildet vielmehr eine mehrdimensionale gekoppelte Hyperfläche (*Operating Envelope*), in der die maximal zulässige Kernspannung $V_{\mathrm{core}}$ streng von der aktuellen Sperrschichttemperatur $T_j$, der Taktfrequenz $F_{\mathrm{cpu}}$ und den Injektionsströmen der I/O-Pins $I_{\mathrm{inj}}$ abhängt.
 
 Versuche, solche nichtlinearen Sicherheitshüllkurven rein softwareseitig auf dem Hauptprozessor zu berechnen, scheitern an zwei gravierenden Barrieren:
-1. **Inakzeptabler, nicht-deterministischer Jitter:** Gleitkommaoperationen (FP32/FP64) verursachen Rechenzeit-Varianzen und Latenzen im zweistelligen Mikrosekundenbereich, was ein rechtzeitiges Eingreifen im geforderten Sub-Mikrosekunden-Schutzzyklus ($`< 1\,\mu\text{s}`$) verunmöglicht.
-2. **Katastrophaler Hüllkurven-Inversionsfehler (Envelope Inversion Fault):** Bei der hardwarenahen Umstellung auf Ganzzahl-Festkommaarithmetik im Format Q16.16 führt die Multiplikation eines großen Temperaturhubs ($`\Delta T = 125^\circ\text{C} - 25^\circ\text{C} = 100^\circ\text{C}`$) mit einer steilen Derating-Steigung zu einem Überlauf der oberen Bits des 64-Bit-Produkts. Wird das Produkt ohne Sättigungslogik mechanisch trunkiert (`prod[47:16]`), invertiert das Vorzeichenbit: Die berechnete Leistungsreduktion schlägt schlagartig in einen negativen Wert um. Dadurch wird der zulässige Leistungsbereich im thermischen Notfall fatalerweise künstlich **erweitert** statt protektiv verengt – was unmittelbar zur thermischen Zerstörung der Leistungshalbleiter führt.
+1. **Inakzeptabler, nicht-deterministischer Jitter:** Gleitkommaoperationen (FP32/FP64) verursachen Rechenzeit-Varianzen und Latenzen im zweistelligen Mikrosekundenbereich, was ein rechtzeitiges Eingreifen im geforderten Sub-Mikrosekunden-Schutzzyklus ($< 1\,\mu\text{s}$) verunmöglicht.
+2. **Katastrophaler Hüllkurven-Inversionsfehler (Envelope Inversion Fault):** Bei der hardwarenahen Umstellung auf Ganzzahl-Festkommaarithmetik im Format Q16.16 führt die Multiplikation eines großen Temperaturhubs ($\Delta T = 125^\circ\text{C} - 25^\circ\text{C} = 100^\circ\text{C}$) mit einer steilen Derating-Steigung zu einem Überlauf der oberen Bits des 64-Bit-Produkts. Wird das Produkt ohne Sättigungslogik mechanisch trunkiert (`prod[47:16]`), invertiert das Vorzeichenbit: Die berechnete Leistungsreduktion schlägt schlagartig in einen negativen Wert um. Dadurch wird der zulässige Leistungsbereich im thermischen Notfall fatalerweise künstlich **erweitert** statt protektiv verengt – was unmittelbar zur thermischen Zerstörung der Leistungshalbleiter führt.
 
 Um diese Verwundbarkeit auf Hardwareebene kompromisslos auszuschließen, wird ein pipelinierter Coprozessor zur Hüllkurvenbegrenzung mit nativer Sättigungsarithmetik im Format Q16.16 realisiert:
 
@@ -315,13 +315,13 @@ X[47:16], & \text{sonst}.
 ```
 
 Parameter der Formeln zur Hardware-Degression:
-- $`T_{\mathrm{sensor}}`$ — aktuelle Sensortemperatur im Q16.16-Format, Wertebereich $`[-40{,}0, +175{,}0]^\circ\text{C}`$;
-- $`T_{\mathrm{ref}}`$ — Referenztemperatur für den Beginn des thermischen Deratings (z. B. $`+85{,}0^\circ\text{C}`$ bzw. $`+45{,}0^\circ\text{C}`$);
-- $`\Delta T`$ — positive Überschreitung der Temperaturschwelle;
-- $`K_{\mathrm{derate}}`$ — Derating-Koeffizient (W/°C im Format Q16.16);
-- $`P_{\mathrm{max\_nominal}}`$ — nominale Nennleistung im ungedrosselten Kaltbereich (W im Format Q16.16);
-- $`P_{\mathrm{derated}}`$ — dynamisch berechnete momentane Obergrenze der zulässigen Leistung;
-- $`\mathrm{SaturateQ16}`$ — Hardware-Sättigungsoperator, der die oberen 17 Bits des 64-Bit-Produkts $`X`$ auswertet und Vorzeichenüberläufe deterministisch abfängt.
+- $T_{\mathrm{sensor}}$ — aktuelle Sensortemperatur im Q16.16-Format, Wertebereich $[-40{,}0, +175{,}0]^\circ\text{C}$;
+- $T_{\mathrm{ref}}$ — Referenztemperatur für den Beginn des thermischen Deratings (z. B. $+85{,}0^\circ\text{C}$ bzw. $+45{,}0^\circ\text{C}$);
+- $\Delta T$ — positive Überschreitung der Temperaturschwelle;
+- $K_{\mathrm{derate}}$ — Derating-Koeffizient (W/°C im Format Q16.16);
+- $P_{\mathrm{max\_nominal}}$ — nominale Nennleistung im ungedrosselten Kaltbereich (W im Format Q16.16);
+- $P_{\mathrm{derated}}$ — dynamisch berechnete momentane Obergrenze der zulässigen Leistung;
+- $\mathrm{SaturateQ16}$ — Hardware-Sättigungsoperator, der die oberen 17 Bits des 64-Bit-Produkts $X$ auswertet und Vorzeichenüberläufe deterministisch abfängt.
 
 ```mermaid
 flowchart TB
@@ -351,19 +351,19 @@ flowchart TB
 #### 3.1.1. Geschlossener Kreis der ingenieurtechnischen Berechnung des Betriebshüllkurven-Deratings
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
-   In Takt 4 der Pipeline gleicht ein digitaler Komparator den aktuellen Lastvektor mit der dynamischen Obergrenze $`P_{\mathrm{derated}}`$ ab. Gilt $`P_{\mathrm{actual}} \le P_{\mathrm{derated}}`$, wird das Statusbit $`\mathrm{flag\_zf}`$ auf 1 gesetzt und das PWM-Steuersignal verzögerungsfrei an die Leistungsendstufe durchgeschaltet. Wird die Leistungsgrenze überschritten oder kollabiert das Gültigkeitsfenster ($`P_{\mathrm{derated}} < P_{\mathrm{min\_safe}}`$), setzt die Logik das Fehlerflag $`\mathrm{flag\_uf} = 1`$ und erzeugt unmittelbar das Hardwaresignal `HARD_INTERLOCK`. Dies schaltet die Treiber der Leistungstransistoren innerhalb eines einzigen Taktes ($`5\,\text{ns}`$) ohne jede Betriebssystemintervention in den sicheren Zustand (Fail-Closed).
+   In Takt 4 der Pipeline gleicht ein digitaler Komparator den aktuellen Lastvektor mit der dynamischen Obergrenze $P_{\mathrm{derated}}$ ab. Gilt $P_{\mathrm{actual}} \le P_{\mathrm{derated}}$, wird das Statusbit $\mathrm{flag\_zf}$ auf 1 gesetzt und das PWM-Steuersignal verzögerungsfrei an die Leistungsendstufe durchgeschaltet. Wird die Leistungsgrenze überschritten oder kollabiert das Gültigkeitsfenster ($P_{\mathrm{derated}} < P_{\mathrm{min\_safe}}$), setzt die Logik das Fehlerflag $\mathrm{flag\_uf} = 1$ und erzeugt unmittelbar das Hardwaresignal `HARD_INTERLOCK`. Dies schaltet die Treiber der Leistungstransistoren innerhalb eines einzigen Taktes ($5\,\text{ns}$) ohne jede Betriebssystemintervention in den sicheren Zustand (Fail-Closed).
 2. **Hardware-Dimensionierung und infrastrukturelle Schranken (Hardware Dimensioning):**
    - Die Pipeline wird über vier synchrone Registerstufen in FPGA/ASIC implementiert und belegt maximal 380 LUTs sowie einen DSP48E2-Multiplizierer (z. B. auf Xilinx UltraScale+);
-   - Bei einem Systemtakt von $`200\,\text{MHz}`$ beträgt die Latenz exakt $`4 \times 5\,\text{ns} = 20\,\text{ns}`$ bei null Jitter ($`\mathrm{Jitter} = 0`$), was um drei Größenordnungen schneller ist als Software-Timer typischer Echtzeitbetriebssysteme ($`10\text{–}50\,\mu\text{s}`$).
+   - Bei einem Systemtakt von $200\,\text{MHz}$ beträgt die Latenz exakt $4 \times 5\,\text{ns} = 20\,\text{ns}$ bei null Jitter ($\mathrm{Jitter} = 0$), was um drei Größenordnungen schneller ist als Software-Timer typischer Echtzeitbetriebssysteme ($10\text{–}50\,\mu\text{s}$).
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   Betrachten wir einen industriellen Leistungswechselrichter mit einer Nennleistung $`P_{\mathrm{max\_nominal}} = 2000\,\text{W}`$ (im Format Q16.16: `0x07D0_0000`), einer Referenztemperatur für den Derating-Beginn $`T_{\mathrm{ref}} = 45^\circ\text{C}`$ und einem Derating-Koeffizienten $`K_{\mathrm{derate}} = 40\,\text{W/}^\circ\text{C}`$ (im Format Q16.16: `0x0028_0000`).
-   Steigt die Umgebungs- und Sensortemperatur im Schaltschrank auf $`T_{\mathrm{amb}} = T_{\mathrm{sensor}} = 65^\circ\text{C}`$:
-   - $`\Delta T = 65 - 45 = 20^\circ\text{C}`$ (`0x0014_0000`);
-   - Produkt $`\Delta T \cdot K_{\mathrm{derate}} = 20 \times 40 = 800\,\text{W}`$;
-   - Dynamische Leistungsgrenze $`P_{\mathrm{derated}} = 2000 - 800 = 1200\,\text{W}`$ (`0x04B0_0000`).
+   Betrachten wir einen industriellen Leistungswechselrichter mit einer Nennleistung $P_{\mathrm{max\_nominal}} = 2000\,\text{W}$ (im Format Q16.16: `0x07D0_0000`), einer Referenztemperatur für den Derating-Beginn $T_{\mathrm{ref}} = 45^\circ\text{C}$ und einem Derating-Koeffizienten $K_{\mathrm{derate}} = 40\,\text{W/}^\circ\text{C}$ (im Format Q16.16: `0x0028_0000`).
+   Steigt die Umgebungs- und Sensortemperatur im Schaltschrank auf $T_{\mathrm{amb}} = T_{\mathrm{sensor}} = 65^\circ\text{C}$:
+   - $\Delta T = 65 - 45 = 20^\circ\text{C}$ (`0x0014_0000`);
+   - Produkt $\Delta T \cdot K_{\mathrm{derate}} = 20 \times 40 = 800\,\text{W}$;
+   - Dynamische Leistungsgrenze $P_{\mathrm{derated}} = 2000 - 800 = 1200\,\text{W}$ (`0x04B0_0000`).
 
-   Fordert die übergeordnete Steuerung eine Last von $`P_{\mathrm{req}} = 1800\,\text{W}`$ an, detektiert die Pipeline nach $`20\,\text{ns}`$ die Schrankenverletzung ($`1800\,\text{W} > 1200\,\text{W}`$). Sie setzt unverzüglich $`\mathrm{flag\_uf} = 1`$, blockiert die Anforderung per `HARD_INTERLOCK Refusal` (Fail-Closed) und zwingt die Endstufe in eine sichere Leistungsbegrenzung.
-   Auf dieselbe Weise schützt die Schaltung automobile Traktionswechselrichter ($`P_{\mathrm{max\_nominal}} = 150\,\text{kW}`$, $`T_{\mathrm{ref}} = 85^\circ\text{C}`$, $`K_{\mathrm{derate}} = 2{,}5\,\text{kW/}^\circ\text{C}`$): Steigt $`T_{\mathrm{sensor}}`$ auf $`135^\circ\text{C}`$, verbleibt $`P_{\mathrm{derated}} = 25\,\text{kW}`$; eine Motorlast von $`80\,\text{kW}`$ löst binnen $`20\,\text{ns}`$ den Interlock aus und schützt die IGBT-Module vor dem Durchbruch.
+   Fordert die übergeordnete Steuerung eine Last von $P_{\mathrm{req}} = 1800\,\text{W}$ an, detektiert die Pipeline nach $20\,\text{ns}$ die Schrankenverletzung ($1800\,\text{W} > 1200\,\text{W}$). Sie setzt unverzüglich $\mathrm{flag\_uf} = 1$, blockiert die Anforderung per `HARD_INTERLOCK Refusal` (Fail-Closed) und zwingt die Endstufe in eine sichere Leistungsbegrenzung.
+   Auf dieselbe Weise schützt die Schaltung automobile Traktionswechselrichter ($P_{\mathrm{max\_nominal}} = 150\,\text{kW}$, $T_{\mathrm{ref}} = 85^\circ\text{C}$, $K_{\mathrm{derate}} = 2{,}5\,\text{kW/}^\circ\text{C}$): Steigt $T_{\mathrm{sensor}}$ auf $135^\circ\text{C}$, verbleibt $P_{\mathrm{derated}} = 25\,\text{kW}$; eine Motorlast von $80\,\text{kW}$ löst binnen $20\,\text{ns}$ den Interlock aus und schützt die IGBT-Module vor dem Durchbruch.
 
 ---
 
@@ -416,8 +416,8 @@ F = \mathbb{E}_{q(\vartheta)}\left[\ln q(\vartheta) - \ln p(\tilde{y}, \vartheta
 
 - In der Gleichung der freien Energie ist $F$ ein Skalar und $\vartheta$ bezeichnet den verborgenen Zustand des Objekts;
 - $q(\vartheta)$ ist die approximative Verteilung interner Zustandsüberzeugungen des Modells und $p(\tilde{y},\vartheta)$ die Verbundverteilung von Beobachtung $\tilde{y}$ und Zustand $\vartheta$ gemäß dem generativen Modell $p$;
-- $`\mathbb{E}_{q(\vartheta)}`$ bezeichnet den Erwartungswert bezüglich der Verteilung $q$, und $\ln$ ist der natürliche Logarithmus;
-- $p(\vartheta\mid\tilde{y})$ ist die A-posteriori-Verteilung des verborgenen Zustands nach der Beobachtung, und $`\mathrm{KL}[q\|p]`$ steht für die Kullback-Leibler-Divergenz zwischen den Verteilungen;
+- $\mathbb{E}_{q(\vartheta)}$ bezeichnet den Erwartungswert bezüglich der Verteilung $q$, und $\ln$ ist der natürliche Logarithmus;
+- $p(\vartheta\mid\tilde{y})$ ist die A-posteriori-Verteilung des verborgenen Zustands nach der Beobachtung, und $\mathrm{KL}[q\|p]$ steht für die Kullback-Leibler-Divergenz zwischen den Verteilungen;
 - $p(\tilde{y})$ bezeichnet die Randwahrscheinlichkeit der Beobachtung; die Gleichung zeigt die Äquivalenz zwischen der Erwartungswert-Darstellung und der KL-Form mit dem additiven Term $-\ln p(\tilde{y})$;
 - Bei Verwendung des natürlichen Logarithmus wird die Informationsgröße in Nat gemessen.
 
@@ -425,7 +425,7 @@ Die Minimierung von $F$ kann über zwei distinkte Pfade erfolgen: Entweder passt
 
 > [!NOTE]
 > **Zwei Facetten ingenieurtechnischer Active Inference nach dem Autormodell**
-> 1. Wahrnehmung (Perception): Das System aktualisiert seine interne A-posteriori-Verteilung $q(\vartheta)$ (Zustandsvektor des Kalman-Filters oder Bayes-Netzes) zur Minimierung der Divergenz $`\mathrm{KL}[q \| p]`$ als passive Modellanpassung an Sensordaten.
+> 1. Wahrnehmung (Perception): Das System aktualisiert seine interne A-posteriori-Verteilung $q(\vartheta)$ (Zustandsvektor des Kalman-Filters oder Bayes-Netzes) zur Minimierung der Divergenz $\mathrm{KL}[q \| p]$ als passive Modellanpassung an Sensordaten.
 > 2. Aktion (Action): Bei Detektion kritischer Abweichungen generiert die Steuerung deterministische Stellsignale an Servomotoren oder Ventile und zwingt die Regelstrecke in sichere Sollwerte zur Verringerung der Überraschung $-\ln p(\tilde{y})$.
 > *Runtime-Steuerung:* Die Minimierung variationeller freier Energie übersetzt sich direkt in die hardwarenahe Taktung von Zustandsschätzung und kompensatorischer Regelung.
 
@@ -467,11 +467,11 @@ Die Varianz der Messungen wächst sprunghaft an, da das System nicht mehr in der
 ```
 
 **Laufzeitsteuerung und präventive Arbitrierung:**
-- **CSD-Warnschwelle (CSD Alarm):** Werden in einem gleitenden Beobachtungsfenster simultan die Bedingungen $`\rho_1 \ge \tau_{\rho} = 0{,}85`$ und $`\mathrm{Var}(x) / \sigma_0^2 \ge 3{,}0`$ erfüllt (die Varianz hat sich gegenüber dem Basisrauschen $`\sigma_0^2`$ verdreifacht), signalisiert das System den drohenden Verlust der dynamischen Stabilität;
+- **CSD-Warnschwelle (CSD Alarm):** Werden in einem gleitenden Beobachtungsfenster simultan die Bedingungen $\rho_1 \ge \tau_{\rho} = 0{,}85$ und $\mathrm{Var}(x) / \sigma_0^2 \ge 3{,}0$ erfüllt (die Varianz hat sich gegenüber dem Basisrauschen $\sigma_0^2$ verdreifacht), signalisiert das System den drohenden Verlust der dynamischen Stabilität;
 - **Aktion des Expertenkerns:** Die symbolische Inferenzmaschine entzieht dem linearen Regler die Steuerautorität und initiiert das Protokoll zur präventiven Überführung in einen sicheren Zustand (`PREEMPTIVE_FAIL_SAFE`), indem Drehzahl oder elektrische Last vor Eintritt der irreversiblen Bifurkation aktiv gedrosselt werden.
 
 **Numerisches Berechnungsbeispiel zur Bifurkationsdetektion:**
-Ein Temperatursensor eines Wechselrichters mit Abtastintervall $\Delta t = 0{,}5\,\text{s}$ registriert eine schleichende Degradation des Kühlsystems. Die Erholungsrate ist auf $\lambda = 0{,}1\,\text{s}^{-1}$ eingebrochen, bei einer Rauschintensität von $\sigma = 0{,}2\,^\circ\text{C}$ (Basisvarianz $`\sigma_0^2 = 0{,}04`$):
+Ein Temperatursensor eines Wechselrichters mit Abtastintervall $\Delta t = 0{,}5\,\text{s}$ registriert eine schleichende Degradation des Kühlsystems. Die Erholungsrate ist auf $\lambda = 0{,}1\,\text{s}^{-1}$ eingebrochen, bei einer Rauschintensität von $\sigma = 0{,}2^\circ\text{C}$ (Basisvarianz $\sigma_0^2 = 0{,}04$):
 
 ```math
 \rho_1 = e^{-0{,}1 \cdot 0{,}5} = e^{-0{,}05} \approx 0{,}951 \ge 0{,}85
@@ -495,7 +495,7 @@ flowchart LR
     EXP --> ACT["Sicherer Zustand (Fail-Safe)<br/>Drehzahlreduktion, Spannungsabschaltung"]
 ```
 
-Für Expertensysteme begründet dies eine neue Klasse von Regeln: **präventive Vor-Bifurkations-Schutzregeln**. Anstatt passiv abzuwarten, bis eine Temperatur den Notabschaltwert reißt oder ein Fluggerät unsteuerbar taumelt, detektiert das System synergetische CSD-Frühwarnindikatoren ($`\rho_1 \uparrow, \mathrm{Var} \uparrow`$) als aktiven Defeater für den Normalbetrieb und schaltet die Anlage noch im Bereich linearer Beherrschbarkeit präventiv in einen geschützten Modus.
+Für Expertensysteme begründet dies eine neue Klasse von Regeln: **präventive Vor-Bifurkations-Schutzregeln**. Anstatt passiv abzuwarten, bis eine Temperatur den Notabschaltwert reißt oder ein Fluggerät unsteuerbar taumelt, detektiert das System synergetische CSD-Frühwarnindikatoren ($\rho_1 \uparrow, \mathrm{Var} \uparrow$) als aktiven Defeater für den Normalbetrieb und schaltet die Anlage noch im Bereich linearer Beherrschbarkeit präventiv in einen geschützten Modus.
 
 ## 6. Hierarchie der Zeithorizonte L0–L4
 
@@ -634,18 +634,18 @@ Die in den Abschnitten 7.1 und 7.2 formalisierten Verträge setzen grundsätzlic
 
 Dieses Paradigma wird auf Basis von Software-Defined Radio (SDR) und der offenen **AI-RAN-Architektur (Open RAN mit GPU-beschleunigtem cuPHY)** implementiert. Im Gegensatz zu anwendungsspezifischen ASICs verlagert die cuPHY-Pipeline die Verarbeitung von I/Q-Abtastwerten auf hochparallele Tensor-Kerne. Dies ermöglicht es, simultan zur Nutzdatendemodulation radiophysikalische Spektralmetriken in harter Echtzeit zu erfassen und direkt in symbolische Datalog-Prädikate zu überführen.
 
-Als Schlüsselmetrik für die Kanalintegrität dient der Jamming-Index (*Jamming Index*, $`\mathrm{JammingIndex}`$):
+Als Schlüsselmetrik für die Kanalintegrität dient der Jamming-Index (*Jamming Index*, $\mathrm{JammingIndex}$):
 
 ```math
 \mathrm{JammingIndex} = \frac{P_{\mathrm{total}} - P_{\mathrm{pilot}}}{N_0 \cdot B_{\mathrm{channel}}}.
 ```
 
 Parameter der Formel zur Störsendererkennung:
-- $`P_{\mathrm{total}}`$ — gesamte integrierte Hochfrequenzleistung im Nutzkanalband (in dBm oder Watt);
-- $`P_{\mathrm{pilot}}`$ — kohärent akkumulierte Nutzleistung der Pilotsignale der Basisstation (DMRS / SSB);
-- $`N_0`$ — spektrale Rauschleistungsdichte des thermischen Eigenrauschens der Empfangsstufe (W/Hz);
-- $`B_{\mathrm{channel}}`$ — effektive Kanalbandbreite (Hz);
-- $`\mathrm{JammingIndex}`$ — dimensionslose Kennzahl für das Vielfache, um welches die Leistung künstlicher Störsignale den natürlichen Rauschteppich übersteigt.
+- $P_{\mathrm{total}}$ — gesamte integrierte Hochfrequenzleistung im Nutzkanalband (in dBm oder Watt);
+- $P_{\mathrm{pilot}}$ — kohärent akkumulierte Nutzleistung der Pilotsignale der Basisstation (DMRS / SSB);
+- $N_0$ — spektrale Rauschleistungsdichte des thermischen Eigenrauschens der Empfangsstufe (W/Hz);
+- $B_{\mathrm{channel}}$ — effektive Kanalbandbreite (Hz);
+- $\mathrm{JammingIndex}$ — dimensionslose Kennzahl für das Vielfache, um welches die Leistung künstlicher Störsignale den natürlichen Rauschteppich übersteigt.
 
 ```mermaid
 flowchart LR
@@ -677,14 +677,14 @@ flowchart LR
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
    Kontinuierlich erfasste Funkmetriken werden durch formale Sicherheitsregeln interpretiert:
-   - Liegt $`\mathrm{JammingIndex} \le 3{,}0`$ (normales Hintergrundrauschen), gilt der Übertragungskanal als vertrauenswürdig; die Telemetrie wird als `PHYS_TRANSPORT_VALID` klassifiziert;
-   - Bei $`3{,}0 < \mathrm{JammingIndex} \le 12{,}0`$ initiiert das System einen pseudozufälligen Frequenzsprungbetrieb (FHSS) oder schaltet das Modulations- und Codierschema (MCS) auf orthogonale Spreizcodes mit maximaler Bandspreizung (DSSS) um;
-   - Übersteigt $`\mathrm{JammingIndex} > 12{,}0`$ oder treten Anzeichen inkohärenter Doppler-Drifts im GNSS-Signal auf, leitet die Inferenzmaschine sofort das Prädikat `gnss_unreliable` ab und sperrt Satellitennavigationsdaten. Der Autopilot autonomer Agenten wechselt deterministisch auf Trägheitsnavigation (IMU) und optischen Fluss (Fail-Closed bezüglich GNSS), wodurch ein Abfangen des Systems über manipulierte Raumkoordinaten zuverlässig verhindert wird.
+   - Liegt $\mathrm{JammingIndex} \le 3{,}0$ (normales Hintergrundrauschen), gilt der Übertragungskanal als vertrauenswürdig; die Telemetrie wird als `PHYS_TRANSPORT_VALID` klassifiziert;
+   - Bei $3{,}0 < \mathrm{JammingIndex} \le 12{,}0$ initiiert das System einen pseudozufälligen Frequenzsprungbetrieb (FHSS) oder schaltet das Modulations- und Codierschema (MCS) auf orthogonale Spreizcodes mit maximaler Bandspreizung (DSSS) um;
+   - Übersteigt $\mathrm{JammingIndex} > 12{,}0$ oder treten Anzeichen inkohärenter Doppler-Drifts im GNSS-Signal auf, leitet die Inferenzmaschine sofort das Prädikat `gnss_unreliable` ab und sperrt Satellitennavigationsdaten. Der Autopilot autonomer Agenten wechselt deterministisch auf Trägheitsnavigation (IMU) und optischen Fluss (Fail-Closed bezüglich GNSS), wodurch ein Abfangen des Systems über manipulierte Raumkoordinaten zuverlässig verhindert wird.
 2. **Hardware-Dimensionierung und infrastrukturelle Schranken (Hardware Dimensioning):**
-   - Die Verarbeitung von 100-MHz-I/Q-Abtastwerten in cuPHY auf NVIDIA Jetson AGX Orin oder RTX 6000 Ada erfordert eine Speicherbandbreite von $`B_{\mathrm{mem}} \ge 1{,}6\,\text{GB/s}`$ bei 16-Bit-Quantisierung;
-   - Die Berechnung einer 4096-Punkte-FFT und die Bestimmung von $`\mathrm{JammingIndex}`$ beanspruchen auf Tensor-Kernen lediglich $`18\,\mu\text{s}`$. Damit wird eine Störsenderattacke detektiert, lange bevor höhere Protokollschichten des TCP/IP-Stacks in Pufferüberläufe laufen.
+   - Die Verarbeitung von 100-MHz-I/Q-Abtastwerten in cuPHY auf NVIDIA Jetson AGX Orin oder RTX 6000 Ada erfordert eine Speicherbandbreite von $B_{\mathrm{mem}} \ge 1{,}6\,\text{GB/s}$ bei 16-Bit-Quantisierung;
+   - Die Berechnung einer 4096-Punkte-FFT und die Bestimmung von $\mathrm{JammingIndex}$ beanspruchen auf Tensor-Kernen lediglich $18\,\mu\text{s}$. Damit wird eine Störsenderattacke detektiert, lange bevor höhere Protokollschichten des TCP/IP-Stacks in Pufferüberläufe laufen.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   An Bord eines fahrerlosen Transportsystems registriert der Funkempfänger einen Anstieg der Gesamtleistung im 2,4-GHz-Band auf $`P_{\mathrm{total}} = -45\,\text{dBm}`$ ($`31{,}6\,\text{nW}`$), während die Nutzleistung der Pilotsignale der Basisstation auf $`P_{\mathrm{pilot}} = -82\,\text{dBm}`$ ($`6{,}3\,\text{pW}`$) einbricht. Bei einer Kanalbandbreite von $`B = 20\,\text{MHz}`$ und einem thermischen Rauschteppich von $`N_0 \cdot B = -101\,\text{dBm}`$ ($`0{,}08\,\text{pW}`$):
+   An Bord eines fahrerlosen Transportsystems registriert der Funkempfänger einen Anstieg der Gesamtleistung im 2,4-GHz-Band auf $P_{\mathrm{total}} = -45\,\text{dBm}$ ($31{,}6\,\text{nW}$), während die Nutzleistung der Pilotsignale der Basisstation auf $P_{\mathrm{pilot}} = -82\,\text{dBm}$ ($6{,}3\,\text{pW}$) einbricht. Bei einer Kanalbandbreite von $B = 20\,\text{MHz}$ und einem thermischen Rauschteppich von $N_0 \cdot B = -101\,\text{dBm}$ ($0{,}08\,\text{pW}$):
 
 ```math
 \mathrm{JammingIndex} = \frac{31{,}6 \times 10^{-9} - 0{,}0063 \times 10^{-9}}{0{,}08 \times 10^{-12}} \approx 395 \gg 12{,}0.
@@ -820,13 +820,13 @@ wobei der Zustand der Inferenzmaschine durch folgendes Tupel formal definiert is
 ```
 
 Parameter des Kriteriums für kreuzarchitektonischen Isomorphismus:
-- $`\mathcal{P}`$ — kompiliertes EISA-Regelprogramm oder Wissenspaket;
-- $`\mathbf{X}`$ — normalisierter Eingangsvektor von Telemetrie- und Faktenwerten;
-- $`\mathcal{A}_1, \mathcal{A}_2`$ — beliebige physische Hardwareplattformen (z. B. x86-64 und RISC-V);
-- $`R_0 \dots R_7`$ — 64-Bit-Universalregister des EISA-Interpreters;
-- $`\mathrm{EIR}`$ — Epistemic Instruction Register (Befehlszeiger);
-- $`\mathrm{EFLAGS}`$ — Statusregister (Flags `flag_zf`, `flag_uf`, `flag_cf`);
-- $`\mathrm{ProofTreeHash}`$ — kryptografischer SHA-256-Digest des Beweisbaums, der die vollständige Kette angewendeter Inferenzregeln festschreibt.
+- $\mathcal{P}$ — kompiliertes EISA-Regelprogramm oder Wissenspaket;
+- $\mathbf{X}$ — normalisierter Eingangsvektor von Telemetrie- und Faktenwerten;
+- $\mathcal{A}_1, \mathcal{A}_2$ — beliebige physische Hardwareplattformen (z. B. x86-64 und RISC-V);
+- $R_0 \dots R_7$ — 64-Bit-Universalregister des EISA-Interpreters;
+- $\mathrm{EIR}$ — Epistemic Instruction Register (Befehlszeiger);
+- $\mathrm{EFLAGS}$ — Statusregister (Flags `flag_zf`, `flag_uf`, `flag_cf`);
+- $\mathrm{ProofTreeHash}$ — kryptografischer SHA-256-Digest des Beweisbaums, der die vollständige Kette angewendeter Inferenzregeln festschreibt.
 
 ```mermaid
 flowchart TB
@@ -866,13 +866,13 @@ flowchart TB
    Beim Laden eines Regel-Bundles erzwingt der Boot-Loader drei strukturelle Invarianten:
    - Alle 64-Bit-Felder und Instruktionen sind zwingend an 8-Byte-Grenzen ausgerichtet (`offset % 8 == 0`), 32-Bit-Werte an 4-Byte-Grenzen; direktes Dereferenzieren unausgerichteter Pointer ist strikt untersagt;
    - Die Byte-Reihenfolge ist ausnahmslos Little-Endian (LE); auf Big-Endian-Zielsystemen erfolgt der Speicherzugriff ausschließlich über Hardware-Intrinsics für Byte-Reversal (`__builtin_bswap64`);
-   - Sämtliche logischen Gewichte werden in den ganzzahligen Wertebereich $`[0, 65535]`$ (oder Q16.16) skaliert, was den Einsatz von Gleitkommaoperationen in der sicherheitskritischen Inferenzlogik vollständig eliminiert.
-   Weicht im automatisierten Regressionstest auch nur ein einziges Bit im $`\mathrm{ProofTreeHash}`$ ab, wird das Vertrauenszertifikat des Knotens widerrufen und der Befehl `REFUSAL_ARITHMETIC_DIVERGENCE` (Fail-Closed) ausgelöst.
+   - Sämtliche logischen Gewichte werden in den ganzzahligen Wertebereich $[0, 65535]$ (oder Q16.16) skaliert, was den Einsatz von Gleitkommaoperationen in der sicherheitskritischen Inferenzlogik vollständig eliminiert.
+   Weicht im automatisierten Regressionstest auch nur ein einziges Bit im $\mathrm{ProofTreeHash}$ ab, wird das Vertrauenszertifikat des Knotens widerrufen und der Befehl `REFUSAL_ARITHMETIC_DIVERGENCE` (Fail-Closed) ausgelöst.
 2. **Hardware-Dimensionierung und infrastrukturelle Schranken (Hardware Dimensioning):**
-   - Die natürliche Ausrichtung verhindert kostspielige Split-Lock-Zyklen auf x86 sowie Hardware-Traps auf ARM/RISC-V, wodurch der Speicherzugriff auf exakt einen AXI-Bustakt ($`5\,\text{ns}`$ bei $`200\,\text{MHz}`$) gedrückt wird;
-   - Der Speicher-Overhead durch Füllbytes (*Padding*) beträgt weniger als $`3{,}2\,\%`$ des gesamten Paketvolumens.
+   - Die natürliche Ausrichtung verhindert kostspielige Split-Lock-Zyklen auf x86 sowie Hardware-Traps auf ARM/RISC-V, wodurch der Speicherzugriff auf exakt einen AXI-Bustakt ($5\,\text{ns}$ bei $200\,\text{MHz}$) gedrückt wird;
+   - Der Speicher-Overhead durch Füllbytes (*Padding*) beträgt weniger als $3{,}2\,\%$ des gesamten Paketvolumens.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   Während einer Konformitätsprüfung nach DO-178C Level A wird ein Paket aus 1.024 Sicherheitsregeln parallel auf x86-64 (Intel Xeon), ARM64 (Cortex-A78AE) und RISC-V (SiFive U74) ausgeführt. Bei identischen Eingangsvektoren $`\mathbf{X}`$ aus 64 Telemetrieparametern beenden alle drei Plattformen die Inferenz nach exakt 256 EISA-Befehlen mit dem identischen SHA-256-Beweisbaum-Hash `0x8F4A2C19...` und gesetztem Flag `flag_zf = 1`. **Ingenieurtechnische Entscheidung:** Der kreuzarchitektonische Isomorphismus ist zu 100 % bewiesen; das Bundle wird für den Einsatz im heterogenen Produktionscluster freigegeben.
+   Während einer Konformitätsprüfung nach DO-178C Level A wird ein Paket aus 1.024 Sicherheitsregeln parallel auf x86-64 (Intel Xeon), ARM64 (Cortex-A78AE) und RISC-V (SiFive U74) ausgeführt. Bei identischen Eingangsvektoren $\mathbf{X}$ aus 64 Telemetrieparametern beenden alle drei Plattformen die Inferenz nach exakt 256 EISA-Befehlen mit dem identischen SHA-256-Beweisbaum-Hash `0x8F4A2C19...` und gesetztem Flag `flag_zf = 1`. **Ingenieurtechnische Entscheidung:** Der kreuzarchitektonische Isomorphismus ist zu 100 % bewiesen; das Bundle wird für den Einsatz im heterogenen Produktionscluster freigegeben.
 
 ---
 
@@ -925,13 +925,13 @@ Zur virtuellen intellektuellen Fachdiskussion sind der Begründer der Kybernetik
 
 - **Norbert Wiener:** Betrachten wir das interne Modell der Regelstrecke. Nach dem Conant-Ashby-Theorem muss jeder gute Regler ein Modell des zu regelnden Systems sein. In Ihrem Abschnitt 7 wird kontinuierliche Sensortelemetrie in diskrete semantische Ereignisverträge quantisiert. Doch jede grobe Diskretisierung eines kontinuierlichen Phasenraums zerstört unvermeidlich Shannon-Wiener-Transinformation. Nähert sich ein physikalisches System einer kritischen Verlangsamung oder einem Bifurkationspunkt (Abschnitt 5), divergieren Varianzfluktuationen und Autokorrelation 1. Ordnung exponentiell. Wenn der Edge-Knoten L2/L3 auf verarmten diskreten Kategorien operiert, verliert sein Modell im Augenblick des Phasenübergangs nicht jede Passgenauigkeit und führt zu regulatorischer Blindheit?
 
-- **Mykola Fedchyk:** Herr Wiener, das Conant-Ashby-Theorem wird in unserer Architektur durch eine mehrstufige Zustandsbeobachtung realisiert, bei der Quantisierung niemals ein naiver skalarer Schwellenwertentscheid ist. Auf Ebene L2 verfolgt der Zustandsschätzer (Kalman-Filter oder Alpha-Beta-Beobachter) kontinuierlich den latenten dynamischen Zustandsvektor $`\mathbf{x}_k`$ und die Fehlerkovarianzmatrix $`\mathbf{P}_k`$. Die Quantisierung in Ereignisverträge erfolgt nicht anhand von Rohsignalen, sondern auf Basis von Kalman-Innovationsresiduen und Chi-Quadrat-Hypothesentests ($`\chi^2`$). Zudem werden synergetische Indikatoren kritischer Verlangsamung — ansteigende gleitende Varianz $`\sigma^2`$ und Lag-1-Autokorrelation $`\mathrm{AC}(1)`$ — als kontinuierliche Zeitreihenmetriken direkt in Hardwareregistern berechnet. Das diskrete semantische Faktum „Phasenübergang steht bevor“ wird erst gefeuert, wenn eine informationstheoretische Entropieschranke mathematisch verifiziert überschritten ist. Dadurch verliert das interne Modell des Edge-Knotens auch an kritischen Bifurkationspunkten nie den kontinuierlichen Kontakt zur physikalischen Realität.
+- **Mykola Fedchyk:** Herr Wiener, das Conant-Ashby-Theorem wird in unserer Architektur durch eine mehrstufige Zustandsbeobachtung realisiert, bei der Quantisierung niemals ein naiver skalarer Schwellenwertentscheid ist. Auf Ebene L2 verfolgt der Zustandsschätzer (Kalman-Filter oder Alpha-Beta-Beobachter) kontinuierlich den latenten dynamischen Zustandsvektor $\mathbf{x}_k$ und die Fehlerkovarianzmatrix $\mathbf{P}_k$. Die Quantisierung in Ereignisverträge erfolgt nicht anhand von Rohsignalen, sondern auf Basis von Kalman-Innovationsresiduen und Chi-Quadrat-Hypothesentests ($\chi^2$). Zudem werden synergetische Indikatoren kritischer Verlangsamung — ansteigende gleitende Varianz $\sigma^2$ und Lag-1-Autokorrelation $\mathrm{AC}(1)$ — als kontinuierliche Zeitreihenmetriken direkt in Hardwareregistern berechnet. Das diskrete semantische Faktum „Phasenübergang steht bevor“ wird erst gefeuert, wenn eine informationstheoretische Entropieschranke mathematisch verifiziert überschritten ist. Dadurch verliert das interne Modell des Edge-Knotens auch an kritischen Bifurkationspunkten nie den kontinuierlichen Kontakt zur physikalischen Realität.
 
 **Dialog mit Edward Lee: Determinismus multithreaded Software-Pipelines und Hardware-Zeitunterstützung**
 
 - **Edward A. Lee:** Herr Fedchyk, die standardmäßigen Abstraktionen moderner Betriebssysteme — Threads, Mutexe, Queues und Go-Channels — sind bezüglich der physikalischen Zeit von Natur aus nicht-deterministisch. In Ihrem Entwurf werden Sensoraufnahme, Filterung und Zustandsschätzung über Software-Goroutinen abgebildet. Standard-Scheduler und Garbage-Kollektoren gewähren jedoch keinerlei Worst-Case-Execution-Time-Garantien (WCET). Ohne zeitpräzise Prozessorarchitekturen (Precision-Timed Architectures, PRET) und synchron-reaktive Semantik sind Ihre temporalen Verträge und logischen Uhren bloße Scheingenauigkeit, die vor Zertifizierungsstellen für cyber-physische Systeme nicht bestehen kann.
 
-- **Mykola Fedchyk:** Herr Lee, Ihre fundamentale Kritik an threadbasierter Nebenläufigkeit und fehlender Zeitsemantik in Allzwecksprachen ist vollkommen berechtigt. Daher ist die Go-basierte Datenpipeline in unserer Monografie ausdrücklich auf die analytischen Ebenen L2–L3 (Zustandsschätzung, Telemetrie-Logging und Regelauswertung) beschränkt, wo das System mit Zeitstempeln und gleitenden Ereignisfenstern operiert, statt Mikrosekunden-Deadlines zu garantieren. Harte Zeitanforderungen auf den Ebenen L0–L1 werden dedizierten Mikrocontrollern (ARM Cortex-R, Infineon AURIX Lockstep) unter formal verifizierten Echtzeit-Mikrokernen (wie seL4) mit hardwaregebundenen Zeitgebern übertragen. An der Schnittstelle zur Sensordatenaufnahme fungiert ein Zulassungstor: Weicht der Jitter eines Telemetrierahmens über den Grenzwert $`\Delta t_{\mathrm{max}}`$ ab, wird der Frame nicht in den Modellzustand eingerechnet, sondern in ein Fehlertrace umgeleitet, um veraltete Messwerte aus dem Regelkreis fernzuhalten.
+- **Mykola Fedchyk:** Herr Lee, Ihre fundamentale Kritik an threadbasierter Nebenläufigkeit und fehlender Zeitsemantik in Allzwecksprachen ist vollkommen berechtigt. Daher ist die Go-basierte Datenpipeline in unserer Monografie ausdrücklich auf die analytischen Ebenen L2–L3 (Zustandsschätzung, Telemetrie-Logging und Regelauswertung) beschränkt, wo das System mit Zeitstempeln und gleitenden Ereignisfenstern operiert, statt Mikrosekunden-Deadlines zu garantieren. Harte Zeitanforderungen auf den Ebenen L0–L1 werden dedizierten Mikrocontrollern (ARM Cortex-R, Infineon AURIX Lockstep) unter formal verifizierten Echtzeit-Mikrokernen (wie seL4) mit hardwaregebundenen Zeitgebern übertragen. An der Schnittstelle zur Sensordatenaufnahme fungiert ein Zulassungstor: Weicht der Jitter eines Telemetrierahmens über den Grenzwert $\Delta t_{\mathrm{max}}$ ab, wird der Frame nicht in den Modellzustand eingerechnet, sondern in ein Fehlertrace umgeleitet, um veraltete Messwerte aus dem Regelkreis fernzuhalten.
 
 **Fortsetzung des Dialogs mit Edward Lee: Semantik der physikalischen Zeit bei der Zustandsabstimmung und thermodynamische Irreversibilität**
 
@@ -967,11 +967,11 @@ Das thematisch folgende [Kapitel 23](ch23-knowledge-base-verification.md) eröff
 6. Welche Mechanismen verhindern, dass ein Edge-Knoten im Zustand `DegradedLocalOnly` unkontrolliert Fehlentscheidungen akkumuliert?
 7. Wie löst die Konfliktrichtlinie den Fall, dass ein Edge-Knoten während eines Netzwerkausfalls einen Motor aus Sicherheitsgründen sperrt, die Zentrale jedoch nach Wiederverbindung einen planmäßigen Startbefehl erteilt?
 8. Warum erfordert die Aktualisierung von Gewichten eines neuronalen Netzes auf einem Edge-Controller dasselbe kryptografische Signatur- und Quorumverfahren wie die Modifikation symbolischer Regeln?
-9. Wie ermöglichen synergetische Indikatoren des Critical Slowing Down (CSD) – Autokorrelation erster Ordnung $`\rho_1`$ und Varianz $\mathrm{Var}(x)$ – die frühzeitige Detektion drohender Bifurkationen vor dem physischen Erreichen von Alarmgrenzen?
+9. Wie ermöglichen synergetische Indikatoren des Critical Slowing Down (CSD) – Autokorrelation erster Ordnung $\rho_1$ und Varianz $\mathrm{Var}(x)$ – die frühzeitige Detektion drohender Bifurkationen vor dem physischen Erreichen von Alarmgrenzen?
 10. Worin unterscheidet sich das Konzept logischer Lamport-Uhren von physikalischer astronomischer Zeit, und warum sind für einen sicheren Zustandsabgleich nach Verbindungsabbrüchen zwingend beide Zeitstempelarten erforderlich?
-11. Wie verhindert ein Hardware-Begrenzer des Betriebsbereichs (*Operating Envelope Limiter*) mit ganzzahligem Derating im Format Q16.16 den thermischen Durchbruch eines Antriebs und garantiert die Einhaltung der Sicherheitsinvariante $`P_{\mathrm{actual}} \le P_{\mathrm{derated}}`$ in $O(1)$ Takten?
-12. Auf welche Weise überführt eine softwaredefinierte Bitübertragungsschicht (AI-RAN / cuPHY) das rohe Hochfrequenzspektrum und Interferenzmetriken (Jamming Index $`\mathrm{JammingIndex}`$) in strukturierte sensorische Datalog-Evidenzen und eliminiert damit den Nichtdeterminismus probabilistischer Klassifikatoren?
-13. Warum ist für Expertensysteme der kreuzarchitektonische Isomorphismus von EISA-Interpretern kritisch, und wie garantieren eine natürliche Speicherausrichtung sowie der Verzicht auf Hardware-`float` bitgenaue Inferenzäquivalenz $`\mathrm{State}(\mathcal{A}_1) \equiv \mathrm{State}(\mathcal{A}_2)`$ zwischen x86-64, ARM64 und RISC-V?
+11. Wie verhindert ein Hardware-Begrenzer des Betriebsbereichs (*Operating Envelope Limiter*) mit ganzzahligem Derating im Format Q16.16 den thermischen Durchbruch eines Antriebs und garantiert die Einhaltung der Sicherheitsinvariante $P_{\mathrm{actual}} \le P_{\mathrm{derated}}$ in $O(1)$ Takten?
+12. Auf welche Weise überführt eine softwaredefinierte Bitübertragungsschicht (AI-RAN / cuPHY) das rohe Hochfrequenzspektrum und Interferenzmetriken (Jamming Index $\mathrm{JammingIndex}$) in strukturierte sensorische Datalog-Evidenzen und eliminiert damit den Nichtdeterminismus probabilistischer Klassifikatoren?
+13. Warum ist für Expertensysteme der kreuzarchitektonische Isomorphismus von EISA-Interpretern kritisch, und wie garantieren eine natürliche Speicherausrichtung sowie der Verzicht auf Hardware-`float` bitgenaue Inferenzäquivalenz $\mathrm{State}(\mathcal{A}_1) \equiv \mathrm{State}(\mathcal{A}_2)$ zwischen x86-64, ARM64 und RISC-V?
 
 ## Glossar
 

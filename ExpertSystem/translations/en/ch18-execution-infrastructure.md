@@ -69,10 +69,10 @@ P_{\text{peak}} = N_{\text{cores}} \times f \times \mathrm{FLOP}_{\text{cycle}}
 ```
 
 where:
-- $`P_{\text{peak}}`$ is the theoretical peak performance of the processor or accelerator, measured in floating-point operations per second ($\text{FLOP}/\text{s}$, typically $\text{TFLOP}/\text{s}$ or $\text{GFLOP}/\text{s}$);
-- $`N_{\text{cores}}`$ is the physical count of parallel compute cores or streaming multiprocessors allocated to the task ($`N_{\text{cores}} \in \mathbb{N}`$, spanning from 1 to 16,384);
+- $P_{\text{peak}}$ is the theoretical peak performance of the processor or accelerator, measured in floating-point operations per second ($\text{FLOP}/\text{s}$, typically $\text{TFLOP}/\text{s}$ or $\text{GFLOP}/\text{s}$);
+- $N_{\text{cores}}$ is the physical count of parallel compute cores or streaming multiprocessors allocated to the task ($N_{\text{cores}} \in \mathbb{N}$, spanning from 1 to 16,384);
 - $f$ is the sustained operating clock frequency of the execution units under steady load, measured in hertz ($\text{Hz}$, typically $0.7 \times 10^9 - 5.5 \times 10^9\text{ Hz}$);
-- $`\mathrm{FLOP}_{\text{cycle}}`$ is the number of elementary floating-point operations a single core can execute per clock cycle via SIMD/SIMT vector units (for example, a core with two 512-bit FMA units executing FP32 arithmetic yields $2 \times 16 \times 2 = 64\text{ FLOP}/\text{cycle}$, where a fused multiply-add $a \cdot b + c$ counts as two FLOPs).
+- $\mathrm{FLOP}_{\text{cycle}}$ is the number of elementary floating-point operations a single core can execute per clock cycle via SIMD/SIMT vector units (for example, a core with two 512-bit FMA units executing FP32 arithmetic yields $2 \times 16 \times 2 = 64\text{ FLOP}/\text{cycle}$, where a fused multiply-add $a \cdot b + c$ counts as two FLOPs).
 
 **Practical Application and Engineering Takeaways:**
 1. This calculation is conducted during hardware specification to establish the upper bound on throughput for dense linear algebra workloads (GEMM operations within transformer encoder or decoder layers).
@@ -82,7 +82,7 @@ where:
 P_{\text{peak}} = 16 \times (3.0 \times 10^9) \times 64 = 3.072 \times 10^{12}\text{ FLOP/s} \approx 3.07\text{ TFLOP/s}
 ```
 
-3. **Failure Criterion:** If the empirically measured throughput for dense matrix multiplication falls below $`P_{\text{observed}} < 0.60 \times P_{\text{peak}}`$, this indicates underlying microarchitectural anomalies: thermal throttling (operating frequency $f$ dropped below base clock), suboptimal register data alignment, or excessive instruction cache evictions in L1i.
+3. **Failure Criterion:** If the empirically measured throughput for dense matrix multiplication falls below $P_{\text{observed}} < 0.60 \times P_{\text{peak}}$, this indicates underlying microarchitectural anomalies: thermal throttling (operating frequency $f$ dropped below base clock), suboptimal register data alignment, or excessive instruction cache evictions in L1i.
 
 The memory interface bandwidth governs the maximum throughput at which bytes can be streamed from system DRAM or dedicated video RAM into execution registers:
 
@@ -91,10 +91,10 @@ The memory interface bandwidth governs the maximum throughput at which bytes can
 ```
 
 where:
-- $`\mathrm{BW}`$ is the peak theoretical bandwidth of the memory interface, measured in bytes per second ($\text{B}/\text{s}$ or $\text{GB}/\text{s}$);
-- $`f_{\text{mem}}`$ is the effective data transfer rate of the memory interface in megatransfers per second ($\text{MT}/\text{s}$ or transfers per second, e.g., $4.8 \times 10^9\text{ T/s}$ for DDR5-4800 or $8.533 \times 10^9\text{ T/s}$ for LPDDR5X);
-- $`W_{\text{bus}}`$ is the data bus width of a single physical memory channel in bits (typically 64 bits for standard DDR4/DDR5 modules, or 32/16 bits for LPDDR5/LPDDR5X sub-channels), where division by 8 converts bits to bytes;
-- $`N_{\text{channels}}`$ is the number of independent interleaved memory channels serviced by the processor's memory controller ($`N_{\text{channels}} \in \{1, 2, 4, 8, 12\}`$).
+- $\mathrm{BW}$ is the peak theoretical bandwidth of the memory interface, measured in bytes per second ($\text{B}/\text{s}$ or $\text{GB}/\text{s}$);
+- $f_{\text{mem}}$ is the effective data transfer rate of the memory interface in megatransfers per second ($\text{MT}/\text{s}$ or transfers per second, e.g., $4.8 \times 10^9\text{ T/s}$ for DDR5-4800 or $8.533 \times 10^9\text{ T/s}$ for LPDDR5X);
+- $W_{\text{bus}}$ is the data bus width of a single physical memory channel in bits (typically 64 bits for standard DDR4/DDR5 modules, or 32/16 bits for LPDDR5/LPDDR5X sub-channels), where division by 8 converts bits to bytes;
+- $N_{\text{channels}}$ is the number of independent interleaved memory channels serviced by the processor's memory controller ($N_{\text{channels}} \in \{1, 2, 4, 8, 12\}$).
 
 **Practical Application and Engineering Takeaways:**
 1. This calculation determines the performance ceiling during unstructured data retrieval, graph adjacency list traversal, and weight matrix streaming during single-batch autoregressive inference.
@@ -104,7 +104,7 @@ where:
 \mathrm{BW} = 4.8 \times 10^9 \times \frac{64}{8} \times 2 = 76.8 \times 10^9\text{ B/s} = 76.8\text{ GB/s}
 ```
 
-3. **Engineering Utilization Threshold:** Owing to physical DRAM protocol overheads (row buffer conflicts, `tRFC` refresh commands, `CAS` latency), the actual sustained application bandwidth $`\mathrm{BW}_{\text{eff}}`$ rarely exceeds $75-85\%$ of theoretical $`\mathrm{BW}`$. If an algorithm saturates $> 80\%$ of bus bandwidth, any attempt to optimize performance by spawning additional compute threads will merely induce bus contention, pipeline stalls, and latency degradation.
+3. **Engineering Utilization Threshold:** Owing to physical DRAM protocol overheads (row buffer conflicts, `tRFC` refresh commands, `CAS` latency), the actual sustained application bandwidth $\mathrm{BW}_{\text{eff}}$ rarely exceeds $75-85\%$ of theoretical $\mathrm{BW}$. If an algorithm saturates $> 80\%$ of bus bandwidth, any attempt to optimize performance by spawning additional compute threads will merely induce bus contention, pipeline stalls, and latency degradation.
 
 The Roofline model synthesizes both physical constraints via the algorithmic operational (arithmetic) intensity $I$:
 
@@ -113,10 +113,10 @@ P_{\text{observed}} \le \min\left(P_{\text{peak}},\; I \times \mathrm{BW}\right)
 ```
 
 where:
-- $`P_{\text{observed}}`$ is the practically achievable compute performance of the expert system for a specific algorithmic kernel, measured in $\text{FLOP}/\text{s}$;
+- $P_{\text{observed}}$ is the practically achievable compute performance of the expert system for a specific algorithmic kernel, measured in $\text{FLOP}/\text{s}$;
 - $I$ is the arithmetic intensity of the computational kernel, defined as the ratio of floating-point operations executed per byte of data transferred across the memory bus ($\text{FLOP}/\text{byte}$);
-- $`\mathrm{BW}`$ is the sustained memory subsystem bandwidth ($\text{byte}/\text{s}$);
-- $`P_{\text{peak}}`$ is the peak compute performance of the processor or accelerator ($\text{FLOP}/\text{s}$);
+- $\mathrm{BW}$ is the sustained memory subsystem bandwidth ($\text{byte}/\text{s}$);
+- $P_{\text{peak}}$ is the peak compute performance of the processor or accelerator ($\text{FLOP}/\text{s}$);
 - $\min(a, b)$ is the minimum operator identifying the dominant physical bottleneck.
 
 **Practical Application, Asymptotic Transitions, and Engineering Conclusions:**
@@ -126,20 +126,20 @@ where:
 I_{\text{ridge}} = \frac{P_{\text{peak}}}{\mathrm{BW}}
 ```
 
-For the baseline workstation under consideration ($`P_{\text{peak}} = 3.07\text{ TFLOP/s}`$, $`\mathrm{BW} = 76.8\text{ GB/s}`$), the critical inflection point is:
+For the baseline workstation under consideration ($P_{\text{peak}} = 3.07\text{ TFLOP/s}$, $\mathrm{BW} = 76.8\text{ GB/s}$), the critical inflection point is:
 
 ```math
 I_{\text{ridge}} = \frac{3.072 \times 10^{12}}{76.8 \times 10^9} = 40.0\text{ FLOP/byte}
 ```
 
-2. **Memory-Bound Regime ($`I < I_{\text{ridge}}`$):** Approximate nearest-neighbor vector search within an HNSW (*Hierarchical Navigable Small World*) graph index [[2]](#src-2) for a 768-dimensional FP32 embedding vector (3,072 bytes) requires approximately $2 \times 768 = 1,536$ operations per distance calculation, yielding an arithmetic intensity of $I \approx 1,536 / 3,072 = 0.5\text{ FLOP/byte}$. Because $0.5 \ll 40.0$, throughput is strictly governed by memory bus bandwidth:
+2. **Memory-Bound Regime ($I < I_{\text{ridge}}$):** Approximate nearest-neighbor vector search within an HNSW (*Hierarchical Navigable Small World*) graph index [[2]](#src-2) for a 768-dimensional FP32 embedding vector (3,072 bytes) requires approximately $2 \times 768 = 1,536$ operations per distance calculation, yielding an arithmetic intensity of $I \approx 1,536 / 3,072 = 0.5\text{ FLOP/byte}$. Because $0.5 \ll 40.0$, throughput is strictly governed by memory bus bandwidth:
 
 ```math
 P_{\text{observed}} \le 0.5 \times 76.8 \times 10^9 = 38.4\text{ GFLOP/s}
 ```
 
 This represents a mere $\approx 1.25\%$ of the processor's raw arithmetic capacity. The engineering conclusion is unequivocal: scaling processor clock frequencies or purchasing a massively parallel GPU will yield negligible acceleration for factual vector search; meaningful performance gains can be achieved exclusively by vector quantization (e.g., INT8 scalar quantization doubles intensity to $1.0\text{ FLOP/byte}$ by halving bus traffic) or widening memory bus channels.
-3. **Compute-Bound Regime ($`I \ge I_{\text{ridge}}`$):** Multiplying square matrices of dimension $n = 4,096$ during the forward pass of a multi-layer transformer operates at an operational intensity of $I \approx n / 6 \approx 682.6\text{ FLOP/byte}$. Under these conditions, the hardware fully approaches its arithmetic ceiling $`P_{\text{peak}}`$, where the primary performance lever shifts to SIMD vector utilization and tensor core efficiency.
+3. **Compute-Bound Regime ($I \ge I_{\text{ridge}}$):** Multiplying square matrices of dimension $n = 4,096$ during the forward pass of a multi-layer transformer operates at an operational intensity of $I \approx n / 6 \approx 682.6\text{ FLOP/byte}$. Under these conditions, the hardware fully approaches its arithmetic ceiling $P_{\text{peak}}$, where the primary performance lever shifts to SIMD vector utilization and tensor core efficiency.
 
 ```mermaid
 flowchart LR
@@ -324,25 +324,25 @@ R_{\mathrm{exfil}} = V_{\mathrm{asset}} \times P_{\mathrm{leak}} = V_{\mathrm{as
 ```
 
 where:
-- $`R_{\mathrm{exfil}}`$ is the aggregate residual exfiltration risk of intellectual property, quantified in monetary loss units or normalized risk index scores (from $`0`$ to $`V_{\mathrm{asset}}`$);
-- $`V_{\mathrm{asset}}`$ is the baseline economic valuation of the protected R&D asset (knowledge base, ontology, processor microcode), incorporating potential regulatory fines and sunk engineering costs ($`V_{\mathrm{asset}} > 0`$);
-- $`P_{\mathrm{leak}} \in [0, 1]`$ is the calculated probability of a successful asset leak penetrating all defensive tiers;
-- $`\eta_{\mathrm{airgap}} \in [0, 1]`$ is the physical network isolation efficacy ($`\eta_{\mathrm{airgap}} = 0.70`$ for a shared corporate VLAN, $`\eta_{\mathrm{airgap}} = 0.92`$ for a managed firewall perimeter, and $`\eta_{\mathrm{airgap}} = 0.9999`$ for a physically severed network cable with an optical unidirectional *Data Diode*);
-- $`\eta_{\mathrm{enc}} \in [0, 1]`$ is the cryptographic encryption efficacy covering volatile memory and persistent storage ($`\eta_{\mathrm{enc}} = 0.85`$ for standard host-level disk encryption, and $`\eta_{\mathrm{enc}} = 0.995`$ for hardware-enforced AMD SEV-SNP / Intel TDX memory enclaves);
-- $`\eta_{\mathrm{auth}} \in [0, 1]`$ is the authentication efficacy for engineering operations ($`\eta_{\mathrm{auth}} = 0.60`$ for password authentication, and $`\eta_{\mathrm{auth}} = 0.999`$ for physical FIDO2 / cryptographic HSM tokens requiring non-delegable Ed25519 session signing).
+- $R_{\mathrm{exfil}}$ is the aggregate residual exfiltration risk of intellectual property, quantified in monetary loss units or normalized risk index scores (from $0$ to $V_{\mathrm{asset}}$);
+- $V_{\mathrm{asset}}$ is the baseline economic valuation of the protected R&D asset (knowledge base, ontology, processor microcode), incorporating potential regulatory fines and sunk engineering costs ($V_{\mathrm{asset}} > 0$);
+- $P_{\mathrm{leak}} \in [0, 1]$ is the calculated probability of a successful asset leak penetrating all defensive tiers;
+- $\eta_{\mathrm{airgap}} \in [0, 1]$ is the physical network isolation efficacy ($\eta_{\mathrm{airgap}} = 0.70$ for a shared corporate VLAN, $\eta_{\mathrm{airgap}} = 0.92$ for a managed firewall perimeter, and $\eta_{\mathrm{airgap}} = 0.9999$ for a physically severed network cable with an optical unidirectional *Data Diode*);
+- $\eta_{\mathrm{enc}} \in [0, 1]$ is the cryptographic encryption efficacy covering volatile memory and persistent storage ($\eta_{\mathrm{enc}} = 0.85$ for standard host-level disk encryption, and $\eta_{\mathrm{enc}} = 0.995$ for hardware-enforced AMD SEV-SNP / Intel TDX memory enclaves);
+- $\eta_{\mathrm{auth}} \in [0, 1]$ is the authentication efficacy for engineering operations ($\eta_{\mathrm{auth}} = 0.60$ for password authentication, and $\eta_{\mathrm{auth}} = 0.999$ for physical FIDO2 / cryptographic HSM tokens requiring non-delegable Ed25519 session signing).
 
 #### 3.2.1. Actionable Closed Loop of R&D Asset Exfiltration Risk Calculation
 
 1. **Control Flow and Runtime Decisions:**
-   - If the evaluated leak probability exceeds $`P_{\mathrm{leak}} > 10^{-4}`$, the infrastructure orchestrator engages `Strict Isolation Lock`: all physical USB mass storage interfaces are disabled at the kernel level, unencrypted memory core dumps are forbidden, and the ingestion of updated model weights or rule sets is blocked pending physical data diode integrity verification;
-   - If $`P_{\mathrm{leak}} \le 10^{-4}`$ and $`R_{\mathrm{exfil}} < \tau_{\mathrm{risk\_accept}}`$, the execution runtime permits mounting the target knowledge volume in read-only mode inside the encrypted memory enclave (`SEV_SNP_INIT_OK`).
+   - If the evaluated leak probability exceeds $P_{\mathrm{leak}} > 10^{-4}$, the infrastructure orchestrator engages `Strict Isolation Lock`: all physical USB mass storage interfaces are disabled at the kernel level, unencrypted memory core dumps are forbidden, and the ingestion of updated model weights or rule sets is blocked pending physical data diode integrity verification;
+   - If $P_{\mathrm{leak}} \le 10^{-4}$ and $R_{\mathrm{exfil}} < \tau_{\mathrm{risk\_accept}}$, the execution runtime permits mounting the target knowledge volume in read-only mode inside the encrypted memory enclave (`SEV_SNP_INIT_OK`).
 2. **Hardware Dimensioning:**
-   - The R&D testbed is equipped with a hardware optical data diode rated for a sustained unidirectional transfer rate of no less than $`10\,\text{Gbps}`$ for inbound dataset ingestion;
-   - The encrypted enclave memory pool must accommodate the quantized SLM ($`16\,\text{GB}`$ in FP8) plus the memory-mapped fact base ($`8\,\text{GB}`$) with a $`1.5\times`$ safety headroom factor, mandating a minimum of $`48\,\text{GB}`$ of hardware-encrypted DDR5 ECC system memory per CPU socket.
+   - The R&D testbed is equipped with a hardware optical data diode rated for a sustained unidirectional transfer rate of no less than $10\,\text{Gbps}$ for inbound dataset ingestion;
+   - The encrypted enclave memory pool must accommodate the quantized SLM ($16\,\text{GB}$ in FP8) plus the memory-mapped fact base ($8\,\text{GB}$) with a $1.5\times$ safety headroom factor, mandating a minimum of $48\,\text{GB}$ of hardware-encrypted DDR5 ECC system memory per CPU socket.
 3. **Worked Numerical Example:**
-   - The baseline valuation of a flight-control software R&D knowledge pack is $`V_{\mathrm{asset}} = \$5{,}000{,}000`$.
-   - Under a naive baseline design (VLAN without physical air-gap, standard server lacking encrypted memory enclaves, and password-based developer logins), the exfiltration probability evaluates to $`P_{\mathrm{leak}} = (1 - 0.70) \cdot (1 - 0.85) \cdot (1 - 0.60) = 0.018`$. Residual risk equals $`R_{\mathrm{exfil}} = \$5{,}000{,}000 \times 0.018 = \$90{,}000`$, exceeding the corporate risk acceptance threshold $\tau_{\mathrm{risk\_accept}} = \$500$ by a factor of 180 (an unacceptable posture for defense and aerospace programs).
-   - Migrating to an *Air-Gapped R&D* architecture (optical Data Diode $`\eta_{\mathrm{airgap}} = 0.9999`$, AMD SEV-SNP enclave $`\eta_{\mathrm{enc}} = 0.995`$, and FIDO2 HSM tokens $`\eta_{\mathrm{auth}} = 0.999`$) reduces the exfiltration probability to $`P_{\mathrm{leak}} = (1 - 0.9999) \cdot (1 - 0.995) \cdot (1 - 0.999) = 10^{-4} \cdot 5 \cdot 10^{-3} \cdot 10^{-3} = 5 \cdot 10^{-10}`$. Residual risk plummets to $`R_{\mathrm{exfil}} = \$5{,}000{,}000 \times 5 \cdot 10^{-10} = \$0.0025`$ ($`0.25`$ cents). The architecture provides definitive formal clearance for processing classified and safety-critical IP.
+   - The baseline valuation of a flight-control software R&D knowledge pack is $V_{\mathrm{asset}} = \$5{,}000{,}000$.
+   - Under a naive baseline design (VLAN without physical air-gap, standard server lacking encrypted memory enclaves, and password-based developer logins), the exfiltration probability evaluates to $P_{\mathrm{leak}} = (1 - 0.70) \cdot (1 - 0.85) \cdot (1 - 0.60) = 0.018$. Residual risk equals $R_{\mathrm{exfil}} = \$5{,}000{,}000 \times 0.018 = \$90{,}000$, exceeding the corporate risk acceptance threshold $\tau_{\mathrm{risk\_accept}} = \$500$ by a factor of 180 (an unacceptable posture for defense and aerospace programs).
+   - Migrating to an *Air-Gapped R&D* architecture (optical Data Diode $\eta_{\mathrm{airgap}} = 0.9999$, AMD SEV-SNP enclave $\eta_{\mathrm{enc}} = 0.995$, and FIDO2 HSM tokens $\eta_{\mathrm{auth}} = 0.999$) reduces the exfiltration probability to $P_{\mathrm{leak}} = (1 - 0.9999) \cdot (1 - 0.995) \cdot (1 - 0.999) = 10^{-4} \cdot 5 \cdot 10^{-3} \cdot 10^{-3} = 5 \cdot 10^{-10}$. Residual risk plummets to $R_{\mathrm{exfil}} = \$5{,}000{,}000 \times 5 \cdot 10^{-10} = \$0.0025$ ($0.25$ cents). The architecture provides definitive formal clearance for processing classified and safety-critical IP.
 
 ### 3.3. Covert Channel Protection and Hardware Cache Partitioning (Intel RDT / ARM MPAM)
 
@@ -360,28 +360,28 @@ To mathematically prove non-interference and bounded memory access latency, arch
 ```
 
 where:
-- $`\mathrm{BW}_{\mathrm{guaranteed}}(\mathrm{SafetyCore})`$ is the guaranteed hardware memory bus throughput dedicated to the real-time expert system core, expressed in gigabytes per second ($`\text{GB/s}`$);
-- $`\mathrm{BW}_{\mathrm{bus\_peak}}`$ is the theoretical peak memory bus bandwidth of the host memory controller ($`\text{GB/s}`$, e.g., $`204.8\,\text{GB/s}`$ across an 8-channel DDR5-6400 interface);
-- $`M_{\mathrm{ways}}`$ is the number of L3 cache ways allocated exclusively via the CAT bitmask (e.g., `0x000F` representing 4 dedicated ways out of 16);
-- $`M_{\mathrm{total\_ways}}`$ is the total cache associativity of the L3 cache ($`M_{\mathrm{total\_ways}} \ge M_{\mathrm{ways}}`$);
-- $`\delta_{\mathrm{mba\_penalty}} \in [0, 1]`$ is the artificial throttling coefficient imposed by MBA on background or untrusted processes ($`\delta_{\mathrm{mba\_penalty}} = 0`$ for the safety core, $`\delta_{\mathrm{mba\_penalty}} \ge 0.60`$ for untrusted guest containers);
-- $`\mathrm{BW}_{\min\_req}`$ is the minimum required bandwidth necessary to ingest and evaluate streaming fact assertions without queuing latency ($`\text{GB/s}`$).
+- $\mathrm{BW}_{\mathrm{guaranteed}}(\mathrm{SafetyCore})$ is the guaranteed hardware memory bus throughput dedicated to the real-time expert system core, expressed in gigabytes per second ($\text{GB/s}$);
+- $\mathrm{BW}_{\mathrm{bus\_peak}}$ is the theoretical peak memory bus bandwidth of the host memory controller ($\text{GB/s}$, e.g., $204.8\,\text{GB/s}$ across an 8-channel DDR5-6400 interface);
+- $M_{\mathrm{ways}}$ is the number of L3 cache ways allocated exclusively via the CAT bitmask (e.g., `0x000F` representing 4 dedicated ways out of 16);
+- $M_{\mathrm{total\_ways}}$ is the total cache associativity of the L3 cache ($M_{\mathrm{total\_ways}} \ge M_{\mathrm{ways}}$);
+- $\delta_{\mathrm{mba\_penalty}} \in [0, 1]$ is the artificial throttling coefficient imposed by MBA on background or untrusted processes ($\delta_{\mathrm{mba\_penalty}} = 0$ for the safety core, $\delta_{\mathrm{mba\_penalty}} \ge 0.60$ for untrusted guest containers);
+- $\mathrm{BW}_{\min\_req}$ is the minimum required bandwidth necessary to ingest and evaluate streaming fact assertions without queuing latency ($\text{GB/s}$).
 
 #### 3.3.1. Actionable Closed Loop of Covert Channel Bandwidth Calculation
 
 1. **Control Flow and Runtime Decisions:**
    - During platform boot, the operating system resource manager (or bare-metal hypervisor such as KVM or Xen) configures processor model-specific registers (MSRs in x86, or MPAM system registers in ARMv8.4-A): the real-time safety core is assigned Class of Service `CLOS0` with dedicated cache ways non-overlapping with untrusted workload class `CLOS1`;
    - If hardware memory bandwidth monitors (Intel MBM / ARM MPAM Mon) detect a co-located container attempting bus saturation beyond its allocated MBA ceiling, a hypervisor interrupt immediately throttles the rogue container's bandwidth allocation to 10% or issues a `SIGSTOP` pause;
-   - To counteract physical TEMPEST acoustic emissions, cooling fan pulse-width modulation (PWM) controllers are injected with randomized pseudorandom frequency jitter ($`\pm 15\%`$), masking acoustic carrier signals, while unused chassis GPIO status LEDs are disabled via UEFI firmware configuration.
+   - To counteract physical TEMPEST acoustic emissions, cooling fan pulse-width modulation (PWM) controllers are injected with randomized pseudorandom frequency jitter ($\pm 15\%$), masking acoustic carrier signals, while unused chassis GPIO status LEDs are disabled via UEFI firmware configuration.
 2. **Hardware Dimensioning:**
-   - Workstation and edge server CPUs must provide an L3 cache associativity of no less than $`16\,\text{ways}`$ with comprehensive silicon support for Intel RDT CAT/MBA (Xeon Scalable, Core Ultra with RDT) or ARMv8.4-A MPAM (Neoverse N2/V2);
+   - Workstation and edge server CPUs must provide an L3 cache associativity of no less than $16\,\text{ways}$ with comprehensive silicon support for Intel RDT CAT/MBA (Xeon Scalable, Core Ultra with RDT) or ARMv8.4-A MPAM (Neoverse N2/V2);
    - Sensitive development laboratories must deploy RF-shielded enclosures or Faraday cages equipped with common-mode power line interference filters certified to NATO SDIP-27 Level A standards.
 3. **Worked Numerical Example:**
-   - A server node features a 16-way associative L3 cache ($`M_{\mathrm{total\_ways}} = 16`$) and a 4-channel DDR5 memory controller delivering a peak bandwidth of $`\mathrm{BW}_{\mathrm{bus\_peak}} = 102.4\,\text{GB/s}`$.
-   - The mission-critical expert system kernel requires a deterministic minimum fact-traversal bandwidth of $`\mathrm{BW}_{\min\_req} = 20\,\text{GB/s}`$.
-   - The architect configures the CAT mask to allocate 4 dedicated cache ways to the safety kernel ($`M_{\mathrm{ways}} = 4`$), while constraining co-located services via an MBA penalty of $`\delta_{\mathrm{mba\_penalty}} = 0.70`$. Guaranteed memory throughput evaluates to:
-     $`\mathrm{BW}_{\mathrm{guaranteed}} = 102.4 \times (4 / 16) \times (1 - 0) = 25.6\,\text{GB/s}`$.
-   - Because $`25.6\,\text{GB/s} \ge 20\,\text{GB/s}`$, the invariant holds with a $`28\%`$ safety margin. Hostile co-located attempts to mount *Prime+Probe* attacks or induce memory starvation are physically barred by silicon-level resource arbiters.
+   - A server node features a 16-way associative L3 cache ($M_{\mathrm{total\_ways}} = 16$) and a 4-channel DDR5 memory controller delivering a peak bandwidth of $\mathrm{BW}_{\mathrm{bus\_peak}} = 102.4\,\text{GB/s}$.
+   - The mission-critical expert system kernel requires a deterministic minimum fact-traversal bandwidth of $\mathrm{BW}_{\min\_req} = 20\,\text{GB/s}$.
+   - The architect configures the CAT mask to allocate 4 dedicated cache ways to the safety kernel ($M_{\mathrm{ways}} = 4$), while constraining co-located services via an MBA penalty of $\delta_{\mathrm{mba\_penalty}} = 0.70$. Guaranteed memory throughput evaluates to:
+     $\mathrm{BW}_{\mathrm{guaranteed}} = 102.4 \times (4 / 16) \times (1 - 0) = 25.6\,\text{GB/s}$.
+   - Because $25.6\,\text{GB/s} \ge 20\,\text{GB/s}$, the invariant holds with a $28\%$ safety margin. Hostile co-located attempts to mount *Prime+Probe* attacks or induce memory starvation are physically barred by silicon-level resource arbiters.
 
 > [!NOTE]
 > **Five Rules for Safe Runtime Isolation and Memory Management Formulated in the Author's Architecture**
@@ -483,18 +483,18 @@ In this pipeline, the purple block prepares work units, orange cylinders represe
 
 ### 5.3. Aggregate Compute Performance Estimation
 
-Resource dimensioning for large-scale embedding upgrades or regulatory corpus reindexing requires formal estimation of aggregate throughput. Summing theoretical NPU datasheet figures yields misleading estimates: corporate workstations exhibit erratic availability schedules, users interrupt background execution, and network transport introduces coordination latency. Analytical modeling of effective cluster throughput $`Q_{\text{eff}}`$ integrates stochastic availability and communication overheads:
+Resource dimensioning for large-scale embedding upgrades or regulatory corpus reindexing requires formal estimation of aggregate throughput. Summing theoretical NPU datasheet figures yields misleading estimates: corporate workstations exhibit erratic availability schedules, users interrupt background execution, and network transport introduces coordination latency. Analytical modeling of effective cluster throughput $Q_{\text{eff}}$ integrates stochastic availability and communication overheads:
 
 ```math
 Q_{\text{eff}} = \sum_{i=1}^{M} q_i \, a_i \, (1 - o_i)
 ```
 
 where:
-- $`Q_{\text{eff}}`$ is the expected value of aggregate indexing mesh throughput, measured in verified embeddings generated per second ($\text{vectors}/\text{s}$);
+- $Q_{\text{eff}}$ is the expected value of aggregate indexing mesh throughput, measured in verified embeddings generated per second ($\text{vectors}/\text{s}$);
 - $M$ is the total count of registered NPU-equipped workstations across the corporate local network ($M \in \mathbb{N}$, typically ranging from 10 to $10^4$ nodes);
-- $`q_i`$ is the empirically measured steady-state throughput of the NPU on workstation $i$ for the selected embedding model ($\text{vectors}/\text{s}$, e.g., $240\text{ vectors/s}$ for a quantized 384-dimensional model on an Intel NPU);
-- $`a_i`$ is the operational availability coefficient of workstation $i$ ($`a_i \in [0, 1]`$), denoting the fraction of time the machine is AC-powered, user-idle ($> 5$ minutes of inactivity), and permitted by OS power governors to run background workloads;
-- $`o_i`$ is the coordination and network overhead factor ($`o_i \in [0, 1]`$), encompassing TLS handshakes, JetStream message round-trips, `AckWait` timeout retransmissions, and canary verification cycles.
+- $q_i$ is the empirically measured steady-state throughput of the NPU on workstation $i$ for the selected embedding model ($\text{vectors}/\text{s}$, e.g., $240\text{ vectors/s}$ for a quantized 384-dimensional model on an Intel NPU);
+- $a_i$ is the operational availability coefficient of workstation $i$ ($a_i \in [0, 1]$), denoting the fraction of time the machine is AC-powered, user-idle ($> 5$ minutes of inactivity), and permitted by OS power governors to run background workloads;
+- $o_i$ is the coordination and network overhead factor ($o_i \in [0, 1]$), encompassing TLS handshakes, JetStream message round-trips, `AckWait` timeout retransmissions, and canary verification cycles.
 
 **Practical Application and Engineering Takeaways:**
 1. This formula is evaluated by the systems architect prior to scheduling a knowledge base reindexing campaign to calculate the expected operational window:
@@ -503,17 +503,17 @@ where:
 T_{\text{reindex}} = \frac{N_{\text{total}}}{Q_{\text{eff}}}
 ```
 
-where $`N_{\text{total}}`$ is the total number of text chunks across the corporate regulatory repository.
-2. **Empirical Calibration Example:** For a fleet of $`M = 200`$ enterprise workstations ($`q_i \approx 240\text{ vectors/s}`$, $`a_i \approx 0.10`$, $`o_i \approx 0.20`$), effective aggregate throughput equals:
+where $N_{\text{total}}$ is the total number of text chunks across the corporate regulatory repository.
+2. **Empirical Calibration Example:** For a fleet of $M = 200$ enterprise workstations ($q_i \approx 240\text{ vectors/s}$, $a_i \approx 0.10$, $o_i \approx 0.20$), effective aggregate throughput equals:
 
 ```math
 Q_{\text{eff}} = 200 \times 240 \times 0.10 \times (1 - 0.20) = 3\,840\text{ vectors/s}
 ```
 
-A repository containing 20 million chunks is reindexed in $`T_{\text{reindex}} \approx 20 \times 10^6 / 3840 \approx 5\,208\text{ s} \approx 1.45\text{ hours}`$. In contrast, a dedicated multi-core server CPU ($`q = 68\text{ vectors/s}`$) would require over 81 continuous hours to finish the same workload.
+A repository containing 20 million chunks is reindexed in $T_{\text{reindex}} \approx 20 \times 10^6 / 3840 \approx 5\,208\text{ s} \approx 1.45\text{ hours}$. In contrast, a dedicated multi-core server CPU ($q = 68\text{ vectors/s}$) would require over 81 continuous hours to finish the same workload.
 3. **Dispatch and Quarantine Rules:**
-   - If a node exhibits $`a_i < 0.03`$ (intermittent connectivity or battery operation), the scheduler removes it from the pool to prevent queue poisoning and repeated timeout cascades;
-   - If projected $`T_{\text{reindex}}`$ exceeds the standard maintenance window ($`T_{\text{reindex}} > T_{\text{maintenance\_window}} = 6\text{ hours}`$), the coordinator issues an engineering alert and dynamically throttles user-inactivity thresholds or temporarily engages central on-premise compute servers.
+   - If a node exhibits $a_i < 0.03$ (intermittent connectivity or battery operation), the scheduler removes it from the pool to prevent queue poisoning and repeated timeout cascades;
+   - If projected $T_{\text{reindex}}$ exceeds the standard maintenance window ($T_{\text{reindex}} > T_{\text{maintenance\_window}} = 6\text{ hours}$), the coordinator issues an engineering alert and dynamically throttles user-inactivity thresholds or temporarily engages central on-premise compute servers.
 
 An idle NPU mesh delivers substantial batch compute capacity without capital expenditure on dedicated server racks. However, interactive reasoning and explanation generation demand dedicated low-latency hardware, motivating a detailed comparative analysis of local hardware platforms.
 
@@ -556,39 +556,39 @@ r_{\text{dec}} \le \frac{\mathrm{BW}}{N_{\text{act}} \cdot q / 8 + S_{\text{KV}}
 ```
 
 where:
-- $`r_{\text{dec}}`$ is the maximum autoregressive decoding throughput for a single execution thread, measured in tokens per second ($\text{tokens}/\text{s}$ or $\text{tps}$);
+- $r_{\text{dec}}$ is the maximum autoregressive decoding throughput for a single execution thread, measured in tokens per second ($\text{tokens}/\text{s}$ or $\text{tps}$);
 - $\mathrm{BW}$ is the sustained memory interface bandwidth of the platform, measured in bytes per second ($\text{bytes}/\text{s}$);
-- $`N_{\text{act}}`$ is the count of active model parameters evaluated during the generation of the current token (for dense architectures $`N_{\text{act}} = N_{\text{total}}`$, whereas for sparse Mixture-of-Experts (MoE) architectures $`N_{\text{act}} \ll N_{\text{total}}`$);
+- $N_{\text{act}}$ is the count of active model parameters evaluated during the generation of the current token (for dense architectures $N_{\text{act}} = N_{\text{total}}$, whereas for sparse Mixture-of-Experts (MoE) architectures $N_{\text{act}} \ll N_{\text{total}}$);
 - $q$ is the quantization precision of model weights in bits per parameter ($q \in \{4, 8, 16\}$, where division by 8 converts bits to bytes);
-- $`S_{\text{KV}}`$ is the memory bus traffic generated by reading and updating the Key-Value cache per decoding step, measured in bytes per token:
+- $S_{\text{KV}}$ is the memory bus traffic generated by reading and updating the Key-Value cache per decoding step, measured in bytes per token:
 
 ```math
 S_{\text{KV}} = 2 \times n_{\text{layers}} \times d_{\text{head}} \times n_{\text{heads\_kv}} \times L_{\text{ctx}} \times \frac{q_{\text{kv}}}{8}
 ```
 
-where $`L_{\text{ctx}}`$ is active context length in tokens, $`n_{\text{layers}}`$ is layer depth, and $`q_{\text{kv}}`$ is KV-cache numeric precision (typically 16 bits for FP16 or 8 bits for FP8).
+where $L_{\text{ctx}}$ is active context length in tokens, $n_{\text{layers}}$ is layer depth, and $q_{\text{kv}}$ is KV-cache numeric precision (typically 16 bits for FP16 or 8 bits for FP8).
 
 **Practical Application and Engineering Takeaways:**
 1. This calculation is conducted during hardware qualification to ensure the platform satisfies interactive SLA criteria without impeding expert user workflows.
 2. **Numerical Benchmarks for Desktop Platforms (273 GB/s Bandwidth):**
-   - **Dense 70B Model (INT4 Quantization, $`N_{\text{act}} = 70 \times 10^9`$, $`q = 4`$):** Memory traffic per token is $`35\text{ GB}`$. Across a $`\mathrm{BW} = 273\text{ GB/s}`$ bus, maximum decoding throughput is bounded by:
+   - **Dense 70B Model (INT4 Quantization, $N_{\text{act}} = 70 \times 10^9$, $q = 4$):** Memory traffic per token is $35\text{ GB}$. Across a $\mathrm{BW} = 273\text{ GB/s}$ bus, maximum decoding throughput is bounded by:
 
 ```math
 r_{\text{dec}} \le \frac{273 \times 10^9}{35 \times 10^9} \approx 7.8\text{ tokens/s}
 ```
 
-Generating a comprehensive 150-token justification requires $`\approx 19.2\text{ s}`$, violating the interactive target SLA ($`< 1\text{ s}`$).
-   - **Sparse Mixture-of-Experts (MoE) 117B Model ($`N_{\text{total}} = 117\text{B}`$, $`N_{\text{act}} = 5.1\text{B}`$, $`q = 4`$) [[27]](#src-27), [[28]](#src-28):** Bus traffic per token plummets to $`2.55\text{ GB}`$. Achievable decoding throughput increases fourteen-fold:
+Generating a comprehensive 150-token justification requires $\approx 19.2\text{ s}$, violating the interactive target SLA ($< 1\text{ s}$).
+   - **Sparse Mixture-of-Experts (MoE) 117B Model ($N_{\text{total}} = 117\text{B}$, $N_{\text{act}} = 5.1\text{B}$, $q = 4$) [[27]](#src-27), [[28]](#src-28):** Bus traffic per token plummets to $2.55\text{ GB}$. Achievable decoding throughput increases fourteen-fold:
 
 ```math
 r_{\text{dec}} \le \frac{273 \times 10^9}{2.55 \times 10^9} \approx 107\text{ tokens/s}
 ```
 
-The same 150-token explanation completes in $`1.4\text{ s}`$. However, loading the full 117B parameter set requires at least 59 GB of memory, disqualifying 32 GB hardware configurations.
+The same 150-token explanation completes in $1.4\text{ s}$. However, loading the full 117B parameter set requires at least 59 GB of memory, disqualifying 32 GB hardware configurations.
 3. **Operational Thresholds and Architectural Gateways:**
-   - $`r_{\text{dec}} \ge 15\text{ tokens/s}`$: **Comfortable Interactivity**. Token streaming feels instantaneous and cognitively smooth to the domain engineer;
-   - $`8 \le r_{\text{dec}} < 15\text{ tokens/s}`$: **Acceptable Workstation Pace**. Permissible for desktop terminals, provided the interface presents the formal symbolic verdict (approval/rejection, rule ID) instantly prior to streaming the explanatory text;
-   - $`r_{\text{dec}} < 8\text{ tokens/s}`$: **Interactive SLA Breach**. Prohibited for operational deployments. The architecture must reject dense 70B models on this bus width, transitioning to MoE architectures, speculative decoding, or offloading synthesis to external accelerators equipped with GDDR7 or HBM.
+   - $r_{\text{dec}} \ge 15\text{ tokens/s}$: **Comfortable Interactivity**. Token streaming feels instantaneous and cognitively smooth to the domain engineer;
+   - $8 \le r_{\text{dec}} < 15\text{ tokens/s}$: **Acceptable Workstation Pace**. Permissible for desktop terminals, provided the interface presents the formal symbolic verdict (approval/rejection, rule ID) instantly prior to streaming the explanatory text;
+   - $r_{\text{dec}} < 8\text{ tokens/s}$: **Interactive SLA Breach**. Prohibited for operational deployments. The architecture must reject dense 70B models on this bus width, transitioning to MoE architectures, speculative decoding, or offloading synthesis to external accelerators equipped with GDDR7 or HBM.
 
 ### 6.2. Selection Criteria and Functional Roles of Platforms
 
@@ -632,7 +632,7 @@ None of the platforms in the catalog accelerate the Rete rule engine, relational
 
 ## 7. Hardware Base and Physical Constraints of Edge Systems
 
-Embedded and edge hardware represents the physical vanguard where a cyber-physical expert system directly senses and acts upon its operating environment: onboard vehicles and industrial robotics, local silicon performs raw sensor acquisition, signal filtering, and real-time safety invariant enforcement. Overlooking the physical constraints of the execution environment — thermal dissipation budgets (TDP), mechanical shock, vibration, and radiation-induced soft errors — causes catastrophic system failures: allowing silicon junction temperatures to trigger thermal throttling ($`T_{\mathrm{tj}} > 99^\circ\text{C}`$) introduces unbounded latency jitter in perception pipelines, telemetry frame drops, and emergency disengagements of prime movers (directly violating ISO 26262 ASIL-D and IEC 61508 safety standards). The naive attempt to deploy unhardened consumer or datacenter accelerator boards into harsh vehicle environments fails due to power supply brownouts, moisture intrusion, and Single Event Upsets (SEUs) in volatile RAM. Distinct computational classes require dedicated silicon architectures, as summarized below.
+Embedded and edge hardware represents the physical vanguard where a cyber-physical expert system directly senses and acts upon its operating environment: onboard vehicles and industrial robotics, local silicon performs raw sensor acquisition, signal filtering, and real-time safety invariant enforcement. Overlooking the physical constraints of the execution environment — thermal dissipation budgets (TDP), mechanical shock, vibration, and radiation-induced soft errors — causes catastrophic system failures: allowing silicon junction temperatures to trigger thermal throttling ($T_{\mathrm{tj}} > 99^\circ\text{C}$) introduces unbounded latency jitter in perception pipelines, telemetry frame drops, and emergency disengagements of prime movers (directly violating ISO 26262 ASIL-D and IEC 61508 safety standards). The naive attempt to deploy unhardened consumer or datacenter accelerator boards into harsh vehicle environments fails due to power supply brownouts, moisture intrusion, and Single Event Upsets (SEUs) in volatile RAM. Distinct computational classes require dedicated silicon architectures, as summarized below.
 
 | Compute Class | Operational Characteristics | Target Hardware | Software Platforms |
 |---|---|---|---|
@@ -697,9 +697,9 @@ A distinguishing engineering feature of this industrial chassis is its **fully p
 * GPU frequency was constrained to 408 MHz;
 * The emergency thermal shutdown trip point was configured at $75.0^\circ\text{C}$ (against the absolute silicon junction maximum of $99^\circ\text{C}$).
 
-Telemetry was sampled via the hardware `tegrastats` interface at 500 ms intervals, recording synchronized vectors of core temperatures ($`T_{\text{cpu}}, T_{\text{tj}}, T_{\text{soc}}`$), voltage rail power draws (`VIN_SYS_5V0`, `VDD_GPU_SOC`, `VDD_CPU_CV`), and core loads. Specialized 7B and 14B knowledge extraction models were evaluated against dense clauses from engineering standards (RFC 9110 HTTP Semantics and ISO 26262-4 ASIL-D).
+Telemetry was sampled via the hardware `tegrastats` interface at 500 ms intervals, recording synchronized vectors of core temperatures ($T_{\text{cpu}}, T_{\text{tj}}, T_{\text{soc}}$), voltage rail power draws (`VIN_SYS_5V0`, `VDD_GPU_SOC`, `VDD_CPU_CV`), and core loads. Specialized 7B and 14B knowledge extraction models were evaluated against dense clauses from engineering standards (RFC 9110 HTTP Semantics and ISO 26262-4 ASIL-D).
 
-| Scenario / Standard Clause | Extraction Model | Latency (s) | Prompt Speed | Eval Speed | Average Power $`P_{\text{sys}}`$ | Energy per Fact $`\int P dt`$ | Defeater Retention | Peak Temp $`T_{\text{tj}}`$ |
+| Scenario / Standard Clause | Extraction Model | Latency (s) | Prompt Speed | Eval Speed | Average Power $P_{\text{sys}}$ | Energy per Fact $\int P dt$ | Defeater Retention | Peak Temp $T_{\text{tj}}$ |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **RFC 9110 Sec 7.2 (Authority)** | 7B SLM | 16.75 s | 129.2 tps | 4.7 tps | 5,860.6 mW | **98.17 J** | 0% (lost `unless`) | 55.81°C |
 | **RFC 9110 Sec 7.2 (Authority)** | 14B SLM | 42.13 s | 65.2 tps | 2.5 tps | 6,076.6 mW | **256.01 J** | **100%** (extracted `unless`) | 56.69°C |
@@ -712,7 +712,7 @@ Telemetry was sampled via the hardware `tegrastats` interface at 500 ms interval
 
 1. **Defeater Retention Sensitivity:** On dense normative specifications, 7B parameter models frequently over-summarize output clauses, omitting vital limiting conditions (*defeaters*, e.g., dropping subordinate clauses such as `unless authority contains userinfo`). Conversely, 14B models achieved **100% defeater completeness**, extracting deontic requirements alongside all boundary rebuttals.
 2. **The Energetic Cost of Precision:** Higher model fidelity demands a greater energy expenditure: 250 to 650 Joules per validated fact for 14B versus 98–200 Joules for 7B. However, in terms of steady-state electrical power draw, the platform sustained a modest **5.8–6.6 W**, remaining well within the thermal and battery constraints of mobile robotics.
-3. **Passive Thermal Headroom:** Across extended continuous inference under the heaviest test scenarios, peak silicon junction temperature ($`T_{\mathrm{tj}}`$) never exceeded **60.0°C**. This preserved a substantial $15.0^\circ\text{C}$ safety margin below the conservative $75^\circ\text{C}$ threshold without requiring active fan airflow, confirming the viability of unventilated industrial enclosures.
+3. **Passive Thermal Headroom:** Across extended continuous inference under the heaviest test scenarios, peak silicon junction temperature ($T_{\mathrm{tj}}$) never exceeded **60.0°C**. This preserved a substantial $15.0^\circ\text{C}$ safety margin below the conservative $75^\circ\text{C}$ threshold without requiring active fan airflow, confirming the viability of unventilated industrial enclosures.
 
 ### 7.2. Active Thermodynamic Control and MODE_30W Configuration: Expanding the Computational Budget
 
@@ -769,9 +769,9 @@ stateDiagram-v2
 
 #### 7.2.1. Empirical Test Telemetry in MODE_30W with GBNF Masking
 
-During comparative benchmarks across 7B and 14B models (`znavets-rfc` and `znavets-automotive`), 699 telemetry snapshots were captured via `tegrastats` at 500 ms intervals. Evaluated metrics included prompt prefill speed, token generation throughput (Eval Speed), integrated energy, peak junction temperature ($`T_{\mathrm{tj}}`$), schema syntax errors, and pass rates through a Popperian falsification gate.
+During comparative benchmarks across 7B and 14B models (`znavets-rfc` and `znavets-automotive`), 699 telemetry snapshots were captured via `tegrastats` at 500 ms intervals. Evaluated metrics included prompt prefill speed, token generation throughput (Eval Speed), integrated energy, peak junction temperature ($T_{\mathrm{tj}}$), schema syntax errors, and pass rates through a Popperian falsification gate.
 
-| Scenario ID | Model & Standard | Decoding Mode | Latency (s) | Prompt Speed | Eval Speed | Power $`P_{\mathrm{sys}}`$ | Energy per Fact | Peak $`T_{\mathrm{tj}}`$ | Syntax Errors | Popperian Verdict |
+| Scenario ID | Model & Standard | Decoding Mode | Latency (s) | Prompt Speed | Eval Speed | Power $P_{\mathrm{sys}}$ | Energy per Fact | Peak $T_{\mathrm{tj}}$ | Syntax Errors | Popperian Verdict |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **EXP3-S1** | RFC 9110 (7B) | **GBNF Constrained** | 23.01 s | 209.9 tps | 8.0 tps | 7,216.8 mW | **166.03 J** | 45.00°C | 0.00% | **ADMITTED ($F^+$ OK, $F^-$ REFUSED)** |
 | **EXP3-S2** | RFC 9110 (7B) | Unconstrained Baseline | 15.31 s | 527.5 tps | 8.3 tps | 7,565.5 mW | **115.79 J** | 45.59°C | 0.00% | **REJECTED (Unstable Schema)** |
@@ -785,9 +785,9 @@ During comparative benchmarks across 7B and 14B models (`znavets-rfc` and `znave
 
 Juxtaposing telemetry across both operational regimes reveals critical empirical lessons:
 
-1. **Thermodynamic Benefits of Active Airflow:** Although system electrical draw increased ($`P_{\mathrm{sys}}`$ rose from 5.8–6.6 W to 7.2–7.7 W), active convection reduced operating junction temperatures by $\approx 15-20^\circ\text{C}$. The margin to software throttling ($99^\circ\text{C}$) expanded from $+33^\circ\text{C}$ to **$+56^\circ\text{C}$**, and the margin to hardware thermal shutdown ($104^\circ\text{C}$) widened to **$+61^\circ\text{C}$**. Adding a compact active fan completely eliminates the hazard of dynamic clock throttling, guaranteeing deterministic response latency.
+1. **Thermodynamic Benefits of Active Airflow:** Although system electrical draw increased ($P_{\mathrm{sys}}$ rose from 5.8–6.6 W to 7.2–7.7 W), active convection reduced operating junction temperatures by $\approx 15-20^\circ\text{C}$. The margin to software throttling ($99^\circ\text{C}$) expanded from $+33^\circ\text{C}$ to **$+56^\circ\text{C}$**, and the margin to hardware thermal shutdown ($104^\circ\text{C}$) widened to **$+61^\circ\text{C}$**. Adding a compact active fan completely eliminates the hazard of dynamic clock throttling, guaranteeing deterministic response latency.
 2. **Throughput Scaling for 14B Models:** Generation throughput (Eval Speed) for the full 14B model jumped from 2.5 tps (in passive 15W) to **4.3–4.5 tps** (in 30W), representing a **+72–80%** acceleration. This reduced the end-to-end extraction latency of an ISO 26262 rule from 57.6 s down to 39.8 s.
-3. **Net Energy Parity via Shorter Wall-Clock Duration:** While instantaneous power draw in 30W is 15–20% higher, total integrated energy per validated fact ($`\int P_{\mathrm{sys}} dt`$) proved slightly lower: for the 14B model extracting RFC 9110 Sec 7.2, energy consumption dropped from **256.01 J** (15W across 42.1 s) to **227.65 J** (30W across 31.7 s). The reduction in execution duration fully offset the higher instantaneous power draw.
+3. **Net Energy Parity via Shorter Wall-Clock Duration:** While instantaneous power draw in 30W is 15–20% higher, total integrated energy per validated fact ($\int P_{\mathrm{sys}} dt$) proved slightly lower: for the 14B model extracting RFC 9110 Sec 7.2, energy consumption dropped from **256.01 J** (15W across 42.1 s) to **227.65 J** (30W across 31.7 s). The reduction in execution duration fully offset the higher instantaneous power draw.
 4. **The Indispensability of GBNF Logit-Masking:** Contrasting GBNF constrained decoding with baseline unconstrained runs (EXP3-S2, S4, S7) demonstrated that without grammar logit masks, model outputs exhibit structural volatility (hallucinating commentary, mutating JSON keys, or injecting arbitrary markdown fencing). Hardware- and software-enforced logit masking is mandatory to guarantee 0.00% syntax errors and seamless ingestion into the Popperian verification gate.
 
 Hardware determines what can be executed; the following section analyzes how rapidly and reproducibly reasoning proceeds.
@@ -803,21 +803,21 @@ T_{\text{total}} = T_{\text{retrieval}} + T_{\text{embedding}} + T_{\text{rerank
 ```
 
 where:
-- $`T_{\text{total}}`$ is the total end-to-end processing time from query submission to returning a validated verdict, measured in milliseconds ($\text{ms}$);
-- $`T_{\text{retrieval}}`$ is the duration of candidate fact retrieval from the relational SQL database and BM25 full-text index ($\text{ms}$, typically $20-60\text{ ms}$);
-- $`T_{\text{embedding}}`$ is query vectorization time on an NPU or CPU ($\text{ms}$, typically $5-15\text{ ms}$);
-- $`T_{\text{reranking}}`$ is cross-encoder neural reranking latency across candidate excerpts ($\text{ms}$, typically $20-40\text{ ms}$ for 50 candidates);
-- $`T_{\text{rules}}`$ is deterministic rule evaluation time within the Rete/Datalog engine on the CPU ($\text{ms}$, typically $2-10\text{ ms}$);
-- $`T_{\text{LLM}}`$ is the duration of autoregressive natural language explanation synthesis by the language model ($\text{ms}$, typically $500-1,500\text{ ms}$);
-- $`T_{\text{overhead}}`$ encompasses IPC tensor serialization, JSON/GBNF schema validation, PROV-O audit cryptographic hashing, and network transport ($\text{ms}$, typically $5-20\text{ ms}$).
+- $T_{\text{total}}$ is the total end-to-end processing time from query submission to returning a validated verdict, measured in milliseconds ($\text{ms}$);
+- $T_{\text{retrieval}}$ is the duration of candidate fact retrieval from the relational SQL database and BM25 full-text index ($\text{ms}$, typically $20-60\text{ ms}$);
+- $T_{\text{embedding}}$ is query vectorization time on an NPU or CPU ($\text{ms}$, typically $5-15\text{ ms}$);
+- $T_{\text{reranking}}$ is cross-encoder neural reranking latency across candidate excerpts ($\text{ms}$, typically $20-40\text{ ms}$ for 50 candidates);
+- $T_{\text{rules}}$ is deterministic rule evaluation time within the Rete/Datalog engine on the CPU ($\text{ms}$, typically $2-10\text{ ms}$);
+- $T_{\text{LLM}}$ is the duration of autoregressive natural language explanation synthesis by the language model ($\text{ms}$, typically $500-1,500\text{ ms}$);
+- $T_{\text{overhead}}$ encompasses IPC tensor serialization, JSON/GBNF schema validation, PROV-O audit cryptographic hashing, and network transport ($\text{ms}$, typically $5-20\text{ ms}$).
 
 **Practical Application and Engineering Takeaways:**
 1. This formulation is instrumented via distributed OpenTelemetry tracing to profile pipeline stages and allocate latency quotas.
-2. **Non-Additivity of Percentiles (Counterexample):** The sum of individual stage percentiles does not equal the end-to-end query percentile: $`\mathrm{p95}(T_{\text{total}}) \ne \sum \mathrm{p95}(T_k)`$. If two independent stages each require 0 ms with probability 0.95 and 100 ms with probability 0.05, the $\mathrm{p95}$ of each individual stage is 0 ms. However, the probability that both complete in 0 ms is $0.95 \times 0.95 = 0.9025$, meaning the composite $`\mathrm{p95}(T_{\text{total}}) = 100\text{ ms}`$. Target latency planning uses analytical sums, but production SLA verification requires empirical end-to-end load benchmarking.
+2. **Non-Additivity of Percentiles (Counterexample):** The sum of individual stage percentiles does not equal the end-to-end query percentile: $\mathrm{p95}(T_{\text{total}}) \ne \sum \mathrm{p95}(T_k)$. If two independent stages each require 0 ms with probability 0.95 and 100 ms with probability 0.05, the $\mathrm{p95}$ of each individual stage is 0 ms. However, the probability that both complete in 0 ms is $0.95 \times 0.95 = 0.9025$, meaning the composite $\mathrm{p95}(T_{\text{total}}) = 100\text{ ms}$. Target latency planning uses analytical sums, but production SLA verification requires empirical end-to-end load benchmarking.
 3. **Fail-Safe Thresholds and Degradation Automata:**
-   - An interactive specialist workstation enforces a hard ceiling of $`\mathrm{p95}(T_{\text{total}}) \le 1,000\text{ ms}`$; a real-time edge loop enforces $`\mathrm{p99}(T_{\text{total}}) \le 100\text{ ms}`$;
-   - If $`T_{\text{retrieval}} + T_{\text{rules}} > 50\text{ ms}`$, the system alerts on SQLite B-tree fragmentation or Rete alpha-memory overload;
-   - If $`T_{\text{LLM}} > 800\text{ ms}`$ (or GPU queue depth exceeds 3), a fail-safe degradation state machine activates: text generation is aborted, and the interface immediately delivers the structured symbolic proof tree (activated rules, standard clause references) directly to the user, averting SLA failure.
+   - An interactive specialist workstation enforces a hard ceiling of $\mathrm{p95}(T_{\text{total}}) \le 1,000\text{ ms}$; a real-time edge loop enforces $\mathrm{p99}(T_{\text{total}}) \le 100\text{ ms}$;
+   - If $T_{\text{retrieval}} + T_{\text{rules}} > 50\text{ ms}$, the system alerts on SQLite B-tree fragmentation or Rete alpha-memory overload;
+   - If $T_{\text{LLM}} > 800\text{ ms}$ (or GPU queue depth exceeds 3), a fail-safe degradation state machine activates: text generation is aborted, and the interface immediately delivers the structured symbolic proof tree (activated rules, standard clause references) directly to the user, averting SLA failure.
 
 ### 8.2. Measurement Protocol and Autonomy Requirements
 
@@ -912,16 +912,16 @@ Automated regression pipelines therefore benchmark candidate vectors against cer
 ```
 
 where:
-- $`\vec{v}_{\text{now}} \in \mathbb{R}^d`$ is the vector representation of a regulatory excerpt produced by the updated runtime or driver revision;
-- $`\vec{v}_{\text{base}} \in \mathbb{R}^d`$ is the immutable gold baseline vector computed on a certified release build and preserved in the test registry;
-- $`\vec{v}_{\text{now}} \cdot \vec{v}_{\text{base}} = \sum_{j=1}^d v_{\text{now}, j} \, v_{\text{base}, j}`$ is the inner dot product of the two $d$-dimensional vectors;
-- $`\|\vec{v}\| = \sqrt{\sum_{j=1}^d v_j^2}`$ is the Euclidean $`L_2`$-norm;
-- $`\tau_{\text{drift}}`$ is the regulatory drift tolerance threshold ($`\tau_{\text{drift}} \in [0, 1]`$, dimensionless).
+- $\vec{v}_{\text{now}} \in \mathbb{R}^d$ is the vector representation of a regulatory excerpt produced by the updated runtime or driver revision;
+- $\vec{v}_{\text{base}} \in \mathbb{R}^d$ is the immutable gold baseline vector computed on a certified release build and preserved in the test registry;
+- $\vec{v}_{\text{now}} \cdot \vec{v}_{\text{base}} = \sum_{j=1}^d v_{\text{now}, j} \, v_{\text{base}, j}$ is the inner dot product of the two $d$-dimensional vectors;
+- $\|\vec{v}\| = \sqrt{\sum_{j=1}^d v_j^2}$ is the Euclidean $L_2$-norm;
+- $\tau_{\text{drift}}$ is the regulatory drift tolerance threshold ($\tau_{\text{drift}} \in [0, 1]$, dimensionless).
 
 **Practical Application and Engineering Takeaways:**
 1. This verification gate executes in the CI/CD pipeline prior to deploying any driver update, ONNX optimizer change, or NPU firmware patch to production.
 2. **Drift Quality Gates and Failure Behaviors:**
-   - $`\cos \ge \tau_{\text{drift}} = 0.999`$: **GREEN GATE (Full Admission)**. Variations stem purely from benign float32 non-associativity; update is admitted without reindexing the knowledge base;
+   - $\cos \ge \tau_{\text{drift}} = 0.999$: **GREEN GATE (Full Admission)**. Variations stem purely from benign float32 non-associativity; update is admitted without reindexing the knowledge base;
    - $0.990 \le \cos < 0.999$: **YELLOW GATE (Quarantine Mode)**. Triggers an automated Rank Inversion Test across safety-critical corner cases. If the semantic ordering of top-5 retrieved facts changes, the deployment is blocked;
    - $\cos < 0.990$: **RED GATE (Fail-Closed Rejection)**. Severe semantic drift detected, threatening erroneous symbolic grounding. The driver update is rejected, or a mandatory reindexing of the entire knowledge base is enforced.
 
@@ -972,36 +972,36 @@ flowchart LR
     class PC5 exitStyle;
 ```
 
-Because the control flow graph is strictly acyclic, the maximum execution path length is bounded by the total instruction count $`N_{\mathrm{rules}}`$ within the loaded rule memory block. The worst-case execution time is determined analytically in closed form:
+Because the control flow graph is strictly acyclic, the maximum execution path length is bounded by the total instruction count $N_{\mathrm{rules}}$ within the loaded rule memory block. The worst-case execution time is determined analytically in closed form:
 
 ```math
 T_{\mathrm{WCET}} = \sum_{i=1}^{M_{\mathrm{longest}}} t_{\mathrm{cycle}}(I_i) \le N_{\mathrm{rules}} \cdot \max_{k} \bigl( t_{\mathrm{cycle}}(I_k) \bigr)
 ```
 
 where:
-- $`T_{\mathrm{WCET}}`$ is the analytically verified maximum execution latency of the inference routine under worst-case inputs, measured in nanoseconds ($\text{ns}$) or microseconds ($\mu\text{s}$);
-- $`M_{\mathrm{longest}}`$ is the instruction length of the critical (longest latency) path across the DAG ($`M_{\mathrm{longest}} \le N_{\mathrm{rules}}`$);
-- $`t_{\mathrm{cycle}}(I_i)`$ is the deterministic execution cycle count of instruction $`I_i`$, multiplied by the clock period $`T_{\mathrm{clk}} = 1 / F_{\mathrm{clk}}`$;
-- $`N_{\mathrm{rules}}`$ is the total static instruction count of the compiled rule block (sized to reside entirely within accelerator BRAM/UltraRAM);
-- $`\max_{k} \bigl( t_{\mathrm{cycle}}(I_k) \bigr)`$ is the maximum latency of the most complex instruction in the EISA (for pipelined knowledge processors, $`t_{\mathrm{cycle}} = 1`$ clock cycle via fixed-depth pipeline registers).
+- $T_{\mathrm{WCET}}$ is the analytically verified maximum execution latency of the inference routine under worst-case inputs, measured in nanoseconds ($\text{ns}$) or microseconds ($\mu\text{s}$);
+- $M_{\mathrm{longest}}$ is the instruction length of the critical (longest latency) path across the DAG ($M_{\mathrm{longest}} \le N_{\mathrm{rules}}$);
+- $t_{\mathrm{cycle}}(I_i)$ is the deterministic execution cycle count of instruction $I_i$, multiplied by the clock period $T_{\mathrm{clk}} = 1 / F_{\mathrm{clk}}$;
+- $N_{\mathrm{rules}}$ is the total static instruction count of the compiled rule block (sized to reside entirely within accelerator BRAM/UltraRAM);
+- $\max_{k} \bigl( t_{\mathrm{cycle}}(I_k) \bigr)$ is the maximum latency of the most complex instruction in the EISA (for pipelined knowledge processors, $t_{\mathrm{cycle}} = 1$ clock cycle via fixed-depth pipeline registers).
 
 #### 8.4.1. Actionable Closed Loop of WCET Calculation and Verification
 
 1. **Control Flow and Runtime Decisions:**
    - During binary rule compilation, the EISA toolchain applies topological sorting across basic blocks (Kahn's algorithm or Tarjan's topological sort). If a back-edge is detected (indicating recursion or cyclic rules), compilation terminates immediately with a fatal `CYCLIC_RULE_DEPENDENCY_DETECTED` error;
-   - In hardware, the instruction decoder in the FPGA/ASIC execution unit incorporates a hardwired comparator: if an instruction's relative branch offset satisfies $`\mathrm{Offset} \le 0`$, the decode stage raises a non-maskable integrity trap (`HARD_FAULT_ILLEGAL_BACKWARD_JUMP`), placing actuators into a safe fail-closed state within 1 clock cycle;
-   - If verified $`T_{\mathrm{WCET}} \le T_{\mathrm{FTTI\_budget}}`$, the rule package is granted flight-certification clearance for direct closed-loop actuation without requiring dynamic watchdog timers.
+   - In hardware, the instruction decoder in the FPGA/ASIC execution unit incorporates a hardwired comparator: if an instruction's relative branch offset satisfies $\mathrm{Offset} \le 0$, the decode stage raises a non-maskable integrity trap (`HARD_FAULT_ILLEGAL_BACKWARD_JUMP`), placing actuators into a safe fail-closed state within 1 clock cycle;
+   - If verified $T_{\mathrm{WCET}} \le T_{\mathrm{FTTI\_budget}}$, the rule package is granted flight-certification clearance for direct closed-loop actuation without requiring dynamic watchdog timers.
 2. **Hardware Dimensioning:**
-   - The on-chip instruction BRAM of the knowledge processor is dimensioned to fully hold the critical path length $`N_{\mathrm{rules}}`$, eliminating external DRAM access jitter (achieving Zero Cache Miss Jitter);
-   - Given a core clock frequency $`F_{\mathrm{clk}} = 200\,\text{MHz}`$ ($`T_{\mathrm{clk}} = 5\,\text{ns}`$) and an automotive brake-by-wire FTTI constraint of $`T_{\mathrm{FTTI}} = 100\,\mu\text{s}`$, the maximum admissible rule block capacity is strictly bounded by:
-     $`N_{\max\_instructions} = T_{\mathrm{FTTI}} / T_{\mathrm{clk}} = (100 \cdot 10^{-6}\,\text{s}) / (5 \cdot 10^{-9}\,\text{s}) = 20{,}000`$ instructions.
+   - The on-chip instruction BRAM of the knowledge processor is dimensioned to fully hold the critical path length $N_{\mathrm{rules}}$, eliminating external DRAM access jitter (achieving Zero Cache Miss Jitter);
+   - Given a core clock frequency $F_{\mathrm{clk}} = 200\,\text{MHz}$ ($T_{\mathrm{clk}} = 5\,\text{ns}$) and an automotive brake-by-wire FTTI constraint of $T_{\mathrm{FTTI}} = 100\,\mu\text{s}$, the maximum admissible rule block capacity is strictly bounded by:
+     $N_{\max\_instructions} = T_{\mathrm{FTTI}} / T_{\mathrm{clk}} = (100 \cdot 10^{-6}\,\text{s}) / (5 \cdot 10^{-9}\,\text{s}) = 20{,}000$ instructions.
 3. **Worked Numerical Example:**
-   - An unmanned aerial vehicle collision avoidance subsystem compiles an emergency flight-envelope rule base totaling $`N_{\mathrm{rules}} = 1{,}200`$ EISA instructions.
-   - The hardware pipeline guarantees deterministic single-cycle execution per instruction ($`t_{\mathrm{cycle}} = 1`$) at an FPGA clock frequency of $`F_{\mathrm{clk}} = 100\,\text{MHz}`$ ($`T_{\mathrm{clk}} = 10\,\text{ns}`$).
-   - Topological DAG analysis identifies a critical path of $`M_{\mathrm{longest}} = 450`$ instructions.
-   - Closed-form WCET evaluates to $`T_{\mathrm{WCET}} = 450 \times 10\,\text{ns} = 4{,}500\,\text{ns} = 4.5\,\mu\text{s}`$.
-   - Given a regulatory emergency response budget of $`T_{\mathrm{budget}} = 50\,\mu\text{s}`$, the safety margin factor is:
-     $`K_{\mathrm{safety\_margin}} = 50\,\mu\text{s} / 4.5\,\mu\text{s} \approx 11.1`$.
+   - An unmanned aerial vehicle collision avoidance subsystem compiles an emergency flight-envelope rule base totaling $N_{\mathrm{rules}} = 1{,}200$ EISA instructions.
+   - The hardware pipeline guarantees deterministic single-cycle execution per instruction ($t_{\mathrm{cycle}} = 1$) at an FPGA clock frequency of $F_{\mathrm{clk}} = 100\,\text{MHz}$ ($T_{\mathrm{clk}} = 10\,\text{ns}$).
+   - Topological DAG analysis identifies a critical path of $M_{\mathrm{longest}} = 450$ instructions.
+   - Closed-form WCET evaluates to $T_{\mathrm{WCET}} = 450 \times 10\,\text{ns} = 4{,}500\,\text{ns} = 4.5\,\mu\text{s}$.
+   - Given a regulatory emergency response budget of $T_{\mathrm{budget}} = 50\,\mu\text{s}$, the safety margin factor is:
+     $K_{\mathrm{safety\_margin}} = 50\,\mu\text{s} / 4.5\,\mu\text{s} \approx 11.1$.
    - Verdict: The system operates with an 11-fold temporal margin, providing mathematical and hardware-enforced guarantees that actuation deadlines will never be missed under any combination of sensor inputs.
 
 > [!NOTE]
@@ -1165,7 +1165,7 @@ The execution infrastructure of evidence-governed expert systems mandates strict
 
 - **Mykola Fedchyk:**  
   *“Professor John Hennessy, to solve memory bus contention at the hardware level, we enforce strict hardware resource partitioning compliant with Intel RDT (Resource Director Technology) and ARM MPAM (Memory System Resource Partitioning and Monitoring).  
-  The safety-critical core and hardware coprocessor are allocated dedicated L3 cache ways via Cache Allocation Technology (CAT) and guaranteed memory controller bandwidth via Memory Bandwidth Allocation (MBA). Background neural network traffic is aggressively throttled at the bus controller level whenever it exceeds its assigned budget $`B_{\mathrm{cap}}`$.  
+  The safety-critical core and hardware coprocessor are allocated dedicated L3 cache ways via Cache Allocation Technology (CAT) and guaranteed memory controller bandwidth via Memory Bandwidth Allocation (MBA). Background neural network traffic is aggressively throttled at the bus controller level whenever it exceeds its assigned budget $B_{\mathrm{cap}}$.  
   Furthermore, our symbolic rule processor's instruction set architecture enforces Forward-Only Jumps, constraining the control flow graph (CFG) into a strictly acyclic DAG. This provides a mathematical guarantee of loop-free termination within a constant cycle count, ensuring analytical WCET calculation remains mathematically sound even under worst-case system loads.”*
 
 **Dialogue with Jim Keller: Static Timing Analysis (STA) and Bus Bandwidth in Physical Silicon**
@@ -1188,7 +1188,7 @@ The execution infrastructure of evidence-governed expert systems mandates strict
   This is why our hardware implementations on Infineon AURIX microcontrollers and radiation-tolerant Xilinx UltraScale+ FPGAs incorporate three physical defense layers.  
   First, all on-chip BRAM blocks and pipeline registers are protected by hardware SEC-DED (Single Error Correction, Double Error Detection) circuitry, repairing single-bit errors within 1 clock cycle and raising an immediate trap on uncorrectable multi-bit faults.  
   Second, critical register slices and combinatorial ALUs are synthesized with Triple Modular Redundancy (TMR) featuring hardware majority voters evaluated on every clock cycle.  
-  Third, Static Timing Analysis (STA) is conducted against the extreme Worst-Case Slow Corner ($`T_j = 125^\circ\text{C}`$ and $`V_{\mathrm{core}} - 10\%`$). Even under these harsh conditions, our systolic pipeline maintains positive timing slack exceeding 1.4 ns. Should an unrecoverable silicon fault occur, a hardware watchdog transitions the actuation path to a fail-closed safe state within 1 clock cycle, barring the execution of unvalidated rules.”*
+  Third, Static Timing Analysis (STA) is conducted against the extreme Worst-Case Slow Corner ($T_j = 125^\circ\text{C}$ and $V_{\mathrm{core}} - 10\%$). Even under these harsh conditions, our systolic pipeline maintains positive timing slack exceeding 1.4 ns. Should an unrecoverable silicon fault occur, a hardware watchdog transitions the actuation path to a fail-closed safe state within 1 clock cycle, barring the execution of unvalidated rules.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 The execution infrastructure of evidence-governed systems fuses the flexibility of heterogeneous silicon with mathematical certainty: high-throughput NPU adapters propose structural candidates within isolated memory zones, while hardware FPGA coprocessors and deterministic CPU cores guarantee nanosecond proof verification under strict compliance with real-world silicon timing constraints.

@@ -122,9 +122,9 @@ Die Protokollanalyse von Ericsson und Simon behandelt Verbalberichte als empiris
 
 ### 3.1. Kellys Repertory-Grid-Methode: Triadische Differenzierungsanalyse
 
-In der Wissensbasis eines Expertensystems erfordern diagnostische Prädikate scharfe, bipolare Differenzierungen. Eine direkte Befragung des Experten („Wie genau unterscheiden Sie einen regulären Start von einem Fehlerzustand?“) führt jedoch regelmäßig zu nachträglichen Rationalisierungen: Der Fachexperte zitiert allgemeine Passagen aus Datenblättern und übergeht unbewusst die entscheidenden impliziten Erfahrungswerte. Stützt sich die Wissensbasis lediglich auf solche oberflächlichen Spezifikationsmerkmale, generiert die Inferenzmaschine im Grenzbetrieb fatale Fehlalarme, was in sicherheitskritischen Anwendungen zu ungerechtfertigten Notabschaltungen führt. Die Repertory-Grid-Methode von George Kelly überwindet diese kognitive Hürde durch einen strukturierten triadischen Vergleich konkreter Vorfälle oder Artefakte $`(e_1, e_2, e_3)`$.
+In der Wissensbasis eines Expertensystems erfordern diagnostische Prädikate scharfe, bipolare Differenzierungen. Eine direkte Befragung des Experten („Wie genau unterscheiden Sie einen regulären Start von einem Fehlerzustand?“) führt jedoch regelmäßig zu nachträglichen Rationalisierungen: Der Fachexperte zitiert allgemeine Passagen aus Datenblättern und übergeht unbewusst die entscheidenden impliziten Erfahrungswerte. Stützt sich die Wissensbasis lediglich auf solche oberflächlichen Spezifikationsmerkmale, generiert die Inferenzmaschine im Grenzbetrieb fatale Fehlalarme, was in sicherheitskritischen Anwendungen zu ungerechtfertigten Notabschaltungen führt. Die Repertory-Grid-Methode von George Kelly überwindet diese kognitive Hürde durch einen strukturierten triadischen Vergleich konkreter Vorfälle oder Artefakte $(e_1, e_2, e_3)$.
 
-Der Knowledge Engineer legt dem Experten drei reale Oszillogramme eines Startvorgangs vor und stellt eine unveränderliche methodische Frage: „Welche zwei dieser Fälle ähneln einander, unterscheiden sich jedoch vom dritten – und an welchem konkreten physikalischen Merkmal machen Sie dies fest?“ Diese kognitive Operation zwingt den Experten, ein verborgenes bipolares Konstrukt explizit zu machen, beispielsweise: *„Der Taktgenerator startet vor der Stabilisierung der Versorgungsspannung“* $\longleftrightarrow$ *„Der Taktgenerator startet erst nach erfolgter Stabilisierung“*. Dieses Prädikat existierte zuvor in keinem formalen Datenschema, bildet jedoch das ausschlaggebende Kriterium zur Fehlerdiagnose. Im nächsten Schritt hinterlegt der Knowledge Engineer dieses Konstrukt mit messbaren physikalischen Parametern (Einheiten, zulässige Zeitintervalle $`\Delta t`$, Spannungsschwellenwerte) und validiert die gewonnene bipolare Regel an einem unabhängigen Korpus von Oszillogrammen.
+Der Knowledge Engineer legt dem Experten drei reale Oszillogramme eines Startvorgangs vor und stellt eine unveränderliche methodische Frage: „Welche zwei dieser Fälle ähneln einander, unterscheiden sich jedoch vom dritten – und an welchem konkreten physikalischen Merkmal machen Sie dies fest?“ Diese kognitive Operation zwingt den Experten, ein verborgenes bipolares Konstrukt explizit zu machen, beispielsweise: *„Der Taktgenerator startet vor der Stabilisierung der Versorgungsspannung“* $\longleftrightarrow$ *„Der Taktgenerator startet erst nach erfolgter Stabilisierung“*. Dieses Prädikat existierte zuvor in keinem formalen Datenschema, bildet jedoch das ausschlaggebende Kriterium zur Fehlerdiagnose. Im nächsten Schritt hinterlegt der Knowledge Engineer dieses Konstrukt mit messbaren physikalischen Parametern (Einheiten, zulässige Zeitintervalle $\Delta t$, Spannungsschwellenwerte) und validiert die gewonnene bipolare Regel an einem unabhängigen Korpus von Oszillogrammen.
 
 ### 3.2. Critical Decision Method (CDM): Analyse kritischer Vorfälle
 
@@ -258,8 +258,8 @@ Parameter der Beta-Verteilung:
 
 Praktische Anwendung und Auslösekriterium:
 Die A-posteriori-Verteilung gestattet der Inferenzmaschine die Berechnung eines $95\,\%$-Bayes-Glaubwürdigkeitsintervalls (Credible Interval) $[p_{\mathrm{low}}, p_{\mathrm{high}}]$ über die Quantilsformel: $\int_0^{p_{\mathrm{low}}} \mathrm{Beta} = 0{,}025$ und $\int_0^{p_{\mathrm{high}}} \mathrm{Beta} = 0{,}975$.
-- Beträgt die Intervallbreite $`\Delta p = p_{\mathrm{high}} - p_{\mathrm{low}} \le 0{,}15`$, gilt die Regel als statistisch ausgereift und wird für den Produktiveinsatz in der Wissensbasis freigegeben.
-- Beträgt die Intervallbreite $`\Delta p > 0{,}30`$ (beispielsweise für $k=7, n=10$, wo $\mathrm{Beta}(8, 4)$ ein $95\,\%$-Intervall von etwa $[0{,}39; 0{,}89]$ liefert), ist die Ungewissheit für sicherheitskritische Entscheidungen inakzeptabel. Das Expertensystem schaltet in einen Schutzmodus (*fail-safe hold*), blockiert die automatisierte Entscheidung und fordert eine konservative Fallback-Regel oder einen manuellen Eingriff an.
+- Beträgt die Intervallbreite $\Delta p = p_{\mathrm{high}} - p_{\mathrm{low}} \le 0{,}15$, gilt die Regel als statistisch ausgereift und wird für den Produktiveinsatz in der Wissensbasis freigegeben.
+- Beträgt die Intervallbreite $\Delta p > 0{,}30$ (beispielsweise für $k=7, n=10$, wo $\mathrm{Beta}(8, 4)$ ein $95\,\%$-Intervall von etwa $[0{,}39; 0{,}89]$ liefert), ist die Ungewissheit für sicherheitskritische Entscheidungen inakzeptabel. Das Expertensystem schaltet in einen Schutzmodus (*fail-safe hold*), blockiert die automatisierte Entscheidung und fordert eine konservative Fallback-Regel oder einen manuellen Eingriff an.
 
 Klassifizieren mehrere Experten denselben Fallbestand, liefert die einfache prozentuale Übereinstimmung ein verzerrtes Bild, wenn eine Kategorie dominant auftritt. Cohens Kappa-Koeffizient korrigiert die Übereinstimmung zweier Beurteiler um den Zufall [[13]](#src-13):
 
@@ -269,8 +269,8 @@ Klassifizieren mehrere Experten denselben Fallbestand, liefert die einfache proz
 
 Komponenten von Kappa und Normierung:
 
-- $`p_o`$ ist der beobachtete Anteil übereinstimmender Bewertungen zweier Experten auf der Kalibrierungsstichprobe;
-- $`p_e`$ ist der theoretisch erwartete Anteil zufälliger Übereinstimmungen bei gegebenen Randverteilungen ($p_e < 1$);
+- $p_o$ ist der beobachtete Anteil übereinstimmender Bewertungen zweier Experten auf der Kalibrierungsstichprobe;
+- $p_e$ ist der theoretisch erwartete Anteil zufälliger Übereinstimmungen bei gegebenen Randverteilungen ($p_e < 1$);
 - $\kappa$ ist der dimensionslose Koeffizient der Beurteilerübereinstimmung im theoretischen Wertebereich $[-1, 1]$.
 
 Ingenieurtechnische Schwellenwerte für die Regelzulassung:
@@ -311,14 +311,14 @@ H(\Theta)=-\sum_i P(\theta_i)\log_2 P(\theta_i).
 
 Symbole der Entropieformel:
 
-- $\Theta$ ist eine diskrete Zufallsvariable, $`\theta_i`$ ein möglicher Zustand und $P(\theta_i)$ die Wahrscheinlichkeit dieses Zustands;
+- $\Theta$ ist eine diskrete Zufallsvariable, $\theta_i$ ein möglicher Zustand und $P(\theta_i)$ die Wahrscheinlichkeit dieses Zustands;
 - $i$ iteriert über alle Zustände, die Summe aggregiert deren Beiträge, und $\log_2$ bezeichnet den Logarithmus dualis;
 - $H(\Theta)$ wird in Bit gemessen, nimmt bei deterministischem Ausgang den Wert null an und wächst, wenn sich die Wahrscheinlichkeitsmasse auf mehrere Alternativen verteilt.
 
 Für zwei gleichwahrscheinliche Hypothesen ergibt sich $H=-2(0{,}5\log_2 0{,}5)=1\ \text{Bit}$.
 
 Abbruchkriterium des aktiven Befragungsalgorithmus:
-Die Generierung von Fragen an den Fachexperten bricht nach einer Konvergenzregel des Informationsgewinns ab: Gilt für alle Fragen $q \in Q$ die Bedingung $\max_q IG(q) < \epsilon_{\mathrm{stop}}$ (wobei die Schranke typischerweise auf $`\epsilon_{\mathrm{stop}} = 0{,}05\ \text{Bit}`$ gesetzt wird), gelten weitere Nachfragen als unergiebig. Die Sitzung schaltet auf die Formalisierung der Resultate um, was eine kognitive Überlastung des Experten verhindert.
+Die Generierung von Fragen an den Fachexperten bricht nach einer Konvergenzregel des Informationsgewinns ab: Gilt für alle Fragen $q \in Q$ die Bedingung $\max_q IG(q) < \epsilon_{\mathrm{stop}}$ (wobei die Schranke typischerweise auf $\epsilon_{\mathrm{stop}} = 0{,}05\ \text{Bit}$ gesetzt wird), gelten weitere Nachfragen als unergiebig. Die Sitzung schaltet auf die Formalisierung der Resultate um, was eine kognitive Überlastung des Experten verhindert.
 
 Die Fragenselektion nach maximalem Informationsgewinn ist eng mit dem Active Learning verwandt, dessen Grundlagen Burr Settles zusammenfasste [[16]](#src-16). Eine Frage mit maximaler Entropiereduktion besitzt jedoch nicht zwingend den höchsten praktischen Nutzen. Die Information-Value-Theorie von Ronald Howard bewertet Information danach, in welchem Maße sie reale Entscheidungen verbessert [[17]](#src-17). Die Priorität in der industriellen Praxis koppelt daher das Entscheidungsrisiko, die Schadensreduktion und die Kosten der Fragestellung:
 
@@ -329,14 +329,14 @@ q^*=\arg\max_q\frac{\mathbb E\bigl[L(a_0)-L(a_q)\bigr]}{C_{\mathrm{expert}}(q)+C
 Kriterien der optimalen Fragenauswahl:
 
 - $q$ ist eine Kandidatenfrage und $q^*$ jene Frage mit dem maximalen Quotienten aus erwarteter Verlustreduktion und Gesamtkosten;
-- $`a_0`$ ist die optimale Aktion beim aktuellen Kenntnisstand, $a_q$ die angepasste Aktion nach Erhalt der Antwort und $L(a)$ der Verlust der Aktion $a$;
-- $`\mathbb E[L(a_0)-L(a_q)]`$ mittelt die Schadensreduktion über alle denkbaren Antworten;
-- $`C_{\mathrm{expert}}(q)`$ beziffert die Kosten der Expertenzeit, $`C_{\mathrm{validation}}(q)`$ die Verifikationskosten der Antwort, wobei deren Summe strikt positiv sein muss;
+- $a_0$ ist die optimale Aktion beim aktuellen Kenntnisstand, $a_q$ die angepasste Aktion nach Erhalt der Antwort und $L(a)$ der Verlust der Aktion $a$;
+- $\mathbb E[L(a_0)-L(a_q)]$ mittelt die Schadensreduktion über alle denkbaren Antworten;
+- $C_{\mathrm{expert}}(q)$ beziffert die Kosten der Expertenzeit, $C_{\mathrm{validation}}(q)$ die Verifikationskosten der Antwort, wobei deren Summe strikt positiv sein muss;
 - alle Kostenkomponenten müssen in konsistenten Einheiten bilanziert werden, damit der Quotient den Grenznutzen pro Kosteneinheit darstellt.
 
 Wirtschaftliches und sicherheitstechnisches Abbruchkriterium:
 Der Zähler repräsentiert die mathematische Erwartung vermiedener Schäden (in Währungs- oder Risikoeinheiten), der Nenner die direkten Kosten der Expertensitzung und Prüfstandsmessungen.
-- Gilt $`\max_q \mathbb E[L(a_0)-L(a_q)] \le C_{\mathrm{expert}}(q) + C_{\mathrm{validation}}(q)`$, ist der Erkenntniswert weiterer Befragungen erschöpft. Das System stoppt die Elicitation, markiert die Restunsicherheit als irreduzibles «bekanntes Unbekanntes» ($UNK$) und überführt sie in eine restriktive Sicherheitsinvariante des Expertensystems.
+- Gilt $\max_q \mathbb E[L(a_0)-L(a_q)] \le C_{\mathrm{expert}}(q) + C_{\mathrm{validation}}(q)$, ist der Erkenntniswert weiterer Befragungen erschöpft. Das System stoppt die Elicitation, markiert die Restunsicherheit als irreduzibles «bekanntes Unbekanntes» ($UNK$) und überführt sie in eine restriktive Sicherheitsinvariante des Expertensystems.
 
 ```mermaid
 flowchart TD
@@ -447,11 +447,11 @@ Mittlere Verlustschätzung der Regel:
 
 - $r$ ist die zu prüfende Regel, $N>0$ die Anzahl der Testfälle und $i$ der Laufindex;
 - $x_i$ bezeichnet die Eingangsdaten, $y_i$ das Sollergebnis und $r(x_i)$ den Regelbefund;
-- $`L(r(x_i),y_i;\ \mathrm{context}_i)`$ beziffert den Verlust einer Fehlentscheidung unter Berücksichtigung des spezifischen Kontexts $`\mathrm{context}_i`$ (Semikolon trennt den Kontext);
+- $L(r(x_i),y_i;\ \mathrm{context}_i)$ beziffert den Verlust einer Fehlentscheidung unter Berücksichtigung des spezifischen Kontexts $\mathrm{context}_i$ (Semikolon trennt den Kontext);
 - die Summe aggregiert die Einzelverluste, die Division durch $N$ liefert den mittleren Verlust in Einheiten der Kostenmatrix.
 
 Ingenieurtechnische Abnahmekriterien und Risikostratifikation:
-Eine Regel wird erst dann für den Produktiveinsatz zugelassen, wenn das empirische Risiko auf der Gesamttestmenge die Sicherheitsgrenze nicht überschreitet: $`\widehat R(r) \le \tau_{\mathrm{risk}}`$ (für missionskritische Funktionen nach ASIL D gilt typischerweise $`\tau_{\mathrm{risk}} = 0{,}001`$). Zusätzlich wird eine stratifizierte Verlustanalyse über operative Teilschnitte durchgeführt: Tritt auf einer kritischen Teilmenge (etwa Kaltstart bei $T < -10^\circ\mathrm{C}$) ein Einzelschaden $`L_{\mathrm{slice}} > 0`$ auf (beispielsweise das Nichterkennen einer fatalen Spannungsdegradation), wird die Regel ausnahmslos zurückgewiesen – ungeachtet eines exzellenten globalen Mittelwerts. Bei hypothetischen Verlusten von 0, 1 und 2 über drei Testfälle beträgt der Mittelwert $(0+1+2)/3=1$. Ein globaler Mittelwert darf niemals eine singuläre katastrophale Fehlfunktion im Grenzbereich verschleiern.
+Eine Regel wird erst dann für den Produktiveinsatz zugelassen, wenn das empirische Risiko auf der Gesamttestmenge die Sicherheitsgrenze nicht überschreitet: $\widehat R(r) \le \tau_{\mathrm{risk}}$ (für missionskritische Funktionen nach ASIL D gilt typischerweise $\tau_{\mathrm{risk}} = 0{,}001$). Zusätzlich wird eine stratifizierte Verlustanalyse über operative Teilschnitte durchgeführt: Tritt auf einer kritischen Teilmenge (etwa Kaltstart bei $T < -10^\circ\mathrm{C}$) ein Einzelschaden $L_{\mathrm{slice}} > 0$ auf (beispielsweise das Nichterkennen einer fatalen Spannungsdegradation), wird die Regel ausnahmslos zurückgewiesen – ungeachtet eines exzellenten globalen Mittelwerts. Bei hypothetischen Verlusten von 0, 1 und 2 über drei Testfälle beträgt der Mittelwert $(0+1+2)/3=1$. Ein globaler Mittelwert darf niemals eine singuläre katastrophale Fehlfunktion im Grenzbereich verschleiern.
 
 ## 11. Antipattern und typische Fehlkonzepte des kognitiven Knowledge Engineering
 

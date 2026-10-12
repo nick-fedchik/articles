@@ -116,11 +116,11 @@ C_{\text{req}}(r)=\frac{1}{m}\sum_{j=1}^{m} I_j(r)
 
 Quantities in structural completeness:
 
-- $r$ is the requirement, $`m>0`$ is the number of mandatory schema fields, and $j$ indexes the field;
-- $`I_j(r)`$ equals 1 if field $j$ is populated with a value of the correct datatype, and 0 otherwise;
-- $`\sum_{j=1}^{m}`$ aggregates evaluations across all fields, and division by $m$ computes their ratio.
+- $r$ is the requirement, $m>0$ is the number of mandatory schema fields, and $j$ indexes the field;
+- $I_j(r)$ equals 1 if field $j$ is populated with a value of the correct datatype, and 0 otherwise;
+- $\sum_{j=1}^{m}$ aggregates evaluations across all fields, and division by $m$ computes their ratio.
 
-The output metric is bounded within the interval $[0, 1]$: if four of five required attributes are populated, $`C_{\text{req}} = 4/5 = 0.8`$. However, a populated field does not guarantee semantic validity: populating `owner: TBD` satisfies schema presence while failing engineering accountability. Therefore, an operational quality gate (*quality gate*) is formalized as a product of conjunctional binary checks, without asserting statistical independence:
+The output metric is bounded within the interval $[0, 1]$: if four of five required attributes are populated, $C_{\text{req}} = 4/5 = 0.8$. However, a populated field does not guarantee semantic validity: populating `owner: TBD` satisfies schema presence while failing engineering accountability. Therefore, an operational quality gate (*quality gate*) is formalized as a product of conjunctional binary checks, without asserting statistical independence:
 
 ```math
 Q_{\text{gate}}(r)=\mathbf{1}[C_{\text{req}}(r)=1]\cdot\mathbf{1}[T(r)=1]\cdot\mathbf{1}[A(r)=1]\cdot\mathbf{1}[S(r)=1]
@@ -128,25 +128,25 @@ Q_{\text{gate}}(r)=\mathbf{1}[C_{\text{req}}(r)=1]\cdot\mathbf{1}[T(r)=1]\cdot\m
 
 Checks in the quality gate:
 
-- $r$ is the evaluated requirement, and $`C_{\text{req}}(r)=1`$ asserts complete schema compliance;
+- $r$ is the evaluated requirement, and $C_{\text{req}}(r)=1$ asserts complete schema compliance;
 - $\mathbf{1}[\cdot]$ denotes the indicator function yielding 1 if its internal predicate is satisfied, and 0 otherwise;
 - $T(r)$ evaluates testability, $A(r)$ asserts the absence of identified ambiguities, and $S(r)$ verifies formal consistency against the active baseline;
 - The multiplication operator enforces that every gating condition must evaluate to 1 simultaneously.
 
-Consequently, $`Q_{\text{gate}}(r)`$ evaluates strictly to $\{0, 1\}$, returning 1 only when all validation gates pass. While a statistical or neural classifier may estimate $T$ or flag suspected ambiguities, an automated quality gate must never silently substitute a probabilistic heuristic for a deterministic engineering verdict.
+Consequently, $Q_{\text{gate}}(r)$ evaluates strictly to $\{0, 1\}$, returning 1 only when all validation gates pass. While a statistical or neural classifier may estimate $T$ or flag suspected ambiguities, an automated quality gate must never silently substitute a probabilistic heuristic for a deterministic engineering verdict.
 
 **Runtime Control Flow and State Transitions:**
-- **Baseline Approved (`Baseline Approved`):** when $`Q_{\text{gate}}(r) = 1`$, the requirement object is cryptographically signed using the systems engineer's private key (Ed25519) and permanently committed to the immutable baseline release manifest;
-- **Block Commit (`Block Commit`):** when $`Q_{\text{gate}}(r) = 0`$, the pre-commit or CI/CD hook rejects artifact registration, returning a machine-readable diagnostic report containing the status vector $`[C_{\text{req}}, T, A, S]`$ to guide authorial remediation.
+- **Baseline Approved (`Baseline Approved`):** when $Q_{\text{gate}}(r) = 1$, the requirement object is cryptographically signed using the systems engineer's private key (Ed25519) and permanently committed to the immutable baseline release manifest;
+- **Block Commit (`Block Commit`):** when $Q_{\text{gate}}(r) = 0$, the pre-commit or CI/CD hook rejects artifact registration, returning a machine-readable diagnostic report containing the status vector $[C_{\text{req}}, T, A, S]$ to guide authorial remediation.
 
 **Worked Numerical Example:**
-Consider a draft requirement REQ-104 ("The controller shall rapidly clear the alarm flag under undervoltage conditions"). The schema defines $m = 5$ mandatory attributes, all populated with valid datatypes ($`C_{\text{req}} = 1`$). Testability is established via hardware injection ($T = 1$), and consistency against the baseline is confirmed ($S = 1$). However, the linguistic linter flags the vague adverb "rapidly" lacking an explicit millisecond timeout bound ($A = 0$):
+Consider a draft requirement REQ-104 ("The controller shall rapidly clear the alarm flag under undervoltage conditions"). The schema defines $m = 5$ mandatory attributes, all populated with valid datatypes ($C_{\text{req}} = 1$). Testability is established via hardware injection ($T = 1$), and consistency against the baseline is confirmed ($S = 1$). However, the linguistic linter flags the vague adverb "rapidly" lacking an explicit millisecond timeout bound ($A = 0$):
 
 ```math
 Q_{\text{gate}}(\text{REQ-104}) = \mathbf{1}[1 = 1] \cdot \mathbf{1}[1 = 1] \cdot \mathbf{1}[0 = 1] \cdot \mathbf{1}[1 = 1] = 1 \cdot 1 \cdot 0 \cdot 1 = 0
 ```
 
-Because $`Q_{\text{gate}} = 0`$, the pipeline blocks artifact registration, emitting diagnostic code `ERR_AMBIGUOUS_SPECIFICATION: missing latency bound`. The verification sequence is illustrated below:
+Because $Q_{\text{gate}} = 0$, the pipeline blocks artifact registration, emitting diagnostic code `ERR_AMBIGUOUS_SPECIFICATION: missing latency bound`. The verification sequence is illustrated below:
 
 > [!NOTE]
 > **Author's Deterministic Quality Gate for Engineering Requirements ($Q_{\text{gate}}$)**
@@ -197,23 +197,23 @@ Structured data transforms this chain into an actionable, navigable graph. Chang
 
 Notation for coverage:
 
-- $R$ denotes the set of active requirements, $T$ denotes the set of tests, and $`E_{RT}`$ denotes the set of confirmed "requirement is verified by test" relations;
-- $r$ designates an individual requirement, $t$ designates an individual test, and $`(r,t)\in E_{RT}`$ asserts that a confirmed relation binds that exact pair;
-- $\exists$ signifies "there exists at least one", and $`\lvert\cdot\rvert`$ denotes set cardinality;
+- $R$ denotes the set of active requirements, $T$ denotes the set of tests, and $E_{RT}$ denotes the set of confirmed "requirement is verified by test" relations;
+- $r$ designates an individual requirement, $t$ designates an individual test, and $(r,t)\in E_{RT}$ asserts that a confirmed relation binds that exact pair;
+- $\exists$ signifies "there exists at least one", and $\lvert\cdot\rvert$ denotes set cardinality;
 - The numerator enumerates all requirements backed by at least one verification test, while the denominator counts all active requirements in the baseline.
 
 **Runtime Control Flow and Regulatory Compliance Gates:**
-- **Functional Safety Imperative (ISO 26262 ASIL D / DO-178C Level A):** regulatory standards strictly mandate $`\mathrm{Coverage}_{R\rightarrow T} = 1.00`$. Any value strictly less than unity represents a safety-critical verification deficiency;
-- **Pipeline Reaction:** if $`\mathrm{Coverage}_{R\rightarrow T} < 1.00`$, the safety report compiler raises a `FAIL_CLOSED` event, blocks production binary compilation and cryptographic signing, and exports the set of unverified requirements to the defect tracker.
+- **Functional Safety Imperative (ISO 26262 ASIL D / DO-178C Level A):** regulatory standards strictly mandate $\mathrm{Coverage}_{R\rightarrow T} = 1.00$. Any value strictly less than unity represents a safety-critical verification deficiency;
+- **Pipeline Reaction:** if $\mathrm{Coverage}_{R\rightarrow T} < 1.00$, the safety report compiler raises a `FAIL_CLOSED` event, blocks production binary compilation and cryptographic signing, and exports the set of unverified requirements to the defect tracker.
 
 **Worked Numerical Example:**
-A release candidate baseline contains $`\lvert R \rvert = 120`$ safety-critical requirements. Automated test bench auditing confirms valid associations with passing test runs for 118 requirements:
+A release candidate baseline contains $\lvert R \rvert = 120$ safety-critical requirements. Automated test bench auditing confirms valid associations with passing test runs for 118 requirements:
 
 ```math
 \mathrm{Coverage}_{R\rightarrow T} = \frac{118}{120} \approx 0{,}9833
 ```
 
-Because $`\mathrm{Coverage}_{R\rightarrow T} = 0.9833 < 1.00`$, the release gate aborts firmware release despite 98.3% verification completion, highlighting the two unverified specifications: `REQ-045` (watchdog timer reset sequence) and `REQ-089` (CAN bus break detection).
+Because $\mathrm{Coverage}_{R\rightarrow T} = 0.9833 < 1.00$, the release gate aborts firmware release despite 98.3% verification completion, highlighting the two unverified specifications: `REQ-045` (watchdog timer reset sequence) and `REQ-089` (CAN bus break detection).
 
 ## 7. Modeling Plans, Risks, and Milestones as Typed Objects
 
@@ -384,10 +384,10 @@ flowchart TB
 A complete provenance descriptor for an extracted engineering artifact comprises five coordinate dimensions:
 
 1. **Cryptographic source hash (`file_sha256`):** captures the exact binary snapshot within Git or Content-Addressable Storage (*Content-Addressable Storage*, CAS). Altering a single bit in the source file invalidates the hash.
-2. **Byte span (`byte_span`):** a half-open byte interval $`[b_{\text{start}}, b_{\text{end}})`$ referencing raw binary offsets within the source file, providing an encoding-independent reference.
+2. **Byte span (`byte_span`):** a half-open byte interval $[b_{\text{start}}, b_{\text{end}})$ referencing raw binary offsets within the source file, providing an encoding-independent reference.
 3. **Character span (`char_span`):** Unicode character offsets in the decoded canonical text, used by internal text-processing runtimes.
-4. **Line and column coordinates (`line_col`):** a tuple $`[l_{\text{start}}, c_{\text{start}}, l_{\text{end}}, c_{\text{end}}]`$ enabling IDEs (VS Code, CLion) to highlight the source passage.
-5. **Bounding box (`bbox`):** for PDFs, engineering drawings, or scans: page number and normalized spatial coordinates $`[x_0, y_0, x_1, y_1]`$ bounding the visual region.
+4. **Line and column coordinates (`line_col`):** a tuple $[l_{\text{start}}, c_{\text{start}}, l_{\text{end}}, c_{\text{end}}]$ enabling IDEs (VS Code, CLion) to highlight the source passage.
+5. **Bounding box (`bbox`):** for PDFs, engineering drawings, or scans: page number and normalized spatial coordinates $[x_0, y_0, x_1, y_1]$ bounding the visual region.
 
 <details>
 <summary>Example YAML: Chunk provenance metadata with byte coordinates</summary>
@@ -498,7 +498,7 @@ The chunk count $N(L, c, o)$ directly dictates the memory footprint for vectoriz
 M_{\mathrm{emb}} = N \cdot d_{\mathrm{model}} \cdot b_{\mathrm{elem}}
 ```
 
-where $`d_{\mathrm{model}}`$ is the embedding dimension (e.g., 768 values), and $`b_{\mathrm{elem}}`$ is the datatype size in bytes (2 bytes for FP16 or 1 byte for INT8).
+where $d_{\mathrm{model}}$ is the embedding dimension (e.g., 768 values), and $b_{\mathrm{elem}}$ is the datatype size in bytes (2 bytes for FP16 or 1 byte for INT8).
 
 **Worked Numerical Example:**
 A hardware specification contains an extensive bus protocol section comprising $L = 2500$ tokens. The chunking pipeline is configured with capacity $c = 512$ tokens and overlap $o = 64$ tokens (stride $c - o = 448$ tokens):
@@ -507,7 +507,7 @@ A hardware specification contains an extensive bus protocol section comprising $
 N(2500, 512, 64) = 1 + \left\lceil\frac{\max(0, 2500 - 512)}{448}\right\rceil = 1 + \left\lceil\frac{1988}{448}\right\rceil = 1 + \lceil 4{,}4375 \rceil = 1 + 5 = 6 \text{ chunks}
 ```
 
-Persisting the resulting 6 chunk embeddings in FP16 format ($`d_{\mathrm{model}} = 768`$) requires:
+Persisting the resulting 6 chunk embeddings in FP16 format ($d_{\mathrm{model}} = 768$) requires:
 
 ```math
 M_{\mathrm{emb}} = 6 \cdot 768 \cdot 2\,\text{bytes} = 9\,216\,\text{bytes} \approx 9{,}0\,\text{KB}
@@ -632,25 +632,25 @@ S_{\text{triage}}(x)=\sum_i w_i\,q_i(x)-\sum_j v_j\,n_j(x),\qquad w_i,\ v_j\ge 0
 
 Components of the score:
 
-- $x$ designates the candidate chunk, $`q_i(x)\in[0,1]`$ denotes normalized positive quality signals, and $`n_j(x)\in[0,1]`$ represents normalized noise signals;
-- $i$ and $j$ index positive and noise features, respectively, with $`w_i\ge0`$ and $`v_j\ge0`$ weighting their relative impact;
+- $x$ designates the candidate chunk, $q_i(x)\in[0,1]$ denotes normalized positive quality signals, and $n_j(x)\in[0,1]$ represents normalized noise signals;
+- $i$ and $j$ index positive and noise features, respectively, with $w_i\ge0$ and $v_j\ge0$ weighting their relative impact;
 - The first summation aggregates weighted quality indicators, while the second penalizes detected noise.
 
-The composite score falls within the range $`[-\sum_j v_j, \sum_i w_i]`$. Applying dual thresholds yields three deterministic outcomes: if $`S\ge\tau_{\text{accept}}`$, the chunk is indexed; if $`S<\tau_{\text{reject}}`$, it is rejected with logged diagnostic codes; and if $`\tau_{\text{reject}}\le S<\tau_{\text{accept}}`$, it is quarantined for human review. This intermediate zone prevents masquerading uncertainty as binary truth.
+The composite score falls within the range $[-\sum_j v_j, \sum_i w_i]$. Applying dual thresholds yields three deterministic outcomes: if $S\ge\tau_{\text{accept}}$, the chunk is indexed; if $S<\tau_{\text{reject}}$, it is rejected with logged diagnostic codes; and if $\tau_{\text{reject}}\le S<\tau_{\text{accept}}$, it is quarantined for human review. This intermediate zone prevents masquerading uncertainty as binary truth.
 
 **Runtime Control Flow and Triage Thresholds:**
-- **Direct Admission (`Direct Admission`):** if $`S_{\text{triage}}(x) \ge \tau_{\text{accept}} = 0.75`$, the chunk is verified as clean and forwarded to vectorization;
-- **Human-in-the-Loop Quarantine (`Human-in-the-Loop Triage`):** if $`\tau_{\text{reject}} \le S_{\text{triage}}(x) < \tau_{\text{accept}}`$ (with $`\tau_{\text{reject}} = 0.20`$), the chunk is flagged as `SUSPICIOUS_ARTIFACT` and routed to the curator queue;
-- **Drop Noise (`Drop Noise`):** if $`S_{\text{triage}}(x) < \tau_{\text{reject}} = 0.20`$, the chunk is discarded as parsing or scanning debris, logging an event without contaminating index storage.
+- **Direct Admission (`Direct Admission`):** if $S_{\text{triage}}(x) \ge \tau_{\text{accept}} = 0.75$, the chunk is verified as clean and forwarded to vectorization;
+- **Human-in-the-Loop Quarantine (`Human-in-the-Loop Triage`):** if $\tau_{\text{reject}} \le S_{\text{triage}}(x) < \tau_{\text{accept}}$ (with $\tau_{\text{reject}} = 0.20$), the chunk is flagged as `SUSPICIOUS_ARTIFACT` and routed to the curator queue;
+- **Drop Noise (`Drop Noise`):** if $S_{\text{triage}}(x) < \tau_{\text{reject}} = 0.20$, the chunk is discarded as parsing or scanning debris, logging an event without contaminating index storage.
 
 **Worked Numerical Example:**
-Evaluating a chunk extracted from a PDF specification: printable character ratio $`q_1 = 0.95`$ ($`w_1 = 0.6`$), presence of standard identifier $`q_2 = 1.0`$ ($`w_2 = 0.4`$), mixed-alphabet ratio from OCR $`n_1 = 0.05`$ ($`v_1 = 0.5`$):
+Evaluating a chunk extracted from a PDF specification: printable character ratio $q_1 = 0.95$ ($w_1 = 0.6$), presence of standard identifier $q_2 = 1.0$ ($w_2 = 0.4$), mixed-alphabet ratio from OCR $n_1 = 0.05$ ($v_1 = 0.5$):
 
 ```math
 S_{\text{triage}}(x) = (0.6 \cdot 0.95 + 0.4 \cdot 1.0) - (0.5 \cdot 0.05) = (0.57 + 0.40) - 0.025 = 0.945
 ```
 
-Because $`S_{\text{triage}}(x) = 0.945 \ge \tau_{\text{accept}} = 0.75`$, the chunk clears the quality gate and proceeds directly to indexing.
+Because $S_{\text{triage}}(x) = 0.945 \ge \tau_{\text{accept}} = 0.75$, the chunk clears the quality gate and proceeds directly to indexing.
 
 > [!NOTE]
 > **Author's Three-Tier Sanitation Triage Model for Engineering Chunks ($S_{\text{triage}}$)**
@@ -662,7 +662,7 @@ Because $`S_{\text{triage}}(x) = 0.945 \ge \tau_{\text{accept}} = 0.75`$, the ch
 <details>
 <summary>Example in Go: Triage filtering of clean and degraded OCR chunks</summary>
 
-This self-contained program is executable via `go run main.go`. Integer scores implement a pedagogical approximation of $`S_{\text{triage}}`$; mixed-script words (intermixing Cyrillic and Latin glyphs) are penalized as OCR corruption.
+This self-contained program is executable via `go run main.go`. Integer scores implement a pedagogical approximation of $S_{\text{triage}}$; mixed-script words (intermixing Cyrillic and Latin glyphs) are penalized as OCR corruption.
 
 ```go
 package main
@@ -858,10 +858,10 @@ Cosine similarity between individual query-document pairs cannot validate overal
 Metric parameters:
 
 - $Q$ is the benchmark query suite, and $q$ represents an individual query;
-- $\mathrm{Rel}(q)$ is the set of ground-truth relevant chunks for $q$, and $`\mathrm{Top}_k(q)`$ represents the top $k$ items returned by retrieval;
-- $`|\cdot|`$ denotes set cardinality, and the outer summation and division by $`|Q|`$ compute the mean recall across queries.
+- $\mathrm{Rel}(q)$ is the set of ground-truth relevant chunks for $q$, and $\mathrm{Top}_k(q)$ represents the top $k$ items returned by retrieval;
+- $|\cdot|$ denotes set cardinality, and the outer summation and division by $|Q|$ compute the mean recall across queries.
 
-The metric is bounded within $[0, 1]$, measuring what fraction of necessary evidence appears in the top $k$ results. For example, if a system retrieves 2 of 4 relevant chunks for query 1 and 3 of 3 for query 2, mean Recall@k is $(2/4+3/3)/2=0.75$. The metric requires $`|\mathrm{Rel}(q)|>0`$; zero-relevance queries are evaluated separately. Normalized Discounted Cumulative Gain (*normalized Discounted Cumulative Gain*, nDCG@k) evaluates rank ordering, while Mean Reciprocal Rank (*Mean Reciprocal Rank*, MRR) measures performance when exactly one primary reference is expected.
+The metric is bounded within $[0, 1]$, measuring what fraction of necessary evidence appears in the top $k$ results. For example, if a system retrieves 2 of 4 relevant chunks for query 1 and 3 of 3 for query 2, mean Recall@k is $(2/4+3/3)/2=0.75$. The metric requires $|\mathrm{Rel}(q)|>0$; zero-relevance queries are evaluated separately. Normalized Discounted Cumulative Gain (*normalized Discounted Cumulative Gain*, nDCG@k) evaluates rank ordering, while Mean Reciprocal Rank (*Mean Reciprocal Rank*, MRR) measures performance when exactly one primary reference is expected.
 
 Ablation studies (*ablation*) isolate performance drivers: evaluating pure BM25, pure vector retrieval, RRF hybrid fusion, and hybrid retrieval with cross-encoder reranking over identical corpus snapshots. Systems must monitor p50/p95 latency, operational costs, zero-result rates, and negative security authorization suites. A scenario where benchmark recall increases while user satisfaction degrades typically indicates corrupted provenance, an out-of-domain reranker, or failure of the generation layer to ground its responses in retrieved chunks.
 
@@ -1002,7 +1002,7 @@ The team selects a single artifact type, defines its minimal schema, and integra
 > *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
 **Chapter Thesis (Mykola Fedchyk):**  
-Engineering artifacts (requirements, datasheets, CAD schematics, test suites) become verifiable data for an evidential knowledge base exclusively through three-dimensional grounding: cryptographic primary-source custody ($`\mathcal{G}`$), 2D spatial bounding of cells within document coordinates, and physical unit normalization under the UCUM standard with counterfactual constraint validation. The document is merely a transient projection over typed data.
+Engineering artifacts (requirements, datasheets, CAD schematics, test suites) become verifiable data for an evidential knowledge base exclusively through three-dimensional grounding: cryptographic primary-source custody ($\mathcal{G}$), 2D spatial bounding of cells within document coordinates, and physical unit normalization under the UCUM standard with counterfactual constraint validation. The document is merely a transient projection over typed data.
 
 **Dialogue with David Parnas: Structured Engineering Documentation versus Automated Ingestion of Unformalized Text**
 
@@ -1011,7 +1011,7 @@ Engineering artifacts (requirements, datasheets, CAD schematics, test suites) be
 
 - **Mykola Fedchyk:**  
   *“Professor Parnas, your critique of vague specifications is the bedrock of engineering discipline: a machine cannot deduce an unambiguous contract from inherently ambiguous prose.  
-  Precisely for this reason, our artifact ingestion pipeline does not attempt to magically 'fix' flawed requirements. It performs an entirely different function: transforming passive files into a rigorous relational model while preserving a bijective mapping to primary byte spans ($`\mathcal{G}`$). If a normative statement in a source PDF exhibits ambiguity—such as omitting a numeric tolerance or the valid input domain of environmental variables under your Four-Variable Model—the requirement linter does not fabricate values; it emits a typed specification defect and halts the release gate in the CI/CD pipeline. We do not replace mathematical discipline—we enforce it automatically, converting every requirement into an auditable predicate over system states.”*
+  Precisely for this reason, our artifact ingestion pipeline does not attempt to magically 'fix' flawed requirements. It performs an entirely different function: transforming passive files into a rigorous relational model while preserving a bijective mapping to primary byte spans ($\mathcal{G}$). If a normative statement in a source PDF exhibits ambiguity—such as omitting a numeric tolerance or the valid input domain of environmental variables under your Four-Variable Model—the requirement linter does not fabricate values; it emits a typed specification defect and halts the release gate in the CI/CD pipeline. We do not replace mathematical discipline—we enforce it automatically, converting every requirement into an auditable predicate over system states.”*
 
 - **David L. Parnas (Counter-Challenge):**  
   *“Yet if your linter rejects the majority of legacy engineering documents due to their lack of mathematical rigor, how can real-world industrial enterprises adopt your expert system without completely paralyzing ongoing programs? Will not demanding immediate, total formalization trigger outright rejection by engineering teams?”*
@@ -1026,7 +1026,7 @@ Engineering artifacts (requirements, datasheets, CAD schematics, test suites) be
 
 - **Mykola Fedchyk:**  
   *“Dr. Frederick Brooks, your warning regarding accidental complexity is entirely justified: a naive automated ingestion script would quickly choke on formatting anomalies. This is precisely why this chapter establishes the foundational paradigm: 'a document is merely an ephemeral projection, whereas an engineering artifact must be born as typed data.'  
-  For legacy documentation (PDF and CAD files), we enforce strict three-dimensional isolation: the parser never guesses ambiguous semantics. Whenever OCR confidence or language model extraction ambiguity falls below our certification threshold, the artifact is quarantined with an immutable span grounding tuple $`\mathcal{G}`$.  
+  For legacy documentation (PDF and CAD files), we enforce strict three-dimensional isolation: the parser never guesses ambiguous semantics. Whenever OCR confidence or language model extraction ambiguity falls below our certification threshold, the artifact is quarantined with an immutable span grounding tuple $\mathcal{G}$.  
   No extracted rule enters the active production base without explicit digital sign-off from a certified domain engineer through a Human-in-the-Loop gate. We do not promise a magical 'silver bullet' that eliminates accidental formatting chaos; we engineer a hermetic qualification perimeter that filters out noise at the system boundary and admits only mathematically verified invariants into the core.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
@@ -1036,7 +1036,7 @@ Transforming engineering artifacts into verified data bridges the chasm between 
 
 This chapter opened with a project manager manually assembling status reports before every steering meeting, and a natural language requirement that failed to answer fundamental engineering questions. The chapter's central conclusion: engineering requirements and technical documentation do not disappear; they transform their operational role. Requirements, project schedules, work breakdown structures, risk registers, change requests, release milestones, and compliance packages must exist as verifiable, linkable, analyzable, and reproducible data objects, while documents serve as transient projections over that data. This chapter established:
 
-- Modeling requirements as structured objects with persistent identifiers and semantic versioning renders quality measurable ($`C_{\text{req}}`$, $`Q_{\text{gate}}`$) and graph coverage computable ($`\mathrm{Coverage}_{R\rightarrow T}`$), with both metrics indicating structural deficiencies rather than substituting for human engineering judgment;
+- Modeling requirements as structured objects with persistent identifiers and semantic versioning renders quality measurable ($C_{\text{req}}$, $Q_{\text{gate}}$) and graph coverage computable ($\mathrm{Coverage}_{R\rightarrow T}$), with both metrics indicating structural deficiencies rather than substituting for human engineering judgment;
 - Physical file formats dictate structural fidelity: markup formats are parsed deterministically, whereas layout-oriented formats and raster scans require heuristic and neural reconstruction with confidence scoring and byte-level provenance;
 - The pipeline from raw files to indexes (parsing, chunking, triage filtering, vectorization, dual indexing) propagates source attribution, quality scores, and security labels alongside each chunk, while search enhancements are validated via precision and recall metrics on domain-specific benchmarks;
 - Deterministic rules and compact models handle repetitive, high-throughput pipeline stages, while generative LLMs are engaged where broad contextual reasoning and synthesis justify computational cost.

@@ -158,7 +158,7 @@ Within the global architecture of an evidence-governed expert system, the primar
 
 The storage model for analog telemetry fundamentally differs from verbatim byte citation of a text document: a past continuous physical wave cannot be retrieved without prior digital recording. The system must store the digitized observation alongside the physical measurement channel descriptor. A digital signature applied post-conversion attests to recording integrity, not the truth of the physical phenomenon prior to reception. Physical verification and neuromorphic mixed-signal computing are treated in detail in [Appendix E](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
 
-For ideal uniform sampling of a real baseband signal with no frequency content above $B$, the Nyquist-Shannon criterion mandates $`f_s > 2B`$ coupled with an appropriate anti-aliasing filter. This condition preserves spectral information under defined assumptions; it does not ensure message truth, as formalized in Claude Shannon's mathematical theory of communication [[21]](#src-21). If an acoustic application requires an 8 kHz bandwidth, sampling at 16 kHz leaves zero practical transition band for an anti-aliasing filter; thus, sampling rates must be sized alongside analog filter roll-off characteristics. For bandpass and complex I/Q signals, distinct sampling theorems apply.
+For ideal uniform sampling of a real baseband signal with no frequency content above $B$, the Nyquist-Shannon criterion mandates $f_s > 2B$ coupled with an appropriate anti-aliasing filter. This condition preserves spectral information under defined assumptions; it does not ensure message truth, as formalized in Claude Shannon's mathematical theory of communication [[21]](#src-21). If an acoustic application requires an 8 kHz bandwidth, sampling at 16 kHz leaves zero practical transition band for an anti-aliasing filter; thus, sampling rates must be sized alongside analog filter roll-off characteristics. For bandpass and complex I/Q signals, distinct sampling theorems apply.
 
 The proposed observation manifest comprises a primary identifier, modality, target entity, event and ingestion timestamps, spatial coordinates, spatio-temporal uncertainty bounds, transformation lineage, model versions, source identifier, and dependency group. A record stripped of its primary raw fragment remains an unconfirmed lead for retrieval, but never a sufficient premise for an evidence-governed conclusion. The subsequent requirement is classifying the epistemic status of the assertion itself.
 
@@ -223,7 +223,7 @@ Across the operational lifecycle of an expert system, two fundamentally distinct
 
 In knowledge ingestion mode, continuous likelihood ratios $\Lambda(E) = \frac{P(E\mid H)}{P(E\mid \neg H)}$ cannot be applied directly: an arbitrary engineering prose document lacks objective numerical priors $P(H)$. Assigning an arbitrary log-odds coefficient to text is an exercise in pseudo-precision.
 
-For textual specifications, an evidence-governed expert system employs a **discrete epistemic scorecard ($`S_{\mathrm{doc}} \in [0, 100]`$)**:
+For textual specifications, an evidence-governed expert system employs a **discrete epistemic scorecard ($S_{\mathrm{doc}} \in [0, 100]$)**:
 
 | Evaluation Component | Objective Criterion | Score Contribution |
 |---|---|---|
@@ -239,9 +239,9 @@ For textual specifications, an evidence-governed expert system employs a **discr
 | | Violation of physical invariants (thermodynamic laws, energy conservation) | $-100$ (`REJECT`) |
 
 **Operational Knowledge Gate Thresholds:**
-- $`S_{\mathrm{doc}} \ge 70`$ points $\to$ `ADMIT` (admit document to automated ontological rule extraction);
-- $`40 \le S_{\mathrm{doc}} < 70`$ points $\to$ `DEFER` (requires independent secondary corroboration or human engineer review);
-- $`S_{\mathrm{doc}} < 40`$ points $\to$ `DISMISS` (reject without expending downstream parsing resources).
+- $S_{\mathrm{doc}} \ge 70$ points $\to$ `ADMIT` (admit document to automated ontological rule extraction);
+- $40 \le S_{\mathrm{doc}} < 70$ points $\to$ `DEFER` (requires independent secondary corroboration or human engineer review);
+- $S_{\mathrm{doc}} < 40$ points $\to$ `DISMISS` (reject without expending downstream parsing resources).
 
 ## 7. Probabilistic Assessment: Evidence Strength, Dependence, and Uncertainty
 
@@ -277,14 +277,14 @@ During stream processing of distributed telemetry, systems face the severe hazar
 
 **Parameters and Admissible Ranges:**
 - $\log O(H) \in (-\infty, +\infty)$ — initial log-prior odds expressed in logits (dimensionless units: $\text{nats}$ or $\text{dB}$).
-- $`E_i`$ — $i$-th incoming observation in the streaming fact pool ($i = 1, \dots, n$).
-- $`E_{1:i-1}`$ — set of all previously processed and linked evidence up to step $i$ inclusive (empty for $i=1$).
-- $`\frac{P(E_i\mid H,E_{1:i-1})}{P(E_i\mid\neg H,E_{1:i-1})}`$ — conditional likelihood ratio of evidence $`E_i`$ given history $`E_{1:i-1}`$.
-- $`\log O(H\mid E_{1:n})`$ — resulting log-odds of the hypothesis after processing the evidence series.
+- $E_i$ — $i$-th incoming observation in the streaming fact pool ($i = 1, \dots, n$).
+- $E_{1:i-1}$ — set of all previously processed and linked evidence up to step $i$ inclusive (empty for $i=1$).
+- $\frac{P(E_i\mid H,E_{1:i-1})}{P(E_i\mid\neg H,E_{1:i-1})}$ — conditional likelihood ratio of evidence $E_i$ given history $E_{1:i-1}$.
+- $\log O(H\mid E_{1:n})$ — resulting log-odds of the hypothesis after processing the evidence series.
 
 **Practical Implementation and Engineering Decisions:**
-- The admission gate maintains a directed provenance graph (*provenance graph*) for every fact. Simple summation of independent log terms is permitted if and only if the graph guarantees conditional source independence: $`P(E_i \mid H, E_{1:i-1}) = P(E_i \mid H)`$.
-- If observation $`E_i`$ is a duplicate or retransmission of an already incorporated $`E_j`$, its conditional probability equals unity under both $H$ and $\neg H$. The likelihood ratio reduces to $\frac{1}{1} = 1$, and its logarithmic contribution vanishes identically ($\log 1 = 0$).
+- The admission gate maintains a directed provenance graph (*provenance graph*) for every fact. Simple summation of independent log terms is permitted if and only if the graph guarantees conditional source independence: $P(E_i \mid H, E_{1:i-1}) = P(E_i \mid H)$.
+- If observation $E_i$ is a duplicate or retransmission of an already incorporated $E_j$, its conditional probability equals unity under both $H$ and $\neg H$. The likelihood ratio reduces to $\frac{1}{1} = 1$, and its logarithmic contribution vanishes identically ($\log 1 = 0$).
 - Engineering gating rule: upon receiving ten retransmissions, the initial assessment $P(H\mid E) \approx 0.471$ (given $P(H)=0.1$, $\Lambda=8$) remains unchanged. Only an authenticated independent observation (for instance, an optical sensor complementing an acoustic pickup with $\Lambda=4$) elevates the posterior probability to $32/41 \approx 0.780$. Any input lacking demonstrated independence is grouped into a unified dependency pool `GroupID`.
 
 ### 7.3. Assessment Interval in Lieu of Spurious Precision
@@ -298,19 +298,19 @@ L_{\max}=\mathop{\mathrm{logit}}(p_{0,\max})+\sum_{g\in\mathcal{G}}\ell_{g,\max}
 ```
 
 **Parameters and Admissible Ranges:**
-- $`p_{0,\min}, p_{0,\max} \in (0, 1)`$ — bounds of the prior probability interval subject to $`p_{0,\min} \le p_{0,\max}`$.
+- $p_{0,\min}, p_{0,\max} \in (0, 1)$ — bounds of the prior probability interval subject to $p_{0,\min} \le p_{0,\max}$.
 - $\mathop{\mathrm{logit}}(p) = \log\frac{p}{1-p}$ — logit transformation mapping $(0, 1)$ onto the real line $(-\infty, +\infty)$.
 - $\mathcal{G}$ — set of verified independent evidence groups.
-- $`\ell_{g,\min}, \ell_{g,\max} \in (-\infty, +\infty)`$ — lower and upper bounds of log-likelihood ratio for independent group $g$ ($`\ell_{g} = \log \Lambda_g`$).
+- $\ell_{g,\min}, \ell_{g,\max} \in (-\infty, +\infty)$ — lower and upper bounds of log-likelihood ratio for independent group $g$ ($\ell_{g} = \log \Lambda_g$).
 - $\sigma(L) = \frac{1}{1 + e^{-L}}$ — standard logistic sigmoid mapping $(-\infty, +\infty) \to [0, 1]$.
-- $`[p_{\min}, p_{\max}] \subseteq [0, 1]`$ — resulting guaranteed posterior probability interval.
+- $[p_{\min}, p_{\max}] \subseteq [0, 1]$ — resulting guaranteed posterior probability interval.
 
 **Practical Implementation and Engineering Decisions:**
-- The decision engine evaluates the derived interval $`[p_{\min}, p_{\max}]`$ against engineering safety thresholds:
-  - Fact admission threshold: if $`p_{\min} \ge \tau_{\mathrm{accept}}`$ (e.g., $`\tau_{\mathrm{accept}} = 0.95`$), the fact transitions to `SUPPORTED` and is admitted to the resolution engine.
-  - Hypothesis rejection threshold: if $`p_{\max} \le \tau_{\mathrm{reject}}`$ (e.g., $`\tau_{\mathrm{reject}} = 0.05`$), the hypothesis is refuted with status `COUNTER_SUPPORTED`.
-  - Epistemic uncertainty zone: if the interval straddles the operational threshold band or its width exceeds tolerance ($`p_{\max} - p_{\min} > \Delta_{\mathrm{tol}}`$), the system emits status `DEFER` (deferred decision).
-- Worked numerical scenario: given prior interval $[0.05, 0.15]$ and two independent groups with bounds $`\Lambda_1 \in [6, 10]`$ and $`\Lambda_2 \in [2, 5]`$, the resulting interval is $[0.387, 0.898]$. Although both pieces of evidence support the fault hypothesis, the lower bound $0.387$ provides zero formal justification for high-consequence intervention. The expert system suppresses premature shutdown and schedules targeted evidence acquisition.
+- The decision engine evaluates the derived interval $[p_{\min}, p_{\max}]$ against engineering safety thresholds:
+  - Fact admission threshold: if $p_{\min} \ge \tau_{\mathrm{accept}}$ (e.g., $\tau_{\mathrm{accept}} = 0.95$), the fact transitions to `SUPPORTED` and is admitted to the resolution engine.
+  - Hypothesis rejection threshold: if $p_{\max} \le \tau_{\mathrm{reject}}$ (e.g., $\tau_{\mathrm{reject}} = 0.05$), the hypothesis is refuted with status `COUNTER_SUPPORTED`.
+  - Epistemic uncertainty zone: if the interval straddles the operational threshold band or its width exceeds tolerance ($p_{\max} - p_{\min} > \Delta_{\mathrm{tol}}$), the system emits status `DEFER` (deferred decision).
+- Worked numerical scenario: given prior interval $[0.05, 0.15]$ and two independent groups with bounds $\Lambda_1 \in [6, 10]$ and $\Lambda_2 \in [2, 5]$, the resulting interval is $[0.387, 0.898]$. Although both pieces of evidence support the fault hypothesis, the lower bound $0.387$ provides zero formal justification for high-consequence intervention. The expert system suppresses premature shutdown and schedules targeted evidence acquisition.
 
 ### 7.4. Conflict and Unknown Correlation
 
@@ -322,16 +322,16 @@ P_{\mathrm{CI}}^{-1}=\omega P_1^{-1}+(1-\omega)P_2^{-1},\qquad
 ```
 
 **Parameters and Admissible Ranges:**
-- $`\hat x_1, \hat x_2 \in \mathbb{R}^d`$ — state estimate vectors of dimension $d$ acquired from two measurement channels (e.g., bearing temperature and lubrication pressure).
-- $`P_1, P_2 \in \mathbb{S}_{++}^d`$ — symmetric positive-definite error covariance matrices of dimension $d\times d$.
+- $\hat x_1, \hat x_2 \in \mathbb{R}^d$ — state estimate vectors of dimension $d$ acquired from two measurement channels (e.g., bearing temperature and lubrication pressure).
+- $P_1, P_2 \in \mathbb{S}_{++}^d$ — symmetric positive-definite error covariance matrices of dimension $d\times d$.
 - $\omega \in [0, 1]$ — scalar weighting factor parameterizing the convex combination of information matrices.
-- $`P_{\mathrm{CI}} \in \mathbb{S}_{++}^d`$ — resulting conservative fused error covariance matrix.
-- $`\hat x_{\mathrm{CI}} \in \mathbb{R}^d`$ — resulting fused state estimate vector.
+- $P_{\mathrm{CI}} \in \mathbb{S}_{++}^d$ — resulting conservative fused error covariance matrix.
+- $\hat x_{\mathrm{CI}} \in \mathbb{R}^d$ — resulting fused state estimate vector.
 
 **Practical Implementation and Engineering Decisions:**
-- The parameter $\omega$ is optimized via a deterministic numerical algorithm (Golden Section search on $[0, 1]$) minimizing the trace $`\min_\omega \mathrm{Tr}(P_{\mathrm{CI}})`$ or determinant $`\min_\omega \det(P_{\mathrm{CI}})`$.
-- Mathematical guarantee: the dispersion ellipsoid of $`P_{\mathrm{CI}}`$ encloses the intersection of the component ellipsoids ($`P_{\mathrm{CI}} \ge P_1 \cap P_2`$), completely precluding overconfidence. For two scalar estimates with equal variance $`\sigma_1^2 = \sigma_2^2 = 4`$, CI yields $`\sigma_{\mathrm{CI}}^2 = 4`$ (in contrast to naive Kalman fusion, which erroneously claims variance $2$).
-- Gating rule: if the resulting trace $`\mathrm{Tr}(P_{\mathrm{CI}})`$ exceeds the maximum permissible variance specified by ISO 26262, the system flags anomalous channel divergence, rejects the fused value, and switches the control channel to protective isolation.
+- The parameter $\omega$ is optimized via a deterministic numerical algorithm (Golden Section search on $[0, 1]$) minimizing the trace $\min_\omega \mathrm{Tr}(P_{\mathrm{CI}})$ or determinant $\min_\omega \det(P_{\mathrm{CI}})$.
+- Mathematical guarantee: the dispersion ellipsoid of $P_{\mathrm{CI}}$ encloses the intersection of the component ellipsoids ($P_{\mathrm{CI}} \ge P_1 \cap P_2$), completely precluding overconfidence. For two scalar estimates with equal variance $\sigma_1^2 = \sigma_2^2 = 4$, CI yields $\sigma_{\mathrm{CI}}^2 = 4$ (in contrast to naive Kalman fusion, which erroneously claims variance $2$).
+- Gating rule: if the resulting trace $\mathrm{Tr}(P_{\mathrm{CI}})$ exceeds the maximum permissible variance specified by ISO 26262, the system flags anomalous channel divergence, rejects the fused value, and switches the control channel to protective isolation.
 
 ## 8. Algorithmic Skepticism as an Executable Procedure
 
@@ -354,18 +354,18 @@ S_{\mathrm{leave}}=\max_{g\in\mathcal{G}}\left|p(H\mid E)-p(H\mid E\setminus E_g
 **Parameters and Admissible Ranges:**
 - $p(H\mid E) \in [0, 1]$ — posterior probability of hypothesis $H$ evaluated on the complete evidence set $E$.
 - $\mathcal{G}$ — set of verified independent evidence groups participating in the current inference.
-- $`E_g`$ — subset of observations belonging to dependency group $g$ (e.g., all frames from a single camera or telemetry gateway).
-- $`E\setminus E_g`$ — reduced evidence set resulting from temporarily withholding group $g$.
-- $`p(H\mid E\setminus E_g) \in [0, 1]`$ — recomputed posterior probability without evidence group $g$.
-- $`S_{\mathrm{leave}} \in [0, 1]`$ — dimensionless fragility index (maximum absolute probability shift).
+- $E_g$ — subset of observations belonging to dependency group $g$ (e.g., all frames from a single camera or telemetry gateway).
+- $E\setminus E_g$ — reduced evidence set resulting from temporarily withholding group $g$.
+- $p(H\mid E\setminus E_g) \in [0, 1]$ — recomputed posterior probability without evidence group $g$.
+- $S_{\mathrm{leave}} \in [0, 1]$ — dimensionless fragility index (maximum absolute probability shift).
 
 **Practical Implementation and Engineering Decisions:**
 - Sensitivity analysis is triggered automatically prior to generating any actuation command (such as emergency pressure venting or switching to a backup link).
-- If $`S_{\mathrm{leave}} > \tau_{\mathrm{fragile}}`$ (where the engineering threshold is typically $`\tau_{\mathrm{fragile}} = 0.25`$), the conclusion is flagged as a Single Point of Evidence Failure.
-- Calculation example: in the configuration from Section 7.2, removing the second evidence group shifts the assessment from 0.780 to 0.471 ($`|0.780 - 0.471| = 0.309`$). Removing the first group leaves $4/13 \approx 0.308$, producing a shift of $`|0.780 - 0.308| = 0.472`$. The maximum shift is $`S_{\mathrm{leave}} = 0.472 > 0.25`$.
+- If $S_{\mathrm{leave}} > \tau_{\mathrm{fragile}}$ (where the engineering threshold is typically $\tau_{\mathrm{fragile}} = 0.25$), the conclusion is flagged as a Single Point of Evidence Failure.
+- Calculation example: in the configuration from Section 7.2, removing the second evidence group shifts the assessment from 0.780 to 0.471 ($|0.780 - 0.471| = 0.309$). Removing the first group leaves $4/13 \approx 0.308$, producing a shift of $|0.780 - 0.308| = 0.472$. The maximum shift is $S_{\mathrm{leave}} = 0.472 > 0.25$.
 - Engineering action: the system blocks execution of automated irreversible actions, tags the assertion as `FRAGILE_EVIDENCE`, and emits an operator escalation highlighting the exact sensor channel whose failure collapses the hypothesis.
 
-The cost of error dictates the operational threshold for action, but does not alter physical ground truth. In a binary decision setting with zero cost for correct outcomes, an action is admissible when $`p > C_{\mathrm{FP}} / (C_{\mathrm{FP}} + C_{\mathrm{FN}})`$, where $`C_{\mathrm{FP}}`$ is the loss incurred by a false positive and $`C_{\mathrm{FN}}`$ is the loss from a missed detection. For losses of 99 and 1, the threshold is 0.99; for losses of 1 and 99, the threshold is 0.01. The identical assessment may justify dispatching an auxiliary sensor while simultaneously barring an irreversible physical actuation. For interval estimates, risk is evaluated across the entire admissible band, and authorization is enforced via the governance policies of [Chapter 21](ch21-from-recommendation-to-action.md).
+The cost of error dictates the operational threshold for action, but does not alter physical ground truth. In a binary decision setting with zero cost for correct outcomes, an action is admissible when $p > C_{\mathrm{FP}} / (C_{\mathrm{FP}} + C_{\mathrm{FN}})$, where $C_{\mathrm{FP}}$ is the loss incurred by a false positive and $C_{\mathrm{FN}}$ is the loss from a missed detection. For losses of 99 and 1, the threshold is 0.99; for losses of 1 and 99, the threshold is 0.01. The identical assessment may justify dispatching an auxiliary sensor while simultaneously barring an irreversible physical actuation. For interval estimates, risk is evaluated across the entire admissible band, and authorization is enforced via the governance policies of [Chapter 21](ch21-from-recommendation-to-action.md).
 
 Negative evidence requires an explicit observability model. "No pump visible on camera" supports pump absence only when lighting, field of view, and detector recall are characterized. The absence of audit logs on a node where logging was disabled constitutes zero evidence of incident absence. These systematic checks distinguish algorithmic skepticism from ungrounded cynicism.
 
@@ -408,19 +408,19 @@ b\approx\log\frac{1-\beta}{\alpha}.
 ```
 
 **Parameters and Admissible Ranges:**
-- $`x_i`$ — $i$-th physical measurement sample (e.g., vibration acceleration in $\text{m/s}^2$ or network jitter in $\text{ms}$).
-- $`f_0(x), f_1(x)`$ — probability density functions under null hypothesis $`H_0`$ (nominal state) and alternative hypothesis $`H_1`$ (fault or attack).
+- $x_i$ — $i$-th physical measurement sample (e.g., vibration acceleration in $\text{m/s}^2$ or network jitter in $\text{ms}$).
+- $f_0(x), f_1(x)$ — probability density functions under null hypothesis $H_0$ (nominal state) and alternative hypothesis $H_1$ (fault or attack).
 - $\alpha \in (0, 0.5)$ — design bound on Type I error probability (False Alarm Rate).
 - $\beta \in (0, 0.5)$ — design bound on Type II error probability (Missed Detection Rate).
 - $a, b \in (-\infty, +\infty)$ — lower and upper decision thresholds ($a < 0 < b$).
-- $`Z_n \in (-\infty, +\infty)`$ — cumulative log-likelihood ratio statistic at step $n$.
+- $Z_n \in (-\infty, +\infty)$ — cumulative log-likelihood ratio statistic at step $n$.
 
 **Practical Implementation and Engineering Decisions:**
 - The algorithm executes iteratively on every sampling cycle:
-  - Protection trigger: if $`Z_n \ge b`$, sampling terminates, $`H_1`$ is asserted, and the admission gate emits a deterministic trip signal.
-  - Normalcy confirmation: if $`Z_n \le a`$, testing halts, the anomaly hypothesis is rejected in favor of $`H_0`$, and the accumulator resets to 0.
-  - Continued monitoring: if $`a < Z_n < b`$, current evidence is insufficient; sample $`x_{n+1}`$ is acquired.
-- Finite budget constraint: if step count reaches time budget $`n = N_{\max}`$ with thresholds uncrossed ($`a < Z_N < b`$), the system is strictly prohibited from guessing or applying ad-hoc heuristics. The event transitions to `SPRT_TIMEOUT_INCONCLUSIVE`, emits a sensor degradation warning, and enters heightened surveillance. For $\alpha = \beta = 0.01$, the thresholds evaluate to $a \approx -4.595$, $b \approx +4.595$.
+  - Protection trigger: if $Z_n \ge b$, sampling terminates, $H_1$ is asserted, and the admission gate emits a deterministic trip signal.
+  - Normalcy confirmation: if $Z_n \le a$, testing halts, the anomaly hypothesis is rejected in favor of $H_0$, and the accumulator resets to 0.
+  - Continued monitoring: if $a < Z_n < b$, current evidence is insufficient; sample $x_{n+1}$ is acquired.
+- Finite budget constraint: if step count reaches time budget $n = N_{\max}$ with thresholds uncrossed ($a < Z_N < b$), the system is strictly prohibited from guessing or applying ad-hoc heuristics. The event transitions to `SPRT_TIMEOUT_INCONCLUSIVE`, emits a sensor degradation warning, and enters heightened surveillance. For $\alpha = \beta = 0.01$, the thresholds evaluate to $a \approx -4.595$, $b \approx +4.595$.
 
 ### 9.2. Latency, Overload, and Timestamps
 
@@ -431,12 +431,12 @@ T_{\mathrm{queue}}+T_{\mathrm{capture}}+T_{\mathrm{parse}}+T_{\mathrm{checks}}+T
 ```
 
 **Parameters and Admissible Ranges:**
-- $`T_{\mathrm{queue}}`$ — maximum queue waiting time in the ingress buffer ($\text{ms}$).
-- $`T_{\mathrm{capture}}`$ — hardware latency of physical signal acquisition or ADC conversion ($\text{ms}$).
-- $`T_{\mathrm{parse}}`$ — packet syntax parsing, schema validation, and deserialization time ($\text{ms}$).
-- $`T_{\mathrm{checks}}`$ — cryptographic signature validation, hashing, and authorization check time ($\text{ms}$).
-- $`T_{\mathrm{inference}}`$ — execution latency of evidence evaluation algorithms (SPRT, interval logit, or CI) ($\text{ms}$).
-- $`T_{\mathrm{dispatch}}`$ — provenance logging and command dispatch latency to actuators ($\text{ms}$).
+- $T_{\mathrm{queue}}$ — maximum queue waiting time in the ingress buffer ($\text{ms}$).
+- $T_{\mathrm{capture}}$ — hardware latency of physical signal acquisition or ADC conversion ($\text{ms}$).
+- $T_{\mathrm{parse}}$ — packet syntax parsing, schema validation, and deserialization time ($\text{ms}$).
+- $T_{\mathrm{checks}}$ — cryptographic signature validation, hashing, and authorization check time ($\text{ms}$).
+- $T_{\mathrm{inference}}$ — execution latency of evidence evaluation algorithms (SPRT, interval logit, or CI) ($\text{ms}$).
+- $T_{\mathrm{dispatch}}$ — provenance logging and command dispatch latency to actuators ($\text{ms}$).
 - $D$ — deterministic real-time deadline (FTTI or RTOS control cycle, e.g., $D = 20\,\text{ms}$).
 
 **Practical Implementation and Engineering Decisions:**

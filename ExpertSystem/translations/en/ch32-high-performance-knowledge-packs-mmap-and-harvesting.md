@@ -6,7 +6,7 @@
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Advanced: Systems Architects, Database and Index Developers, Knowledge Engineers, High-Performance Computing and Edge AI Specialists  
-> **Expected Learning Outcomes:** Explain the composition of a knowledge pack, its invariants, lifecycle, and the differences between two format generations; select which materialized representations to compute during pack compilation; design zero-deserialization binary knowledge packs based on the `mmap(2)` system call and identify when `mmap(2)` is unsuitable; independently measure opening time, first query, and subsequent queries, and verify with tests the absence of heap allocations during lookup; validate an untrusted binary index prior to the first query and discover reader crashes via fuzzing; master OS virtual memory mechanics, demand paging, record alignment, and the `madvise(2)` system call; guarantee determinism and bit-for-bit reproducibility of manifests during concurrent compilation (`--concurrency / -j`); implement lossless inverted fact clustering with injective keys while preserving the exact citation provenance graph; construct continuous neuro-symbolic knowledge enrichment pipelines where a local small language model (SLM) proposes hypotheses and a byte-level admission gateway decides what enters the pack; profile engineering corpora using the Knowledge Density Index ($`\mathrm{KDI}`$), distinguish density from recall, and estimate extraction completeness using the capture-recapture method; partition a pack into shards by document family key, verify the completeness, disjointness, and reconstructibility of the partitioning, and never interpret shard silence as the absence of a fact.
+> **Expected Learning Outcomes:** Explain the composition of a knowledge pack, its invariants, lifecycle, and the differences between two format generations; select which materialized representations to compute during pack compilation; design zero-deserialization binary knowledge packs based on the `mmap(2)` system call and identify when `mmap(2)` is unsuitable; independently measure opening time, first query, and subsequent queries, and verify with tests the absence of heap allocations during lookup; validate an untrusted binary index prior to the first query and discover reader crashes via fuzzing; master OS virtual memory mechanics, demand paging, record alignment, and the `madvise(2)` system call; guarantee determinism and bit-for-bit reproducibility of manifests during concurrent compilation (`--concurrency / -j`); implement lossless inverted fact clustering with injective keys while preserving the exact citation provenance graph; construct continuous neuro-symbolic knowledge enrichment pipelines where a local small language model (SLM) proposes hypotheses and a byte-level admission gateway decides what enters the pack; profile engineering corpora using the Knowledge Density Index ($\mathrm{KDI}$), distinguish density from recall, and estimate extraction completeness using the capture-recapture method; partition a pack into shards by document family key, verify the completeness, disjointness, and reconstructibility of the partitioning, and never interpret shard silence as the absence of a fact.
 
 ---
 
@@ -14,7 +14,7 @@
 
 Consider an embedded compute platform deployed in an autonomous chassis or robotic manipulator (such as an Infineon AURIX TC397, ARM Cortex-R52, or edge accelerator like the NVIDIA Jetson AGX Orin). The expert system must execute normative safety arbitration within a hard real-time control loop with a fault-tolerant time interval (FTTI) budget of no more than 20–50 milliseconds (ISO 26262 ASIL D). If the expert system stores its knowledge base in conventional formats (such as JSON, SQLite, or a client-server RDBMS), a cold start requires 1.5–3 seconds to parse and allocate millions of heap objects, while an unpredictable garbage collection stop-the-world pause at a critical juncture introduces an additional latency of 100–250 ms. As a result, the FTTI budget is grossly violated, hazardous system states are not recognized in time, and the physical actuator loses closed-loop control. In safety-critical architectures, zero-deserialization and dynamic-allocation-free knowledge retrieval are not "premature optimizations," but rigorous functional safety mandates.
 
-This chapter addresses the engineering challenge of transitioning an expert system prototype containing several thousand rules into an industrial-scale knowledge base: tens of thousands of specifications, hundreds of thousands of normative facts, and microsecond response latencies in embedded execution environments. The chapter details an original architecture: the immutable, self-describing **Knowledge Pack** and the binary specification of its **ZNAV-INDEX v2** index leveraging the `mmap(2)` system call. The chapter begins by detailing the composition and lifecycle of the knowledge pack, the distinctions between two format generations, and the mathematical boundaries of zero-deserialization applicability, including atomic hot-swapping of packs via the Read-Copy-Update (RCU) pattern to prevent `SIGBUS` crashes without downtime. It then investigates the algorithms for lossless inverted fact clustering, deterministic concurrent compilation (`--concurrency`), hermetic crystallization of ZKP4 binary containers with bit-for-bit reproducibility (enforcing strict 64-byte zero-padding and hierarchical container integrity Merkle roots), knowledge supply chain security under SLSA v1.0 Level 4 and NIST SP 800-218 (SSDF), the neuro-symbolic extraction pipeline with a byte-level admission gateway, the Knowledge Density Index ($`\mathrm{KDI}`$), and mathematically sound pack sharding that strictly differentiates shard silence from the absence of knowledge in the system.
+This chapter addresses the engineering challenge of transitioning an expert system prototype containing several thousand rules into an industrial-scale knowledge base: tens of thousands of specifications, hundreds of thousands of normative facts, and microsecond response latencies in embedded execution environments. The chapter details an original architecture: the immutable, self-describing **Knowledge Pack** and the binary specification of its **ZNAV-INDEX v2** index leveraging the `mmap(2)` system call. The chapter begins by detailing the composition and lifecycle of the knowledge pack, the distinctions between two format generations, and the mathematical boundaries of zero-deserialization applicability, including atomic hot-swapping of packs via the Read-Copy-Update (RCU) pattern to prevent `SIGBUS` crashes without downtime. It then investigates the algorithms for lossless inverted fact clustering, deterministic concurrent compilation (`--concurrency`), hermetic crystallization of ZKP4 binary containers with bit-for-bit reproducibility (enforcing strict 64-byte zero-padding and hierarchical container integrity Merkle roots), knowledge supply chain security under SLSA v1.0 Level 4 and NIST SP 800-218 (SSDF), the neuro-symbolic extraction pipeline with a byte-level admission gateway, the Knowledge Density Index ($\mathrm{KDI}$), and mathematically sound pack sharding that strictly differentiates shard silence from the absence of knowledge in the system.
 
 ---
 
@@ -89,7 +89,7 @@ The purple node represents the manifest, green nodes form the canonical layer, a
 | Predicate Vocabulary | Admitted closed vocabulary and relation subsumption lattice ([Chapter 31](ch31-syllogistic-reasoning-and-relation-lattices.md)) | Canonical | Admission gateway, syllogistic reasoning engine |
 | Binary Index | Subject tables, string dictionaries, and postings lists (Section 4) | Derived | Symbolic inference engine |
 | Materialized Views | Precomputed transitive closures, supersession graphs, and reverse indices (Section 1.6) | Derived | Symbolic inference engine |
-| Quality Profile | $`\mathrm{KDI}`$ across domain categories, detected knowledge gaps, gateway rejection metrics (Sections 7 and 8) | Derived | Knowledge engineer, CI/CD release gate |
+| Quality Profile | $\mathrm{KDI}$ across domain categories, detected knowledge gaps, gateway rejection metrics (Sections 7 and 8) | Derived | Knowledge engineer, CI/CD release gate |
 
 The strict separation between canonical and derived layers constitutes the foundational design decision of the pack architecture. Derived layers are never edited manually: they are synthesized deterministically by the pack builder, while verification procedures recompute them and compare cryptographic digests. A hash discrepancy indicates compiler defect or file tampering, triggering immediate refusal to mount the pack. This separation makes index evolution computationally inexpensive: an updated index format represents merely a new derived layer over the unmodified canonical truth, eliminating the need to re-extract knowledge from primary documentation, while reproducibility checks immediately verify semantic equivalence.
 
@@ -171,17 +171,17 @@ V^{*} = \arg\min_{V \subseteq \mathcal{V}} \sum_{q \in Q} f_q \cdot c(q \mid V) 
 
 Components of the materialized view selection formulation:
 
-- $`\mathcal{V}`$ denotes the set of candidate views, such as predicate lattice closures, supersession chains, or inverted object indices;
-- $`V`$ denotes an arbitrary selected subset of candidate views, and $`V^{*}`$ is the optimal subset minimizing aggregate query cost;
-- $`Q`$ denotes the representative workload of inference queries, where $`f_q`$ represents the execution frequency of query $`q`$ derived from operational query logs (in queries per minute);
-- $`c(q \mid V)`$ denotes the computational latency of answering query $`q`$ given the precomputed views in $`V`$ (in microseconds of CPU time);
-- $`s(v)`$ denotes the storage footprint of view $`v`$ within the pack, and $`S_{\max}`$ is the maximum storage budget allocated by the target execution environment (in megabytes).
+- $\mathcal{V}$ denotes the set of candidate views, such as predicate lattice closures, supersession chains, or inverted object indices;
+- $V$ denotes an arbitrary selected subset of candidate views, and $V^{*}$ is the optimal subset minimizing aggregate query cost;
+- $Q$ denotes the representative workload of inference queries, where $f_q$ represents the execution frequency of query $q$ derived from operational query logs (in queries per minute);
+- $c(q \mid V)$ denotes the computational latency of answering query $q$ given the precomputed views in $V$ (in microseconds of CPU time);
+- $s(v)$ denotes the storage footprint of view $v$ within the pack, and $S_{\max}$ is the maximum storage budget allocated by the target execution environment (in megabytes).
 
-In the general case, view selection is NP-hard; industrial implementations employ greedy heuristics based on marginal benefit per unit of storage. Harinarayan, Rajaraman, and Ullman proved for data cube view lattices that greedy selection achieves a competitive ratio of at least $`(e-1)/e \approx 0.63`$ relative to the theoretical optimum [[5]](#src-5), while Gupta extended this formulation to generalized view graphs [[6]](#src-6).
+In the general case, view selection is NP-hard; industrial implementations employ greedy heuristics based on marginal benefit per unit of storage. Harinarayan, Rajaraman, and Ullman proved for data cube view lattices that greedy selection achieves a competitive ratio of at least $(e-1)/e \approx 0.63$ relative to the theoretical optimum [[5]](#src-5), while Gupta extended this formulation to generalized view graphs [[6]](#src-6).
 
-The practical interpretation: a candidate view is materialized within the pack if its frequency-weighted reduction in query latency exceeds the marginal benefit that alternative views could yield within the same storage budget. Consider an edge deployment with a 20 MB budget for derived views and two candidates. The transitive closure of the predicate lattice requires 2 MB and reduces subsumption validation latency from 40 to 1.5 $`\mu\text{s}`$; at 10,000 checks per minute, materialization saves $`10{,}000 \times 38.5\,\mu\text{s} = 385\,\text{ms}`$ of CPU time per minute, or approximately 192 ms/MB. An inverted index over objects requires 30 MB and reduces a rare query (100 per minute) from 900 to 5 $`\mu\text{s}`$, yielding 90 ms/min saved, or 3 ms/MB. The inverted index exceeds the storage budget and delivers a marginal utility 64 times lower than the lattice closure; hence, only the lattice closure is admitted into the pack. If the storage budget expands to 40 MB, greedy selection admits both.
+The practical interpretation: a candidate view is materialized within the pack if its frequency-weighted reduction in query latency exceeds the marginal benefit that alternative views could yield within the same storage budget. Consider an edge deployment with a 20 MB budget for derived views and two candidates. The transitive closure of the predicate lattice requires 2 MB and reduces subsumption validation latency from 40 to 1.5 $\mu\text{s}$; at 10,000 checks per minute, materialization saves $10{,}000 \times 38.5\,\mu\text{s} = 385\,\text{ms}$ of CPU time per minute, or approximately 192 ms/MB. An inverted index over objects requires 30 MB and reduces a rare query (100 per minute) from 900 to 5 $\mu\text{s}$, yielding 90 ms/min saved, or 3 ms/MB. The inverted index exceeds the storage budget and delivers a marginal utility 64 times lower than the lattice closure; hence, only the lattice closure is admitted into the pack. If the storage budget expands to 40 MB, greedy selection admits both.
 
-The fundamental operational limitation of this optimization lies in workload estimation: query frequencies $`f_q`$ are sampled from historical logs of the preceding generation. In a newly launched domain lacking telemetry, initial selection relies on knowledge engineering estimates and undergoes refinement in the subsequent release cycle. Materialized views remain strictly derived layers; consequently, pack verification recomputes them alongside binary indices.
+The fundamental operational limitation of this optimization lies in workload estimation: query frequencies $f_q$ are sampled from historical logs of the preceding generation. In a newly launched domain lacking telemetry, initial selection relies on knowledge engineering estimates and undergoes refinement in the subsequent release cycle. Materialized views remain strictly derived layers; consequently, pack verification recomputes them alongside binary indices.
 
 Section 1 established the structure of the knowledge pack and its governing invariants. The subsequent sections investigate why format generation 2 eliminated runtime text parsing, detailing the low-level systems mechanisms that enforce these invariants at the byte level.
 
@@ -239,13 +239,13 @@ The table below reproduces historical measurements recorded by the author on a t
 
 | Storage Architecture | Cold Start Latency | Single Query Latency ($P_{99}$) | RAM Footprint (RSS) | Memory Allocations per Op | GC Pause Latency at 10k QPS |
 |---|---|---|---|---|---|
-| **Direct JSONL Ingest** | 14.8 s | 850 $`\mu\text{s}`$ | 1.42 GB | 145 KB/op (320 allocs) | 45 ms |
-| **SQLite (B-Tree, in-memory)** | 3.2 s | 45 $`\mu\text{s}`$ | 380 MB | 4.2 KB/op (28 allocs) | 8 ms |
+| **Direct JSONL Ingest** | 14.8 s | 850 $\mu\text{s}$ | 1.42 GB | 145 KB/op (320 allocs) | 45 ms |
+| **SQLite (B-Tree, in-memory)** | 3.2 s | 45 $\mu\text{s}$ | 380 MB | 4.2 KB/op (28 allocs) | 8 ms |
 | **PostgreSQL (Local Unix Socket)** | 0.8 s (connect) | 1.2 ms | 520 MB (server) | 12 KB/op (socket buffers) | None (server GC) |
 | **Vector DB (HNSW Index)** | 22.5 s | 4.8 ms | 2.85 GB | 85 KB/op | 65 ms |
-| **Knowledge Pack v2 (`mmap`)** | **4.2 $`\mu\text{s}`$** | **1.5 $`\mu\text{s}`$** | **18 MB (Shared)** | **0 B/op (0 allocs)** | **0.0 ms (Zero GC)** |
+| **Knowledge Pack v2 (`mmap`)** | **4.2 $\mu\text{s}$** | **1.5 $\mu\text{s}$** | **18 MB (Shared)** | **0 B/op (0 allocs)** | **0.0 ms (Zero GC)** |
 
-Per the author's experimental records, these measurements were conducted on September 28, 2026, utilizing an AMD EPYC 7763 processor, Samsung PM9A3 NVMe storage, and Linux kernel 6.8 against a normative engineering corpus. The reported 4.2 $`\mu\text{s}`$ cold start denotes solely the execution of the `mmap(2)` system call and header signature validation, rather than the residency of all pages in physical memory. It does not establish a performance advantage over the first query to an alternative storage engine.
+Per the author's experimental records, these measurements were conducted on September 28, 2026, utilizing an AMD EPYC 7763 processor, Samsung PM9A3 NVMe storage, and Linux kernel 6.8 against a normative engineering corpus. The reported 4.2 $\mu\text{s}$ cold start denotes solely the execution of the `mmap(2)` system call and header signature validation, rather than the residency of all pages in physical memory. It does not establish a performance advantage over the first query to an alternative storage engine.
 
 </details>
 
@@ -434,8 +434,8 @@ To guarantee identical reader execution across divergent processor architectures
 \forall i \in [0, N_{\text{sections}}-1]: \quad \mathrm{Offset}_i \pmod{64} = 0
 ```
 
-- $`\mathrm{Offset}_i`$ denotes the starting byte offset of section $`i`$ from the beginning of the file;
-- The modulo operation $`\pmod{64}`$ computes the byte remainder;
+- $\mathrm{Offset}_i$ denotes the starting byte offset of section $i$ from the beginning of the file;
+- The modulo operation $\pmod{64}$ computes the byte remainder;
 - A zero remainder guarantees that no atomic binary record straddles the boundary between two physical cache lines.
 
 #### 3.3.2. Empirical Verification of Cross-Architectural Determinism
@@ -458,7 +458,7 @@ The test suite executed 107 specialized symbolic inference microprograms over th
 | **Hardware Alignment Faults (`SIGBUS`)** | 0 | **0** | 0 | 64-Byte Alignment Validated |
 | **Energy Dissipation per 1,000,000 Inferences** | — | **4.8684 J** | — | ~0.33 W Core Power |
 
-The measured divergence metric of $`\mathrm{Divergence} = 0.0000\,\%`$ confirms that enforcing 64-byte structural alignment within the binary pack format and eliminating mutable shared state in memory completely neutralizes the hardware disparity between the strict x86-64 TSO model and the weakly ordered ARM model. This enables knowledge packs compiled and certified on cloud-based x86_64 build servers to execute with identical deductive determinism on ARM-powered embedded vehicular and robotic platforms.
+The measured divergence metric of $\mathrm{Divergence} = 0.0000\,\%$ confirms that enforcing 64-byte structural alignment within the binary pack format and eliminating mutable shared state in memory completely neutralizes the hardware disparity between the strict x86-64 TSO model and the weakly ordered ARM model. This enables knowledge packs compiled and certified on cloud-based x86_64 build servers to execute with identical deductive determinism on ARM-powered embedded vehicular and robotic platforms.
 
 ### 3.4. Atomic Hot-Swap of mmap Packs via RCU (Read-Copy-Update) and SIGBUS Protection
 
@@ -468,9 +468,9 @@ A naive architectural workaround—protecting the mapped memory pointer with a s
 
 To resolve this fundamental tension, the author implemented an architectural pattern based on **atomic knowledge pack hot-swapping governed by an RCU (Read-Copy-Update) lifecycle** [[27]](#src-27). This architecture enforces three rigorous invariants:
 
-1. **Immutable Parallel Mappings:** The updated knowledge pack generation $`\mathcal{P}_{k+1}`$ is compiled into a separate, distinct binary artifact and mapped concurrently into an independent virtual address range via `mmap` in read-only mode (`PROT_READ`, `MAP_SHARED`). The active legacy generation $`\mathcal{P}_k`$ remains completely undisturbed.
-2. **Atomic Pointer Swinging:** The root reference to the active knowledge pack is encapsulated in an atomic processor pointer (e.g., `atomic.Pointer[KnowledgePack]` in Go or `std::atomic<const KnowledgePack*>` in C++). Promoting the new generation executes as a single atomic pointer store instruction (taking 1 CPU clock cycle). All subsequent inference queries arriving after this cycle lock-free and instantaneously acquire the reference to $`\mathcal{P}_{k+1}`$.
-3. **Epoch Drain and Safe Munmap:** Reader threads that commenced evaluation on generation $`\mathcal{P}_k`$ prior to the atomic pointer swing continue reading the legacy memory mapping safely. The lifetime of the retired mapping is guarded by an atomic epoch reference counter (*Epoch Reference Counter*). The kernel unmapping call `unix.Munmap()` is dispatched strictly after the legacy epoch completes its drain—when the active reader counter drops to zero.
+1. **Immutable Parallel Mappings:** The updated knowledge pack generation $\mathcal{P}_{k+1}$ is compiled into a separate, distinct binary artifact and mapped concurrently into an independent virtual address range via `mmap` in read-only mode (`PROT_READ`, `MAP_SHARED`). The active legacy generation $\mathcal{P}_k$ remains completely undisturbed.
+2. **Atomic Pointer Swinging:** The root reference to the active knowledge pack is encapsulated in an atomic processor pointer (e.g., `atomic.Pointer[KnowledgePack]` in Go or `std::atomic<const KnowledgePack*>` in C++). Promoting the new generation executes as a single atomic pointer store instruction (taking 1 CPU clock cycle). All subsequent inference queries arriving after this cycle lock-free and instantaneously acquire the reference to $\mathcal{P}_{k+1}$.
+3. **Epoch Drain and Safe Munmap:** Reader threads that commenced evaluation on generation $\mathcal{P}_k$ prior to the atomic pointer swing continue reading the legacy memory mapping safely. The lifetime of the retired mapping is guarded by an atomic epoch reference counter (*Epoch Reference Counter*). The kernel unmapping call `unix.Munmap()` is dispatched strictly after the legacy epoch completes its drain—when the active reader counter drops to zero.
 
 ```mermaid
 sequenceDiagram
@@ -498,34 +498,34 @@ sequenceDiagram
     Note over M: Physical pages reclaimed safely without SIGBUS risk
 ```
 
-The duration of the safe reclamation grace period (*Grace Period* or retention latency $`T_{\mathrm{reclaim}}`$) is bounded by the longest-running in-flight reader request:
+The duration of the safe reclamation grace period (*Grace Period* or retention latency $T_{\mathrm{reclaim}}$) is bounded by the longest-running in-flight reader request:
 
 ```math
 T_{\mathrm{reclaim}} = \max_{j \in [1, N_{\mathrm{active}}]} \left( \tau_{\mathrm{rem}}(r_j) \right) + \Delta_{\mathrm{drain}}
 ```
 
-- $`T_{\mathrm{reclaim}}`$ denotes the duration of the safe epoch drain grace period from the instant of the atomic pointer swing until the execution of `munmap(2)`, expressed in milliseconds ($\text{ms}$);
-- $`N_{\mathrm{active}}`$ denotes the number of concurrent reader threads holding references to generation $`\mathcal{P}_k`$ at the instant of pointer reassignment;
-- $`\tau_{\mathrm{rem}}(r_j)`$ denotes the remaining execution latency of active query $r_j$ prior to reference release, bounded by the system query deadline $`T_{\mathrm{deadline}}`$ ($`\tau_{\mathrm{rem}}(r_j) \le T_{\mathrm{deadline}}`$);
-- $`\Delta_{\mathrm{drain}}`$ denotes the hardware latency of memory barrier propagation and atomic reference decrement operations ($`\Delta_{\mathrm{drain}} \le 2\,\mu\text{s}`$ on x86-64 and ARM64 architectures).
+- $T_{\mathrm{reclaim}}$ denotes the duration of the safe epoch drain grace period from the instant of the atomic pointer swing until the execution of `munmap(2)`, expressed in milliseconds ($\text{ms}$);
+- $N_{\mathrm{active}}$ denotes the number of concurrent reader threads holding references to generation $\mathcal{P}_k$ at the instant of pointer reassignment;
+- $\tau_{\mathrm{rem}}(r_j)$ denotes the remaining execution latency of active query $r_j$ prior to reference release, bounded by the system query deadline $T_{\mathrm{deadline}}$ ($\tau_{\mathrm{rem}}(r_j) \le T_{\mathrm{deadline}}$);
+- $\Delta_{\mathrm{drain}}$ denotes the hardware latency of memory barrier propagation and atomic reference decrement operations ($\Delta_{\mathrm{drain}} \le 2\,\mu\text{s}$ on x86-64 and ARM64 architectures).
 
-The peak virtual address space footprint during the transient hot-swap interval ($`M_{\mathrm{transit}}`$) evaluates to:
+The peak virtual address space footprint during the transient hot-swap interval ($M_{\mathrm{transit}}$) evaluates to:
 
 ```math
 M_{\mathrm{transit}} = M(\mathcal{P}_k) + M(\mathcal{P}_{k+1}) \le M_{\mathrm{budget}}
 ```
 
-- $`M(\mathcal{P}_k)`$ and $`M(\mathcal{P}_{k+1})`$ denote the respective file footprints of the concurrent knowledge pack generations mapped into memory;
-- $`M_{\mathrm{budget}}`$ denotes the architectural virtual address space ceiling and the process file descriptor map limit governed by `vm.max_map_count`.
+- $M(\mathcal{P}_k)$ and $M(\mathcal{P}_{k+1})$ denote the respective file footprints of the concurrent knowledge pack generations mapped into memory;
+- $M_{\mathrm{budget}}$ denotes the architectural virtual address space ceiling and the process file descriptor map limit governed by `vm.max_map_count`.
 
 Actionable Closed-Loop Formulation:
 
 1. **Control Flow & Runtime Decisions:**
-   Upon swinging the generation pointer, the background reclamation daemon subscribes to epoch zero-counter notifications via a condition variable (`sync.Cond`) or channel event. If the epoch counter drains to zero within $`t \le T_{\mathrm{reclaim}}`$, the daemon immediately issues `unix.Munmap(oldData)`. If an anomalous reader stall causes the drain latency to breach the watchdog threshold $`T_{\mathrm{watchdog}} = 2 \times T_{\mathrm{deadline}}`$, the runtime cancels the stalling query context (`context.Canceled`), captures a diagnostic stack trace, and unmaps the physical pages only after the goroutine has demonstrably exited the critical section. The runtime strictly blocks `munmap` invocations while $`N_{\mathrm{active}} \ne 0`$, providing a 100% mathematical guarantee against `SIGBUS` faults.
+   Upon swinging the generation pointer, the background reclamation daemon subscribes to epoch zero-counter notifications via a condition variable (`sync.Cond`) or channel event. If the epoch counter drains to zero within $t \le T_{\mathrm{reclaim}}$, the daemon immediately issues `unix.Munmap(oldData)`. If an anomalous reader stall causes the drain latency to breach the watchdog threshold $T_{\mathrm{watchdog}} = 2 \times T_{\mathrm{deadline}}$, the runtime cancels the stalling query context (`context.Canceled`), captures a diagnostic stack trace, and unmaps the physical pages only after the goroutine has demonstrably exited the critical section. The runtime strictly blocks `munmap` invocations while $N_{\mathrm{active}} \ne 0$, providing a 100% mathematical guarantee against `SIGBUS` faults.
 2. **Hardware Dimensioning:**
-   Because both knowledge pack generations coexist in virtual memory during the transition interval $`T_{\mathrm{reclaim}}`$ ($`M_{\mathrm{transit}} = M(\mathcal{P}_k) + M(\mathcal{P}_{k+1})`$), systems engineers must size Linux kernel parameters accordingly: `sysctl vm.max_map_count` must accommodate at least $`2 \times N_{\mathrm{shards}} + 64`$ distinct memory regions to prevent `mmap` allocation rejections with `ENOMEM`. Furthermore, 64-bit address space layouts must budget a virtual address window of at least $`2 \times V_{\mathrm{pack}}`$. Because read-only `MAP_SHARED` pages do not incur swap-backed dirty page replication, the OS page cache eliminates duplicate physical RAM allocation for unchanged disk sectors.
+   Because both knowledge pack generations coexist in virtual memory during the transition interval $T_{\mathrm{reclaim}}$ ($M_{\mathrm{transit}} = M(\mathcal{P}_k) + M(\mathcal{P}_{k+1})$), systems engineers must size Linux kernel parameters accordingly: `sysctl vm.max_map_count` must accommodate at least $2 \times N_{\mathrm{shards}} + 64$ distinct memory regions to prevent `mmap` allocation rejections with `ENOMEM`. Furthermore, 64-bit address space layouts must budget a virtual address window of at least $2 \times V_{\mathrm{pack}}$. Because read-only `MAP_SHARED` pages do not incur swap-backed dirty page replication, the OS page cache eliminates duplicate physical RAM allocation for unchanged disk sectors.
 3. **Worked Numerical Example:**
-   Consider an edge avionics expert system mounting an active knowledge pack of size $`M(\mathcal{P}_k) = 480\,\text{MB}`$. At the moment an updated release $`M(\mathcal{P}_{k+1}) = 510\,\text{MB}`$ is deployed, $`N_{\mathrm{active}} = 64`$ concurrent symbolic inference threads are in flight. The maximum deterministic query deadline is $`T_{\mathrm{deadline}} = 25\,\text{ms}`$, the observed maximum residual execution latency is $`\tau_{\mathrm{rem}} = 14.2\,\text{ms}`$, and the barrier latency is $`\Delta_{\mathrm{drain}} = 1.8\,\mu\text{s}`$. The evaluated grace period evaluates to $`T_{\mathrm{reclaim}} = 14.2018\,\text{ms}`$. The peak transient virtual memory footprint during migration equals $`M_{\mathrm{transit}} = 480 + 510 = 990\,\text{MB} \le 16\,\text{GB}`$ (well within the physical LPDDR5x budget of the onboard computer). Exactly $14.2\,\text{ms}$ after the pointer swing, the legacy epoch counter hits zero, the reclamation daemon executes `unix.Munmap()`, freeing $480\,\text{MB}$ of address space; none of the 64 concurrent threads experienced latency spikes or `SIGBUS` faults, maintaining 100.00% system availability.
+   Consider an edge avionics expert system mounting an active knowledge pack of size $M(\mathcal{P}_k) = 480\,\text{MB}$. At the moment an updated release $M(\mathcal{P}_{k+1}) = 510\,\text{MB}$ is deployed, $N_{\mathrm{active}} = 64$ concurrent symbolic inference threads are in flight. The maximum deterministic query deadline is $T_{\mathrm{deadline}} = 25\,\text{ms}$, the observed maximum residual execution latency is $\tau_{\mathrm{rem}} = 14.2\,\text{ms}$, and the barrier latency is $\Delta_{\mathrm{drain}} = 1.8\,\mu\text{s}$. The evaluated grace period evaluates to $T_{\mathrm{reclaim}} = 14.2018\,\text{ms}$. The peak transient virtual memory footprint during migration equals $M_{\mathrm{transit}} = 480 + 510 = 990\,\text{MB} \le 16\,\text{GB}$ (well within the physical LPDDR5x budget of the onboard computer). Exactly $14.2\,\text{ms}$ after the pointer swing, the legacy epoch counter hits zero, the reclamation daemon executes `unix.Munmap()`, freeing $480\,\text{MB}$ of address space; none of the 64 concurrent threads experienced latency spikes or `SIGBUS` faults, maintaining 100.00% system availability.
 
 ---
 
@@ -554,7 +554,7 @@ The binary index file is structured as a contiguous byte array governed by a rig
 
 </details>
 
-Because the `SubjectEntry` array is strictly sorted by subject name, key lookups execute via standard binary search in $`\mathcal{O}(\log_2 N)`$ time. No strings are copied into the process heap: the lookup routine returns a subslice directly referencing the underlying memory-mapped buffer, preventing garbage collection tracing overhead.
+Because the `SubjectEntry` array is strictly sorted by subject name, key lookups execute via standard binary search in $\mathcal{O}(\log_2 N)$ time. No strings are copied into the process heap: the lookup routine returns a subslice directly referencing the underlying memory-mapped buffer, preventing garbage collection tracing overhead.
 
 The canonical ZNAV-INDEX v2 format matches the memory layout implemented in the Go reference reader in Section 9. All integers are serialized in little-endian byte order. The file header occupies exactly 64 bytes: the `SubjectIndexOff` field (8 bytes, offsets 0x20–0x27) specifies the absolute byte offset of the sorted `SubjectEntry` table, followed by `CRC32Checksum` (4 bytes, offsets 0x28–0x2B) and 20 bytes of reserved zero-padding (`Reserved`, offsets 0x2C–0x3F). The IEEE CRC32 checksum is computed strictly over header bytes 0x00–0x27 (preceding the checksum field itself). The integrity of the remaining payload is verified via the SHA-256 digest sealed in the generation manifest (Invariant 2, Section 1.3). The explicit `SubjectIndexOff` pointer permits future header extensions without hardcoding the subject table to offset 0x40.
 
@@ -568,12 +568,12 @@ The index format evolved across two generations in tandem with container archite
 |---|---|---|
 | Magic Signature & Version | ASCII `ZNAV`, version as `uint32` (value 1), no bitflags | `ZNAV`, version in 2 bytes, capability flags in 2 bytes |
 | Container Header | 28 bytes (Magic: 4B, Version: 4B, EntityDirOff: 8B, Assertions: 4B, Citations: 4B), no CRC32 | 64 bytes, IEEE CRC32 checksum over header fields |
-| Subject Lookup | Unstructured entity directory at EOF, parsed at startup into Go hash map (`map[string][]uint64`) | Sorted 16-byte array of entries, $`\mathcal{O}(\log_2 N)`$ binary search |
+| Subject Lookup | Unstructured entity directory at EOF, parsed at startup into Go hash map (`map[string][]uint64`) | Sorted 16-byte array of entries, $\mathcal{O}(\log_2 N)$ binary search |
 | String Dictionary | String literals stored individually per entity (`uint16` length + UTF-8 bytes) without deduplication | Centralized UTF-8 table with deduplicated subjects and predicates |
 | Postings Lists | Contiguous array of 64-bit JSON record offsets (`uint64`), ungrouped by predicate | Structured offsets into canonical assertions stream |
 | File Ingestion | `mmap(2)` with mandatory heap allocation and parsing of directory map | Zero-copy `mmap(2)` without intermediate data structures |
-| Integer Capacity | 32-bit fact counters (up to $`4 \times 10^9`$), 64-bit directory offset | 16-bit name length and posting counts, 32-bit offsets in subject entries |
-| Measured Performance | 12–15 ms initialization latency, 12–18 MB heap allocation at startup, ~25–30 $`\mu\text{s}`$ lookup latency | Profiled in Section 2.2 benchmark table |
+| Integer Capacity | 32-bit fact counters (up to $4 \times 10^9$), 64-bit directory offset | 16-bit name length and posting counts, 32-bit offsets in subject entries |
+| Measured Performance | 12–15 ms initialization latency, 12–18 MB heap allocation at startup, ~25–30 $\mu\text{s}$ lookup latency | Profiled in Section 2.2 benchmark table |
 
 The field bitwidths of v2 impose explicit structural boundaries that the compiler must enforce. The 16-bit `PostingsCount` limits any single subject to 65,535 associated assertions, the 16-bit `StrLen` restricts subject names to 65,535 bytes, and 32-bit intra-file offsets cap the addressable table section at 4 GiB. For highly recurring subjects in vast corpora (e.g., "TCP" across all IETF RFCs), the posting limit can be reached; the compiler must abort with an explicit error rather than silently truncating postings lists. Exceeding these limits necessitates an updated container revision, which is facilitated by the explicit version field and reserved padding bytes (Invariant 4, Section 1.3).
 
@@ -619,7 +619,7 @@ flowchart TD
 
 ### 5.1. Cluster Key: Injective Field Encoding
 
-The clustering engine merges two records if and only if their computed keys match; therefore, the key must establish an **injective mapping** from the 4-tuple $`\langle \text{subject}, \text{predicate}, \text{object}, \text{modality} \rangle`$. Concatenating fields with a delimiter and hashing the resulting string violates injectivity. For instance, the distinct tuples $`\langle \text{"a|b"}, \text{"c"}, \text{"d"}, \text{"MUST"} \rangle`$ and $`\langle \text{"a"}, \text{"b|c"}, \text{"d"}, \text{"MUST"} \rangle`$ yield the identical delimited string `a|b|c|d|MUST`, causing the clustering engine to erroneously merge two semantically disparate facts and cross-contaminate their citation graphs. A cryptographic hash function cannot resolve this collision: SHA-256 [[17]](#src-17) guarantees preimage resistance, but identical inputs produce identical hashes by definition. Injectivity must be enforced prior to hashing by prefixing each field with its byte length encoded as a fixed-size 8-byte big-endian integer.
+The clustering engine merges two records if and only if their computed keys match; therefore, the key must establish an **injective mapping** from the 4-tuple $\langle \text{subject}, \text{predicate}, \text{object}, \text{modality} \rangle$. Concatenating fields with a delimiter and hashing the resulting string violates injectivity. For instance, the distinct tuples $\langle \text{"a|b"}, \text{"c"}, \text{"d"}, \text{"MUST"} \rangle$ and $\langle \text{"a"}, \text{"b|c"}, \text{"d"}, \text{"MUST"} \rangle$ yield the identical delimited string `a|b|c|d|MUST`, causing the clustering engine to erroneously merge two semantically disparate facts and cross-contaminate their citation graphs. A cryptographic hash function cannot resolve this collision: SHA-256 [[17]](#src-17) guarantees preimage resistance, but identical inputs produce identical hashes by definition. Injectivity must be enforced prior to hashing by prefixing each field with its byte length encoded as a fixed-size 8-byte big-endian integer.
 
 A second requirement concerns text canonicalization. In Unicode, characters such as "й" can be encoded either as a single precomposed code point (U+0439) or as a decomposed sequence (U+0438 followed by combining breve U+0306); raw byte comparison would treat these representations as distinct. Unicode Standard Annex #15 specifies normal forms ensuring that canonically equivalent strings share identical binary representations [[18]](#src-18). Normalization to NFC is executed by the extraction pipeline ([Chapter 15](ch15-knowledge-extraction-and-kb-construction.md)) prior to clustering; because the Go standard library does not bundle Unicode normalization routines, the clustering implementation below assumes pre-normalized inputs.
 
@@ -785,10 +785,10 @@ When scaling compilation pipelines across many-core server architectures (e.g., 
 
 Formal components of the concurrent compilation invariant:
 
-- $`\text{Build}(J=k)`$ denotes the binary compilation output generated across $`k`$ concurrent worker threads;
-- $`J`$ designates the concurrency level (`-j` or `--concurrency`);
-- $`\text{SHA256}`$ represents the cryptographic hash of the compiled binary artifact;
-- $`\equiv`$ mandates absolute bit-for-bit equivalence of checksums regardless of kernel thread scheduling non-determinism.
+- $\text{Build}(J=k)$ denotes the binary compilation output generated across $k$ concurrent worker threads;
+- $J$ designates the concurrency level (`-j` or `--concurrency`);
+- $\text{SHA256}$ represents the cryptographic hash of the compiled binary artifact;
+- $\equiv$ mandates absolute bit-for-bit equivalence of checksums regardless of kernel thread scheduling non-determinism.
 
 ```mermaid
 flowchart LR
@@ -817,7 +817,7 @@ flowchart LR
 
 ### 6.1. Reorder Buffer Algorithm
 
-Because parallel worker threads complete document processing in arbitrary order, a **reorder buffer** buffers the output of document index $`i`$ until all preceding indices $`0 \dots i-1`$ have been sequentially committed to the output stream. A naive buffer implementation exhibits two latent failure modes: redundant submissions for a previously committed index (e.g., following a worker timeout retry) can silently overwrite data or corrupt state, while a dropped worker task leaves an unresolvable sequence gap, causing the buffer to silently stall while the manifest is computed over an incomplete, truncated stream. Consequently, the `Push` method returns explicit errors on duplicate or out-of-range indices, while `Close` verifies that all expected items were committed without gaps.
+Because parallel worker threads complete document processing in arbitrary order, a **reorder buffer** buffers the output of document index $i$ until all preceding indices $0 \dots i-1$ have been sequentially committed to the output stream. A naive buffer implementation exhibits two latent failure modes: redundant submissions for a previously committed index (e.g., following a worker timeout retry) can silently overwrite data or corrupt state, while a dropped worker task leaves an unresolvable sequence gap, causing the buffer to silently stall while the manifest is computed over an incomplete, truncated stream. Consequently, the `Push` method returns explicit errors on duplicate or out-of-range indices, while `Close` verifies that all expected items were committed without gaps.
 
 <details>
 <summary>Go implementation: reorder buffer with duplicate and sequence gap detection</summary>
@@ -1035,37 +1035,37 @@ flowchart TB
     class REJECT,QUAR bad;
 ```
 
-The runtime admission decision governing whether a binary knowledge pack may be mapped into process virtual memory is evaluated by the formal admission predicate $`\mathrm{Admission}(\mathcal{P})`$:
+The runtime admission decision governing whether a binary knowledge pack may be mapped into process virtual memory is evaluated by the formal admission predicate $\mathrm{Admission}(\mathcal{P})$:
 
 ```math
 \mathrm{Admission}(\mathcal{P}) = \mathbb{I}\left( \mathrm{VerifySig}_{K_{\mathrm{root}}}(\sigma_{\mathcal{A}}, \mathcal{A}) \land (\mathrm{SHA256}(\mathcal{P}) = \mathcal{A}.\mathrm{digest}) \land \bigwedge_{d \in \mathcal{D}} (\mathrm{SHA256}(d) = \mathcal{A}.\mathrm{sources}[d]) \land \mathcal{A}.\mathrm{hermetic} \right)
 ```
 
 Parameters and dimensions:
-- $`\mathrm{Admission}(\mathcal{P}) \in \{0, 1\}`$ denotes the boolean verdict granting or denying runtime `mmap` mounting permission;
-- $`\mathbb{I}(\cdot)`$ denotes the indicator function mapping a true logical predicate to 1 and false to 0;
-- $`\mathrm{VerifySig}_{K_{\mathrm{root}}}(\sigma_{\mathcal{A}}, \mathcal{A})`$ denotes cryptographic verification of the digital signature $`\sigma_{\mathcal{A}}`$ on attestation $`\mathcal{A}`$ against root trust anchor $`K_{\mathrm{root}}`$ via the Ed25519 standard;
-- $`\mathrm{SHA256}(\mathcal{P})`$ denotes the actual 256-bit cryptographic digest of the compiled binary pack file $`\mathcal{P}`$;
-- $`\mathcal{A}.\mathrm{digest}`$ denotes the artifact digest recorded within the signed attestation descriptor (*subject digest*);
-- $`\bigwedge_{d \in \mathcal{D}} (\mathrm{SHA256}(d) = \mathcal{A}.\mathrm{sources}[d])`$ denotes the conjunction of byte-level checksum matches for each input normative document $d$ against the approved source registry $`\mathcal{D}`$;
-- $`\mathcal{A}.\mathrm{hermetic} \in \{\mathrm{True}, \mathrm{False}\}`$ denotes the boolean flag certifying that the compilation environment satisfied SLSA v1.0 Level 4 isolation criteria (total network isolation, pinned toolchains).
+- $\mathrm{Admission}(\mathcal{P}) \in \{0, 1\}$ denotes the boolean verdict granting or denying runtime `mmap` mounting permission;
+- $\mathbb{I}(\cdot)$ denotes the indicator function mapping a true logical predicate to 1 and false to 0;
+- $\mathrm{VerifySig}_{K_{\mathrm{root}}}(\sigma_{\mathcal{A}}, \mathcal{A})$ denotes cryptographic verification of the digital signature $\sigma_{\mathcal{A}}$ on attestation $\mathcal{A}$ against root trust anchor $K_{\mathrm{root}}$ via the Ed25519 standard;
+- $\mathrm{SHA256}(\mathcal{P})$ denotes the actual 256-bit cryptographic digest of the compiled binary pack file $\mathcal{P}$;
+- $\mathcal{A}.\mathrm{digest}$ denotes the artifact digest recorded within the signed attestation descriptor (*subject digest*);
+- $\bigwedge_{d \in \mathcal{D}} (\mathrm{SHA256}(d) = \mathcal{A}.\mathrm{sources}[d])$ denotes the conjunction of byte-level checksum matches for each input normative document $d$ against the approved source registry $\mathcal{D}$;
+- $\mathcal{A}.\mathrm{hermetic} \in \{\mathrm{True}, \mathrm{False}\}$ denotes the boolean flag certifying that the compilation environment satisfied SLSA v1.0 Level 4 isolation criteria (total network isolation, pinned toolchains).
 
 Actionable Closed-Loop Formulation:
 
 1. **Control Flow & Runtime Decisions:**
-   The expert system loader gateway evaluates $`\mathrm{Admission}(\mathcal{P})`$ strictly prior to invoking the `mmap(2)` system call.
-   - *Verdict $`\mathrm{Admission}(\mathcal{P}) = 1`$ (`PASS`):* The pack is verified as authentic and intact; the loader issues `mmap` with `PROT_READ` and initiates the RCU hot-swap sequence (Section 3.4).
-   - *Verdict $`\mathrm{Admission}(\mathcal{P}) = 0`$ (`FAIL`):* The loader enforces a strict *Fail-Closed* policy. The initialization sequence aborts immediately, emitting a critical security alert (`Security Tampering Alert`), isolating the binary file into quarantine, while the inference engine continues servicing queries on the existing verified generation or enters a safe stopped state.
+   The expert system loader gateway evaluates $\mathrm{Admission}(\mathcal{P})$ strictly prior to invoking the `mmap(2)` system call.
+   - *Verdict $\mathrm{Admission}(\mathcal{P}) = 1$ (`PASS`):* The pack is verified as authentic and intact; the loader issues `mmap` with `PROT_READ` and initiates the RCU hot-swap sequence (Section 3.4).
+   - *Verdict $\mathrm{Admission}(\mathcal{P}) = 0$ (`FAIL`):* The loader enforces a strict *Fail-Closed* policy. The initialization sequence aborts immediately, emitting a critical security alert (`Security Tampering Alert`), isolating the binary file into quarantine, while the inference engine continues servicing queries on the existing verified generation or enters a safe stopped state.
 2. **Hardware Dimensioning:**
-   Evaluating $`\mathrm{Admission}(\mathcal{P})`$ imposes deterministic boot and reload time budgets. Ed25519 signature verification on ARM Cortex-A78AE cores requires only $45\,\mu\text{s}$. Computing the SHA-256 digest of pack $`V_{\mathrm{pack}}`$ on hardware featuring ARMv8-A Crypto Extension or Intel SHA-NI instructions achieves throughputs of $`B_{\mathrm{sha}} \approx 2.4\,\text{GB/s}`$. Total verification latency evaluates to:
+   Evaluating $\mathrm{Admission}(\mathcal{P})$ imposes deterministic boot and reload time budgets. Ed25519 signature verification on ARM Cortex-A78AE cores requires only $45\,\mu\text{s}$. Computing the SHA-256 digest of pack $V_{\mathrm{pack}}$ on hardware featuring ARMv8-A Crypto Extension or Intel SHA-NI instructions achieves throughputs of $B_{\mathrm{sha}} \approx 2.4\,\text{GB/s}$. Total verification latency evaluates to:
 
 ```math
 T_{\mathrm{verify}} = \frac{V_{\mathrm{pack}}}{B_{\mathrm{sha}}} + T_{\mathrm{sig}}
 ```
 
-   where $`V_{\mathrm{pack}}`$ is the knowledge pack size in bytes, $`B_{\mathrm{sha}}`$ is the cryptographic hashing throughput, and $`T_{\mathrm{sig}}`$ is the signature verification latency. For a pack of $`V_{\mathrm{pack}} = 500\,\text{MB}`$, total verification consumes only $208\,\text{ms}$, executing comfortably within background reload windows without degrading active inference pipelines.
+   where $V_{\mathrm{pack}}$ is the knowledge pack size in bytes, $B_{\mathrm{sha}}$ is the cryptographic hashing throughput, and $T_{\mathrm{sig}}$ is the signature verification latency. For a pack of $V_{\mathrm{pack}} = 500\,\text{MB}$, total verification consumes only $208\,\text{ms}$, executing comfortably within background reload windows without degrading active inference pipelines.
 3. **Worked Numerical Example:**
-   An edge railway signaling automation node receives an updated knowledge pack governing train separation safety rules with footprint $`V_{\mathrm{pack}} = 120\,\text{MB}`$. The admission gateway validates the attestation: the Curve25519 signature $`\sigma_{\mathcal{A}}`$ verifies in $42\,\mu\text{s}$. Hardware-accelerated hashing completes in $`T_{\mathrm{hash}} = 120\,\text{MB} / (2.4\,\text{GB/s}) = 50\,\text{ms}`$. The evaluated digest matches $`\mathcal{A}.\mathrm{digest}`$ (`0x9f4a...b2c1`). All 18 input IEC/EN standards match registered digests, and $`\mathcal{A}.\mathrm{hermetic} = \mathrm{True}`$. The predicate returns $`\mathrm{Admission}(\mathcal{P}) = 1`$. The runtime authorizes the atomic RCU pointer swing. Had a single byte within the binary index been altered (e.g., modifying a braking deceleration threshold), $`\mathrm{SHA256}(\mathcal{P}) \ne \mathcal{A}.\mathrm{digest} \implies \mathrm{Admission}(\mathcal{P}) = 0`$, blocking the poisoned pack in $50.042\,\text{ms}$ and preventing safety perimeter subversion.
+   An edge railway signaling automation node receives an updated knowledge pack governing train separation safety rules with footprint $V_{\mathrm{pack}} = 120\,\text{MB}$. The admission gateway validates the attestation: the Curve25519 signature $\sigma_{\mathcal{A}}$ verifies in $42\,\mu\text{s}$. Hardware-accelerated hashing completes in $T_{\mathrm{hash}} = 120\,\text{MB} / (2.4\,\text{GB/s}) = 50\,\text{ms}$. The evaluated digest matches $\mathcal{A}.\mathrm{digest}$ (`0x9f4a...b2c1`). All 18 input IEC/EN standards match registered digests, and $\mathcal{A}.\mathrm{hermetic} = \mathrm{True}$. The predicate returns $\mathrm{Admission}(\mathcal{P}) = 1$. The runtime authorizes the atomic RCU pointer swing. Had a single byte within the binary index been altered (e.g., modifying a braking deceleration threshold), $\mathrm{SHA256}(\mathcal{P}) \ne \mathcal{A}.\mathrm{digest} \implies \mathrm{Admission}(\mathcal{P}) = 0$, blocking the poisoned pack in $50.042\,\text{ms}$ and preventing safety perimeter subversion.
 
 ### 6.3. Hermetic Knowledge Container Crystallization (ZKP4) and Bit-for-Bit Reproducibility
 
@@ -1108,7 +1108,7 @@ The hermetic crystallization pipeline eliminates environmental entropy across fo
 \forall i < j: \quad \mathrm{Hash}(A_i) <_{\mathrm{lex}} \mathrm{Hash}(A_j)
 ```
 
-where $`\mathrm{Hash}(A)`$ represents the 256-bit cryptographic digest of knowledge atom $A$, and $<_{\mathrm{lex}}$ denotes strict byte-level lexicographical ordering.
+where $\mathrm{Hash}(A)$ represents the 256-bit cryptographic digest of knowledge atom $A$, and $<_{\mathrm{lex}}$ denotes strict byte-level lexicographical ordering.
 3. **Hermetic Compiler Isolation:** Compilation executes with the `-trimpath` flag, removing host developer filesystem paths from symbol tables, while all build timestamps are replaced by a deterministic epoch defined by `SOURCE_DATE_EPOCH` (the Unix timestamp of the latest cryptographically signed commit within the normative repository).
 4. **Strict Zero-Padding:** Aligning tables and posting lists to 64-byte CPU cache line boundaries is performed exclusively via the explicit emission of zero bytes (`0x00`).
 
@@ -1121,8 +1121,8 @@ The quantity of padding bytes required to align an offset to a 64-byte cache lin
 ```
 
 where:
-- $`\mathrm{CurrentOffset} \in \mathbb{N}_0`$ — current byte offset within the output binary container;
-- $`\mathrm{PadBytes} \in [0, 63]`$ — exact number of `0x00` zero bytes that must be explicitly written into the stream before serializing the subsequent section. Using address seeking without writing (`fseek`, `seek`) is strictly forbidden to prevent leaking uninitialized host memory (*dirty padding*).
+- $\mathrm{CurrentOffset} \in \mathbb{N}_0$ — current byte offset within the output binary container;
+- $\mathrm{PadBytes} \in [0, 63]$ — exact number of `0x00` zero bytes that must be explicitly written into the stream before serializing the subsequent section. Using address seeking without writing (`fseek`, `seek`) is strictly forbidden to prevent leaking uninitialized host memory (*dirty padding*).
 
 To protect multi-section ZKP4 containers, the container header incorporates a hierarchical Merkle root (*Container Integrity Root*) binding the discrete checksums of all four structural sections:
 
@@ -1140,21 +1140,21 @@ where:
 
 1. **Control Flow & Runtime Decisions:**
    - Prior to memory-mapping the container via `mmap(2)`, the loader computes $\mathrm{RootHash}$ from disk and verifies it against the signed manifest value and the hardware admission register `%ebx`.
-   - If $`\mathrm{RootHash} \equiv \mathcal{A}.\mathrm{root\_digest}`$, the container is mapped into the virtual address space with `PROT_READ | MAP_SHARED`, and the active knowledge pointer is atomically swung via RCU within a single CPU cycle.
+   - If $\mathrm{RootHash} \equiv \mathcal{A}.\mathrm{root\_digest}$, the container is mapped into the virtual address space with `PROT_READ | MAP_SHARED`, and the active knowledge pointer is atomically swung via RCU within a single CPU cycle.
    - If any discrepancy is detected—even down to a single bit—the system immediately raises a `HALT_REFUSE (0x403)` alarm, blocks mounting of the untrusted container, and enters a Fail-Closed posture.
 2. **Hardware Dimensioning:**
    - Strict 64-byte alignment guarantees that every atomic knowledge structure resides within a single L1/L2 cache line ($64\,\text{bytes}$), eliminating split cache line penalties that otherwise introduce $12\text{--}18$ latency cycles on every memory access.
    - Zero dynamic heap allocation: the mapped ZKP4 image is serviced directly from the kernel Page Cache, achieving cold-start latencies of $T_{\mathrm{boot}} < 45\,\mu\text{s}$ even across knowledge packs spanning $V_{\mathrm{pack}} = 4\,\text{GB}$.
 3. **Worked Numerical Example:**
    - On two independent build nodes (Node A running Ubuntu 24.04 ARM64 and Node B running Debian 12 x86_64), the avionics normative corpus DO-178C is compiled.
-   - The symbol section terminates at offset $`\mathrm{CurrentOffset} = 145{,}453\,\text{bytes}`$. The compiler computes the required padding size:
+   - The symbol section terminates at offset $\mathrm{CurrentOffset} = 145{,}453\,\text{bytes}$. The compiler computes the required padding size:
 
 ```math
 \mathrm{PadBytes} = (64 - (145453 \bmod 64)) \bmod 64 = (64 - 45) \bmod 64 = 19\,\text{bytes}.
 ```
 
    - The compiler strictly writes $19$ zero bytes `0x00`, advancing the offset to the aligned boundary of $145{,}472\,\text{bytes}$ ($145472 / 64 = 2273$).
-   - Thanks to the `-trimpath` flag, pinning $`\mathrm{SOURCE\_DATE\_EPOCH} = 1718000000`$, and lexicographic sorting of predicates, both servers generate a binary file `avionics-core.kp` of size $48{,}234{,}496\,\text{bytes}$ with an identical root hash $`\mathrm{RootHash} = \text{0x7e2b8c...4a19}`$. The admission gateway validates bit-for-bit parity, and the update is successfully mounted into the aircraft's onboard compute unit.
+   - Thanks to the `-trimpath` flag, pinning $\mathrm{SOURCE\_DATE\_EPOCH} = 1718000000$, and lexicographic sorting of predicates, both servers generate a binary file `avionics-core.kp` of size $48{,}234{,}496\,\text{bytes}$ with an identical root hash $\mathrm{RootHash} = \text{0x7e2b8c...4a19}$. The admission gateway validates bit-for-bit parity, and the update is successfully mounted into the aircraft's onboard compute unit.
 
 ---
 
@@ -1191,7 +1191,7 @@ flowchart TD
 
 ### 7.1. Mathematical Conditions of the Admission Gateway
 
-A candidate assertion $`\mathcal{C} = \langle s, p, o, d, q, b_s, b_e \rangle`$ is admitted into the subsequent release generation of the knowledge pack if and only if the conjunction of four formal validation predicates evaluates to true:
+A candidate assertion $\mathcal{C} = \langle s, p, o, d, q, b_s, b_e \rangle$ is admitted into the subsequent release generation of the knowledge pack if and only if the conjunction of four formal validation predicates evaluates to true:
 
 ```math
 \text{Admit}(\mathcal{C}) \iff \mathcal{P}_{\text{source-hash}}(d) \land \mathcal{P}_{\text{valid-utf8}}(d, b_s, b_e) \land \mathcal{P}_{\text{exact-slice}}(d, q, b_s, b_e) \land \mathcal{P}_{\text{lattice-pred}}(p).
@@ -1199,21 +1199,21 @@ A candidate assertion $`\mathcal{C} = \langle s, p, o, d, q, b_s, b_e \rangle`$ 
 
 Formal definitions of admission gateway predicates:
 
-- $`\mathcal{C} = \langle s, p, o, d, q, b_s, b_e \rangle`$ denotes the candidate assertion: subject $`s`$, predicate $`p`$, object $`o`$, document identifier $`d`$, claimed quotation $`q`$, and claimed byte offsets $`b_s, b_e`$;
-- $`\mathcal{P}_{\text{source-hash}}(d)`$ validates that the SHA-256 digest of the primary document $`d`$ residing on host storage matches the registered digest sealed in the pack source registry (Section 1.2), guaranteeing that text slices originate from an approved, immutable baseline;
-- $`\mathcal{P}_{\text{valid-utf8}}(d, b_s, b_e)`$ verifies that byte offsets $`b_s`$ and $`b_e`$ reside within the valid bounds of document $`d`$ and align exactly with Unicode UTF-8 code point boundaries, preventing corrupted multi-byte sequences;
-- $`\mathcal{P}_{\text{exact-slice}}(d, q, b_s, b_e)`$ mandates that the physical byte slice extracted from document $`d`$ over range $`[b_s, b_e)`$ is byte-for-byte identical to the quotation string $`q`$;
-- $`\mathcal{P}_{\text{lattice-pred}}(p)`$ verifies that predicate $`p`$ belongs to the admitted relation lattice ($`\exists \text{Top} : p \sqsubseteq^* \text{Top}`$).
+- $\mathcal{C} = \langle s, p, o, d, q, b_s, b_e \rangle$ denotes the candidate assertion: subject $s$, predicate $p$, object $o$, document identifier $d$, claimed quotation $q$, and claimed byte offsets $b_s, b_e$;
+- $\mathcal{P}_{\text{source-hash}}(d)$ validates that the SHA-256 digest of the primary document $d$ residing on host storage matches the registered digest sealed in the pack source registry (Section 1.2), guaranteeing that text slices originate from an approved, immutable baseline;
+- $\mathcal{P}_{\text{valid-utf8}}(d, b_s, b_e)$ verifies that byte offsets $b_s$ and $b_e$ reside within the valid bounds of document $d$ and align exactly with Unicode UTF-8 code point boundaries, preventing corrupted multi-byte sequences;
+- $\mathcal{P}_{\text{exact-slice}}(d, q, b_s, b_e)$ mandates that the physical byte slice extracted from document $d$ over range $[b_s, b_e)$ is byte-for-byte identical to the quotation string $q$;
+- $\mathcal{P}_{\text{lattice-pred}}(p)$ verifies that predicate $p$ belongs to the admitted relation lattice ($\exists \text{Top} : p \sqsubseteq^* \text{Top}$).
 
 The host runtime computes the SHA-256 digest of the quotation directly from the extracted byte slice. A hash supplied by the model or its runtime wrapper is fundamentally untrusted: an external agent could hash its own hallucinated paraphrase, rendering quotation hash validation useless. Evidentiary custody is established solely through bytes directly read and verified by host code against the approved document revision.
 
-Any attempt by a generative model to rephrase, synthesize, or hallucinate text triggers immediate rejection by the gateway, preventing knowledge base poisoning. A critical boundary must be recognized: the gateway proves that quote $`q`$ exists verbatim within the primary source, but does not prove that the model extracted an accurate semantic interpretation of that quote. A tuple $`\langle s, p, o \rangle`$ pairing an authentic quote with an inverted or flawed logical interpretation will pass the gateway; such semantic errors must be caught by formal examination matrices and expert engineering peer review ([Chapter 25](ch25-how-expert-systems-learn.md)).
+Any attempt by a generative model to rephrase, synthesize, or hallucinate text triggers immediate rejection by the gateway, preventing knowledge base poisoning. A critical boundary must be recognized: the gateway proves that quote $q$ exists verbatim within the primary source, but does not prove that the model extracted an accurate semantic interpretation of that quote. A tuple $\langle s, p, o \rangle$ pairing an authentic quote with an inverted or flawed logical interpretation will pass the gateway; such semantic errors must be caught by formal examination matrices and expert engineering peer review ([Chapter 25](ch25-how-expert-systems-learn.md)).
 
 ---
 
 ## 8. Knowledge Density Engineering: The KDI Metric and Epistemic Profiling
 
-To profile technical documentation corpora, the author employs the **Knowledge Density Index** ($`\mathrm{KDI}`$), defined as the weighted sum of extracted formal knowledge primitives normalized by the primary text volume:
+To profile technical documentation corpora, the author employs the **Knowledge Density Index** ($\mathrm{KDI}$), defined as the weighted sum of extracted formal knowledge primitives normalized by the primary text volume:
 
 ```math
 \mathrm{KDI} = \frac{\sum_{i=1}^M w(t_i) \cdot N(t_i)}{\text{Size}_{\text{MB}}(\text{SourceCorpus})}.
@@ -1221,29 +1221,29 @@ To profile technical documentation corpora, the author employs the **Knowledge D
 
 Components of the Knowledge Density Index formulation:
 
-- $`\mathrm{KDI}`$ denotes the Knowledge Density Index, expressed in weighted facts per megabyte of source text;
-- $`M`$ denotes the total number of distinct knowledge categories in the classification schema;
-- $`N(t_i)`$ represents the count of validated facts extracted under category $`t_i`$;
-- $`w(t_i)`$ denotes the formal engineering weight assigned to knowledge category $`t_i`$;
-- $`\text{Size}_{\text{MB}}(\text{SourceCorpus})`$ denotes the primary text volume of the documentation corpus, in megabytes.
+- $\mathrm{KDI}$ denotes the Knowledge Density Index, expressed in weighted facts per megabyte of source text;
+- $M$ denotes the total number of distinct knowledge categories in the classification schema;
+- $N(t_i)$ represents the count of validated facts extracted under category $t_i$;
+- $w(t_i)$ denotes the formal engineering weight assigned to knowledge category $t_i$;
+- $\text{Size}_{\text{MB}}(\text{SourceCorpus})$ denotes the primary text volume of the documentation corpus, in megabytes.
 
-Scale of formal engineering significance weights $`w(t_i)`$:
-- Formal protocol grammars in ABNF format [[22]](#src-22): $`w = 5.0`$;
-- Finite State Machine (FSM) state transitions: $`w = 4.0`$;
-- Explicit normative prohibitions (`MUST_NOT`): $`w = 3.5`$;
-- Mandatory normative requirements (`MUST`): $`w = 3.0`$;
-- Recommended practices (`SHOULD`): $`w = 2.0`$;
-- Foundational domain terminology definitions: $`w = 1.0`$.
+Scale of formal engineering significance weights $w(t_i)$:
+- Formal protocol grammars in ABNF format [[22]](#src-22): $w = 5.0$;
+- Finite State Machine (FSM) state transitions: $w = 4.0$;
+- Explicit normative prohibitions (`MUST_NOT`): $w = 3.5$;
+- Mandatory normative requirements (`MUST`): $w = 3.0$;
+- Recommended practices (`SHOULD`): $w = 2.0$;
+- Foundational domain terminology definitions: $w = 1.0$.
 
-These weights represent an authoritative engineering choice by the author reflecting the mathematical tractability and verifiability of each knowledge type. Alternative weighting schemes yield divergent numerical values; consequently, comparative $`\mathrm{KDI}`$ analyses are meaningful only when computed across identical weighting frameworks.
+These weights represent an authoritative engineering choice by the author reflecting the mathematical tractability and verifiability of each knowledge type. Alternative weighting schemes yield divergent numerical values; consequently, comparative $\mathrm{KDI}$ analyses are meaningful only when computed across identical weighting frameworks.
 
 **Operational Thresholds and Control Actions:**
-- Minimum acceptability threshold for automated extraction: $`\mathrm{KDI}_{\text{threshold}} = 25`$ weighted facts per megabyte (under the author's weighting scale);
-- If $`\mathrm{KDI} \ge 25`$, the document corpus is admitted for automated pack compilation (`ADMIT_FOR_PACKAGING`);
-- If $`\mathrm{KDI} < 25`$, the pipeline flags an epistemic knowledge gap (`REJECT_KNOWLEDGE_GAP`), suspends binary container generation, and generates an extraction ticket targeting unparsed tables and state diagrams that the automated pipeline missed.
+- Minimum acceptability threshold for automated extraction: $\mathrm{KDI}_{\text{threshold}} = 25$ weighted facts per megabyte (under the author's weighting scale);
+- If $\mathrm{KDI} \ge 25$, the document corpus is admitted for automated pack compilation (`ADMIT_FOR_PACKAGING`);
+- If $\mathrm{KDI} < 25$, the pipeline flags an epistemic knowledge gap (`REJECT_KNOWLEDGE_GAP`), suspends binary container generation, and generates an extraction ticket targeting unparsed tables and state diagrams that the automated pipeline missed.
 
 **Worked Numerical Example:**  
-Consider a technical power controller specification occupying $`\text{Size}_{\text{MB}} = 2.0\,\text{MB}`$. The automated extractor identifies: 4 FSM transitions ($`w = 4.0`$), 20 mandatory `MUST` requirements ($`w = 3.0`$), 15 recommended `SHOULD` specifications ($`w = 2.0`$), and 10 terminology definitions ($`w = 1.0`$). The weighted sum of extracted knowledge primitives evaluates to:
+Consider a technical power controller specification occupying $\text{Size}_{\text{MB}} = 2.0\,\text{MB}$. The automated extractor identifies: 4 FSM transitions ($w = 4.0$), 20 mandatory `MUST` requirements ($w = 3.0$), 15 recommended `SHOULD` specifications ($w = 2.0$), and 10 terminology definitions ($w = 1.0$). The weighted sum of extracted knowledge primitives evaluates to:
 
 ```math
 \sum_{i=1}^M w(t_i) \cdot N(t_i) = 4 \times 4.0 + 20 \times 3.0 + 15 \times 2.0 + 10 \times 1.0 = 16 + 60 + 30 + 10 = 116.
@@ -1255,26 +1255,26 @@ The resulting Knowledge Density Index evaluates to:
 \mathrm{KDI} = \frac{116}{2.0} = 58.0\,\text{facts/MB}.
 ```
 
-Because $`58.0 \ge 25.0`$, the specification demonstrates high formal density and is admitted for compilation into the binary ZKP4 container.
+Because $58.0 \ge 25.0$, the specification demonstrates high formal density and is admitted for compilation into the binary ZKP4 container.
 
 ### 8.1. Empirical Knowledge Density Profiles Across Industrial Corpora
 
-The table below summarizes empirical profiles compiled from the author's benchmark datasets across four industrial domains. Aggregate columns combine multiple knowledge categories with distinct weights; consequently, exact $`\mathrm{KDI}`$ values cannot be recomputed directly from the table, but lie strictly within the theoretical boundaries defined by the minimum and maximum category weights.
+The table below summarizes empirical profiles compiled from the author's benchmark datasets across four industrial domains. Aggregate columns combine multiple knowledge categories with distinct weights; consequently, exact $\mathrm{KDI}$ values cannot be recomputed directly from the table, but lie strictly within the theoretical boundaries defined by the minimum and maximum category weights.
 
-| Documentation Corpus | Text Footprint | Formal FSM / ABNF | Normative Requirements | Terminology Definitions | Evaluated $`\mathrm{KDI}`$ | Profiling Verdict |
+| Documentation Corpus | Text Footprint | Formal FSM / ABNF | Normative Requirements | Terminology Definitions | Evaluated $\mathrm{KDI}$ | Profiling Verdict |
 |---|---|---|---|---|---|---|
 | **IETF Transport Protocols (TCP, QUIC)** | 12.4 MB | 142 | 1,840 | 410 | **542.7** | Density far exceeds threshold; recall evaluated separately |
 | **ISO 26262 (Automotive Functional Safety)** | 28.0 MB | 88 | 2,950 | 1,120 | **375.4** | Density comfortably exceeds threshold |
 | **DO-178C (Avionics Software Engineering)** | 8.5 MB | 12 | 680 | 340 | **278.8** | Density exceeds threshold |
-| **Unstructured Field Operations Manuals** | 45.0 MB | 0 | 115 | 85 | **9.5** | **Knowledge Gap ($`\mathrm{KDI} < 25`$)** |
+| **Unstructured Field Operations Manuals** | 45.0 MB | 0 | 115 | 85 | **9.5** | **Knowledge Gap ($\mathrm{KDI} < 25$)** |
 
-The operating threshold $`\mathrm{KDI}_{\text{threshold}} = 25`$ was established empirically by the author. If a safety-critical standard (such as a drone battery management specification) falls below this threshold, the CI/CD profiling gate flags a **knowledge gap** and schedules a focused secondary extraction targeting tables, state transition matrices, and diagrams omitted by the initial pass.
+The operating threshold $\mathrm{KDI}_{\text{threshold}} = 25$ was established empirically by the author. If a safety-critical standard (such as a drone battery management specification) falls below this threshold, the CI/CD profiling gate flags a **knowledge gap** and schedules a focused secondary extraction targeting tables, state transition matrices, and diagrams omitted by the initial pass.
 
 ### 8.2. Density Is Not Recall: Estimation via Capture-Recapture
 
-A high $`\mathrm{KDI}`$ does not guarantee that all relevant knowledge was captured. Density measures facts extracted per megabyte, but cannot quantify facts omitted by the pipeline. A dense technical standard may contain unparsed tables, while an unstructured document with low density may have been completely harvested. To estimate completeness, the architecture requires a mathematical estimate of the unknown total assertion population $`N`$.
+A high $\mathrm{KDI}$ does not guarantee that all relevant knowledge was captured. Density measures facts extracted per megabyte, but cannot quantify facts omitted by the pipeline. A dense technical standard may contain unparsed tables, while an unstructured document with low density may have been completely harvested. To estimate completeness, the architecture requires a mathematical estimate of the unknown total assertion population $N$.
 
-This estimate is provided by the **capture-recapture method**, adapted from quantitative ecology where it models wild animal populations. Eick et al. introduced capture-recapture to software engineering inspections: multiple reviewers independently audit an engineering specification, and the overlap among defects discovered by distinct inspectors yields a statistical estimate of undiscovered defects [[23]](#src-23). In an automated knowledge pipeline, the independent inspectors are two distinct extraction engines—for example, deterministic rule-based pattern matchers and a local SLM coupled to the byte-level admission gateway of Section 7. If the first extractor identifies $`n_1`$ assertions, the second identifies $`n_2`$, and $`m`$ assertions are identified by both, the Lincoln-Petersen estimator computes:
+This estimate is provided by the **capture-recapture method**, adapted from quantitative ecology where it models wild animal populations. Eick et al. introduced capture-recapture to software engineering inspections: multiple reviewers independently audit an engineering specification, and the overlap among defects discovered by distinct inspectors yields a statistical estimate of undiscovered defects [[23]](#src-23). In an automated knowledge pipeline, the independent inspectors are two distinct extraction engines—for example, deterministic rule-based pattern matchers and a local SLM coupled to the byte-level admission gateway of Section 7. If the first extractor identifies $n_1$ assertions, the second identifies $n_2$, and $m$ assertions are identified by both, the Lincoln-Petersen estimator computes:
 
 ```math
 \hat{N} = \frac{n_1 \cdot n_2}{m}, \qquad \widehat{R}_{\cup} = \frac{n_1 + n_2 - m}{\hat{N}}.
@@ -1282,32 +1282,32 @@ This estimate is provided by the **capture-recapture method**, adapted from quan
 
 Formal parameters of the completeness estimation:
 
-- $`n_1, n_2`$ denote the total counts of canonical assertions extracted independently by the first and second extractors over the identical corpus;
-- $`m`$ denotes the count of assertions identified by both extractors; equivalency is evaluated via the injective cluster key (Section 5.1);
-- $`\hat{N}`$ denotes the estimated total assertion population within the corpus;
-- $`\widehat{R}_{\cup} \in [0, 1]`$ represents the estimated extraction recall (completeness) achieved by the union of both pipelines.
+- $n_1, n_2$ denote the total counts of canonical assertions extracted independently by the first and second extractors over the identical corpus;
+- $m$ denotes the count of assertions identified by both extractors; equivalency is evaluated via the injective cluster key (Section 5.1);
+- $\hat{N}$ denotes the estimated total assertion population within the corpus;
+- $\widehat{R}_{\cup} \in [0, 1]$ represents the estimated extraction recall (completeness) achieved by the union of both pipelines.
 
 **Operational Thresholds and Quality Control:**
-- For safety-critical domains governed by ISO 26262 ASIL D or DO-178C DAL A, the mandatory certification recall threshold is set at $`\tau_{\mathrm{recall}} = 0.95`$ ($`95\%`$).
-- If $`\widehat{R}_{\cup} \ge 0.95`$, the merged knowledge set is certified as exhaustive and admitted for release (`RELEASE_PERMITTED`).
-- If $`\widehat{R}_{\cup} < 0.95`$, the pipeline blocks automated release (`BLOCK_INCOMPLETE_RELEASE`), assigns the status `QUALIFIED_AUDIT_REQUIRED`, and routes the corpus to a knowledge engineer for targeted manual inspection.
+- For safety-critical domains governed by ISO 26262 ASIL D or DO-178C DAL A, the mandatory certification recall threshold is set at $\tau_{\mathrm{recall}} = 0.95$ ($95\%$).
+- If $\widehat{R}_{\cup} \ge 0.95$, the merged knowledge set is certified as exhaustive and admitted for release (`RELEASE_PERMITTED`).
+- If $\widehat{R}_{\cup} < 0.95$, the pipeline blocks automated release (`BLOCK_INCOMPLETE_RELEASE`), assigns the status `QUALIFIED_AUDIT_REQUIRED`, and routes the corpus to a knowledge engineer for targeted manual inspection.
 
 **Worked Numerical Example:**  
-Across a standard chapter, rule templates extract $`n_1 = 180`$ assertions, the language model extracts $`n_2 = 150`$, and $`m = 120`$ assertions are shared. Evaluating the estimators yields:
+Across a standard chapter, rule templates extract $n_1 = 180$ assertions, the language model extracts $n_2 = 150$, and $m = 120$ assertions are shared. Evaluating the estimators yields:
 
 ```math
 \hat{N} = \frac{180 \cdot 150}{120} = 225, \qquad \widehat{R}_{\cup} = \frac{180 + 150 - 120}{225} = \frac{210}{225} \approx 0.933.
 ```
 
-Because $`0.933 < 0.950`$, the release gate blocks automated publication, generates an engineering report highlighting approximately 15 uncaptured requirements ($`225 - 210 = 15`$), and routes the chapter to an expert engineer for targeted manual auditing.
+Because $0.933 < 0.950$, the release gate blocks automated publication, generates an engineering report highlighting approximately 15 uncaptured requirements ($225 - 210 = 15$), and routes the chapter to an expert engineer for targeted manual auditing.
 
-The capture-recapture method relies on two foundational assumptions that are frequently stressed in practice. First, it assumes extractor independence. If both pipelines omit tabular data because both operate over the document text stream, the shared count $`m`$ is artificially inflated, causing $`\hat{N}`$ to be underestimated and recall to be overestimated. Second, it assumes equal capture probability across all assertions, whereas footnotes and complex diagrams are intrinsically harder to extract than plain text. Consequently, the Lincoln-Petersen estimate must be treated as an optimistic upper bound and validated via manual sample audits. Together, the two metrics form a complementary quality gate: $`\mathrm{KDI}`$ identifies sparse corpora, while capture-recapture estimates the volume of uncaptured knowledge remaining in dense documents.
+The capture-recapture method relies on two foundational assumptions that are frequently stressed in practice. First, it assumes extractor independence. If both pipelines omit tabular data because both operate over the document text stream, the shared count $m$ is artificially inflated, causing $\hat{N}$ to be underestimated and recall to be overestimated. Second, it assumes equal capture probability across all assertions, whereas footnotes and complex diagrams are intrinsically harder to extract than plain text. Consequently, the Lincoln-Petersen estimate must be treated as an optimistic upper bound and validated via manual sample audits. Together, the two metrics form a complementary quality gate: $\mathrm{KDI}$ identifies sparse corpora, while capture-recapture estimates the volume of uncaptured knowledge remaining in dense documents.
 
 ---
 
 ## 9. Reference Implementation of the Go mmap Index Reader
 
-The reference implementation of the ZNAV-INDEX v2 reader below is decomposed into two distinct components. The portable `Parse` function validates memory-mapped byte buffers: verifying the magic signature, container version, header CRC32, section boundaries, entry bounds, and strict lexicographical ordering of the subject table. Once validation succeeds, no subsequent `LookupSubject` operation can escape buffer boundaries; consequently, the lookup routine requires zero per-hop bounds checking. The OS-specific `OpenFile` function is isolated in a separate file governed by the `//go:build linux` directive, as `syscall.Mmap` is non-portable: Windows requires divergent system calls. Comprehensive validation incurs $`\mathcal{O}(N)`$ computational overhead during initialization; therefore, opening latency must be profiled separately from lookup latency; the historical 4.2 $`\mu\text{s}`$ metric cited in Section 2.2 excluded full structural verification.
+The reference implementation of the ZNAV-INDEX v2 reader below is decomposed into two distinct components. The portable `Parse` function validates memory-mapped byte buffers: verifying the magic signature, container version, header CRC32, section boundaries, entry bounds, and strict lexicographical ordering of the subject table. Once validation succeeds, no subsequent `LookupSubject` operation can escape buffer boundaries; consequently, the lookup routine requires zero per-hop bounds checking. The OS-specific `OpenFile` function is isolated in a separate file governed by the `//go:build linux` directive, as `syscall.Mmap` is non-portable: Windows requires divergent system calls. Comprehensive validation incurs $\mathcal{O}(N)$ computational overhead during initialization; therefore, opening latency must be profiled separately from lookup latency; the historical 4.2 $\mu\text{s}$ metric cited in Section 2.2 excluded full structural verification.
 
 <details>
 <summary>Go implementation: portable verification and binary search in ZNAV-INDEX v2</summary>
@@ -1633,11 +1633,11 @@ The partition placement function must be deterministic, depend exclusively on th
 \mathrm{shard}(k, S) = \arg\max_{s \in S} h(k, s)
 ```
 
-- $`k`$ denotes the partition key (in this chapter, the document lineage/family), and $`S`$ denotes the set of active shard identifiers;
-- $`h(k,s)`$ computes the affinity weight: the high-order 64 bits of the SHA-256 digest of key and shard ID, each prefixed with its byte length as in Section 5.1;
-- $`\arg\max`$ selects the shard with the maximum weight; in the vanishingly improbable event of a tie, lexicographical ordering of shard IDs breaks the tie deterministically.
+- $k$ denotes the partition key (in this chapter, the document lineage/family), and $S$ denotes the set of active shard identifiers;
+- $h(k,s)$ computes the affinity weight: the high-order 64 bits of the SHA-256 digest of key and shard ID, each prefixed with its byte length as in Section 5.1;
+- $\arg\max$ selects the shard with the maximum weight; in the vanishingly improbable event of a tie, lexicographical ordering of shard IDs breaks the tie deterministically.
 
-Rendezvous hashing was chosen for this reference implementation because it requires no virtual token rings or tree structures in the manifest: placement is a pure mathematical function of the key and the shard list. The trade-off is an $`\mathcal{O}(|S|)`$ hash computation per key, which is negligible across dozens of shards. Unit tests validate two essential properties. First: placement is invariant to the ordering of shard IDs in the input list. Second: when scaling from four shards to five, keys migrate exclusively to the newly added shard, with migration probability bounded by $`1/(n+1)`$ where $`n`$ is the initial shard count. Across 5,000 synthetic keys, observed migration was 0.193 against an expected 0.200, with zero key migration among the four original shards. In contrast, modulo hashing remmapped 0.805 of all keys (matching theoretical $`n/(n+1) = 0.8`$).
+Rendezvous hashing was chosen for this reference implementation because it requires no virtual token rings or tree structures in the manifest: placement is a pure mathematical function of the key and the shard list. The trade-off is an $\mathcal{O}(|S|)$ hash computation per key, which is negligible across dozens of shards. Unit tests validate two essential properties. First: placement is invariant to the ordering of shard IDs in the input list. Second: when scaling from four shards to five, keys migrate exclusively to the newly added shard, with migration probability bounded by $1/(n+1)$ where $n$ is the initial shard count. Across 5,000 synthetic keys, observed migration was 0.193 against an expected 0.200, with zero key migration among the four original shards. In contrast, modulo hashing remmapped 0.805 of all keys (matching theoretical $n/(n+1) = 0.8$).
 
 ### 10.3. Shard Construction and Partition Verification
 
@@ -2218,11 +2218,11 @@ All eight tests execute cleanly under `-race`, passing `go vet` and `gofmt` veri
 | Metric | Measured Value | Architectural Implication |
 |---|---|---|
 | Key migration ratio adding 5th shard to 4 existing: Rendezvous Hashing | 0.193 | Keys migrate exclusively to the newly added shard |
-| Key migration ratio: Modulo Hashing ($`h \bmod N`$) | 0.805 | Vast majority of cluster keys reshuffled |
+| Key migration ratio: Modulo Hashing ($h \bmod N$) | 0.805 | Vast majority of cluster keys reshuffled |
 | Cut dependency edge fraction (48 cross-revision edges): Lineage Key | 0.000 | All document revisions co-located on matching shard |
 | Cut dependency edge fraction: Document Key | 0.750 | 36 of 48 inter-document deduction edges severed |
-| Load imbalance ratio $`\beta`$: Lineage Key | 1.67 | Largest shard occupies ~1.7x average shard volume |
-| Load imbalance ratio $`\beta`$: Document Key | 1.47 | Superior balance, but severs cross-document deduction |
+| Load imbalance ratio $\beta$: Lineage Key | 1.67 | Largest shard occupies ~1.7x average shard volume |
+| Load imbalance ratio $\beta$: Document Key | 1.47 | Superior balance, but severs cross-document deduction |
 
 These metrics substantiate the core trade-off formalized in Chapter 7: coarser partition keys (lineages) preserve deductive dependencies at the expense of storage balance. The structural limits of this educational reference implementation are:
 
@@ -2258,7 +2258,7 @@ Eminent architects of systems programming, operating system kernels, and applied
 
 - **Daniel J. Bernstein:** Mr. Fedchyk, decades of security engineering have demonstrated that bypassing formal schema deserialization in favor of casting raw in-memory byte buffers is a chronic vector for critical vulnerabilities. If binary knowledge packs are compiled across distributed build pipelines, an adversary can manipulate the offset table within the ZNAV-INDEX header, triggering out-of-bounds reads or memory corruption when dereferencing string table pools. How does your model establish absolute memory safety without high-level validation routines, and how do you verify artifact authenticity prior to dereferencing the very first byte?
 
-- **Mykola Fedchyk:** Professor Bernstein, your engineering principles governing qmail security and Ed25519 cryptography serve as cornerstones for our safety invariants. A knowledge pack is never mapped blindly into memory. Prior to invoking `mmap`, the loader subsystem validates the release manifest: it computes the SHA-256 root hash of the Merkle tree encompassing the entire binary payload and verifies an Ed25519 detached cryptographic signature signed by an authorized engineering consortium. Within the runtime itself, memory safety is enforced by our reference Go implementation without resorting to unrestricted `unsafe.Pointer` dereferences: struct access occurs through strictly bounds-checked slices and `binary.LittleEndian` decoders where every offset satisfies $`\mathrm{Offset} + \mathrm{Length} \le \mathrm{FileSize}`$. If an offset anomaly or 64-byte cacheline misalignment is detected, the engine raises a fail-closed `DISP_REFUSE` refusal before any corrupted assertion can reach the inference pipeline.
+- **Mykola Fedchyk:** Professor Bernstein, your engineering principles governing qmail security and Ed25519 cryptography serve as cornerstones for our safety invariants. A knowledge pack is never mapped blindly into memory. Prior to invoking `mmap`, the loader subsystem validates the release manifest: it computes the SHA-256 root hash of the Merkle tree encompassing the entire binary payload and verifies an Ed25519 detached cryptographic signature signed by an authorized engineering consortium. Within the runtime itself, memory safety is enforced by our reference Go implementation without resorting to unrestricted `unsafe.Pointer` dereferences: struct access occurs through strictly bounds-checked slices and `binary.LittleEndian` decoders where every offset satisfies $\mathrm{Offset} + \mathrm{Length} \le \mathrm{FileSize}$. If an offset anomaly or 64-byte cacheline misalignment is detected, the engine raises a fail-closed `DISP_REFUSE` refusal before any corrupted assertion can reach the inference pipeline.
 
 **Continued Dialogue with Daniel J. Bernstein: Offset Overflow Arithmetic and Post-Quantum Cryptographic Custody**
 
@@ -2275,9 +2275,9 @@ Eminent architects of systems programming, operating system kernels, and applied
 3. **Lossless Fact Clustering:** Unifying identical facts eliminates redundant records without discarding source citations, provided the cluster key implements injective field encoding, fields are Unicode-normalized prior to hashing, and citations are sorted. Delimiter concatenation violates injectivity and induces false collisions that cryptographic hashing cannot prevent. Near-duplicate assertions must be merged exclusively through expert human review.
 4. **Bit-for-Bit Reproducibility:** Concurrent compilation pipelines guarantee byte-for-byte identical index and manifest digests prior to signing across arbitrary thread counts (`--concurrency / -j`), provided a reorder buffer traps duplicates and sequence gaps, map traversals are pre-sorted, and build timestamps and paths are neutralized.
 5. **Admission Gateway for Language Model Extractions:** Direct byte-level comparison of model-extracted quotes against approved primary source documents prevents hallucinated or paraphrased assertions from penetrating the knowledge base. Evidentiary authority derives strictly from bytes read directly by the host engine, rather than hashes reported by the model. Logical misinterpretations of authentic quotes bypass the gateway and must be intercepted by formal test suites.
-6. **Knowledge Density and Recall Metrics:** $`\mathrm{KDI}`$ identifies sparse document corpora to guide subsequent extraction passes, but cannot quantify completeness. Extraction recall must be statistically modeled using capture-recapture across independent extractors, treating the Lincoln-Petersen estimate as an optimistic upper bound.
+6. **Knowledge Density and Recall Metrics:** $\mathrm{KDI}$ identifies sparse document corpora to guide subsequent extraction passes, but cannot quantify completeness. Extraction recall must be statistically modeled using capture-recapture across independent extractors, treating the Lincoln-Petersen estimate as an optimistic upper bound.
 7. **Untrusted Index Verification:** The binary index reader validates checksums, section bounds, and entry ordering prior to the first lookup, enabling steady-state binary search to execute without per-hop boundary checks or heap allocations. Malformed index testing and fuzzing uncover unhandled panics, but do not replace formal verification.
-8. **Sharding Immutable Packs:** A shard represents a minimal self-contained knowledge pack, with shard topologies and file digests sealed within the manifest. Document lineage partitioning preserves deductive inference chains at the expense of storage balance: on synthetic corpora, cut edge fractions evaluate to 0 versus 0.750, and load imbalance evaluates to 1.67 versus 1.47. Rendezvous hashing remaps approximately $`1/(n+1)`$ keys upon shard addition, compared to $`n/(n+1)`$ under modulo hashing. Shard silence is not absence: in the absence of complete responses from all required shards serving an identical generation, the verdict `absent` is strictly prohibited.
+8. **Sharding Immutable Packs:** A shard represents a minimal self-contained knowledge pack, with shard topologies and file digests sealed within the manifest. Document lineage partitioning preserves deductive inference chains at the expense of storage balance: on synthetic corpora, cut edge fractions evaluate to 0 versus 0.750, and load imbalance evaluates to 1.67 versus 1.47. Rendezvous hashing remaps approximately $1/(n+1)$ keys upon shard addition, compared to $n/(n+1)$ under modulo hashing. Shard silence is not absence: in the absence of complete responses from all required shards serving an identical generation, the verdict `absent` is strictly prohibited.
 
 ---
 
@@ -2289,9 +2289,9 @@ Eminent architects of systems programming, operating system kernels, and applied
 4. Why are memory mapping, socket connection, and full index parsing not equivalent operations? What does the educational testbed measure, and what does it fail to prove regarding cold starts?
 5. Under what architectural conditions do Crotty, Leis, and Pavlo permit `mmap(2)` in database engines, and why does an immutable pack satisfy or fail those conditions?
 6. Which two latent failure modes occur in a naive reorder buffer, and which external factors besides concurrency violate bit-for-bit manifest reproducibility?
-7. Why does the naive composite key $`\text{SHA-256}(s|p|o|m)`$ cause collisions between distinct assertions, and how do length prefixing and Unicode normalization eliminate this vulnerability?
+7. Why does the naive composite key $\text{SHA-256}(s|p|o|m)$ cause collisions between distinct assertions, and how do length prefixing and Unicode normalization eliminate this vulnerability?
 8. Which four formal predicates govern candidate fact admission from a local language model, why does the host refuse to trust model-provided citation hashes, and which category of errors bypasses the gateway?
-9. Why does a high $`\mathrm{KDI}`$ fail to prove extraction completeness? Calculate the Lincoln-Petersen estimate for $`n_1 = 90`$, $`n_2 = 60`$, $`m = 45`$, and explain how dependency between extractors biases the result.
+9. Why does a high $\mathrm{KDI}$ fail to prove extraction completeness? Calculate the Lincoln-Petersen estimate for $n_1 = 90$, $n_2 = 60$, $m = 45$, and explain how dependency between extractors biases the result.
 10. How do fixed 16-byte subject entries and 64-byte alignment boundaries optimize CPU cache line utilization during binary search?
 11. Which validation steps must an untrusted ZNAV-INDEX v2 reader execute prior to servicing queries, and why must the fuzz harness recalculate header CRC32 values?
 12. How do fragmentation, sharding, and feature grouping differ, and which three formal rules govern partitioning correctness ([Chapter 7](ch07-knowledge-base-typology.md))?

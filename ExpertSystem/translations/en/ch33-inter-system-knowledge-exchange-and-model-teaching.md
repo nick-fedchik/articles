@@ -67,7 +67,7 @@ The expert system translates declarative ontological axioms into rigorous numeri
 \mathcal{E}_s = \left\{ y(t) \in \mathbb{R}^d \;\middle|\; y_{\min} \le y(t) \le y_{\max} \;\land\; \left\|\frac{dy}{dt}\right\| \le \Delta_{\max} \;\land\; \Phi(y(t), x_{\text{state}}) = 1 \right\}
 ```
 
-where $`y_{\min}`$ and $`y_{\max}`$ establish stationary sensor range bounds, $`\Delta_{\max}`$ limits the physically allowable slew rate of the process, and $`\Phi`$ represents a boolean predicate expressing contextual consistency with the current machine operating mode $`x_{\text{state}}`$, as defined in [Chapter 22](ch22-cybernetics-edge-to-backend.md).
+where $y_{\min}$ and $y_{\max}$ establish stationary sensor range bounds, $\Delta_{\max}$ limits the physically allowable slew rate of the process, and $\Phi$ represents a boolean predicate expressing contextual consistency with the current machine operating mode $x_{\text{state}}$, as defined in [Chapter 22](ch22-cybernetics-edge-to-backend.md).
 
 When the expert system exports a validity envelope to a signal processor or Kalman filter, it configures innovation gating thresholds based on the Mahalanobis distance formulation of Bar-Shalom et al. [[1]](#src-1):
 
@@ -76,21 +76,21 @@ d_M^2(t) = \tilde{y}^T(t) S^{-1}(t) \tilde{y}(t) \le \gamma_{\text{threshold}}
 ```
 
 **Parameters and Measurable Quantities:**
-- $`\tilde{y}(t) = y(t) - \hat{y}(t|t-1) \in \mathbb{R}^d`$ — innovation vector (measurement prediction residual) of dimension $`d`$;
-- $`S(t) \in \mathbb{S}_{++}^d`$ — symmetric positive-definite innovation covariance matrix of dimension $`d \times d`$;
-- $`\gamma_{\text{threshold}} = \chi_d^2(1 - \alpha)`$ — chi-square distribution quantile with $`d`$ degrees of freedom for a design significance level $`\alpha`$ (e.g., $`\alpha = 0.01`$);
-- $`d_M^2(t) \ge 0`$ — dimensionless squared Mahalanobis distance.
+- $\tilde{y}(t) = y(t) - \hat{y}(t|t-1) \in \mathbb{R}^d$ — innovation vector (measurement prediction residual) of dimension $d$;
+- $S(t) \in \mathbb{S}_{++}^d$ — symmetric positive-definite innovation covariance matrix of dimension $d \times d$;
+- $\gamma_{\text{threshold}} = \chi_d^2(1 - \alpha)$ — chi-square distribution quantile with $d$ degrees of freedom for a design significance level $\alpha$ (e.g., $\alpha = 0.01$);
+- $d_M^2(t) \ge 0$ — dimensionless squared Mahalanobis distance.
 
 **Operational Transitions and Numerical Example:**
-- If $`d_M^2(t) \le \gamma_{\text{threshold}}`$, the observation is deemed physically valid, and the Kalman filter updates the state estimate (`INNOVATION_ACCEPTED`);
-- If $`d_M^2(t) > \gamma_{\text{threshold}}`$, the measurement is classified as an out-of-envelope anomaly (`INNOVATION_REJECTED`); the observation is discarded from state estimation, the filter retains its a priori prediction, and the runtime generates a sensor-path incident report;
-- Worked numerical calculation: Consider a scalar oil pressure channel ($`d = 1`$). At significance level $`\alpha = 0.01`$, the critical threshold is $`\gamma_{\text{threshold}} = \chi_1^2(0.99) = 6.635`$. Let the predicted value be $`\hat{y} = 10.0\,\text{bar}`$, innovation variance $`S = 0.25\,\text{bar}^2`$ (standard deviation $`\sigma = 0.5\,\text{bar}`$), and the current sensor reading suddenly spikes to $`y = 11.6\,\text{bar}`$. The residual is $`\tilde{y} = 11.6 - 10.0 = 1.6\,\text{bar}`$.
+- If $d_M^2(t) \le \gamma_{\text{threshold}}$, the observation is deemed physically valid, and the Kalman filter updates the state estimate (`INNOVATION_ACCEPTED`);
+- If $d_M^2(t) > \gamma_{\text{threshold}}$, the measurement is classified as an out-of-envelope anomaly (`INNOVATION_REJECTED`); the observation is discarded from state estimation, the filter retains its a priori prediction, and the runtime generates a sensor-path incident report;
+- Worked numerical calculation: Consider a scalar oil pressure channel ($d = 1$). At significance level $\alpha = 0.01$, the critical threshold is $\gamma_{\text{threshold}} = \chi_1^2(0.99) = 6.635$. Let the predicted value be $\hat{y} = 10.0\,\text{bar}$, innovation variance $S = 0.25\,\text{bar}^2$ (standard deviation $\sigma = 0.5\,\text{bar}$), and the current sensor reading suddenly spikes to $y = 11.6\,\text{bar}$. The residual is $\tilde{y} = 11.6 - 10.0 = 1.6\,\text{bar}$.
 
 ```math
 d_M^2 = \frac{(1.6\,\text{bar})^2}{0.25\,\text{bar}^2} = \frac{2.56}{0.25} = 10.24.
 ```
 
-Because $`10.24 > 6.635`$, the innovation gate rejects the measurement (`INNOVATION_REJECTED`), preventing the Kalman filter from becoming corrupted by an abrupt pressure transient.
+Because $10.24 > 6.635$, the innovation gate rejects the measurement (`INNOVATION_REJECTED`), preventing the Kalman filter from becoming corrupted by an abrupt pressure transient.
 
 ### 2.2. Predicate Rules for Interference Detection and Sensor Spoofing
 
@@ -101,11 +101,11 @@ Through its linkage with an engineering ontology, the expert system detects corr
 ```
 
 **Parameters and Engineering Constraints:**
-- $`v_{\text{GNSS}}(t), v_{\text{odo}}(t) \ge 0`$ — instantaneous longitudinal velocity estimates from the satellite navigation receiver and wheel odometry ($`\text{km/h}`$);
-- $`\epsilon_v`$ — maximum permissible velocity discrepancy threshold (e.g., $`\epsilon_v = 15.0\,\text{km/h}`$).
+- $v_{\text{GNSS}}(t), v_{\text{odo}}(t) \ge 0$ — instantaneous longitudinal velocity estimates from the satellite navigation receiver and wheel odometry ($\text{km/h}$);
+- $\epsilon_v$ — maximum permissible velocity discrepancy threshold (e.g., $\epsilon_v = 15.0\,\text{km/h}$).
 
 **Operational Actions and Example:**
-- If the satellite receiver reports $`v_{\text{GNSS}} = 120\,\text{km/h}`$ while the odometer reports $`v_{\text{odo}} = 5\,\text{km/h}`$, the module computes the discrepancy: $`\lvert 120 - 5 \rvert = 115\,\text{km/h} > 15\,\text{km/h}`$.
+- If the satellite receiver reports $v_{\text{GNSS}} = 120\,\text{km/h}$ while the odometer reports $v_{\text{odo}} = 5\,\text{km/h}$, the module computes the discrepancy: $\lvert 120 - 5 \rvert = 115\,\text{km/h} > 15\,\text{km/h}$.
 - The expert system immediately issues a directive to the signal processor dynamically zeroing the weight of the untrusted GNSS channel within the navigation fusion filter (`DegradeWeight(GNSS, 0)`), transitioning the navigation system into autonomous dead reckoning based on inertial data.
 
 ---
@@ -116,21 +116,21 @@ When the external system is a neural network classifier or controller, the exper
 
 ### 3.1. Symbolic Knowledge Distillation via Semantic Loss Functions
 
-Symbolic knowledge distillation (Symbolic Knowledge Distillation) transfers logical inference rules directly into the parameter weights of an artificial neural network. This paradigm builds upon the posterior regularization framework of Hu et al. [[2]](#src-2), where the expert system generates a target probability distribution $`q(y|x)`$ satisfying a set of logical rules $`\mathcal{R} = \{(r_k, \lambda_k)\}`$ by minimizing Kullback-Leibler divergence relative to a base neural network $`p_\theta(y|x)`$:
+Symbolic knowledge distillation (Symbolic Knowledge Distillation) transfers logical inference rules directly into the parameter weights of an artificial neural network. This paradigm builds upon the posterior regularization framework of Hu et al. [[2]](#src-2), where the expert system generates a target probability distribution $q(y|x)$ satisfying a set of logical rules $\mathcal{R} = \{(r_k, \lambda_k)\}$ by minimizing Kullback-Leibler divergence relative to a base neural network $p_\theta(y|x)$:
 
 ```math
 \min_{q} \text{KL}(q(y|x) \parallel p_\theta(y|x)) - \sum_{k} \lambda_k \mathbb{E}_{q}[\mathbf{1}_{r_k}(x, y)]
 ```
 
-where $`\mathbf{1}_{r_k}(x, y)`$ evaluates to one if the pair $`(x, y)`$ satisfies rule $`r_k`$, and $`\lambda_k \ge 0`$ determines the regularization weight (hardness) of the rule. The closed-form solution to this optimization problem follows a Gibbs distribution:
+where $\mathbf{1}_{r_k}(x, y)$ evaluates to one if the pair $(x, y)$ satisfies rule $r_k$, and $\lambda_k \ge 0$ determines the regularization weight (hardness) of the rule. The closed-form solution to this optimization problem follows a Gibbs distribution:
 
 ```math
 q^*(y|x) \propto p_\theta(y|x) \exp\left( \sum_k \lambda_k \mathbf{1}_{r_k}(x, y) \right)
 ```
 
-The resulting distribution $`q^*(y|x)`$ serves as a set of soft labels for training the student network via cross-entropy loss.
+The resulting distribution $q^*(y|x)$ serves as a set of soft labels for training the student network via cross-entropy loss.
 
-For direct end-to-end differentiation of logical constraints, the architecture leverages the semantic loss formulation of Xu et al. [[3]](#src-3). When a formal rule is expressed as a propositional formula $`\alpha`$ over the classifier outputs, the semantic loss is defined as the negative log-likelihood of the formula's satisfaction:
+For direct end-to-end differentiation of logical constraints, the architecture leverages the semantic loss formulation of Xu et al. [[3]](#src-3). When a formal rule is expressed as a propositional formula $\alpha$ over the classifier outputs, the semantic loss is defined as the negative log-likelihood of the formula's satisfaction:
 
 ```math
 \mathcal{L}_{\text{semantic}}(\theta, \alpha) = -\log \sum_{y \models \alpha} \prod_{j: y_j = 1} p_\theta(\hat{y}_j = 1 \mid x) \prod_{j: y_j = 0} (1 - p_\theta(\hat{y}_j = 1 \mid x))
@@ -142,7 +142,7 @@ During error backpropagation, the gradient of the semantic loss penalizes networ
 
 In reinforcement learning (RL), an agent explores state space through trial and error. In safety-critical applications, unconstrained exploration can lead to physical equipment destruction or catastrophic transitions into forbidden failure states.
 
-The expert system implements formal shielding based on the framework established by Alshiekh et al. [[4]](#src-4). The shield is synthesized from safety specifications expressed in Linear Temporal Logic (LTL). The expert system computes the set of safe actions in the current state, $`\mathcal{A}_{\text{safe}}(s_t) \subseteq \mathcal{A}`$. If the agent selects an action $`a_t \notin \mathcal{A}_{\text{safe}}(s_t)`$, the shield intercepts the command, substitutes the closest admissible safe action $`a_t' = \arg\min_{a \in \mathcal{A}_{\text{safe}}} \|a - a_t\|`$, and returns a penalty within the reward feedback signal. Consequently, the external system learns to optimize its objective strictly within the verified safety envelope.
+The expert system implements formal shielding based on the framework established by Alshiekh et al. [[4]](#src-4). The shield is synthesized from safety specifications expressed in Linear Temporal Logic (LTL). The expert system computes the set of safe actions in the current state, $\mathcal{A}_{\text{safe}}(s_t) \subseteq \mathcal{A}$. If the agent selects an action $a_t \notin \mathcal{A}_{\text{safe}}(s_t)$, the shield intercepts the command, substitutes the closest admissible safe action $a_t' = \arg\min_{a \in \mathcal{A}_{\text{safe}}} \|a - a_t\|$, and returns a penalty within the reward feedback signal. Consequently, the external system learns to optimize its objective strictly within the verified safety envelope.
 
 ---
 
@@ -208,15 +208,15 @@ When knowledge traverses independently engineered systems, semantic corruption p
 
 ### 5.1. Conservative Extensions and Module Locality
 
-Following modular ontology theory formulated by Cuenca Grau et al. [[8]](#src-8), exporting a knowledge fragment $`\mathcal{M}`$ from a source ontology $`\mathcal{O}_1`$ to a target system $`\mathcal{O}_2`$ is sound if and only if $`\mathcal{M}`$ constitutes a **conservative extension** with respect to the designated signature $`\Sigma`$:
+Following modular ontology theory formulated by Cuenca Grau et al. [[8]](#src-8), exporting a knowledge fragment $\mathcal{M}$ from a source ontology $\mathcal{O}_1$ to a target system $\mathcal{O}_2$ is sound if and only if $\mathcal{M}$ constitutes a **conservative extension** with respect to the designated signature $\Sigma$:
 
 ```math
 \mathcal{O}_1 \models \psi \iff \mathcal{M} \models \psi \quad \text{for all formulas } \psi \text{ over signature } \Sigma
 ```
 
 This guarantees two fundamental invariants:
-1. **Import Safety:** Importing the module does not alter relationships among internal concepts within the target ontology that lie outside the shared signature $`\Sigma`$.
-2. **Deductive Completeness:** All entailments over the signature $`\Sigma`$ derivable from the complete source ontology $`\mathcal{O}_1`$ remain fully derivable exclusively from the exported module $`\mathcal{M}`$ without loading the entire knowledge base.
+1. **Import Safety:** Importing the module does not alter relationships among internal concepts within the target ontology that lie outside the shared signature $\Sigma$.
+2. **Deductive Completeness:** All entailments over the signature $\Sigma$ derivable from the complete source ontology $\mathcal{O}_1$ remain fully derivable exclusively from the exported module $\mathcal{M}$ without loading the entire knowledge base.
 
 ### 5.2. Semantic Type Preservation Rules
 
@@ -232,37 +232,37 @@ In complex engineering and defense programs, a knowledge base contains assertion
 
 ### 6.1. Multi-Level Security Based on the Denning Information Flow Lattice
 
-Access control is formalized using Denning's information flow lattice [[9]](#src-9) combined with the Bell-LaPadula model [[10]](#src-10). The set of security labels forms a partially ordered lattice $`(\mathcal{L}, \le, \sqcap, \sqcup)`$:
+Access control is formalized using Denning's information flow lattice [[9]](#src-9) combined with the Bell-LaPadula model [[10]](#src-10). The set of security labels forms a partially ordered lattice $(\mathcal{L}, \le, \sqcap, \sqcup)$:
 
 ```math
 \mathcal{L} = \mathcal{C} \times 2^{\mathcal{K}}
 ```
 
-where $`\mathcal{C} = \{\text{Public} < \text{Internal} < \text{Restricted} < \text{Critical}\}`$ defines a linear hierarchy of classification levels, and $`\mathcal{K}`$ denotes the set of categorical compartments (e.g., project-specific or consortium-specific identifiers).
+where $\mathcal{C} = \{\text{Public} < \text{Internal} < \text{Restricted} < \text{Critical}\}$ defines a linear hierarchy of classification levels, and $\mathcal{K}$ denotes the set of categorical compartments (e.g., project-specific or consortium-specific identifiers).
 
-A subject label $`L_s = (c_s, K_s)`$ dominates an object knowledge label $`L_o = (c_o, K_o)`$ if and only if:
+A subject label $L_s = (c_s, K_s)$ dominates an object knowledge label $L_o = (c_o, K_o)$ if and only if:
 
 ```math
 L_s \ge L_o \iff (c_s \ge c_o) \land (K_o \subseteq K_s)
 ```
 
 **Parameters and Lattice Conditions:**
-- $`c_s, c_o \in \mathcal{C}`$ — classification levels of subject and object within the ordered set $`\text{Public} < \text{Internal} < \text{Restricted} < \text{Critical}`$;
-- $`K_s, K_o \subseteq \mathcal{K}`$ — sets of categorical access compartments;
-- $`L_s = (c_s, K_s), L_o = (c_o, K_o)`$ — composite security labels.
+- $c_s, c_o \in \mathcal{C}$ — classification levels of subject and object within the ordered set $\text{Public} < \text{Internal} < \text{Restricted} < \text{Critical}$;
+- $K_s, K_o \subseteq \mathcal{K}$ — sets of categorical access compartments;
+- $L_s = (c_s, K_s), L_o = (c_o, K_o)$ — composite security labels.
 
 **Secure Export Rule and Worked Numerical Example:**
-- A fact $`f`$ tagged with label $`L_o = L(f)`$ is transmitted to an external system possessing clearance $`L_s = L_{\text{recipient}}`$ if and only if the recipient's clearance dominates the fact label: $`L_s \ge L_o`$.
-- If $`L_s \not\ge L_o`$, the export gateway rejects the transmission with status `REJECT_CLEARANCE_VIOLATION`.
-- Practical example: Consider an external diagnostic system with clearance $`L_s = (\text{Internal}, \{\text{Avionics}, \text{Telemetry}\})`$. The knowledge base contains an operational fact $`f_1`$ with label $`L(f_1) = (\text{Internal}, \{\text{Telemetry}\})`$ and a critical calibration rule $`f_2`$ labeled $`L(f_2) = (\text{Restricted}, \{\text{Avionics}\})`$.
-  - For $`f_1`$: $`c_s = \text{Internal} \ge c_o = \text{Internal}`$ and $`K_o = \{\text{Telemetry}\} \subseteq K_s`$, hence $`L_s \ge L(f_1)`$ → export permitted (`EXPORT_PERMITTED`);
-  - For $`f_2`$: $`c_s = \text{Internal} < c_o = \text{Restricted}`$, hence $`L_s \not\ge L(f_2)`$ → the fact is deterministically blocked at the gate (`EXPORT_DENIED`).
+- A fact $f$ tagged with label $L_o = L(f)$ is transmitted to an external system possessing clearance $L_s = L_{\text{recipient}}$ if and only if the recipient's clearance dominates the fact label: $L_s \ge L_o$.
+- If $L_s \not\ge L_o$, the export gateway rejects the transmission with status `REJECT_CLEARANCE_VIOLATION`.
+- Practical example: Consider an external diagnostic system with clearance $L_s = (\text{Internal}, \{\text{Avionics}, \text{Telemetry}\})$. The knowledge base contains an operational fact $f_1$ with label $L(f_1) = (\text{Internal}, \{\text{Telemetry}\})$ and a critical calibration rule $f_2$ labeled $L(f_2) = (\text{Restricted}, \{\text{Avionics}\})$.
+  - For $f_1$: $c_s = \text{Internal} \ge c_o = \text{Internal}$ and $K_o = \{\text{Telemetry}\} \subseteq K_s$, hence $L_s \ge L(f_1)$ → export permitted (`EXPORT_PERMITTED`);
+  - For $f_2$: $c_s = \text{Internal} < c_o = \text{Restricted}$, hence $L_s \not\ge L(f_2)$ → the fact is deterministically blocked at the gate (`EXPORT_DENIED`).
 
 ### 6.2. Selective Disclosure of Proofs via Merkle Trees
 
 When an external auditing system requires proof that a specific requirement or test case belongs to an approved knowledge base release, disclosing the entire repository could expose proprietary firmware internals or confidential topologies.
 
-To resolve this challenge, the expert system employs cryptographic Merkle trees [[11]](#src-11). The root hash $`R_{\text{Merkle}}`$ is published in the open release certificate ([Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)). To prove the presence of an isolated fact $`f_i`$ having hash $`H(f_i)`$, the expert system generates a compact authentication path of length $`O(\log N)`$, known as a **Merkle inclusion proof**:
+To resolve this challenge, the expert system employs cryptographic Merkle trees [[11]](#src-11). The root hash $R_{\text{Merkle}}$ is published in the open release certificate ([Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)). To prove the presence of an isolated fact $f_i$ having hash $H(f_i)$, the expert system generates a compact authentication path of length $O(\log N)$, known as a **Merkle inclusion proof**:
 
 ```math
 \pi(f_i) = \langle h_1, h_2, \dots, h_{\lceil \log_2 N \rceil} \rangle
@@ -275,12 +275,12 @@ H(\dots H(H(f_i), h_1) \dots) = R_{\text{Merkle}}
 ```
 
 **Parameters and Numerical Verification Example:**
-- $`N`$ — total number of immutable facts recorded in the ZKP4 knowledge pack;
-- $`H(f_i)`$ — SHA-256 cryptographic hash of the target fact $`f_i`$;
-- $`\lceil \log_2 N \rceil`$ — length of the Merkle inclusion proof path;
-- $`R_{\text{Merkle}}`$ — tree root hash attested in the public release certificate.
-- If the recomputed hash strictly matches $`R_{\text{Merkle}}`$, the fact is accepted as authentic (`PROOF_VALID`); if the result differs by even a single bit, the transaction is rejected (`PROOF_INVALID`).
-- Numerical dimensioning: For a knowledge base containing $`N = 1024`$ facts, the proof path length is $`\lceil \log_2 1024 \rceil = 10`$ intermediate 32-byte hashes (a total proof payload of only $`320\,\text{bytes}`$ instead of transferring the entire $`32\,\text{KB}`$ database). Evaluating this hash sequence on an ARM Cortex-A72 processor executes in under $`12\,\mu\text{s}`$, enabling real-time fact authentication.
+- $N$ — total number of immutable facts recorded in the ZKP4 knowledge pack;
+- $H(f_i)$ — SHA-256 cryptographic hash of the target fact $f_i$;
+- $\lceil \log_2 N \rceil$ — length of the Merkle inclusion proof path;
+- $R_{\text{Merkle}}$ — tree root hash attested in the public release certificate.
+- If the recomputed hash strictly matches $R_{\text{Merkle}}$, the fact is accepted as authentic (`PROOF_VALID`); if the result differs by even a single bit, the transaction is rejected (`PROOF_INVALID`).
+- Numerical dimensioning: For a knowledge base containing $N = 1024$ facts, the proof path length is $\lceil \log_2 1024 \rceil = 10$ intermediate 32-byte hashes (a total proof payload of only $320\,\text{bytes}$ instead of transferring the entire $32\,\text{KB}$ database). Evaluating this hash sequence on an ARM Cortex-A72 processor executes in under $12\,\mu\text{s}$, enabling real-time fact authentication.
 
 ---
 
@@ -312,7 +312,7 @@ An attacking node (even possessing a valid access credential) transmits an asser
 Objective: Disabling fail-safe interlocks during critical mission phases.
 
 #### 7.2.2. Stealth Semantic Drift
-The attack operates incrementally over extended durations: subtle micro-deltas of numeric thresholds or tolerances are submitted every second (e.g., shifting maximum current limits by $`+0.1\%`$ per reading). Individually, each observation passes local outlier filters, but cumulative drift pushes the system beyond safe operational envelopes.
+The attack operates incrementally over extended durations: subtle micro-deltas of numeric thresholds or tolerances are submitted every second (e.g., shifting maximum current limits by $+0.1\%$ per reading). Individually, each observation passes local outlier filters, but cumulative drift pushes the system beyond safe operational envelopes.
 
 #### 7.2.3. Cyclic Denial-of-Reasoning
 Injecting cyclic interdependencies among novel predicates:
@@ -324,7 +324,7 @@ P_1(x) \leftarrow P_2(x), \quad P_2(x) \leftarrow P_3(x), \quad P_3(x) \leftarro
 This induces exponential combinatorial explosion or non-termination during resolution refutation or least fixed-point evaluation.
 
 #### 7.2.4. Sybil Consensus Poisoning
-Compromising a pool of edge sensor nodes to coordinate the simultaneous transmission of fabricated counterexamples, artificially exceeding the threshold $`N_{\text{threshold}}`$ and forcing the system to misclassify synthetic anomalies as genuine physical environment shifts.
+Compromising a pool of edge sensor nodes to coordinate the simultaneous transmission of fabricated counterexamples, artificially exceeding the threshold $N_{\text{threshold}}$ and forcing the system to misclassify synthetic anomalies as genuine physical environment shifts.
 
 ### 7.3. Admission Control Gate and Knowledge Quarantine Lifecycle
 
@@ -368,14 +368,14 @@ System interaction operates as a bidirectional closed loop. As subordinate subsy
 
 When an external processor records an out-of-envelope signal excursion or a neural network reports elevated classification entropy, a structured anomaly incident report is dispatched to the Feedback Queue.
 
-The feedback collector aggregates these telemetry reports. An isolated transient excursion may stem from temporary physical sensor noise and does not warrant rule revisions. However, when the volume of homogeneous counterexamples for a specific signal surpasses the statistical threshold $`N_{\text{threshold}}`$, the collector flags the pattern as a sustained anomaly indicating genuine environmental shifts.
+The feedback collector aggregates these telemetry reports. An isolated transient excursion may stem from temporary physical sensor noise and does not warrant rule revisions. However, when the volume of homogeneous counterexamples for a specific signal surpasses the statistical threshold $N_{\text{threshold}}$, the collector flags the pattern as a sustained anomaly indicating genuine environmental shifts.
 
 ### 8.2. Powering the Continual Learning Cycle
 
 Accumulated, verified counterexamples serve as direct input into:
 - Expansion of the examination test suite detailed in [Chapter 25](ch25-how-expert-systems-learn.md): Novel counterexamples are integrated into mandatory negative or boundary tests, creating updated difficulty tiers.
 - Systematic drift detection algorithms from [Chapter 26](ch26-continual-learning.md): Telemetry streams are analyzed using cumulative sum (CUSUM) statistical tests to provide early warning of sensor degradation or operating point displacement.
-- Recalibration of validity envelopes: Knowledge engineers or automated optimizers formulate revised bounds $`\mathcal{E}_s'`$, which undergo exhaustive regression testing prior to the release of a new knowledge pack generation.
+- Recalibration of validity envelopes: Knowledge engineers or automated optimizers formulate revised bounds $\mathcal{E}_s'$, which undergo exhaustive regression testing prior to the release of a new knowledge pack generation.
 
 ---
 

@@ -65,7 +65,7 @@ flowchart LR
     G1m & G2m & Gim ==> Im
 ```
 
-Die Schaltung erschließt sich von links nach rechts. Gemäß dem Ohmschen Gesetz ist der Strom durch ein Leitwertelement am Schnittpunkt der $i$-ten Zeile und der $j$-ten Spalte gleich dem Produkt aus der Eingangsspannung $`V_i`$ und dem Leitwert des Elements $`G_{ij}=1/R_{ij}`$:
+Die Schaltung erschließt sich von links nach rechts. Gemäß dem Ohmschen Gesetz ist der Strom durch ein Leitwertelement am Schnittpunkt der $i$-ten Zeile und der $j$-ten Spalte gleich dem Produkt aus der Eingangsspannung $V_i$ und dem Leitwert des Elements $G_{ij}=1/R_{ij}$:
 
 ```math
 I_{ij}=G_{ij}\,V_i .
@@ -73,9 +73,9 @@ I_{ij}=G_{ij}\,V_i .
 
 Hierbei bedeuten:
 
-- $`I_{ij}`$ ist der elektrische Strom durch das Element am Schnittpunkt der $i$-ten Zeile und der $j$-ten Spalte, in Ampere;
-- $`G_{ij}`$ ist der elektrische Leitwert dieses Elements, in Siemens; er stellt den Kehrwert des ohmschen Widerstands $`R_{ij}`$ dar und fungiert als Verbindungsgewicht, das vom Bauteil physikalisch gespeichert wird;
-- $`V_i`$ ist das elektrische Potenzial (die Spannung) an der $i$-ten Zeile, in Volt; sie kodiert die Eingangsvariable, beispielsweise ein normiertes Sensorsignal.
+- $I_{ij}$ ist der elektrische Strom durch das Element am Schnittpunkt der $i$-ten Zeile und der $j$-ten Spalte, in Ampere;
+- $G_{ij}$ ist der elektrische Leitwert dieses Elements, in Siemens; er stellt den Kehrwert des ohmschen Widerstands $R_{ij}$ dar und fungiert als Verbindungsgewicht, das vom Bauteil physikalisch gespeichert wird;
+- $V_i$ ist das elektrische Potenzial (die Spannung) an der $i$-ten Zeile, in Volt; sie kodiert die Eingangsvariable, beispielsweise ein normiertes Sensorsignal.
 
 Folglich führt jedes einzelne Element der Kreuzschiene die Multiplikation «Eingangswert mal Gewicht» autonom aus – ohne Prozessortakt, Befehlsdekodierung oder Schleifenkonstrukt.
 
@@ -87,17 +87,17 @@ I_j=\sum_{i=1}^{N}G_{ij}\,V_i .
 
 Hierbei bedeuten:
 
-- $`I_j`$ ist der Ausgangsstrom der Spalte $j$, in Ampere;
+- $I_j$ ist der Ausgangsstrom der Spalte $j$, in Ampere;
 - $\sum_{i=1}^{N}$ ist die Summe über alle Zeilen von der ersten bis zur $N$-ten, die unmittelbar durch die Kirchhoffsche Stromaddition im Schaltungsknoten vollzogen wird;
 - $N$ ist die Anzahl der Zeilen der Kreuzschiene, was der Dimension des Merkmalsvektors entspricht;
 - $i$ ist der Zeilenindex;
-- $`G_{ij}\,V_i`$ ist der Strombeitrag der Zeile $i$ zum Gesamtausgangsstrom der Spalte $j$.
+- $G_{ij}\,V_i$ ist der Strombeitrag der Zeile $i$ zum Gesamtausgangsstrom der Spalte $j$.
 
 Eine Spalte berechnet damit die gewichtete Summe der Eingänge, formal das Skalarprodukt des Spannungsvektors mit dem Leitwertsvektor, während die gesamte Kreuzschiene die vollständige Matrix-Vektor-Multiplikation in einem einzigen physikalischen Schritt ausführt. Werden beispielsweise an drei Zeilen die Eingangsspannungen $0{,}5$, $0{,}2$ und $0{,}8$ V angelegt und weisen die Elemente der Spalte Leitwerte von $2$, $1$ und $0{,}5$ $\mu\text{S}$ auf, so resultiert ein Spaltenstrom von $I_j=0{,}5\cdot 2 + 0{,}2\cdot 1 + 0{,}8\cdot 0{,}5 = 1{,}6\ \mu\text{A}$ (exemplarische Zahlenwerte).
 
 Sämtliche Teilprodukte und Summen der gesamten Matrix stellen sich zeitgleich ein. Dies impliziert jedoch keineswegs eine unendlich hohe Rechengeschwindigkeit: Die physische Schrittdauer wird durch die Einschwingvorgänge der RC-Leitungsnetzwerke sowie durch die Latenzen der Digital-Analog-Wandler (DAC) an den Eingängen und der Analog-Digital-Wandler (ADC) an den Ausgängen begrenzt. Es ist daher präzise, von einem vollständig parallelen Rechenschritt für die gesamte Matrix zu sprechen, wobei der effektive Durchsatz realer Chips stets unter Einbeziehung der Wandlerstufen bilanziert werden muss. Die Programmierung von Kreuzschienen zur Beschleunigung von Matrix-Vektor-Multiplikationen wurde von Hu et al. detailliert beschrieben [[4]](#src-4), während der Übersichtsartikel von Ielmini und Wong das In-Memory-Computing auf Basis resistiver Schaltelemente umfassend systematisiert [[5]](#src-5). Die Wandlungskosten und deren systemische Beherrschung werden in [Anhang E](appendix-e-mixed-signal-neuromorphic-expert-systems.md) vertieft.
 
-Da elektrische Leitwerte physikalisch stets nicht-negativ sind ($G \ge 0$), Inferenzgewichte in Expertensystemen jedoch häufig negative Werte (hemmende Evidenz) annehmen müssen, wird das Regelgewicht $`w_{ij}`$ in der Praxis als Differenz der Leitwerte zweier Schaltungselemente kodiert:
+Da elektrische Leitwerte physikalisch stets nicht-negativ sind ($G \ge 0$), Inferenzgewichte in Expertensystemen jedoch häufig negative Werte (hemmende Evidenz) annehmen müssen, wird das Regelgewicht $w_{ij}$ in der Praxis als Differenz der Leitwerte zweier Schaltungselemente kodiert:
 
 ```math
 w_{ij}\propto G_{ij}^{+}-G_{ij}^{-}.
@@ -105,10 +105,10 @@ w_{ij}\propto G_{ij}^{+}-G_{ij}^{-}.
 
 Hierbei bedeuten:
 
-- $`w_{ij}`$ ist das Verbindungsgewicht zwischen Eingang $i$ und Hypothese $j$; das Gewicht kann positiv sein, wenn das Merkmal die Hypothese stützt, oder negativ, wenn es sie falsifiziert;
+- $w_{ij}$ ist das Verbindungsgewicht zwischen Eingang $i$ und Hypothese $j$; das Gewicht kann positiv sein, wenn das Merkmal die Hypothese stützt, oder negativ, wenn es sie falsifiziert;
 - $\propto$ bezeichnet das Proportionalitätsverhältnis;
-- $`G_{ij}^{+}`$ ist der Leitwert des Elements, dessen Strombeitrag die Hypothese stützt (erregender Pfad);
-- $`G_{ij}^{-}`$ ist der Leitwert des Elements, dessen Strombeitrag die Hypothese schwächt (hemmender Pfad).
+- $G_{ij}^{+}$ ist der Leitwert des Elements, dessen Strombeitrag die Hypothese stützt (erregender Pfad);
+- $G_{ij}^{-}$ ist der Leitwert des Elements, dessen Strombeitrag die Hypothese schwächt (hemmender Pfad).
 
 Ein Leitwertpaar mit $G^{+}=5\ \mu\text{S}$ und $G^{-}=2\ \mu\text{S}$ repräsentiert beispielsweise ein effektives Gewicht proportional zu $+3\ \mu\text{S}$, während das Wertepaar $2$ und $5\ \mu\text{S}$ ein negatives Gewicht von $-3\ \mu\text{S}$ abbildet. Diese differenzielle Kodierung kompensiert Gleichtakt-Driften, die beide Elemente gleichermaßen betreffen, eliminiert jedoch keine asymmetrischen Alterungs- oder Fluktuationsprozesse zwischen den beiden Komponenten.
 
@@ -122,17 +122,17 @@ V_{\text{out}}(t)=-\frac{1}{RC}\int_{0}^{t}V_{\text{in}}(\tau)\,d\tau+V_{\text{o
 
 Hierbei bedeuten:
 
-- $`V_{\text{out}}(t)`$ ist die Ausgangsspannung des Integrators zum Zeitpunkt $t$, in Volt;
-- $`V_{\text{in}}(\tau)`$ ist die Eingangsspannung zum Zeitpunkt $\tau$, in Volt;
+- $V_{\text{out}}(t)$ ist die Ausgangsspannung des Integrators zum Zeitpunkt $t$, in Volt;
+- $V_{\text{in}}(\tau)$ ist die Eingangsspannung zum Zeitpunkt $\tau$, in Volt;
 - $\tau$ ist die Integrationsvariable (die kontinuierliche Zeit zwischen $0$ und $t$);
 - $R$ ist der ohmsche Widerstand des Eingangswiderstands, in Ohm;
 - $C$ ist die Kapazität des Rückkopplungskondensators, in Farad;
 - $RC$ ist die Zeitkonstante des Integrators, in Sekunden: Je größer dieser Wert ist, desto langsamer wächst die Ausgangsspannung bei konstantem Eingangssignal an;
-- $`\int_{0}^{t}\ldots\,d\tau`$ bezeichnet das bestimmte Zeitintegral, das der akkumulierten Fläche unter dem Verlauf der Eingangsspannung im Intervall von $0$ bis $t$ entspricht;
-- $`V_{\text{out}}(0)`$ ist die Anfangsspannung am Integratorausgang, von der die kontinuierliche Akkumulation ausgeht;
+- $\int_{0}^{t}\ldots\,d\tau$ bezeichnet das bestimmte Zeitintegral, das der akkumulierten Fläche unter dem Verlauf der Eingangsspannung im Intervall von $0$ bis $t$ entspricht;
+- $V_{\text{out}}(0)$ ist die Anfangsspannung am Integratorausgang, von der die kontinuierliche Akkumulation ausgeht;
 - das negative Vorzeichen resultiert aus der invertierenden Beschaltung des Operationsverstärkers.
 
-Bei einer konstanten Eingangsspannung von $1$ V, $R=100\ \text{k}\Omega$ und $C=1\ \mu\text{F}$ beträgt die Integrationszeitkonstante beispielsweise $RC=0{,}1$ s. Ausgehend von $`V_{\text{out}}(0)=0`$ V ändert sich die Ausgangsspannung nach $0{,}05$ s exakt um $-(1/0{,}1)\cdot 1\cdot 0{,}05 = -0{,}5$ V.
+Bei einer konstanten Eingangsspannung von $1$ V, $R=100\ \text{k}\Omega$ und $C=1\ \mu\text{F}$ beträgt die Integrationszeitkonstante beispielsweise $RC=0{,}1$ s. Ausgehend von $V_{\text{out}}(0)=0$ V ändert sich die Ausgangsspannung nach $0{,}05$ s exakt um $-(1/0{,}1)\cdot 1\cdot 0{,}05 = -0{,}5$ V.
 
 Die Schaltung integriert ohne jede zeitliche Diskretisierung; ein numerischer Integrationsschritt (wie beim Euler- oder Runge-Kutta-Verfahren) entfällt vollständig. Reale Operationsverstärker weisen jedoch unvermeidliche Eingangs-Offsetspannungen und Biasströme auf. Diese parasitären Größen werden mitintegriert und führen zu einer schleichenden Drift des Ausgangssignals, bis die Schaltung an die Grenzen der Versorgungsspannung stößt (Sättigung). Ein analoger Integrator – beispielsweise zur Beschleunigungsintegration in einem Trägheitssensorknoten – bedarf daher zwingend periodischer Rücksetzimpulse (*Reset*) und kontinuierlicher Kalibrierzyklen. Auch hier zeigt sich das unverrückbare Prinzip: physikalisches Rechenprimitiv gepaart mit zwingender digitaler Überwachung.
 
@@ -255,13 +255,13 @@ Hierbei bedeuten:
 - $I_d$ ist der Drainstrom des MOSFETs, in Ampere;
 - $I_0$ ist der prozesstechnologie- und geometrieabhängige Skalierungsstrom, in Ampere;
 - $\exp$ ist die Exponentialfunktion $e^{x}$;
-- $`V_{gs}`$ ist die Gate-Source-Spannung, in Volt;
-- $`V_{th}`$ ist die Schwellenspannung (Threshold-Spannung) des Transistors, in Volt;
-- $`V_{ds}`$ ist die Drain-Source-Spannung, in Volt;
-- $`U_T=kT/q`$ ist die Temperaturspannung, wobei $k$ die Boltzmann-Konstante, $T$ die absolute Temperatur in Kelvin und $q$ die Elementarladung bezeichnen; bei Raumtemperatur beträgt $`U_T`$ rund 25 mV;
+- $V_{gs}$ ist die Gate-Source-Spannung, in Volt;
+- $V_{th}$ ist die Schwellenspannung (Threshold-Spannung) des Transistors, in Volt;
+- $V_{ds}$ ist die Drain-Source-Spannung, in Volt;
+- $U_T=kT/q$ ist die Temperaturspannung, wobei $k$ die Boltzmann-Konstante, $T$ die absolute Temperatur in Kelvin und $q$ die Elementarladung bezeichnen; bei Raumtemperatur beträgt $U_T$ rund 25 mV;
 - $\kappa$ ist der kapazitive Kopplungsfaktor zwischen Gate und Kanal, ein dimensionsloser Wert kleiner als eins.
 
-Für den Schaltungsentwurf ist folgender Aspekt essenziell: Unterschreitet $`V_{gs}`$ die Schwellenspannung, schaltet der Transistor nicht abrupt ab, sondern reduziert seinen Leitungsstrom exponentiell: Eine Erhöhung von $`V_{gs}`$ um rund $60/\kappa$ mV steigert den Strom bei Raumtemperatur exakt um eine Zehnerpotenz. Sobald $`V_{ds}`$ wenige $`U_T`$ übersteigt, nähert sich der Klammerausdruck $(1 - \exp(-V_{ds}/U_T))$ dem Wert eins an, sodass der Drainstrom nahezu unabhängig von der Drain-Spannung wird (Stromquellencharakteristik). Der Subthreshold-Betrieb und darauf basierende analoge Schaltungsfamilien werden im Grundlagenwerk von Carver Mead über analoge VLSI- und neuronale Systeme detailliert erörtert [[14]](#src-14). Ein Differenzverstärker-Transistorpaar in diesem Bereich erzeugt eine sigmoide Übertragungskennlinie; durch gezielte Verschiebung der Referenzspannungen lässt sich exakt kalibrieren, bei welchem physikalischen Messwert das linguistische Prädikat «hohe Vibration» stufenlos von 0 auf 1 übergeht.
+Für den Schaltungsentwurf ist folgender Aspekt essenziell: Unterschreitet $V_{gs}$ die Schwellenspannung, schaltet der Transistor nicht abrupt ab, sondern reduziert seinen Leitungsstrom exponentiell: Eine Erhöhung von $V_{gs}$ um rund $60/\kappa$ mV steigert den Strom bei Raumtemperatur exakt um eine Zehnerpotenz. Sobald $V_{ds}$ wenige $U_T$ übersteigt, nähert sich der Klammerausdruck $(1 - \exp(-V_{ds}/U_T))$ dem Wert eins an, sodass der Drainstrom nahezu unabhängig von der Drain-Spannung wird (Stromquellencharakteristik). Der Subthreshold-Betrieb und darauf basierende analoge Schaltungsfamilien werden im Grundlagenwerk von Carver Mead über analoge VLSI- und neuronale Systeme detailliert erörtert [[14]](#src-14). Ein Differenzverstärker-Transistorpaar in diesem Bereich erzeugt eine sigmoide Übertragungskennlinie; durch gezielte Verschiebung der Referenzspannungen lässt sich exakt kalibrieren, bei welchem physikalischen Messwert das linguistische Prädikat «hohe Vibration» stufenlos von 0 auf 1 übergeht.
 
 Konkurrieren in einem regelbasierten System mehrere Hypothesen, muss das System die ranghöchste auswählen. Ein digitaler Algorithmus ermittelt das Maximum über sequenzielle Vergleiche mit einer Zeitkomplexität von $\mathcal{O}(K)$, proportional zur Anzahl der Kandidaten $K$. Die analoge Winner-Take-All-Schaltung (*winner-take-all*, WTA) von Lazzaro et al. benötigt pro Eingangskanal lediglich zwei Transistoren und eine gemeinsame Kopplungsleitung, wodurch die Verbindungskomplexität strikt linear mit der Kanalanzahl skaliert [[15]](#src-15). Eine nichtlineare Rückkopplung über die gemeinsame Knotenleitung verstärkt den Kanal mit dem stärksten Eingangsstrom massiv, während alle schwächeren Kanäle vollständig unterdrückt werden:
 
@@ -274,14 +274,14 @@ I_{\text{bias}}, & k=\arg\max_j I_{\text{in},j},\\
 
 Hierbei bedeuten:
 
-- $`I_{\text{out},k}`$ ist der Ausgangsstrom des Kanals $k$, in Ampere;
-- $`I_{\text{in},j}`$ ist der Eingangsstrom des Kanals $j$, welcher die Evidenzstärke für die $j$-te Hypothese repräsentiert, in Ampere;
-- $`I_{\text{bias}}`$ ist der Gesamt-Ruhestrom der Schaltung, der exklusiv dem siegreichen Kanal zugewiesen wird, in Ampere;
+- $I_{\text{out},k}$ ist der Ausgangsstrom des Kanals $k$, in Ampere;
+- $I_{\text{in},j}$ ist der Eingangsstrom des Kanals $j$, welcher die Evidenzstärke für die $j$-te Hypothese repräsentiert, in Ampere;
+- $I_{\text{bias}}$ ist der Gesamt-Ruhestrom der Schaltung, der exklusiv dem siegreichen Kanal zugewiesen wird, in Ampere;
 - $k$ ist der Index des betrachteten Ausgangskanals, während $j$ über alle Eingangskanäle iteriert;
 - $\arg\max_j I_{\text{in},j}$ bezeichnet den Index des Kanals mit dem maximalen Eingangsstrom;
-- die Fallunterscheidung verdeutlicht die harte Selektion: Der Sieger erhält den vollen Strom $`I_{\text{bias}}`$, alle übrigen Ausgänge führen idealerweise Strom null.
+- die Fallunterscheidung verdeutlicht die harte Selektion: Der Sieger erhält den vollen Strom $I_{\text{bias}}$, alle übrigen Ausgänge führen idealerweise Strom null.
 
-Betragen die Ströme dreier konkurrierender Hypothesen beispielsweise $4$, $9$ und $7$ nA, leitet der zweite Kanal den gesamten Strom $`I_{\text{bias}}`$, während Kanal 1 und 3 abgeschaltet werden (Ausgangsstrom $0$).
+Betragen die Ströme dreier konkurrierender Hypothesen beispielsweise $4$, $9$ und $7$ nA, leitet der zweite Kanal den gesamten Strom $I_{\text{bias}}$, während Kanal 1 und 3 abgeschaltet werden (Ausgangsstrom $0$).
 
 Die Selektionsschärfe dieser Schaltung wird jedoch fundamental durch Fertigungstoleranzen (Mismatch) der Transistoren begrenzt: Liegen zwei Eingangsströme extrem nah beieinander, entscheidet nicht die stärkere Regelpräferenz, sondern eine zufällige Bauteilasymmetrie über den Ausgang. Aus diesem Grund muss die übergeordnete digitale Ebene stets die Sicherheitsmarge zwischen dem Sieger und dem Zweitplatzierten evaluieren – analog zum Sicherheitsmargen-Gateway, das in [Anhang E](appendix-e-mixed-signal-neuromorphic-expert-systems.md) zur Schwellenwertabsicherung formalisiert ist.
 
@@ -298,11 +298,11 @@ Die Parameter der Gleichung [[17]](#src-17):
 - $u(t)$ ist das elektrische Membranpotenzial des Neurons zum Zeitpunkt $t$, in Volt;
 - $du/dt$ ist die zeitliche Ableitung dieses Potenzials, in Volt pro Sekunde;
 - $\tau_m$ ist die Membranzeitkonstante, in Sekunden: Je kleiner dieser Wert ist, desto schneller relaxiert das Potenzial in den Ruhezustand;
-- $`u_{\text{rest}}`$ ist das Ruhepotenzial, auf welches sich die Membran ohne externen Stromeintrag einstellt, in Volt;
+- $u_{\text{rest}}$ ist das Ruhepotenzial, auf welches sich die Membran ohne externen Stromeintrag einstellt, in Volt;
 - $R_m$ ist der ohmsche Membranwiderstand, in Ohm;
-- $`I_{\text{syn}}(t)`$ ist der synaptische Eingangsstrom, in Ampere.
+- $I_{\text{syn}}(t)$ ist der synaptische Eingangsstrom, in Ampere.
 
-Erreicht das Membranpotenzial die Zündschwelle $`V_{\text{th}}`$, generiert das Neuron einen Spannungsimpuls (Spike) und setzt sein Potenzial schlagartig auf den Wert $`u_{\text{reset}}`$ zurück. Die physikalische Interpretation der Differentialgleichung: Der Term $-(u-u_{\text{rest}})$ modelliert den kontinuierlichen Ladungsverlust (Leakage), der das Neuron in den Ruhezustand zieht, während der Term $`R_m\,I_{\text{syn}}`$ die Membrankapazität auflädt. Bei einem konstanten Eingangsstrom konvergiert das Potenzial asymptotisch gegen den Grenzwert $`u_{\text{rest}}+R_m\,I_{\text{syn}}`$. Spikes entstehen somit ausschließlich dann, wenn dieser Gleichgewichtswert die Schwellenspannung $`V_{\text{th}}`$ übersteigt: Subschwellige Signale erzeugen keinerlei Aktivität, während stärkere Ströme die Zündfrequenz proportional erhöhen. In einer analogen Schaltung wird die Membran durch einen realen Kondensator und die Schwellwertprüfung durch einen Komparator realisiert. Da Informationen über den exakten Zeitpunkt und die Frequenz von Spikes transportiert werden, verbraucht die Schaltung dynamische Energie ausschließlich beim Auftreten realer Ereignisse; lediglich der minimale statische Ruhestrom bleibt permanent bestehen.
+Erreicht das Membranpotenzial die Zündschwelle $V_{\text{th}}$, generiert das Neuron einen Spannungsimpuls (Spike) und setzt sein Potenzial schlagartig auf den Wert $u_{\text{reset}}$ zurück. Die physikalische Interpretation der Differentialgleichung: Der Term $-(u-u_{\text{rest}})$ modelliert den kontinuierlichen Ladungsverlust (Leakage), der das Neuron in den Ruhezustand zieht, während der Term $R_m\,I_{\text{syn}}$ die Membrankapazität auflädt. Bei einem konstanten Eingangsstrom konvergiert das Potenzial asymptotisch gegen den Grenzwert $u_{\text{rest}}+R_m\,I_{\text{syn}}$. Spikes entstehen somit ausschließlich dann, wenn dieser Gleichgewichtswert die Schwellenspannung $V_{\text{th}}$ übersteigt: Subschwellige Signale erzeugen keinerlei Aktivität, während stärkere Ströme die Zündfrequenz proportional erhöhen. In einer analogen Schaltung wird die Membran durch einen realen Kondensator und die Schwellwertprüfung durch einen Komparator realisiert. Da Informationen über den exakten Zeitpunkt und die Frequenz von Spikes transportiert werden, verbraucht die Schaltung dynamische Energie ausschließlich beim Auftreten realer Ereignisse; lediglich der minimale statische Ruhestrom bleibt permanent bestehen.
 
 Ein ideales sensorisches Pendant zu diesem Berechnungsmodell ist die ereignisbasierte Kamera (*event camera* bzw. Dynamic Vision Sensor, DVS). Jedes Pixel eines solchen Sensors reagiert vollkommen autonom auf zeitliche Änderungen des Helligkeits-Logarithmus:
 
@@ -348,7 +348,7 @@ Für derartige Ereignisströme existieren spezialisierte gemischt-analoge/digita
 
 Ein bedeutsamer Teil der Aufgabenstellungen in Expertensystemen lässt sich als kombinatorische Optimierung unter Nebenbedingungen formulieren: die optimale Zuweisung von Wartungsteams auf Schadensstellen, die energieeffiziente Pfadplanung oder der Abgleich verrauschter Sensordaten mit bekannten Modellen. John Hopfield bewies mathematisch, dass ein rekurrentes neuronales Netzwerk mit kontinuierlicher Aktivierungsfunktion eine skalare Energiefunktion besitzt, die über die Zeit monoton fällt [[23]](#src-23). Gemeinsam mit David Tank wandte Hopfield diese Netzwerktopologie erfolgreich auf anspruchsvolle Optimierungsprobleme wie das Problem des Handlungsreisenden (Traveling Salesperson Problem, TSP) an [[24]](#src-24).
 
-Betrachten wir eine analoge Schaltungsanordnung aus $N$ Verstärkern, die über eine Leitwertmatrix $`T_{ij}`$ gekoppelt sind:
+Betrachten wir eine analoge Schaltungsanordnung aus $N$ Verstärkern, die über eine Leitwertmatrix $T_{ij}$ gekoppelt sind:
 
 ```math
 C_i\frac{dU_i}{dt}=-\frac{U_i}{R_i}+\sum_{j=1}^{N}T_{ij}V_j+I_i .
@@ -359,11 +359,11 @@ Hierbei bedeuten:
 - $C_i$ ist die Eingangskapazität des $i$-ten Verstärkers, in Farad;
 - $U_i$ ist die Eingangsspannung am $i$-ten Verstärker, in Volt;
 - $R_i$ ist der Eingangswiderstand (Ableitwiderstand) dieses Knotens gegen Masse, in Ohm;
-- $`V_j=g(U_j)`$ ist die Ausgangsspannung des $j$-ten Verstärkers, wobei $g$ eine monoton wachsende, sigmoide Übertragungsfunktion darstellt;
-- $`T_{ij}`$ ist der Koppelleitwert zwischen dem Ausgang des $j$-ten und dem Eingang des $i$-ten Verstärkers; die Matrix $`T_{ij}`$ kodiert die Problem-Nebenbedingungen und das Gütekriterium, wobei $`T_{ij}=T_{ji}`$ (Symmetrie) und $`T_{ii}=0`$ gilt;
+- $V_j=g(U_j)$ ist die Ausgangsspannung des $j$-ten Verstärkers, wobei $g$ eine monoton wachsende, sigmoide Übertragungsfunktion darstellt;
+- $T_{ij}$ ist der Koppelleitwert zwischen dem Ausgang des $j$-ten und dem Eingang des $i$-ten Verstärkers; die Matrix $T_{ij}$ kodiert die Problem-Nebenbedingungen und das Gütekriterium, wobei $T_{ij}=T_{ji}$ (Symmetrie) und $T_{ii}=0$ gilt;
 - $I_i$ ist ein externer Strom, der die Eingangsbedingungen (Fakten) repräsentiert, in Ampere;
 - $N$ ist die Gesamtanzahl der Verstärkerstufen;
-- $`\sum_{j=1}^{N}T_{ij}V_j`$ ist der akkumulierte Summenstrom, den alle Verstärker an den Eingang des $i$-ten Knotens einspeisen.
+- $\sum_{j=1}^{N}T_{ij}V_j$ ist der akkumulierte Summenstrom, den alle Verstärker an den Eingang des $i$-ten Knotens einspeisen.
 
 In der Praxis summiert jeder Verstärker die gewichteten Ausgangssignale aller anderen Einheiten, während der Kondensator $C_i$ die Differenz zwischen dem zufließenden Summenstrom und dem Leckstrom $U_i/R_i$ integriert. Die Spannungszustände im Netzwerk «fließen» somit kontinuierlich entlang eines Gradienten abwärts, bis ein stabiler Ruhezustand erreicht ist, der einen Lösungskandidaten für das gegebene Problem darstellt. Die Lyapunov-Energiefunktion für ein solches System lautet:
 
@@ -374,7 +374,7 @@ E=-\frac{1}{2}\sum_{i=1}^{N}\sum_{j=1}^{N}T_{ij}V_iV_j-\sum_{i=1}^{N}I_iV_i+\sum
 Hierbei bedeuten:
 
 - $E$ ist die Gesamtenergie (Lyapunov-Funktion) des Netzwerks, ein skalarer Wert, der vom Zustand sämtlicher Verstärkerausgänge abhängt und während des Schaltungsbetriebs niemals ansteigt;
-- der erste Term $-\tfrac12\sum\sum T_{ij}V_iV_j$ beschreibt die paarweise Wechselwirkungsenergie der Ausgangsspannungen über die Koppelgewichte $`T_{ij}`$;
+- der erste Term $-\tfrac12\sum\sum T_{ij}V_iV_j$ beschreibt die paarweise Wechselwirkungsenergie der Ausgangsspannungen über die Koppelgewichte $T_{ij}$;
 - der zweite Term $-\sum I_iV_i$ quantifiziert den Einfluss der externen Eingangsströme (der Randbedingungen);
 - der dritte Integralterm berücksichtigt die ohmschen Verluste und die Krümmung der Übertragungsfunktion $g$; bei einer sehr steilen Aktivierungskennlinie ist sein numerischer Beitrag vernachlässigbar klein [[23]](#src-23);
 - $g^{-1}$ ist die Umkehrfunktion der Übertragungsfunktion $g$, und $V$ ist die Integrationsvariable;
@@ -382,7 +382,7 @@ Hierbei bedeuten:
 
 Man kann sich diese Energielandschaft anschaulich als topografisches Relief vorstellen: Der Systemzustand rollt schwerkraftartig talwärts und stabilisiert sich im Boden einer Senke, wobei jedes Tal einem konkreten Lösungskandidaten entspricht.
 
-Da $`\partial E/\partial V_i=-\left(\sum_j T_{ij}V_j+I_i-U_i/R_i\right)=-C_i\,dU_i/dt`$ gilt, berechnet sich die zeitliche Ableitung der Energie zu:
+Da $\partial E/\partial V_i=-\left(\sum_j T_{ij}V_j+I_i-U_i/R_i\right)=-C_i\,dU_i/dt$ gilt, berechnet sich die zeitliche Ableitung der Energie zu:
 
 ```math
 \frac{dE}{dt}=\sum_{i=1}^{N}\frac{\partial E}{\partial V_i}\frac{dV_i}{dt}=-\sum_{i=1}^{N}C_i\,g'(U_i)\left(\frac{dU_i}{dt}\right)^{2}\le 0.
@@ -391,13 +391,13 @@ Da $`\partial E/\partial V_i=-\left(\sum_j T_{ij}V_j+I_i-U_i/R_i\right)=-C_i\,dU
 Hierbei bedeuten:
 
 - $dE/dt$ ist die zeitliche Änderungsrate der Energie;
-- $`\partial E/\partial V_i`$ ist die partielle Ableitung der Energie nach der Ausgangsspannung des $i$-ten Knotens;
-- $`dV_i/dt`$ und $`dU_i/dt`$ sind die zeitlichen Ableitungen der Ausgangs- bzw. Eingangsspannungen;
-- $`g'(U_i)`$ ist die Steigung der Verstärkerkennlinie im Arbeitspunkt $U_i$.
+- $\partial E/\partial V_i$ ist die partielle Ableitung der Energie nach der Ausgangsspannung des $i$-ten Knotens;
+- $dV_i/dt$ und $dU_i/dt$ sind die zeitlichen Ableitungen der Ausgangs- bzw. Eingangsspannungen;
+- $g'(U_i)$ ist die Steigung der Verstärkerkennlinie im Arbeitspunkt $U_i$.
 
-Da die Kapazitäten $C_i$ positiv sind, die Ableitung $`g'(U_i)`$ für jede streng monoton wachsende Kennlinie stets positiv ist und der quadratische Term $(dU_i/dt)^{2}$ per Definition nicht-negativ ist, ist die gesamte rechte Seite der Gleichung stets kleiner oder gleich null ($\le 0$). Die Systemenergie nimmt folglich kontinuierlich ab, bis die Schaltung in einem stationären Fixpunkt mit $dU_i/dt=0$ zur Ruhe kommt.
+Da die Kapazitäten $C_i$ positiv sind, die Ableitung $g'(U_i)$ für jede streng monoton wachsende Kennlinie stets positiv ist und der quadratische Term $(dU_i/dt)^{2}$ per Definition nicht-negativ ist, ist die gesamte rechte Seite der Gleichung stets kleiner oder gleich null ($\le 0$). Die Systemenergie nimmt folglich kontinuierlich ab, bis die Schaltung in einem stationären Fixpunkt mit $dU_i/dt=0$ zur Ruhe kommt.
 
-Dieser mathematische Beweis garantiert die Konvergenz der Schaltung, trifft jedoch keinerlei Aussage über die globale Güte der gefundenen Lösung: Das System verharrt häufig in einem lokalen Minimum, welches signifikant vom globalen Optimum abweichen kann. Zudem hängt die Qualität stark davon ab, wie präzise die Randbedingungen in die Matrix $`T_{ij}`$ übersetzt wurden. Die Einschwingzeit wird primär durch die RC-Zeitkonstanten der Schaltung bestimmt. Für ein Expertensystem liefert ein Hopfield-Netzwerk daher stets nur einen vorläufigen Hypothesenkandidaten: Die digitale Überwachungsebene muss zwingend sämtliche harten Systemrandbedingungen des gefundenen Zustands formal prüfen, bevor dieser als valider Fakt in die Wissensbasis übernommen wird. Moderne Weiterentwicklungen dieses Prinzips – wie analoge Ising-Maschinen und probabilistische Bits (p-Bits) – werden in [Anhang E](appendix-e-mixed-signal-neuromorphic-expert-systems.md) vertieft.
+Dieser mathematische Beweis garantiert die Konvergenz der Schaltung, trifft jedoch keinerlei Aussage über die globale Güte der gefundenen Lösung: Das System verharrt häufig in einem lokalen Minimum, welches signifikant vom globalen Optimum abweichen kann. Zudem hängt die Qualität stark davon ab, wie präzise die Randbedingungen in die Matrix $T_{ij}$ übersetzt wurden. Die Einschwingzeit wird primär durch die RC-Zeitkonstanten der Schaltung bestimmt. Für ein Expertensystem liefert ein Hopfield-Netzwerk daher stets nur einen vorläufigen Hypothesenkandidaten: Die digitale Überwachungsebene muss zwingend sämtliche harten Systemrandbedingungen des gefundenen Zustands formal prüfen, bevor dieser als valider Fakt in die Wissensbasis übernommen wird. Moderne Weiterentwicklungen dieses Prinzips – wie analoge Ising-Maschinen und probabilistische Bits (p-Bits) – werden in [Anhang E](appendix-e-mixed-signal-neuromorphic-expert-systems.md) vertieft.
 
 ## 8. Ingenieurbeispiel: Hardwarebasiertes analoges Mahalanobis-Gateway
 
@@ -411,7 +411,7 @@ d_M^{2}=(\mathbf{z}-\hat{\mathbf{z}})^{\top}\mathbf{S}^{-1}(\mathbf{z}-\hat{\mat
 
 Hierbei bedeuten:
 
-- $`d_M^{2}`$ ist das Quadrat der Mahalanobis-Distanz, ein dimensionsloser statistischer Wert, der den geometrischen Abstand zwischen Messung und Erwartungswert normiert auf die Kovarianz der Unsicherheit quantifiziert;
+- $d_M^{2}$ ist das Quadrat der Mahalanobis-Distanz, ein dimensionsloser statistischer Wert, der den geometrischen Abstand zwischen Messung und Erwartungswert normiert auf die Kovarianz der Unsicherheit quantifiziert;
 - $\mathbf{z}$ ist der reale Messvektor (beispielsweise Koordinaten eines optischen Sensors);
 - $\hat{\mathbf{z}}$ ist der prädizierte Messvektor aus dem kinematischen Modell; der Zirkumflex («Hut») kennzeichnet den Schätzwert;
 - $\mathbf{z}-\hat{\mathbf{z}}$ ist der Innovationsvektor (das Residuum zwischen Realität und Modell);
@@ -463,11 +463,11 @@ Die analoge Implementierung gliedert sich in drei kaskadierte Funktionsstufen:
 
 **Gewichtung:** Wird über Leitwerte $G_x=k_0/\sigma_x^{2}$ und $G_y=k_0/\sigma_y^{2}$ definiert, wobei $k_0$ einen Skalierungsfaktor darstellt; diese Leitwerte werden durch kalibrierte Festwiderstände, digital steuerbare Potenziometer oder programmierbare Memristoren eingestellt.
 
-**Komparator:** Vergleicht den aufsummierten Summenstrom mit einem Referenzstrom proportional zu $\gamma$. Eine gezielte Hysterese verhindert hochfrequentes Schwingen des Schaltausgangs, wenn $`d_M^{2}`$ in unmittelbarer Nähe der Schaltschwelle liegt.
+**Komparator:** Vergleicht den aufsummierten Summenstrom mit einem Referenzstrom proportional zu $\gamma$. Eine gezielte Hysterese verhindert hochfrequentes Schwingen des Schaltausgangs, wenn $d_M^{2}$ in unmittelbarer Nähe der Schaltschwelle liegt.
 
 ### 8.3. Kriterien der ingenieurtechnischen Verifikation
 
-Latenz und Energieaufnahme einer solchen Schaltung werden im Wesentlichen durch die Quadrierer und den Komparator bestimmt. Für ein konkretes Schaltungslayout müssen diese Kenngrößen über SPICE-Simulationen über alle Ecken des Fertigungsprozesses (Process Corners) sowie durch Messungen an realen Silizium-Mustern ermittelt werden – Datenblatt-Schätzwerte einzelner Standardkomponenten reichen hierfür nicht aus. Da sich die Kovarianzmatrix $\mathbf{S}$ in realen Szenarien mit den Umgebungsbedingungen und dem Sensorzustand ändert, müssen die Leitwerte $G_x$ und $G_y$ durch die digitale Überwachungsebene dynamisch nachgeführt werden; jedes dieser Updates stellt eine versionierte Kalibrierung dar. Befindet sich der berechnete Wert $`d_M^{2}`$ schließlich in einem engen Toleranzband um $\gamma$, schaltet die analoge Hardware aufgrund von Rauschen stochastisch; Grenzfälle müssen daher zwingend durch eine digitale Neuberechnung abgesichert werden. Das analoge Gateway entlastet den Hauptprozessor massiv von eindeutigen Messwerten, entbindet das digitale System jedoch keinesfalls von der Verantwortung für Grenzwertentscheidungen.
+Latenz und Energieaufnahme einer solchen Schaltung werden im Wesentlichen durch die Quadrierer und den Komparator bestimmt. Für ein konkretes Schaltungslayout müssen diese Kenngrößen über SPICE-Simulationen über alle Ecken des Fertigungsprozesses (Process Corners) sowie durch Messungen an realen Silizium-Mustern ermittelt werden – Datenblatt-Schätzwerte einzelner Standardkomponenten reichen hierfür nicht aus. Da sich die Kovarianzmatrix $\mathbf{S}$ in realen Szenarien mit den Umgebungsbedingungen und dem Sensorzustand ändert, müssen die Leitwerte $G_x$ und $G_y$ durch die digitale Überwachungsebene dynamisch nachgeführt werden; jedes dieser Updates stellt eine versionierte Kalibrierung dar. Befindet sich der berechnete Wert $d_M^{2}$ schließlich in einem engen Toleranzband um $\gamma$, schaltet die analoge Hardware aufgrund von Rauschen stochastisch; Grenzfälle müssen daher zwingend durch eine digitale Neuberechnung abgesichert werden. Das analoge Gateway entlastet den Hauptprozessor massiv von eindeutigen Messwerten, entbindet das digitale System jedoch keinesfalls von der Verantwortung für Grenzwertentscheidungen.
 
 ## 9. Vergleichende Analyse digitaler und analoger Rechenwerke
 

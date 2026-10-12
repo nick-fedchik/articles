@@ -10,7 +10,7 @@
 
 ## Abstract
 
-This chapter investigates the architectural principles of dual-mode expert systems capable of concurrently serving as a rigorous source of evidence (for regulatory auditing and certification under ISO 26262 / DO-178C) and a flexible advisory assistant (for operational diagnostics and incident troubleshooting). The foundational invariant of evidence grounding is formulated: advisory hypotheses are explicitly tagged as ungrounded, possess an immutable derivation method and verification criteria, and are strictly excluded from deterministic inference and formal safety argumentation (*Safety Cases*). The mathematical apparatus of the deterministic symbolic core based on Horn clauses, least fixed point computation, and stratified negation is analyzed. The role of Peirce's epistemic triad (deduction, induction, abduction) and causal reduction is formalized. A mechanism for transforming typed refusals (*Refusal*) into learning material, an expert escalation protocol, and the integration of validated findings into the case base are detailed. A reference Python implementation of the dual-mode engine is provided, and the heterogeneous Simplex architecture (*Simplex Architecture*) is substantiated for the safe deployment of stochastic Edge AI under the supervision of a deterministic baseline controller and a hardware arbiter with dynamic time margin calculation $`t_{\mathrm{margin}}`$.
+This chapter investigates the architectural principles of dual-mode expert systems capable of concurrently serving as a rigorous source of evidence (for regulatory auditing and certification under ISO 26262 / DO-178C) and a flexible advisory assistant (for operational diagnostics and incident troubleshooting). The foundational invariant of evidence grounding is formulated: advisory hypotheses are explicitly tagged as ungrounded, possess an immutable derivation method and verification criteria, and are strictly excluded from deterministic inference and formal safety argumentation (*Safety Cases*). The mathematical apparatus of the deterministic symbolic core based on Horn clauses, least fixed point computation, and stratified negation is analyzed. The role of Peirce's epistemic triad (deduction, induction, abduction) and causal reduction is formalized. A mechanism for transforming typed refusals (*Refusal*) into learning material, an expert escalation protocol, and the integration of validated findings into the case base are detailed. A reference Python implementation of the dual-mode engine is provided, and the heterogeneous Simplex architecture (*Simplex Architecture*) is substantiated for the safe deployment of stochastic Edge AI under the supervision of a deterministic baseline controller and a hardware arbiter with dynamic time margin calculation $t_{\mathrm{margin}}$.
 
 Consider a certification audit of an autonomous vehicle chassis control system (ISO 26262 ASIL D) or airborne avionics (DO-178C). If an unverified diagnostic heuristic or empirical bench workaround ("ignore steering angle sensor faults when voltage drops below 11 V") inadvertently enters the formal safety argument from [Chapter 27](ch27-safety-case-gsn-synthesis.md) as a verified fact, the system receives operational approval with a latent defect, precipitating a fatal skid during a high-speed maneuver. The behavior of an expert system in such domains must be strictly fail-closed: when authoritative normative knowledge is lacking, the system is prohibited from fabricating or interpolating claims.
 
@@ -20,7 +20,7 @@ This chapter resolves the central engineering challenge: **how can a single expe
 
 ## 1. Architectural Dichotomy of the Two Modes and the Foundational Evidence Invariant
 
-A fundamental requirement for the architecture of an evidence-governed expert system is the rigorous separation of deterministic inference from heuristic conjecture. To implement this dichotomy, the system maintains two isolated operational modes: strict and advisory. In strict mode, the response to a query $q$ is a strict result $`\mathcal{T}_{\mathrm{strict}}(q)`$: either an assertion grounded in primary source citations or a refusal $`\mathrm{Refusal}(\rho)`$ with a typed reason $\rho$ detailing the specific knowledge deficit. In advisory mode, the response is an ordered pair:
+A fundamental requirement for the architecture of an evidence-governed expert system is the rigorous separation of deterministic inference from heuristic conjecture. To implement this dichotomy, the system maintains two isolated operational modes: strict and advisory. In strict mode, the response to a query $q$ is a strict result $\mathcal{T}_{\mathrm{strict}}(q)$: either an assertion grounded in primary source citations or a refusal $\mathrm{Refusal}(\rho)$ with a typed reason $\rho$ detailing the specific knowledge deficit. In advisory mode, the response is an ordered pair:
 
 ```math
 \mathcal{Y}_{\mathrm{ext}}(q)=\bigl\langle\,\mathcal{T}_{\mathrm{strict}}(q),\ \mathcal{H}(q)\,\bigr\rangle,
@@ -28,25 +28,25 @@ A fundamental requirement for the architecture of an evidence-governed expert sy
 \mathcal{H}(q)=\{h_1,\dots,h_k\}.
 ```
 
-- For the extended response, $q$ is the query, $`\mathcal{T}_{\mathrm{strict}}(q)`$ is the strict result, and $`\mathcal{H}(q)`$ is the set of advisory hypotheses;
+- For the extended response, $q$ is the query, $\mathcal{T}_{\mathrm{strict}}(q)$ is the strict result, and $\mathcal{H}(q)$ is the set of advisory hypotheses;
 - Angle brackets $\langle\ ,\ \rangle$ form an ordered pair, preserving distinct positions for the strict result and the advisory hypotheses;
-- $`h_1,\dots,h_k`$ are hypotheses indexed from 1 to $k$, where $k$ denotes their total count;
-- $`\mathcal{Y}_{\mathrm{ext}}(q)`$ represents the complete extended response for query $q$.
+- $h_1,\dots,h_k$ are hypotheses indexed from 1 to $k$, where $k$ denotes their total count;
+- $\mathcal{Y}_{\mathrm{ext}}(q)$ represents the complete extended response for query $q$.
 
 The interpretation is clear: advisory mode augments the unmodified strict response with candidate hypotheses. The formula establishes the structural composition of the output without granting hypotheses evidentiary standing.
 
-The strict component remains unmodified in advisory mode: the advisory engine merely appends the hypothesis set $`\mathcal{H}(q)`$. Each hypothesis is a 5-tuple:
+The strict component remains unmodified in advisory mode: the advisory engine merely appends the hypothesis set $\mathcal{H}(q)$. Each hypothesis is a 5-tuple:
 
 ```math
 h_i=\langle\,\sigma_i,\ \mu_i,\ c_i,\ \mathcal{O}_i,\ \mathcal{P}_i\,\rangle.
 ```
 
-- In tuple $`h_i`$, index $i$ designates the hypothesis rank, and angle brackets define an ordered sequence;
-- $`\sigma_i`$ is the hypothesis proposition, $`\mu_i`$ is the derivation method, and $`c_i`$ is the confidence assessment;
-- $`\mathcal{O}_i`$ contains the empirical observations supporting the hypothesis, and $`\mathcal{P}_i`$ defines the verification criteria required for promotion to a fact candidate;
+- In tuple $h_i$, index $i$ designates the hypothesis rank, and angle brackets define an ordered sequence;
+- $\sigma_i$ is the hypothesis proposition, $\mu_i$ is the derivation method, and $c_i$ is the confidence assessment;
+- $\mathcal{O}_i$ contains the empirical observations supporting the hypothesis, and $\mathcal{P}_i$ defines the verification criteria required for promotion to a fact candidate;
 - The fields strictly follow the order: proposition, method, confidence, observations, promotion criteria.
 
-The tuple encapsulates not only the conjectured claim, but also its formal derivation pathway and the necessary empirical tests required for validation. Confidence score $`c_i`$ does not represent an automatically calibrated Bayesian probability.
+The tuple encapsulates not only the conjectured claim, but also its formal derivation pathway and the necessary empirical tests required for validation. Confidence score $c_i$ does not represent an automatically calibrated Bayesian probability.
 
 The foundational evidence invariant is formally defined as:
 
@@ -54,14 +54,14 @@ The foundational evidence invariant is formally defined as:
 \forall h\in\mathcal{H}(q):\quad \mathrm{EvidenceGrounded}(h)=\mathrm{false}\ \land\ h\notin\mathrm{SafetyCase}.
 ```
 
-- The invariant holds for every hypothesis $h$ in set $`\mathcal{H}(q)`$ generated for query $q$;
+- The invariant holds for every hypothesis $h$ in set $\mathcal{H}(q)$ generated for query $q$;
 - $\forall$ denotes universal quantification ("for all"), and $\in$ denotes set membership;
 - $\mathrm{EvidenceGrounded}(h)=\mathrm{false}$ asserts that the hypothesis lacks a confirmed evidentiary foundation;
 - $\land$ denotes logical conjunction, and $h\notin\mathrm{SafetyCase}$ prohibits the inclusion of the hypothesis in any formal safety case.
 
 Consequently, every advisory hypothesis remains ungrounded and quarantined from safety argumentation. This rule governs data classification rather than numeric plausibility.
 
-A hypothesis by definition lacks grounding in verified primary sources and cannot enter the safety cases discussed in [Chapter 27](ch27-safety-case-gsn-synthesis.md). The path of a hypothesis to the knowledge base proceeds strictly through the candidate admission lifecycle detailed in [Chapter 26](ch26-continual-learning.md): satisfaction of criteria $`\mathcal{P}_i`$, human peer review, and passing the admission gateway. This invariant is meaningful only when the underlying symbolic core is strictly deterministic and guaranteed to terminate, which motivates our examination of the deterministic core.
+A hypothesis by definition lacks grounding in verified primary sources and cannot enter the safety cases discussed in [Chapter 27](ch27-safety-case-gsn-synthesis.md). The path of a hypothesis to the knowledge base proceeds strictly through the candidate admission lifecycle detailed in [Chapter 26](ch26-continual-learning.md): satisfaction of criteria $\mathcal{P}_i$, human peer review, and passing the admission gateway. This invariant is meaningful only when the underlying symbolic core is strictly deterministic and guaranteed to terminate, which motivates our examination of the deterministic core.
 
 ## 2. Deterministic Symbolic Core: Horn Clauses and the Least Fixed Point
 
@@ -72,11 +72,11 @@ H(\vec X)\leftarrow B_1(\vec X_1)\land\dots\land B_m(\vec X_m)\land\neg N_1(\vec
 ```
 
 - In the Horn clause, $H$ is the head representing the derived conclusion, and $\vec X$ is the tuple of head variables;
-- $`B_i(\vec X_i)`$ are positive body atoms, $m$ denotes their total count, and $\land$ enforces joint satisfaction;
+- $B_i(\vec X_i)$ are positive body atoms, $m$ denotes their total count, and $\land$ enforces joint satisfaction;
 - $\leftarrow$ denotes logical implication ("derive head if body holds");
-- $`N_j(\vec Y_j)`$ are negation-as-failure atoms, $k$ denotes their total count, and $\neg$ denotes that the corresponding fact cannot be proven;
+- $N_j(\vec Y_j)$ are negation-as-failure atoms, $k$ denotes their total count, and $\neg$ denotes that the corresponding fact cannot be proven;
 - Indices $i$ and $j$ enumerate atoms, while $\dots$ denotes the continuation of rule conditions up to bounds $m$ and $k$;
-- $`\vec X_i`$ and $`\vec Y_j`$ are tuples of variables occurring within respective atoms; rule variables share a common domain.
+- $\vec X_i$ and $\vec Y_j$ are tuples of variables occurring within respective atoms; rule variables share a common domain.
 
 The rule states: derive conclusion $H$ when all positive body conditions are satisfied and none of the negated facts can be proven. For rules incorporating negation, stratification is mandatory to prevent evaluation order from altering the derived model.
 
@@ -103,7 +103,7 @@ flowchart LR
     class Done done;
 ```
 
-For positive Datalog programs (without negation), the evaluation converges to the unique least fixed point: the minimal set of facts closed under all program rules. Because function symbols are excluded, the universe of discourse is finite; hence, evaluation terminates in polynomial time relative to the size of the extensional database for a fixed rule set [[1]](#src-1). Negation as failure disrupts monotonicity: a fact derived from the absence of $`N`$ may be invalidated if $N$ is derived in a subsequent iteration. Stratification resolves this non-monotonicity: rules are partitioned into ordered strata such that any negated predicate is completely evaluated in lower strata before being negated in higher strata [[1]](#src-1). Programs containing recursion through negation lack stratification and are rejected by the strict core during rule base compilation.
+For positive Datalog programs (without negation), the evaluation converges to the unique least fixed point: the minimal set of facts closed under all program rules. Because function symbols are excluded, the universe of discourse is finite; hence, evaluation terminates in polynomial time relative to the size of the extensional database for a fixed rule set [[1]](#src-1). Negation as failure disrupts monotonicity: a fact derived from the absence of $N$ may be invalidated if $N$ is derived in a subsequent iteration. Stratification resolves this non-monotonicity: rules are partitioned into ordered strata such that any negated predicate is completely evaluated in lower strata before being negated in higher strata [[1]](#src-1). Programs containing recursion through negation lack stratification and are rejected by the strict core during rule base compilation.
 
 The deterministic core outputs more than binary truth values. **Universal quantification over a finite domain** evaluates systemic completeness properties, such as "for every protocol command, a documented response exists in the knowledge base":
 
@@ -147,7 +147,7 @@ In his 1878 treatise "Illustrations of the Logic of Science VI: Deduction, Induc
 s_1\sim s_2\iff\forall w\in\Sigma^{*}:\ \bigl(\hat\delta(s_1,w)\in F\iff\hat\delta(s_2,w)\in F\bigr).
 ```
 
-- For the automata under comparison, $`s_1`$ and $`s_2`$ are states, and $\sim$ denotes state equivalence;
+- For the automata under comparison, $s_1$ and $s_2$ are states, and $\sim$ denotes state equivalence;
 - $\forall w\in\Sigma^*$ tests every finite word of input symbols $w$ over alphabet $\Sigma$, where the asterisk denotes the Kleene closure (including the empty string);
 - $\hat\delta(s,w)$ is the extended transition function returning the terminal state reached after processing word $w$;
 - $F$ is the set of accepting states, $\in$ denotes membership, and $\iff$ denotes logical equivalence;
@@ -169,11 +169,11 @@ The most pragmatic source of advisory hypotheses is corporate case memory. Case-
 J(S_{\mathrm{in}},S_{\mathrm{case}})=\frac{|S_{\mathrm{in}}\cap S_{\mathrm{case}}|}{|S_{\mathrm{in}}\cup S_{\mathrm{case}}|}.
 ```
 
-- The index $J$ measures the similarity between query symptom set $`S_{\mathrm{in}}`$ and historical case symptom set $`S_{\mathrm{case}}`$;
-- $\cap$ denotes set intersection, $\cup$ denotes set union, and $`\lvert \cdot \rvert`$ denotes set cardinality;
+- The index $J$ measures the similarity between query symptom set $S_{\mathrm{in}}$ and historical case symptom set $S_{\mathrm{case}}$;
+- $\cap$ denotes set intersection, $\cup$ denotes set union, and $\lvert \cdot \rvert$ denotes set cardinality;
 - The numerator enumerates shared symptoms, while the denominator counts all unique symptoms across both sets.
 
-For a worked numerical example with $`S_{\mathrm{in}} = \{A, B\}`$ and $`S_{\mathrm{case}} = \{B, C\}`$, we calculate $J = 1 / 3 \approx 0.33$. For non-empty unions, the coefficient ranges from 0 to 1; if both sets are empty, the denominator is zero and the metric is undefined. The metric measures taxonomic overlap, not hypothesis correctness probability.
+For a worked numerical example with $S_{\mathrm{in}} = \{A, B\}$ and $S_{\mathrm{case}} = \{B, C\}$, we calculate $J = 1 / 3 \approx 0.33$. For non-empty unions, the coefficient ranges from 0 to 1; if both sets are empty, the denominator is zero and the metric is undefined. The metric measures taxonomic overlap, not hypothesis correctness probability.
 
 If similarity $J$ exceeds a calibrated threshold $\theta$, the retrieved case is formulated as an advisory hypothesis with method "case-based analogy", confidence score $c = J$, and explicit promotion criteria: reproduce the case conditions on a testbed and confirm the root cause. The threshold $\theta$ must not be chosen arbitrarily; it is calibrated empirically on labeled validation sets as demonstrated in [Chapter 25](ch25-how-expert-systems-learn.md), since the Jaccard index reflects structural feature similarity rather than statistical truth probability.
 
@@ -228,9 +228,9 @@ Router notation:
 
 - $q$ is the query, reduced to a set of categorical features matching the Jaccard formulation above;
 - $\mathrm{Strict}(q)$ is the evaluation output of the strict core, and $\bot$ denotes a typed refusal;
-- $`C_{\mathrm{val}}`$ is the set of precedents validated by an authorized expert, and $`c^{*}`$ is the most similar precedent from this set;
-- $`J(q,c^{*})`$ is the Jaccard similarity index between query features and precedent features, and $\theta$ is the calibrated threshold;
-- $\arg\max$ returns the precedent maximizing similarity; if $`C_{\mathrm{val}}`$ is empty, the router immediately selects an expert request.
+- $C_{\mathrm{val}}$ is the set of precedents validated by an authorized expert, and $c^{*}$ is the most similar precedent from this set;
+- $J(q,c^{*})$ is the Jaccard similarity index between query features and precedent features, and $\theta$ is the calibrated threshold;
+- $\arg\max$ returns the precedent maximizing similarity; if $C_{\mathrm{val}}$ is empty, the router immediately selects an expert request.
 
 The routing logic governs default behavior: an engineer who deems an advisory hypothesis insufficient for operational decision-making may manually escalate the inquiry to human experts. The escalation packet is synthesized autonomously by the system rather than the user, assembling all requisite diagnostic context. The table specifies the escalation payload fields.
 
@@ -242,11 +242,11 @@ The routing logic governs default behavior: an engineer who deems an advisory hy
 | Response Draft | Advisory hypothesis accompanied by promotion criteria | Opportunity to validate or adjust a structured draft rather than writing from scratch |
 | Primary Source Citations | Document identifier, revision tag, and exact quotation byte range | Immediate verification of normative grounding without auxiliary manual search |
 
-The expert's response returns along two distinct channels carrying divergent epistemic status. The confirmed or corrected response is appended to $`C_{\mathrm{val}}`$ as a validated precedent, bearing the expert's cryptographic identity, timestamp, operational scope, and any scope qualifiers stipulated by the expert. If the response formulates a general rule referencing a normative standard, the expert system concurrently creates a fact candidate, which undergoes the identical review and consistency auditing depicted in the sequence diagram. An expert's endorsement does not exempt a fact candidate from rigorous checks against supersession cycles, deontic conflicts, and conflicting constants.
+The expert's response returns along two distinct channels carrying divergent epistemic status. The confirmed or corrected response is appended to $C_{\mathrm{val}}$ as a validated precedent, bearing the expert's cryptographic identity, timestamp, operational scope, and any scope qualifiers stipulated by the expert. If the response formulates a general rule referencing a normative standard, the expert system concurrently creates a fact candidate, which undergoes the identical review and consistency auditing depicted in the sequence diagram. An expert's endorsement does not exempt a fact candidate from rigorous checks against supersession cycles, deontic conflicts, and conflicting constants.
 
 Consider an extension of the timeout scenario: an engineer reports a connection timeout on port 25 in a newly commissioned laboratory network. The strict core emits a refusal, and the nearest validated precedent achieves a Jaccard index of 0.33, falling below the threshold $\theta = 0.4$. The router synthesizes an escalation request to the mail infrastructure administrator containing the draft recommendation: "Verify whether the upstream ISP blocks outbound port 25." The administrator endorses the draft, appending the operational constraint: "Applies exclusively to dynamic IP allocations lacking static reverse DNS." Subsequent matching queries receive an advisory hypothesis citing this validated precedent without triggering human escalation. The strict core continues emitting a refusal for such queries until an administrator links an excerpt from the ISP terms of service as a primary citation and the resulting fact candidate passes peer review.
 
-A fundamental constraint of this architectural pattern is expert bandwidth. Authorized human expertise is an inherently scarce resource—the fatawa system was conceived precisely to alleviate scholar shortages. Consequently, the escalation ratio (the percentage of refusals routed to human experts) must be continuously monitored: growth in $`C_{\mathrm{val}}`$ must drive down escalation frequency, while the rejection rate of generated drafts serves as a direct indicator of advisory mode quality. Validated precedents also suffer from temporal decay: when a primary source standard referenced by a precedent is superseded, the precedent must be scheduled for re-validation, mirroring the lifecycle of obsolete facts described in [Chapter 15](ch15-knowledge-extraction-and-kb-construction.md).
+A fundamental constraint of this architectural pattern is expert bandwidth. Authorized human expertise is an inherently scarce resource—the fatawa system was conceived precisely to alleviate scholar shortages. Consequently, the escalation ratio (the percentage of refusals routed to human experts) must be continuously monitored: growth in $C_{\mathrm{val}}$ must drive down escalation frequency, while the rejection rate of generated drafts serves as a direct indicator of advisory mode quality. Validated precedents also suffer from temporal decay: when a primary source standard referenced by a precedent is superseded, the precedent must be scheduled for re-validation, mirroring the lifecycle of obsolete facts described in [Chapter 15](ch15-knowledge-extraction-and-kb-construction.md).
 
 ## 6. Software Verification: Python Implementation of the Dual-Mode Engine
 
@@ -519,9 +519,9 @@ flowchart TD
 
 The Simplex architecture is grounded in a tripartite separation of responsibilities across computing nodes:
 
-1. **High-Level Optimization Controller (*Advanced/AI Node*):** A high-performance compute platform (NPU/GPU running Linux) executing stochastic processing of complex sensory streams (computer vision, spatial trajectory planning, LiDAR point clouds) and generating candidate trajectory commands and actions $`U_{\mathrm{adv}}`$. This node operates strictly in advisory mode: its commands are treated by the system purely as candidate proposals lacking evidentiary authority.
-2. **Baseline Safety Controller (*Baseline Safety Controller*):** A certified functional safety microcontroller (such as Infineon AURIX or ARM Cortex-R) or FPGA hardware logic governed by a deterministic RTOS (Zephyr). It executes a verified Horn-clause rule base hosted in static memory, enforces simple, formally proven physical control laws, and synthesizes a certified safe trajectory $`U_{\mathrm{safe}}`$ that deterministically steers the physical plant into a safe fallback state (*Fail-Closed*).
-3. **Hardware Switching Arbiter (*Safety Decision / Interlock Gate*):** An independent logic block realized via combinational logic or a dedicated safety microcontroller that verifies in real time whether the candidate trajectory $`U_{\mathrm{adv}}`$ remains strictly within the admissible safety envelope (*Safety Envelope*), while continuously monitoring the periodic liveness heartbeat (*Heartbeat*) from the AI node.
+1. **High-Level Optimization Controller (*Advanced/AI Node*):** A high-performance compute platform (NPU/GPU running Linux) executing stochastic processing of complex sensory streams (computer vision, spatial trajectory planning, LiDAR point clouds) and generating candidate trajectory commands and actions $U_{\mathrm{adv}}$. This node operates strictly in advisory mode: its commands are treated by the system purely as candidate proposals lacking evidentiary authority.
+2. **Baseline Safety Controller (*Baseline Safety Controller*):** A certified functional safety microcontroller (such as Infineon AURIX or ARM Cortex-R) or FPGA hardware logic governed by a deterministic RTOS (Zephyr). It executes a verified Horn-clause rule base hosted in static memory, enforces simple, formally proven physical control laws, and synthesizes a certified safe trajectory $U_{\mathrm{safe}}$ that deterministically steers the physical plant into a safe fallback state (*Fail-Closed*).
+3. **Hardware Switching Arbiter (*Safety Decision / Interlock Gate*):** An independent logic block realized via combinational logic or a dedicated safety microcontroller that verifies in real time whether the candidate trajectory $U_{\mathrm{adv}}$ remains strictly within the admissible safety envelope (*Safety Envelope*), while continuously monitoring the periodic liveness heartbeat (*Heartbeat*) from the AI node.
 
 ### 9.2. Mathematical Invariant of Safe Transition
 
@@ -532,9 +532,9 @@ t_{\mathrm{margin}} = t_{\mathrm{hazard}} - t_{\mathrm{recovery}}
 ```
 
 where:
-- $`t_{\mathrm{margin}}`$ is the dynamic safety time margin of the system, measured in seconds or milliseconds ($`\text{ms}`$);
-- $`t_{\mathrm{hazard}}`$ is the calculated time remaining until unavoidable violation of the physical safety envelope (collision, rollover, thermal or structural failure) assuming the current trajectory is maintained, in $`\text{ms}`$;
-- $`t_{\mathrm{recovery}}`$ is the guaranteed worst-case execution and dynamic recovery time (*Worst-Case Execution & Dynamic Recovery Time*) required by the baseline safety controller to deterministically restore the plant to a certified safe state, in $`\text{ms}`$.
+- $t_{\mathrm{margin}}$ is the dynamic safety time margin of the system, measured in seconds or milliseconds ($\text{ms}$);
+- $t_{\mathrm{hazard}}$ is the calculated time remaining until unavoidable violation of the physical safety envelope (collision, rollover, thermal or structural failure) assuming the current trajectory is maintained, in $\text{ms}$;
+- $t_{\mathrm{recovery}}$ is the guaranteed worst-case execution and dynamic recovery time (*Worst-Case Execution & Dynamic Recovery Time*) required by the baseline safety controller to deterministically restore the plant to a certified safe state, in $\text{ms}$.
 
 The condition for hardware disengagement and immediate trip to the baseline safety controller is formulated as a strict logical predicate:
 
@@ -542,24 +542,24 @@ The condition for hardware disengagement and immediate trip to the baseline safe
 t_{\mathrm{margin}} < \Delta t_{\mathrm{threshold}} \quad \lor \quad \neg \mathrm{HeartbeatValid}(\mathrm{AINode}) \implies \mathrm{TripToBaseline}(\mathrm{FailClosed})
 ```
 
-where $`\Delta t_{\mathrm{threshold}}`$ is the calibrated engineering threshold of the arbiter, accounting for switch hardware transfer latency $`\tau_{\mathrm{switch}}`$ and sensor measurement uncertainty. If the dynamic time margin drops below this critical threshold or the AI node misses a heartbeat epoch, the arbiter asserts hardware interlocks, decoupling the AI controller output and transferring actuator authority to the baseline safety controller.
+where $\Delta t_{\mathrm{threshold}}$ is the calibrated engineering threshold of the arbiter, accounting for switch hardware transfer latency $\tau_{\mathrm{switch}}$ and sensor measurement uncertainty. If the dynamic time margin drops below this critical threshold or the AI node misses a heartbeat epoch, the arbiter asserts hardware interlocks, decoupling the AI controller output and transferring actuator authority to the baseline safety controller.
 
 #### 9.2.1. Actionable Closed Loop of Dynamic Simplex Switching
 
 1. **Control Flow & Runtime Decisions:**
-   The computed value of $`t_{\mathrm{margin}}`$ governs control authority routing during every arbitration cycle. Provided $`t_{\mathrm{margin}} \ge \Delta t_{\mathrm{threshold}}`$ and the heartbeat signal is valid, the hardware interlock flag `Interlock_State` remains in state `ARMED_AI`, streaming trajectory commands $`U_{\mathrm{adv}}`$ directly to actuator power stages. The instant this invariant is violated, the hardware gate pulls the `ENABLE_AI` line to zero within $`\tau_{\mathrm{switch}} < 50\,\mu\text{s}`$, asserts `TRIP_SAFE_BASELINE`, latches the non-volatile status register `FLAG_SIMPLEX_TRIP`, and commits a cryptographic hash of the transition event into the tamper-evident Merkle log.
+   The computed value of $t_{\mathrm{margin}}$ governs control authority routing during every arbitration cycle. Provided $t_{\mathrm{margin}} \ge \Delta t_{\mathrm{threshold}}$ and the heartbeat signal is valid, the hardware interlock flag `Interlock_State` remains in state `ARMED_AI`, streaming trajectory commands $U_{\mathrm{adv}}$ directly to actuator power stages. The instant this invariant is violated, the hardware gate pulls the `ENABLE_AI` line to zero within $\tau_{\mathrm{switch}} < 50\,\mu\text{s}$, asserts `TRIP_SAFE_BASELINE`, latches the non-volatile status register `FLAG_SIMPLEX_TRIP`, and commits a cryptographic hash of the transition event into the tamper-evident Merkle log.
 2. **Hardware Dimensioning:**
    The cumulative trip and recovery budget must satisfy the regulatory Fault Tolerant Time Interval (*FTTI*):
-   $`T_{\mathrm{sense}} + T_{\mathrm{arbiter}} + \tau_{\mathrm{switch}} + t_{\mathrm{recovery}} \le T_{\mathrm{FTTI}}`$.
-   The hardware watchdog timer of the AI node is bounded by $`T_{\mathrm{wdg}} \le \Delta t_{\mathrm{threshold}} - \tau_{\mathrm{switch}}`$. The physical interconnect between the AI node and the arbiter is mapped to an isolated bus (SPI or PCIe MSI-X) with zero memory contention, preventing arbiter starvation caused by host OS memory pressure or driver stalls.
+   $T_{\mathrm{sense}} + T_{\mathrm{arbiter}} + \tau_{\mathrm{switch}} + t_{\mathrm{recovery}} \le T_{\mathrm{FTTI}}$.
+   The hardware watchdog timer of the AI node is bounded by $T_{\mathrm{wdg}} \le \Delta t_{\mathrm{threshold}} - \tau_{\mathrm{switch}}$. The physical interconnect between the AI node and the arbiter is mapped to an isolated bus (SPI or PCIe MSI-X) with zero memory contention, preventing arbiter starvation caused by host OS memory pressure or driver stalls.
 3. **Worked Numerical Example:**
-   An automated guided vehicle (AGV) with total mass $`m = 350\,\text{kg}`$ traverses an industrial corridor at velocity $`v = 2.0\,\text{m/s}`$. The neural path planner proposes an evasive steering maneuver around an unexpected obstacle detected at distance $`d = 0.44\,\text{m}`$.
-   Time to hazard impact: $`t_{\mathrm{hazard}} = \frac{d}{v} = \frac{0.44\,\text{m}}{2.0\,\text{m/s}} = 220\,\text{ms}`$.
-   Upon activation, the baseline safety controller running on Zephyr RTOS executes an emergency braking and stabilization maneuver with guaranteed worst-case recovery time $`t_{\mathrm{recovery}} = 170\,\text{ms}`$.
+   An automated guided vehicle (AGV) with total mass $m = 350\,\text{kg}$ traverses an industrial corridor at velocity $v = 2.0\,\text{m/s}$. The neural path planner proposes an evasive steering maneuver around an unexpected obstacle detected at distance $d = 0.44\,\text{m}$.
+   Time to hazard impact: $t_{\mathrm{hazard}} = \frac{d}{v} = \frac{0.44\,\text{m}}{2.0\,\text{m/s}} = 220\,\text{ms}$.
+   Upon activation, the baseline safety controller running on Zephyr RTOS executes an emergency braking and stabilization maneuver with guaranteed worst-case recovery time $t_{\mathrm{recovery}} = 170\,\text{ms}$.
    The dynamic time margin is therefore:
-   $`t_{\mathrm{margin}} = 220\,\text{ms} - 170\,\text{ms} = 50\,\text{ms}`$.
-   The calibrated safety threshold is configured to $`\Delta t_{\mathrm{threshold}} = 60\,\text{ms}`$.
-   Because $`t_{\mathrm{margin}} = 50\,\text{ms} < 60\,\text{ms}`$, the arbiter detects a critical margin deficit ($`50 < 60`$) and, within hardware switching time $`\tau_{\mathrm{switch}} = 14\,\mu\text{s}`$, cuts off the AI planner, transferring actuator control to the baseline controller, which deterministically halts the platform and prevents the collision.
+   $t_{\mathrm{margin}} = 220\,\text{ms} - 170\,\text{ms} = 50\,\text{ms}$.
+   The calibrated safety threshold is configured to $\Delta t_{\mathrm{threshold}} = 60\,\text{ms}$.
+   Because $t_{\mathrm{margin}} = 50\,\text{ms} < 60\,\text{ms}$, the arbiter detects a critical margin deficit ($50 < 60$) and, within hardware switching time $\tau_{\mathrm{switch}} = 14\,\mu\text{s}$, cuts off the AI planner, transferring actuator control to the baseline controller, which deterministically halts the platform and prevents the collision.
 
 ## 10. Pro et Contra Dialogue
 
@@ -616,7 +616,7 @@ The architectural limitations of this chapter must be recognized. Strict mode gu
 9. What three structural defects are intercepted by pre-admission consistency auditing prior to committing a new fact candidate?
 10. Why does a precedent validated by an expert remain an advisory hypothesis when applied to a novel query? What payload fields must an automated expert escalation packet contain?
 11. Why does an approved post-mortem log record become a validated precedent in the reference program, whereas an approved specification quotation becomes an axiomatic fact strictly within its declared operational scope?
-12. What three functional nodes constitute the heterogeneous Simplex architecture, and how is the safe switching time invariant $`t_{\mathrm{margin}}`$ calculated? Under what criteria does the hardware arbiter disengage the AI controller?
+12. What three functional nodes constitute the heterogeneous Simplex architecture, and how is the safe switching time invariant $t_{\mathrm{margin}}$ calculated? Under what criteria does the hardware arbiter disengage the AI controller?
 
 ## Glossary
 

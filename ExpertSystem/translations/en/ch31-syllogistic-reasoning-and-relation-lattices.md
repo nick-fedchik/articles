@@ -16,7 +16,7 @@ Consider an industrial SCADA deployment or the vehicular communication network o
 
 The central question of this chapter is: **how can an expert system derive deterministic conclusions from multiple interconnected normative authorities, traverse predicate hierarchies, and guarantee that an unknown exception state never collapses into an unsafe grant of operational permission?**
 
-This chapter decouples information retrieval, predicate lattices, formal exception evaluation (defeasible reasoning via Horn clauses and ASPIC+ argumentation), and valid norm selection. Information retrieval may execute over multiple hops or graph traversals, but its output remains strictly input material for the symbolic logic core. It examines Dung grounded semantics ($`\mathrm{GE}`$), topological cycle resolution via Tarjan's algorithm ($`O(V+E)`$), automatic epistemic argument rehabilitation upon arrival of new evidence, and the transitive cascading falsification operator across hierarchical Goal Structuring Notation (GSN) safety trees under ISO 26262 ASIL D. An educational Go implementation verifies derivation traces, while a declarative Answer Set Programming (ASP / clingo) model validates normative selection across nine boundary packet-handling scenarios. Deterministic deduction does not establish the empirical truth of ground facts; therefore, the epistemic boundary between proof and empirical validation remains inviolable.
+This chapter decouples information retrieval, predicate lattices, formal exception evaluation (defeasible reasoning via Horn clauses and ASPIC+ argumentation), and valid norm selection. Information retrieval may execute over multiple hops or graph traversals, but its output remains strictly input material for the symbolic logic core. It examines Dung grounded semantics ($\mathrm{GE}$), topological cycle resolution via Tarjan's algorithm ($O(V+E)$), automatic epistemic argument rehabilitation upon arrival of new evidence, and the transitive cascading falsification operator across hierarchical Goal Structuring Notation (GSN) safety trees under ISO 26262 ASIL D. An educational Go implementation verifies derivation traces, while a declarative Answer Set Programming (ASP / clingo) model validates normative selection across nine boundary packet-handling scenarios. Deterministic deduction does not establish the empirical truth of ground facts; therefore, the epistemic boundary between proof and empirical validation remains inviolable.
 
 ---
 
@@ -30,12 +30,12 @@ Modern semantic retrieval pipelines maximize the cosine similarity of dense vect
 
 Notation for vector retrieval:
 
-- $`\text{Query}`$ represents the unstructured textual query submitted by an engineer or operator;
-- $`\text{Embed}`$ denotes the transformation mapping text into a vector of real numbers;
-- $`\mathbf{v}_q`$ is the resulting query embedding in latent representation space;
-- $`\mathbf{v}_k`$ denotes stored passage embeddings across indexed document chunks;
-- $`\cos(\mathbf{v}_q, \mathbf{v}_k)`$ evaluates cosine similarity on the interval $[-1, 1]$;
-- $`\arg\max_k`$ selects the chunk index exhibiting the highest geometric proximity.
+- $\text{Query}$ represents the unstructured textual query submitted by an engineer or operator;
+- $\text{Embed}$ denotes the transformation mapping text into a vector of real numbers;
+- $\mathbf{v}_q$ is the resulting query embedding in latent representation space;
+- $\mathbf{v}_k$ denotes stored passage embeddings across indexed document chunks;
+- $\cos(\mathbf{v}_q, \mathbf{v}_k)$ evaluates cosine similarity on the interval $[-1, 1]$;
+- $\arg\max_k$ selects the chunk index exhibiting the highest geometric proximity.
 
 This formulation ranks textual similarity; it does not evaluate the logical validity or operational applicability of a norm. High similarity indicates semantic affinity, not legal or technical applicability.
 
@@ -163,8 +163,8 @@ Elements of a normative judgment tuple:
 - $\mathcal{J}$ denotes the formal normative judgment tuple;
 - $\text{Subject}$ and $\text{Object}$ represent concepts within the engineering taxonomy;
 - $\mathcal{R}$ designates a relation predicate drawn from the relation hierarchy;
-- $`\mathcal{M} \in \{ \text{MUST}, \text{MUST-NOT}, \text{SHOULD}, \text{SHOULD-NOT}, \text{MAY} \}`$ indicates the deontic modality;
-- $`\mathcal{D} = \{ d_1, d_2, \dots \}`$ represents the set of defeater conditions;
+- $\mathcal{M} \in \{ \text{MUST}, \text{MUST-NOT}, \text{SHOULD}, \text{SHOULD-NOT}, \text{MAY} \}$ indicates the deontic modality;
+- $\mathcal{D} = \{ d_1, d_2, \dots \}$ represents the set of defeater conditions;
 - $\text{Provenance}$ contains primary source grounding descriptors (document ID, SHA-256 hash, and byte offsets).
 
 ### 2.3. Inferences
@@ -247,12 +247,12 @@ flowchart TD
 ### 3.1. Mathematical Laws of Directed Subsumption
 
 The partial order satisfies three axiomatic properties:
-1. **Reflexivity:** $`\forall R \in \mathcal{R} : R \sqsubseteq R`$.
-2. **Antisymmetry:** $`\forall R_1, R_2 \in \mathcal{R} : (R_1 \sqsubseteq R_2 \land R_2 \sqsubseteq R_1) \implies R_1 = R_2`$.
-3. **Transitivity:** $`\forall R_1, R_2, R_3 \in \mathcal{R} : (R_1 \sqsubseteq R_2 \land R_2 \sqsubseteq R_3) \implies R_1 \sqsubseteq R_3`$.
+1. **Reflexivity:** $\forall R \in \mathcal{R} : R \sqsubseteq R$.
+2. **Antisymmetry:** $\forall R_1, R_2 \in \mathcal{R} : (R_1 \sqsubseteq R_2 \land R_2 \sqsubseteq R_1) \implies R_1 = R_2$.
+3. **Transitivity:** $\forall R_1, R_2, R_3 \in \mathcal{R} : (R_1 \sqsubseteq R_2 \land R_2 \sqsubseteq R_3) \implies R_1 \sqsubseteq R_3$.
 
 **Query Generalization Rule.**  
-A ground relation $`R_{\text{fact}}`$ satisfies a query targeting predicate $`R_{\text{query}}`$ if and only if it resides within the descendant subtree of the queried relation:
+A ground relation $R_{\text{fact}}$ satisfies a query targeting predicate $R_{\text{query}}$ if and only if it resides within the descendant subtree of the queried relation:
 
 ```math
 \text{Matches}(R_{\text{query}}, R_{\text{fact}}) \iff R_{\text{fact}} \sqsubseteq^* R_{\text{query}}.
@@ -261,12 +261,12 @@ A ground relation $`R_{\text{fact}}`$ satisfies a query targeting predicate $`R_
 In the directed subsumption rule:
 
 - $\text{Matches}$ is a boolean predicate testing whether a fact satisfies query constraints;
-- $`R_{\text{query}}`$ is the predicate requested by the operator;
-- $`R_{\text{fact}}`$ is the predicate asserted in the knowledge base;
+- $R_{\text{query}}$ is the predicate requested by the operator;
+- $R_{\text{fact}}$ is the predicate asserted in the knowledge base;
 - $\sqsubseteq^*$ denotes the reflexive-transitive closure of subsumption (the existence of an abstraction path).
 
 **Prohibition of Reverse Specialization.**  
-When an operator query demands a specific strict rule $`R_{\text{specific}}`$ (such as `prohibited_requirement`), the system is prohibited from returning a high-level generalization $`R_{\text{general}}`$ (`normative_requirement`), because a general requirement does not guarantee compliance with a specific prohibition:
+When an operator query demands a specific strict rule $R_{\text{specific}}$ (such as `prohibited_requirement`), the system is prohibited from returning a high-level generalization $R_{\text{general}}$ (`normative_requirement`), because a general requirement does not guarantee compliance with a specific prohibition:
 
 ```math
 R_{\text{general}} \not\sqsubseteq^* R_{\text{specific}} \quad \text{when } R_{\text{specific}} \sqsubset R_{\text{general}}.
@@ -274,8 +274,8 @@ R_{\text{general}} \not\sqsubseteq^* R_{\text{specific}} \quad \text{when } R_{\
 
 Notation for reverse specialization prohibition:
 
-- $`R_{\text{general}}`$ denotes a generalized predicate located higher in the hierarchy;
-- $`R_{\text{specific}}`$ represents a strict subordinate predicate;
+- $R_{\text{general}}$ denotes a generalized predicate located higher in the hierarchy;
+- $R_{\text{specific}}$ represents a strict subordinate predicate;
 - $\not\sqsubseteq^*$ forbids satisfaction: the existence of a general norm does not prove adherence to a specialized strict constraint.
 
 ### 3.2. Matching Phrases to Predicates
@@ -315,7 +315,7 @@ To reason safely over incomplete information, the system adopts **Strong Kleene 
 
 Strong Kleene truth values:
 
-- $`\mathcal{V}_3`$ denotes the Strong Kleene 3VL truth space;
+- $\mathcal{V}_3$ denotes the Strong Kleene 3VL truth space;
 - $\text{True}$ indicates a proven proposition;
 - $\text{False}$ indicates proven falsity;
 - $\text{Unknown}$ represents missing data or epistemic uncertainty without permitting a presumption of falsity.
@@ -336,7 +336,7 @@ Strong Kleene truth values:
 
 ### 4.2. Information Ordering and Fail-Closed Behavior
 
-Kleene logic introduces a partial information ordering ($`\le_i`$):
+Kleene logic introduces a partial information ordering ($\le_i$):
 
 ```math
 \text{Unknown} \le_i \text{True}, \quad \text{Unknown} \le_i \text{False}.
@@ -344,7 +344,7 @@ Kleene logic introduces a partial information ordering ($`\le_i`$):
 
 Information ordering:
 
-- $`\le_i`$ denotes the partial order of increasing epistemic information;
+- $\le_i$ denotes the partial order of increasing epistemic information;
 - The inequalities establish that $\text{Unknown}$ contains minimal information, whereas transitioning to $\text{True}$ or $\text{False}$ increases certainty monotonically.
 
 A function $f$ is monotonic with respect to information ordering if acquiring further knowledge (transitioning from $\text{Unknown}$ to $\text{True}$ or $\text{False}$) never reverses an already established deterministic conclusion.
@@ -411,41 +411,41 @@ The distinction between these two classes carries direct engineering consequence
 
 Pollock's defeater formalization resolves local conflicts between pairs of mutually exclusive rules; however, in real-world expert systems, norms form interconnected networks of mutual constraints. When hundreds of standards concurrently govern an evidence space, localized defeat relations produce complex attack graphs susceptible to mutual cycles or spurious cascades of knowledge displacement. Without a global mathematical admissibility semantics, an expert system risks infinite recursion or non-deterministic verdicts that vary with the memory order of rule evaluation.
 
-To rigorously formalize such networks, Dung's Abstract Argumentation Framework ($`\mathcal{AF}`$) [[17]](#src-17) is employed, defined as a tuple $`\mathcal{AF} = \langle \mathcal{A}, \mathcal{R}_{\mathrm{defeat}} \rangle`$, where $`\mathcal{A}`$ is a finite set of arguments and $`\mathcal{R}_{\mathrm{defeat}} \subseteq \mathcal{A} \times \mathcal{A}`$ is a binary defeat (attack) relation. Under the ASPIC+ structured argumentation framework [[7]](#src-7), the relation $`(B, A) \in \mathcal{R}_{\mathrm{defeat}}`$ arises through three distinct mechanisms:
-1. **Premise undermining (*Undermining*):** an attack on the defeasible premises or initial observations supporting argument $`A`$ ($`\mathrm{Prem}(A)`$);
-2. **Conclusion rebutting (*Rebutting*):** a direct contradiction between opposing conclusions ($`\mathrm{Conc}(A) \equiv \neg \mathrm{Conc}(B)`$), which constitutes a successful defeat only if the attacking argument is not strictly inferior to the attacked argument under the established preference ordering ($`B \not< A`$);
-3. **Inference undercutting (*Undercutting*):** an attack directly targeting the legitimacy of an inference step licensed by defeasible rule $`r`$, which succeeds unconditionally ($`B \to \mathrm{defeat}(A)`$) irrespective of argument weights or preferences.
+To rigorously formalize such networks, Dung's Abstract Argumentation Framework ($\mathcal{AF}$) [[17]](#src-17) is employed, defined as a tuple $\mathcal{AF} = \langle \mathcal{A}, \mathcal{R}_{\mathrm{defeat}} \rangle$, where $\mathcal{A}$ is a finite set of arguments and $\mathcal{R}_{\mathrm{defeat}} \subseteq \mathcal{A} \times \mathcal{A}$ is a binary defeat (attack) relation. Under the ASPIC+ structured argumentation framework [[7]](#src-7), the relation $(B, A) \in \mathcal{R}_{\mathrm{defeat}}$ arises through three distinct mechanisms:
+1. **Premise undermining (*Undermining*):** an attack on the defeasible premises or initial observations supporting argument $A$ ($\mathrm{Prem}(A)$);
+2. **Conclusion rebutting (*Rebutting*):** a direct contradiction between opposing conclusions ($\mathrm{Conc}(A) \equiv \neg \mathrm{Conc}(B)$), which constitutes a successful defeat only if the attacking argument is not strictly inferior to the attacked argument under the established preference ordering ($B \not< A$);
+3. **Inference undercutting (*Undercutting*):** an attack directly targeting the legitimacy of an inference step licensed by defeasible rule $r$, which succeeds unconditionally ($B \to \mathrm{defeat}(A)$) irrespective of argument weights or preferences.
 
-To define the set of arguments that the logical core must deem unequivocally acceptable, **Dung's characteristic operator** $`\Gamma_{\mathcal{AF}} : 2^{\mathcal{A}} \to 2^{\mathcal{A}}`$ is introduced:
+To define the set of arguments that the logical core must deem unequivocally acceptable, **Dung's characteristic operator** $\Gamma_{\mathcal{AF}} : 2^{\mathcal{A}} \to 2^{\mathcal{A}}$ is introduced:
 
 ```math
 \Gamma_{\mathcal{AF}}(S) = \{ A \in \mathcal{A} \mid \forall B \in \mathcal{A} \, ((B, A) \in \mathcal{R}_{\mathrm{defeat}} \implies \exists C \in S : (C, B) \in \mathcal{R}_{\mathrm{defeat}}) \}.
 ```
 
 Parameters of Dung's characteristic operator:
-- $`S \subseteq \mathcal{A}`$ is an arbitrary set of arguments evaluated as potential defenders;
-- $`A \in \mathcal{A}`$ is the argument whose admissibility is being evaluated;
-- $`(B, A) \in \mathcal{R}_{\mathrm{defeat}}`$ denotes an attack from argument $`B`$ against argument $`A`$;
-- $`(C, B) \in \mathcal{R}_{\mathrm{defeat}}`$ denotes a defending counterattack from argument $`C \in S`$ against the attacking argument $`B`$; the operator yields all arguments whose attackers are defeated by elements of $`S`$ (argument $`A`$ is defended by $`S`$).
+- $S \subseteq \mathcal{A}$ is an arbitrary set of arguments evaluated as potential defenders;
+- $A \in \mathcal{A}$ is the argument whose admissibility is being evaluated;
+- $(B, A) \in \mathcal{R}_{\mathrm{defeat}}$ denotes an attack from argument $B$ against argument $A$;
+- $(C, B) \in \mathcal{R}_{\mathrm{defeat}}$ denotes a defending counterattack from argument $C \in S$ against the attacking argument $B$; the operator yields all arguments whose attackers are defeated by elements of $S$ (argument $A$ is defended by $S$).
 
-The operator $`\Gamma_{\mathcal{AF}}`$ is monotonic with respect to set inclusion ($`S_1 \subseteq S_2 \implies \Gamma_{\mathcal{AF}}(S_1) \subseteq \Gamma_{\mathcal{AF}}(S_2)`$). By Tarski's fixed-point theorem, the operator possesses a unique least fixed point ($\mathrm{lfp}$), which defines the **grounded extension** ($\mathrm{GE}$):
+The operator $\Gamma_{\mathcal{AF}}$ is monotonic with respect to set inclusion ($S_1 \subseteq S_2 \implies \Gamma_{\mathcal{AF}}(S_1) \subseteq \Gamma_{\mathcal{AF}}(S_2)$). By Tarski's fixed-point theorem, the operator possesses a unique least fixed point ($\mathrm{lfp}$), which defines the **grounded extension** ($\mathrm{GE}$):
 
 ```math
 \mathrm{GE}(\mathcal{AF}) = \mathrm{lfp}(\Gamma_{\mathcal{AF}}) = \bigcup_{k=0}^{\infty} \Gamma_{\mathcal{AF}}^k(\emptyset).
 ```
 
 Parameters of the grounded extension:
-- $`\emptyset`$ is the initial empty set of defenders (base step $`\Gamma_{\mathcal{AF}}^0(\emptyset) = \emptyset`$);
-- $`\Gamma_{\mathcal{AF}}^1(\emptyset)`$ is the set of unattacked arguments (unassailable initial axioms and verified ground facts);
-- $`\Gamma_{\mathcal{AF}}^k(\emptyset)`$ represents the $`k`$-th defense iteration, reinstating arguments whose attackers were neutralized in preceding steps;
-- $`\mathrm{GE}(\mathcal{AF})`$ is the unique deterministic extension, computed in polynomial time $`O(\lvert \mathcal{A} \rvert \cdot \lvert \mathcal{R}_{\mathrm{defeat}} \rvert)`$.
+- $\emptyset$ is the initial empty set of defenders (base step $\Gamma_{\mathcal{AF}}^0(\emptyset) = \emptyset$);
+- $\Gamma_{\mathcal{AF}}^1(\emptyset)$ is the set of unattacked arguments (unassailable initial axioms and verified ground facts);
+- $\Gamma_{\mathcal{AF}}^k(\emptyset)$ represents the $k$-th defense iteration, reinstating arguments whose attackers were neutralized in preceding steps;
+- $\mathrm{GE}(\mathcal{AF})$ is the unique deterministic extension, computed in polynomial time $O(\lvert \mathcal{A} \rvert \cdot \lvert \mathcal{R}_{\mathrm{defeat}} \rvert)$.
 
 To assign statuses to all nodes in the argumentation graph, Caminada's tri-state labeling (*Caminada Tri-State Labeling*) is applied:
-- `IN` ($`A \in \mathrm{GE}`$): the argument is fully accepted by the system (all its attackers are labeled `OUT`);
+- `IN` ($A \in \mathrm{GE}$): the argument is fully accepted by the system (all its attackers are labeled `OUT`);
 - `OUT`: the argument is categorically rejected (at least one attacking argument is labeled `IN`);
 - `UNDEC`: the argument remains in an undecided state due to unresolved mutual cycles or symmetric conflicts of equal priority.
 
-In critical engineering systems, the occurrence of a symmetric mutual attack without an explicit preference ($`A \leftrightarrow B`$) presents a severe threat of oscillatory non-determinism. If an inference engine relies on non-deterministic queue traversals, system decisions become dependent on memory allocation order. To eliminate this vulnerability, the symbolic logic core executes an initial topological decomposition of the defeat subgraph using Tarjan's Strongly Connected Components algorithm (SCC) [[19]](#src-19) with linear complexity $`O(V + E)`$, where $`V = \lvert \mathcal{A} \rvert`$ and $`E = \lvert \mathcal{R}_{\mathrm{defeat}} \rvert`$.
+In critical engineering systems, the occurrence of a symmetric mutual attack without an explicit preference ($A \leftrightarrow B$) presents a severe threat of oscillatory non-determinism. If an inference engine relies on non-deterministic queue traversals, system decisions become dependent on memory allocation order. To eliminate this vulnerability, the symbolic logic core executes an initial topological decomposition of the defeat subgraph using Tarjan's Strongly Connected Components algorithm (SCC) [[19]](#src-19) with linear complexity $O(V + E)$, where $V = \lvert \mathcal{A} \rvert$ and $E = \lvert \mathcal{R}_{\mathrm{defeat}} \rvert$.
 
 ```mermaid
 flowchart TB
@@ -480,25 +480,25 @@ flowchart TB
 #### 4.4.1. Actionable Closed Loop of Grounded Semantics
 
 1. **Control Flow & Runtime Decisions:**
-   Computation of the grounded extension $`\mathrm{GE}(\mathcal{AF})`$ directly dictates state transitions in the decision-making state machine:
-   - If argument $`A_{\mathrm{action}}`$ is labeled `IN`, the system issues an actuation directive (`ACCEPT`) accompanied by a cryptographic proof of compliance;
+   Computation of the grounded extension $\mathrm{GE}(\mathcal{AF})$ directly dictates state transitions in the decision-making state machine:
+   - If argument $A_{\mathrm{action}}$ is labeled `IN`, the system issues an actuation directive (`ACCEPT`) accompanied by a cryptographic proof of compliance;
    - If the argument is labeled `OUT`, an explicit refusal is emitted detailing the active defeating arguments (`REJECT`);
    - If the argument enters the `UNDEC` state due to a symmetric attack or cycle lacking priority, the runtime categorically rejects both alternatives and transitions into the fail-closed refusal mode `REFUSAL_UNRESOLVED_SYMMETRIC_CONFLICT` (`Fail-Closed`), blocking potentially hazardous operations and alerting the human operator.
 2. **Hardware Dimensioning:**
-   Tarjan's algorithm and the $`\Gamma_{\mathcal{AF}}`$ operator iterator enforce deterministic memory and execution budgets:
-   - The recursive DFS call stack depth during SCC decomposition is strictly bounded by the total argument count $`\lvert \mathcal{A} \rvert`$: stack memory consumption is bounded by $`M_{\mathrm{stack}} = \lvert \mathcal{A} \rvert \times 32\,\text{bytes}`$;
-   - Caminada tri-state bitmasks require only $`2 \times \lvert \mathcal{A} \rvert`$ bits in static BRAM within a microcontroller or FPGA;
-   - Time complexity is strictly deterministic at $`O(\lvert \mathcal{A} \rvert + \lvert \mathcal{R} \rvert)`$ for cycle detection and $`O(k \cdot \lvert \mathcal{R} \rvert)`$ for $`k \le \mathrm{diam}(\mathcal{AF})`$ relaxation iterations, guaranteeing deterministic Worst-Case Execution Time (WCET) without exponential $`2^N`$ blowups.
+   Tarjan's algorithm and the $\Gamma_{\mathcal{AF}}$ operator iterator enforce deterministic memory and execution budgets:
+   - The recursive DFS call stack depth during SCC decomposition is strictly bounded by the total argument count $\lvert \mathcal{A} \rvert$: stack memory consumption is bounded by $M_{\mathrm{stack}} = \lvert \mathcal{A} \rvert \times 32\,\text{bytes}$;
+   - Caminada tri-state bitmasks require only $2 \times \lvert \mathcal{A} \rvert$ bits in static BRAM within a microcontroller or FPGA;
+   - Time complexity is strictly deterministic at $O(\lvert \mathcal{A} \rvert + \lvert \mathcal{R} \rvert)$ for cycle detection and $O(k \cdot \lvert \mathcal{R} \rvert)$ for $k \le \mathrm{diam}(\mathcal{AF})$ relaxation iterations, guaranteeing deterministic Worst-Case Execution Time (WCET) without exponential $2^N$ blowups.
 3. **Worked Numerical Example:**
    Consider an emergency braking subsystem in an autonomous metro train governed by four arguments:
-   - $`A_1`$: "Engage service electrodynamic braking on slope" (asserted by velocity sensor);
-   - $`A_2`$: "Inhibit electrodynamic braking due to power resistor overheating" (rebutting defeater $`A_2 \xrightarrow{\mathrm{rebut}} A_1`$);
-   - $`A_3`$: "Anomalous temperature sensor readings: open-circuit fault in thermistor TB-12" (undercutting defeater $`A_3 \xrightarrow{\mathrm{undercut}} A_2`$);
-   - $`A_4`$: "Sensor TB-12 readings confirmed by redundant pyrometer" (rebutting defeater $`A_4 \xrightarrow{\mathrm{rebut}} A_3`$).
+   - $A_1$: "Engage service electrodynamic braking on slope" (asserted by velocity sensor);
+   - $A_2$: "Inhibit electrodynamic braking due to power resistor overheating" (rebutting defeater $A_2 \xrightarrow{\mathrm{rebut}} A_1$);
+   - $A_3$: "Anomalous temperature sensor readings: open-circuit fault in thermistor TB-12" (undercutting defeater $A_3 \xrightarrow{\mathrm{undercut}} A_2$);
+   - $A_4$: "Sensor TB-12 readings confirmed by redundant pyrometer" (rebutting defeater $A_4 \xrightarrow{\mathrm{rebut}} A_3$).
 
-   In the first step, $`\Gamma_{\mathcal{AF}}^1(\emptyset) = \{ A_4 \}`$, as $`A_4`$ possesses no counterarguments. In the second step, $`A_4 \to \mathrm{IN}`$ defends the counterattack against $`A_3`$, yielding $`A_3 \to \mathrm{OUT}`$. In the third step, because $`A_3`$ is defeated (`OUT`), its undercutting attack against $`A_2`$ is invalidated, and $`A_2`$ receives the status `IN`. Consequently, in the fourth step, $`A_2 \to \mathrm{IN}`$ successfully rebuts $`A_1`$, driving $`A_1 \to \mathrm{OUT}`$.
+   In the first step, $\Gamma_{\mathcal{AF}}^1(\emptyset) = \{ A_4 \}$, as $A_4$ possesses no counterarguments. In the second step, $A_4 \to \mathrm{IN}$ defends the counterattack against $A_3$, yielding $A_3 \to \mathrm{OUT}$. In the third step, because $A_3$ is defeated (`OUT`), its undercutting attack against $A_2$ is invalidated, and $A_2$ receives the status `IN`. Consequently, in the fourth step, $A_2 \to \mathrm{IN}$ successfully rebuts $A_1$, driving $A_1 \to \mathrm{OUT}$.
 
-   The system deterministically converges within 4 iterations ($`42\,\mu\text{s}`$ on an ARM Cortex-R5F core for $`\lvert \mathcal{A} \rvert = 4, \lvert \mathcal{R} \rvert = 3`$) to the unique grounded extension $`\mathrm{GE} = \{ A_4, A_2 \}`$. **Decision:** argument $`A_1`$ is rejected (`OUT`), service electrodynamic braking is inhibited, and the system autonomously deploys the pneumatic backup brake in accordance with equipment failure protocols.
+   The system deterministically converges within 4 iterations ($42\,\mu\text{s}$ on an ARM Cortex-R5F core for $\lvert \mathcal{A} \rvert = 4, \lvert \mathcal{R} \rvert = 3$) to the unique grounded extension $\mathrm{GE} = \{ A_4, A_2 \}$. **Decision:** argument $A_1$ is rejected (`OUT`), service electrodynamic braking is inhibited, and the system autonomously deploys the pneumatic backup brake in accordance with equipment failure protocols.
 
 ---
 
@@ -508,17 +508,17 @@ Deploying argumentation systems in mission-critical environments (such as ISO 26
 
 #### 4.5.1. Mechanism of Epistemic Argument Rehabilitation (Reinstatement)
 
-In naive inference engines, the defeat of argument $`A`$ by counterargument $`B`$ results in the irreversible excision of $`A`$ from working memory (epistemic amnesia). If subsequent measurement cycles yield evidence $`C`$ that discredits counterargument $`B`$, a naive system cannot automatically restore $`A`$ to active status without a complete knowledge base restart.
+In naive inference engines, the defeat of argument $A$ by counterargument $B$ results in the irreversible excision of $A$ from working memory (epistemic amnesia). If subsequent measurement cycles yield evidence $C$ that discredits counterargument $B$, a naive system cannot automatically restore $A$ to active status without a complete knowledge base restart.
 
-Under Dung's grounded semantics, reinstatement is a structural theorem: if $`C \to \mathrm{IN}`$ and $`(C, B) \in \mathcal{R}_{\mathrm{defeat}}`$, then $`B`$ is labeled `OUT`. Consequently, the set of active defeating arguments targeting $`A`$ becomes empty, and $`A`$ is automatically reinstated ($`A \to \mathrm{IN}`$) at the identical fixed point $`\mathrm{lfp}(\Gamma_{\mathcal{AF}})`$. This eliminates epistemic amnesia and ensures uninterrupted continuity in online reasoning loops.
+Under Dung's grounded semantics, reinstatement is a structural theorem: if $C \to \mathrm{IN}$ and $(C, B) \in \mathcal{R}_{\mathrm{defeat}}$, then $B$ is labeled `OUT`. Consequently, the set of active defeating arguments targeting $A$ becomes empty, and $A$ is automatically reinstated ($A \to \mathrm{IN}$) at the identical fixed point $\mathrm{lfp}(\Gamma_{\mathcal{AF}})$. This eliminates epistemic amnesia and ensures uninterrupted continuity in online reasoning loops.
 
 #### 4.5.2. Transitive Falsification Cascade in ISO 26262 Safety Trees
 
-In Goal Structuring Notation (GSN), an argumentation tree $`\mathcal{T} = \langle \mathcal{G}, \mathcal{E}, \mathcal{R} \rangle`$ decomposes a top-level safety goal (an ASIL D Safety Goal, such as $`G_0`$: "Unintended steering actuator locking prevented") through intermediate sub-requirements $`G_i`$ down to low-level hardware evidence leaves $`e \in \mathcal{E}`$.
+In Goal Structuring Notation (GSN), an argumentation tree $\mathcal{T} = \langle \mathcal{G}, \mathcal{E}, \mathcal{R} \rangle$ decomposes a top-level safety goal (an ASIL D Safety Goal, such as $G_0$: "Unintended steering actuator locking prevented") through intermediate sub-requirements $G_i$ down to low-level hardware evidence leaves $e \in \mathcal{E}$.
 
-Safety audits frequently expose a critical flaw: when an angular displacement sensor detects an out-of-tolerance voltage spike, a low-level rule invalidates only that local telemetry proposition. The root safety goal $`G_0`$ in naive reasoning engines remains asserted as valid (`VALID`), because its formal predicate does not explicitly reference raw sensor voltage thresholds (the "silent omission" hazard).
+Safety audits frequently expose a critical flaw: when an angular displacement sensor detects an out-of-tolerance voltage spike, a low-level rule invalidates only that local telemetry proposition. The root safety goal $G_0$ in naive reasoning engines remains asserted as valid (`VALID`), because its formal predicate does not explicitly reference raw sensor voltage thresholds (the "silent omission" hazard).
 
-To guarantee functional safety under ISO 26262, the **transitive cascading falsification operator** $`\mathrm{Status}(G_i)`$ is formalized:
+To guarantee functional safety under ISO 26262, the **transitive cascading falsification operator** $\mathrm{Status}(G_i)$ is formalized:
 
 ```math
 \mathrm{Status}(G_i) = \begin{cases} 
@@ -530,18 +530,18 @@ To guarantee functional safety under ISO 26262, the **transitive cascading falsi
 ```
 
 Parameters of the transitive falsification operator:
-- $`G_i \in \mathcal{G}`$ represents an argumentation tree node (safety goal or strategy);
-- $`\mathrm{Defeaters}(G_i)`$ denotes the set of local defeaters attached to goal $`G_i`$;
-- $`\mathrm{Children}(G_i)`$ denotes the set of immediate child subgoals or evidence leaves;
-- $`\mathrm{Evaluated}(d)`$ is a Boolean predicate indicating whether defeater condition $`d`$ is satisfied;
-- $`\mathrm{DIRECTLY\_FALSIFIED}`$ marks direct local falsification by an active defeater;
-- $`\mathrm{TRANSITIVELY\_FALSIFIED}`$ marks inherited falsification propagated up to root goal $`G_0`$;
-- $`\mathrm{REFUSAL}`$ indicates an epistemic deficit or indeterminate state in a child node;
-- $`\mathrm{VALID}`$ confirms goal validity given the total absence of defeaters throughout its entire subtree.
+- $G_i \in \mathcal{G}$ represents an argumentation tree node (safety goal or strategy);
+- $\mathrm{Defeaters}(G_i)$ denotes the set of local defeaters attached to goal $G_i$;
+- $\mathrm{Children}(G_i)$ denotes the set of immediate child subgoals or evidence leaves;
+- $\mathrm{Evaluated}(d)$ is a Boolean predicate indicating whether defeater condition $d$ is satisfied;
+- $\mathrm{DIRECTLY\_FALSIFIED}$ marks direct local falsification by an active defeater;
+- $\mathrm{TRANSITIVELY\_FALSIFIED}$ marks inherited falsification propagated up to root goal $G_0$;
+- $\mathrm{REFUSAL}$ indicates an epistemic deficit or indeterminate state in a child node;
+- $\mathrm{VALID}$ confirms goal validity given the total absence of defeaters throughout its entire subtree.
 
 #### 4.5.3. Strict Fail-Closed on Unknowns and Deontic Control (ModalityMust)
 
-1. **Strict Fail-Closed on Unknowns:** if an action or physical parameter $`X`$ lacks established normative grounding in the knowledge base, the system categorically refuses default assumptions and emits a verdict `REFUSAL_INSUFFICIENT_EVIDENCE` with the flag `EvidenceVerified = false`.
+1. **Strict Fail-Closed on Unknowns:** if an action or physical parameter $X$ lacks established normative grounding in the knowledge base, the system categorically refuses default assumptions and emits a verdict `REFUSAL_INSUFFICIENT_EVIDENCE` with the flag `EvidenceVerified = false`.
 2. **Deontic Priority of Obligations (`ModalityMust`):** any proposed action or exception that attempts to suppress, bypass, or defer a mandatory safety requirement (such as skipping a periodic Built-In Self-Test (BIST) memory audit or bypassing a high-voltage enclosure door interlock) automatically triggers a highest-priority undercutting defeater that transitions the corresponding safety goal into `DIRECTLY_FALSIFIED`.
 
 ```mermaid
@@ -581,23 +581,23 @@ flowchart TD
 #### 4.5.4. Actionable Closed Loop of Transitive Falsification
 
 1. **Control Flow & Runtime Decisions:**
-   The evaluated root goal status $`\mathrm{Status}(G_0)`$ directly dictates safety enforcement actions:
+   The evaluated root goal status $\mathrm{Status}(G_0)$ directly dictates safety enforcement actions:
    - Status `VALID` permits certificate generation and authorizes control pulses to power actuators;
    - Status `TRANSITIVELY_FALSIFIED` at any level in the safety hierarchy immediately revokes operational trust certificates, disables Pulse-Width Modulation (PWM) to actuators, and triggers ISO 26262 emergency protocols;
    - Status `REFUSAL` transitions the system into a safe-standby state awaiting telemetry confirmation, blocking transitions to active operational states.
 2. **Hardware Dimensioning:**
-   - Tree structure $`\mathcal{T}`$ is evaluated in a single bottom-up post-order traversal with time complexity $`O(\lvert \mathcal{G} \rvert + \lvert \mathcal{E} \rvert)`$;
-   - For a tree of depth $`H = 6`$ levels with $`N = 64`$ nodes, evaluation on an ARM Cortex-M7 core ($`400\,\text{MHz}`$) completes in under $`2.8\,\mu\text{s}`$, well within the stringent Fault Tolerant Time Interval (FTTI), which in automotive systems typically spans $`10`$ to $`50\,\text{ms}`$;
-   - The tree status bitvector occupies exactly $`2 \times 64 = 128`$ bits, permitting SIMD tree reductions in minimal clock cycles.
+   - Tree structure $\mathcal{T}$ is evaluated in a single bottom-up post-order traversal with time complexity $O(\lvert \mathcal{G} \rvert + \lvert \mathcal{E} \rvert)$;
+   - For a tree of depth $H = 6$ levels with $N = 64$ nodes, evaluation on an ARM Cortex-M7 core ($400\,\text{MHz}$) completes in under $2.8\,\mu\text{s}$, well within the stringent Fault Tolerant Time Interval (FTTI), which in automotive systems typically spans $10$ to $50\,\text{ms}$;
+   - The tree status bitvector occupies exactly $2 \times 64 = 128$ bits, permitting SIMD tree reductions in minimal clock cycles.
 3. **Worked Numerical Example:**
-   Consider an unmanned aerial vehicle thrust-vectoring control system with root goal $`G_0`$ (ASIL D), decomposed into 3 subgoals $`G_1, G_2, G_3`$ and 9 evidence leaves. During flight, hydraulic line pressure sensor $`E_7`$ records a pressure drop below $`12\,\text{MPa}`$ against a nominal $`21\,\text{MPa}`$, activating defeater $`d_{\mathrm{hydr}}`$.
+   Consider an unmanned aerial vehicle thrust-vectoring control system with root goal $G_0$ (ASIL D), decomposed into 3 subgoals $G_1, G_2, G_3$ and 9 evidence leaves. During flight, hydraulic line pressure sensor $E_7$ records a pressure drop below $12\,\text{MPa}$ against a nominal $21\,\text{MPa}$, activating defeater $d_{\mathrm{hydr}}$.
 
    Formula evaluation:
-   1. $`\mathrm{Status}(E_7) = \mathrm{DIRECTLY\_FALSIFIED}`$ (predicate $`\mathrm{Evaluated}(d_{\mathrm{hydr}}) = \mathrm{True}`$);
-   2. $`\mathrm{Status}(G_3) = \mathrm{TRANSITIVELY\_FALSIFIED}`$, since $`E_7 \in \mathrm{Children}(G_3)`$;
-   3. $`\mathrm{Status}(G_0) = \mathrm{TRANSITIVELY\_FALSIFIED}`$, since $`G_3 \in \mathrm{Children}(G_0)`$.
+   1. $\mathrm{Status}(E_7) = \mathrm{DIRECTLY\_FALSIFIED}$ (predicate $\mathrm{Evaluated}(d_{\mathrm{hydr}}) = \mathrm{True}$);
+   2. $\mathrm{Status}(G_3) = \mathrm{TRANSITIVELY\_FALSIFIED}$, since $E_7 \in \mathrm{Children}(G_3)$;
+   3. $\mathrm{Status}(G_0) = \mathrm{TRANSITIVELY\_FALSIFIED}$, since $G_3 \in \mathrm{Children}(G_0)$.
 
-   **Decision:** Despite the remaining 8 sensors reporting `VALID`, the system confirms root goal $`G_0`$ compromise in $`3.2\,\mu\text{s}`$, revokes flight authorization, and immediately cuts turbine throttle while deploying the emergency ballistic parachute.
+   **Decision:** Despite the remaining 8 sensors reporting `VALID`, the system confirms root goal $G_0$ compromise in $3.2\,\mu\text{s}$, revokes flight authorization, and immediately cuts turbine throttle while deploying the emergency ballistic parachute.
 
 ---
 
@@ -1097,7 +1097,7 @@ The educational implementations in this chapter illustrate foundational mechanis
 | Defeaters and priority ordering | ASPIC+ structured argumentation framework [[7]](#src-7) | Formal semantics of attacks and preferences for verifier validation | Preference orderings must be supplied by domain experts, not the formalism |
 | Norms with exceptions as executable programs | Catala programming language by Merigoux, Chataing, and Protzenko [[14]](#src-14) | First-class exception constructs and code testable alongside legal statutes | Designed for statutory law; technical standards require custom domain models |
 | Extracting hierarchy candidates from text | Hearst patterns [[15]](#src-15) | Discovers candidate hyponym-hypernym pairs across document corpora | Patterns introduce noisy false positives requiring human review |
-| Mining candidate rules and subproperties from facts | AMIE association rule mining [[16]](#src-16) | Induces rules of the form $`r_1(x,y) \implies r_2(x,y)`$ with metric confidence scores | Statistical correlation does not establish normative authority |
+| Mining candidate rules and subproperties from facts | AMIE association rule mining [[16]](#src-16) | Induces rules of the form $r_1(x,y) \implies r_2(x,y)$ with metric confidence scores | Statistical correlation does not establish normative authority |
 
 The first row aligns directly with Section 3. RDFS entailment rule rdfs7 dictates that if property $a$ is a subproperty of $b$ and triple $x\,a\,y$ is asserted, the triple $x\,b\,y$ is logically entailed. This corresponds precisely to the $\text{Matches}$ condition defined in Section 3.1, while preserving the prohibition of reverse specialization: an asserted superproperty never entails a subordinate property. A SPARQL 1.1 property path such as `?p rdfs:subPropertyOf* :normative_requirement` resolves all subproperties dynamically at query time, eliminating the need to materialize every entailed triple in advance. However, the boundary of RDFS is critical: its semantics are strictly monotonic, meaning new facts can never invalidate previously derived assertions. Consequently, predicate hierarchies are well suited for storage in RDF, whereas defeasible exceptions and active version selection must be evaluated within ASP or a dedicated non-monotonic inference engine. This architectural separation mirrors the division between Section 3 and Sections 4 and 5 of this chapter.
 
@@ -1159,7 +1159,7 @@ The educational Go implementation executes a single inference step and does not 
 6. Why does the ASP model signal a conflict rather than defaulting to an older revision when a supersession fact is missing, and why is the `complete(tcp_rst)` fact required?
 7. In what way does the RDFS rule rdfs7 resemble the `Subsumes` check, and what expressive limitations prevent RDFS from modeling defeasible norms?
 8. How can rule candidates mined by AMIE or Hearst patterns be incorporated into an engineering knowledge base without confusing statistical support with normative authority?
-9. How do Dung's characteristic operator $`\Gamma_{\mathcal{AF}}`$ and Tarjan's Strongly Connected Components algorithm eliminate non-determinism and infinite cycling in the presence of symmetric attacks of equal strength?
+9. How do Dung's characteristic operator $\Gamma_{\mathcal{AF}}$ and Tarjan's Strongly Connected Components algorithm eliminate non-determinism and infinite cycling in the presence of symmetric attacks of equal strength?
 10. How does the transitive falsification operator in GSN trees (ISO 26262 ASIL D) prevent "silent omission" failures, and under what conditions does epistemic rehabilitation of a previously defeated rule occur?
 
 ---

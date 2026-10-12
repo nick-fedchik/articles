@@ -31,7 +31,7 @@ This chapter presents an educational engineering model rather than a certified p
 | Troubleshooting | What should be inspected, tested, or repaired next? | Testing policy and corrective action workflow |
 | Prognostics | How and when will system degradation progress? | Degradation trajectory, Remaining Useful Life (RUL) |
 
-This table clarifies the engineering error described in the opening scenario: the classifier solved the second task (classification), whereas the field technician required solutions to the third and fifth tasks (diagnostics and troubleshooting). A classifier prediction can serve as a useful prior, but an estimate such as $`P(\text{clock\_fault} \mid \text{trace}) = 0.72`$ does not explain why the power rail sag occurred earlier in the timeline. A root cause does not follow simply from a feature exhibiting the highest feature importance in a machine learning model. Furthermore, an ad-hoc repair after which the device happens to boot successfully does not prove a unique cause: the intervention may have cleared transient hardware state or altered multiple physical variables simultaneously. The diagram below illustrates the complete closed-loop diagnostic cycle.
+This table clarifies the engineering error described in the opening scenario: the classifier solved the second task (classification), whereas the field technician required solutions to the third and fifth tasks (diagnostics and troubleshooting). A classifier prediction can serve as a useful prior, but an estimate such as $P(\text{clock\_fault} \mid \text{trace}) = 0.72$ does not explain why the power rail sag occurred earlier in the timeline. A root cause does not follow simply from a feature exhibiting the highest feature importance in a machine learning model. Furthermore, an ad-hoc repair after which the device happens to boot successfully does not prove a unique cause: the intervention may have cleared transient hardware state or altered multiple physical variables simultaneously. The diagram below illustrates the complete closed-loop diagnostic cycle.
 
 ```mermaid
 flowchart LR
@@ -237,7 +237,7 @@ The first class of specification conflict involves version obsolescence. If one 
 - $\mathrm{Obsoletes}(D_2, D_1)$ asserts that document $D_2$ formally supersedes document $D_1$;
 - $\Rightarrow$ denotes material implication, $\mathrm{Status}$ returns normative lifecycle status, and $\mathrm{Superseded}$ marks the clause as superseded by newer standards.
 
-The second class involves deontic collisions. When two active standards apply simultaneously, but one obligates behavior $p$ while the other prohibits it ($`\mathcal{O}(p)`$ versus $`\mathcal{F}(p)`$), the expert system synthesizes a normative conflict report featuring verbatim byte-level citations from both standards, as developed in [Chapter 15](ch15-knowledge-extraction-and-kb-construction.md). The third class involves exception handling: if a normative rule contains a proviso ("unless condition $c$ is met"), the diagnostic engine inspects telemetry to verify whether a session teardown was a legitimate consequence of an triggered exception.
+The second class involves deontic collisions. When two active standards apply simultaneously, but one obligates behavior $p$ while the other prohibits it ($\mathcal{O}(p)$ versus $\mathcal{F}(p)$), the expert system synthesizes a normative conflict report featuring verbatim byte-level citations from both standards, as developed in [Chapter 15](ch15-knowledge-extraction-and-kb-construction.md). The third class involves exception handling: if a normative rule contains a proviso ("unless condition $c$ is met"), the diagnostic engine inspects telemetry to verify whether a session teardown was a legitimate consequence of an triggered exception.
 
 ## 5. Probabilistic Ranking of Consistent Diagnoses
 
@@ -252,7 +252,7 @@ P(H_i \mid E) = \frac{P(E \mid H_i)\, P(H_i)}{\sum_j P(E \mid H_j)\, P(H_j)}
 - $P(H_i \mid E)$ is the posterior probability conditioned on evidence; all probabilities are constrained to the interval $[0, 1]$;
 - $\sum_j$ normalizes the likelihood-prior products across all competing hypotheses $H_j$ to form a valid probability distribution.
 
-Illustrative numerical example: if $`P(H) = 0.1`$, $`P(E \mid H) = 0.8`$, $`P(\neg H) = 0.9`$, and $`P(E \mid \neg H) = 0.2`$, then $`P(H \mid E) = 0.08 / (0.08 + 0.18) \approx 0.308`$. The observation increases the probability of the hypothesis from $0.1$ to approximately $0.308$ within this toy model.
+Illustrative numerical example: if $P(H) = 0.1$, $P(E \mid H) = 0.8$, $P(\neg H) = 0.9$, and $P(E \mid \neg H) = 0.2$, then $P(H \mid E) = 0.08 / (0.08 + 0.18) \approx 0.308$. The observation increases the probability of the hypothesis from $0.1$ to approximately $0.308$ within this toy model.
 
 Fleet reliability data from an older hardware revision or a benign operating environment cannot be uncritically imported as prior probabilities. When analyzing multiple simultaneous faults, mutual independence:
 
@@ -264,7 +264,7 @@ P(H_a \land H_b) = P(H_a)\, P(H_b)
 - $\land$ denotes joint occurrence of both failure modes, and $P(\cdot)$ represents probability within $[0, 1]$;
 - $=$ defines the joint probability as the product of marginals strictly under the condition of statistical independence.
 
-Illustrative example: assuming independent probabilities $`P(H_a) = 0.1`$ and $`P(H_b) = 0.2`$, the joint probability evaluates to $`0.1 \cdot 0.2 = 0.02`$. This is purely an assumption: common-cause failure mechanisms (humidity ingress, supply transients, defective manufacturing batches) induce strong statistical coupling between components.
+Illustrative example: assuming independent probabilities $P(H_a) = 0.1$ and $P(H_b) = 0.2$, the joint probability evaluates to $0.1 \cdot 0.2 = 0.02$. This is purely an assumption: common-cause failure mechanisms (humidity ingress, supply transients, defective manufacturing batches) induce strong statistical coupling between components.
 
 ### 5.1. Diagnosis Accounting for Measurement Channel Errors and Sensor Failures
 
@@ -299,7 +299,7 @@ Metric parameters:
    - **$BS \le 0.10$ (High Calibration):** The classifier's probabilistic outputs are validated; the system is authorized to autonomously present ranked numerical probability estimates to human operators;
    - **$0.10 < BS \le 0.25$ (Moderate Deviation):** Conditional admission; the system automatically inserts a post-processing calibration layer (isotonic regression or Platt scaling) prior to passing probabilities into the downstream decision module;
    - **$BS > 0.25$ (Uncalibrated or Deceptive Distribution):** Numerical probabilities are suppressed; the system forcefully falls back to a conservative qualitative deterministic listing of consistent hypotheses without displaying misleading numerical confidence weights.
-2. **Practical Numerical Example:** For a test batch of two alternative diagnoses with prediction $(0.80, 0.20)$ against true label $(1, 0)$, the Brier score evaluates to $`(0.80 - 1)^2 + (0.20 - 0)^2 = 0.04 + 0.04 = 0.08 \le 0.10`$. **System Action:** The metric confirms reliable calibration; the automated admission threshold is satisfied.
+2. **Practical Numerical Example:** For a test batch of two alternative diagnoses with prediction $(0.80, 0.20)$ against true label $(1, 0)$, the Brier score evaluates to $(0.80 - 1)^2 + (0.20 - 0)^2 = 0.04 + 0.04 = 0.08 \le 0.10$. **System Action:** The metric confirms reliable calibration; the automated admission threshold is satisfied.
 
 The Brier score measures the probabilistic calibration of predictions, but does not verify the completeness of the underlying failure mode catalog: an engine can be well-calibrated over known classes while completely lacking an "unknown fault" hypothesis.
 
@@ -371,7 +371,7 @@ H(\mathcal{H} \mid E) = -\sum_i P(H_i \mid E) \log_2 P(H_i \mid E)
 - $P(H_i \mid E)$ is the posterior probability of hypothesis $H_i$, with $\sum_i$ summing across all mutually exclusive hypotheses;
 - $\log_2$ denotes the base-2 logarithm; the negation ensures non-negative entropy bounded within $[0, \log_2|\mathcal{H}|]$ bits.
 
-Illustrative example: for two equiprobable hypotheses ($P = 0.5$ each), entropy evaluates to $`-2 \cdot 0.5 \log_2(0.5) = 1`$ bit, representing maximum uncertainty between two outcomes.
+Illustrative example: for two equiprobable hypotheses ($P = 0.5$ each), entropy evaluates to $-2 \cdot 0.5 \log_2(0.5) = 1$ bit, representing maximum uncertainty between two outcomes.
 
 The expected Information Gain (IG) from candidate test $T$ with possible outcomes $o$ equals the expected entropy reduction:
 
@@ -383,7 +383,7 @@ IG(T) = H(\mathcal{H} \mid E) - \sum_o P(o \mid E, T)\, H(\mathcal{H} \mid E, o,
 - $H(\mathcal{H} \mid E)$ is current entropy prior to the test, and $H(\mathcal{H} \mid E, o, T)$ is posterior entropy after observing outcome $o$;
 - $P(o \mid E, T)$ is the marginal probability of observing outcome $o$, with $\sum_o$ weighting posterior entropies across all possible outcomes.
 
-Illustrative example: if initial entropy is $1$ bit and an infallible test perfectly isolates the true hypothesis (reducing posterior entropy to $0$), information gain equals $`1 - 0 = 1`$ bit.
+Illustrative example: if initial entropy is $1$ bit and an infallible test perfectly isolates the true hypothesis (reducing posterior entropy to $0$), information gain equals $1 - 0 = 1$ bit.
 
 The test offering maximum information gain may be prohibitively expensive or physically hazardous. Therefore, actionable engineering utility balances information gain against execution duration, financial expense, operational hazard, and evidence destruction:
 
@@ -874,7 +874,7 @@ The founder of the Theory of Diagnosis from First Principles Raymond Reiter (Pro
 
 - **Raymond Reiter:** In classical first-principles diagnosis, observations $OBS$ are treated as ground-truth facts about the physical world. In production reality, however, sensors drift, noise corrupts telemetry, and many physical components lack instrumentation altogether. When an observation vector contradicts all known single and double component failure modes, a pure hitting set search returns an empty set or degenerates into an implausible hypothesis where all components have failed simultaneously. How does your diagnosis engine avoid force-fitting an over-parameterized model onto incomplete data without relying on ad-hoc heuristic penalties?
 
-- **Mykola Fedchyk:** Raymond Reiter, precisely to address this reality, we established the formal mechanism of algorithmic refusal with evidence deficit accounting. When the engine encounters an empty candidate set within the allowable cardinality threshold, or when the posterior probability of the leading candidate fails to reach the certification threshold $`\tau_{\mathrm{diag}}`$, the engine refrains from fabricating high-cardinality conjunctions. Instead, it activates the Distinguishability Query protocol: using your consistency formulation, it calculates the exact supplementary measurement required to falsify a sensor anomaly hypothesis against a physical plant failure. If physical measurement is impossible or too hazardous, it issues an explicit `REFUSAL_INSUFFICIENT_EVIDENCE` verdict itemizing missing observable parameters. This converts logical incompleteness into a disciplined engineering safety barrier.
+- **Mykola Fedchyk:** Raymond Reiter, precisely to address this reality, we established the formal mechanism of algorithmic refusal with evidence deficit accounting. When the engine encounters an empty candidate set within the allowable cardinality threshold, or when the posterior probability of the leading candidate fails to reach the certification threshold $\tau_{\mathrm{diag}}$, the engine refrains from fabricating high-cardinality conjunctions. Instead, it activates the Distinguishability Query protocol: using your consistency formulation, it calculates the exact supplementary measurement required to falsify a sensor anomaly hypothesis against a physical plant failure. If physical measurement is impossible or too hazardous, it issues an explicit `REFUSAL_INSUFFICIENT_EVIDENCE` verdict itemizing missing observable parameters. This converts logical incompleteness into a disciplined engineering safety barrier.
 
 **Dialogue with Peter Struss: Discrete Logic and Qualitative Physics Models in Diagnosis**
 
@@ -886,7 +886,7 @@ The founder of the Theory of Diagnosis from First Principles Raymond Reiter (Pro
 
 - **Peter Struss:** Real cyber-physical systems exhibit deep structural hierarchies: a chip resides on a circuit board, the board sits in an ECU, the ECU controls a powertrain subsystem. When a high-frequency transient occurs—such as an inductive coil short circuit—it creates thermal stress in a power transistor, which minutes later causes a microcontroller brownout. If a diagnostic engine evaluates all components on a single flat conflict graph, it will suffer from diagnostic aliasing: confusing downstream secondary effects with the primary trigger. How does your model structure dependent faults across time and hierarchy?
 
-- **Mykola Fedchyk:** Peter Struss, we resolve cascading fault propagation through Temporal Constraint Networks (TCN) coupled with spatial-structural hierarchy. Each component in the knowledge base defines not only static behavioral conservation laws, but also propagation latency bounds $`\Delta t_{\mathrm{prop}}`$. When a conflict is recorded at timestamp $t$, the conflict generation algorithm backtracks along the temporal causal cone, localizing the earliest unbalanced mass or energy flux. Secondary symptoms that fall within the propagation horizon are tagged as induced effects and suppressed from independent inclusion in minimal hitting sets. This ensures the diagnostic verdict isolates the initiating root-cause impulse from the ensuing avalanche of alarm signatures.
+- **Mykola Fedchyk:** Peter Struss, we resolve cascading fault propagation through Temporal Constraint Networks (TCN) coupled with spatial-structural hierarchy. Each component in the knowledge base defines not only static behavioral conservation laws, but also propagation latency bounds $\Delta t_{\mathrm{prop}}$. When a conflict is recorded at timestamp $t$, the conflict generation algorithm backtracks along the temporal causal cone, localizing the earliest unbalanced mass or energy flux. Secondary symptoms that fall within the propagation horizon are tagged as induced effects and suppressed from independent inclusion in minimal hitting sets. This ensures the diagnostic verdict isolates the initiating root-cause impulse from the ensuing avalanche of alarm signatures.
 
 **Synthesis:** Model-based diagnosis in evidence-governed expert systems synthesizes the mathematical rigor of Reiter's first principles with the engineering realism of Struss's qualitative physics. The deductive core prunes physically impossible failure combinations based on fundamental conservation laws, qualitative physics and temporal constraint networks disentangle cascading parameter degradation chains, and Bayesian Value of Information (VOI) optimization steers the technician toward minimal cost and maximal safety in root-cause isolation.
 
@@ -900,7 +900,7 @@ The boundaries of this chapter are well-defined. Consistency with a model does n
 
 ## Self-Check Questions
 
-1. How does technical diagnostics fundamentally differ from classification, and why is an estimate such as $`P(\text{clock\_fault} \mid \text{trace}) = 0.72`$ not a diagnosis?
+1. How does technical diagnostics fundamentally differ from classification, and why is an estimate such as $P(\text{clock\_fault} \mid \text{trace}) = 0.72$ not a diagnosis?
 2. Which metadata attributes must accompany an empirical observation to establish unambiguous event ordering and evaluate numerical values against operational thresholds?
 3. What does consistency with a Reiter-style system model prove, and what does it fail to prove?
 4. Why is there no single-fault diagnosis for conflict sets $C_1$, $C_2$, and $C_3$, and how are minimal hitting sets computed across them?

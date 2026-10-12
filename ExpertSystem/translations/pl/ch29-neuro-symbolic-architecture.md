@@ -29,13 +29,13 @@ P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1}),\qquad \hat{w}_{1:N}=\operatorname*{a
 Oznaczenia:
 
 - $\mathcal{M}$ to model językowy;
-- $`w_t`$ to token na pozycji $t$, a $`w_1,\dots,w_{t-1}`$ to tokeny poprzedzające;
-- $`P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1})`$ to prawdopodobieństwo kolejnego tokenu w kontekście tokenów poprzednich, w przedziale $[0, 1]$;
-- $N$ to długość sekwencji, a $`w_{1:N}`$ oznacza pełną sekwencję;
-- $`w_{1:t-1}`$ (lub $`w_{<t}`$) oznacza sekwencję tokenów poprzedzających pozycję $t$;
-- $`\prod_{t=1}^{N}`$ oznacza iloczyn prawdopodobieństw tokenów od pozycji 1 do $N$;
-- $`\operatorname*{arg\,max}_{w_{1:N}}`$ wybiera sekwencję o największym iloczynie prawdopodobieństw;
-- $`\hat{w}_{1:N}`$ to wybrana przez model sekwencja wyjściowa.
+- $w_t$ to token na pozycji $t$, a $w_1,\dots,w_{t-1}$ to tokeny poprzedzające;
+- $P_{\mathcal{M}}(w_t\mid w_1,\dots,w_{t-1})$ to prawdopodobieństwo kolejnego tokenu w kontekście tokenów poprzednich, w przedziale $[0, 1]$;
+- $N$ to długość sekwencji, a $w_{1:N}$ oznacza pełną sekwencję;
+- $w_{1:t-1}$ (lub $w_{<t}$) oznacza sekwencję tokenów poprzedzających pozycję $t$;
+- $\prod_{t=1}^{N}$ oznacza iloczyn prawdopodobieństw tokenów od pozycji 1 do $N$;
+- $\operatorname*{arg\,max}_{w_{1:N}}$ wybiera sekwencję o największym iloczynie prawdopodobieństw;
+- $\hat{w}_{1:N}$ to wybrana przez model sekwencja wyjściowa.
 
 Model wyznacza maksimum wiarygodności statystycznej wśród kandydatów, a nie prawdopodobieństwo zgodności tekstu z rzeczywistością.
 
@@ -159,7 +159,7 @@ W systemie **AlphaProof** badacze Google DeepMind wykazali zdolność rozwiązyw
 
 > **Wniosek dla systemów dowodowych:** Rozdział *„LLM proponuje taktykę → formalny rdzeń weryfikuje”* jest standardem niezawodności.
 > 
-> **Granica stosowalności:** Lean 4 tworzono dla matematyków. Dowodzenie trwa sekundy lub minuty. W sterownikach wbudowanych (ISO 26262 ASIL D, DO-178C DAL A) o limitach reakcji $`< 100\,\mu\text{s}`$ jest to niedopuszczalne. Systemy czasu rzeczywistego wymagają wyspecjalizowanych rdzeni symbolicznych o deterministycznym czasie i zerowej alokacji.
+> **Granica stosowalności:** Lean 4 tworzono dla matematyków. Dowodzenie trwa sekundy lub minuty. W sterownikach wbudowanych (ISO 26262 ASIL D, DO-178C DAL A) o limitach reakcji $< 100\,\mu\text{s}$ jest to niedopuszczalne. Systemy czasu rzeczywistego wymagają wyspecjalizowanych rdzeni symbolicznych o deterministycznym czasie i zerowej alokacji.
 
 ### 4.2. Doświadczenia OpenAI: nagrody procesowe (PRM) i granice ukrytego rozumowania
 

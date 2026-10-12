@@ -95,8 +95,8 @@ Komponenten des Graphen:
 
 - $\mathcal{V}$ ist die Menge der Knoten und $\mathcal{E}$ die Menge der gerichteten Kanten mit eindeutigen Identifikatoren;
 - $s,t:\mathcal{E}\to\mathcal{V}$ ordnen jeder Kante ihren Quell- bzw. Zielknoten zu;
-- $`\tau_v:\mathcal{V}\to\mathcal{T}_V`$ und $`\tau_e:\mathcal{E}\to\mathcal{T}_E`$ weisen Knoten und Kanten Typen zu, wobei $`\mathcal{T}_V`$ und $`\mathcal{T}_E`$ die jeweiligen Typmengen bezeichnen;
-- $`\mathcal{A}_v`$ und $`\mathcal{A}_e`$ sind Attribute von Knoten und Kanten, wie etwa kryptografische Hashes, Zeitstempel, Quelltext-Offsets und Messergebnisse;
+- $\tau_v:\mathcal{V}\to\mathcal{T}_V$ und $\tau_e:\mathcal{E}\to\mathcal{T}_E$ weisen Knoten und Kanten Typen zu, wobei $\mathcal{T}_V$ und $\mathcal{T}_E$ die jeweiligen Typmengen bezeichnen;
+- $\mathcal{A}_v$ und $\mathcal{A}_e$ sind Attribute von Knoten und Kanten, wie etwa kryptografische Hashes, Zeitstempel, Quelltext-Offsets und Messergebnisse;
 - $\mathcal{P}$ ist die Menge von Integritätsregeln und logischen Inferenzregeln, während die Klammern alle Komponenten zu einem Tupel bündeln.
 
 Diese Definition beschreibt eine algebraische Struktur, keinen Skalarwert: Jeder Knoten und jede Kante besitzen einen Typ und Attribute, und zwei Knoten können durch mehrere Kanten unterschiedlichen Typs verbunden sein. Typen ermöglichen es beispielsweise, alle Funktionen abzufragen, die ein Register konfigurieren, von dem eine Sicherheitsanforderung abhängt. Das nachfolgende Klassendiagramm illustriert die Kernklassen von Knoten und deren Relationen.
@@ -160,12 +160,12 @@ Die Bezeichner von Klassen und Attributen entsprechen dem formalen Datenschema u
 
 ### 2.1. Typologie der Knoten: Von Systemanforderungen bis zu Hardwareregistern
 
-1. **Normative Knoten** $`V_R\subset\mathcal{V}`$: Abschnitte regulatorischer Standards, normative Festlegungen mit Modalitäten (SHALL, MUST, REQUIRED), Zustände und Übergänge endlicher Automaten (*Finite State Machines*, FSM). Jeder normative Knoten besitzt eine unanfechtbare Quellenverankerung (*evidence grounding*): Datei, exakte Byte-Grenzen des Zitats und den SHA-256-Hash des referenzierten Textfragments.
-2. **Architekturknoten** $`V_A\subset\mathcal{V}`$: Komponenten, Subsysteme, Kommunikationskanäle, Datenbusse, Schnittstellenverträge (Interface Description Languages, Protobuf, SysML-Blöcke).
-3. **Softwareknoten** $`V_C\subset\mathcal{V}`$: Knoten des abstrakten Syntaxbaums (*Abstract Syntax Tree*, AST), d. h. Module, Strukturen, Funktionen, Methoden und Verzweigungspunkte, verknüpft mit Git-Commit-Hash und Zeilenspanne.
-4. **Hardwareknoten** $`V_H\subset\mathcal{V}`$: Periphere Controller (UART, SPI, CAN, Ethernet), Registeradressen im speicherabgebildeten Ein-/Ausgabebereich (*Memory-Mapped I/O*), Bitfelder, Interrupt-Leitungen (IRQ), Pin-Konfigurationen (GPIO).
-5. **Testknoten** $`V_T\subset\mathcal{V}`$: Testfälle, Fehlereinbringungsszenarien (*Fault Injection*), HIL-Prüfvorschriften, Fuzzing-Modelle.
-6. **Evidenzknoten** $`V_E\subset\mathcal{V}`$: Konkrete Testläufe, Berichte zur strukturellen Codeabdeckung (Anweisungs-, Zweig-, MC/DC-Abdeckung), Logikanalysator-Aufzeichnungen, signierte CAN- oder Ethernet-Traces mit Prüfstandszertifikaten.
+1. **Normative Knoten** $V_R\subset\mathcal{V}$: Abschnitte regulatorischer Standards, normative Festlegungen mit Modalitäten (SHALL, MUST, REQUIRED), Zustände und Übergänge endlicher Automaten (*Finite State Machines*, FSM). Jeder normative Knoten besitzt eine unanfechtbare Quellenverankerung (*evidence grounding*): Datei, exakte Byte-Grenzen des Zitats und den SHA-256-Hash des referenzierten Textfragments.
+2. **Architekturknoten** $V_A\subset\mathcal{V}$: Komponenten, Subsysteme, Kommunikationskanäle, Datenbusse, Schnittstellenverträge (Interface Description Languages, Protobuf, SysML-Blöcke).
+3. **Softwareknoten** $V_C\subset\mathcal{V}$: Knoten des abstrakten Syntaxbaums (*Abstract Syntax Tree*, AST), d. h. Module, Strukturen, Funktionen, Methoden und Verzweigungspunkte, verknüpft mit Git-Commit-Hash und Zeilenspanne.
+4. **Hardwareknoten** $V_H\subset\mathcal{V}$: Periphere Controller (UART, SPI, CAN, Ethernet), Registeradressen im speicherabgebildeten Ein-/Ausgabebereich (*Memory-Mapped I/O*), Bitfelder, Interrupt-Leitungen (IRQ), Pin-Konfigurationen (GPIO).
+5. **Testknoten** $V_T\subset\mathcal{V}$: Testfälle, Fehlereinbringungsszenarien (*Fault Injection*), HIL-Prüfvorschriften, Fuzzing-Modelle.
+6. **Evidenzknoten** $V_E\subset\mathcal{V}$: Konkrete Testläufe, Berichte zur strukturellen Codeabdeckung (Anweisungs-, Zweig-, MC/DC-Abdeckung), Logikanalysator-Aufzeichnungen, signierte CAN- oder Ethernet-Traces mit Prüfstandszertifikaten.
 
 ### 2.2. Semantische Klassifikation von Kanten und Integritätsregeln
 
@@ -173,14 +173,14 @@ Die Kanten des Graphen repräsentieren keine beliebigen Assoziationen, sondern f
 
 | Kantentyp | Richtung | Semantische Bedeutung | Anwendungsbereich |
 |---|---|---|---|
-| `allocates_to` | $`V_R\to V_A`$ | Anforderung ist einem Architekturblock zugewiesen | Anforderungsallokation nach ISO 26262-4 [[4]](#src-4) und DO-178C [[2]](#src-2) |
-| `satisfies` | $`V_C\to V_R`$ | Funktion oder Modul implementiert die Anforderung | Rückverfolgbarkeit des Codes auf Low-Level-Anforderungen nach DO-178C |
-| `configures` | $`V_C\to V_H`$ | Code konfiguriert oder liest ein physisches Hardwareregister | Board Support Packages, CMSIS-SVD-Spezifikationen |
-| `verifies` | $`V_T\to V_R`$ | Testfall ist zur Verifikation der Anforderung bestimmt | Verifikation und Validierung nach IEEE 1012 [[5]](#src-5) |
-| `exercises` | $`V_T\to V_C`$ | Test führt einen Codeblock aus und belastet ihn | Strukturelle Abdeckungsanalyse |
-| `mitigates` | $`V_R\to V_{\mathrm{Hazard}}`$ | Anforderung dient als Gegenmaßnahme gegen eine identifizierte Gefahr | Gefahrenanalyse und Risikobewertung |
-| `derived_from` | $`V_R\to V_R`$ | Low-Level-Anforderung ist aus Systemanforderung abgeleitet | Anforderungsherkunft (*requirements lineage*) |
-| `obsoletes` | $`V_R\to V_R`$ | Neue Revision ersetzt oder annulliert eine vorherige | Revisions- und Versionsmanagement von Anforderungen |
+| `allocates_to` | $V_R\to V_A$ | Anforderung ist einem Architekturblock zugewiesen | Anforderungsallokation nach ISO 26262-4 [[4]](#src-4) und DO-178C [[2]](#src-2) |
+| `satisfies` | $V_C\to V_R$ | Funktion oder Modul implementiert die Anforderung | Rückverfolgbarkeit des Codes auf Low-Level-Anforderungen nach DO-178C |
+| `configures` | $V_C\to V_H$ | Code konfiguriert oder liest ein physisches Hardwareregister | Board Support Packages, CMSIS-SVD-Spezifikationen |
+| `verifies` | $V_T\to V_R$ | Testfall ist zur Verifikation der Anforderung bestimmt | Verifikation und Validierung nach IEEE 1012 [[5]](#src-5) |
+| `exercises` | $V_T\to V_C$ | Test führt einen Codeblock aus und belastet ihn | Strukturelle Abdeckungsanalyse |
+| `mitigates` | $V_R\to V_{\mathrm{Hazard}}$ | Anforderung dient als Gegenmaßnahme gegen eine identifizierte Gefahr | Gefahrenanalyse und Risikobewertung |
+| `derived_from` | $V_R\to V_R$ | Low-Level-Anforderung ist aus Systemanforderung abgeleitet | Anforderungsherkunft (*requirements lineage*) |
+| `obsoletes` | $V_R\to V_R$ | Neue Revision ersetzt oder annulliert eine vorherige | Revisions- und Versionsmanagement von Anforderungen |
 
 Die Kantentypen bilden das Vokabular, auf dem automatisierte Analyseabfragen aufbauen. Fazit des Abschnitts: Der Graph integriert typisierte Knoten aus sechs Domänenklassen und typisierte Kanten mit präziser Semantik, während die Regelschnittstelle $\mathcal{P}$ die strukturelle Konsistenz überwacht. Praktische Wirksamkeit entfaltet dieses Modell jedoch erst dann, wenn der Graph kontinuierlich und vollautomatisch konstruiert wird.
 
@@ -380,25 +380,25 @@ Die Anforderungsabdeckung in sicherheitskritischen Systemen unterliegt weitaus s
 Interpretation der Lückenmenge:
 
 - $r$ ist eine Anforderung, $c$ ein Quellcodeknoten, $t$ ein Testfall und $e$ ein Nachweisknoten eines Testlaufs;
-- $`V_R`$, $`V_C`$, $`V_T`$ und $`V_E`$ bezeichnen die Mengen der Anforderungs-, Code-, Test- bzw. Evidenzknoten, während $\rho$ das Ziel-Release darstellt;
+- $V_R$, $V_C$, $V_T$ und $V_E$ bezeichnen die Mengen der Anforderungs-, Code-, Test- bzw. Evidenzknoten, während $\rho$ das Ziel-Release darstellt;
 - Die Pfeile $\xrightarrow{\mathrm{satisfies}}$, $\xrightarrow{\mathrm{verifies}}$ und $``\xrightarrow{\mathrm{produced\_by}}``$ repräsentieren die Relationen „implementiert Anforderung“, „verifiziert Anforderung“ bzw. „Nachweis erzeugt durch Test“;
 - $\mathrm{verdict}(e)=\mathrm{PASS}$ erzwingt ein erfolgreiches Testergebnis und $\mathrm{release}(e)=\rho$ bindet den Nachweis an das aktuelle Release;
 - $\neg\exists$ steht für den Existenzquantor mit Negation („es existiert kein“), $\lor$ für die logische Disjunktion („oder“) und $\land$ für die Konjunktion („und“); die geschweiften Klammern aggregieren alle Anforderungen, welche die Bedingung hinter dem vertikalen Strich erfüllen.
 
-Eine Anforderung fällt in die Lückenmenge $`\mathcal{U}_R`$, wenn entweder kein Quellcode existiert, der sie implementiert, oder kein Testfall vorliegt, der für das aktuelle Release mit dem Urteil `PASS` abgeschlossen wurde. Die Mächtigkeit liegt im Intervall $`[0, \lvert V_R \rvert]`$, und die Anforderungsabdeckung berechnet sich zu $`1-\lvert\mathcal{U}_R\rvert/\lvert V_R \rvert`$, was die Metrik aus [Kapitel 8](ch08-engineering-artifacts-as-data.md) formal präzisiert.
+Eine Anforderung fällt in die Lückenmenge $\mathcal{U}_R$, wenn entweder kein Quellcode existiert, der sie implementiert, oder kein Testfall vorliegt, der für das aktuelle Release mit dem Urteil `PASS` abgeschlossen wurde. Die Mächtigkeit liegt im Intervall $[0, \lvert V_R \rvert]$, und die Anforderungsabdeckung berechnet sich zu $1-\lvert\mathcal{U}_R\rvert/\lvert V_R \rvert$, was die Metrik aus [Kapitel 8](ch08-engineering-artifacts-as-data.md) formal präzisiert.
 
 **Runtime-Steuerung und Kriterium der Verifikationsvollständigkeit:**
-- **Normative Sicherheitsinvariante (ASIL D / DO-178C Level A):** Das System erzwingt strikt $`\lvert\mathcal{U}_R\rvert = 0`$ ($100\%$ verifizierte Anforderungen);
-- **Pipeline-Reaktion:** Gilt $`\lvert\mathcal{U}_R\rvert > 0`$, blockiert der Build-Compiler die Erzeugung des Firmware-Images, emittiert das Fehlertoken `ERR_SAFETY_GAPS_DETECTED` und exportiert einen detaillierten Audit-Bericht mit den fehlenden Verifikationstests.
+- **Normative Sicherheitsinvariante (ASIL D / DO-178C Level A):** Das System erzwingt strikt $\lvert\mathcal{U}_R\rvert = 0$ ($100\%$ verifizierte Anforderungen);
+- **Pipeline-Reaktion:** Gilt $\lvert\mathcal{U}_R\rvert > 0$, blockiert der Build-Compiler die Erzeugung des Firmware-Images, emittiert das Fehlertoken `ERR_SAFETY_GAPS_DETECTED` und exportiert einen detaillierten Audit-Bericht mit den fehlenden Verifikationstests.
 
 **Praktisches Rechenbeispiel:**
-Ein Ziel-Release umfasst $`\lvert V_R \rvert = 150`$ Sicherheitsanforderungen. Das automatisierte Audit des HIL-Prüfstands bestätigt für 148 Anforderungen eine Code-Implementierung sowie erfolgreiche Testnachweise mit dem Urteil `PASS`. Für 2 Anforderungen (`REQ-088` und `REQ-142`) endeten die Tests mit dem Urteil `FAIL`:
+Ein Ziel-Release umfasst $\lvert V_R \rvert = 150$ Sicherheitsanforderungen. Das automatisierte Audit des HIL-Prüfstands bestätigt für 148 Anforderungen eine Code-Implementierung sowie erfolgreiche Testnachweise mit dem Urteil `PASS`. Für 2 Anforderungen (`REQ-088` und `REQ-142`) endeten die Tests mit dem Urteil `FAIL`:
 
 ```math
 \lvert\mathcal{U}_R\rvert = 2, \qquad \mathrm{Coverage} = 1 - \frac{2}{150} \approx 0{,}9867
 ```
 
-Da $`\lvert\mathcal{U}_R\rvert = 2 \ne 0`$, wird die Freigabe des Release-Builds unverzüglich gestoppt, bis sämtliche Abweichungen behoben sind.
+Da $\lvert\mathcal{U}_R\rvert = 2 \ne 0$, wird die Freigabe des Release-Builds unverzüglich gestoppt, bis sämtliche Abweichungen behoben sind.
 
 > [!NOTE]
 > **Deterministisches Autoren-Qualitätsprüftor für Anforderungsabdeckung ($\mathcal{U}_R$)**
@@ -409,7 +409,7 @@ Da $`\lvert\mathcal{U}_R\rvert = 2 \ne 0`$, wird die Freigabe des Release-Builds
 
 ### 4.2. Heuristische Vorhersage fehlender Kanten mittels Adamic-Adar-Index
 
-Die Lückenmenge $`\mathcal{U}_R`$ identifiziert Anforderungen ohne Implementierung oder ohne erfolgreichen Testnachweis, differenziert jedoch nicht, ob die Relation tatsächlich fehlt oder lediglich nicht annotiert wurde. In komplexen Industrieprojekten verifiziert ein Testfall häufig de facto eine Anforderung, doch die Kante `verifies` wurde nie explizit im System hinterlegt. Algorithmen der Kantenprädiktion (*Link Prediction*) ermitteln Kandidaten für solche fehlenden Verknüpfungen.
+Die Lückenmenge $\mathcal{U}_R$ identifiziert Anforderungen ohne Implementierung oder ohne erfolgreichen Testnachweis, differenziert jedoch nicht, ob die Relation tatsächlich fehlt oder lediglich nicht annotiert wurde. In komplexen Industrieprojekten verifiziert ein Testfall häufig de facto eine Anforderung, doch die Kante `verifies` wurde nie explizit im System hinterlegt. Algorithmen der Kantenprädiktion (*Link Prediction*) ermitteln Kandidaten für solche fehlenden Verknüpfungen.
 
 Das Verfahren besitzt ein solides theoretisches Fundament in der Netzwerkanalyse. David Liben-Nowell und Jon Kleinberg wiesen anhand von Koautorschaftsnetzwerken nach, dass graphentopologische Ähnlichkeitsmaße, insbesondere gemeinsame Nachbarschaften, künftige Kanten um ein Vielfaches präziser vorhersagen als der Zufall, wenngleich die absolute Trefferquote moderat bleibt [[8]](#src-8). Pham Thi Thu Thuy und Thinh Thi Thuy erweiterten strukturelle Merkmale um temporale und semantische Dimensionen: Daten aus bibliografischen Repositorien (AMiner, DBLP, Mendeley) wurden in eine gemeinsame Ontologie auf Basis von SKOS (*Simple Knowledge Organization System*) und Dublin Core überführt; auf diesen Features erzielten Random Forests und Graph Neural Networks aus [Kapitel 6](ch06-applied-mathematics-for-expert-systems.md) signifikante Performanzsteigerungen gegenüber klassischen Baseline-Modellen [[9]](#src-9). Während diese Arbeiten wissenschaftliche Kooperationen modellieren, adaptiert das Expertensystem diesen Ansatz für den ingenieurtechnischen Graphen: Für ein Paar (Anforderung, Test) bilden gemeinsame Fachbegriffe, identische Hardwaresignale und -register, gemeinsame Architekturkomponenten sowie die zeitliche Nähe von Commits den Merkmalsraum.
 
@@ -424,13 +424,13 @@ Komponenten des Adamic-Adar-Indexes:
 - $x$ und $y$ sind die Knoten des Kandidatenpaares, beispielsweise eine Anforderung und ein Testfall;
 - $N(v)$ bezeichnet die Nachbarschaft des Knotens $v$ im Graphen: Signale, Register, Architekturblöcke und Glossarbegriffe;
 - $z$ iteriert über die Schnittmenge der gemeinsamen Nachbarn beider Knoten, wobei $\cap$ die mengentheoretische Schnittmenge darstellt;
-- $`\lvert N(z) \rvert`$ ist der Knotengrad des gemeinsamen Nachbarn (seine Kantenanzahl) und $\ln$ der natürliche Logarithmus;
+- $\lvert N(z) \rvert$ ist der Knotengrad des gemeinsamen Nachbarn (seine Kantenanzahl) und $\ln$ der natürliche Logarithmus;
 - $\mathrm{AA}(x, y)$ liefert einen nicht-negativen Ähnlichkeitsscore zur Rangordnung von Kandidatenpaaren, keine Wahrscheinlichkeit.
 
 Ein seltener gemeinsamer Nachbar besitzt ein höheres Gewicht als ein hochgradig vernetzter Knoten: Ein spezifisches Hardwareregister stellt eine starke Evidenz dar, ein ubiquitärer Sammelbegriff hingegen nur schwaches Rauschen.
 
 **Runtime-Steuerung und Schwellenwertfilterung:**
-- **Vorschlagsschwelle ($`\tau_{\mathrm{suggest}} = 1{,}00`$):** Gilt $`\mathrm{AA}(x, y) \ge \tau_{\mathrm{suggest}}`$, wird das Paar (Anforderung, Test) automatisch in die Review-Warteschlange des Ingenieurs (`review_inbox`) eingesteuert — annotiert mit den gemeinsamen strukturellen Markern;
+- **Vorschlagsschwelle ($\tau_{\mathrm{suggest}} = 1{,}00$):** Gilt $\mathrm{AA}(x, y) \ge \tau_{\mathrm{suggest}}$, wird das Paar (Anforderung, Test) automatisch in die Review-Warteschlange des Ingenieurs (`review_inbox`) eingesteuert — annotiert mit den gemeinsamen strukturellen Markern;
 - **Rauschunterdrückung:** Bei $\mathrm{AA}(x, y) < 1{,}00$ wird das Paar verworfen, um eine Überflutung des Ingenieurs mit Falsch-Positiven zu verhindern.
 
 **Praktisches Rechenbeispiel:**
@@ -458,19 +458,19 @@ Quellcode, der sich nicht auf genehmigte Anforderungen zurückführen lässt, st
 
 Notation des nicht rückverfolgbaren Codes:
 
-- $c$ ist der evaluierte Codeknoten, $c'$ ein Quellcodeknoten, der die Anforderung $r$ implementiert, während $`V_C`$ und $`V_R`$ die Mengen der Quellcode- bzw. Anforderungsknoten bezeichnen;
+- $c$ ist der evaluierte Codeknoten, $c'$ ein Quellcodeknoten, der die Anforderung $r$ implementiert, während $V_C$ und $V_R$ die Mengen der Quellcode- bzw. Anforderungsknoten bezeichnen;
 - $\xrightarrow{\mathrm{satisfies}}$ markiert die Implementierungsrelation und $\xrightarrow{\mathrm{calls}^{*}}$ bezeichnet den gerichteten Aufrufpfad von $c'$ zu $c$;
 - Der Stern in $\mathrm{calls}^{*}$ symbolisiert die reflexiv-transitive Hülle: Der Aufrufpfad kann null Schritte (Identität $c'=c$), einen direkten Funktionsaufruf oder eine Kette transitiver Aufrufe umfassen;
 - $\neg\exists$ besagt, dass kein Knoten existiert, der den geforderten Pfad schließt; die Mengenklammern bündeln alle isolierten Knoten $c$.
 
-Das Resultat ist die Menge jener Funktionen, zu denen von keiner anforderungsbasierten Implementierung ein Ausführungspfad existiert; ihre Mächtigkeit liegt im Bereich $`[0, \lvert V_C \rvert]`$.
+Das Resultat ist die Menge jener Funktionen, zu denen von keiner anforderungsbasierten Implementierung ein Ausführungspfad existiert; ihre Mächtigkeit liegt im Bereich $[0, \lvert V_C \rvert]$.
 
 **Runtime-Steuerung und statisches Analyse-Gate:**
-- **Zertifizierungsvorgabe nach DO-178C (Level A/B):** Verlangt zwingend $`\lvert\mathcal{C}_{\mathrm{untraced}}\rvert = 0`$;
-- **Build-Pipeline-Aktion:** Das Vorhandensein eines Symbols in $`\mathcal{C}_{\mathrm{untraced}}`$ bricht den Linker-Vorgang mit dem Fehler `-Werror=untraced-symbol` ab. Der Entwickler muss den toten Code entweder physisch eliminieren oder eine abgeleitete Sicherheitsanforderung (*Derived Requirement*) definieren, die durch eine FMEA abzusichern ist.
+- **Zertifizierungsvorgabe nach DO-178C (Level A/B):** Verlangt zwingend $\lvert\mathcal{C}_{\mathrm{untraced}}\rvert = 0$;
+- **Build-Pipeline-Aktion:** Das Vorhandensein eines Symbols in $\mathcal{C}_{\mathrm{untraced}}$ bricht den Linker-Vorgang mit dem Fehler `-Werror=untraced-symbol` ab. Der Entwickler muss den toten Code entweder physisch eliminieren oder eine abgeleitete Sicherheitsanforderung (*Derived Requirement*) definieren, die durch eine FMEA abzusichern ist.
 
 **Praktisches Rechenbeispiel:**
-Die statische Analyse einer Bremssteuerungs-Codebasis ($`\lvert V_C \rvert = 84`$ Funktionen) deckt auf, dass die Funktion `dbg_force_override()` über keinerlei Aufrufpfad von einer Sicherheitsanforderung erreichbar ist ($`\lvert\mathcal{C}_{\mathrm{untraced}}\rvert = 1`$). Das Kompilieren des Produktions-Binaries wird blockiert, bis die Debug-Funktion vollständig aus dem Release-Zweig entfernt wurde.
+Die statische Analyse einer Bremssteuerungs-Codebasis ($\lvert V_C \rvert = 84$ Funktionen) deckt auf, dass die Funktion `dbg_force_override()` über keinerlei Aufrufpfad von einer Sicherheitsanforderung erreichbar ist ($\lvert\mathcal{C}_{\mathrm{untraced}}\rvert = 1$). Das Kompilieren des Produktions-Binaries wird blockiert, bis die Debug-Funktion vollständig aus dem Release-Zweig entfernt wurde.
 
 > [!NOTE]
 > **Autorenalgorithmus zur Erkennung unrückverfolgbaren Codes über transitive Hüllen ($\mathcal{C}_{\mathrm{untraced}}$)**
@@ -490,16 +490,16 @@ Eine der komplexesten Herausforderungen in Entwicklungsprojekten ist die präzis
 Bedeutung der Propagationserreichbarkeit:
 
 - $v^{*}$ ist der geänderte Ausgangsknoten, $u$ ein beliebiger Knoten des Graphen und $\mathcal{V}$ die Gesamtmenge aller Knoten;
-- $`v^{*}\leadsto_{\delta}u`$ definiert die Existenz eines Pfades von $v^{*}$ nach $u$, wobei $\delta$ die zulässige Traversierungsrichtung für jeden Kantentyp festlegt;
+- $v^{*}\leadsto_{\delta}u$ definiert die Existenz eines Pfades von $v^{*}$ nach $u$, wobei $\delta$ die zulässige Traversierungsrichtung für jeden Kantentyp festlegt;
 - $\mathrm{Impact}(v^{*})$ ist die Menge aller unter diesen Regeln erreichbaren Knoten, einschließlich des Ursprungsknotens bei Pfadlänge null;
-- $`\{v^{*}\}`$ bezeichnet die einelementige Menge des modifizierten Knotens; die Mengenklammern erfassen alle transitiv betroffenen Entitäten.
+- $\{v^{*}\}$ bezeichnet die einelementige Menge des modifizierten Knotens; die Mengenklammern erfassen alle transitiv betroffenen Entitäten.
 
 **Steuerung von Regressionstests und CI/CD-Optimierung:**
-- Gilt das Verhältnis $`\lvert\mathrm{Impact}(v^{*})\rvert / \lvert\mathcal{V}\rvert \le 0{,}15`$, aktiviert die Pipeline den Modus des **selektiven Regressionstestens**: Es werden ausschließlich Tests aus der Teilmenge $`\mathrm{Impact}(v^{*}) \cap V_T`$ ausgeführt, was die Testdauer drastisch reduziert;
-- Gilt $`\lvert\mathrm{Impact}(v^{*})\rvert / \lvert\mathcal{V}\rvert > 0{,}15`$, wird die Modifikation als architektonischer Eingriff eingestuft und ein vollständiger Regressionslauf über die gesamte Testsuite veranlasst.
+- Gilt das Verhältnis $\lvert\mathrm{Impact}(v^{*})\rvert / \lvert\mathcal{V}\rvert \le 0{,}15$, aktiviert die Pipeline den Modus des **selektiven Regressionstestens**: Es werden ausschließlich Tests aus der Teilmenge $\mathrm{Impact}(v^{*}) \cap V_T$ ausgeführt, was die Testdauer drastisch reduziert;
+- Gilt $\lvert\mathrm{Impact}(v^{*})\rvert / \lvert\mathcal{V}\rvert > 0{,}15$, wird die Modifikation als architektonischer Eingriff eingestuft und ein vollständiger Regressionslauf über die gesamte Testsuite veranlasst.
 
 **Praktisches Rechenbeispiel:**
-In einem Getriebesteuerungssystem ($`\lvert\mathcal{V}\rvert = 1\,200`$ Knoten) wird der Quellcode des CAN-Treibers modifiziert ($v^*$). Die Graphenanalyse identifiziert $`\lvert\mathrm{Impact}(v^*)\rvert = 18`$ betroffene Knoten (2 Schnittstellendateien und 16 Unit-Tests):
+In einem Getriebesteuerungssystem ($\lvert\mathcal{V}\rvert = 1\,200$ Knoten) wird der Quellcode des CAN-Treibers modifiziert ($v^*$). Die Graphenanalyse identifiziert $\lvert\mathrm{Impact}(v^*)\rvert = 18$ betroffene Knoten (2 Schnittstellendateien und 16 Unit-Tests):
 
 ```math
 \frac{\lvert\mathrm{Impact}(v^*)\rvert}{\lvert\mathcal{V}\rvert} = \frac{18}{1\,200} = 0{,}015 \le 0{,}15
@@ -1012,7 +1012,7 @@ Durchgängige Rückverfolgbarkeit in der funktionalen Sicherheit (ASPICE v4.0 / 
 - **Mykola Fedchyk:**  
   *„Linus, der Ansatz von `git bisect` ist rein reaktiv: Um eine Regression zu finden, muss der Fehler bereits aufgetreten sein, und ein Test, der ihn reproduziert, muss bereits geschrieben und ausgeführt worden sein. In der Avionik oder funktionalen Sicherheit von Kraftfahrzeugen können wir es uns nicht leisten, einen Millionen Euro teuren HIL-Prüfstand zu zerstören oder auf das Versagen eines Bremsaktors auf der Autobahn zu warten.  
   Unsere graphenbasierte Auswirkungsanalyse (Change Impact Analysis) arbeitet prädiktiv und statisch. Wenn ein Ingenieur eine einzelne Bitshift-Konstante in einer CMSIS-SVD-Registerbeschreibung ändert, sieht ein herkömmlicher `git diff` nur eine geänderte Textzeile.  
-  Der Engineering Knowledge Graph berechnet die transitive Hülle $`\mathrm{Impact}(c)`$ in Millisekunden: Er zeigt sofort an, dass diese Bitänderung vier Peripherietreiber betrifft, zwei Architekturentscheidungen (ADRs) entwertet, eine ASIL-D-Sicherheitsanforderung verletzt und die erneute Ausführung von 18 spezifischen HIL-Tests erfordert, noch bevor der Pull-Request in den Hauptzweig gemergt wird. Wir ersetzen Git nicht – wir verleihen dem System semantische Sehkraft, die einem reinen Text-Diff schlicht fehlt.“*
+  Der Engineering Knowledge Graph berechnet die transitive Hülle $\mathrm{Impact}(c)$ in Millisekunden: Er zeigt sofort an, dass diese Bitänderung vier Peripherietreiber betrifft, zwei Architekturentscheidungen (ADRs) entwertet, eine ASIL-D-Sicherheitsanforderung verletzt und die erneute Ausführung von 18 spezifischen HIL-Tests erfordert, noch bevor der Pull-Request in den Hauptzweig gemergt wird. Wir ersetzen Git nicht – wir verleihen dem System semantische Sehkraft, die einem reinen Text-Diff schlicht fehlt.“*
 
 **Synthese und wissenschaftliches Fazit des Kapitels:**  
 Der Engineering Knowledge Graph erhebt Beziehungen zwischen Anforderungen, Code, Registern und Testläufen zu formal verifizierbaren Fakten mit kryptografischer Nachweiskette. Die Closed World Assumption schließt blinde Flecken der Verifikation systematisch aus und stellt die automatisierte Konformität mit strengsten Sicherheitsnormen sicher, ohne den Softwareentwicklungsprozess bürokratisch zu lähmen.

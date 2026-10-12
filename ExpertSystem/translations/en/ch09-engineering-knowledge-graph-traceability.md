@@ -381,7 +381,7 @@ Reading the verification gap set:
 
 - $r$ is a requirement node, $c$ is a code entity, $t$ is a test routine, and $e$ represents a concrete test run evidence record;
 - $V_R$, $V_C$, $V_T$, and $V_E$ denote the sets of requirement, code, test, and evidence nodes respectively, while $\rho$ designates the active target release baseline;
-- Directed arrows $\xrightarrow{\mathrm{satisfies}}$, $\xrightarrow{\mathrm{verifies}}$, and $`\xrightarrow{\mathrm{produced\_by}}`$ denote implementation, verification intention, and execution provenance respectively;
+- Directed arrows $\xrightarrow{\mathrm{satisfies}}$, $\xrightarrow{\mathrm{verifies}}$, and $\xrightarrow{\mathrm{produced\_by}}$ denote implementation, verification intention, and execution provenance respectively;
 - $\mathrm{verdict}(e)=\mathrm{PASS}$ enforces that the execution terminated successfully, and $\mathrm{release}(e)=\rho$ binds the execution record to the active target release;
 - Symbols $\neg\exists$, $\lor$, and $\land$ represent logical negation ("there does not exist"), disjunction ("or"), and conjunction ("and"); the enclosing set comprehension collects all requirements failing either implementation or verified execution.
 
@@ -1004,7 +1004,7 @@ End-to-end traceability in functional safety engineering (ASPICE v4.0 / ISO 2626
 - **Mykola Fedchyk:**  
   *“Linus, `git bisect` is inherently reactive: to identify a regression, the failure must have already occurred, and an automated test capable of triggering it must already be committed and executed. In avionics or automotive safety, we cannot afford to destroy a million-dollar HIL rig or await a brake actuator failure on a highway.  
   Our graph-based Change Impact Analysis (CIA) is predictive and static. When an engineer modifies a single bit-shift constant in a CMSIS-SVD register definition, standard `git diff` perceives only a changed line of text.  
-  The Engineering Knowledge Graph computes the transitive closure $`\mathrm{Impact}(c)`$ in milliseconds: it instantly flags that this bit change impacts four peripheral drivers, invalidates two architectural decision records (ADRs), violates an ASIL-D safety requirement, and necessitates the execution of 18 specific HIL test cases before the pull request can be merged into main. We do not replace Git—we provide semantic vision that raw text diffs simply cannot see.”*
+  The Engineering Knowledge Graph computes the transitive closure $\mathrm{Impact}(c)$ in milliseconds: it instantly flags that this bit change impacts four peripheral drivers, invalidates two architectural decision records (ADRs), violates an ASIL-D safety requirement, and necessitates the execution of 18 specific HIL test cases before the pull request can be merged into main. We do not replace Git—we provide semantic vision that raw text diffs simply cannot see.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
 The engineering knowledge graph elevates relationships between requirements, code, registers, and test executions into formally verifiable facts backed by a cryptographic chain of custody. Enforcing the Closed World Assumption eliminates verification blind spots, ensuring automated compliance with rigorous functional safety standards without imposing bureaucratic friction on the software engineering process.

@@ -12,9 +12,9 @@
 
 In safety-critical autonomous systems and mobile robotics (ISO 26262 ASIL D, IEC 61508 SIL 3, DO-178C DAL A), directly coupling neural network perception models or multimodal AI to physical actuators inevitably leads to catastrophic accidents. The physical consequences of a robot's actions (emergency braking, payload release, sharp rudder deflection) are irreversible and expend real kinetic energy. At a control loop frequency of $f = 50\ \text{Hz}$, even a negligible classification or detection error probability of $p = 10^{-3}$ guarantees a hazardous command within an average of $T_{\text{err}} = 1/(p \cdot f) = 20\ \text{seconds}$ of flight or motion.
 
-This appendix resolves this dilemma by introducing a fundamental principle of cyber-physical safety: the strict separation of probabilistic sensory intelligence from deterministic action admission. The author refutes the engineering illusion of the "Human-on-the-Loop" (HOTL) paradigm due to the physical latency of the radio link and human neurophysiology ($`T_{\Sigma} = 390 - 780\,\text{ms}`$, $`S_{\mathrm{react}} \approx 19.5 - 39.0\,\text{m}`$), necessitating a transition to a strictly onboard Safe State ontology and emergency sagas (*Ballistic Jettison*, *Dead Reckoning RTB*, *Safe Zeroize*).
+This appendix resolves this dilemma by introducing a fundamental principle of cyber-physical safety: the strict separation of probabilistic sensory intelligence from deterministic action admission. The author refutes the engineering illusion of the "Human-on-the-Loop" (HOTL) paradigm due to the physical latency of the radio link and human neurophysiology ($T_{\Sigma} = 390 - 780\,\text{ms}$, $S_{\mathrm{react}} \approx 19.5 - 39.0\,\text{m}$), necessitating a transition to a strictly onboard Safe State ontology and emergency sagas (*Ballistic Jettison*, *Dead Reckoning RTB*, *Safe Zeroize*).
 
-A three-tier architecture featuring an **Epistemic Governor** is proposed and examined in detail, wherein action admission is formalized as a deductive proof over Datalog rules in static memory without dynamic `malloc` allocation and backed by defense against GNSS spoofing; a research testbed for synchronous precision physical state spectroscopy based on Infineon TLE90xx and AURIX TC49x (isoUART 2.0); an autonomous Popperian Red Teamer deployed on a Seeed Studio reServer Industrial J501 (NVIDIA Jetson AGX Orin 64GB) and Xilinx Virtex FPGA with a hardware disposition gate ($`T_{\mathrm{disp}} < 100\,\text{ns}`$, $`\mathrm{ZHR} = 1.00`$); hardware and software protection of the sensor front-end against Fail-Open anomalies (filtering jagged matrices, IEEE 754 NaN/Inf anomalies, and EMC noise floor bounds), formal action contracts with precondition and postcondition verification, and methodologies for detecting interface defects prior to field trials at the proving ground.
+A three-tier architecture featuring an **Epistemic Governor** is proposed and examined in detail, wherein action admission is formalized as a deductive proof over Datalog rules in static memory without dynamic `malloc` allocation and backed by defense against GNSS spoofing; a research testbed for synchronous precision physical state spectroscopy based on Infineon TLE90xx and AURIX TC49x (isoUART 2.0); an autonomous Popperian Red Teamer deployed on a Seeed Studio reServer Industrial J501 (NVIDIA Jetson AGX Orin 64GB) and Xilinx Virtex FPGA with a hardware disposition gate ($T_{\mathrm{disp}} < 100\,\text{ns}$, $\mathrm{ZHR} = 1.00$); hardware and software protection of the sensor front-end against Fail-Open anomalies (filtering jagged matrices, IEEE 754 NaN/Inf anomalies, and EMC noise floor bounds), formal action contracts with precondition and postcondition verification, and methodologies for detecting interface defects prior to field trials at the proving ground.
 
 ---
 
@@ -85,19 +85,19 @@ In contemporary debates concerning autonomous unmanned systems, mobile robotics,
 
 However, from the perspectives of fundamental physics, kinematics, and neurophysiology, this assumption represents a perilous engineering delusion. In the terminal phase of motion (a drone diving at high velocity, high-speed obstacle closing, or emergency evasive maneuvering of a ground vehicle), video compression latency, radio propagation delays, and human cognitive reaction times render external intervention physically too late.
 
-The aggregate system reaction time $`T_{\Sigma}`$ under a human-on-the-loop architecture comprises five serial physical delays:
+The aggregate system reaction time $T_{\Sigma}$ under a human-on-the-loop architecture comprises five serial physical delays:
 
 ```math
 T_{\Sigma} = t_{\mathrm{cam\_encode}} + t_{\mathrm{link\_down}} + t_{\mathrm{cogn}} + t_{\mathrm{link\_up}} + t_{\mathrm{actuator}}
 ```
 
 where:
-- $`T_{\Sigma}`$ is the total reaction time of the supervisory system from the optical manifestation of a hazardous anomaly until physical displacement of aerodynamic control surfaces or brake pads, in seconds ($\text{s}$);
-- $`t_{\mathrm{cam\_encode}}`$ is the frame capture, exposure, and hardware video compression latency (H.264/H.265/AV1), typically $`20 - 40\,\text{ms}`$;
-- $`t_{\mathrm{link\_down}}`$ is the digital radio downlink transmission latency (accounting for packet buffering, repeaters, and electronic warfare interference), typically $`60 - 150\,\text{ms}`$;
-- $`t_{\mathrm{cogn}}`$ is the human operator cognitive latency to visually discern the AI hallucination and actuate the emergency abort button, typically $`250 - 450\,\text{ms}`$;
-- $`t_{\mathrm{link\_up}}`$ is the command uplink transmission latency across jammed RF channels, typically $`40 - 100\,\text{ms}`$;
-- $`t_{\mathrm{actuator}}`$ is the actuator mechanical response time to deflect rudders or energize braking valves, typically $`20 - 40\,\text{ms}`$.
+- $T_{\Sigma}$ is the total reaction time of the supervisory system from the optical manifestation of a hazardous anomaly until physical displacement of aerodynamic control surfaces or brake pads, in seconds ($\text{s}$);
+- $t_{\mathrm{cam\_encode}}$ is the frame capture, exposure, and hardware video compression latency (H.264/H.265/AV1), typically $20 - 40\,\text{ms}$;
+- $t_{\mathrm{link\_down}}$ is the digital radio downlink transmission latency (accounting for packet buffering, repeaters, and electronic warfare interference), typically $60 - 150\,\text{ms}$;
+- $t_{\mathrm{cogn}}$ is the human operator cognitive latency to visually discern the AI hallucination and actuate the emergency abort button, typically $250 - 450\,\text{ms}$;
+- $t_{\mathrm{link\_up}}$ is the command uplink transmission latency across jammed RF channels, typically $40 - 100\,\text{ms}$;
+- $t_{\mathrm{actuator}}$ is the actuator mechanical response time to deflect rudders or energize braking valves, typically $20 - 40\,\text{ms}$.
 
 Summing these discrete components yields the representative range of total supervisory latency:
 
@@ -105,13 +105,13 @@ Summing these discrete components yields the representative range of total super
 T_{\Sigma} \in [390\,\text{ms}, \ 780\,\text{ms}].
 ```
 
-The kinematic consequence of this latency determines the uncontrolled traverse distance of the platform $`S_{\mathrm{react}}`$ during the terminal approach:
+The kinematic consequence of this latency determines the uncontrolled traverse distance of the platform $S_{\mathrm{react}}$ during the terminal approach:
 
 ```math
 S_{\mathrm{react}} = v \cdot T_{\Sigma}
 ```
 
-where $`v`$ is the closing velocity of the platform toward the target or terrain surface, in meters per second ($\text{m/s}$). At a representative terminal dive or maneuvering velocity $`v = 180\,\text{km/h} = 50\,\text{m/s}`$:
+where $v$ is the closing velocity of the platform toward the target or terrain surface, in meters per second ($\text{m/s}$). At a representative terminal dive or maneuvering velocity $v = 180\,\text{km/h} = 50\,\text{m/s}$:
 
 ```math
 S_{\mathrm{react}} = 50\,\text{m/s} \times [0.39 \dots 0.78]\,\text{s} \approx 19.5 \dots 39.0\,\text{meters}.
@@ -122,13 +122,13 @@ From this follows an unequivocal engineering conclusion: if a computer vision ne
 #### 1.4.1. Actionable Closed Loop of Supervisory Latency Dimensioning
 
 1. **Control Flow & Runtime Decisions:**
-   The onboard flight dispatcher executing within the safety microcontroller continuously evaluates the current distance to destination $`d_{\mathrm{target}}`$ against a dynamic autonomy threshold:
-   $`d_{\mathrm{crit}} = v \cdot T_{\Sigma}^{\max} + \delta_{\mathrm{margin}}`$. As soon as $`d_{\mathrm{target}} \le d_{\mathrm{crit}}`$, the system unconditionally disables dependency on the radio datalink and transitions into autonomous-veto-only mode (`AUTONOMOUS_VETO_ONLY`). Remote operator commands can no longer serve as an assurance mechanism: the onboard logic core unilaterally vetoes execution in the absence of a cryptographic proof of target or upon violation of deontic prohibitions.
+   The onboard flight dispatcher executing within the safety microcontroller continuously evaluates the current distance to destination $d_{\mathrm{target}}$ against a dynamic autonomy threshold:
+   $d_{\mathrm{crit}} = v \cdot T_{\Sigma}^{\max} + \delta_{\mathrm{margin}}$. As soon as $d_{\mathrm{target}} \le d_{\mathrm{crit}}$, the system unconditionally disables dependency on the radio datalink and transitions into autonomous-veto-only mode (`AUTONOMOUS_VETO_ONLY`). Remote operator commands can no longer serve as an assurance mechanism: the onboard logic core unilaterally vetoes execution in the absence of a cryptographic proof of target or upon violation of deontic prohibitions.
 2. **Hardware Dimensioning:**
-   The onboard deterministic verifier on the safety microcontroller (Zephyr RTOS) or FPGA must reach admission verdicts with latency $`T_{\mathrm{onboard}} \le 2\,\text{ms}`$, two orders of magnitude faster than the RF link. This mandates guaranteed sensor sampling at $`f_{\mathrm{sensor}} \ge 100\,\text{Hz}`$, microsecond-accurate hardware timer allocation, and local residency of spatial geofence ontologies directly in on-chip SRAM of no less than $`128\,\text{KB}`$.
+   The onboard deterministic verifier on the safety microcontroller (Zephyr RTOS) or FPGA must reach admission verdicts with latency $T_{\mathrm{onboard}} \le 2\,\text{ms}$, two orders of magnitude faster than the RF link. This mandates guaranteed sensor sampling at $f_{\mathrm{sensor}} \ge 100\,\text{Hz}$, microsecond-accurate hardware timer allocation, and local residency of spatial geofence ontologies directly in on-chip SRAM of no less than $128\,\text{KB}$.
 3. **Worked Numerical Example:**
-   A high-speed unmanned aerial platform navigates at $`v = 50\,\text{m/s}`$. Under electronic warfare interference, downlink video delay is $`t_{\mathrm{link\_down}} = 110\,\text{ms}`$, camera compression $`t_{\mathrm{cam\_encode}} = 25\,\text{ms}`$, human cognitive latency $`t_{\mathrm{cogn}} = 300\,\text{ms}`$, uplink command latency $`t_{\mathrm{link\_up}} = 65\,\text{ms}`$, and actuator deflection $`t_{\mathrm{actuator}} = 25\,\text{ms}`$. The total latency is:
-   $`T_{\Sigma} = 25 + 110 + 300 + 65 + 25 = 525\,\text{ms} = 0.525\,\text{s}`$. The uncontrolled travel distance is $`S_{\mathrm{react}} = 50 \cdot 0.525 = 26.25\,\text{m}`$. If a hallucination occurs at altitude $`h = 24\,\text{m} < 26.25\,\text{m}`$, the remote operator presses the abort switch after impact. In contrast, the onboard Datalog engine derives a maneuver prohibition within $`45\,\mu\text{s}`$, the hardware logic gate suppresses the command in $`5\,\text{ns}`$, and control surfaces are forcefully deflected into a climb at $`23.8\,\text{m}`$, completely averting disaster.
+   A high-speed unmanned aerial platform navigates at $v = 50\,\text{m/s}$. Under electronic warfare interference, downlink video delay is $t_{\mathrm{link\_down}} = 110\,\text{ms}$, camera compression $t_{\mathrm{cam\_encode}} = 25\,\text{ms}$, human cognitive latency $t_{\mathrm{cogn}} = 300\,\text{ms}$, uplink command latency $t_{\mathrm{link\_up}} = 65\,\text{ms}$, and actuator deflection $t_{\mathrm{actuator}} = 25\,\text{ms}$. The total latency is:
+   $T_{\Sigma} = 25 + 110 + 300 + 65 + 25 = 525\,\text{ms} = 0.525\,\text{s}$. The uncontrolled travel distance is $S_{\mathrm{react}} = 50 \cdot 0.525 = 26.25\,\text{m}$. If a hallucination occurs at altitude $h = 24\,\text{m} < 26.25\,\text{m}$, the remote operator presses the abort switch after impact. In contrast, the onboard Datalog engine derives a maneuver prohibition within $45\,\mu\text{s}$, the hardware logic gate suppresses the command in $5\,\text{ns}$, and control surfaces are forcefully deflected into a climb at $23.8\,\text{m}$, completely averting disaster.
 
 ### 1.5. Deterministic Safe State Ontology and Emergency Saga Selection Tree
 
@@ -158,11 +158,11 @@ The selection of a safety saga is a logical deduction performed by the expert co
 #### 1.5.1. Actionable Closed Loop of Emergency Saga Selection
 
 1. **Control Flow & Runtime Decisions:**
-   The expert system continuously evaluates the spatial predicate `current_zone(ZoneID, HostilityLevel)` and remaining energy budget $`E_{\mathrm{rem}}`$. When an irreconcilable epistemic deficit arises (such as irreconcilable divergence between GNSS and visual odometry), the Datalog engine fires the transaction corresponding to the selected saga. Every saga step represents an inviolable contract with postcondition verification: when transitioning to Saga 3, the controller validates the status of pin `ZEROIZE_DONE` before cutting power regulator rails.
+   The expert system continuously evaluates the spatial predicate `current_zone(ZoneID, HostilityLevel)` and remaining energy budget $E_{\mathrm{rem}}$. When an irreconcilable epistemic deficit arises (such as irreconcilable divergence between GNSS and visual odometry), the Datalog engine fires the transaction corresponding to the selected saga. Every saga step represents an inviolable contract with postcondition verification: when transitioning to Saga 3, the controller validates the status of pin `ZEROIZE_DONE` before cutting power regulator rails.
 2. **Hardware Dimensioning:**
-   Retention of cryptographic credentials and critical ontologies is isolated in Secure Storage (hardware-accelerated AES-GCM in Secure Enclave), wired to an emergency hardware zeroization bus that discharges in $`T_{\mathrm{zeroize}} \le 50\,\mu\text{s}`$ powered by a dedicated $`100\,\mu\text{F}`$ backup capacitor.
+   Retention of cryptographic credentials and critical ontologies is isolated in Secure Storage (hardware-accelerated AES-GCM in Secure Enclave), wired to an emergency hardware zeroization bus that discharges in $T_{\mathrm{zeroize}} \le 50\,\mu\text{s}$ powered by a dedicated $100\,\mu\text{F}$ backup capacitor.
 3. **Worked Numerical Example:**
-   A UAV suffers total camera blinding and odometry divergence at altitude $`h = 45\,\text{m}`$. The map ontology classifies the coordinate sector as `HostileZone` in critical proximity to the forward line of own troops ($`d_{\mathrm{front}} = 1200\,\text{m}`$, safe altitude threshold $`h_{\mathrm{safe}} = 80\,\text{m}`$). Because $`h < h_{\mathrm{safe}}`$, the decision tree triggers Saga 3: assertion of `DISARM`, EEPROM routing table scrub within $`18\,\mu\text{s}`$, eFuse blow in $`40\,\mu\text{s}`$, and servo command to $-15^\circ$ pitch for controlled descent into an empty sector without risk of key or software extraction.
+   A UAV suffers total camera blinding and odometry divergence at altitude $h = 45\,\text{m}$. The map ontology classifies the coordinate sector as `HostileZone` in critical proximity to the forward line of own troops ($d_{\mathrm{front}} = 1200\,\text{m}$, safe altitude threshold $h_{\mathrm{safe}} = 80\,\text{m}$). Because $h < h_{\mathrm{safe}}$, the decision tree triggers Saga 3: assertion of `DISARM`, EEPROM routing table scrub within $18\,\mu\text{s}$, eFuse blow in $40\,\mu\text{s}$, and servo command to $-15^\circ$ pitch for controlled descent into an empty sector without risk of key or software extraction.
 
 ### 1.6. Architectural Roadmap: Deterministic Admission Gate
 
@@ -285,19 +285,19 @@ flowchart TD
 
 #### 2.2.1. Mathematical Formalism of Proof of Physical Action
 
-A physical action $`A`$ (initiating a terminal dive, releasing a payload, energizing an ignition circuit, or abrupt evasive maneuvering) is executed **if and only if** the Expert System synthesizes a formal deductive proof over the active fact base:
+A physical action $A$ (initiating a terminal dive, releasing a payload, energizing an ignition circuit, or abrupt evasive maneuvering) is executed **if and only if** the Expert System synthesizes a formal deductive proof over the active fact base:
 
 ```math
 \mathrm{PermitAction}(A) \iff \mathrm{KB} \cup \mathrm{ObservedFacts} \vdash_{\mathrm{Datalog}} \mathrm{Eligible}(A) \wedge \neg\mathrm{Conflict}(A)
 ```
 
 where:
-- $`\mathrm{PermitAction}(A)`$ is the boolean admission predicate governing physical execution of action $`A`$;
-- $`\mathrm{KB}`$ is the normative mission knowledge base defining geospatial geofences, Rules of Engagement (RoE), and functional safety mandates;
-- $`\mathrm{ObservedFacts}`$ is the set of validated sensory facts that have passed hardware plausibility audits;
-- $`\vdash_{\mathrm{Datalog}}`$ is the deductive entailment operator in Datalog with negation stratified across cycles;
-- $`\mathrm{Eligible}(A)`$ is the predicate certifying satisfaction of all positive qualification criteria;
-- $`\neg\mathrm{Conflict}(A)`$ is the invariant asserting the absence of active defeaters (exceptions or deontic prohibitions).
+- $\mathrm{PermitAction}(A)$ is the boolean admission predicate governing physical execution of action $A$;
+- $\mathrm{KB}$ is the normative mission knowledge base defining geospatial geofences, Rules of Engagement (RoE), and functional safety mandates;
+- $\mathrm{ObservedFacts}$ is the set of validated sensory facts that have passed hardware plausibility audits;
+- $\vdash_{\mathrm{Datalog}}$ is the deductive entailment operator in Datalog with negation stratified across cycles;
+- $\mathrm{Eligible}(A)$ is the predicate certifying satisfaction of all positive qualification criteria;
+- $\neg\mathrm{Conflict}(A)$ is the invariant asserting the absence of active defeaters (exceptions or deontic prohibitions).
 
 The deductive admission rule for kinetic or high-energy physical action is formalized as a closed Horn clause in Datalog:
 
@@ -325,10 +325,10 @@ The expert system continuously cross-examines sensory facts against fundamental 
 ```
 
 where:
-- $`\Delta \vec{r}_{\mathrm{GPS}}`$ is the spatial displacement vector reported by the satellite receiver over interval $\Delta t$, in meters ($\text{m}$);
-- $`\vec{v}_{\mathrm{IMU}}`$ is the true platform velocity vector integrated from Inertial Measurement Unit (IMU) gyroscopes and accelerometers, in meters per second ($\text{m/s}$);
-- $`\epsilon_{\mathrm{drift}}`$ is the permissible static sensor channel error, typically $`1.5 - 3.0\,\text{m}`$;
-- $`\kappa`$ is the dead-reckoning drift divergence coefficient, in meters per second ($\text{m/s}$).
+- $\Delta \vec{r}_{\mathrm{GPS}}$ is the spatial displacement vector reported by the satellite receiver over interval $\Delta t$, in meters ($\text{m}$);
+- $\vec{v}_{\mathrm{IMU}}$ is the true platform velocity vector integrated from Inertial Measurement Unit (IMU) gyroscopes and accelerometers, in meters per second ($\text{m/s}$);
+- $\epsilon_{\mathrm{drift}}$ is the permissible static sensor channel error, typically $1.5 - 3.0\,\text{m}$;
+- $\kappa$ is the dead-reckoning drift divergence coefficient, in meters per second ($\text{m/s}$).
 
 If the observed divergence exceeds the kinematic consistency threshold, the Epistemic Governor executes the following transactional actions:
 1. Deterministically derives the fact `sensor_status(gps, falsified)` and evicts GPS coordinates from working memory.
@@ -339,13 +339,13 @@ If the observed divergence exceeds the kinematic consistency threshold, the Epis
 1. **Control Flow & Runtime Decisions:**
    Upon detecting a violation of kinematic consistency, the Datalog engine asserts `GPS_INVALID` in a single resolution step. The power gate suppresses generation of the `ProofToken`. The flight controller is transitioned into heading-and-optical-flow mode, barring stochastic dive commands.
 2. **Hardware Dimensioning:**
-   Deterministic Datalog inference in static microcontroller RAM (without `malloc`) completes in $`T_{\mathrm{infer}} \le 50\,\mu\text{s}`$ for a knowledge base of 150 rules and 500 facts. This is three orders of magnitude faster than NPU neural inference ($`15 - 30\,\text{ms}`$), guaranteeing response within a single hard real-time timer cycle.
+   Deterministic Datalog inference in static microcontroller RAM (without `malloc`) completes in $T_{\mathrm{infer}} \le 50\,\mu\text{s}$ for a knowledge base of 150 rules and 500 facts. This is three orders of magnitude faster than NPU neural inference ($15 - 30\,\text{ms}$), guaranteeing response within a single hard real-time timer cycle.
 3. **Worked Numerical Example:**
-   A UAV cruises at $`v = 40\,\text{m/s}`$. Across interval $`\Delta t = 0.1\,\text{s}`$, the satellite receiver reports a coordinate displacement jump $`\Delta \vec{r}_{\mathrm{GPS}} = (18.0; \ 0.0; \ 0.0)\,\text{m}`$ (an apparent velocity of $`180\,\text{m/s}`$ caused by spoofing). The IMU integral yields a displacement of $`\int \vec{v}_{\mathrm{IMU}} dt = (4.02; \ 0.01; \ -0.05)\,\text{m}`$.
+   A UAV cruises at $v = 40\,\text{m/s}$. Across interval $\Delta t = 0.1\,\text{s}$, the satellite receiver reports a coordinate displacement jump $\Delta \vec{r}_{\mathrm{GPS}} = (18.0; \ 0.0; \ 0.0)\,\text{m}$ (an apparent velocity of $180\,\text{m/s}$ caused by spoofing). The IMU integral yields a displacement of $\int \vec{v}_{\mathrm{IMU}} dt = (4.02; \ 0.01; \ -0.05)\,\text{m}$.
    Residual norm:
-   $`\left\lVert \Delta \vec{r}_{\mathrm{GPS}} - \int \vec{v}_{\mathrm{IMU}} dt \right\rVert = \sqrt{(18.0 - 4.02)^2 + (0.0 - 0.01)^2 + (0.0 + 0.05)^2} \approx 13.98\,\text{m}`$.
-   With allowable threshold $`\epsilon_{\mathrm{drift}} + \kappa \cdot \Delta t = 2.0 + 5.0 \cdot 0.1 = 2.5\,\text{m}`$, the disparity $`13.98\,\text{m} \gg 2.5\,\text{m}`$ triggers fault handling.
-   The Epistemic Governor asserts `sensor_status(gps, falsified)` within $`18\,\mu\text{s}`$, revokes the GPS flight path, and inhibits payload release, preventing a strike on spoofed false coordinates.
+   $\left\lVert \Delta \vec{r}_{\mathrm{GPS}} - \int \vec{v}_{\mathrm{IMU}} dt \right\rVert = \sqrt{(18.0 - 4.02)^2 + (0.0 - 0.01)^2 + (0.0 + 0.05)^2} \approx 13.98\,\text{m}$.
+   With allowable threshold $\epsilon_{\mathrm{drift}} + \kappa \cdot \Delta t = 2.0 + 5.0 \cdot 0.1 = 2.5\,\text{m}$, the disparity $13.98\,\text{m} \gg 2.5\,\text{m}$ triggers fault handling.
+   The Epistemic Governor asserts `sensor_status(gps, falsified)` within $18\,\mu\text{s}$, revokes the GPS flight path, and inhibits payload release, preventing a strike on spoofed false coordinates.
 
 ## 3. Research Hardware Platforms: Test Benches Based on NVIDIA Jetson AGX Orin and Xilinx Virtex FPGA
 
@@ -514,7 +514,7 @@ sequenceDiagram
 2. **Hardware Safety Watchdog:**
    * The FPGA arbiter incorporates an independent hardware timer counting down an unalterable period $T_{\text{wdg}}$ (e.g., 10 to 20 ms).
    * Should System 1 (NPU/GPU/Linux) freeze, suffer memory bus starvation, or fail to transmit a valid fact descriptor within $T_{\text{wdg}}$, the FPGA watchdog asserts an emergency fault, drops `disp_accept = 0`, and de-energizes actuators without waiting for software recovery.
-3. **End-to-End Admission Loop Latency ($`T_{\mathrm{loop}}`$):**
+3. **End-to-End Admission Loop Latency ($T_{\mathrm{loop}}$):**
    The aggregate elapsed time from raw sensor frame arrival to assertion of the physical `disp_accept` signal at the FPGA pin is characterized by:
 
 ```math
@@ -522,9 +522,9 @@ T_{\mathrm{loop}} = T_{\mathrm{infer}} + T_{\mathrm{dma}} + T_{\mathrm{fpga}}
 ```
 
    where:
-   * $`T_{\mathrm{infer}}`$ is the time required for predicate extraction and candidate action synthesis on the NPU/GPU ($10–30\ \text{ms}$);
-   * $`T_{\mathrm{dma}}`$ is the descriptor transmission latency across PCIe Gen4 ($1.0–1.5\ \mu\text{s}$);
-   * $`T_{\mathrm{fpga}}`$ is the formal verification latency across the FPGA core array ($40–100\ \text{ns}$).
+   * $T_{\mathrm{infer}}$ is the time required for predicate extraction and candidate action synthesis on the NPU/GPU ($10–30\ \text{ms}$);
+   * $T_{\mathrm{dma}}$ is the descriptor transmission latency across PCIe Gen4 ($1.0–1.5\ \mu\text{s}$);
+   * $T_{\mathrm{fpga}}$ is the formal verification latency across the FPGA core array ($40–100\ \text{ns}$).
 4. **Falsification Gate Criterion:**
    In compliance with functional safety mandates (ISO 26262 ASIL D, IEC 61508 SIL 3), the hypothesis affirming the safety and viability of the heterogeneous architecture is **falsified** (rejected) if:
 
@@ -532,8 +532,8 @@ T_{\mathrm{loop}} = T_{\mathrm{infer}} + T_{\mathrm{dma}} + T_{\mathrm{fpga}}
 \max(T_{\mathrm{loop}}) > T_{\mathrm{FTTI}}
 ```
 
-   where $`T_{\mathrm{FTTI}}`$ is the Fault Tolerant Time Interval defined for the target physical platform,
-   or if the probability of missing a hardware verdict within the watchdog deadline satisfies $`P(T_{\mathrm{loop}} > T_{\mathrm{wdg}}) > 10^{-9}\ \text{failures per operational hour}`$,
+   where $T_{\mathrm{FTTI}}$ is the Fault Tolerant Time Interval defined for the target physical platform,
+   or if the probability of missing a hardware verdict within the watchdog deadline satisfies $P(T_{\mathrm{loop}} > T_{\mathrm{wdg}}) > 10^{-9}\ \text{failures per operational hour}$,
    or if a single occurrence of `disp_accept = 1` is recorded when an active defeater exists or a formal safety invariant is violated.
 
 > [!NOTE]
@@ -559,7 +559,7 @@ To address this challenge, the author deployed an autonomous adversarial testing
    * Executes strictly deterministic microcode for byte-level citation provenance verification, interval bounding of physical parameters, and conflict detection across rule systems (ASPIC+).
 3. **Hardware Emergency Interlock (Hardware Disposition Gate):**
    * The interconnect between System 1 and System 2 is established not merely across PCIe packet buses, but also via **isolated physical digital input/output (DI/DO) lines** and a safety-certified industrial **CAN FD** bus.
-   * Upon detecting the slightest deviation or fallacy, the hardware fault line drives an interlock signal into the host controller input in $`T_{\mathrm{disp}} < 100\,\text{ns}`$, inhibiting hazardous actuation without operating system mediation.
+   * Upon detecting the slightest deviation or fallacy, the hardware fault line drives an interlock signal into the host controller input in $T_{\mathrm{disp}} < 100\,\text{ns}$, inhibiting hazardous actuation without operating system mediation.
 
 This hardware foundation implements the methodology of the autonomous Popperian Red Teamer. The local System 1 tensor processor generates millions of adversarial counterexamples, false premises, and boundary conditions (Boundary Value Analysis, BVA). The System 2 hardware verifier mathematically inspects each query, validating the Zero Hallucination Rate invariant:
 
@@ -568,20 +568,20 @@ This hardware foundation implements the methodology of the autonomous Popperian 
 ```
 
 where:
-- $`\mathrm{ZHR}`$ is the Zero Hallucination Rate metric;
-- $`N_{\mathrm{leak}}`$ is the count of stochastic hallucinations or errors that penetrated the admission gate (governed by the engineering invariant $`N_{\mathrm{leak}} \equiv 0`$);
-- $`N_{\mathrm{adversarial}}`$ is the total volume of generated adversarial counterexamples and boundary mutations ($`N_{\mathrm{adversarial}} \ge 10^7`$).
+- $\mathrm{ZHR}$ is the Zero Hallucination Rate metric;
+- $N_{\mathrm{leak}}$ is the count of stochastic hallucinations or errors that penetrated the admission gate (governed by the engineering invariant $N_{\mathrm{leak}} \equiv 0$);
+- $N_{\mathrm{adversarial}}$ is the total volume of generated adversarial counterexamples and boundary mutations ($N_{\mathrm{adversarial}} \ge 10^7$).
 
 Any breakthrough of a hallucination past the symbolic filters is automatically logged as a critical defect of the knowledge base or linter.
 
 #### 3.4.1. Actionable Closed Loop of Autonomous Knowledge Stress-Testing
 
 1. **Control Flow & Runtime Decisions:**
-   When the System 1 adversarial generator synthesizes an edge case triggering a `CONFLICT` or `DEFIEVER_ACTIVE` signal in the Datalog engine, the hardware disposition gate confirms interception by latching the `REDTEAM_CAUGHT` flag. If a stochastic hypothesis induces a processing stall $`T > T_{\mathrm{wdg}}`$, the hardware watchdog timer asserts `TEST_FAIL` and routes the mutation vector into the linter defect quarantine log.
+   When the System 1 adversarial generator synthesizes an edge case triggering a `CONFLICT` or `DEFIEVER_ACTIVE` signal in the Datalog engine, the hardware disposition gate confirms interception by latching the `REDTEAM_CAUGHT` flag. If a stochastic hypothesis induces a processing stall $T > T_{\mathrm{wdg}}$, the hardware watchdog timer asserts `TEST_FAIL` and routes the mutation vector into the linter defect quarantine log.
 2. **Hardware Dimensioning:**
-   The Jetson Orin mutation generator delivers an adversarial descriptor fuzzing throughput of $`R_{\mathrm{fuzz}} \ge 5\,000\,\text{packets/s}`$. The FPGA hardware disposition gate clocked at $`350\,\text{MHz}`$ evaluates up to $`10^7`$ assertions per second, consuming less than 4% of the CAN FD bus bandwidth and guaranteeing a physical fault assertion latency of $`T_{\mathrm{disp}} \le 85\,\text{ns}`$.
+   The Jetson Orin mutation generator delivers an adversarial descriptor fuzzing throughput of $R_{\mathrm{fuzz}} \ge 5\,000\,\text{packets/s}$. The FPGA hardware disposition gate clocked at $350\,\text{MHz}$ evaluates up to $10^7$ assertions per second, consuming less than 4% of the CAN FD bus bandwidth and guaranteeing a physical fault assertion latency of $T_{\mathrm{disp}} \le 85\,\text{ns}$.
 3. **Worked Numerical Example:**
-   During an overnight autonomous stress run, System 1 generated $`N_{\mathrm{adversarial}} = 20,000,000`$ boundary vectors of angular velocities and spoofed targets. The System 2 admission gate intercepted $`19,999,998`$ violations via deontic rules and 2 deviations due to watchdog timeouts ($`T > 10\,\text{ms}`$). The number of escapes was $`N_{\mathrm{leak}} = 0`$, yielding $`\mathrm{ZHR} = 1.00`$. The hardware disposition line latency measured $`72\,\text{ns}`$, confirming full compliance with ISO 26262 ASIL D.
+   During an overnight autonomous stress run, System 1 generated $N_{\mathrm{adversarial}} = 20,000,000$ boundary vectors of angular velocities and spoofed targets. The System 2 admission gate intercepted $19,999,998$ violations via deontic rules and 2 deviations due to watchdog timeouts ($T > 10\,\text{ms}$). The number of escapes was $N_{\mathrm{leak}} = 0$, yielding $\mathrm{ZHR} = 1.00$. The hardware disposition line latency measured $72\,\text{ns}$, confirming full compliance with ISO 26262 ASIL D.
 
 ### 3.5. Research Testbed "Generalized Synchronous Measurement Platform" Based on Infineon TLE90xx and AURIX TC49x
 
@@ -639,11 +639,11 @@ flowchart TD
 The architectural approach reinterprets specialized battery management integrated circuits (BMS ICs) as a universal high-precision measurement front-end:
 
 1. **Simultaneous Hardware Channel Strobing:**
-   A multi-channel 16-bit delta-sigma ADC executes fully synchronous sampling across all differential inputs driven by a single hardware strobe. This eliminates phase drift between instantaneous voltage $`U_k`$ and current $`I_k`$ measurements.
+   A multi-channel 16-bit delta-sigma ADC executes fully synchronous sampling across all differential inputs driven by a single hardware strobe. This eliminates phase drift between instantaneous voltage $U_k$ and current $I_k$ measurements.
 2. **Galvanically Isolated isoUART 2.0 Interface:**
    Digitized telemetry frames are transmitted to the host microcontroller across a differential capacitive or transformer isolation barrier at up to 2 Mbps. This provides the measurement pipeline with robust immunity against high-voltage common-mode electromagnetic transients (up to 1500 V) typical of robotic high-power drives.
 3. **Secondary Measurement Path:**
-   To fulfill ISO 26262 ASIL D mandates, the TLE90xx die integrates an independent second ADC that redundantly monitors voltages and temperatures in parallel. Any discrepancy between primary and secondary measurements exceeding $`\epsilon_{\mathrm{diag}} = 3\,\text{mV}`$ triggers a hardware fault detection.
+   To fulfill ISO 26262 ASIL D mandates, the TLE90xx die integrates an independent second ADC that redundantly monitors voltages and temperatures in parallel. Any discrepancy between primary and secondary measurements exceeding $\epsilon_{\mathrm{diag}} = 3\,\text{mV}$ triggers a hardware fault detection.
 4. **Electrochemical Impedance Spectroscopy (EIS):**
    Employing a variable-frequency excitation probe signal $\omega \in [10\,\text{Hz}, 1\,\text{kHz}]$, the system computes the complex transfer impedance function of high-voltage busbars and contact junctions:
 
@@ -652,26 +652,26 @@ Z(\omega) = \frac{V(\omega)}{I(\omega)} = R_{\mathrm{real}}(\omega) + j\,X_{\mat
 ```
 
 where:
-- $`Z(\omega)`$ is the complex impedance of the electrical joint or electrochemical cell at angular frequency $\omega$, in ohms ($\Omega$);
-- $`V(\omega)`$ is the amplitude-phase spectrum of the AC voltage ripple across the contacts, in volts ($\text{V}$);
-- $`I(\omega)`$ is the spectrum of the excitation probe current through the conductor, in amperes ($\text{A}$);
-- $`R_{\mathrm{real}}(\omega)`$ is the real ohmic resistance of the conductor, indicating mechanical degradation, oxidation, and micro-cracking of terminals;
-- $`X_{\mathrm{imag}}(\omega)`$ is the reactive impedance component, sensitive to structural shifts in internal capacitance and inductance.
+- $Z(\omega)$ is the complex impedance of the electrical joint or electrochemical cell at angular frequency $\omega$, in ohms ($\Omega$);
+- $V(\omega)$ is the amplitude-phase spectrum of the AC voltage ripple across the contacts, in volts ($\text{V}$);
+- $I(\omega)$ is the spectrum of the excitation probe current through the conductor, in amperes ($\text{A}$);
+- $R_{\mathrm{real}}(\omega)$ is the real ohmic resistance of the conductor, indicating mechanical degradation, oxidation, and micro-cracking of terminals;
+- $X_{\mathrm{imag}}(\omega)$ is the reactive impedance component, sensitive to structural shifts in internal capacitance and inductance.
 
 #### 3.5.2. Actionable Closed Loop of Synchronous Spectroscopy TLE90xx/AURIX
 
 1. **Control Flow & Runtime Decisions:**
-   The AURIX TC49x core computes the impedance spectral vector in real time. If the real resistance of a power busbar $`R_{\mathrm{real}}`$ exceeds the calibrated degradation threshold $`R_{\mathrm{degrade}} = R_0 \cdot (1 + \delta_{\mathrm{crit}})`$, the Datalog engine asserts the symbolic fact `busbar_degraded(bus_id, r_current)`. A deontic prohibition rule immediately halts peak current draw across the traction motors, forcing the power inverter into a degraded fail-safe state with current clamped to 40% of nominal (*Fail-Closed*).
+   The AURIX TC49x core computes the impedance spectral vector in real time. If the real resistance of a power busbar $R_{\mathrm{real}}$ exceeds the calibrated degradation threshold $R_{\mathrm{degrade}} = R_0 \cdot (1 + \delta_{\mathrm{crit}})$, the Datalog engine asserts the symbolic fact `busbar_degraded(bus_id, r_current)`. A deontic prohibition rule immediately halts peak current draw across the traction motors, forcing the power inverter into a degraded fail-safe state with current clamped to 40% of nominal (*Fail-Closed*).
 2. **Hardware Dimensioning:**
-   The ADC sampling rate is set to $`f_s = 10\,\text{kHz}`$ per channel. Across 16 measurement channels, the raw telemetry bandwidth amounts to $`16 \times 16\,\text{bits} \times 10\,\text{kHz} = 2.56\,\text{Mbps}`$. Applying hardware differential delta compression compresses the stream to $`1.28\,\text{Mbps}`$, safely within the $`2.0\,\text{Mbps}`$ throughput limit of the isoUART 2.0 interface with over 35% bus bandwidth headroom. The DMA ring buffer is allocated in the AURIX core's local static DLMU memory ($`4\,\text{KB}`$), avoiding traffic contention on the global SRI crossbar bus.
+   The ADC sampling rate is set to $f_s = 10\,\text{kHz}$ per channel. Across 16 measurement channels, the raw telemetry bandwidth amounts to $16 \times 16\,\text{bits} \times 10\,\text{kHz} = 2.56\,\text{Mbps}$. Applying hardware differential delta compression compresses the stream to $1.28\,\text{Mbps}$, safely within the $2.0\,\text{Mbps}$ throughput limit of the isoUART 2.0 interface with over 35% bus bandwidth headroom. The DMA ring buffer is allocated in the AURIX core's local static DLMU memory ($4\,\text{KB}$), avoiding traffic contention on the global SRI crossbar bus.
 3. **Worked Numerical Example:**
-   Consider monitoring a traction inverter power busbar with a nominal resistance $`R_0 = 0.250\,\text{m}\Omega`$ ($`250\,\mu\Omega`$). The critical degradation threshold is specified as $`\delta_{\mathrm{crit}} = 0.20`$ ($`+20\%`$), yielding $`R_{\mathrm{degrade}} = 0.300\,\text{m}\Omega`$.
-   At an interrogation frequency of $`f = 100\,\text{Hz}`$, the synchronous TLE90xx ADC measures an AC voltage ripple $`V = 48.0\,\text{mV}`$ at an alternating current of $`I = 120.0\,\text{A}`$ with a phase angle $\phi = 12.0^\circ$.
+   Consider monitoring a traction inverter power busbar with a nominal resistance $R_0 = 0.250\,\text{m}\Omega$ ($250\,\mu\Omega$). The critical degradation threshold is specified as $\delta_{\mathrm{crit}} = 0.20$ ($+20\%$), yielding $R_{\mathrm{degrade}} = 0.300\,\text{m}\Omega$.
+   At an interrogation frequency of $f = 100\,\text{Hz}$, the synchronous TLE90xx ADC measures an AC voltage ripple $V = 48.0\,\text{mV}$ at an alternating current of $I = 120.0\,\text{A}$ with a phase angle $\phi = 12.0^\circ$.
    Complex impedance:
-   $`|Z| = \frac{48.0 \cdot 10^{-3}}{120.0} = 0.400\,\text{m}\Omega`$.
-   $`R_{\mathrm{real}} = |Z| \cdot \cos(12.0^\circ) = 0.400 \cdot 0.9781 = 0.391\,\text{m}\Omega`$.
-   $`X_{\mathrm{imag}} = |Z| \cdot \sin(12.0^\circ) = 0.400 \cdot 0.2079 = 0.083\,\text{m}\Omega`$.
-   Because $`R_{\mathrm{real}} = 0.391\,\text{m}\Omega > 0.300\,\text{m}\Omega`$, the system identifies contact degradation exceeding nominal baseline by $`+56.4\%`$. Within $`42\,\mu\text{s}`$, the Datalog engine derives the failure predicate, and the AURIX controller throttles contactor current, averting thermal runaway of the power junction.
+   $|Z| = \frac{48.0 \cdot 10^{-3}}{120.0} = 0.400\,\text{m}\Omega$.
+   $R_{\mathrm{real}} = |Z| \cdot \cos(12.0^\circ) = 0.400 \cdot 0.9781 = 0.391\,\text{m}\Omega$.
+   $X_{\mathrm{imag}} = |Z| \cdot \sin(12.0^\circ) = 0.400 \cdot 0.2079 = 0.083\,\text{m}\Omega$.
+   Because $R_{\mathrm{real}} = 0.391\,\text{m}\Omega > 0.300\,\text{m}\Omega$, the system identifies contact degradation exceeding nominal baseline by $+56.4\%$. Within $42\,\mu\text{s}$, the Datalog engine derives the failure predicate, and the AURIX controller throttles contactor current, averting thermal runaway of the power junction.
 
 ---
 
@@ -731,9 +731,9 @@ Where:
 - $a_{\mathrm{max}}$ is the maximum guaranteed braking deceleration achievable on the current physical surface, in meters per second squared;
 - $D_{\mathrm{margin}}$ is the mandatory safety margin that must remain between the halted robot and the obstacle, e.g., 0.5 m;
 - $\tau_{\mathrm{reaction}}$ is the worst-case hardware actuation latency from hazard detection to physical brake engagement, in seconds, measured directly on target hardware;
-- $`v\,\tau_{\mathrm{reaction}}`$ is the distance traversed during this reaction latency before braking deceleration begins.
+- $v\,\tau_{\mathrm{reaction}}$ is the distance traversed during this reaction latency before braking deceleration begins.
 
-The invariant condition reads: the clearance to the obstacle, minus the stopping distance, must cover both the safety margin and the distance traversed during actuation delay. Suppose, for example, $v=3$ m/s, $a_{\mathrm{max}}=2$ m/s², and $\tau_{\mathrm{reaction}}=0.02$ s. Then $S_{\mathrm{stop}}=3^{2}/(2\cdot2)=2.25$ m, $`v\,\tau_{\mathrm{reaction}}=0.06`$ m, and the arbiter permits forward motion only if the obstacle is farther than $2.25+0.5+0.06=2.81$ m. These parameters serve an illustrative purpose. If $U_{\mathrm{adv}}$ violates this inequality, or if the NPU fails to publish the next command within a watchdog deadline (e.g., 50 ms), the arbiter deasserts the $U_{\mathrm{adv}}$ channel and passes control to the baseline controller, which initiates maximum braking at $-a_{\mathrm{max}}$.
+The invariant condition reads: the clearance to the obstacle, minus the stopping distance, must cover both the safety margin and the distance traversed during actuation delay. Suppose, for example, $v=3$ m/s, $a_{\mathrm{max}}=2$ m/s², and $\tau_{\mathrm{reaction}}=0.02$ s. Then $S_{\mathrm{stop}}=3^{2}/(2\cdot2)=2.25$ m, $v\,\tau_{\mathrm{reaction}}=0.06$ m, and the arbiter permits forward motion only if the obstacle is farther than $2.25+0.5+0.06=2.81$ m. These parameters serve an illustrative purpose. If $U_{\mathrm{adv}}$ violates this inequality, or if the NPU fails to publish the next command within a watchdog deadline (e.g., 50 ms), the arbiter deasserts the $U_{\mathrm{adv}}$ channel and passes control to the baseline controller, which initiates maximum braking at $-a_{\mathrm{max}}$.
 
 ## 5. Onboard Knowledge Base: Compiled Datalog Without Dynamic Memory Allocation
 
@@ -996,10 +996,10 @@ In automotive and aerospace cyber-physical systems requiring the highest integri
    If defensive validation logic is naively structured (for example, checking merely `if noise > max_allowed { reject() }`), the presence of `NaN` bypasses the rejection condition. The system mistakenly treats corrupted noise as acceptable and issues an unsafe admission decision (`ACCEPT`), permitting autonomous platform motion with a failed sensor.
 
 2. **Core Panic on Asynchronous Non-Rectangular ("Jagged") Matrices:**
-   During streamed sensor reads across Direct Memory Access (DMA), hardware packet drops can truncate individual rows of the observation matrix (*Jagged Matrix*). An algorithm's subsequent attempt to access a fixed column index $`M[i][j]`$ triggers an unhandled runtime fault (`panic: index out of range`), instantly freezing the control loop.
+   During streamed sensor reads across Direct Memory Access (DMA), hardware packet drops can truncate individual rows of the observation matrix (*Jagged Matrix*). An algorithm's subsequent attempt to access a fixed column index $M[i][j]$ triggers an unhandled runtime fault (`panic: index out of range`), instantly freezing the control loop.
 
 3. **Dead-Sensor Blindness:**
-   A complete line severance or ADC lockup at zero ground potential causes the measurement vector to collapse to all zeros ($`V = [0.0, 0.0, \dots, 0.0]`$). If zero falls within the sensor's nominal operational range, the logical reasoning core naively interprets this catastrophic open circuit as a quiescent, perfectly stable platform state.
+   A complete line severance or ADC lockup at zero ground potential causes the measurement vector to collapse to all zeros ($V = [0.0, 0.0, \dots, 0.0]$). If zero falls within the sensor's nominal operational range, the logical reasoning core naively interprets this catastrophic open circuit as a quiescent, perfectly stable platform state.
 
 To neutralize these vulnerabilities at the interface between low-level device drivers and hardware accelerators, a **sensor-frontline fail-closed gate** (*Sensor-Frontline Fail-Closed Gate*) is integrated into the data ingestion pipeline.
 
@@ -1047,7 +1047,7 @@ flowchart TD
 
 Before executing any numerical computation, the adapter must enforce a strict four-stage pipeline:
 
-1. **Geometric Invariance:** Every row length is compared against the expected dimension in $`O(R)`$ time. Any discrepancy triggers immediate rejection prior to indexed element dereferencing.
+1. **Geometric Invariance:** Every row length is compared against the expected dimension in $O(R)$ time. Any discrepancy triggers immediate rejection prior to indexed element dereferencing.
 2. **IEEE 754 Anomaly Filter:**
 
 ```math
@@ -1069,19 +1069,19 @@ Before executing any numerical computation, the adapter must enforce a strict fo
 \mathrm{NoiseFloor}_{\mathrm{min}} \le \eta \le \mathrm{NoiseFloor}_{\mathrm{max}}
 ```
 
-   If observed noise collapses to absolute zero (which is physically impossible in an operational analog circuit subject to Johnson-Nyquist thermal noise $`v_n = \sqrt{4 k_B T R \Delta f}`$), this signals an artificial replay simulation (spoofing) or physical disconnection of the analog front-end.
+   If observed noise collapses to absolute zero (which is physically impossible in an operational analog circuit subject to Johnson-Nyquist thermal noise $v_n = \sqrt{4 k_B T R \Delta f}$), this signals an artificial replay simulation (spoofing) or physical disconnection of the analog front-end.
 
 #### 8.2.2. Actionable Closed Loop of Sensor Front-End Protection
 
 1. **Control Flow & Runtime Decisions:**
    Upon detecting any structural or arithmetic anomaly, the sensor admission gate halts fact synthesis, sets operational status to `HALT_REFUSE`, asserts the hardware flag `FLAG_SENSOR_FAULT`, and commands the actuator subsystem into safe degraded mode. No element of an anomalous frame is ever passed to the inference engine.
 2. **Hardware Dimensioning:**
-   Array structure validation is executed directly in the controller's DMA pipeline within $`T_{\mathrm{val}} < 15\,\mu\text{s}`$ for matrices up to $`64 \times 64`$. The lower thermal noise limit $`\mathrm{NoiseFloor}_{\mathrm{min}}`$ is calculated from analog physical parameters: for a resistive divider $`R = 10\,\text{k}\Omega`$ at $`T = 300\,\text{K}`$ and bandwidth $\Delta f = 10\,\text{kHz}$, the minimum thermal noise voltage is $`v_n \approx 1.28\,\mu\text{V}`$.
+   Array structure validation is executed directly in the controller's DMA pipeline within $T_{\mathrm{val}} < 15\,\mu\text{s}$ for matrices up to $64 \times 64$. The lower thermal noise limit $\mathrm{NoiseFloor}_{\mathrm{min}}$ is calculated from analog physical parameters: for a resistive divider $R = 10\,\text{k}\Omega$ at $T = 300\,\text{K}$ and bandwidth $\Delta f = 10\,\text{kHz}$, the minimum thermal noise voltage is $v_n \approx 1.28\,\mu\text{V}$.
 3. **Worked Numerical Example:**
-   A $`16 \times 32`$ tactile pressure sensor matrix streams an observation buffer. Geometric verification validates a row width of 32 for all 16 rows ($`O(R) = 16`$ checks, $`0.4\,\mu\text{s}`$).
-   Evaluating array elements reveals cell $`M[4][12]`$ contains $`\mathrm{0x7FF8000000000000}`$ (quiet `NaN`), induced by a transient brownout on the SPI transceiver power rail.
-   A naive comparator would pass this corrupted sample, since $`(\mathrm{NaN} > 50.0) \equiv \mathrm{False}`$.
-   The specialized filter traps `math.IsNaN(x) == True` within $`12\,\text{ns}`$, aborts ingestion, asserts error code `0x400`, and halts platform maneuvers, preventing uncontrolled acceleration.
+   A $16 \times 32$ tactile pressure sensor matrix streams an observation buffer. Geometric verification validates a row width of 32 for all 16 rows ($O(R) = 16$ checks, $0.4\,\mu\text{s}$).
+   Evaluating array elements reveals cell $M[4][12]$ contains $\mathrm{0x7FF8000000000000}$ (quiet `NaN`), induced by a transient brownout on the SPI transceiver power rail.
+   A naive comparator would pass this corrupted sample, since $(\mathrm{NaN} > 50.0) \equiv \mathrm{False}$.
+   The specialized filter traps `math.IsNaN(x) == True` within $12\,\text{ns}$, aborts ingestion, asserts error code `0x400`, and halts platform maneuvers, preventing uncontrolled acceleration.
 
 ## 9. Non-Functional Interfaces and Assumption Boundaries Prior to Integration
 
@@ -1297,7 +1297,7 @@ The boundaries of these techniques are clearly defined. Numerical parameters in 
 | Human-on-the-Loop | *human-on-the-loop* | Concept of passive external supervision over an autonomous system with emergency abort authority |
 | Safe State Ontology | *safe state ontology* | Formal model for deterministic selection of an emergency saga based on geospatial context and faults |
 | Hardware Disposition Gate | *hardware disposition gate* | Hardware combinational circuit for instantaneous actuator cut-off (latency $< 100\,\text{ns}$) using DI/DO and CAN FD |
-| Popperian Red Teamer | *Popperian red teamer* | Adversarial testing engine generating boundary vectors and falsifying safety hypotheses targeting $`\mathrm{ZHR} = 1.00`$ |
+| Popperian Red Teamer | *Popperian red teamer* | Adversarial testing engine generating boundary vectors and falsifying safety hypotheses targeting $\mathrm{ZHR} = 1.00$ |
 | Ballistic Jettison | *ballistic jettison* | Emergency saga deactivating the warhead and executing controlled gliding into a designated safe ditching sector |
 
 ## Abbreviations
@@ -1318,7 +1318,7 @@ The boundaries of these techniques are clearly defined. Numerical parameters in 
 | DMA | Direct Memory Access | Feature allowing hardware subsystems to access system memory without CPU intervention |
 | EIS | Electrochemical Impedance Spectroscopy | Diagnostic method evaluating material impedance spectra across varying frequencies |
 | EPU | Epistemic Processing Unit | Dedicated hardware coprocessor for deterministic rule evaluation and fact verification |
-| FIT | Failures in Time | Standard unit of failure rate ($`10^{-9}`$ component failures per operating hour) |
+| FIT | Failures in Time | Standard unit of failure rate ($10^{-9}$ component failures per operating hour) |
 | FPGA | Field-Programmable Gate Array | Semiconductor device based around a matrix of configurable logic blocks |
 | GMSL | Gigabit Multimedia Serial Link | High-speed serial interconnect protocol for automotive cameras and sensors |
 | GNSS | Global Navigation Satellite System | Satellite-based radio navigation systems (GPS, GLONASS, Galileo, BeiDou) |
@@ -1338,7 +1338,7 @@ The boundaries of these techniques are clearly defined. Numerical parameters in 
 | URAM | UltraRAM | High-density synchronous static memory macro on Xilinx FPGAs with single-cycle latency |
 | WCET | Worst-Case Execution Time | Maximum execution duration required for a computational task on a given architecture |
 | PWM | Pulse-Width Modulation | Technique for controlling power supplied to electrical loads via variable-width pulsing |
-| ZHR | Zero Hallucination Rate | Metric denoting complete absence of hallucinations ($`\mathrm{ZHR} \equiv 1.00`$) |
+| ZHR | Zero Hallucination Rate | Metric denoting complete absence of hallucinations ($\mathrm{ZHR} \equiv 1.00$) |
 
 ## References
 

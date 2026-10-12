@@ -534,7 +534,7 @@ Ein Expertensystem unterscheidet sich grundlegend von Suchmaschinen und Sprachmo
 - **Mykola Fedchyk:**  
   *„Herr Professor Deutsch, dies markiert die fundamentale Trennung zwischen regulatorischer Begründung und physikalischer Kausalerklärung.  
   Genau deshalb trennt unsere Architektur strikt zwischen der referenziellen Auskunft aus Normentexten und der rechnerischen Auswertung von Prädikaten im konkreten Fall.  
-  Ein Begründungspaket (Justification Bundle) zitiert nicht einfach Normentexte: Es synthetisiert einen formalen Beweis über die Erfüllung physikalischer Verträge. Jedes Prädikat bindet an reale physikalische Messgrößen des Prüfstands ($`T_{\mathrm{case}}`$, Strom, Spannung, Einschwingzeiten) und berechnet explizit die Sicherheitsmarge bis zur kritischen Ausfallgrenze.  
+  Ein Begründungspaket (Justification Bundle) zitiert nicht einfach Normentexte: Es synthetisiert einen formalen Beweis über die Erfüllung physikalischer Verträge. Jedes Prädikat bindet an reale physikalische Messgrößen des Prüfstands ($T_{\mathrm{case}}$, Strom, Spannung, Einschwingzeiten) und berechnet explizit die Sicherheitsmarge bis zur kritischen Ausfallgrenze.  
   Werden Einsatzgrenzen verletzt, generiert das System weder Spekulationen noch plausible Hypothesen, sondern liefert einen minimalen unerfüllbaren Kern (Minimal Unsatisfiable Core, MUC) mit exakter Angabe der verletzten physikalischen Vorbedingung. Dies wandelt bürokratische Zitate in eine funktionale technische Erklärung um, die den Grund der Verweigerung physikalisch exakt lokalisiert.“*
 
 **Dialog mit Bertrand Meyer: Vertragliche Strenge und relationale Autonomiebegrenzung**

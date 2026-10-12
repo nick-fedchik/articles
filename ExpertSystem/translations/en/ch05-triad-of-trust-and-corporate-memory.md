@@ -10,7 +10,7 @@
 
 ## Abstract
 
-This chapter investigates the conceptual triad of trust in artificial intelligence systems within mission-critical engineering, unifying a symbolic expert system, an evidence-governed recommendation, and R&D corporate memory. A rigorous demarcation is established between the functions of generative large language models (operating as semantic interfaces and text preprocessors) and deterministic logical inference engines. The chapter formalizes the schema of a minimal evidence record for recommendations, the specification of a cryptographic audit trail compliant with ISO 26262, ISO/SAE 21434, and the W3C PROV-O ontology, as well as an unbroken cryptographic evidence custody mechanism featuring byte-level grounding of normative facts ($`\mathcal{G}`$). A threshold multi-party authorization protocol ($k$-of-$n$) for knowledge base updates based on Hardware Security Modules (HSMs) and RFC 3161 timestamps is proposed to defend against Insider Threats. It substantiates a methodology for converting passive documentation archives into an active relational knowledge graph under the SECI model, provides quantitative metrics for assessing the engineering maturity of knowledge transfer processes, and synthesizes the conceptual foundations of Part I of this monograph.
+This chapter investigates the conceptual triad of trust in artificial intelligence systems within mission-critical engineering, unifying a symbolic expert system, an evidence-governed recommendation, and R&D corporate memory. A rigorous demarcation is established between the functions of generative large language models (operating as semantic interfaces and text preprocessors) and deterministic logical inference engines. The chapter formalizes the schema of a minimal evidence record for recommendations, the specification of a cryptographic audit trail compliant with ISO 26262, ISO/SAE 21434, and the W3C PROV-O ontology, as well as an unbroken cryptographic evidence custody mechanism featuring byte-level grounding of normative facts ($\mathcal{G}$). A threshold multi-party authorization protocol ($k$-of-$n$) for knowledge base updates based on Hardware Security Modules (HSMs) and RFC 3161 timestamps is proposed to defend against Insider Threats. It substantiates a methodology for converting passive documentation archives into an active relational knowledge graph under the SECI model, provides quantitative metrics for assessing the engineering maturity of knowledge transfer processes, and synthesizes the conceptual foundations of Part I of this monograph.
 
 An experienced engineer transfers to another business unit. A newly onboarded developer inspects the codebase, encounters a disabled communications protocol mode, and inquires: "Why is this mode unused?" An enterprise search engine returns a dozen documents containing the word "mode." A document chatbot replies: "Due to communication instability." However, who decided to disable the mode, for which target product version, following which test failure, and whether that decision remains currently in force, remains completely unknown. The newcomer is left with the two detrimental options Michael Nygard identified in 2011: blindly accept the legacy decision or blindly modify it without understanding its original rationale and systemic consequences [[1]](#src-1).
 
@@ -350,23 +350,23 @@ An AI recommendation achieves evidentiary status not by virtue of model scale, b
 In the certification audit of mission-critical systems (under ISO 26262, DO-178C, IEC 61508), one of the most debilitating causes of eroded trust in artificial intelligence recommendations is a broken traceability chain (*Broken Traceability Chain*). When a language model or heuristic parser emits a verdict citing a standard ("pursuant to Clause 8.4.3 of ISO 26262-5..."), an engineer or regulatory auditor rarely possesses the means to instantaneously verify whether this provision actually exists in that exact wording, or whether it was hallucinated or corrupted during extraction. Any quotation inaccuracy or loss of primary context strips the expert system's conclusion of its legal validity, reducing it to an unprovable toy. To overcome this failure mode, the author developed and implemented the concept of **cryptographic evidence custody (Evidence Custody) and byte-level grounding of engineering knowledge**.
 
 1. **Unbroken Span Grounding Tuple:**
-   Every normative fact or rule admitted into the expert system's knowledge base is strictly accompanied by a cryptographically secured span grounding tuple $`\mathcal{G}`$:
+   Every normative fact or rule admitted into the expert system's knowledge base is strictly accompanied by a cryptographically secured span grounding tuple $\mathcal{G}$:
 
 ```math
 \mathcal{G} = \langle \mathrm{DocID}, \ \mathrm{SHA256}(\mathrm{RawDoc}), \ \mathrm{StartByte}, \ \mathrm{EndByte}, \ \mathrm{NormalizedPredicate} \rangle
 ```
 
 where:
-- $`\mathrm{DocID}`$ is the globally unique identifier of the primary source (standard, datasheet, test report);
-- $`\mathrm{SHA256}(\mathrm{RawDoc})`$ is the cryptographic hash digest of the unmodified raw binary source file;
-- $`\mathrm{StartByte}, \ \mathrm{EndByte}`$ are the exact memory-mapped (`mmap`) byte offsets delimiting the specific textual assertion;
-- $`\mathrm{NormalizedPredicate}`$ is the canonical first-order logic (FOL) predicate or deontic EISA microcode derived by a deterministic translator.
+- $\mathrm{DocID}$ is the globally unique identifier of the primary source (standard, datasheet, test report);
+- $\mathrm{SHA256}(\mathrm{RawDoc})$ is the cryptographic hash digest of the unmodified raw binary source file;
+- $\mathrm{StartByte}, \ \mathrm{EndByte}$ are the exact memory-mapped (`mmap`) byte offsets delimiting the specific textual assertion;
+- $\mathrm{NormalizedPredicate}$ is the canonical first-order logic (FOL) predicate or deontic EISA microcode derived by a deterministic translator.
 
 2. **Non-Normative Isolation:**
    The evidentiary core of the system enforces a strict demarcation barrier between normative imperatives (`SHALL`, `MUST`, `REQUIRED`) and informative-descriptive passages (examples, informative annexes, explanatory *Notes*). Any text lacking deontic modality is automatically segregated into an isolated informative class: it serves as heuristic context for synthesizing human-readable explanations, but is strictly stripped of authority to spawn binding invariants or block releases.
 
 3. **Chain-of-Custody Invariant:**
-   Any unauthorized modification of the source document by even a single bit alters its $`\mathrm{SHA256}(\mathrm{RawDoc})`$ digest. Upon rule evaluation, an evidence custody breach (*Custody Breach*) is detected, instantly revoking the validity status of the compiled knowledge bundle and transitioning the system into a safe *Fail-Closed* state.
+   Any unauthorized modification of the source document by even a single bit alters its $\mathrm{SHA256}(\mathrm{RawDoc})$ digest. Upon rule evaluation, an evidence custody breach (*Custody Breach*) is detected, instantly revoking the validity status of the compiled knowledge bundle and transitioning the system into a safe *Fail-Closed* state.
 
 > [!NOTE]
 > **Authorial Evidence Custody Architecture and Byte-Level Grounding of Engineering Knowledge**  
@@ -379,11 +379,11 @@ where:
 #### 4.6.1. Actionable Closed Loop of Byte-Level Evidence Custody
 
 1. **Control Flow & Runtime Decisions:**
-   During knowledge base loading, the fact verification core inspects the primary source via direct memory mapping (`mmap`). The CPU `%ebx` register or memory descriptor captures the verification hash. If $`\mathrm{SHA256}(\mathrm{RawDoc}[\mathrm{StartByte}:\mathrm{EndByte}]) \neq \mathrm{ExpectedHash}`$, the inference engine triggers an `ERR_CUSTODY_VIOLATION` hardware interrupt, clears the rule validity flag, and terminates the recommendation with a `REFUSAL` verdict.
+   During knowledge base loading, the fact verification core inspects the primary source via direct memory mapping (`mmap`). The CPU `%ebx` register or memory descriptor captures the verification hash. If $\mathrm{SHA256}(\mathrm{RawDoc}[\mathrm{StartByte}:\mathrm{EndByte}]) \neq \mathrm{ExpectedHash}$, the inference engine triggers an `ERR_CUSTODY_VIOLATION` hardware interrupt, clears the rule validity flag, and terminates the recommendation with a `REFUSAL` verdict.
 2. **Hardware Dimensioning:**
-   Storing the descriptor $`\mathcal{G}`$ consumes a fixed $`64\,\text{bytes}`$ per normative requirement (16 bytes for DocID, 32 bytes for SHA-256, and 8 bytes each for offsets). For an industrial knowledge base comprising $`N = 10\,000`$ normative clauses, the total memory footprint of custody descriptors is merely $`640\,\text{KB}`$. This enables pinning the entire custody table in CPU L3 cache or controller BRAM, eliminating disk lookup latencies ($`t_{\mathrm{lookup}} < 12\,\text{ns}`$).
+   Storing the descriptor $\mathcal{G}$ consumes a fixed $64\,\text{bytes}$ per normative requirement (16 bytes for DocID, 32 bytes for SHA-256, and 8 bytes each for offsets). For an industrial knowledge base comprising $N = 10\,000$ normative clauses, the total memory footprint of custody descriptors is merely $640\,\text{KB}$. This enables pinning the entire custody table in CPU L3 cache or controller BRAM, eliminating disk lookup latencies ($t_{\mathrm{lookup}} < 12\,\text{ns}$).
 3. **Worked Numerical Example:**
-   The analyzer verifies ISO 26262-5 Clause 8.4.2 regarding single-point fault metrics. Descriptor $`\mathcal{G}`$ points to byte range $`[1\,048\,576 \dots 1\,049\,120]`$ within a $`12.4\,\text{MB}`$ standard document. The engine computes the local slice hash in $`18\,\mu\text{s}`$, confirming an exact match with the reference digest `0x9f83...a12c`. An adversary attempting to modify the normative threshold from $`99\%`$ to $`90\%`$ shifts the slice hash to `0x3b11...77fa`, prompting the system to immediately issue `REFUSAL: Custody breach on ISO 26262-5 [1048576..1049120]`, neutralizing sabotage at the knowledge layer.
+   The analyzer verifies ISO 26262-5 Clause 8.4.2 regarding single-point fault metrics. Descriptor $\mathcal{G}$ points to byte range $[1\,048\,576 \dots 1\,049\,120]$ within a $12.4\,\text{MB}$ standard document. The engine computes the local slice hash in $18\,\mu\text{s}$, confirming an exact match with the reference digest `0x9f83...a12c`. An adversary attempting to modify the normative threshold from $99\%$ to $90\%$ shifts the slice hash to `0x3b11...77fa`, prompting the system to immediately issue `REFUSAL: Custody breach on ISO 26262-5 [1048576..1049120]`, neutralizing sabotage at the knowledge layer.
 
 ## 5. The Third Triad Component: R&D Corporate Memory as a Relational Graph
 
@@ -573,9 +573,9 @@ S = \sum_{i=1}^{k} s_i \cdot \ell_i(0) \pmod{q}, \quad \ell_i(0) = \prod_{j \neq
 ```
 
 where:
-- $`s_i`$ is the signature share generated by the $`i`$-th participant using their local secret $`x_i`$;
-- $`\ell_i(0)`$ is the Lagrange interpolation basis polynomial evaluated at zero;
-- $`q`$ is the prime order of the elliptic curve subgroup (for Ed25519: $`q = 2^{252} + 27742317777372353535851937790883648493`$).
+- $s_i$ is the signature share generated by the $i$-th participant using their local secret $x_i$;
+- $\ell_i(0)$ is the Lagrange interpolation basis polynomial evaluated at zero;
+- $q$ is the prime order of the elliptic curve subgroup (for Ed25519: $q = 2^{252} + 27742317777372353535851937790883648493$).
 
 The full private key is never reconstructed in the memory of any single host.
 
@@ -593,11 +593,11 @@ The full private key is never reconstructed in the memory of any single host.
 #### 5.9.1. Actionable Closed Loop of Consortium Knowledge Authorization
 
 1. **Control Flow & Runtime Decisions:**
-   Upon preparing a new knowledge base release, the pipeline broadcasts the package cryptographic digest $`H_{\mathrm{bundle}}`$ to authorized stakeholders. Each participant audits the artifacts and signs the hash using their hardware token. The collector aggregates shares $`s_i`$. If the share count $`m < k`$, the pipeline blocks knowledge base activation and enters the `AWAITING_CONSENSUS` state. If $`m \ge k`$, the engine synthesizes the aggregate signature $`S`$, appends the RFC 3161 timestamp, and transitions the knowledge bundle into `ACTIVATED_PRODUCTION`.
+   Upon preparing a new knowledge base release, the pipeline broadcasts the package cryptographic digest $H_{\mathrm{bundle}}$ to authorized stakeholders. Each participant audits the artifacts and signs the hash using their hardware token. The collector aggregates shares $s_i$. If the share count $m < k$, the pipeline blocks knowledge base activation and enters the `AWAITING_CONSENSUS` state. If $m \ge k$, the engine synthesizes the aggregate signature $S$, appends the RFC 3161 timestamp, and transitions the knowledge bundle into `ACTIVATED_PRODUCTION`.
 2. **Hardware Dimensioning:**
-   Lagrange interpolation and signature aggregation for $`k=3`$ shares over the Ed25519 curve consumes less than $`1.2\,\text{ms}`$ of CPU compute time and under $`16\,\text{KB}`$ of RAM, enabling threshold verification even on resource-constrained embedded edge controllers during Over-The-Air (OTA) updates.
+   Lagrange interpolation and signature aggregation for $k=3$ shares over the Ed25519 curve consumes less than $1.2\,\text{ms}$ of CPU compute time and under $16\,\text{KB}$ of RAM, enabling threshold verification even on resource-constrained embedded edge controllers during Over-The-Air (OTA) updates.
 3. **Worked Numerical Example:**
-   A critical knowledge base patch is prepared that modifies the allowable Fault Tolerant Time Interval (FTTI) for an automotive braking subsystem. The governance topology specifies $`n=5`$ stakeholders with threshold $`k=3`$. The safety engineer and chief architect submit signatures ($`m=2 < 3`$). An attempt to activate the patch triggers an immediate `ERR_THRESHOLD_NOT_MET (2/3 signatures)` abort. Only after the lead auditor validates the physical test bench report and authorizes the third signature share via their HSM does the system synthesize a valid consortium signature $`S`$ and hot-reload the rule into active working memory.
+   A critical knowledge base patch is prepared that modifies the allowable Fault Tolerant Time Interval (FTTI) for an automotive braking subsystem. The governance topology specifies $n=5$ stakeholders with threshold $k=3$. The safety engineer and chief architect submit signatures ($m=2 < 3$). An attempt to activate the patch triggers an immediate `ERR_THRESHOLD_NOT_MET (2/3 signatures)` abort. Only after the lead auditor validates the physical test bench report and authorizes the third signature share via their HSM does the system synthesize a valid consortium signature $S$ and hot-reload the rule into active working memory.
 
 ## 6. Domain-Specific Nuances of the Triad of Trust in Critical Domains
 
@@ -703,7 +703,7 @@ From these conceptual foundations, the monograph advances to concrete engineerin
 3. How frequently has the solution to a critical technical dilemma already been documented in a previous project, yet could not be retrieved in time to inform active development?
 4. Which organizational bottleneck is most damaging to your team: the epistemic disconnect between chatbots and ground-truth engineering data, the absence of relational links between project documents, or the concentration of critical knowledge within single individuals?
 5. How many calendar weeks does an onboarded engineer require to independently understand core architectural decisions within your product, and what factors primarily govern that ramp-up duration?
-6. How does the span grounding descriptor $`\mathcal{G}`$ prevent broken traceability chains (*Broken Traceability Chain*), and why must non-normative commentary be strictly isolated from binding invariants?
+6. How does the span grounding descriptor $\mathcal{G}$ prevent broken traceability chains (*Broken Traceability Chain*), and why must non-normative commentary be strictly isolated from binding invariants?
 7. Why is a $k$-of-$n$ consortium signature based on hardware HSM tokens and Shamir's protocol mandatory for safeguarding an engineering knowledge base against insider threats (*Insider Threat*)?
 
 ## Glossary
@@ -755,7 +755,7 @@ From these conceptual foundations, the monograph advances to concrete engineerin
 | Complex Device Driver | *complex device driver* | Dedicated software driver interfacing non-standard hardware peripherals not handled by standard OS layers |
 | Software Requirement | *software requirement* | Formal engineering specification of required software behavior |
 | Evidence Custody | *evidence custody* | Guarantee of integrity and authenticity of the evidentiary chain from primary source bytes to the system conclusion |
-| Span Grounding Tuple | *span grounding tuple* | Tuple $`\mathcal{G}`$ cryptographically binding a normative rule to a byte-level slice of the primary source |
+| Span Grounding Tuple | *span grounding tuple* | Tuple $\mathcal{G}$ cryptographically binding a normative rule to a byte-level slice of the primary source |
 | Non-Normative Isolation | *non-normative isolation* | Demarcation separating informative-descriptive text from mandatory deontic requirements |
 | Threshold Cryptography | *threshold cryptography* | Cryptographic protocol ($k$-of-$n$) requiring the collaboration of $k$ independent share holders to synthesize a signature |
 | Hardware Security Module | *hardware security module, HSM* | Dedicated physical device for secure generation, storage, and execution of cryptographic operations without key export |

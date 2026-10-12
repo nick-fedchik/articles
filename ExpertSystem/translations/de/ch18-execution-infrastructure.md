@@ -82,7 +82,7 @@ wobei:
 P_{\text{peak}} = 16 \times (3{,}0 \times 10^9) \times 64 = 3{,}072 \times 10^{12}\text{ FLOP/s} \approx 3{,}07\text{ TFLOP/s}
 ```
 
-3. **Ausfallkriterium:** Liegt der gemessene reale Durchsatz dichter Matrixmultiplikationen bei $`P_{\text{observed}} < 0{,}60 \times P_{\text{peak}}`$, weist dies auf mikroarchitektonische Anomalien hin: thermisches Drosseln (die Taktfrequenz $f$ sinkt unter den Basistakt), suboptimale Speicherausrichtung in Registern oder Cache-Misses im L1i-Befehlscache.
+3. **Ausfallkriterium:** Liegt der gemessene reale Durchsatz dichter Matrixmultiplikationen bei $P_{\text{observed}} < 0{,}60 \times P_{\text{peak}}$, weist dies auf mikroarchitektonische Anomalien hin: thermisches Drosseln (die Taktfrequenz $f$ sinkt unter den Basistakt), suboptimale Speicherausrichtung in Registern oder Cache-Misses im L1i-Befehlscache.
 
 Die Bandbreite der Speicherschnittstelle begrenzt den maximalen Datendurchsatz zwischen System-RAM bzw. Grafikspeicher und den Rechenregistern:
 
@@ -91,10 +91,10 @@ Die Bandbreite der Speicherschnittstelle begrenzt den maximalen Datendurchsatz z
 ```
 
 wobei:
-- $`\mathrm{BW}`$ — die theoretische Spitzenbandbreite der Arbeitsspeicherschnittstelle in Bytes pro Sekunde ist ($\text{B}/\text{s}$ oder $\text{GB}/\text{s}$);
-- $`f_{\text{mem}}`$ — die effektive Datenrate der Speicherschnittstelle in Megatransfers pro Sekunde bezeichnet ($\text{MT}/\text{s}$ bzw. Transfers pro Sekunde, z. B. $4{,}8 \times 10^9\text{ T/s}$ für DDR5-4800 oder $8{,}533 \times 10^9\text{ T/s}$ für LPDDR5X);
-- $`W_{\text{bus}}`$ — die Datenbusbreite eines einzelnen physischen Speicherkanals in Bit ist (typischerweise 64 Bit für Standard-DDR4/DDR5-Module, 32 oder 16 Bit für Subkanäle bei LPDDR5/LPDDR5X), wobei die Division durch 8 Bits in Bytes umrechnet;
-- $`N_{\text{channels}}`$ — die Anzahl unabhängiger, verschränkter Speicherkanäle des Speichercontrollers ist ($`N_{\text{channels}} \in \{1, 2, 4, 8, 12\}`$).
+- $\mathrm{BW}$ — die theoretische Spitzenbandbreite der Arbeitsspeicherschnittstelle in Bytes pro Sekunde ist ($\text{B}/\text{s}$ oder $\text{GB}/\text{s}$);
+- $f_{\text{mem}}$ — die effektive Datenrate der Speicherschnittstelle in Megatransfers pro Sekunde bezeichnet ($\text{MT}/\text{s}$ bzw. Transfers pro Sekunde, z. B. $4{,}8 \times 10^9\text{ T/s}$ für DDR5-4800 oder $8{,}533 \times 10^9\text{ T/s}$ für LPDDR5X);
+- $W_{\text{bus}}$ — die Datenbusbreite eines einzelnen physischen Speicherkanals in Bit ist (typischerweise 64 Bit für Standard-DDR4/DDR5-Module, 32 oder 16 Bit für Subkanäle bei LPDDR5/LPDDR5X), wobei die Division durch 8 Bits in Bytes umrechnet;
+- $N_{\text{channels}}$ — die Anzahl unabhängiger, verschränkter Speicherkanäle des Speichercontrollers ist ($N_{\text{channels}} \in \{1, 2, 4, 8, 12\}$).
 
 **Praktische Anwendung und ingenieurtechnische Schlussfolgerungen:**
 1. Diese Kennzahl bestimmt das theoretische Leistungsmaximum beim Abrufen unstrukturierter Daten, beim Durchlaufen von Adjazenzlisten in Graphen und beim Einlesen von Gewichtsmatrizen während der sequentiellen autoregressiven Inferenz.
@@ -104,7 +104,7 @@ wobei:
 \mathrm{BW} = 4{,}8 \times 10^9 \times \frac{64}{8} \times 2 = 76{,}8 \times 10^9\text{ B/s} = 76{,}8\text{ GB/s}
 ```
 
-3. **Ingenieurtechnische Auslastungsgrenze:** Die tatsächliche Nutzbandbreite $`\mathrm{BW}_{\text{eff}}`$ übersteigt infolge des DRAM-Protokolloverheads (Zeilenkonflikte, Refresh-Zyklen `tRFC`, `CAS`-Latenzen) selten $75-85\,\%$ der theoretischen $\mathrm{BW}$. Wenn ein Algorithmus bereits $> 80\,\%$ der Busbandbreite beansprucht, führt eine Erhöhung der Worker-Threads nicht zu Beschleunigung, sondern zu Buskonflikten und Latenzexplosion.
+3. **Ingenieurtechnische Auslastungsgrenze:** Die tatsächliche Nutzbandbreite $\mathrm{BW}_{\text{eff}}$ übersteigt infolge des DRAM-Protokolloverheads (Zeilenkonflikte, Refresh-Zyklen `tRFC`, `CAS`-Latenzen) selten $75-85\,\%$ der theoretischen $\mathrm{BW}$. Wenn ein Algorithmus bereits $> 80\,\%$ der Busbandbreite beansprucht, führt eine Erhöhung der Worker-Threads nicht zu Beschleunigung, sondern zu Buskonflikten und Latenzexplosion.
 
 Das Roofline-Modell verknüpft beide physikalischen Schranken über die arithmetische (operationelle) Intensität des Algorithmus $I$:
 
@@ -113,10 +113,10 @@ P_{\text{observed}} \le \min\left(P_{\text{peak}},\; I \times \mathrm{BW}\right)
 ```
 
 wobei:
-- $`P_{\text{observed}}`$ — die real erreichbare Rechenleistung des Systems für den konkreten Algorithmus in $\text{FLOP}/\text{s}$ ist;
-- $`I`$ — die arithmetische Intensität des Rechenkerns darstellt, d. h. die Anzahl ausgeführter Gleitkommaoperationen pro Byte, das über den Speicherbus übertragen wird ($\text{FLOP}/\text{Byte}$);
-- $`\mathrm{BW}`$ — die Bandbreite des Speichersystems in $\text{Byte}/\text{s}$ ist;
-- $`P_{\text{peak}}`$ — die Spitzenleistung des Prozessors oder Beschleunigers in $\text{FLOP}/\text{s}$ angibt;
+- $P_{\text{observed}}$ — die real erreichbare Rechenleistung des Systems für den konkreten Algorithmus in $\text{FLOP}/\text{s}$ ist;
+- $I$ — die arithmetische Intensität des Rechenkerns darstellt, d. h. die Anzahl ausgeführter Gleitkommaoperationen pro Byte, das über den Speicherbus übertragen wird ($\text{FLOP}/\text{Byte}$);
+- $\mathrm{BW}$ — die Bandbreite des Speichersystems in $\text{Byte}/\text{s}$ ist;
+- $P_{\text{peak}}$ — die Spitzenleistung des Prozessors oder Beschleunigers in $\text{FLOP}/\text{s}$ angibt;
 - $\min(a, b)$ — die Minimumfunktion ist, welche den dominierenden physikalischen Engpass bestimmt.
 
 **Praktische Anwendung, Grenzfälle und ingenieurtechnische Schlussfolgerungen:**
@@ -126,20 +126,20 @@ wobei:
 I_{\text{ridge}} = \frac{P_{\text{peak}}}{\mathrm{BW}}
 ```
 
-Für die beispielhafte Workstation ($`P_{\text{peak}} = 3{,}07\text{ TFLOP/s}`$, $`\mathrm{BW} = 76{,}8\text{ GB/s}`$) liegt der kritische Knickpunkt bei:
+Für die beispielhafte Workstation ($P_{\text{peak}} = 3{,}07\text{ TFLOP/s}$, $\mathrm{BW} = 76{,}8\text{ GB/s}$) liegt der kritische Knickpunkt bei:
 
 ```math
 I_{\text{ridge}} = \frac{3{,}072 \times 10^{12}}{76{,}8 \times 10^9} = 40{,}0\text{ FLOP/byte}
 ```
 
-2. **Speicherbandbreitenbegrenzter Bereich ($`I < I_{\text{ridge}}`$):** Die Vektorsuche in einem HNSW-Graphindex (*Hierarchical Navigable Small World*) [[2]](#src-2) für einen Vektor der Dimension 768 im FP32-Format (3072 Bytes) erfordert rund $2 \times 768 = 1536$ Operationen. Daraus resultiert eine arithmetische Intensität von $I \approx 1536 / 3072 = 0{,}5\text{ FLOP/byte}$. Da $0{,}5 \ll 40{,}0$ gilt, wird der Durchsatz strikt durch den Speicherbus limitiert:
+2. **Speicherbandbreitenbegrenzter Bereich ($I < I_{\text{ridge}}$):** Die Vektorsuche in einem HNSW-Graphindex (*Hierarchical Navigable Small World*) [[2]](#src-2) für einen Vektor der Dimension 768 im FP32-Format (3072 Bytes) erfordert rund $2 \times 768 = 1536$ Operationen. Daraus resultiert eine arithmetische Intensität von $I \approx 1536 / 3072 = 0{,}5\text{ FLOP/byte}$. Da $0{,}5 \ll 40{,}0$ gilt, wird der Durchsatz strikt durch den Speicherbus limitiert:
 
 ```math
 P_{\text{observed}} \le 0{,}5 \times 76{,}8 \times 10^9 = 38{,}4\text{ GFLOP/s}
 ```
 
 Dies entspricht lediglich $\approx 1{,}25\,\%$ des Rechenpotenzials der CPU. Die ingenieurtechnische Konsequenz: Höhere CPU-Taktraten oder GPUs mit mehr Kernen beschleunigen den Faktenabruf nicht; eine Beschleunigung gelingt ausschließlich über Vektorquantisierung (skalare INT8-Quantisierung verdoppelt die Intensität auf $1{,}0\text{ FLOP/byte}$ bei halbiertem Datenverkehr) oder breitere Speicherbusse.
-3. **Rechenbegrenzter Bereich ($`I \ge I_{\text{ridge}}`$):** Die Multiplikation quadratischer Matrizen der Dimension $n = 4096$ im Vorwärtspfad eines mehrschichtigen Transformers weist eine Intensität von $I \approx n / 6 \approx 682{,}6\text{ FLOP/byte}$ auf. Hier schöpft der Prozessor sein volles Potenzial $P_{\text{peak}}$ aus; entscheidend werden Vektorinstruktionen und Tensorkerne.
+3. **Rechenbegrenzter Bereich ($I \ge I_{\text{ridge}}$):** Die Multiplikation quadratischer Matrizen der Dimension $n = 4096$ im Vorwärtspfad eines mehrschichtigen Transformers weist eine Intensität von $I \approx n / 6 \approx 682{,}6\text{ FLOP/byte}$ auf. Hier schöpft der Prozessor sein volles Potenzial $P_{\text{peak}}$ aus; entscheidend werden Vektorinstruktionen und Tensorkerne.
 
 ```mermaid
 flowchart LR
@@ -324,25 +324,25 @@ R_{\mathrm{exfil}} = V_{\mathrm{asset}} \times P_{\mathrm{leak}} = V_{\mathrm{as
 ```
 
 wobei:
-- $`R_{\mathrm{exfil}}`$ — das kumulierte Restrisiko des Abflusses geistigen Eigentums ist, gemessen in monetären Schadenseinheiten oder relativen Risikopunkten (von $`0`$ bis $`V_{\mathrm{asset}}`$);
-- $`V_{\mathrm{asset}}`$ — der Basiswert des geschützten F&E-Assets (Wissensbasis, Ontologie, Prozessor-Mikrocode) unter Berücksichtigung von regulatorischen Strafen und Entwicklungskosten ist ($`V_{\mathrm{asset}} > 0`$);
-- $`P_{\mathrm{leak}} \in [0, 1]`$ — die rechnerische Wahrscheinlichkeit eines erfolgreichen Asset-Abflusses über alle Verteidigungslinien hinweg darstellt;
-- $`\eta_{\mathrm{airgap}} \in [0, 1]`$ — die Wirksamkeit der physischen Netzwerktrennung bezeichnet (für Standard-VLAN $`\eta_{\mathrm{airgap}} = 0{,}70`$, für eine verwaltete Firewall $`\eta_{\mathrm{airgap}} = 0{,}92`$, für ein galvanisch getrenntes Kabel mit unidirektionalem Fotodioden-Gateway *Data Diode* $`\eta_{\mathrm{airgap}} = 0{,}9999`$);
-- $`\eta_{\mathrm{enc}} \in [0, 1]`$ — die Wirksamkeit der kryptografischen Speicher- und Datenträgerverschlüsselung ist (für Standard-Host-Verschlüsselung $`\eta_{\mathrm{enc}} = 0{,}85`$, für hardwarebasierte Enklaven AMD SEV-SNP / Intel TDX $`\eta_{\mathrm{enc}} = 0{,}995`$);
-- $`\eta_{\mathrm{auth}} \in [0, 1]`$ — die Wirksamkeit der Authentifizierung von Ingenieur-Operationen quantifiziert (Passwortschutz $`\eta_{\mathrm{auth}} = 0{,}60`$, hardwarebasierter FIDO2- / kryptografischer HSM-Token mit unteilbarer Ed25519-Signatur jeder Sitzung $`\eta_{\mathrm{auth}} = 0{,}999`$).
+- $R_{\mathrm{exfil}}$ — das kumulierte Restrisiko des Abflusses geistigen Eigentums ist, gemessen in monetären Schadenseinheiten oder relativen Risikopunkten (von $0$ bis $V_{\mathrm{asset}}$);
+- $V_{\mathrm{asset}}$ — der Basiswert des geschützten F&E-Assets (Wissensbasis, Ontologie, Prozessor-Mikrocode) unter Berücksichtigung von regulatorischen Strafen und Entwicklungskosten ist ($V_{\mathrm{asset}} > 0$);
+- $P_{\mathrm{leak}} \in [0, 1]$ — die rechnerische Wahrscheinlichkeit eines erfolgreichen Asset-Abflusses über alle Verteidigungslinien hinweg darstellt;
+- $\eta_{\mathrm{airgap}} \in [0, 1]$ — die Wirksamkeit der physischen Netzwerktrennung bezeichnet (für Standard-VLAN $\eta_{\mathrm{airgap}} = 0{,}70$, für eine verwaltete Firewall $\eta_{\mathrm{airgap}} = 0{,}92$, für ein galvanisch getrenntes Kabel mit unidirektionalem Fotodioden-Gateway *Data Diode* $\eta_{\mathrm{airgap}} = 0{,}9999$);
+- $\eta_{\mathrm{enc}} \in [0, 1]$ — die Wirksamkeit der kryptografischen Speicher- und Datenträgerverschlüsselung ist (für Standard-Host-Verschlüsselung $\eta_{\mathrm{enc}} = 0{,}85$, für hardwarebasierte Enklaven AMD SEV-SNP / Intel TDX $\eta_{\mathrm{enc}} = 0{,}995$);
+- $\eta_{\mathrm{auth}} \in [0, 1]$ — die Wirksamkeit der Authentifizierung von Ingenieur-Operationen quantifiziert (Passwortschutz $\eta_{\mathrm{auth}} = 0{,}60$, hardwarebasierter FIDO2- / kryptografischer HSM-Token mit unteilbarer Ed25519-Signatur jeder Sitzung $\eta_{\mathrm{auth}} = 0{,}999$).
 
 #### 3.2.1. Geschlossener Kreis der ingenieurtechnischen Berechnung des Exfiltrationsrisikos von F&E-Assets
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
-   - Liegt der berechnete Wert bei $`P_{\mathrm{leak}} > 10^{-4}`$, aktiviert der Infrastruktur-Orchestrator den strikten Isolationsmodus (`Strict Isolation Lock`): Sämtliche USB-Speicherschnittstellen werden blockiert, die Erstellung unverschlüsselter Speicherauszüge (`core dumps`) wird untersagt und das Einspielen neuer Modellgewichte oder Regelbasen bis zur Integritätsprüfung des physikalischen Daten-Gateways gesperrt;
-   - Gilt $`P_{\mathrm{leak}} \le 10^{-4}`$ und $`R_{\mathrm{exfil}} < \tau_{\mathrm{risk\_accept}}`$, erteilt die Ausführungsumgebung die Freigabe zur schreibgeschützten Einbindung des Wissens-Volumes (`read-only`) innerhalb der verschlüsselten Speicher-Enklave (`SEV_SNP_INIT_OK`).
+   - Liegt der berechnete Wert bei $P_{\mathrm{leak}} > 10^{-4}$, aktiviert der Infrastruktur-Orchestrator den strikten Isolationsmodus (`Strict Isolation Lock`): Sämtliche USB-Speicherschnittstellen werden blockiert, die Erstellung unverschlüsselter Speicherauszüge (`core dumps`) wird untersagt und das Einspielen neuer Modellgewichte oder Regelbasen bis zur Integritätsprüfung des physikalischen Daten-Gateways gesperrt;
+   - Gilt $P_{\mathrm{leak}} \le 10^{-4}$ und $R_{\mathrm{exfil}} < \tau_{\mathrm{risk\_accept}}$, erteilt die Ausführungsumgebung die Freigabe zur schreibgeschützten Einbindung des Wissens-Volumes (`read-only`) innerhalb der verschlüsselten Speicher-Enklave (`SEV_SNP_INIT_OK`).
 2. **Hardware-Dimensionierung und infrastrukturelle Randbedingungen (Hardware Dimensioning):**
-   - Der F&E-Prüfstand wird mit einer hardwarebasierten optischen Datendiode (*Data Diode*) mit einer Übertragungsrate von mindestens $`10\,\text{Gbit/s}`$ für den Ingress-Transfer von Datensätzen ausgestattet;
-   - Die Kapazität des verschlüsselten Enklaven-Arbeitsspeichers muss das quantisierte SLM-Modell ($`16\,\text{GB}`$ in FP8) zuzüglich der `mmap`-Faktenbasis ($`8\,\text{GB}`$) mit einem Sicherheitsfaktor von $`1{,}5\times`$ aufnehmen können, was eine Mindestausstattung von $`48\,\text{GB}`$ DDR5 ECC-Systemspeicher mit Hardwareverschlüsselung pro Sockel vorgibt.
+   - Der F&E-Prüfstand wird mit einer hardwarebasierten optischen Datendiode (*Data Diode*) mit einer Übertragungsrate von mindestens $10\,\text{Gbit/s}$ für den Ingress-Transfer von Datensätzen ausgestattet;
+   - Die Kapazität des verschlüsselten Enklaven-Arbeitsspeichers muss das quantisierte SLM-Modell ($16\,\text{GB}$ in FP8) zuzüglich der `mmap`-Faktenbasis ($8\,\text{GB}$) mit einem Sicherheitsfaktor von $1{,}5\times$ aufnehmen können, was eine Mindestausstattung von $48\,\text{GB}$ DDR5 ECC-Systemspeicher mit Hardwareverschlüsselung pro Sockel vorgibt.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   - Der Basiswert des F&E-Wissenspakets eines Flugreglers beträgt $`V_{\mathrm{asset}} = 5\,000\,000\,\$`$.
-   - Bei einem naiven Ansatz (VLAN ohne galvanische/physikalische Trennung, Standardserver ohne Speicher-Enklaven und mit einfacher Passwort-Authentifizierung) ergibt die Wahrscheinlichkeitsrechnung $`P_{\mathrm{leak}} = (1 - 0{,}70) \cdot (1 - 0{,}85) \cdot (1 - 0{,}60) = 0{,}018`$. Das verbleibende Restrisiko beläuft sich auf $`R_{\mathrm{exfil}} = 5\,000\,000 \times 0{,}018 = 90\,000\,\$`$, was den unternehmensweiten Grenzwert $`\tau_{\mathrm{risk\_accept}} = 500\,\$`$ um das 180-Fache übersteigt (für verteidigungskritische Systeme unzulässig).
-   - Beim Übergang zur *Air-Gapped R&D*-Architektur (optische Data Diode $`\eta_{\mathrm{airgap}} = 0{,}9999`$, AMD SEV-SNP Enklave $`\eta_{\mathrm{enc}} = 0{,}995`$, FIDO2-HSM-Token $`\eta_{\mathrm{auth}} = 0{,}999`$) sinkt die Wahrscheinlichkeit auf $`P_{\mathrm{leak}} = (1 - 0{,}9999) \cdot (1 - 0{,}995) \cdot (1 - 0{,}999) = 10^{-4} \cdot 5 \cdot 10^{-3} \cdot 10^{-3} = 5 \cdot 10^{-10}`$. Das Restrisiko beträgt $`R_{\mathrm{exfil}} = 5\,000\,000 \times 5 \cdot 10^{-10} = 0{,}0025\,\$`$ ($`0{,}25`$ Cent). Diese Architektur ermöglicht die uneingeschränkte Zulassung zur Verarbeitung hochsensibler Entwicklungsartefakte.
+   - Der Basiswert des F&E-Wissenspakets eines Flugreglers beträgt $V_{\mathrm{asset}} = 5\,000\,000\,\$$.
+   - Bei einem naiven Ansatz (VLAN ohne galvanische/physikalische Trennung, Standardserver ohne Speicher-Enklaven und mit einfacher Passwort-Authentifizierung) ergibt die Wahrscheinlichkeitsrechnung $P_{\mathrm{leak}} = (1 - 0{,}70) \cdot (1 - 0{,}85) \cdot (1 - 0{,}60) = 0{,}018$. Das verbleibende Restrisiko beläuft sich auf $R_{\mathrm{exfil}} = 5\,000\,000 \times 0{,}018 = 90\,000\,\$$, was den unternehmensweiten Grenzwert $\tau_{\mathrm{risk\_accept}} = 500\,\$$ um das 180-Fache übersteigt (für verteidigungskritische Systeme unzulässig).
+   - Beim Übergang zur *Air-Gapped R&D*-Architektur (optische Data Diode $\eta_{\mathrm{airgap}} = 0{,}9999$, AMD SEV-SNP Enklave $\eta_{\mathrm{enc}} = 0{,}995$, FIDO2-HSM-Token $\eta_{\mathrm{auth}} = 0{,}999$) sinkt die Wahrscheinlichkeit auf $P_{\mathrm{leak}} = (1 - 0{,}9999) \cdot (1 - 0{,}995) \cdot (1 - 0{,}999) = 10^{-4} \cdot 5 \cdot 10^{-3} \cdot 10^{-3} = 5 \cdot 10^{-10}$. Das Restrisiko beträgt $R_{\mathrm{exfil}} = 5\,000\,000 \times 5 \cdot 10^{-10} = 0{,}0025\,\$$ ($0{,}25$ Cent). Diese Architektur ermöglicht die uneingeschränkte Zulassung zur Verarbeitung hochsensibler Entwicklungsartefakte.
 
 ### 3.3. Schutz vor verdeckten Datenabflusskanälen und Hardware-Cache-Partitionierung (Intel RDT / ARM MPAM)
 
@@ -360,27 +360,27 @@ Zur Gewährleistung vollständiger Interferenzfreiheit und deterministischer Spe
 ```
 
 wobei:
-- $`\mathrm{BW}_{\mathrm{guaranteed}}(\mathrm{SafetyCore})`$ — die garantierte Hardware-Bandbreite des Speicherbusses für den Echtzeitkern des Expertensystems in Gigabyte pro Sekunde ist ($`\text{GB/s}`$);
-- $`\mathrm{BW}_{\mathrm{bus\_peak}}`$ — die maximale Spitzenbandbreite des Host-Speichercontrollers darstellt ($`\text{GB/s}`$, z. B. $`204{,}8\,\text{GB/s}`$ für 8-Kanal-DDR5-6400);
-- $`M_{\mathrm{ways}}`$ — die Anzahl der L3-Cache-Wege ist, die über die CAT-Maske exklusiv zugewiesen sind (z. B. `0x000F` für 4 von 16 Wegen);
-- $`M_{\mathrm{total\_ways}}`$ — die Gesamtassoziativität des L3-Caches bezeichnet ($`M_{\mathrm{total\_ways}} \ge M_{\mathrm{ways}}`$);
-- $`\delta_{\mathrm{mba\_penalty}} \in [0, 1]`$ — der künstliche Drosselungsfaktor über den MBA-Mechanismus für Hintergrund- und Drittprozesse ist ($`\delta_{\mathrm{mba\_penalty}} = 0`$ für den Sicherheitskern, $`\delta_{\mathrm{mba\_penalty}} \ge 0{,}60`$ für Drittcontainer);
-- $`\mathrm{BW}_{\min\_req}`$ — die normative Mindestbandbreite darstellt, die für die verzögerungsfreie Verarbeitung des Faktenstroms ohne Warteschlangenbildung erforderlich ist ($`\text{GB/s}`$).
+- $\mathrm{BW}_{\mathrm{guaranteed}}(\mathrm{SafetyCore})$ — die garantierte Hardware-Bandbreite des Speicherbusses für den Echtzeitkern des Expertensystems in Gigabyte pro Sekunde ist ($\text{GB/s}$);
+- $\mathrm{BW}_{\mathrm{bus\_peak}}$ — die maximale Spitzenbandbreite des Host-Speichercontrollers darstellt ($\text{GB/s}$, z. B. $204{,}8\,\text{GB/s}$ für 8-Kanal-DDR5-6400);
+- $M_{\mathrm{ways}}$ — die Anzahl der L3-Cache-Wege ist, die über die CAT-Maske exklusiv zugewiesen sind (z. B. `0x000F` für 4 von 16 Wegen);
+- $M_{\mathrm{total\_ways}}$ — die Gesamtassoziativität des L3-Caches bezeichnet ($M_{\mathrm{total\_ways}} \ge M_{\mathrm{ways}}$);
+- $\delta_{\mathrm{mba\_penalty}} \in [0, 1]$ — der künstliche Drosselungsfaktor über den MBA-Mechanismus für Hintergrund- und Drittprozesse ist ($\delta_{\mathrm{mba\_penalty}} = 0$ für den Sicherheitskern, $\delta_{\mathrm{mba\_penalty}} \ge 0{,}60$ für Drittcontainer);
+- $\mathrm{BW}_{\min\_req}$ — die normative Mindestbandbreite darstellt, die für die verzögerungsfreie Verarbeitung des Faktenstroms ohne Warteschlangenbildung erforderlich ist ($\text{GB/s}$).
 
 #### 3.3.1. Geschlossener Kreis der ingenieurtechnischen Bandbreitenberechnung verdeckter Kanäle
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
    - Der Ressourcenmanager des Betriebssystems (oder Hypervisor KVM/Xen) schreibt bei der Systeminitialisierung die Partitionierungskonfiguration in dedizierte Prozessorregister (MSRs bei x86 oder MPAM-Systemregister bei ARM): Dem Sicherheitskern wird die eindeutige Dienstklasse `CLOS0` (Class of Service) mit einer vollständigen, nicht überlappenden Cache-Bitmaske zugewiesen, getrennt von der Dienstklasse `CLOS1` externer Prozesse;
    - Registriert der Hardware-Speicherbandbreitenmonitor (Intel MBM / ARM MPAM Mon) den Versuch eines Drittprozesses, den Speicherbus über das MBA-Limit hinaus zu überlasten, reduziert ein Hypervisor-Interrupt die Priorität des nicht vertrauenswürdigen Containers unmittelbar auf 10 % der Busbandbreite oder pausiert dessen Ausführung temporär (`SIGSTOP`);
-   - Zur Eliminierung physikalischer TEMPEST-Kanäle werden die Drehzahlregler der Lüfter auf einen pseudozufälligen Frequenz-Jitter ($`\pm 15\%`$) programmiert, wodurch eine akustische Signalmodulation zerstört wird, während GPIO-Aktivitäts-LEDs auf UEFI-Firmware-Ebene deaktiviert werden.
+   - Zur Eliminierung physikalischer TEMPEST-Kanäle werden die Drehzahlregler der Lüfter auf einen pseudozufälligen Frequenz-Jitter ($\pm 15\%$) programmiert, wodurch eine akustische Signalmodulation zerstört wird, während GPIO-Aktivitäts-LEDs auf UEFI-Firmware-Ebene deaktiviert werden.
 2. **Hardware-Dimensionierung und infrastrukturelle Randbedingungen (Hardware Dimensioning):**
-   - Der Prozessor der Workstation oder des Edge-Servers muss über einen L3-Cache mit einer Assoziativität von mindestens $`16\,\text{ways}`$ und voller Hardware-Unterstützung für Intel RDT CAT/MBA (Xeon Scalable, Core Ultra mit RDT) oder ARMv8.4-A MPAM (Neoverse N2/V2) verfügen;
+   - Der Prozessor der Workstation oder des Edge-Servers muss über einen L3-Cache mit einer Assoziativität von mindestens $16\,\text{ways}$ und voller Hardware-Unterstützung für Intel RDT CAT/MBA (Xeon Scalable, Core Ultra mit RDT) oder ARMv8.4-A MPAM (Neoverse N2/V2) verfügen;
    - Der isolierte Laborbereich wird mit einem geschirmten Gehäuse oder einem Faradayschen Käfig mit Netzfilterung gegen Gleichtaktstörungen auf den Versorgungsleitungen ausgestattet (Schutzniveau nach NATO-Standard SDIP-27 Level A).
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   - Ein Serverknoten verfügt über einen 16-Wege-L3-Cache ($`M_{\mathrm{total\_ways}} = 16`$) und 4-Kanal-DDR5-Speicher mit einer Spitzenbandbreite von $`\mathrm{BW}_{\mathrm{bus\_peak}} = 102{,}4\,\text{GB/s}`$.
-   - Die normative Mindestanforderung des Expertensystemkerns zur Echtzeitverarbeitung des Faktengraphen beträgt $`\mathrm{BW}_{\min\_req} = 20\,\text{GB/s}`$.
-   - Der Systemarchitekt konfiguriert die CAT-Maske: Dem Expertensystemkern werden 4 isolierte Cache-Wege exklusiv zugewiesen ($`M_{\mathrm{ways}} = 4`$), während für Drittdienste ein MBA-Drosselungskoeffizient von $`\delta_{\mathrm{mba\_penalty}} = 0{,}70`$ festgelegt wird. Die berechnete garantierte Speicherbandbreite beläuft sich auf $`\mathrm{BW}_{\mathrm{guaranteed}} = 102{,}4 \times (4 / 16) \times (1 - 0) = 25{,}6\,\text{GB/s}`$.
-   - Da $`25{,}6\,\text{GB/s} \ge 20\,\text{GB/s}`$, ist die Invariante mit einer Sicherheitsreserve von $`28\%`$ erfüllt. Der Versuch eines Drittprozesses, einen *Prime+Probe*-Angriff durchzuführen oder ein Bandbreiten-Starvation auf dem Speicherbus hervorzurufen, wird bereits auf Ebene der Silizium-Topologie des Chips unterbunden.
+   - Ein Serverknoten verfügt über einen 16-Wege-L3-Cache ($M_{\mathrm{total\_ways}} = 16$) und 4-Kanal-DDR5-Speicher mit einer Spitzenbandbreite von $\mathrm{BW}_{\mathrm{bus\_peak}} = 102{,}4\,\text{GB/s}$.
+   - Die normative Mindestanforderung des Expertensystemkerns zur Echtzeitverarbeitung des Faktengraphen beträgt $\mathrm{BW}_{\min\_req} = 20\,\text{GB/s}$.
+   - Der Systemarchitekt konfiguriert die CAT-Maske: Dem Expertensystemkern werden 4 isolierte Cache-Wege exklusiv zugewiesen ($M_{\mathrm{ways}} = 4$), während für Drittdienste ein MBA-Drosselungskoeffizient von $\delta_{\mathrm{mba\_penalty}} = 0{,}70$ festgelegt wird. Die berechnete garantierte Speicherbandbreite beläuft sich auf $\mathrm{BW}_{\mathrm{guaranteed}} = 102{,}4 \times (4 / 16) \times (1 - 0) = 25{,}6\,\text{GB/s}$.
+   - Da $25{,}6\,\text{GB/s} \ge 20\,\text{GB/s}$, ist die Invariante mit einer Sicherheitsreserve von $28\%$ erfüllt. Der Versuch eines Drittprozesses, einen *Prime+Probe*-Angriff durchzuführen oder ein Bandbreiten-Starvation auf dem Speicherbus hervorzurufen, wird bereits auf Ebene der Silizium-Topologie des Chips unterbunden.
 
 > [!NOTE]
 > **Fünf Regeln zur sicheren Laufzeit-Isolation und Speicherverwaltung nach der Architektur des Autors**
@@ -502,17 +502,17 @@ wobei:
 T_{\text{reindex}} = \frac{N_{\text{total}}}{Q_{\text{eff}}}
 ```
 
-wobei $`N_{\text{total}}`$ die Gesamtzahl der Dokumenten-Chunks angibt.
-2. **Dimensionierungsbeispiel:** Für einen Bestand von $`M = 200`$ Workstations ($`q_i \approx 240\text{ vectors/s}`$, $`a_i \approx 0{,}10`$, $`o_i \approx 0{,}20`$) beträgt der effektive Gesamtdurchsatz:
+wobei $N_{\text{total}}$ die Gesamtzahl der Dokumenten-Chunks angibt.
+2. **Dimensionierungsbeispiel:** Für einen Bestand von $M = 200$ Workstations ($q_i \approx 240\text{ vectors/s}$, $a_i \approx 0{,}10$, $o_i \approx 0{,}20$) beträgt der effektive Gesamtdurchsatz:
 
 ```math
 Q_{\text{eff}} = 200 \times 240 \times 0{,}10 \times (1 - 0{,}20) = 3\,840\text{ vectors/s}
 ```
 
-Ein Korpus von 20 Millionen Chunks wird somit in $`T_{\text{reindex}} \approx 20 \times 10^6 / 3840 \approx 5\,208\text{ s} \approx 1{,}45\text{ Stunden}`$ vollständig verarbeitet. Eine dedizierte Server-CPU ($`q = 68\text{ vectors/s}`$) würde für dieselbe Aufgabe über 81 Stunden benötigen.
+Ein Korpus von 20 Millionen Chunks wird somit in $T_{\text{reindex}} \approx 20 \times 10^6 / 3840 \approx 5\,208\text{ s} \approx 1{,}45\text{ Stunden}$ vollständig verarbeitet. Eine dedizierte Server-CPU ($q = 68\text{ vectors/s}$) würde für dieselbe Aufgabe über 81 Stunden benötigen.
 3. **Scheduling- und Quarantänekriterien:**
-   - Liegt $`a_i < 0{,}03`$ (die Station schaltet häufig ab oder läuft primär auf Akku), wird der Knoten aus dem Pool entfernt, um Warteschlangen nicht durch Timeouts zu belasten;
-   - Übersteigt $`T_{\text{reindex}}`$ das reguläre nächtliche Wartungsfenster ($`T_{\text{reindex}} > T_{\text{maintenance\_window}} = 6\text{ h}`$), löst das System eine Warnung aus, um temporär zentrale Server zuzuschalten oder die Leerlaufschwelle anzupassen.
+   - Liegt $a_i < 0{,}03$ (die Station schaltet häufig ab oder läuft primär auf Akku), wird der Knoten aus dem Pool entfernt, um Warteschlangen nicht durch Timeouts zu belasten;
+   - Übersteigt $T_{\text{reindex}}$ das reguläre nächtliche Wartungsfenster ($T_{\text{reindex}} > T_{\text{maintenance\_window}} = 6\text{ h}$), löst das System eine Warnung aus, um temporär zentrale Server zuzuschalten oder die Leerlaufschwelle anzupassen.
 
 > [!NOTE]
 > **Vier Invarianten der NPU-Hintergrundindizierung nach dem Autorenmodell**
@@ -557,35 +557,35 @@ wobei:
 - $\mathrm{BW}$ — die nutzbare Speicherbandbreite der Plattform in Bytes pro Sekunde darstellt ($\text{bytes}/\text{s}$);
 - $N_{\text{act}}$ — die Anzahl der aktiven Modellparameter ist (bei Dense-Modellen gilt $N_{\text{act}} = N_{\text{total}}$, bei Mixture-of-Experts-Modellen $N_{\text{act}} \ll N_{\text{total}}$);
 - $q$ — die Quantisierungsbreite der Modellgewichte in Bits pro Parameter ist ($q \in \{4, 8, 16\}$);
-- $`S_{\text{KV}}`$ — das Bus-Transfervolumen des KV-Caches pro Dekodierschritt in Bytes pro Token angibt:
+- $S_{\text{KV}}$ — das Bus-Transfervolumen des KV-Caches pro Dekodierschritt in Bytes pro Token angibt:
 
 ```math
 S_{\text{KV}} = 2 \times n_{\text{layers}} \times d_{\text{head}} \times n_{\text{heads\_kv}} \times L_{\text{ctx}} \times \frac{q_{\text{kv}}}{8}
 ```
 
-wobei $`L_{\text{ctx}}`$ die aktuelle Kontextlänge in Tokens, $`n_{\text{layers}}`$ die Schichttiefe und $`q_{\text{kv}}`$ die Bitbreite des KV-Caches bezeichnet (typisch 16 Bit für FP16 oder 8 Bit für FP8).
+wobei $L_{\text{ctx}}$ die aktuelle Kontextlänge in Tokens, $n_{\text{layers}}$ die Schichttiefe und $q_{\text{kv}}$ die Bitbreite des KV-Caches bezeichnet (typisch 16 Bit für FP16 oder 8 Bit für FP8).
 
 **Praktische Anwendung und ingenieurtechnische Schlussfolgerungen:**
 1. Diese Berechnung dient der Eignungsprüfung, ob eine Workstation die interaktiven SLA-Vorgaben einhalten kann.
 2. **Numerische Benchmarks für Desktop-Plattformen (273 GB/s Bandbreite):**
-   - **Dense-Modell 70B (INT4, $`N_{\text{act}} = 70 \times 10^9`$, $`q = 4`$):** Das Speichertransfervolumen beträgt $`35\text{ GB}`$ pro Token. Bei $`\mathrm{BW} = 273\text{ GB/s}`$ resultiert eine Rate von maximal:
+   - **Dense-Modell 70B (INT4, $N_{\text{act}} = 70 \times 10^9$, $q = 4$):** Das Speichertransfervolumen beträgt $35\text{ GB}$ pro Token. Bei $\mathrm{BW} = 273\text{ GB/s}$ resultiert eine Rate von maximal:
 
 ```math
 r_{\text{dec}} \le \frac{273 \times 10^9}{35 \times 10^9} \approx 7{,}8\text{ tokens/s}
 ```
 
-Die Erstellung einer fundierten Begründung von 150 Tokens erfordert $`\approx 19{,}2\text{ s}`$, was den interaktiven Zeitrahmen ($`< 1\text{ s}`$) deutlich verfehlt.
-   - **Mixture-of-Experts-Modell 117B ($`N_{\text{total}} = 117\text{B}`$, $`N_{\text{act}} = 5{,}1\text{B}`$, $`q = 4`$) [[27]](#src-27), [[28]](#src-28):** Das Transfervolumen sinkt auf $`2{,}55\text{ GB}`$ pro Token. Die erreichbare Rate steigt um das 14-Fache:
+Die Erstellung einer fundierten Begründung von 150 Tokens erfordert $\approx 19{,}2\text{ s}$, was den interaktiven Zeitrahmen ($< 1\text{ s}$) deutlich verfehlt.
+   - **Mixture-of-Experts-Modell 117B ($N_{\text{total}} = 117\text{B}$, $N_{\text{act}} = 5{,}1\text{B}$, $q = 4$) [[27]](#src-27), [[28]](#src-28):** Das Transfervolumen sinkt auf $2{,}55\text{ GB}$ pro Token. Die erreichbare Rate steigt um das 14-Fache:
 
 ```math
 r_{\text{dec}} \le \frac{273 \times 10^9}{2{,}55 \times 10^9} \approx 107\text{ tokens/s}
 ```
 
-Derselbe Text wird in $`1{,}4\text{ s}`$ generiert. Jedoch müssen mindestens 59 GB Speicher vorhanden sein, um die 117 Milliarden Parameter überhaupt resident zu halten (32-GB-Knoten scheiden aus).
+Derselbe Text wird in $1{,}4\text{ s}$ generiert. Jedoch müssen mindestens 59 GB Speicher vorhanden sein, um die 117 Milliarden Parameter überhaupt resident zu halten (32-GB-Knoten scheiden aus).
 3. **Zulassungskriterien und Architektur-Gates:**
-   - $`r_{\text{dec}} \ge 15\text{ tokens/s}`$: **Flüssige Interaktivität**. Die Antwortgenerierung wird vom Experten kognitiv als verzögerungsfrei wahrgenommen;
-   - $`8 \le r_{\text{dec}} < 15\text{ tokens/s}`$: **Akzeptables Arbeitstempo**. Zulässig für Terminalarbeitsplätze, sofern das UI vor Beginn der Textgenerierung sofort den formalen symbolischen Status (Regel-ID, Freigabe/Sperre) darstellt;
-   - $`r_{\text{dec}} < 8\text{ tokens/s}`$: **SLA-Verletzung**. Unzulässig für den operativen Betrieb. Solche Dense-70B-Modelle müssen auf dieser Hardware verworfen und durch MoE-Architekturen, spekulatives Dekodieren oder dedizierte Beschleuniger mit GDDR7/HBM ersetzt werden.
+   - $r_{\text{dec}} \ge 15\text{ tokens/s}$: **Flüssige Interaktivität**. Die Antwortgenerierung wird vom Experten kognitiv als verzögerungsfrei wahrgenommen;
+   - $8 \le r_{\text{dec}} < 15\text{ tokens/s}$: **Akzeptables Arbeitstempo**. Zulässig für Terminalarbeitsplätze, sofern das UI vor Beginn der Textgenerierung sofort den formalen symbolischen Status (Regel-ID, Freigabe/Sperre) darstellt;
+   - $r_{\text{dec}} < 8\text{ tokens/s}$: **SLA-Verletzung**. Unzulässig für den operativen Betrieb. Solche Dense-70B-Modelle müssen auf dieser Hardware verworfen und durch MoE-Architekturen, spekulatives Dekodieren oder dedizierte Beschleuniger mit GDDR7/HBM ersetzt werden.
 
 ### 6.2. Auswahlkriterien und funktionale Rollen der Plattformen
 
@@ -701,7 +701,7 @@ Telemetriedaten wurden über das `tegrastats`-Interface im 500-ms-Intervall sync
 
 1. **Erhalt von Einschränkungen (Defeater Retention):** 7B-Modelle neigen bei komplexen Satzgefügen dazu, restriktive Konditionalsätze (*defeaters*, z. B. Nebensätze wie `unless authority contains userinfo`) zu unterschlagen. 14B-Modelle erreichten **100 % Defeater-Vollständigkeit** und erfassten deontische Regeln samt ihrer Anfechtungsbedingungen fehlerfrei.
 2. **Präzisionskosten in Joule:** Die semantische Exaktheit der 14B-Modelle verlangt ein höheres Energiebudget (250–650 Joule pro Fakt gegenüber 98–200 Joule bei 7B). Mit einer mittleren Leistungsaufnahme von **5{,}8–6{,}6 W** bleibt das Gesamtsystem jedoch voll im Rahmen automobiler und mobiler Batteriebudgets.
-3. **Thermische Reserve des Passivgehäuses:** Unter Volllast erreichte die Chiptemperatur ($`T_{\mathrm{tj}}`$) maximal **60{,}0°C**. Dies bietet selbst ohne Lüfter einen Sicherheitsabstand von $15{,}0^\circ\text{C}$ zur Warnschwelle ($75^\circ\text{C}$) und belegt die Eignung für geschlossene Schaltschränke.
+3. **Thermische Reserve des Passivgehäuses:** Unter Volllast erreichte die Chiptemperatur ($T_{\mathrm{tj}}$) maximal **60{,}0°C**. Dies bietet selbst ohne Lüfter einen Sicherheitsabstand von $15{,}0^\circ\text{C}$ zur Warnschwelle ($75^\circ\text{C}$) und belegt die Eignung für geschlossene Schaltschränke.
 
 ### 7.2. Aktives thermodynamisches Management und Konfiguration MODE_30W: Erweiterung des Rechenbudgets
 
@@ -756,9 +756,9 @@ stateDiagram-v2
 
 #### 7.2.1. Empirische Telemetrie der Erprobung im Modus MODE_30W mit GBNF-Maskierung
 
-Im Rahmen der Benchmark-Reihe mit Modellen der Klassen 7B und 14B (`znavets-rfc` und `znavets-automotive`) wurden 699 Telemetriemesspunkte erfasst. Verglichen wurden Prompt Speed, Token-Generierungsrate (Eval Speed), Gesamtenergie, Chiptemperatur ($`T_{\mathrm{tj}}`$), Syntaxfehlerquote sowie das Passieren des Popperschen Falsifikations-Gateways.
+Im Rahmen der Benchmark-Reihe mit Modellen der Klassen 7B und 14B (`znavets-rfc` und `znavets-automotive`) wurden 699 Telemetriemesspunkte erfasst. Verglichen wurden Prompt Speed, Token-Generierungsrate (Eval Speed), Gesamtenergie, Chiptemperatur ($T_{\mathrm{tj}}$), Syntaxfehlerquote sowie das Passieren des Popperschen Falsifikations-Gateways.
 
-| Szenario-ID | Modell und Norm | Dekodiermodus | Latenz (s) | Prompt Speed | Eval Speed | Leistung $`P_{\mathrm{sys}}`$ | Energie pro Fakt | Peak $`T_{\mathrm{tj}}`$ | Syntaxfehler | Poppersche Zulassung |
+| Szenario-ID | Modell und Norm | Dekodiermodus | Latenz (s) | Prompt Speed | Eval Speed | Leistung $P_{\mathrm{sys}}$ | Energie pro Fakt | Peak $T_{\mathrm{tj}}$ | Syntaxfehler | Poppersche Zulassung |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **EXP3-S1** | RFC 9110 (7B) | **GBNF Constrained** | 23{,}01 s | 209{,}9 tps | 8{,}0 tps | 7 216{,}8 mW | **166{,}03 J** | 45{,}00°C | 0{,}00 % | **ZUGELASSEN ($F^+$ OK, $F^-$ REFUSED)** |
 | **EXP3-S2** | RFC 9110 (7B) | Ungeführte Baseline | 15{,}31 s | 527{,}5 tps | 8{,}3 tps | 7 565{,}5 mW | **115{,}79 J** | 45{,}59°C | 0{,}00 % | **ABGEWIESEN (Instabiles Schema)** |
@@ -772,9 +772,9 @@ Im Rahmen der Benchmark-Reihe mit Modellen der Klassen 7B und 14B (`znavets-rfc`
 
 Der direkte Vergleich beider Betriebsarten offenbart zentrale ingenieurtechnische Gesetzmäßigkeiten:
 
-1. **Thermodynamischer Vorteil aktiver Kühlung:** Trotz höherer elektrischer Leistungsaufnahme ($`P_{\mathrm{sys}}`$ stieg von 5,8–6,6 W auf 7,2–7,7 W) senkte der aktive Luftstrom die Betriebstemperatur um $\approx 15-20^\circ\text{C}$. Die Sicherheitsmarge zur Drosselschwelle ($99^\circ\text{C}$) stieg von $+33^\circ\text{C}$ auf **$+56^\circ\text{C}$**, zur Notabschaltung auf **$+61^\circ\text{C}$**. Ein temperaturbedingtes Absinken der Taktraten wird somit zuverlässig verhindert, was deterministische Antwortzeiten garantiert.
+1. **Thermodynamischer Vorteil aktiver Kühlung:** Trotz höherer elektrischer Leistungsaufnahme ($P_{\mathrm{sys}}$ stieg von 5,8–6,6 W auf 7,2–7,7 W) senkte der aktive Luftstrom die Betriebstemperatur um $\approx 15-20^\circ\text{C}$. Die Sicherheitsmarge zur Drosselschwelle ($99^\circ\text{C}$) stieg von $+33^\circ\text{C}$ auf **$+56^\circ\text{C}$**, zur Notabschaltung auf **$+61^\circ\text{C}$**. Ein temperaturbedingtes Absinken der Taktraten wird somit zuverlässig verhindert, was deterministische Antwortzeiten garantiert.
 2. **Durchsatzsprung bei 14B-Modellen:** Die Token-Generierungsrate stieg von 2,5 tps (15W passiv) auf **4,3–4,5 tps** (30W aktiv), ein Zuwachs von **+72–80 %**. Die Extraktionslatenz für komplexe ISO-26262-Klauseln sank von 57,6 s auf 39,8 s.
-3. **Energieneutralität durch Laufzeitverkürzung:** Obwohl die Momentanleistung um 15–20 % höher liegt, sank der integrale Gesamtenergiebedarf pro validiertem Fakt ($`\int P_{\mathrm{sys}} dt`$): Für das 14B-Modell bei RFC 9110 Sec 7.2 reduzierte sich der Energieaufwand von **256{,}01 J** (15W / 42,1 s) auf **227{,}65 J** (30W / 31,7 s). Die verkürzte Rechenzeit kompensiert die höhere Leistungsaufnahme vollständig.
+3. **Energieneutralität durch Laufzeitverkürzung:** Obwohl die Momentanleistung um 15–20 % höher liegt, sank der integrale Gesamtenergiebedarf pro validiertem Fakt ($\int P_{\mathrm{sys}} dt$): Für das 14B-Modell bei RFC 9110 Sec 7.2 reduzierte sich der Energieaufwand von **256{,}01 J** (15W / 42,1 s) auf **227{,}65 J** (30W / 31,7 s). Die verkürzte Rechenzeit kompensiert die höhere Leistungsaufnahme vollständig.
 4. **Notwendigkeit von Logit-Masking (GBNF):** Ungeführte Durchläufe (EXP3-S2, S4, S7) demonstrieren, dass Ausgaben ohne Grammatikmaskierung strukturell instabil sind (Freitextbeifügungen, mutierende JSON-Keys). Nur GBNF-Logit-Masking garantiert 0,00 % Syntaxfehler und ermöglicht die automatische Einspeisung in das Poppersche Verifikations-Gateway.
 
 ## 8. Latenzbudget und numerische Drift von Ergebnissen
@@ -788,21 +788,21 @@ T_{\text{total}} = T_{\text{retrieval}} + T_{\text{embedding}} + T_{\text{rerank
 ```
 
 wobei:
-- $`T_{\text{total}}`$ — die Gesamtdurchlaufzeit der Anfrage bis zur Rückgabe des verifizierten Evidenzpakets in Millisekunden ist ($\text{ms}$);
-- $`T_{\text{retrieval}}`$ — die Dauer des Faktenabrufs aus SQL-Datenbank und BM25-Volltextindex darstellt ($\text{ms}$, typisch $20-60\text{ ms}$);
-- $`T_{\text{embedding}}`$ — die Zeit für die Vektorisierung der Anfrage auf NPU oder CPU ist ($\text{ms}$, typisch $5-15\text{ ms}$);
-- $`T_{\text{reranking}}`$ — die Ausführungszeit des Cross-Encoder-Rerankings für Kandidatenchunks beziffert ($\text{ms}$, typisch $20-40\text{ ms}$ für 50 Kandidaten);
-- $`T_{\text{rules}}`$ — die deterministische Ausführungszeit der Rete-/Datalog-Regel-Engine auf der CPU ist ($\text{ms}$, typisch $2-10\text{ ms}$);
-- $`T_{\text{LLM}}`$ — die Dauer der autoregressiven Synthese der Erklärung durch das Sprachmodell darstellt ($\text{ms}$, üblicherweise $500-1500\text{ ms}$);
-- $`T_{\text{overhead}}`$ — den Overhead für IPC-Serialisierung, GBNF-Validierung, PROV-O-Hashing und Netzwerktransport umfasst ($\text{ms}$, typisch $5-20\text{ ms}$).
+- $T_{\text{total}}$ — die Gesamtdurchlaufzeit der Anfrage bis zur Rückgabe des verifizierten Evidenzpakets in Millisekunden ist ($\text{ms}$);
+- $T_{\text{retrieval}}$ — die Dauer des Faktenabrufs aus SQL-Datenbank und BM25-Volltextindex darstellt ($\text{ms}$, typisch $20-60\text{ ms}$);
+- $T_{\text{embedding}}$ — die Zeit für die Vektorisierung der Anfrage auf NPU oder CPU ist ($\text{ms}$, typisch $5-15\text{ ms}$);
+- $T_{\text{reranking}}$ — die Ausführungszeit des Cross-Encoder-Rerankings für Kandidatenchunks beziffert ($\text{ms}$, typisch $20-40\text{ ms}$ für 50 Kandidaten);
+- $T_{\text{rules}}$ — die deterministische Ausführungszeit der Rete-/Datalog-Regel-Engine auf der CPU ist ($\text{ms}$, typisch $2-10\text{ ms}$);
+- $T_{\text{LLM}}$ — die Dauer der autoregressiven Synthese der Erklärung durch das Sprachmodell darstellt ($\text{ms}$, üblicherweise $500-1500\text{ ms}$);
+- $T_{\text{overhead}}$ — den Overhead für IPC-Serialisierung, GBNF-Validierung, PROV-O-Hashing und Netzwerktransport umfasst ($\text{ms}$, typisch $5-20\text{ ms}$).
 
 **Praktische Anwendung und ingenieurtechnische Schlussfolgerungen:**
 1. Diese Gleichung bildet die Grundlage für OpenTelemetry-Traces und die Kontingentierung einzelner Verarbeitungsschritte.
-2. **Nicht-Additivität von Perzentilen (Gegenbeispiel):** Die Summe der Einzellatenz-Perzentile entspricht nicht dem Gesamtperzentil der Anfrage: $`\mathrm{p95}(T_{\text{total}}) \ne \sum \mathrm{p95}(T_k)`$. Benötigen zwei unabhängige Stufen mit einer Wahrscheinlichkeit von 0,95 jeweils 0 ms und mit 0,05 jeweils 100 ms, so beträgt das $\mathrm{p95}$ beider Stufen isoliert 0 ms. Die Wahrscheinlichkeit, dass beide gleichzeitig 0 ms benötigen, liegt jedoch nur bei $0{,}95 \times 0{,}95 = 0{,}9025$. Folglich beträgt das tatsächliche $`\mathrm{p95}(T_{\text{total}}) = 100\text{ ms}`$. SLAs müssen daher stets an der Gesamtverteilung unter Last validiert werden.
+2. **Nicht-Additivität von Perzentilen (Gegenbeispiel):** Die Summe der Einzellatenz-Perzentile entspricht nicht dem Gesamtperzentil der Anfrage: $\mathrm{p95}(T_{\text{total}}) \ne \sum \mathrm{p95}(T_k)$. Benötigen zwei unabhängige Stufen mit einer Wahrscheinlichkeit von 0,95 jeweils 0 ms und mit 0,05 jeweils 100 ms, so beträgt das $\mathrm{p95}$ beider Stufen isoliert 0 ms. Die Wahrscheinlichkeit, dass beide gleichzeitig 0 ms benötigen, liegt jedoch nur bei $0{,}95 \times 0{,}95 = 0{,}9025$. Folglich beträgt das tatsächliche $\mathrm{p95}(T_{\text{total}}) = 100\text{ ms}$. SLAs müssen daher stets an der Gesamtverteilung unter Last validiert werden.
 3. **Fail-Safe-Kriterien und Notfall-Gates:**
-   - Für interaktive Arbeitsplätze gilt typischerweise $`\mathrm{p95}(T_{\text{total}}) \le 1\,000\text{ ms}`$; für Echtzeit-Edge-Pfade $`\mathrm{p99}(T_{\text{total}}) \le 100\text{ ms}`$;
-   - Überschreitet $`T_{\text{retrieval}} + T_{\text{rules}} > 50\text{ ms}`$, weist dies auf SQLite-Tabellenfragmentierung oder Rete-Überlastung hin;
-   - Überschreitet $`T_{\text{LLM}} > 800\text{ ms}`$ (oder übersteigt die GPU-Warteschlange 3 Anfragen), greift ein Schutzautomat: Die generative Textausgabe wird abgebrochen und dem Benutzer unmittelbar der rein symbolische Beweisbaum (Regel-IDs, Normenparagraphen) übermittelt, um das SLA einzuhalten.
+   - Für interaktive Arbeitsplätze gilt typischerweise $\mathrm{p95}(T_{\text{total}}) \le 1\,000\text{ ms}$; für Echtzeit-Edge-Pfade $\mathrm{p99}(T_{\text{total}}) \le 100\text{ ms}$;
+   - Überschreitet $T_{\text{retrieval}} + T_{\text{rules}} > 50\text{ ms}$, weist dies auf SQLite-Tabellenfragmentierung oder Rete-Überlastung hin;
+   - Überschreitet $T_{\text{LLM}} > 800\text{ ms}$ (oder übersteigt die GPU-Warteschlange 3 Anfragen), greift ein Schutzautomat: Die generative Textausgabe wird abgebrochen und dem Benutzer unmittelbar der rein symbolische Beweisbaum (Regel-IDs, Normenparagraphen) übermittelt, um das SLA einzuhalten.
 
 ### 8.2. Messreglement und Autonomieanforderungen
 
@@ -897,16 +897,16 @@ Regressionstests vergleichen aktuelle Vektoren daher über Kosinus-Ähnlichkeit 
 ```
 
 wobei:
-- $`\vec{v}_{\text{now}} \in \mathbb{R}^d`$ — der Vektor des Chunks ist, erzeugt mit der aktuellen Runtime- oder Treiberversion;
-- $`\vec{v}_{\text{base}} \in \mathbb{R}^d`$ — der zertifizierte Referenzvektor (*Gold Baseline*) aus dem Versionsregister ist;
-- $`\vec{v}_{\text{now}} \cdot \vec{v}_{\text{base}} = \sum_{j=1}^d v_{\text{now}, j} \, v_{\text{base}, j}`$ — das Skalarprodukt beider Vektoren darstellt;
-- $`\|\vec{v}\| = \sqrt{\sum_{j=1}^d v_j^2}`$ — die euklidische $L_2$-Norm bezeichnet;
-- $`\tau_{\text{drift}}`$ — den normativ festgelegten Schwellenwert zulässiger numerischer Drift definiert ($`\tau_{\text{drift}} \in [0, 1]`$).
+- $\vec{v}_{\text{now}} \in \mathbb{R}^d$ — der Vektor des Chunks ist, erzeugt mit der aktuellen Runtime- oder Treiberversion;
+- $\vec{v}_{\text{base}} \in \mathbb{R}^d$ — der zertifizierte Referenzvektor (*Gold Baseline*) aus dem Versionsregister ist;
+- $\vec{v}_{\text{now}} \cdot \vec{v}_{\text{base}} = \sum_{j=1}^d v_{\text{now}, j} \, v_{\text{base}, j}$ — das Skalarprodukt beider Vektoren darstellt;
+- $\|\vec{v}\| = \sqrt{\sum_{j=1}^d v_j^2}$ — die euklidische $L_2$-Norm bezeichnet;
+- $\tau_{\text{drift}}$ — den normativ festgelegten Schwellenwert zulässiger numerischer Drift definiert ($\tau_{\text{drift}} \in [0, 1]$).
 
 **Praktische Anwendung und ingenieurtechnische Schlussfolgerungen:**
 1. Diese Prüfung wird in CI/CD-Pipelines vor jedem Ausrollen von Treiber-, ONNX- oder Firmware-Updates ausgeführt.
 2. **Schwellenwerte und Freigabe-Gates:**
-   - $`\cos \ge \tau_{\text{drift}} = 0{,}999`$: **VOLLSTÄNDIGE FREIGABE (Green Gate)**. Geringfügige Rundungseffekte; Freigabe ohne Reindizierung des Bestands;
+   - $\cos \ge \tau_{\text{drift}} = 0{,}999$: **VOLLSTÄNDIGE FREIGABE (Green Gate)**. Geringfügige Rundungseffekte; Freigabe ohne Reindizierung des Bestands;
    - $0{,}990 \le \cos < 0{,}999$: **QUARANTÄNE-STATUS (Yellow Gate)**. Pflicht zur Durchführung von Rangordnungstests (*Rank Inversion Tests*) an Sicherheitsrandfällen. Ändert sich die Top-5-Reihenfolge relevanter Fakten, wird das Release blockiert;
    - $\cos < 0{,}990$: **ABWEISUNG (Red Gate / Fail-Closed)**. Unzulässige semantische Drift, die Fehlentscheidungen der Inferenzmaschine auslösen kann. Das Update wird verworfen oder eine vollständige Reindizierung des Wissensbestands angeordnet.
 
@@ -957,35 +957,35 @@ flowchart LR
     class PC5 exitStyle;
 ```
 
-Da der Graph azyklisch ist, wird die maximale Länge jedes beliebigen Ausführungspfads streng durch die Anzahl der Befehle im geladenen Regelspeicherblock $`N_{\mathrm{rules}}`$ begrenzt. Die maximale Worst-Case-Ausführungszeit lässt sich in geschlossener analytischer Form exakt berechnen:
+Da der Graph azyklisch ist, wird die maximale Länge jedes beliebigen Ausführungspfads streng durch die Anzahl der Befehle im geladenen Regelspeicherblock $N_{\mathrm{rules}}$ begrenzt. Die maximale Worst-Case-Ausführungszeit lässt sich in geschlossener analytischer Form exakt berechnen:
 
 ```math
 T_{\mathrm{WCET}} = \sum_{i=1}^{M_{\mathrm{longest}}} t_{\mathrm{cycle}}(I_i) \le N_{\mathrm{rules}} \cdot \max_{k} \bigl( t_{\mathrm{cycle}}(I_k) \bigr)
 ```
 
 wobei:
-- $`T_{\mathrm{WCET}}`$ — die analytisch bewiesene maximale Ausführungszeit der Inferenzprozedur im ungünstigsten Fall ist, gemessen in Nanosekunden ($\text{ns}$) oder Mikrosekunden ($\mu\text{s}$);
-- $`M_{\mathrm{longest}}`$ — die Länge des kritischen (zeitlich längsten) Pfads im azyklischen DAG darstellt ($`M_{\mathrm{longest}} \le N_{\mathrm{rules}}`$);
-- $`t_{\mathrm{cycle}}(I_i)`$ — die feste Ausführungszeit der Instruktion $`I_i`$ in Prozessortakten multipliziert mit der Taktperiode $`T_{\mathrm{clk}} = 1 / F_{\mathrm{clk}}`$ ist;
-- $`N_{\mathrm{rules}}`$ — die Gesamtzahl der Befehle im statisch kompilierten Regelblock bezeichnet (vollständig im BRAM/UltraRAM des Hardwarebeschleunigers untergebracht);
-- $`\max_{k} \bigl( t_{\mathrm{cycle}}(I_k) \bigr)`$ — die maximale Ausführungslatenz des komplexesten Befehls in EISA angibt (für pipelinierte Wissensprozessoren gilt $`t_{\mathrm{cycle}} = 1`$ Takt dank fester Pipelinetiefe).
+- $T_{\mathrm{WCET}}$ — die analytisch bewiesene maximale Ausführungszeit der Inferenzprozedur im ungünstigsten Fall ist, gemessen in Nanosekunden ($\text{ns}$) oder Mikrosekunden ($\mu\text{s}$);
+- $M_{\mathrm{longest}}$ — die Länge des kritischen (zeitlich längsten) Pfads im azyklischen DAG darstellt ($M_{\mathrm{longest}} \le N_{\mathrm{rules}}$);
+- $t_{\mathrm{cycle}}(I_i)$ — die feste Ausführungszeit der Instruktion $I_i$ in Prozessortakten multipliziert mit der Taktperiode $T_{\mathrm{clk}} = 1 / F_{\mathrm{clk}}$ ist;
+- $N_{\mathrm{rules}}$ — die Gesamtzahl der Befehle im statisch kompilierten Regelblock bezeichnet (vollständig im BRAM/UltraRAM des Hardwarebeschleunigers untergebracht);
+- $\max_{k} \bigl( t_{\mathrm{cycle}}(I_k) \bigr)$ — die maximale Ausführungslatenz des komplexesten Befehls in EISA angibt (für pipelinierte Wissensprozessoren gilt $t_{\mathrm{cycle}} = 1$ Takt dank fester Pipelinetiefe).
 
 #### 8.4.1. Geschlossener Kreis der ingenieurtechnischen WCET-Berechnung und Verifikation
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
    - Der EISA-Compiler führt beim Erstellen des binären Regelpakets eine topologische Sortierung des Blockgraphen durch (Kahn-Algorithmus / Tarjan Topological Sort). Wird eine Rückwärtskante festgestellt (Regelschleife oder Rekursion), bricht die Kompilierung mit dem Fehler `CYCLIC_RULE_DEPENDENCY_DETECTED` ab;
-   - Auf Ebene des Hardware-Befehlsdecoders (Instruction Decoder im FPGA/ASIC) ist ein Hardware-Komparator integriert: Ist das Sprung-Offset-Bitfeld eines Befehls $`\mathrm{Offset} \le 0`$, löst der Baustein unverzüglich einen nicht maskierbaren Integritätsinterrupt `HARD_FAULT_ILLEGAL_BACKWARD_JUMP` aus und schaltet den Aktor innerhalb von 1 Taktzyklus in den Fail-Closed-Zustand;
-   - Gilt $`T_{\mathrm{WCET}} \le T_{\mathrm{FTTI\_budget}}`$, erhält der Regel-Mikrocode das Zertifizierungsprädikat für die Einbindung in den Flugsteuerungszyklus, ohne dass eine dynamische Latenzüberwachung durch Watchdog-Timer erforderlich ist.
+   - Auf Ebene des Hardware-Befehlsdecoders (Instruction Decoder im FPGA/ASIC) ist ein Hardware-Komparator integriert: Ist das Sprung-Offset-Bitfeld eines Befehls $\mathrm{Offset} \le 0$, löst der Baustein unverzüglich einen nicht maskierbaren Integritätsinterrupt `HARD_FAULT_ILLEGAL_BACKWARD_JUMP` aus und schaltet den Aktor innerhalb von 1 Taktzyklus in den Fail-Closed-Zustand;
+   - Gilt $T_{\mathrm{WCET}} \le T_{\mathrm{FTTI\_budget}}$, erhält der Regel-Mikrocode das Zertifizierungsprädikat für die Einbindung in den Flugsteuerungszyklus, ohne dass eine dynamische Latenzüberwachung durch Watchdog-Timer erforderlich ist.
 2. **Hardware-Dimensionierung und infrastrukturelle Randbedingungen (Hardware Dimensioning):**
-   - Die Größe des lokalen BRAM-Befehlsspeichers des Wissensprozessors wird so dimensioniert, dass der kritische Pfad $`N_{\mathrm{rules}}`$ ohne Rückgriff auf externen dynamischen DRAM-Speicher vollständig aufgenommen werden kann (Zero Cache Miss Jitter);
-   - Bei einer Kerntaktfrequenz von $`F_{\mathrm{clk}} = 200\,\text{MHz}`$ ($`T_{\mathrm{clk}} = 5\,\text{ns}`$) und einer FTTI-Vorgabe des automobilen Bremssystems von $`T_{\mathrm{FTTI}} = 100\,\mu\text{s}`$ ist der maximale Umfang des Regelblocks auf $`N_{\max\_instructions} = T_{\mathrm{FTTI}} / T_{\mathrm{clk}} = (100 \cdot 10^{-6}\,\text{s}) / (5 \cdot 10^{-9}\,\text{s}) = 20\,000`$ Instruktionen begrenzt.
+   - Die Größe des lokalen BRAM-Befehlsspeichers des Wissensprozessors wird so dimensioniert, dass der kritische Pfad $N_{\mathrm{rules}}$ ohne Rückgriff auf externen dynamischen DRAM-Speicher vollständig aufgenommen werden kann (Zero Cache Miss Jitter);
+   - Bei einer Kerntaktfrequenz von $F_{\mathrm{clk}} = 200\,\text{MHz}$ ($T_{\mathrm{clk}} = 5\,\text{ns}$) und einer FTTI-Vorgabe des automobilen Bremssystems von $T_{\mathrm{FTTI}} = 100\,\mu\text{s}$ ist der maximale Umfang des Regelblocks auf $N_{\max\_instructions} = T_{\mathrm{FTTI}} / T_{\mathrm{clk}} = (100 \cdot 10^{-6}\,\text{s}) / (5 \cdot 10^{-9}\,\text{s}) = 20\,000$ Instruktionen begrenzt.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   - Das bordeigene Kollisionsvermeidungssystem einer Drohne umfasst eine Regellogik, die in $`N_{\mathrm{rules}} = 1\,200`$ EISA-Instruktionen kompiliert ist.
-   - Die Hardware-Pipeline des Prozessors garantiert eine deterministische Ausführung von 1 Takt pro Befehl ($`t_{\mathrm{cycle}} = 1`$). Die Taktfrequenz der FPGA EPU beträgt $`F_{\mathrm{clk}} = 100\,\text{MHz}`$ ($`T_{\mathrm{clk}} = 10\,\text{ns}`$).
-   - Die Topologieanalyse des DAG identifiziert einen kritischen Pfad von $`M_{\mathrm{longest}} = 450`$ Instruktionen.
-   - Die Berechnung des deterministischen WCET ergibt $`T_{\mathrm{WCET}} = 450 \times 10\,\text{ns} = 4\,500\,\text{ns} = 4{,}5\,\mu\text{s}`$.
-   - Bei einem normativ vorgegebenen Notbrems-Latenzbudget von $`T_{\mathrm{budget}} = 50\,\mu\text{s}`$ berechnet sich der Sicherheitszeitfaktor zu:
-     $`K_{\mathrm{safety\_margin}} = 50\,\mu\text{s} / 4{,}5\,\mu\text{s} \approx 11{,}1`$.
+   - Das bordeigene Kollisionsvermeidungssystem einer Drohne umfasst eine Regellogik, die in $N_{\mathrm{rules}} = 1\,200$ EISA-Instruktionen kompiliert ist.
+   - Die Hardware-Pipeline des Prozessors garantiert eine deterministische Ausführung von 1 Takt pro Befehl ($t_{\mathrm{cycle}} = 1$). Die Taktfrequenz der FPGA EPU beträgt $F_{\mathrm{clk}} = 100\,\text{MHz}$ ($T_{\mathrm{clk}} = 10\,\text{ns}$).
+   - Die Topologieanalyse des DAG identifiziert einen kritischen Pfad von $M_{\mathrm{longest}} = 450$ Instruktionen.
+   - Die Berechnung des deterministischen WCET ergibt $T_{\mathrm{WCET}} = 450 \times 10\,\text{ns} = 4\,500\,\text{ns} = 4{,}5\,\mu\text{s}$.
+   - Bei einem normativ vorgegebenen Notbrems-Latenzbudget von $T_{\mathrm{budget}} = 50\,\mu\text{s}$ berechnet sich der Sicherheitszeitfaktor zu:
+     $K_{\mathrm{safety\_margin}} = 50\,\mu\text{s} / 4{,}5\,\mu\text{s} \approx 11{,}1$.
    - Ergebnis: Das System besitzt eine mehr als 11-fache Zeitreserve, was eine mathematische und hardwaretechnische Garantie gegen Fristüberschreitungen unter allen denkbaren Sensordatenkombinationen darstellt.
 
 > [!NOTE]
@@ -1149,7 +1149,7 @@ Die Ausführungsinfrastruktur beweisgestützter Expertensysteme erfordert eine s
 
 - **Mykola Fedchyk:**  
   *„Herr Professor John Hennessy, um Buskonflikte auf Hardwareebene zu beherrschen, erzwingen wir eine strikte Hardware-Ressourcenpartitionierung nach den Standards Intel RDT (Resource Director Technology) und ARM MPAM (Memory System Resource Partitioning and Monitoring).  
-  Dem Sicherheitskern und dem Hardware-Koprozessor werden dedizierte L3-Cache-Ways (Cache Allocation Technology, CAT) und eine garantierte Speicherbandbreite (Memory Bandwidth Allocation, MBA) zugewiesen. Hintergrund-Workloads neuronaler Netze werden auf Bus-Ebene gedrosselt, sobald sie ihr zugeteiltes Budget $`B_{\mathrm{cap}}`$ überschreiten.  
+  Dem Sicherheitskern und dem Hardware-Koprozessor werden dedizierte L3-Cache-Ways (Cache Allocation Technology, CAT) und eine garantierte Speicherbandbreite (Memory Bandwidth Allocation, MBA) zugewiesen. Hintergrund-Workloads neuronaler Netze werden auf Bus-Ebene gedrosselt, sobald sie ihr zugeteiltes Budget $B_{\mathrm{cap}}$ überschreiten.  
   Darüber hinaus erzwingt der Befehlssatz unseres Regelprozessors ausschließlich Vorwärtssprünge (Forward-Only Jumps), wodurch der Kontrollflussgraph (CFG) zu einem rein azyklischen DAG kollabiert. Dies liefert den mathematischen Beweis für schleifenfreie Terminierung in konstanter Taktzahl und macht die analytische WCET-Berechnung selbst unter maximaler Systemlast exakt und beweisbar.“*
 
 **Dialog mit Jim Keller: Statische Timing-Analyse (STA) und Bus-Bandbreite in physischem Silizium**
@@ -1172,7 +1172,7 @@ Die Ausführungsinfrastruktur beweisgestützter Expertensysteme erfordert eine s
   Deshalb integrieren unsere Hardware-Implementierungen auf Infineon-AURIX-Mikrocontrollern und strahlentoleranten Xilinx-UltraScale+-FPGAs drei physische Schutzebenen.  
   Erstens sind alle chipinternen BRAM-Blöcke und Pipelineregister durch hardwarebasierte SEC-DED-Kodierung (Single Error Correction, Double Error Detection) geschützt, die Ein-Bit-Fehler in 1 Takt korrigiert und bei Mehr-Bit-Fehlern sofort einen Trap auslöst.  
   Zweitens sind kritische Registerkaskaden und ALUs in Triple Modular Redundancy (TMR) mit Hardware-Mehrheitsentscheidern (Majority Voter) in jedem Takt synthetisiert.  
-  Drittens wird die statische Timing-Analyse (STA) für den extremen Worst-Case Slow Corner gerechnet ($`T_j = 125^\circ\text{C}`$ bei $`V_{\mathrm{core}} - 10\%`$). Selbst unter diesen Extrembedingungen hält unser systolisches Design einen positiven Puffer von über 1,4 ns. Tritt dennoch ein nicht korrigierbarer Siliziumfehler auf, schaltet ein Hardware-Watchdog den Aktor-Pfad in 1 Takt in den sicheren Zustand (Fail-Closed), wodurch die Ausführung unvalidierter Regeln absolut verhindert wird.“*
+  Drittens wird die statische Timing-Analyse (STA) für den extremen Worst-Case Slow Corner gerechnet ($T_j = 125^\circ\text{C}$ bei $V_{\mathrm{core}} - 10\%$). Selbst unter diesen Extrembedingungen hält unser systolisches Design einen positiven Puffer von über 1,4 ns. Tritt dennoch ein nicht korrigierbarer Siliziumfehler auf, schaltet ein Hardware-Watchdog den Aktor-Pfad in 1 Takt in den sicheren Zustand (Fail-Closed), wodurch die Ausführung unvalidierter Regeln absolut verhindert wird.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
 Die Ausführungsinfrastruktur beweisgestützter Systeme vereint die Leistungsfähigkeit heterogener Hardware mit mathematischer Determiniertheit: Hochdurchsatzfähige NPU-Adapter generieren Hypothesen in isolierten Adressräumen, während FPGA-Koprozessoren und deterministische CPU-Kerne Nanosekunden-Beweise unter vollständiger Einhaltung physikalischer Siliziumgrenzen garantieren.

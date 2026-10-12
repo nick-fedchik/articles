@@ -417,7 +417,7 @@ Interpreting these axioms:
 
 - $\textsf{SafetyRequirement}$ denotes the concept class of safety requirements, and $\textsf{Requirement}$ denotes the general class of requirements;
 - $\sqsubseteq$ denotes concept subsumption ("is a subclass of");
-- $`\exists\,\textsf{verifiedBy}.\textsf{VerificationTest}`$ designates the class of individuals possessing at least one relation `verifiedBy` pointing to an individual in class $\textsf{VerificationTest}$;
+- $\exists\,\textsf{verifiedBy}.\textsf{VerificationTest}$ designates the class of individuals possessing at least one relation `verifiedBy` pointing to an individual in class $\textsf{VerificationTest}$;
 - $\exists$ denotes existential quantification, and the period delimits the role and its filler class.
 
 The first axiom asserts that every safety requirement is a requirement. The second asserts that for every safety requirement, there exists at least one verification test. Under Web Ontology Language (OWL) semantics, the ontology remains fully consistent even if no named test instance is explicitly asserted: open-world semantics posits an unasserted "witness" individual. Thus, the absence of an explicit triple `REQ-42 verifiedBy TEST-17` does not trigger an inconsistency error. If an engineering release gate mandates the physical presence of this link within the active graph snapshot, that requirement must be verified via Shapes Constraint Language (SHACL) shapes [[3]](#src-3).
@@ -619,7 +619,7 @@ Where:
 - $q$ denotes the novel inquiry case, and $c$ denotes an archival precedent case;
 - $m$ denotes feature count, $j$ indexes attributes, and $w_j$ represents attribute weight;
 - $\mathrm{sim}_j(q_j,c_j)\in[0,1]$ denotes local attribute similarity (exact string match, normalized numerical distance, or embedding cosine similarity);
-- $`g(q,c)\in\{0,1\}`$ represents the binary applicability gate: evaluates to 1 when mandatory constraints are satisfied, and 0 otherwise;
+- $g(q,c)\in\{0,1\}$ represents the binary applicability gate: evaluates to 1 when mandatory constraints are satisfied, and 0 otherwise;
 - The sum of weighted similarities is normalized by total weights, while multiplication by $g(q,c)$ immediately zeroes the score upon constraint violation.
 
 **Runtime Decision Logic and Engineering CBR Thresholds:**
@@ -760,7 +760,7 @@ Where:
 
 - $N$ denotes forecast count, and $i$ indexes individual predictions;
 - $p_i\in[0,1]$ denotes the forecasted probability for event $i$;
-- $`y_i\in\{0,1\}`$ denotes the empirical outcome (1 if event occurred, 0 otherwise);
+- $y_i\in\{0,1\}$ denotes the empirical outcome (1 if event occurred, 0 otherwise);
 - $\sum$ aggregates squared prediction errors, normalized by $N$ to yield the mean.
 
 The score ranges within $[0,1]$, where lower values indicate superior calibration: 0 represents perfect deterministic foresight, while an uninformative constant prediction of 0.5 yields 0.25 on balanced outcomes.
@@ -1241,7 +1241,7 @@ Failure metrics must be isolated causally across the processing cascade: an ungr
 > *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
 **Chapter Thesis (Mykola Fedchyk):**  
-A modern knowledge base architecture for mission-critical systems must be founded upon strict neuro-symbolic dualism: a statistical neural processing pipeline of local SLMs extracts and ranks relevance (Relevance), while a deterministic symbolic EVM core based on typed micro-ontologies and immutable binary knowledge packs unyieldingly decides normative eligibility (Eligibility) within bounded $`O(1)`$ latency.
+A modern knowledge base architecture for mission-critical systems must be founded upon strict neuro-symbolic dualism: a statistical neural processing pipeline of local SLMs extracts and ranks relevance (Relevance), while a deterministic symbolic EVM core based on typed micro-ontologies and immutable binary knowledge packs unyieldingly decides normative eligibility (Eligibility) within bounded $O(1)$ latency.
 
 **Dialogue with Edward Feigenbaum: Decoupling Acquisition and Inference in the Rule Lifecycle**
 
@@ -1283,7 +1283,7 @@ A modern knowledge base architecture for mission-critical systems must be founde
   This enables modular safety verification (Modular Safety Case), where whole-vehicle safety properties are mathematically derived from local sub-theorems without risking runtime combinatorial explosion. We have translated the wisdom of your microtheories into the rigorous paradigm of contract-based design.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
-The neuro-symbolic typology of knowledge bases resolves classical AI paradoxes: statistical perception and local language models deliver rapid semantic routing (Relevance), while a strictly typed symbolic engine anchored in closed-world micro-ontologies guarantees formal mathematical proof, deterministic $`O(1)`$ query bounds, and legally unassailable verdicts (Eligibility).
+The neuro-symbolic typology of knowledge bases resolves classical AI paradoxes: statistical perception and local language models deliver rapid semantic routing (Relevance), while a strictly typed symbolic engine anchored in closed-world micro-ontologies guarantees formal mathematical proof, deterministic $O(1)$ query bounds, and legally unassailable verdicts (Eligibility).
 
 ## Conclusions
 

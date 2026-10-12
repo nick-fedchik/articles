@@ -568,28 +568,28 @@ Wird im Expertensystem ein Vokabular aktualisiert, eine Inferenzregel ergänzt o
 ```
 
 **Parameter und zulässige Wertebereiche:**
-- $Q$ — Referenzstichprobe ingenieurtechnischer Anfragen mit verifizierten Relevanz-Labels ($`\lvert Q \rvert \ge 100`$).
-- $`\mathrm{Rel} \subset \mathcal{D}`$ — Menge von Wissensbasis-Fragmenten, die zur Beantwortung der Anfrage $q$ normativ zwingend erforderlich sind ($`\lvert\mathrm{Rel}\rvert \ge 1`$).
-- $`\mathrm{Top}_k \subset \mathcal{D}`$ — Menge der ersten $k$ vom Retrieval-Adapter zurückgegebenen Treffer (mit $`k \in \{5, 10, 20\}`$).
-- $`\lvert\cdot\rvert`$ — Mächtigkeit einer Menge, $`\cap`$ — Schnittmengenoperation.
-- $`\mathrm{rank}_q \in \{1, 2, \dots, \lvert\mathcal{D}\rvert\}`$ — Position des ersten relevanten Fragments in der Trefferliste für Anfrage $q$. Wird innerhalb des Limits kein relevantes Fragment gefunden, wird der Term $`1/\mathrm{rank}_q`$ deterministisch auf 0 gesetzt.
-- $`\mathrm{Recall@}k \in [0, 1]`$ — Trefferquote (Anteil gefundener relevanter Normen an allen verbindlichen Normen).
-- $`\mathrm{Precision@}k \in [0, 1]`$ — Treffergenauigkeit (Anteil relevanter Fragmente im Fenster der $k$ Kandidaten).
-- $`\mathrm{MRR} \in [0, 1]`$ — mittlerer reziproker Rang (*Mean Reciprocal Rank*), quantifiziert die Zugriffsdistanz zum ersten wahren Fakt.
+- $Q$ — Referenzstichprobe ingenieurtechnischer Anfragen mit verifizierten Relevanz-Labels ($\lvert Q \rvert \ge 100$).
+- $\mathrm{Rel} \subset \mathcal{D}$ — Menge von Wissensbasis-Fragmenten, die zur Beantwortung der Anfrage $q$ normativ zwingend erforderlich sind ($\lvert\mathrm{Rel}\rvert \ge 1$).
+- $\mathrm{Top}_k \subset \mathcal{D}$ — Menge der ersten $k$ vom Retrieval-Adapter zurückgegebenen Treffer (mit $k \in \{5, 10, 20\}$).
+- $\lvert\cdot\rvert$ — Mächtigkeit einer Menge, $\cap$ — Schnittmengenoperation.
+- $\mathrm{rank}_q \in \{1, 2, \dots, \lvert\mathcal{D}\rvert\}$ — Position des ersten relevanten Fragments in der Trefferliste für Anfrage $q$. Wird innerhalb des Limits kein relevantes Fragment gefunden, wird der Term $1/\mathrm{rank}_q$ deterministisch auf 0 gesetzt.
+- $\mathrm{Recall@}k \in [0, 1]$ — Trefferquote (Anteil gefundener relevanter Normen an allen verbindlichen Normen).
+- $\mathrm{Precision@}k \in [0, 1]$ — Treffergenauigkeit (Anteil relevanter Fragmente im Fenster der $k$ Kandidaten).
+- $\mathrm{MRR} \in [0, 1]$ — mittlerer reziproker Rang (*Mean Reciprocal Rank*), quantifiziert die Zugriffsdistanz zum ersten wahren Fakt.
 
 **Praktischer Einsatz und ingenieurtechnische Entscheidungen:**
 - Die Berechnung erfolgt vollautomatisch in der nächtlichen Regressionspipeline bei jeder Aktualisierung der Suchindizes oder Modifikation der Gewichte des hybriden Rankings.
-- Qualitäts-Gate für den Release-Zulassungsprozess: Für sicherheitskritische Normenkorpora gelten die Schwellenwerte $`\mathrm{Recall@}5 \ge 0{,}98`$ und $`\mathrm{MRR} \ge 0{,}85`$.
-- Fällt $`\mathrm{Recall@}5 < 0{,}98`$, bricht die Deployment-Pipeline sofort mit dem Status `BUILD_BLOCKED_RETRIEVAL_REGRESSION` ab: Der Release der neuen Indexversion wird blockiert, da das Risiko, eine sicherheitskritische Anforderung zu übersehen, für Systeme der Klasse ASIL D unzulässig ist.
+- Qualitäts-Gate für den Release-Zulassungsprozess: Für sicherheitskritische Normenkorpora gelten die Schwellenwerte $\mathrm{Recall@}5 \ge 0{,}98$ und $\mathrm{MRR} \ge 0{,}85$.
+- Fällt $\mathrm{Recall@}5 < 0{,}98$, bricht die Deployment-Pipeline sofort mit dem Status `BUILD_BLOCKED_RETRIEVAL_REGRESSION` ab: Der Release der neuen Indexversion wird blockiert, da das Risiko, eine sicherheitskritische Anforderung zu übersehen, für Systeme der Klasse ASIL D unzulässig ist.
 
 **Numerisches Rechenbeispiel:**
-Für eine Testanfrage zur Konfiguration des Watchdog-Timers (WDT) fordert die Spezifikation $`\lvert\mathrm{Rel}\rvert = 4`$ verbindliche Fragmente. Im Fenster $k = 5$ werden 3 relevante Fragmente zurückgegeben ($`\lvert\mathrm{Rel} \cap \mathrm{Top}_5\rvert = 3`$), wobei das erste relevante Fragment auf Rang 2 erscheint ($`\mathrm{rank}_q = 2`$):
+Für eine Testanfrage zur Konfiguration des Watchdog-Timers (WDT) fordert die Spezifikation $\lvert\mathrm{Rel}\rvert = 4$ verbindliche Fragmente. Im Fenster $k = 5$ werden 3 relevante Fragmente zurückgegeben ($\lvert\mathrm{Rel} \cap \mathrm{Top}_5\rvert = 3$), wobei das erste relevante Fragment auf Rang 2 erscheint ($\mathrm{rank}_q = 2$):
 
 ```math
 \mathrm{Recall@}5 = \frac{3}{4} = 0{,}75, \qquad \mathrm{Precision@}5 = \frac{3}{5} = 0{,}60, \qquad \mathrm{RR}_q = \frac{1}{2} = 0{,}50
 ```
 
-Da $`\mathrm{Recall@}5 = 0{,}75 < 0{,}98`$, blockiert das Regressions-Gate das Update des Index und signalisiert den Verlust einer zwingend erforderlichen Spezifikationsklausel.
+Da $\mathrm{Recall@}5 = 0{,}75 < 0{,}98$, blockiert das Regressions-Gate das Update des Index und signalisiert den Verlust einer zwingend erforderlichen Spezifikationsklausel.
 
 Besitzen relevante Fragmente unterschiedliche rechtliche und technische Verbindlichkeit (zwingende Normvorgaben, empfohlene Praktiken, allgemeine Beschreibungen), greift eine rein binäre Relevanzbewertung zu kurz. Zur Berücksichtigung abgestufter Relevanzstufen wird der normalisierte diskontierte kumulative Gewinn nDCG (*Normalized Discounted Cumulative Gain*) nach Järvelin und Kekäläinen herangezogen [[20]](#src-20):
 
@@ -599,17 +599,17 @@ Besitzen relevante Fragmente unterschiedliche rechtliche und technische Verbindl
 ```
 
 **Parameter und zulässige Wertebereiche:**
-- $`i \in \{1, \dots, k\}`$ — Rangposition des Fragments in der Trefferliste.
-- $`\mathrm{rel}_i \in \{0, 1, 2, 3\}`$ — diskrete Relevanzstufe: 3 — zwingende Sicherheitsinvariante (Verletzung unzulässig), 2 — empfohlene Branchennorm, 1 — informativer Kontext, 0 — irrelevantes Rauschen.
-- $`\log_2(i+1)`$ — logarithmischer Diskontierungsfaktor (Positionsstrafe für nach hinten verschobene wichtige Fakten).
-- $`\mathrm{DCG@}k \in [0, \infty)`$ — diskontierter kumulativer Gewinn auf den ersten $k$ Rängen.
-- $`\mathrm{IDCG@}k \in (0, \infty)`$ — idealer Gewinn (*Ideal DCG*), berechnet über denselben Bewertungen, sortiert nach absteigender Relevanz. Ist $`\mathrm{IDCG@}k = 0`$, wird die Metrik bei $`\mathrm{DCG@}k = 0`$ als 1 definiert, andernfalls als 0.
-- $`\mathrm{nDCG@}k \in [0, 1]`$ — normalisierter Güteindex der Wissensordnung.
+- $i \in \{1, \dots, k\}$ — Rangposition des Fragments in der Trefferliste.
+- $\mathrm{rel}_i \in \{0, 1, 2, 3\}$ — diskrete Relevanzstufe: 3 — zwingende Sicherheitsinvariante (Verletzung unzulässig), 2 — empfohlene Branchennorm, 1 — informativer Kontext, 0 — irrelevantes Rauschen.
+- $\log_2(i+1)$ — logarithmischer Diskontierungsfaktor (Positionsstrafe für nach hinten verschobene wichtige Fakten).
+- $\mathrm{DCG@}k \in [0, \infty)$ — diskontierter kumulativer Gewinn auf den ersten $k$ Rängen.
+- $\mathrm{IDCG@}k \in (0, \infty)$ — idealer Gewinn (*Ideal DCG*), berechnet über denselben Bewertungen, sortiert nach absteigender Relevanz. Ist $\mathrm{IDCG@}k = 0$, wird die Metrik bei $\mathrm{DCG@}k = 0$ als 1 definiert, andernfalls als 0.
+- $\mathrm{nDCG@}k \in [0, 1]$ — normalisierter Güteindex der Wissensordnung.
 
 **Praktischer Einsatz und ingenieurtechnische Entscheidungen:**
 - Die Metrik verifiziert, ob sekundäre Informationsnotizen primäre Sicherheitsverbote in der Trefferliste verdrängen.
-- Schwellenwert des Qualitäts-Gates: $`\mathrm{nDCG@}10 \ge 0{,}92`$.
-- Fällt bei einer Referenzanfrage der Kategorie „funktionale Sicherheit“ eine zwingende Sicherheitsinvariante ($`\mathrm{rel}_i = 3`$) unter den dritten Rang ($i > 3$), registriert das System eine Prioritätsverletzung und weist den Retrieval-Encoder zur Re-Kalibrierung zurück.
+- Schwellenwert des Qualitäts-Gates: $\mathrm{nDCG@}10 \ge 0{,}92$.
+- Fällt bei einer Referenzanfrage der Kategorie „funktionale Sicherheit“ eine zwingende Sicherheitsinvariante ($\mathrm{rel}_i = 3$) unter den dritten Rang ($i > 3$), registriert das System eine Prioritätsverletzung und weist den Retrieval-Encoder zur Re-Kalibrierung zurück.
 
 **Evaluierung der Textgenerierung.** Formuliert ein Sprachmodell Erläuterungstexte, werden drei Eigenschaften aus dem RAGAS-Framework evaluiert [[21]](#src-21): Faktentreue (*faithfulness*), d. h. ob der bereitgestellte Kontext jede Aussage der Antwort formal stützt; Relevanz der Antwort bezüglich der Anfrage; Relevanz des selektierten Kontexts bezüglich der Anfrage.
 
@@ -621,29 +621,29 @@ Besitzen relevante Fragmente unterschiedliche rechtliche und technische Verbindl
 
 **Parameter und zulässige Wertebereiche:**
 - $M \in \mathbb{N}$ — Anzahl der Wahrscheinlichkeitsintervalle (Bins) im Intervall $[0, 1]$ (Standard-Ingenieurwert $M = 10$, Schrittweite 0,1).
-- $m \in \{1, \dots, M\}$ — Index des Intervalls $`I_m = \left(\frac{m-1}{M}, \frac{m}{M}\right]`$.
+- $m \in \{1, \dots, M\}$ — Index des Intervalls $I_m = \left(\frac{m-1}{M}, \frac{m}{M}\right]$.
 - $B_m$ — Menge von Teststichproben, deren vorhergesagte Konfidenz in das Intervall $I_m$ fällt.
-- $n$ — Gesamtanzahl geprüfter Stichproben ($`n = \sum_{m=1}^M \lvert B_m \rvert`$).
-- $`\lvert B_m \rvert/n \in [0, 1]`$ — statistisches Gewicht des Intervalls $m$.
-- $`\mathrm{acc}(B_m) = \frac{1}{\lvert B_m \rvert} \sum_{i \in B_m} \mathbf{1}(\hat y_i = y_i) \in [0, 1]`$ — empirische Genauigkeit der Vorhersagen in Bin $m$ (wobei $\mathbf{1}$ die Indikatorfunktion darstellt).
-- $`\mathrm{conf}(B_m) = \frac{1}{\lvert B_m \rvert} \sum_{i \in B_m} \hat p_i \in [0, 1]`$ — mittlere Konfidenz des Modells in Bin $m$.
-- $`\mathrm{ECE} \in [0, 1]`$ — erwarteter Kalibrierungsfehler (ausgedrückt als Anteil oder Prozentsatz).
+- $n$ — Gesamtanzahl geprüfter Stichproben ($n = \sum_{m=1}^M \lvert B_m \rvert$).
+- $\lvert B_m \rvert/n \in [0, 1]$ — statistisches Gewicht des Intervalls $m$.
+- $\mathrm{acc}(B_m) = \frac{1}{\lvert B_m \rvert} \sum_{i \in B_m} \mathbf{1}(\hat y_i = y_i) \in [0, 1]$ — empirische Genauigkeit der Vorhersagen in Bin $m$ (wobei $\mathbf{1}$ die Indikatorfunktion darstellt).
+- $\mathrm{conf}(B_m) = \frac{1}{\lvert B_m \rvert} \sum_{i \in B_m} \hat p_i \in [0, 1]$ — mittlere Konfidenz des Modells in Bin $m$.
+- $\mathrm{ECE} \in [0, 1]$ — erwarteter Kalibrierungsfehler (ausgedrückt als Anteil oder Prozentsatz).
 
 **Praktischer Einsatz und ingenieurtechnische Entscheidungen:**
 - Der ECE wird im Rahmen des Qualifikationsaudits von Faktenklassifikatoren vor deren Integration in den Befüllungspfad berechnet.
-- Ingenieurtechnische Grenze: Für Systeme mit autonomer Faktenzulassung ist $`\mathrm{ECE} \le 0{,}03`$ (3 %) vorgeschrieben.
-- Übersteigt $`\mathrm{ECE} > 0{,}05`$, gelten die Konfidenzwerte des Modells als unkalibriert. Sie dürfen **unter keinen Umständen** als Schwellenwerte für das automatische Auslösen von Inferenzregeln herangezogen werden. Das Modell erfordert ein Post-Processing via Temperaturskalierung (*Temperature Scaling*) oder isotonische Regression; bis zur Re-Kalibrierung müssen alle extrahierten Fakten der obligatorischen menschlichen Prüfung (*Human-in-the-Loop*) unterzogen werden.
+- Ingenieurtechnische Grenze: Für Systeme mit autonomer Faktenzulassung ist $\mathrm{ECE} \le 0{,}03$ (3 %) vorgeschrieben.
+- Übersteigt $\mathrm{ECE} > 0{,}05$, gelten die Konfidenzwerte des Modells als unkalibriert. Sie dürfen **unter keinen Umständen** als Schwellenwerte für das automatische Auslösen von Inferenzregeln herangezogen werden. Das Modell erfordert ein Post-Processing via Temperaturskalierung (*Temperature Scaling*) oder isotonische Regression; bis zur Re-Kalibrierung müssen alle extrahierten Fakten der obligatorischen menschlichen Prüfung (*Human-in-the-Loop*) unterzogen werden.
 
 **Numerisches Rechenbeispiel zur Kalibrierung:**
 Ein Testdatensatz von $n = 1\,000$ Defektklassifikationen wird in 2 aggregierte Bins unterteilt:
-- Bin 1 ($I_1$): $`\lvert B_1 \rvert = 600`$, mittlere Konfidenz $\mathrm{conf} = 0{,}92$, tatsächliche Genauigkeit $\mathrm{acc} = 0{,}90$;
-- Bin 2 ($I_2$): $`\lvert B_2 \rvert = 400`$, mittlere Konfidenz $\mathrm{conf} = 0{,}70$, tatsächliche Genauigkeit $\mathrm{acc} = 0{,}68$.
+- Bin 1 ($I_1$): $\lvert B_1 \rvert = 600$, mittlere Konfidenz $\mathrm{conf} = 0{,}92$, tatsächliche Genauigkeit $\mathrm{acc} = 0{,}90$;
+- Bin 2 ($I_2$): $\lvert B_2 \rvert = 400$, mittlere Konfidenz $\mathrm{conf} = 0{,}70$, tatsächliche Genauigkeit $\mathrm{acc} = 0{,}68$.
 
 ```math
 \mathrm{ECE} = \frac{600}{1000} \cdot \lvert 0{,}90 - 0{,}92 \rvert + \frac{400}{1000} \cdot \lvert 0{,}68 - 0{,}70 \rvert = 0{,}6 \cdot 0{,}02 + 0{,}4 \cdot 0{,}02 = 0{,}012 + 0{,}008 = 0{,}020
 ```
 
-Da $`\mathrm{ECE} = 0{,}020 \le 0{,}030`$, erfüllt der Klassifikator die Kriterien für den autonomen Produktiveinsatz.
+Da $\mathrm{ECE} = 0{,}020 \le 0{,}030$, erfüllt der Klassifikator die Kriterien für den autonomen Produktiveinsatz.
 
 > [!WARNING] Die Übervertrauensfalle (*Overconfidence*) in kritischen Systemen
 > Moderne tiefe neuronale Netze und LLMs leiden unter systematischer Überkonfidenz: Ein Modell deklariert `conf = 0.99` für eine Hypothese, deren empirische Genauigkeit kaum `acc = 0.65` erreicht. In sicherheitskritischen Anwendungen (ISO 26262 ASIL D, DO-178C DAL A) erzeugt dies eine gefährliche Scheinsicherheit: Filter leiten ungeprüfte Artefakte am prüfenden Ingenieur vorbei. Ohne vorherige Kalibrierung der Wahrscheinlichkeiten (z. B. durch Temperaturskalierung *Temperature Scaling* oder isotonische Regression) dürfen Roh-Scores von Klassifikatoren **unter keinen Umständen** als Schwellenkriterien für Release-Freigaben herangezogen werden.

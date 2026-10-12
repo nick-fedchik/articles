@@ -16,7 +16,7 @@ Any production-grade knowledge base inevitably confronts the fundamental challen
 - **Generative Large Language Models (LLMs):** populate knowledge voids with unconstrained, plausible confabulations (hallucinations), distorting engineering standards and safety mandates.
 - **Classical Deductive Engines under the Closed-World Assumption (CWA):** collapse into categorical refusals (*fail-closed nonanswers*), leaving engineers and operators without actionable guidance for further investigation.
 
-This chapter presents an architectural breakthrough for evidence-governed expert systems: coupling deterministic multi-hop relational discovery, abductive synthesis of working hypotheses, and interactive Socratic dialogue. First, the chapter formalizes the classical triad of reasoning within the runtime architecture: **Concepts → Judgments → Inferences**, establishing a domain-agnostic knowledge representation across technical protocols, statutory legislation, and functional safety standards (ISO 26262/21434). Second, it details a bidirectional bounded path discovery algorithm (Bidirectional Bounded Path Discovery, $`k \le 6`$) backed by composite byte-level evidence chains alongside an association rule induction engine leveraging AMIE PCA metrics.
+This chapter presents an architectural breakthrough for evidence-governed expert systems: coupling deterministic multi-hop relational discovery, abductive synthesis of working hypotheses, and interactive Socratic dialogue. First, the chapter formalizes the classical triad of reasoning within the runtime architecture: **Concepts → Judgments → Inferences**, establishing a domain-agnostic knowledge representation across technical protocols, statutory legislation, and functional safety standards (ISO 26262/21434). Second, it details a bidirectional bounded path discovery algorithm (Bidirectional Bounded Path Discovery, $k \le 6$) backed by composite byte-level evidence chains alongside an association rule induction engine leveraging AMIE PCA metrics.
 
 Subsequent sections operationalize Charles Sanders Peirce's abduction as a legitimate mechanism for generating working hypotheses: the engine analyzes boundary gap topology, shared contexts, and relation taxonomies to formulate conjectures that explicitly specify the **Missing Premise**. The Hypothesis Isolation Invariant strictly guarantees that no conjectural premise can ever masquerade as an established categorical fact. Finally, the chapter presents a Socratic questioning architecture that translates epistemic gaps into typed choice alternatives for operator intervention, accompanied by a production-ready, fully verified Go implementation.
 
@@ -53,8 +53,8 @@ flowchart TD
     class REF ref;
 ```
 
-1. **Complete Deductive Chain (Deductive Closure):** A sequence of normative assertions $`A \xrightarrow{r_1} X_1 \xrightarrow{r_2} \dots \xrightarrow{r_k} B`$ exists where every edge is substantiated by a byte-level citation from a primary source. The system emits a categorical `KindAnswer` with a composite evidence chain ([Chapter 19](ch19-from-question-to-evidence.md)).
-2. **Inference Gap with Contextual Overlap (Epistemic Gap):** Entities $`A`$ and $`B`$ are recognized, co-occur within shared regulatory instruments, or share common neighbor entities $`M`$, yet lack an explicit normative edge connecting them.
+1. **Complete Deductive Chain (Deductive Closure):** A sequence of normative assertions $A \xrightarrow{r_1} X_1 \xrightarrow{r_2} \dots \xrightarrow{r_k} B$ exists where every edge is substantiated by a byte-level citation from a primary source. The system emits a categorical `KindAnswer` with a composite evidence chain ([Chapter 19](ch19-from-question-to-evidence.md)).
+2. **Inference Gap with Contextual Overlap (Epistemic Gap):** Entities $A$ and $B$ are recognized, co-occur within shared regulatory instruments, or share common neighbor entities $M$, yet lack an explicit normative edge connecting them.
 3. **Complete Disconnection (Semantic Disjunction):** The entities inhabit mutually disjoint semantic scopes, or at least one is entirely absent from verified repository sources.
 
 In State 2, probabilistic Large Language Models (LLMs) emit perilous hallucinations: they synthesize smooth, authoritative prose that fabricates nonexistent clauses of standards or legal articles. Conversely, legacy symbolic systems collapsed into uninformative `refusal` verdicts ("no data found"), compelling engineers to sift manually through gigabytes of technical documentation.
@@ -123,23 +123,23 @@ A **judgment** constitutes the minimal atomic unit of truth within the knowledge
 J = \langle S, R, V, \text{DocID}, [\beta_{\text{start}}, \beta_{\text{end}}], \text{SHA256}_{\text{quote}}, \mathcal{M} \rangle
 ```
 
-where $`S`$ denotes the subject concept, $`R`$ is the normative relation predicate, $`V`$ is the object concept or literal value, $`\text{DocID}`$ designates the immutable source document, $`[\beta_{\text{start}}, \beta_{\text{end}}]`$ specifies exact physical byte offsets within the file, and $`\mathcal{M}`$ represents the deontic modality (MUST, SHALL, MAY). Any proposition lacking physical byte grounding is categorically rejected by the admission gateway.
+where $S$ denotes the subject concept, $R$ is the normative relation predicate, $V$ is the object concept or literal value, $\text{DocID}$ designates the immutable source document, $[\beta_{\text{start}}, \beta_{\text{end}}]$ specifies exact physical byte offsets within the file, and $\mathcal{M}$ represents the deontic modality (MUST, SHALL, MAY). Any proposition lacking physical byte grounding is categorically rejected by the admission gateway.
 
 ### 2.3. Inferences (Conclusions)
 An **inference** represents the derived outcome of executing deterministic rules across a set of premise judgments. Governed by evidence completeness and relational structure, inferences are partitioned into three categories:
-1. **Deductive Inference** ($`\text{Confidence} = 1.0`$): A logically necessary entailment of premises (syllogism, transitive closure, proven path).
-2. **Abductive Inference** ($`0.0 < \text{Confidence} < 1.0`$): The formulation of a plausible working hypothesis to account for an observed relational gap between verified facts.
-3. **Inductive Inference** ($`0.0 < \text{Confidence} < 1.0`$): The generalization of statistical regularities discovered across the fact base into candidate association rules.
+1. **Deductive Inference** ($\text{Confidence} = 1.0$): A logically necessary entailment of premises (syllogism, transitive closure, proven path).
+2. **Abductive Inference** ($0.0 < \text{Confidence} < 1.0$): The formulation of a plausible working hypothesis to account for an observed relational gap between verified facts.
+3. **Inductive Inference** ($0.0 < \text{Confidence} < 1.0$): The generalization of statistical regularities discovered across the fact base into candidate association rules.
 
 ---
 
 ## 3. Deterministic Multi-Hop Relational Analysis
 
-To resolve queries of the form "How are entity $`A`$ and entity $`B`$ connected?", the knowledge base is modeled as a directed multigraph $`\mathcal{G} = (\mathcal{V}, \mathcal{E})`$, where vertices $`\mathcal{V}`$ represent concepts and normalized literals, and edges $`\mathcal{E}`$ correspond to verified predicate judgments.
+To resolve queries of the form "How are entity $A$ and entity $B$ connected?", the knowledge base is modeled as a directed multigraph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$, where vertices $\mathcal{V}$ represent concepts and normalized literals, and edges $\mathcal{E}$ correspond to verified predicate judgments.
 
 ### 3.1. Bidirectional Bounded Breadth-First Search (Bidirectional Bounded BFS)
 
-Standard unidirectional breadth-first search across high-degree graphs triggers combinatorial explosion with complexity $`\mathcal{O}(b^d)`$. The reference architecture employs a **Bidirectional Bounded BFS**, simultaneously expanding a forward frontier from source node $`A`$ and a backward frontier from target node $`B`$ with an enforced depth limit of $`k \le 6`$:
+Standard unidirectional breadth-first search across high-degree graphs triggers combinatorial explosion with complexity $\mathcal{O}(b^d)$. The reference architecture employs a **Bidirectional Bounded BFS**, simultaneously expanding a forward frontier from source node $A$ and a backward frontier from target node $B$ with an enforced depth limit of $k \le 6$:
 
 ```mermaid
 flowchart LR
@@ -167,12 +167,12 @@ flowchart LR
 
 The traversal algorithm enforces three mandatory architectural invariants:
 1. **Cycle Guard Invariant:** Traversal state retains a visited bitmask or hash set tracking nodes along the current candidate branch. Any transition cycling back to an already visited vertex is pruned immediately.
-2. **Inverse Traversal Invariant:** If the knowledge base records an asserted judgment $`J = (S, R, V)`$, reverse graph traversal admits a backward step from $`V`$ to $`S`$ labeled with the inverted predicate `inverse_of(R)`. This enables discovery of symmetric linkages where both target entities share a common subject or object.
+2. **Inverse Traversal Invariant:** If the knowledge base records an asserted judgment $J = (S, R, V)$, reverse graph traversal admits a backward step from $V$ to $S$ labeled with the inverted predicate `inverse_of(R)`. This enables discovery of symmetric linkages where both target entities share a common subject or object.
 3. **Deterministic Ordering Invariant:** Discovered paths are sorted primarily in ascending order of hop count; ties among paths of equal length are broken deterministically via lexicographical ordering over relation names and source document identifiers.
 
 ### 3.2. Composite Path Evidence
 
-A discovered path $`\mathcal{P} = (h_1, h_2, \dots, h_m)`$ of length $`m`$ hops is epistemically valid if and only if every constituent edge $`h_i`$ independently satisfies the byte-level verification invariant. The runtime synthesizes a composite citation structure encapsulating an ordered vector of verified citations:
+A discovered path $\mathcal{P} = (h_1, h_2, \dots, h_m)$ of length $m$ hops is epistemically valid if and only if every constituent edge $h_i$ independently satisfies the byte-level verification invariant. The runtime synthesizes a composite citation structure encapsulating an ordered vector of verified citations:
 
 ```math
 \text{EvidenceChain}(\mathcal{P}) = \left[ \text{Cite}(J_1), \text{Cite}(J_2), \dots, \text{Cite}(J_m) \right]
@@ -208,51 +208,51 @@ r_1(X, Y) \land r_2(Y, Z) \implies r_3(X, Z)
 
 *(Example: "If component X belongs to subsystem Y, and Y is certified under standard Z, then X is governed by Z")*
 
-The classical Closed-World Assumption (CWA) treats every absent relation as false, which is fundamentally invalid for open-world knowledge graphs. In contrast, the Partial Completeness Assumption asserts: *if entity $`X`$ possesses at least one asserted relation $`r`$ with some object $`Y`$ in the knowledge base such that $`r(X, Y)`$ holds, then the base contains all true objects for the pair $`(X, r)`$*.
+The classical Closed-World Assumption (CWA) treats every absent relation as false, which is fundamentally invalid for open-world knowledge graphs. In contrast, the Partial Completeness Assumption asserts: *if entity $X$ possesses at least one asserted relation $r$ with some object $Y$ in the knowledge base such that $r(X, Y)$ holds, then the base contains all true objects for the pair $(X, r)$*.
 
 ### 4.2. Quality Metrics for Induced Rules
 
-The epistemic validity of an induced candidate rule $`\mathcal{R}: \mathcal{B} \implies r(X, Y)`$ is quantitatively assessed using three deterministic metrics:
+The epistemic validity of an induced candidate rule $\mathcal{R}: \mathcal{B} \implies r(X, Y)$ is quantitatively assessed using three deterministic metrics:
 
 #### 4.2.1. Absolute Support
 
-The number of unique entity pairs $`(X, Y)`$ satisfying both the rule body $`\mathcal{B}`$ and the head relation $`r(X, Y)`$ across the graph:
+The number of unique entity pairs $(X, Y)$ satisfying both the rule body $\mathcal{B}$ and the head relation $r(X, Y)$ across the graph:
 
 ```math
 \mathrm{Supp}(\mathcal{R}) = \lvert \{ (X, Y) : \mathcal{B} \land r(X, Y) \} \rvert
 ```
 
-where $`\lvert \{ (X, Y) \} \rvert`$ represents the set cardinality of linked pairs, expressed as a non-negative integer ($`\mathrm{Supp}(\mathcal{R}) \in \mathbb{N}_0`$).
+where $\lvert \{ (X, Y) \} \rvert$ represents the set cardinality of linked pairs, expressed as a non-negative integer ($\mathrm{Supp}(\mathcal{R}) \in \mathbb{N}_0$).
 
 #### 4.2.2. PCA Confidence
 
-Under the Partial Completeness Assumption, the confidence denominator is restricted strictly to instances where subject $`X`$ has at least one verified relation $`r`$ within the knowledge base:
+Under the Partial Completeness Assumption, the confidence denominator is restricted strictly to instances where subject $X$ has at least one verified relation $r$ within the knowledge base:
 
 ```math
 \mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) = \frac{\lvert \{ (X, Y) : \mathcal{B} \land r(X, Y) \} \rvert}{\lvert \{ (X, Y) : \mathcal{B} \land \exists Y' (r(X, Y')) \} \rvert}
 ```
 
-where $`\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) \in [0, 1]`$ provides a normalized index of statistical validity under incomplete, yet internally consistent, evidence.
+where $\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) \in [0, 1]$ provides a normalized index of statistical validity under incomplete, yet internally consistent, evidence.
 
 #### 4.2.3. Head Coverage
 
-The proportion of known relation instances $`r`$ in the knowledge base that can be derived or explained by the induced rule:
+The proportion of known relation instances $r$ in the knowledge base that can be derived or explained by the induced rule:
 
 ```math
 \mathrm{HC}(\mathcal{R}) = \frac{\mathrm{Supp}(\mathcal{R})}{\lvert \{ (X, Y) : r(X, Y) \} \rvert}
 ```
 
-where $`\mathrm{HC}(\mathcal{R}) \in [0, 1]`$ measures the rule's generalization breadth.
+where $\mathrm{HC}(\mathcal{R}) \in [0, 1]$ measures the rule's generalization breadth.
 
 #### 4.2.4. Closed-Loop Decision
 
 - **Rule Admission and Automatic Certification Criteria:**
-  - $`\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) \ge 0.90`$ at $`\mathrm{Supp}(\mathcal{R}) \ge 10`$: **Automatic Induction**. The candidate rule is committed to the derived layer of the knowledge base (`INFERRED_RULE`) with `VerifiedCandidate` status and admitted to production query evaluation;
-  - $`0.70 \le \mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) < 0.90`$ (at $`\mathrm{Supp}(\mathcal{R}) \ge 3`$): **Quarantine Hypothesis**. The candidate receives `QUARANTINE_HYPOTHESIS` status and is routed to a Socratic review session with a domain specialist or requires corroborating abductive validation;
-  - $`\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) < 0.70`$ or $`\mathrm{Supp}(\mathcal{R}) < 3`$: **Unconditional Rejection**. The candidate is classified as statistical noise or an artifact of sample sparsity and pruned from the candidate queue.
+  - $\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) \ge 0.90$ at $\mathrm{Supp}(\mathcal{R}) \ge 10$: **Automatic Induction**. The candidate rule is committed to the derived layer of the knowledge base (`INFERRED_RULE`) with `VerifiedCandidate` status and admitted to production query evaluation;
+  - $0.70 \le \mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) < 0.90$ (at $\mathrm{Supp}(\mathcal{R}) \ge 3$): **Quarantine Hypothesis**. The candidate receives `QUARANTINE_HYPOTHESIS` status and is routed to a Socratic review session with a domain specialist or requires corroborating abductive validation;
+  - $\mathrm{Conf}_{\mathrm{PCA}}(\mathcal{R}) < 0.70$ or $\mathrm{Supp}(\mathcal{R}) < 3$: **Unconditional Rejection**. The candidate is classified as statistical noise or an artifact of sample sparsity and pruned from the candidate queue.
 - **Hardware Sizing and Background Compute Budgeting:**
-  - The AMIE rule mining process exhibits computational complexity $`\mathcal{O}(\lvert\mathcal{E}\rvert \cdot d_{\max}^{k-1})`$, where $`\lvert\mathcal{E}\rvert`$ represents total edge count, $`d_{\max}`$ is the maximum node degree, and $`k`$ denotes maximum rule length;
-  - To prevent memory exhaustion, rule depth is bounded at $`k \le 3`$, worker execution timeout is set to $`300\,\text{s}`$ per target relation $`r`$, and dedicated RAM allocated for the in-memory graph index is capped at $`4\,\text{GB}`$.
+  - The AMIE rule mining process exhibits computational complexity $\mathcal{O}(\lvert\mathcal{E}\rvert \cdot d_{\max}^{k-1})$, where $\lvert\mathcal{E}\rvert$ represents total edge count, $d_{\max}$ is the maximum node degree, and $k$ denotes maximum rule length;
+  - To prevent memory exhaustion, rule depth is bounded at $k \le 3$, worker execution timeout is set to $300\,\text{s}$ per target relation $r$, and dedicated RAM allocated for the in-memory graph index is capped at $4\,\text{GB}$.
 - **Worked Numerical Example:**
   Consider a transitive rule candidate evaluated over a safety certification graph:
 
@@ -260,9 +260,9 @@ where $`\mathrm{HC}(\mathcal{R}) \in [0, 1]`$ measures the rule's generalization
 \mathrm{HasSubsystem}(X, Y) \land \mathrm{CompliesWith}(Y, Z) \implies \mathrm{RequiresAudit}(X, Z)
 ```
 
-  Recorded parameters: $`\mathrm{Supp}(\mathcal{R}) = 18`$ systems satisfying both premises and conclusion. The total number of systems with components for which the knowledge base records any audit requirements $`\exists Z' (\mathrm{RequiresAudit}(X, Z'))`$ equals $`20`$.
-  Calculation: $`\mathrm{Conf}_{\mathrm{PCA}} = 18 / 20 = 0.90 \ge 0.90`$, $`\mathrm{Supp}(\mathcal{R}) = 18 \ge 10`$.
-  **System Action:** The rule clears the automatic certification threshold and is integrated into the deductive inference engine with an operational confidence weight of $`0.90`$.
+  Recorded parameters: $\mathrm{Supp}(\mathcal{R}) = 18$ systems satisfying both premises and conclusion. The total number of systems with components for which the knowledge base records any audit requirements $\exists Z' (\mathrm{RequiresAudit}(X, Z'))$ equals $20$.
+  Calculation: $\mathrm{Conf}_{\mathrm{PCA}} = 18 / 20 = 0.90 \ge 0.90$, $\mathrm{Supp}(\mathcal{R}) = 18 \ge 10$.
+  **System Action:** The rule clears the automatic certification threshold and is integrated into the deductive inference engine with an operational confidence weight of $0.90$.
 
 ---
 
@@ -278,7 +278,7 @@ The American philosopher and logician Charles Sanders Peirce established abducti
 \frac{\text{The surprising fact } C \text{ is observed}; \quad \text{If } H \text{ were true, } C \text{ would be a matter of course}}{\text{Hence, there is reason to suspect that } H \text{ is true}}
 ```
 
-In evidence-governed expert systems, observed fact $`C`$ represents an unresolved relational query between $`A`$ and $`B`$ accompanied by partial contextual evidence, whereas hypothesis $`H`$ denotes the existence of a missing intermediate premise.
+In evidence-governed expert systems, observed fact $C$ represents an unresolved relational query between $A$ and $B$ accompanied by partial contextual evidence, whereas hypothesis $H$ denotes the existence of a missing intermediate premise.
 
 ```mermaid
 flowchart TD
@@ -305,29 +305,29 @@ flowchart TD
 ### 5.2. Topological Heuristics for Hypothesis Generation
 
 #### 5.2.1. Shared Neighbor Strategy (Bridge Entity)
-The engine queries for an intermediate vertex $`M \in \mathcal{V}`$ satisfying:
+The engine queries for an intermediate vertex $M \in \mathcal{V}$ satisfying:
 
 ```math
 (A \leftrightarrow M) \in \mathcal{E} \quad \land \quad (M \leftrightarrow B) \in \mathcal{E}
 ```
 
-When entity $`M`$ serves as an intermediary, the system synthesizes a hypothesis:
-*"The relationship between A and B is likely mediated by entity M. Categorical proof lacks an explicit normative transitivity rule over relations $`r_1`$ and $`r_2`$ through concept M"*.
-The assigned plausibility confidence for such bridge hypotheses defaults to $`\text{Confidence} \approx 0.75`$.
+When entity $M$ serves as an intermediary, the system synthesizes a hypothesis:
+*"The relationship between A and B is likely mediated by entity M. Categorical proof lacks an explicit normative transitivity rule over relations $r_1$ and $r_2$ through concept M"*.
+The assigned plausibility confidence for such bridge hypotheses defaults to $\text{Confidence} \approx 0.75$.
 
 #### 5.2.2. Document Co-occurrence Strategy
-In the absence of shared intermediate nodes, the engine determines whether $`A`$ and $`B`$ co-occur within propositions extracted from a common regulatory document $`\mathcal{D}`$:
+In the absence of shared intermediate nodes, the engine determines whether $A$ and $B$ co-occur within propositions extracted from a common regulatory document $\mathcal{D}$:
 
 ```math
 \exists J_1, J_2 : J_1.\text{Subject} = A \land J_2.\text{Subject} = B \land J_1.\text{Source} = J_2.\text{Source} = \mathcal{D}
 ```
 
 The system formulates the following hypothesis:
-*"Entities A and B co-occur within normative document $`\mathcal{D}`$, but lack an extracted relational path. Structural relationships between clauses or articles within $`\mathcal{D}`$ require verification"*.
-The assigned plausibility confidence defaults to $`\text{Confidence} \approx 0.60`$.
+*"Entities A and B co-occur within normative document $\mathcal{D}$, but lack an extracted relational path. Structural relationships between clauses or articles within $\mathcal{D}$ require verification"*.
+The assigned plausibility confidence defaults to $\text{Confidence} \approx 0.60$.
 
 #### 5.2.3. Hypernymy Fallback
-If $`A`$ is an ontological subtype of hypernym $`P`$ ($`A \xrightarrow{\text{is-a}} P`$), and a proven path connects $`P`$ to $`B`$, the engine synthesizes an inheritance hypothesis under closed-world default semantics, provided no defeaters or explicit exceptions exist ([Chapter 31](ch31-syllogistic-reasoning-and-relation-lattices.md)).
+If $A$ is an ontological subtype of hypernym $P$ ($A \xrightarrow{\text{is-a}} P$), and a proven path connects $P$ to $B$, the engine synthesizes an inheritance hypothesis under closed-world default semantics, provided no defeaters or explicit exceptions exist ([Chapter 31](ch31-syllogistic-reasoning-and-relation-lattices.md)).
 
 ### 5.3. Hypothesis Isolation Invariant
 
@@ -339,7 +339,7 @@ The principal hazard of hypothesis generation is the risk of conjectural stateme
 > 2. Hypotheses must be returned exclusively within typed payloads of kind `KindQualifiedNonanswer` or `KindClarification`.
 > 3. Response narratives must contain the standardized disclaimer banner:
 >    `--- [CONJECTURE (WORKING HYPOTHESIS)] ---`
-> 4. Every hypothesis must explicitly declare its numerical confidence ($`\text{Confidence} < 1.0`$) and its **Missing Premise**, without whose verification the conjecture can never graduate to factual status.
+> 4. Every hypothesis must explicitly declare its numerical confidence ($\text{Confidence} < 1.0$) and its **Missing Premise**, without whose verification the conjecture can never graduate to factual status.
 
 ---
 
@@ -875,7 +875,7 @@ Titans of theoretical artificial intelligence, mathematical logic, and causality
 ## Conclusions
 1. **Resolving the Incompleteness Dilemma:** Production expert systems are not forced to choose between the confabulations of generative models and the helpless refusals of closed-world semantics. Symbolic abduction equips the system with a legitimate mathematical mechanism for synthesizing controlled hypotheses.
 2. **The Ontological Triad of Cognition:** Formalizing concepts, byte-grounded judgments, and typed conclusions provides a unified runtime representation irrespective of domain variations (network protocols, statutory jurisprudence, automotive functional safety).
-3. **Deterministic Relational Analysis:** Bidirectional bounded BFS ($`k \le 6`$) featuring cycle guards and composite citation assembly discovers multi-hop systemic dependencies with guaranteed determinism and complete auditability.
+3. **Deterministic Relational Analysis:** Bidirectional bounded BFS ($k \le 6$) featuring cycle guards and composite citation assembly discovers multi-hop systemic dependencies with guaranteed determinism and complete auditability.
 4. **Association Rule Induction (AMIE PCA):** Mining assertions under the Partial Completeness Assumption uncovers latent transitive dependencies automatically, eliminating the need to hand-author thousands of production rules.
 5. **The Hypothesis Isolation Invariant:** Working hypotheses are never passed off as established facts. They are typed strictly as `KindQualifiedNonanswer`, explicitly presenting their Missing Premise and numerical plausibility score.
 6. **Socratic Dialogue and Mixed Initiative:** Typed clarification frames (`ClarificationFrame`) transform operational impasses into structured cooperative interaction, enabling operators to explore proposed hypothetical bridges or refine contextual scope with a single keystroke.

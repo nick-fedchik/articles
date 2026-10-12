@@ -10,7 +10,7 @@
 
 ## Abstract
 
-Dieses Kapitel untersucht die architektonischen Prinzipien beim Entwurf von Dual-Mode-Expertensystemen, die simultan als strikte Evidenzquelle (für regulatorische Audits und Zertifizierungen nach ISO 26262 oder DO-178C) sowie als flexibler beratender Assistent (für die operative Fehlerdiagnose und Ursachenanalyse an Testständen) agieren. Es wird die unverletzliche epistemische Basisinvariante formuliert: Beratende Hypothesen werden ausnahmslos als unbestätigt gekennzeichnet, besitzen eine explizite Ableitungsmethode sowie formalisierte Prüfkriterien und bleiben prinzipiell von der strikten Inferenz und der Sicherheitsbegründung (*Safety Case*) ausgeschlossen. Der mathematische Apparat des deterministischen symbolischen Kerns wird auf Basis von Horn-Klauseln, der Berechnung des kleinsten Fixpunkts (*least fixed point*) sowie stratifizierter Negation formalisiert. Das Kapitel verortet die epistemische Triade von Charles Sanders Peirce (Deduktion, Induktion, Abduktion) sowie die kausale Ursachenreduktion innerhalb der Gesamtarchitektur. Es wird ein geschlossener Zyklus beschrieben, der typisierte Verweigerungen (*Refusal*) in Kandidaten für neues Domänenwissen überführt, Anfragen bei unzureichender Evidenz an autorisierte Fachexperten eskaliert und deren Rückmeldungen in die Präzedenzfallbasis integriert. Eine vollständige Python-Referenzimplementierung demonstriert das Zusammenspiel beider Modi, und die heterogene Simplex-Architektur (*Simplex Architecture*) begründet den sicheren Einsatz von stochastischer Edge AI unter der Aufsicht eines deterministischen Basis-Sicherheitscontrollers und eines Hardware-Schiedsrichters (Arbiter) mit Berechnung der dynamischen Zeitreserve $`t_{\mathrm{margin}}`$.
+Dieses Kapitel untersucht die architektonischen Prinzipien beim Entwurf von Dual-Mode-Expertensystemen, die simultan als strikte Evidenzquelle (für regulatorische Audits und Zertifizierungen nach ISO 26262 oder DO-178C) sowie als flexibler beratender Assistent (für die operative Fehlerdiagnose und Ursachenanalyse an Testständen) agieren. Es wird die unverletzliche epistemische Basisinvariante formuliert: Beratende Hypothesen werden ausnahmslos als unbestätigt gekennzeichnet, besitzen eine explizite Ableitungsmethode sowie formalisierte Prüfkriterien und bleiben prinzipiell von der strikten Inferenz und der Sicherheitsbegründung (*Safety Case*) ausgeschlossen. Der mathematische Apparat des deterministischen symbolischen Kerns wird auf Basis von Horn-Klauseln, der Berechnung des kleinsten Fixpunkts (*least fixed point*) sowie stratifizierter Negation formalisiert. Das Kapitel verortet die epistemische Triade von Charles Sanders Peirce (Deduktion, Induktion, Abduktion) sowie die kausale Ursachenreduktion innerhalb der Gesamtarchitektur. Es wird ein geschlossener Zyklus beschrieben, der typisierte Verweigerungen (*Refusal*) in Kandidaten für neues Domänenwissen überführt, Anfragen bei unzureichender Evidenz an autorisierte Fachexperten eskaliert und deren Rückmeldungen in die Präzedenzfallbasis integriert. Eine vollständige Python-Referenzimplementierung demonstriert das Zusammenspiel beider Modi, und die heterogene Simplex-Architektur (*Simplex Architecture*) begründet den sicheren Einsatz von stochastischer Edge AI unter der Aufsicht eines deterministischen Basis-Sicherheitscontrollers und eines Hardware-Schiedsrichters (Arbiter) mit Berechnung der dynamischen Zeitreserve $t_{\mathrm{margin}}$.
 
 Man vergegenwärtige sich ein Zertifizierungsaudit für das Steuerungssystem eines autonomen Fahrwerks (ISO 26262 ASIL D) oder der Bordavionik (DO-178C): Gelangt ein ungeprüfter Diagnosehinweis oder eine empirische Heuristik des Prüfstands („Lenkwinkelsensorfehler bei Spannungseinbruch unter 11 V ignorieren“) fälschlicherweise als verifizierter Fakt in die Sicherheitsbegründung aus [Kapitel 27](ch27-safety-case-gsn-synthesis.md), erhält das System eine Betriebszulassung mit einem latenten Fehler, was bei einem Fahrmanöver unter hoher Geschwindigkeit zu einem fatalen Ausbrechen des Fahrzeugs führen kann. Das Verhalten eines Expertensystems in derartigen Domänen muss ausnahmslos fehlersicher geschlossen (*fail-closed*) sein: Reichen die formalen normativen Kenntnisse nicht aus, darf das System unter keinen Umständen plausible Annahmen erdichten oder Lücken willkürlich schließen.
 
@@ -20,7 +20,7 @@ Dieses Kapitel beantwortet die Frage: **Wie kann ein Expertensystem gleichzeitig
 
 ## 1. Architektonische Dichotomie zweier Betriebsmodi und epistemische Basisinvariante
 
-Eine fundamentale Anforderung an die Architektur evidenzbasierter Expertensysteme besteht in der strikten Trennung zwischen deterministischer Inferenz und heuristischen Annahmen. Zur praktischen Realisierung dieser Dichotomie operiert das System in zwei isolierten Modi: dem strikten Modus und dem Beratungsmodus. Im strikten Modus ist die Antwort auf eine Anfrage $q$ ein striktes Resultat $`\mathcal{T}_{\mathrm{strict}}(q)`$: entweder eine durch Primärquellenzitate gestützte Tatsachenbehauptung oder eine Verweigerung $\mathrm{Refusal}(\rho)$ mit typisierter Ursache $\rho$ für die epistemische Unvollständigkeit. Im Beratungsmodus stellt die Antwort ein geordnetes Paar dar:
+Eine fundamentale Anforderung an die Architektur evidenzbasierter Expertensysteme besteht in der strikten Trennung zwischen deterministischer Inferenz und heuristischen Annahmen. Zur praktischen Realisierung dieser Dichotomie operiert das System in zwei isolierten Modi: dem strikten Modus und dem Beratungsmodus. Im strikten Modus ist die Antwort auf eine Anfrage $q$ ein striktes Resultat $\mathcal{T}_{\mathrm{strict}}(q)$: entweder eine durch Primärquellenzitate gestützte Tatsachenbehauptung oder eine Verweigerung $\mathrm{Refusal}(\rho)$ mit typisierter Ursache $\rho$ für die epistemische Unvollständigkeit. Im Beratungsmodus stellt die Antwort ein geordnetes Paar dar:
 
 ```math
 \mathcal{Y}_{\mathrm{ext}}(q)=\bigl\langle\,\mathcal{T}_{\mathrm{strict}}(q),\ \mathcal{H}(q)\,\bigr\rangle,
@@ -28,10 +28,10 @@ Eine fundamentale Anforderung an die Architektur evidenzbasierter Expertensystem
 \mathcal{H}(q)=\{h_1,\dots,h_k\}.
 ```
 
-- In der erweiterten Antwort bezeichnet $q$ die Anfrage, $`\mathcal{T}_{\mathrm{strict}}(q)`$ das unveränderte strikte Resultat und $\mathcal{H}(q)$ die Menge beratender Hypothesen;
+- In der erweiterten Antwort bezeichnet $q$ die Anfrage, $\mathcal{T}_{\mathrm{strict}}(q)$ das unveränderte strikte Resultat und $\mathcal{H}(q)$ die Menge beratender Hypothesen;
 - Die spitzen Klammern $\langle\ ,\ \rangle$ bilden ein geordnetes Paar, wodurch striktes Resultat und Hypothesen auf distinkten epistemischen Positionen verbleiben;
-- $`h_1,\dots,h_k`$ sind die einzelnen Hypothesen mit Indizes von 1 bis $k$, wobei $k$ deren Gesamtzahl festlegt;
-- $`\mathcal{Y}_{\mathrm{ext}}(q)`$ repräsentiert die gesamte erweiterte Antwortstruktur für die Anfrage $q$.
+- $h_1,\dots,h_k$ sind die einzelnen Hypothesen mit Indizes von 1 bis $k$, wobei $k$ deren Gesamtzahl festlegt;
+- $\mathcal{Y}_{\mathrm{ext}}(q)$ repräsentiert die gesamte erweiterte Antwortstruktur für die Anfrage $q$.
 
 Dies bedeutet formal: Der Beratungsmodus fügt der unveränderten strikten Antwort eine Menge von Hypothesen hinzu. Die Formel definiert die syntaktische Ausgabestruktur, verleiht den Hypothesen jedoch keineswegs einen beweisenden Status.
 
@@ -41,12 +41,12 @@ Der strikte Anteil bleibt im Beratungsmodus unberührt: Der Beratungsmodus ergä
 h_i=\langle\,\sigma_i,\ \mu_i,\ c_i,\ \mathcal{O}_i,\ \mathcal{P}_i\,\rangle.
 ```
 
-- Im Tupel $`h_i`$ bezeichnet der Index $i$ die Nummer der Hypothese, während die spitzen Klammern einen geordneten Datensatz definieren;
-- $`\sigma_i`$ ist der semantische Inhalt der Hypothese, $`\mu_i`$ die Generierungsmethode und $`c_i`$ ein Konfidenzwert;
-- $`\mathcal{O}_i`$ umfasst die empirischen Beobachtungen zur Stützung der Hypothese und $`\mathcal{P}_i`$ die operationalen Prüfkriterien für ihren Übergang zum verifizierten Fakt;
+- Im Tupel $h_i$ bezeichnet der Index $i$ die Nummer der Hypothese, während die spitzen Klammern einen geordneten Datensatz definieren;
+- $\sigma_i$ ist der semantische Inhalt der Hypothese, $\mu_i$ die Generierungsmethode und $c_i$ ein Konfidenzwert;
+- $\mathcal{O}_i$ umfasst die empirischen Beobachtungen zur Stützung der Hypothese und $\mathcal{P}_i$ die operationalen Prüfkriterien für ihren Übergang zum verifizierten Fakt;
 - Die Attribute folgen der festen Sequenz: Inhalt, Methode, Konfidenz, Beobachtungen, Validierungskriterien.
 
-Das Tupel kapselt somit nicht nur die Aussage der Vermutung, sondern auch deren Entstehungskontext und die erforderlichen Verifikationsschritte. Der Konfidenzwert $`c_i`$ stellt keine automatisch kalibrierte Wahrscheinlichkeit dar.
+Das Tupel kapselt somit nicht nur die Aussage der Vermutung, sondern auch deren Entstehungskontext und die erforderlichen Verifikationsschritte. Der Konfidenzwert $c_i$ stellt keine automatisch kalibrierte Wahrscheinlichkeit dar.
 
 Die fundamentale epistemische Basisinvariante lautet:
 
@@ -61,7 +61,7 @@ Die fundamentale epistemische Basisinvariante lautet:
 
 Folglich bleibt jede beratende Arbeitshypothese explizit unbestätigt und von der Sicherheitsbegründung ausgeschlossen. Diese Regel fixiert den epistemischen Status der Daten und stellt keine numerische Plausibilitätsbewertung dar.
 
-Eine Hypothese stützt sich per definitionem nicht auf eine verifizierte Primärquelle und darf keinesfalls in die Sicherheitsbegründung aus [Kapitel 27](ch27-safety-case-gsn-synthesis.md) einfließen. Der Weg einer Hypothese in die Wissensbasis verläuft über den formalen Kandidatenzyklus aus [Kapitel 26](ch26-continual-learning.md): die Prüfung der Kriterien $`\mathcal{P}_i`$, das fachliche Peer-Review sowie das Zulassungs-Gateway. Diese Invariante entfaltet ihre Schutzwirkung jedoch nur dann, wenn der strikte Kern absolut deterministisch arbeitet und garantiert terminiert – daher gilt das Augenmerk zunächst der Architektur des strikten Kerns.
+Eine Hypothese stützt sich per definitionem nicht auf eine verifizierte Primärquelle und darf keinesfalls in die Sicherheitsbegründung aus [Kapitel 27](ch27-safety-case-gsn-synthesis.md) einfließen. Der Weg einer Hypothese in die Wissensbasis verläuft über den formalen Kandidatenzyklus aus [Kapitel 26](ch26-continual-learning.md): die Prüfung der Kriterien $\mathcal{P}_i$, das fachliche Peer-Review sowie das Zulassungs-Gateway. Diese Invariante entfaltet ihre Schutzwirkung jedoch nur dann, wenn der strikte Kern absolut deterministisch arbeitet und garantiert terminiert – daher gilt das Augenmerk zunächst der Architektur des strikten Kerns.
 
 ## 2. Deterministischer symbolischer Kern: Horn-Klauseln und kleinster Fixpunkt
 
@@ -72,11 +72,11 @@ H(\vec X)\leftarrow B_1(\vec X_1)\land\dots\land B_m(\vec X_m)\land\neg N_1(\vec
 ```
 
 - In der Horn-Klausel bildet $H$ den Kopf (*Head*), mithin die Konklusion der Regel, und $\vec X$ den Vektor der Kopfvariablen;
-- $`B_i(\vec X_i)`$ sind positive Atome des Regelrumpfs (*Body*), $m$ bestimmt deren Anzahl, und $\land$ fordert das gleichzeitige Gelten aller Bedingungen;
+- $B_i(\vec X_i)$ sind positive Atome des Regelrumpfs (*Body*), $m$ bestimmt deren Anzahl, und $\land$ fordert das gleichzeitige Gelten aller Bedingungen;
 - $\leftarrow$ ist der Inferenzpfeil („leite den Kopf ab, wenn der Rumpf erfüllt ist“);
-- $`N_j(\vec Y_j)`$ repräsentieren Atome unter Negation als Fehlschlag (*Negation as Failure*), $k$ legt deren Anzahl fest, und $\neg$ signalisiert, dass der entsprechende Fakt in der Wissensbasis nicht ableitbar ist;
+- $N_j(\vec Y_j)$ repräsentieren Atome unter Negation als Fehlschlag (*Negation as Failure*), $k$ legt deren Anzahl fest, und $\neg$ signalisiert, dass der entsprechende Fakt in der Wissensbasis nicht ableitbar ist;
 - Die Indizes $i$ und $j$ nummerieren die Atome, während $\dots$ die Fortsetzung der Bedingungssequenz bis zu den Grenzen $m$ und $k$ anzeigt;
-- $`\vec X_i`$ und $`\vec Y_j`$ sind die Variablenmengen in den jeweiligen Atomen; alle Variablen der Klausel teilen einen gemeinsamen Wertebereich (*Domain*).
+- $\vec X_i$ und $\vec Y_j$ sind die Variablenmengen in den jeweiligen Atomen; alle Variablen der Klausel teilen einen gemeinsamen Wertebereich (*Domain*).
 
 Die Regel leitet die Aussage $H$ genau dann ab, wenn sämtliche positiven Bedingungen erfüllt sind und kein negiertes Faktum abgeleitet werden kann. Für Regeln mit Negation ist eine strikte Stratifizierung zwingend erforderlich, da andernfalls die Auswertungsreihenfolge das Inferenzergebnis verfälschen könnte.
 
@@ -103,7 +103,7 @@ flowchart LR
     class Done done;
 ```
 
-Für regellogische Programme ohne Negation ist das Ergebnis der kleinste Fixpunkt (*least fixed point*): die minimale Menge von Fakten, die bezüglich aller Regeln deduktiv abgeschlossen ist. Da während der Inferenz keine neuen Konstanten generiert werden, ist die Menge möglicher Fakten endlich; der Inferenzprozess terminiert garantiert und beansprucht bei fester Regelmenge eine polynomielle Zeit bezüglich der Anzahl der Fakten [[1]](#src-1). Negation verletzt jedoch die Monotonie: Ein Fakt, der aus der Prämisse „$`N`$ ist nicht bekannt“ abgeleitet wurde, könnte ungültig werden, sobald $N$ in einem späteren Inferenzschritt abgeleitet wird. Das Prinzip der Stratifizierung löst diesen Widerspruch: Die Regeln werden derart in Schichten (*Strata*) partitioniert, dass jedes negierte Prädikat in einer tieferen Schicht vollständig ausmultipliziert und abgeschlossen ist, bevor es in einer höheren Schicht negiert herangezogen werden darf [[1]](#src-1). Logikprogramme mit zyklischer Rekursion über Negation besitzen keine gültige Stratifizierung und werden vom strikten Kern bereits beim Parsen der Regelbasis deterministisch zurückgewiesen.
+Für regellogische Programme ohne Negation ist das Ergebnis der kleinste Fixpunkt (*least fixed point*): die minimale Menge von Fakten, die bezüglich aller Regeln deduktiv abgeschlossen ist. Da während der Inferenz keine neuen Konstanten generiert werden, ist die Menge möglicher Fakten endlich; der Inferenzprozess terminiert garantiert und beansprucht bei fester Regelmenge eine polynomielle Zeit bezüglich der Anzahl der Fakten [[1]](#src-1). Negation verletzt jedoch die Monotonie: Ein Fakt, der aus der Prämisse „$N$ ist nicht bekannt“ abgeleitet wurde, könnte ungültig werden, sobald $N$ in einem späteren Inferenzschritt abgeleitet wird. Das Prinzip der Stratifizierung löst diesen Widerspruch: Die Regeln werden derart in Schichten (*Strata*) partitioniert, dass jedes negierte Prädikat in einer tieferen Schicht vollständig ausmultipliziert und abgeschlossen ist, bevor es in einer höheren Schicht negiert herangezogen werden darf [[1]](#src-1). Logikprogramme mit zyklischer Rekursion über Negation besitzen keine gültige Stratifizierung und werden vom strikten Kern bereits beim Parsen der Regelbasis deterministisch zurückgewiesen.
 
 Der strikte Inferenzkern liefert weit mehr als bloße boolesche Wahrheitswerte („Ja“ oder „Nein“). Ein **Allquantor über einer endlichen Domäne** verifiziert Aussagen wie beispielsweise: „Für jeden Protokollbefehl existiert in der Wissensbasis eine dokumentierte Antwortspezifikation“:
 
@@ -147,7 +147,7 @@ In seiner grundlegenden Abhandlung von 1878, *Illustrations of the Logic of Scie
 s_1\sim s_2\iff\forall w\in\Sigma^{*}:\ \bigl(\hat\delta(s_1,w)\in F\iff\hat\delta(s_2,w)\in F\bigr).
 ```
 
-- In endlichen Automaten bezeichnen $`s_1`$ und $`s_2`$ zwei Zustände, während $\sim$ deren Äquivalenz ausdrückt;
+- In endlichen Automaten bezeichnen $s_1$ und $s_2$ zwei Zustände, während $\sim$ deren Äquivalenz ausdrückt;
 - $\forall w\in\Sigma^*$ prüft jedes endliche Eingabewort (Befehlsfolge) $w$ über dem Alphabet $\Sigma$; der Kleene-Stern umfasst sämtliche endlichen Wörter inklusive des leeren Wortes;
 - $\hat\delta(s,w)$ ist die erweiterte Übergangsfunktion, die den Folgezustand nach Abarbeitung des Wortes $w$ ermittelt;
 - $F$ bezeichnet die Menge der Endzustände (*Accepting States*), $\in$ die Enthaltenseinsrelation und $\iff$ die logische Äquivalenz („genau dann, wenn“);
@@ -169,11 +169,11 @@ Die praxisrelevanteste Quelle für beratende Arbeitshypothesen ist das Gedächtn
 J(S_{\mathrm{in}},S_{\mathrm{case}})=\frac{|S_{\mathrm{in}}\cap S_{\mathrm{case}}|}{|S_{\mathrm{in}}\cup S_{\mathrm{case}}|}.
 ```
 
-- Der Koeffizient $J$ vergleicht die Symptommenge der aktuellen Anfrage $`S_{\mathrm{in}}`$ mit der Symptommenge des historischen Präzedenzfalls $`S_{\mathrm{case}}`$;
-- $\cap$ repräsentiert die Schnittmenge, $\cup$ die Vereinigungsmenge und $`\lvert\cdot\rvert`$ die Kardinalität (Mächtigkeit) der jeweiligen Menge;
+- Der Koeffizient $J$ vergleicht die Symptommenge der aktuellen Anfrage $S_{\mathrm{in}}$ mit der Symptommenge des historischen Präzedenzfalls $S_{\mathrm{case}}$;
+- $\cap$ repräsentiert die Schnittmenge, $\cup$ die Vereinigungsmenge und $\lvert\cdot\rvert$ die Kardinalität (Mächtigkeit) der jeweiligen Menge;
 - Der Zähler quantifiziert die gemeinsamen Symptome, während der Nenner die Gesamtzahl aller distinkten Symptome beider Mengen abbildet.
 
-Für das Beispiel $`S_{\mathrm{in}}=\{A,B\}`$ und $`S_{\mathrm{case}}=\{B,C\}`$ ergibt sich $`J=1/3\approx0{,}33`$. Bei nichtleerer Vereinigungsmenge nimmt der Koeffizient Werte im Intervall von 0 bis 1 an; sind beide Mengen leer, wird der Nenner null und der Wert ist mathematisch undefiniert. Der Koeffizient misst die mengentheoretische Ähnlichkeit, keineswegs die Wahrscheinlichkeit der sachlichen Richtigkeit einer Hypothese.
+Für das Beispiel $S_{\mathrm{in}}=\{A,B\}$ und $S_{\mathrm{case}}=\{B,C\}$ ergibt sich $J=1/3\approx0{,}33$. Bei nichtleerer Vereinigungsmenge nimmt der Koeffizient Werte im Intervall von 0 bis 1 an; sind beide Mengen leer, wird der Nenner null und der Wert ist mathematisch undefiniert. Der Koeffizient misst die mengentheoretische Ähnlichkeit, keineswegs die Wahrscheinlichkeit der sachlichen Richtigkeit einer Hypothese.
 
 Überschreitet $J$ einen definierten Schwellenwert $\theta$, wird der Präzedenzfall als Arbeitshypothese mit der Methode „Präzedenzfallanalogie“, dem Konfidenzwert $c=J$ und einem operationalen Hochstufungskriterium generiert: „Bedingungen des Präzedenzfalls am Teststand reproduzieren und die vermutete Ursache messtechnisch verifizieren“. Der Schwellenwert $\theta$ darf keinesfalls willkürlich geschätzt werden; er wird auf Basis annotierter historischer Testfälle kalibriert, wie in [Kapitel 25](ch25-how-expert-systems-learn.md) beschrieben, da der Jaccard-Index lediglich syntaktische Übereinstimmungen quantifiziert.
 
@@ -228,9 +228,9 @@ Formale Nomenklatur des Routers:
 
 - $q$ bezeichnet die formale Anfrage, die analog zum obigen Jaccard-Index als Symptommenge repräsentiert ist;
 - $\mathrm{Strict}(q)$ ist das Inferenzergebnis des strikten Kerns, wobei $\bot$ eine typisierte Verweigerung markiert;
-- $`C_{\mathrm{val}}`$ ist die Menge der durch autorisierte Experten validierten Präzedenzfälle, und $`c^{*}`$ bezeichnet den ähnlichsten Präzedenzfall innerhalb dieser Menge;
-- $`J(q,c^{*})`$ ist der Jaccard-Koeffizient zwischen den Merkmalen der Anfrage und des Präzedenzfalls, während $\theta$ den kalibrierten Schwellenwert darstellt;
-- $\arg\max$ selektiert den Präzedenzfall mit maximaler Ähnlichkeit; ist die Menge $`C_{\mathrm{val}}`$ leer, initiiert der Router unmittelbar eine Experteneskalation.
+- $C_{\mathrm{val}}$ ist die Menge der durch autorisierte Experten validierten Präzedenzfälle, und $c^{*}$ bezeichnet den ähnlichsten Präzedenzfall innerhalb dieser Menge;
+- $J(q,c^{*})$ ist der Jaccard-Koeffizient zwischen den Merkmalen der Anfrage und des Präzedenzfalls, während $\theta$ den kalibrierten Schwellenwert darstellt;
+- $\arg\max$ selektiert den Präzedenzfall mit maximaler Ähnlichkeit; ist die Menge $C_{\mathrm{val}}$ leer, initiiert der Router unmittelbar eine Experteneskalation.
 
 Dieser Routing-Mechanismus legt das Standardverhalten fest: Reicht dem Anwender eine Hypothese für eine sicherheitskritische Entscheidung nicht aus, kann er eine manuelle Eskalation anstoßen. Da die Expertenanfrage vom System autonom synthetisiert wird, enthält sie bereits alle zur Entscheidungsfindung erforderlichen Fakten. Die nachfolgende Tabelle spezifiziert die Attribute der Expertenanfrage.
 
@@ -242,11 +242,11 @@ Dieser Routing-Mechanismus legt das Standardverhalten fest: Reicht dem Anwender 
 | Antwortentwurf | Beratende Hypothese inklusive Validierungskriterium | Möglichkeit zur Korrektur oder Bestätigung anstelle einer Neuformulierung |
 | Primärquellenzitate | Dokument, Revisionsstand und Zitatbereich | Sofortige Prüfung der formalen Grundlagen ohne eigene Recherche |
 
-Die Rückmeldung des Fachexperten wird über zwei Pfade mit differenziertem Status integriert. Eine bestätigte oder neu formulierte Lösung wird als Präzedenzfall in die Menge $`C_{\mathrm{val}}`$ aufgenommen – versehen mit Experten-ID, Zeitstempel, Geltungsbereich und spezifischen Anwendungsbedingungen. Formuliert der Experte ein allgemeines Regelsystem mit Primärquellenbezug, generiert das System zusätzlich einen Faktenkandidaten, der das reguläre Peer-Review und die Konsistenzprüfung des Sequenzdiagramms durchlaufen muss. Die formale Autorisierung durch einen Experten entbindet den Kandidaten keineswegs von automatisierten Prüfungen auf Revisionszyklen, deontische Konflikte und widersprüchliche Konstanten.
+Die Rückmeldung des Fachexperten wird über zwei Pfade mit differenziertem Status integriert. Eine bestätigte oder neu formulierte Lösung wird als Präzedenzfall in die Menge $C_{\mathrm{val}}$ aufgenommen – versehen mit Experten-ID, Zeitstempel, Geltungsbereich und spezifischen Anwendungsbedingungen. Formuliert der Experte ein allgemeines Regelsystem mit Primärquellenbezug, generiert das System zusätzlich einen Faktenkandidaten, der das reguläre Peer-Review und die Konsistenzprüfung des Sequenzdiagramms durchlaufen muss. Die formale Autorisierung durch einen Experten entbindet den Kandidaten keineswegs von automatisierten Prüfungen auf Revisionszyklen, deontische Konflikte und widersprüchliche Konstanten.
 
 Betrachten wir das Timeout-Szenario im Labornetz: Ein Ingenieur meldet ein Verbindungs-Timeout auf Port 25 in einer neuen Testumgebung. Der strikte Kern verweigert mangels Fakten die Antwort; der ähnlichste validierte Präzedenzfall weist einen Jaccard-Index von 0,33 auf, was unter dem Schwellenwert von 0,4 liegt. Der Router generiert eine Expertenanfrage an den Netzwerkinfrastruktur-Administrator mit dem Entwurf: „Prüfen, ob der Provider ausgehenden Verkehr auf Port 25 blockiert“. Der Administrator bestätigt den Entwurf und ergänzt die Randbedingung: „Gilt für Client-Verbindungen ohne statische IP-Adresse“. Eine nachfolgende gleichartige Anfrage erhält daraufhin eine beratende Hypothese unter Verweis auf den validierten Präzedenzfall – ohne erneute Eskalation. Der strikte Kern wird diese Anfrage jedoch solange weiterhin verweigern, bis der Administrator ein verifiziertes Zitat aus den Servicebedingungen des Providers als Primärquellenevidenz hinterlegt und dieser Faktenkandidat das formale Review erfolgreich durchlaufen hat.
 
-Die Skalierungsgrenze dieses Musters liegt in der Belastung der Fachexperten. Die Arbeitszeit autorisierter Spezialisten ist die am stärksten limitierte Ressource im System. Daher wird der Anteil der Verweigerungen, die zur Eskalation führen, kontinuierlich telemetrisch überwacht: Das Anwachsen der Menge $`C_{\mathrm{val}}`$ muss den Eskalationsbedarf systematisch senken, während die Quote verworfener Entwürfe die Präzision des Beratungsmodus widerspiegelt. Validierte Präzedenzfälle unterliegen zudem einem epistemischen Alterungsprozess: Ändert sich die Revision der zugrundeliegenden Primärnorm, wird der Präzedenzfall analog zu veralteten Fakten in [Kapitel 15](ch15-knowledge-extraction-and-kb-construction.md) in den Überprüfungsstatus zurückversetzt.
+Die Skalierungsgrenze dieses Musters liegt in der Belastung der Fachexperten. Die Arbeitszeit autorisierter Spezialisten ist die am stärksten limitierte Ressource im System. Daher wird der Anteil der Verweigerungen, die zur Eskalation führen, kontinuierlich telemetrisch überwacht: Das Anwachsen der Menge $C_{\mathrm{val}}$ muss den Eskalationsbedarf systematisch senken, während die Quote verworfener Entwürfe die Präzision des Beratungsmodus widerspiegelt. Validierte Präzedenzfälle unterliegen zudem einem epistemischen Alterungsprozess: Ändert sich die Revision der zugrundeliegenden Primärnorm, wird der Präzedenzfall analog zu veralteten Fakten in [Kapitel 15](ch15-knowledge-extraction-and-kb-construction.md) in den Überprüfungsstatus zurückversetzt.
 
 ## 6. Softwareverifikation: Implementierung einer Dual-Mode-Engine in Python
 
@@ -521,9 +521,9 @@ flowchart TD
 
 Die Simplex-Architektur stützt sich auf eine strikte dreiseitige funktionale Aufgabenteilung zwischen den Rechenknoten:
 
-1. **Optimierender Controller höherer Ordnung (*Advanced/AI Node*):** Ein hochperformanter Rechner (NPU/GPU unter Linux PREEMPT_RT), der die stochastische Verarbeitung komplexer Sensorik (Computer Vision, semantische Szenenanalyse, LiDAR-Punktwolken) übernimmt und optimierende Trajektorien sowie Steuerbefehle $`U_{\mathrm{adv}}`$ generiert. Dieser Knoten operiert im Beratungsmodus: Seine Befehle werden vom Gesamtsystem strikt als unverifizierte Kandidatenvorschläge ohne Beweisstatus eingestuft.
-2. **Basis-Sicherheitscontroller (*Baseline Safety Controller*):** Ein nach IEC 61508 / ISO 26262 zertifizierter Sicherheitsmikrocontroller (beispielsweise Infineon AURIX oder ARM Cortex-R) bzw. eine FPGA-Hardwarelogik unter einem deterministischen Echtzeitbetriebssystem (Zephyr RTOS). Er operiert auf einer formal verifizierten Horn-Klausel-Basis im statischen Speicher, implementiert einfache, mathematisch bewiesene physikalische Regelgesetze und erzeugt eine garantiert sichere Steuertrajektorie $`U_{\mathrm{safe}}`$, die das System in den sicheren Zustand (*Fail-Closed*) überführt.
-3. **Hardware-Schiedsrichter / Sicherheitsverriegelung (*Safety Decision / Interlock Gate*):** Ein unabhängiges Logikmodul auf Basis kombinatorischer Logik oder eines fehlersicheren Mikrocontrollers, das in harter Echtzeit überwacht, ob die Kandidatentrajektorie $`U_{\mathrm{adv}}`$ die Grenzen des zulässigen Schutzbereichs (*Safety Envelope*) verletzt, und gleichzeitig das periodische Heartbeat-Taktsignal des AI-Knotens verifiziert.
+1. **Optimierender Controller höherer Ordnung (*Advanced/AI Node*):** Ein hochperformanter Rechner (NPU/GPU unter Linux PREEMPT_RT), der die stochastische Verarbeitung komplexer Sensorik (Computer Vision, semantische Szenenanalyse, LiDAR-Punktwolken) übernimmt und optimierende Trajektorien sowie Steuerbefehle $U_{\mathrm{adv}}$ generiert. Dieser Knoten operiert im Beratungsmodus: Seine Befehle werden vom Gesamtsystem strikt als unverifizierte Kandidatenvorschläge ohne Beweisstatus eingestuft.
+2. **Basis-Sicherheitscontroller (*Baseline Safety Controller*):** Ein nach IEC 61508 / ISO 26262 zertifizierter Sicherheitsmikrocontroller (beispielsweise Infineon AURIX oder ARM Cortex-R) bzw. eine FPGA-Hardwarelogik unter einem deterministischen Echtzeitbetriebssystem (Zephyr RTOS). Er operiert auf einer formal verifizierten Horn-Klausel-Basis im statischen Speicher, implementiert einfache, mathematisch bewiesene physikalische Regelgesetze und erzeugt eine garantiert sichere Steuertrajektorie $U_{\mathrm{safe}}$, die das System in den sicheren Zustand (*Fail-Closed*) überführt.
+3. **Hardware-Schiedsrichter / Sicherheitsverriegelung (*Safety Decision / Interlock Gate*):** Ein unabhängiges Logikmodul auf Basis kombinatorischer Logik oder eines fehlersicheren Mikrocontrollers, das in harter Echtzeit überwacht, ob die Kandidatentrajektorie $U_{\mathrm{adv}}$ die Grenzen des zulässigen Schutzbereichs (*Safety Envelope*) verletzt, und gleichzeitig das periodische Heartbeat-Taktsignal des AI-Knotens verifiziert.
 
 ### 9.2. Mathematische Invariante des sicheren Übergangs
 
@@ -534,9 +534,9 @@ t_{\mathrm{margin}} = t_{\mathrm{hazard}} - t_{\mathrm{recovery}}
 ```
 
 wobei:
-- $`t_{\mathrm{margin}}`$ — die dynamische zeitliche Sicherheitsreserve des Gesamtsystems ist, gemessen in Sekunden oder Millisekunden ($`\text{ms}`$);
-- $`t_{\mathrm{hazard}}`$ — die berechnete Zeitspanne bis zum unausweichlichen Überschreiten der physikalischen Sicherheitsgrenze (Kollision, Umkippen, thermische oder mechanische Zerstörung) unter Beibehaltung der aktuellen Trajektorie ist, in $`\text{ms}`$;
-- $`t_{\mathrm{recovery}}`$ — die garantierte Worst-Case-Ausführungs- und Reaktionszeit (*Worst-Case Execution & Dynamic Recovery Time*) ist, die der Basis-Sicherheitscontroller benötigt, um das Objekt deterministisch in den sicheren Zustand zu überführen, in $`\text{ms}`$.
+- $t_{\mathrm{margin}}$ — die dynamische zeitliche Sicherheitsreserve des Gesamtsystems ist, gemessen in Sekunden oder Millisekunden ($\text{ms}$);
+- $t_{\mathrm{hazard}}$ — die berechnete Zeitspanne bis zum unausweichlichen Überschreiten der physikalischen Sicherheitsgrenze (Kollision, Umkippen, thermische oder mechanische Zerstörung) unter Beibehaltung der aktuellen Trajektorie ist, in $\text{ms}$;
+- $t_{\mathrm{recovery}}$ — die garantierte Worst-Case-Ausführungs- und Reaktionszeit (*Worst-Case Execution & Dynamic Recovery Time*) ist, die der Basis-Sicherheitscontroller benötigt, um das Objekt deterministisch in den sicheren Zustand zu überführen, in $\text{ms}$.
 
 Die Auslösebedingung für die hardwareseitige Umschaltung auf den Basis-Sicherheitscontroller wird als striktes logisches Prädikat formuliert:
 
@@ -544,24 +544,24 @@ Die Auslösebedingung für die hardwareseitige Umschaltung auf den Basis-Sicherh
 t_{\mathrm{margin}} < \Delta t_{\mathrm{threshold}} \quad \lor \quad \neg \mathrm{HeartbeatValid}(\mathrm{AINode}) \implies \mathrm{TripToBaseline}(\mathrm{FailClosed})
 ```
 
-wobei $`\Delta t_{\mathrm{threshold}}`$ die ingenieurtechnische Schaltschwelle des Arbiters darstellt, welche die Umschaltlatenz der Hardware-Weiche $`\tau_{\mathrm{switch}}`$ sowie Messunsicherheiten der Sensorik berücksichtigt. Fällt die Zeitreserve unter diesen kritischen Schwellenwert oder bleibt das Heartbeat-Signal des AI-Knotens aus, sperrt der Arbiter unverzüglich auf Hardwareebene den Ausgang des AI-Controllers und schaltet den Steuerkreis auf den Basis-Sicherheitscontroller um.
+wobei $\Delta t_{\mathrm{threshold}}$ die ingenieurtechnische Schaltschwelle des Arbiters darstellt, welche die Umschaltlatenz der Hardware-Weiche $\tau_{\mathrm{switch}}$ sowie Messunsicherheiten der Sensorik berücksichtigt. Fällt die Zeitreserve unter diesen kritischen Schwellenwert oder bleibt das Heartbeat-Signal des AI-Knotens aus, sperrt der Arbiter unverzüglich auf Hardwareebene den Ausgang des AI-Controllers und schaltet den Steuerkreis auf den Basis-Sicherheitscontroller um.
 
 #### 9.2.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der dynamischen Simplex-Umschaltung
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
-   Der berechnete Wert $`t_{\mathrm{margin}}`$ bestimmt die Weiterleitung der Stellsignale in jedem Arbitrierungszyklus. Solange $`t_{\mathrm{margin}} \ge \Delta t_{\mathrm{threshold}}`$ gilt und der Heartbeat valide ist, verbleibt das Statusflag `Interlock_State` im Zustand `ARMED_AI`, und die Steuerkommandos $`U_{\mathrm{adv}}`$ werden an die digitalen Eingänge der Leistungstreiber durchgeschaltet. Sobald die Bedingung verletzt wird, setzt die Hardwareverriegelung die Freigabeleitung `ENABLE_AI` innerhalb von $`\tau_{\mathrm{switch}} < 50\,\mu\text{s}`$ auf logisch Null, aktiviert `TRIP_SAFE_BASELINE`, setzt das nicht-flüchtige Diagnoseflag `FLAG_SIMPLEX_TRIP` und schreibt den kryptografischen Hashwert des Umschaltereignisses in das unveränderliche Merkle-Audit-Log.
+   Der berechnete Wert $t_{\mathrm{margin}}$ bestimmt die Weiterleitung der Stellsignale in jedem Arbitrierungszyklus. Solange $t_{\mathrm{margin}} \ge \Delta t_{\mathrm{threshold}}$ gilt und der Heartbeat valide ist, verbleibt das Statusflag `Interlock_State` im Zustand `ARMED_AI`, und die Steuerkommandos $U_{\mathrm{adv}}$ werden an die digitalen Eingänge der Leistungstreiber durchgeschaltet. Sobald die Bedingung verletzt wird, setzt die Hardwareverriegelung die Freigabeleitung `ENABLE_AI` innerhalb von $\tau_{\mathrm{switch}} < 50\,\mu\text{s}$ auf logisch Null, aktiviert `TRIP_SAFE_BASELINE`, setzt das nicht-flüchtige Diagnoseflag `FLAG_SIMPLEX_TRIP` und schreibt den kryptografischen Hashwert des Umschaltereignisses in das unveränderliche Merkle-Audit-Log.
 2. **Hardware-Dimensionierung (Hardware Dimensioning):**
    Das gesamte Schaltzeitbudget muss die normative Fehlertoleranzzeit (*Fault Tolerant Time Interval, FTTI*) strikt einhalten:
-   $`T_{\mathrm{sense}} + T_{\mathrm{arbiter}} + \tau_{\mathrm{switch}} + t_{\mathrm{recovery}} \le T_{\mathrm{FTTI}}`$.
-   Der Hardware-Watchdog des AI-Knotens wird auf $`T_{\mathrm{wdg}} \le \Delta t_{\mathrm{threshold}} - \tau_{\mathrm{switch}}`$ begrenzt. Die physikalische Schnittstelle zwischen AI-Knoten und Arbiter wird über einen dedizierten, isolierten Bus (SPI oder PCIe MSI-X) ohne Speicherbuskollisionen realisiert, wodurch ein Blockieren des Arbiters infolge von Systemüberlastungen des Host-Betriebssystems physikalisch ausgeschlossen ist.
+   $T_{\mathrm{sense}} + T_{\mathrm{arbiter}} + \tau_{\mathrm{switch}} + t_{\mathrm{recovery}} \le T_{\mathrm{FTTI}}$.
+   Der Hardware-Watchdog des AI-Knotens wird auf $T_{\mathrm{wdg}} \le \Delta t_{\mathrm{threshold}} - \tau_{\mathrm{switch}}$ begrenzt. Die physikalische Schnittstelle zwischen AI-Knoten und Arbiter wird über einen dedizierten, isolierten Bus (SPI oder PCIe MSI-X) ohne Speicherbuskollisionen realisiert, wodurch ein Blockieren des Arbiters infolge von Systemüberlastungen des Host-Betriebssystems physikalisch ausgeschlossen ist.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   Ein autonomer mobiler Transportroboter mit einer Masse von $`m = 350\,\text{kg}`$ bewegt sich in einem Fabrikkorridor mit einer Geschwindigkeit von $`v = 2{,}0\,\text{m/s}`$. Der neuronale Trajektorienplaner schlägt ein Ausweichmanöver für ein plötzlich in einer Entfernung von $`d = 0{,}44\,\text{m}`$ detektiertes Hindernis vor.
-   Die verbleibende Zeit bis zur Kollision beträgt: $`t_{\mathrm{hazard}} = \frac{d}{v} = \frac{0{,}44\,\text{m}}{2{,}0\,\text{m/s}} = 220\,\text{ms}`$.
-   Der Basis-Sicherheitscontroller unter Zephyr RTOS führt im Aktivierungsfall ein Notbrems- und Stabilisierungsmanöver mit einer garantierten Wiederherstellungszeit von $`t_{\mathrm{recovery}} = 170\,\text{ms}`$ aus.
+   Ein autonomer mobiler Transportroboter mit einer Masse von $m = 350\,\text{kg}$ bewegt sich in einem Fabrikkorridor mit einer Geschwindigkeit von $v = 2{,}0\,\text{m/s}$. Der neuronale Trajektorienplaner schlägt ein Ausweichmanöver für ein plötzlich in einer Entfernung von $d = 0{,}44\,\text{m}$ detektiertes Hindernis vor.
+   Die verbleibende Zeit bis zur Kollision beträgt: $t_{\mathrm{hazard}} = \frac{d}{v} = \frac{0{,}44\,\text{m}}{2{,}0\,\text{m/s}} = 220\,\text{ms}$.
+   Der Basis-Sicherheitscontroller unter Zephyr RTOS führt im Aktivierungsfall ein Notbrems- und Stabilisierungsmanöver mit einer garantierten Wiederherstellungszeit von $t_{\mathrm{recovery}} = 170\,\text{ms}$ aus.
    Daraus ergibt sich die dynamische zeitliche Sicherheitsreserve:
-   $`t_{\mathrm{margin}} = 220\,\text{ms} - 170\,\text{ms} = 50\,\text{ms}`$.
-   Die systemspezifische Sicherheitsschwelle ist auf $`\Delta t_{\mathrm{threshold}} = 60\,\text{ms}`$ kalibriert.
-   Da $`t_{\mathrm{margin}} = 50\,\text{ms} < 60\,\text{ms}`$ gilt, registriert der Schiedsrichter ein kritisches Zeitreservendefizit ($`50 < 60`$) und trennt den AI-Planer innerhalb von $`\tau_{\mathrm{switch}} = 14\,\mu\text{s}`$ hardwareseitig ab. Die Kontrolle wird an den Basiscontroller übergeben, welcher das Fahrwerk deterministisch zum Stillstand bringt und die Kollision zuverlässig abwendet.
+   $t_{\mathrm{margin}} = 220\,\text{ms} - 170\,\text{ms} = 50\,\text{ms}$.
+   Die systemspezifische Sicherheitsschwelle ist auf $\Delta t_{\mathrm{threshold}} = 60\,\text{ms}$ kalibriert.
+   Da $t_{\mathrm{margin}} = 50\,\text{ms} < 60\,\text{ms}$ gilt, registriert der Schiedsrichter ein kritisches Zeitreservendefizit ($50 < 60$) und trennt den AI-Planer innerhalb von $\tau_{\mathrm{switch}} = 14\,\mu\text{s}$ hardwareseitig ab. Die Kontrolle wird an den Basiscontroller übergeben, welcher das Fahrwerk deterministisch zum Stillstand bringt und die Kollision zuverlässig abwendet.
 
 ## 10. Dialog Pro et Contra
 
@@ -618,7 +618,7 @@ Die Grenzen der vorgestellten Methodik sind präzise zu beachten: Der strikte Mo
 9. Welche drei Fehlertypen analysiert die formale Konsistenzprüfung vor der Zulassung eines neuen Faktenkandidaten?
 10. Warum verbleibt die Auskunft aus einem expertenvalidierten Präzedenzfall bei einer neuen, ähnlichen Anfrage zwingend im Status einer Hypothese? Welche Attribute muss eine automatisierte Expertenanfrage enthalten?
 11. Warum transformiert die Freigabe eines Vorfallsprotokolls dieses lediglich in einen Präzedenzfall, während ein freigegebenes Primärquellenzitat einen strikten Fakt begründet, der an einen Geltungsbereich gebunden ist?
-12. Welche drei funktionalen Knoten bilden die heterogene Simplex-Architektur und wie berechnet sich die zeitliche Invariante des sicheren Umschaltens $`t_{\mathrm{margin}}`$? Nach welchen Kriterien trennt der Hardware-Schiedsrichter den AI-Controller ab?
+12. Welche drei funktionalen Knoten bilden die heterogene Simplex-Architektur und wie berechnet sich die zeitliche Invariante des sicheren Umschaltens $t_{\mathrm{margin}}$? Nach welchen Kriterien trennt der Hardware-Schiedsrichter den AI-Controller ab?
 
 ## Glossar
 

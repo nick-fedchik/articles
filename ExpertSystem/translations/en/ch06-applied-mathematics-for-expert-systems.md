@@ -82,13 +82,13 @@ c_1 \land c_2 \land \dots \land c_k \Rightarrow a
 
 Notation:
 
-- $`c_1,\dots,c_k`$ denote verifiable antecedent conditions;
+- $c_1,\dots,c_k$ denote verifiable antecedent conditions;
 - $k$ is the total number of conditions;
 - $\land$ denotes logical conjunction (all conditions must evaluate to true);
 - $\Rightarrow$ denotes material implication ("if ... then");
 - $a$ denotes the consequent assertion or action.
 
-Operationally, the formula stipulates: if every condition evaluates to true, the rule asserts conclusion $a$; otherwise, the rule does not fire. For example, if a requirement is safety-critical ($`c_1`$), has been modified since the approved baseline ($`c_2`$), and lacks an impact analysis ($`c_3`$), the release is blocked ($a$). Each condition must be substantiated by an independent fact referencing a concrete artifact.
+Operationally, the formula stipulates: if every condition evaluates to true, the rule asserts conclusion $a$; otherwise, the rule does not fire. For example, if a requirement is safety-critical ($c_1$), has been modified since the approved baseline ($c_2$), and lacks an impact analysis ($c_3$), the release is blocked ($a$). Each condition must be substantiated by an independent fact referencing a concrete artifact.
 
 In an industrial expert system, a rule is a version-controlled engineering artifact rather than an inline `if` statement buried in application code: it possesses an assigned owner, revision history, validity scope, priority level, and test fixture suite. Consequently, when queried "why is the release blocked?", the system responds with the precise set of fired rules and substantiated facts; when asked "who can modify this rule?", it identifies the designated technical owner.
 
@@ -129,12 +129,12 @@ H \leftarrow B_1, B_2, \dots, B_k
 ```
 
 - $H$ is the rule head, designating the atomic fact to be inferred;
-- $`B_1,\dots,B_k`$ are the body atoms establishing antecedent conditions, where $k$ denotes the number of conditions;
+- $B_1,\dots,B_k$ are the body atoms establishing antecedent conditions, where $k$ denotes the number of conditions;
 - Commas between body atoms represent logical conjunction, and $\leftarrow$ denotes implication ("if").
 
 For instance, the rule $\mathrm{NeedsCheck}(X)\leftarrow\mathrm{Critical}(X),\mathrm{Modified}(X)$ derives for every requirement $X$ the fact that verification is required whenever $X$ is critical and modified.
 
-A single step of bottom-up forward inference is formalized by the immediate consequence operator $`T_P`$:
+A single step of bottom-up forward inference is formalized by the immediate consequence operator $T_P$:
 
 ```math
 T_P(I)=I\cup\{\,H \mid (H\leftarrow B_1,\dots,B_k)\in P,\ \{B_1,\dots,B_k\}\subseteq I\,\}
@@ -143,13 +143,13 @@ T_P(I)=I\cup\{\,H \mid (H\leftarrow B_1,\dots,B_k)\in P,\ \{B_1,\dots,B_k\}\subs
 Parameter explication:
 
 - $P$ denotes the Datalog program (the finite set of rules), and $I$ denotes the current set of known facts;
-- $`T_P(I)`$ denotes the expanded fact set resulting from one evaluation cycle of program $P$ over $I$;
+- $T_P(I)$ denotes the expanded fact set resulting from one evaluation cycle of program $P$ over $I$;
 - $\cup$ represents set union, and braces denote the set of derived head facts;
-- $H$ is the rule head, $`B_1,\dots,B_k`$ are body atoms, and $\in$ denotes set membership;
+- $H$ is the rule head, $B_1,\dots,B_k$ are body atoms, and $\in$ denotes set membership;
 - $\mid$ is read as "such that", and $\subseteq$ denotes set inclusion;
-- The condition $`\{B_1,\dots,B_k\}\subseteq I`$ mandates that all antecedent atoms must already reside within fact set $I$.
+- The condition $\{B_1,\dots,B_k\}\subseteq I$ mandates that all antecedent atoms must already reside within fact set $I$.
 
-The operator is monotonic: facts are never retracted during evaluation; each cycle adds newly inferred assertions or reaches saturation. Inference begins from base extensional facts $F$ and applies $`T_P`$ iteratively:
+The operator is monotonic: facts are never retracted during evaluation; each cycle adds newly inferred assertions or reaches saturation. Inference begins from base extensional facts $F$ and applies $T_P$ iteratively:
 
 ```math
 I_0=F,\qquad I_{i+1}=T_P(I_i),\qquad I_0\subseteq I_1\subseteq I_2\subseteq\dots
@@ -157,19 +157,19 @@ I_0=F,\qquad I_{i+1}=T_P(I_i),\qquad I_0\subseteq I_1\subseteq I_2\subseteq\dots
 
 Parameter definitions:
 
-- $`I_0`$ represents the initial extensional fact base $F$;
-- $`I_i`$ denotes the fact set after $i$ iterations, and $`I_{i+1}`$ denotes the set after the subsequent cycle;
-- $`T_P`$ is the immediate consequence operator for program $P$;
+- $I_0$ represents the initial extensional fact base $F$;
+- $I_i$ denotes the fact set after $i$ iterations, and $I_{i+1}$ denotes the set after the subsequent cycle;
+- $T_P$ is the immediate consequence operator for program $P$;
 - $\subseteq$ denotes set inclusion, and $\dots$ indicates iterative continuation.
 
-Because Datalog lacks function symbols, the universe of discourse (Herbrand base) is strictly finite. Consequently, at some finite step $n$, saturation occurs such that $`I_{n+1}=I_n`$. The set $`I_n`$ represents the least fixed point (LFP): no further facts can be derived by the rules. Maarten van Emden and Robert Kowalski demonstrated that this least fixed point uniquely defines the declarative semantics of the logic program [[4]](#src-4). The outcome is entirely independent of rule evaluation order, ensuring deterministic reproducibility.
+Because Datalog lacks function symbols, the universe of discourse (Herbrand base) is strictly finite. Consequently, at some finite step $n$, saturation occurs such that $I_{n+1}=I_n$. The set $I_n$ represents the least fixed point (LFP): no further facts can be derived by the rules. Maarten van Emden and Robert Kowalski demonstrated that this least fixed point uniquely defines the declarative semantics of the logic program [[4]](#src-4). The outcome is entirely independent of rule evaluation order, ensuring deterministic reproducibility.
 
-Real-world engineering rules frequently require negation: for example, "requirement has not been verified". Unrestricted negation introduces logical paradoxes, such as $`P\leftarrow\mathrm{not}\,P`$, which possesses no stable model. Stratified negation, formalized by Krzysztof Apt, Howard Blair, and Adrian Walker, partitions the rules into ordered strata (levels): a rule in stratum $j$ may negate an atom only if that atom is fully computed in a strictly lower stratum $i < j$ [[5]](#src-5). Evaluation computes the least fixed point of stratum 1, freezes its facts, and then proceeds to evaluate stratum 2. The Go program below executes this two-strata evaluation for the introductory scenario.
+Real-world engineering rules frequently require negation: for example, "requirement has not been verified". Unrestricted negation introduces logical paradoxes, such as $P\leftarrow\mathrm{not}\,P$, which possesses no stable model. Stratified negation, formalized by Krzysztof Apt, Howard Blair, and Adrian Walker, partitions the rules into ordered strata (levels): a rule in stratum $j$ may negate an atom only if that atom is fully computed in a strictly lower stratum $i < j$ [[5]](#src-5). Evaluation computes the least fixed point of stratum 1, freezes its facts, and then proceeds to evaluate stratum 2. The Go program below executes this two-strata evaluation for the introductory scenario.
 
 <details>
 <summary>Go Implementation: Least Fixed Point Inference with Stratified Negation</summary>
 
-This program is fully standalone and executable via `go run main.go`. Predicates model the domain requirements: "critical", "modified", "verifies", and "passed". Rules are applied to each candidate requirement as executed by a Datalog engine. The `fixpoint` function iteratively evaluates the $`T_P`$ operator until the fact base reaches saturation.
+This program is fully standalone and executable via `go run main.go`. Predicates model the domain requirements: "critical", "modified", "verifies", and "passed". Rules are applied to each candidate requirement as executed by a Datalog engine. The `fixpoint` function iteratively evaluates the $T_P$ operator until the fact base reaches saturation.
 
 ```go
 package main
@@ -481,15 +481,15 @@ The formal inductive schema generalizes a finite sample of $m$ independent obser
 
 Parameters and components:
 
-- $`a_1,\dots,a_m \in \mathcal{U}`$ denotes the finite set of $m$ recorded observation instances (e.g., a batch of thermal chamber test executions);
+- $a_1,\dots,a_m \in \mathcal{U}$ denotes the finite set of $m$ recorded observation instances (e.g., a batch of thermal chamber test executions);
 - $m \in \mathbb{N}$ denotes empirical sample size (the count of corroborating instances);
-- $`P(a_i)`$ denotes the presence of an operational trigger condition in observation $i$ (e.g., $`\text{Temperature}(a_i) > 85\ ^\circ\text{C}`$);
-- $`Q(a_i)`$ denotes the failure mode observed in run $i$ (e.g., $`\text{TestFault}(a_i) = \text{T-9}`$);
+- $P(a_i)$ denotes the presence of an operational trigger condition in observation $i$ (e.g., $\text{Temperature}(a_i) > 85\ ^\circ\text{C}$);
+- $Q(a_i)$ denotes the failure mode observed in run $i$ (e.g., $\text{TestFault}(a_i) = \text{T-9}$);
 - $\forall x\,\big(P(x)\Rightarrow Q(x)\big)$ is the candidate rule hypothesis posited as a potential domain invariant.
 
 **Operational Engineering Application:**
 1. *Invocation Lifecycle Phase:* Activated strictly within offline log analytics pipelines ([Chapter 25](ch25-how-expert-systems-learn.md)) when mining latent hardware degradation patterns.
-2. *Result Interpretation:* The sample size $m$ defines the empirical support. If $`m < m_{\min}`$ (where $`m_{\min}`$ is a calibrated statistical significance threshold, e.g., $`m_{\min} = 100`$), the generalization is rejected as statistical noise.
+2. *Result Interpretation:* The sample size $m$ defines the empirical support. If $m < m_{\min}$ (where $m_{\min}$ is a calibrated statistical significance threshold, e.g., $m_{\min} = 100$), the generalization is rejected as statistical noise.
 3. *System Action:* An induced candidate rule is never promoted to the real-time decision engine automatically. The system routes it to a *quarantine knowledge registry*, generating a formal review ticket for the responsible domain architect.
 
 ```mermaid
@@ -517,7 +517,7 @@ flowchart LR
 
 ### 4.4. Abductive Inference: Generating Root-Cause Hypotheses
 
-Abductive inference constitutes the mathematical backbone of automated diagnostic systems, fault isolation, and Fault Tree Analysis (FTA). An engineer relies on abduction whenever an abnormal symptom is observed (e.g., an unexpected communication bus reset or a voltage rail drop) and must formulate plausible root-cause hypotheses by reasoning backward from effect to cause. The fundamental difficulty of abduction stems from non-uniqueness: a single symptom $Q$ can originate from numerous distinct hardware or software faults ($`P_1, P_2, \dots, P_k`$). Naively adopting the first plausible hypothesis leads to incorrect repairs or masks latent safety-critical failures.
+Abductive inference constitutes the mathematical backbone of automated diagnostic systems, fault isolation, and Fault Tree Analysis (FTA). An engineer relies on abduction whenever an abnormal symptom is observed (e.g., an unexpected communication bus reset or a voltage rail drop) and must formulate plausible root-cause hypotheses by reasoning backward from effect to cause. The fundamental difficulty of abduction stems from non-uniqueness: a single symptom $Q$ can originate from numerous distinct hardware or software faults ($P_1, P_2, \dots, P_k$). Naively adopting the first plausible hypothesis leads to incorrect repairs or masks latent safety-critical failures.
 
 Formal abduction derives a plausible root-cause hypothesis $P$ from an observed symptom $Q$ and an established diagnostic rule:
 
@@ -534,7 +534,7 @@ Parameters and components:
 
 **Operational Engineering Application:**
 1. *Invocation Lifecycle Phase:* Triggered by the diagnostic subsystem immediately upon recording a Diagnostic Trouble Code (DTC), an unhandled exception, or an unexpected watchdog reset.
-2. *Result Interpretation:* Abduction generates a candidate hypothesis set $`\mathcal{H}_Q = \{P_1, P_2, \dots\}`$. Each hypothesis is ranked by prior Bayesian probability or diagnostic verification cost.
+2. *Result Interpretation:* Abduction generates a candidate hypothesis set $\mathcal{H}_Q = \{P_1, P_2, \dots\}$. Each hypothesis is ranked by prior Bayesian probability or diagnostic verification cost.
 3. *System Action:* The expert system constructs a discriminatory test plan: scheduling targeted checks (such as inspecting power telemetry logs) to deductively confirm one hypothesis while refuting alternatives ([Chapter 24](ch24-system-diagnosis.md)).
 
 ```mermaid
@@ -572,11 +572,11 @@ Whereas deduction requires a preexisting general law and induction requires hund
 
 Formal expression breakdown:
 
-- $A$ is a known archival precedent case (codified as a tuple $`\langle C_A, P_A, A_A, R_A, \Delta_A \rangle`$; see [Chapter 4](ch04-evolution-from-bayes-to-evidence-ai.md#кортеж-інженерного-досвіду));
-- $B$ is a new, unsolved problem or current anomaly with operational context $`C_B`$;
+- $A$ is a known archival precedent case (codified as a tuple $\langle C_A, P_A, A_A, R_A, \Delta_A \rangle$; see [Chapter 4](ch04-evolution-from-bayes-to-evidence-ai.md#кортеж-інженерного-досвіду));
+- $B$ is a new, unsolved problem or current anomaly with operational context $C_B$;
 - $\mathrm{Sim}(A, B) \in [0, 1]$ is the calculated similarity metric over the feature spaces of both cases;
 - $\theta \in (0, 1]$ is a calibrated engineering confidence threshold below which analogical transfer is prohibited;
-- $`\mathrm{Adapt}(S_A)`$ is the adaptation operator that adjusts solution $`S_A`$ to accommodate the context differences of case $B$.
+- $\mathrm{Adapt}(S_A)$ is the adaptation operator that adjusts solution $S_A$ to accommodate the context differences of case $B$.
 
 #### 4.5.1. Metric Spaces and Similarity Measure Computation $\mathrm{Sim}(A, B)$
 
@@ -589,12 +589,12 @@ d_W(C_A, C_B) = \sqrt{\sum_{i=1}^n w_i \left(\frac{x_{A,i} - x_{B,i}}{\sigma_i}\
 ```
 
 where:
-- $`C_A, C_B`$ are numeric vectors of observed parameters for cases $A$ and $B$;
-- $`x_{A,i}, x_{B,i}`$ are measured engineering quantities for channel $i$ (e.g., supply voltage, load current, operating temperature);
-- $`w_i \in [0, 1]`$ is the normalized importance weight of channel $i$ ($`\sum_{i=1}^n w_i = 1`$);
-- $`\sigma_i > 0`$ is the scale or standard deviation of parameter $i$, normalizing disparate physical units;
-- $`d_W(C_A, C_B) \ge 0`$ is the weighted metric distance;
-- $`\mathrm{Sim}_{\text{metric}}(A, B) \in (0, 1]`$ is the resulting signature similarity score.
+- $C_A, C_B$ are numeric vectors of observed parameters for cases $A$ and $B$;
+- $x_{A,i}, x_{B,i}$ are measured engineering quantities for channel $i$ (e.g., supply voltage, load current, operating temperature);
+- $w_i \in [0, 1]$ is the normalized importance weight of channel $i$ ($\sum_{i=1}^n w_i = 1$);
+- $\sigma_i > 0$ is the scale or standard deviation of parameter $i$, normalizing disparate physical units;
+- $d_W(C_A, C_B) \ge 0$ is the weighted metric distance;
+- $\mathrm{Sim}_{\text{metric}}(A, B) \in (0, 1]$ is the resulting signature similarity score.
 
 **2. Cosine similarity in latent semantic space:**
 
@@ -602,33 +602,33 @@ where:
 \mathrm{Sim}_{\text{cosine}}(z_A, z_B) = \frac{\mathbf{z}_A \cdot \mathbf{z}_B}{\|\mathbf{z}_A\|\,\|\mathbf{z}_B\|}
 ```
 
-where $`\mathbf{z}_A, \mathbf{z}_B \in \mathbb{R}^d`$ are dense semantic embeddings of the incident textual and diagnostic descriptions generated by a domain encoder.
+where $\mathbf{z}_A, \mathbf{z}_B \in \mathbb{R}^d$ are dense semantic embeddings of the incident textual and diagnostic descriptions generated by a domain encoder.
 
 **3. Topological subgraph isomorphism:** computing the Jaccard index or Graph Edit Distance (GED) between the causal subgraphs of both components.
 
 **Runtime Control Flow and Operational Thresholds for Traduction:**
-1. **Automated Reuse (`Reuse`):** if $`\mathrm{Sim}_{\text{metric}}(A, B) \ge \theta_{\mathrm{reuse}} = 0.85`$ ($`d_W \le 0.176`$), the inference engine designates precedent $A$ as an authoritative baseline and enqueues its recovery plan for automated execution.
-2. **Supervised Adaptation (`Revise`):** if $`\theta_{\mathrm{adapt}} \le \mathrm{Sim}_{\text{metric}} < \theta_{\mathrm{reuse}}`$ (with $`\theta_{\mathrm{adapt}} = 0.65`$), the system triggers adaptation operator $`\mathrm{Adapt}(S_A)`$ under mandatory human-in-the-loop review or formal safety constraints verification.
-3. **Analogy Rejection (`Refusal`):** if $`\mathrm{Sim}_{\text{metric}} < 0.65`$, the candidate case is rejected as non-analogous, preventing false analogy errors.
+1. **Automated Reuse (`Reuse`):** if $\mathrm{Sim}_{\text{metric}}(A, B) \ge \theta_{\mathrm{reuse}} = 0.85$ ($d_W \le 0.176$), the inference engine designates precedent $A$ as an authoritative baseline and enqueues its recovery plan for automated execution.
+2. **Supervised Adaptation (`Revise`):** if $\theta_{\mathrm{adapt}} \le \mathrm{Sim}_{\text{metric}} < \theta_{\mathrm{reuse}}$ (with $\theta_{\mathrm{adapt}} = 0.65$), the system triggers adaptation operator $\mathrm{Adapt}(S_A)$ under mandatory human-in-the-loop review or formal safety constraints verification.
+3. **Analogy Rejection (`Refusal`):** if $\mathrm{Sim}_{\text{metric}} < 0.65$, the candidate case is rejected as non-analogous, preventing false analogy errors.
 
 **Worked Numerical Example:**
-A diagnostic subsystem evaluates an unexpected voltage sag on a battery management system (BMS). Two telemetry channels are monitored: reference voltage drift $`V_{\mathrm{ref}}`$ ($`w_1 = 0.6`$, $`\sigma_1 = 0.1\,\text{V}`$) and switching FET temperature $`T_{\mathrm{FET}}`$ ($`w_2 = 0.4`$, $`\sigma_2 = 5\,^\circ\text{C}`$).
-Observed deviations from the archival benchmark are $\Delta V = 0.02\,\text{V}$ and $\Delta T = 1.5\,^\circ\text{C}$.
+A diagnostic subsystem evaluates an unexpected voltage sag on a battery management system (BMS). Two telemetry channels are monitored: reference voltage drift $V_{\mathrm{ref}}$ ($w_1 = 0.6$, $\sigma_1 = 0.1\,\text{V}$) and switching FET temperature $T_{\mathrm{FET}}$ ($w_2 = 0.4$, $\sigma_2 = 5^\circ\text{C}$).
+Observed deviations from the archival benchmark are $\Delta V = 0.02\,\text{V}$ and $\Delta T = 1.5^\circ\text{C}$.
 ```math
 d_W = \sqrt{0{,}6 \cdot \left(\frac{0{,}02}{0{,}1}\right)^2 + 0{,}4 \cdot \left(\frac{1{,}5}{5}\right)^2} = \sqrt{0{,}6 \cdot 0{,}04 + 0{,}4 \cdot 0{,}09} = \sqrt{0{,}024 + 0{,}036} = \sqrt{0{,}060} \approx 0{,}245
 ```
 ```math
 \mathrm{Sim}_{\text{metric}} = \frac{1}{1 + 0{,}245} \approx 0{,}803
 ```
-Because $`\mathrm{Sim}_{\text{metric}} = 0.803 \in [0.65, 0.85)`$, the system sets status `Revise`: it adjusts the protection timeout parameter and requires human engineering sign-off prior to authorizing a controller reset.
+Because $\mathrm{Sim}_{\text{metric}} = 0.803 \in [0.65, 0.85)$, the system sets status `Revise`: it adjusts the protection timeout parameter and requires human engineering sign-off prior to authorizing a controller reset.
 
 #### 4.5.2. Four-Stage Precedent Lifecycle (4R Cycle)
 
 Under the canonical framework of Agnar Aamodt and Enric Plaza [[12a]](#src-12a), traductive inference follows a four-stage lifecycle:
 - **Retrieve:** a $k$-nearest neighbor ($k\text{NN}$) or vector index locates precedent $A$ most similar to current issue $B$;
-- **Reuse:** the verified design or diagnostic solution $`S_A`$ is mapped to target case $B$;
-- **Revise:** an expert or formal simulation model validates whether $`S_A`$ remains safe given the specific differences in $B$, adapting parameters accordingly;
-- **Retain:** the newly verified experience tuple $`\langle C_B, P_B, S_B, R_B, \Delta_B \rangle`$ is committed to the corporate memory repository.
+- **Reuse:** the verified design or diagnostic solution $S_A$ is mapped to target case $B$;
+- **Revise:** an expert or formal simulation model validates whether $S_A$ remains safe given the specific differences in $B$, adapting parameters accordingly;
+- **Retain:** the newly verified experience tuple $\langle C_B, P_B, S_B, R_B, \Delta_B \rangle$ is committed to the corporate memory repository.
 
 #### 4.5.3. Traduction in Modern Neuro-Symbolic Architectures
 
@@ -703,9 +703,9 @@ G \Leftarrow g_1\land g_2\land\dots\land g_k,\qquad g_j\Leftarrow h_1\lor h_2\lo
 
 Components of the formulation:
 
-- $G$ represents the top-level goal, and $`g_1,\dots,g_k`$ are its constituent subgoals;
+- $G$ represents the top-level goal, and $g_1,\dots,g_k$ are its constituent subgoals;
 - $k$ is the count of conjunctive subgoals (all must evaluate to true);
-- $`g_j`$ is one specific subgoal, and $`h_1,\dots,h_m`$ are disjunctive alternative proof paths for $`g_j`$;
+- $g_j$ is one specific subgoal, and $h_1,\dots,h_m$ are disjunctive alternative proof paths for $g_j$;
 - $m$ is the count of alternatives, $\land$ denotes conjunction, and $\lor$ denotes disjunction;
 - $\Leftarrow$ denotes derivability ("is achieved if"), and index $j$ isolates the target subgoal.
 
@@ -717,7 +717,7 @@ The second reduction strategy minimizes the state space of a finite-state automa
 s_1\sim s_2\iff\forall w\in\Sigma^{\ast}:\ \big(\delta^{\ast}(s_1,w)\in\mathcal{F}\iff\delta^{\ast}(s_2,w)\in\mathcal{F}\big)
 ```
 
-- $`s_1`$ and $`s_2`$ are automaton states, and $\sim$ denotes equivalence;
+- $s_1$ and $s_2$ are automaton states, and $\sim$ denotes equivalence;
 - $\Sigma$ is the input symbol alphabet, $\Sigma^{\ast}$ is the set of all finite input words, and $w$ represents a specific input sequence;
 - $\delta^{\ast}(s,w)$ denotes the state reached from state $s$ under input word $w$;
 - $\mathcal{F}$ represents the set of accepting or safe states, and $\in$ denotes set membership;
@@ -731,11 +731,11 @@ States are equivalent if every possible input word either leads both states into
 |---|---|---|---|---|---|
 | **Subduction** | $\in$ Categorization | Instance $a$ and hierarchy $C \sqsubseteq D$ | Membership fact $a \in D$ | Analytic (ontologically determined) | RETE pattern matching, OWL classification |
 | **Deduction** | $\downarrow$ General to specific | Rule $P \to Q$ and verified fact $P$ | Consequence $Q$ | Strictly true (under true premises) | Release gate audit, safety certification |
-| **Induction** | $\uparrow$ Specific to general | Case series $`P(a_i)`$ and results $`Q(a_i)`$ | Rule hypothesis $\forall x (P \to Q)$ | Probabilistic hypothesis (unverified) | Automated learning from test bench logs |
+| **Induction** | $\uparrow$ Specific to general | Case series $P(a_i)$ and results $Q(a_i)$ | Rule hypothesis $\forall x (P \to Q)$ | Probabilistic hypothesis (unverified) | Automated learning from test bench logs |
 | **Abduction** | $\leftarrow$ Effect to cause | Diagnostic rule $P \to Q$ and symptom $Q$ | Root-cause hypothesis $P$ | Plausible hypothesis (best explanation) | Technical diagnostics, fault tree analysis (FTA) |
-| **Traduction** | $\leftrightarrow$ Between precedents | Case $A$, solution $`S_A`$, and $\mathrm{Sim} \ge \theta$ | Adapted solution for $B$ | Heuristic analogy (requires Safety Shield) | Case-based reasoning, Few-Shot RAG, patch reuse |
+| **Traduction** | $\leftrightarrow$ Between precedents | Case $A$, solution $S_A$, and $\mathrm{Sim} \ge \theta$ | Adapted solution for $B$ | Heuristic analogy (requires Safety Shield) | Case-based reasoning, Few-Shot RAG, patch reuse |
 | **Eduction** | $\equiv$ Semantic equivalence | Single proposition $P \to Q$ | Transformed form ($\neg Q \to \neg P$) | Identically true (truth-preserving) | Rule base normalization, backward chaining |
-| **Reduction** | $\searrow$ Complex to simple | Complex goal $G$ or $n$-state automaton | Subgoal tree $`g_1 \land \dots \land g_k`$ or minimal automaton | Equivalent (preserves solvability) | AND/OR goal trees, Hopcroft minimization |
+| **Reduction** | $\searrow$ Complex to simple | Complex goal $G$ or $n$-state automaton | Subgoal tree $g_1 \land \dots \land g_k$ or minimal automaton | Equivalent (preserves solvability) | AND/OR goal trees, Hopcroft minimization |
 
 Subduction categorizes observations, deduction enforces verified safety rules, induction synthesizes new rule hypotheses, abduction isolates root causes of failure, traduction transfers precedent experience, eduction normalizes rule bases, and reduction keeps complex verification tractable. For an expert system, the critical engineering imperative is strictly preserving output epistemic status: deductive, subductive, and eductive results are emitted as mathematically guaranteed conclusions, whereas traductive, inductive, and abductive outputs must be explicitly flagged as hypotheses bounded by validation plans and safety shields. The next challenge is computational: how a rule engine executes thousands of rules over millions of facts without latency degradation.
 
@@ -828,10 +828,10 @@ As the number of system variables grows, specifying full joint probability table
 P(X_1,\dots,X_n)=\prod_{i=1}^{n}P\big(X_i\mid\mathrm{Pa}(X_i)\big)
 ```
 
-- $`X_1,\dots,X_n`$ denote the random variables of the model, where $n$ is the total count;
-- $`\prod_{i=1}^{n}`$ denotes the product of terms evaluated across all indices $i$ from 1 to $n$;
-- $`\mathrm{Pa}(X_i)`$ designates the parent nodes of $`X_i`$ in the DAG, representing direct conditional dependencies;
-- $`P(X_i\mid\mathrm{Pa}(X_i))`$ is the localized conditional probability table for $`X_i`$ given the states of its parents.
+- $X_1,\dots,X_n$ denote the random variables of the model, where $n$ is the total count;
+- $\prod_{i=1}^{n}$ denotes the product of terms evaluated across all indices $i$ from 1 to $n$;
+- $\mathrm{Pa}(X_i)$ designates the parent nodes of $X_i$ in the DAG, representing direct conditional dependencies;
+- $P(X_i\mid\mathrm{Pa}(X_i))$ is the localized conditional probability table for $X_i$ given the states of its parents.
 
 This factorization decomposes the joint distribution into a product of local conditional distributions. If each of 20 binary variables has at most two parents, each local table requires at most four parameters, reducing total model complexity from approximately one million to fewer than 80 values. This factorization is mathematically valid only when conditional independence assertions hold; a directed edge in the graph does not automatically establish physical causality.
 
@@ -865,17 +865,17 @@ The marginal probability of test failure integrates over all four parent configu
 
 ### 7.3. Markov Decision Processes and Dynamic Uncertainty
 
-A Bayesian network models system state at a discrete point in time. However, mission-critical engineering processes evolve dynamically across time: requirements transition through lifecycle stages, and hardware components progressively degrade. Andrey Markov formulated models for stochastic sequences wherein future states depend solely on the present state rather than the complete historical trajectory. For a state sequence $`X_0,X_1,\dots`$, the Markov property is expressed as:
+A Bayesian network models system state at a discrete point in time. However, mission-critical engineering processes evolve dynamically across time: requirements transition through lifecycle stages, and hardware components progressively degrade. Andrey Markov formulated models for stochastic sequences wherein future states depend solely on the present state rather than the complete historical trajectory. For a state sequence $X_0,X_1,\dots$, the Markov property is expressed as:
 
 ```math
 P(X_{t+1}=j\mid X_t=i,X_{t-1},\dots,X_0)=P(X_{t+1}=j\mid X_t=i)=T_{ij}
 ```
 
-- $`X_t`$ denotes the system state at time step $t$, where $`t \in \mathbb{N}_0`$ indexes time or execution cycles;
+- $X_t$ denotes the system state at time step $t$, where $t \in \mathbb{N}_0$ indexes time or execution cycles;
 - $i$ and $j$ represent candidate current and subsequent states from state space $\mathcal{S}$;
-- $P(\cdot\mid\cdot)$ is conditional probability, and $`T_{ij}`$ is the transition probability from state $i$ to state $j$;
-- The equality enforces the Markov property: given current state $`X_t`$, historical states furnish no additional predictive information regarding $`X_{t+1}`$;
-- Each $`T_{ij} \in [0, 1]`$, and transition probabilities out of any state sum to 1 ($`\sum_{j} T_{ij} = 1`$).
+- $P(\cdot\mid\cdot)$ is conditional probability, and $T_{ij}$ is the transition probability from state $i$ to state $j$;
+- The equality enforces the Markov property: given current state $X_t$, historical states furnish no additional predictive information regarding $X_{t+1}$;
+- Each $T_{ij} \in [0, 1]$, and transition probabilities out of any state sum to 1 ($\sum_{j} T_{ij} = 1$).
 
 A stochastic process satisfying this property is a Markov chain. For example, a requirement in state "under review" may transition to "approved" with probability 0.6, to "rework required" with probability 0.3, or remain "under review" with probability 0.1. This model characterizes the statistical behavior of the process under observed historical parameters, rather than predicting the deterministic fate of an individual requirement.
 
@@ -887,12 +887,12 @@ Markov Decision Processes (MDP) incorporate explicit actions and rewards: the ex
 V^{\pi}(s)=\mathbb{E}_{\pi}\Big[\sum_{t=0}^{\infty}\gamma^{t}r_t\ \Big|\ s_0=s\Big]
 ```
 
-- $s \in \mathcal{S}$ is the initial system state, conditioned via $`s_0=s`$;
+- $s \in \mathcal{S}$ is the initial system state, conditioned via $s_0=s$;
 - $V^{\pi}(s)$ is the expected discounted cumulative reward under policy $\pi$ initiated from state $s$;
-- $`r_t`$ represents the scalar reward (or negative operational cost) incurred at step $t$;
+- $r_t$ represents the scalar reward (or negative operational cost) incurred at step $t$;
 - $\gamma \in [0, 1)$ is the discount factor, where $\gamma^t$ discounts future returns relative to immediate costs;
-- $\sum$ sums discounted rewards across an infinite operational horizon, and $`\mathbb{E}_{\pi}`$ denotes the mathematical expectation under policy $\pi$;
-- The vertical bar conditions the expectation upon the initial state $`s_0=s`$.
+- $\sum$ sums discounted rewards across an infinite operational horizon, and $\mathbb{E}_{\pi}$ denotes the mathematical expectation under policy $\pi$;
+- The vertical bar conditions the expectation upon the initial state $s_0=s$.
 
 With $\gamma=0.9$, a reward realized 10 steps into the future carries weight $0.9^{10} \approx 0.35$ relative to an immediate reward. A higher value of $V^{\pi}(s)$ denotes greater expected cumulative utility under policy $\pi$, rather than a deterministic outcome. When states are partially observed through noisy sensors, the framework generalizes to a Partially Observable Markov Decision Process (POMDP); in foundational expert system deployments, a simplified discrete policy with explicit state, cost, and safety invariants is often architecturally optimal.
 
@@ -907,7 +907,7 @@ Many engineering concepts lack crisp binary thresholds: "fresh documentation", "
 Parameters of the formula:
 
 - $a \ge 0$ is the age of the evidentiary document in days;
-- $`\mu_{\mathrm{fresh}}(a) \in [0, 1]`$ represents the degree of freshness, where subscript $\mathrm{fresh}$ denotes the semantic property;
+- $\mu_{\mathrm{fresh}}(a) \in [0, 1]$ represents the degree of freshness, where subscript $\mathrm{fresh}$ denotes the semantic property;
 - $\max$ selects the supremum of 0 and $1 - a/180$, enforcing non-negativity;
 - 180 denotes the agreed project staleness horizon in days, and 1 represents maximal membership.
 
@@ -915,16 +915,16 @@ Under this calibration, a newly ratified document has freshness 1.0, a 90-day-ol
 
 #### 7.4.1. Fuzzy Algebra Operators: T-Norms, S-Norms, and Defuzzification
 
-Combining fuzzy antecedents in compound production rules of the form $`\text{IF}\ (x_1 \in A)\ \text{AND}\ (x_2 \in B)\ \text{THEN}\ (y \in C)`$ relies on triangular norms (T-norms for conjunction "AND") and triangular conorms (S-norms for disjunction "OR"):
+Combining fuzzy antecedents in compound production rules of the form $\text{IF}\ (x_1 \in A)\ \text{AND}\ (x_2 \in B)\ \text{THEN}\ (y \in C)$ relies on triangular norms (T-norms for conjunction "AND") and triangular conorms (S-norms for disjunction "OR"):
 
 1. **T-Norms (Conjunction, Logical "AND"):** a function $T:[0,1]\times[0,1]\to[0,1]$ that is commutative, associative, monotonic, and satisfies boundary condition $T(a, 1) = a$.
-   - *Gödel T-norm (Minimum):* $`T_{\min}(a, b) = \min(a, b)`$ — conservative evaluation reflecting the weakest constraint;
-   - *Product T-norm:* $`T_{\mathrm{prod}}(a, b) = a \cdot b`$ — models multiplicative belief degradation;
-   - *Łukasiewicz T-norm:* $`T_{\mathrm{Luk}}(a, b) = \max(0, a + b - 1)`$ — models strict cumulative deficit.
+   - *Gödel T-norm (Minimum):* $T_{\min}(a, b) = \min(a, b)$ — conservative evaluation reflecting the weakest constraint;
+   - *Product T-norm:* $T_{\mathrm{prod}}(a, b) = a \cdot b$ — models multiplicative belief degradation;
+   - *Łukasiewicz T-norm:* $T_{\mathrm{Luk}}(a, b) = \max(0, a + b - 1)$ — models strict cumulative deficit.
 
 2. **S-Norms (Disjunction, Logical "OR"):** a function $S:[0,1]\times[0,1]\to[0,1]$ satisfying $S(a, 0) = a$.
-   - *Maximum S-norm:* $`S_{\max}(a, b) = \max(a, b)`$;
-   - *Probabilistic Sum:* $`S_{\mathrm{sum}}(a, b) = a + b - a \cdot b`$.
+   - *Maximum S-norm:* $S_{\max}(a, b) = \max(a, b)$;
+   - *Probabilistic Sum:* $S_{\mathrm{sum}}(a, b) = a + b - a \cdot b$.
 
 Translating truncated output fuzzy sets into a crisp control signal or discrete decision is accomplished via **defuzzification**. In the Mamdani model, the Center of Gravity (COG) method is most prevalent:
 
@@ -936,17 +936,17 @@ Formula parameters:
 
 - $z^*$ is the defuzzified crisp scalar output (e.g., an actuator offset angle or an audit priority rating);
 - $Z$ represents the universe of discourse for the output variable;
-- $`z_i`$ denotes the discrete value of the output variable at step $i$ along the discretized scale;
-- $`\mu_C(z_i)`$ is the aggregated degree of membership resulting from firing active rules at $`z_i`$;
-- $`\sum_{i=1}^n`$ sums over all $n$ discretization points across the output interval.
+- $z_i$ denotes the discrete value of the output variable at step $i$ along the discretized scale;
+- $\mu_C(z_i)$ is the aggregated degree of membership resulting from firing active rules at $z_i$;
+- $\sum_{i=1}^n$ sums over all $n$ discretization points across the output interval.
 
-In the **Takagi–Sugeno–Kang (TSK)** model, rule consequents are defined not as fuzzy sets, but as crisp linear functions of the inputs $`f_j(\mathbf{x}) = \mathbf{p}_j^T \mathbf{x} + r_j`$. The global output is computed as a weighted average:
+In the **Takagi–Sugeno–Kang (TSK)** model, rule consequents are defined not as fuzzy sets, but as crisp linear functions of the inputs $f_j(\mathbf{x}) = \mathbf{p}_j^T \mathbf{x} + r_j$. The global output is computed as a weighted average:
 
 ```math
 y^* = \frac{\sum_{j=1}^M w_j \cdot f_j(\mathbf{x})}{\sum_{j=1}^M w_j}
 ```
 
-where $`w_j = T(\mu_{A_j}(x_1), \mu_{B_j}(x_2))`$ represents the firing strength of rule $j$ under the selected T-norm, and $M$ is the total count of rules.
+where $w_j = T(\mu_{A_j}(x_1), \mu_{B_j}(x_2))$ represents the firing strength of rule $j$ under the selected T-norm, and $M$ is the total count of rules.
 
 #### 7.4.2. Fuzzy Logic and Token Probability Distributions in Language Models
 
@@ -955,7 +955,7 @@ Practitioners frequently attempt to replace fuzzy inference engines with statist
 | Comparison Dimension | Fuzzy Logic | Language Model Probability (LLM) |
 |---|---|---|
 | **Semantic Nature** | **Degree of Truth:** measure of compliance with a non-crisp concept ($\mu \in [0, 1]$). | **Plausibility / Frequency:** probability distribution over a discrete token vocabulary ($P \in [0, 1]$). |
-| **Space Normalization** | **Non-additive:** independent membership functions. Concurrently $`\mu_{\mathrm{cold}}(x) = 0.7`$ and $`\mu_{\mathrm{warm}}(x) = 0.6`$. | **Strictly additive (Kolmogorov):** softmax layer guarantees $`\sum_{k} P(\mathrm{token}_k) = 1`$. |
+| **Space Normalization** | **Non-additive:** independent membership functions. Concurrently $\mu_{\mathrm{cold}}(x) = 0.7$ and $\mu_{\mathrm{warm}}(x) = 0.6$. | **Strictly additive (Kolmogorov):** softmax layer guarantees $\sum_{k} P(\mathrm{token}_k) = 1$. |
 | **Condition Composition** | Deterministic T-norms ($\min$, product); zero stochastic variance. | Stochastic sampling (temperature $T$, top-$p$), autoregressive context drift. |
 | **Audit Verifiability** | Mathematically provable bounds, compliant with ISO 26262/IEC 61508 safety standards. | Prone to arithmetic hallucinations and numerical instability under prompt perturbations. |
 
@@ -990,7 +990,7 @@ flowchart LR
 
 1. **Linguistic Fuzzification via Linguistic Hedges:** An operator enters an informal observation: *"Temperature is somewhat above nominal, but vibration is surging extremely rapidly"*. The language model parses qualitative hedges (*"somewhat"* $\to \sqrt{\mu}$, *"extremely"* $\to \mu^2$, or Zadeh's concentration operator) and maps them to concrete input vector parameters for the formal core.
 2. **Rule Synthesis from Engineering Specifications:** The language model extracts candidate associative rules from vendor technical manuals or compliance specifications ([Chapter 14](ch14-requirements-detection-and-formalization.md)), which are subsequently calibrated by systems engineers and locked into the verified knowledge base.
-3. **Linguistic Defuzzification and Decision Explanation:** Receiving crisp mathematical output $z^* = 0.42$ and rule firing vector $`w_j`$, the language model synthesizes an auditable, natural-language explanation, grounding every assertion in the underlying specification coordinates ([Chapter 20](ch20-explanation-engine.md)).
+3. **Linguistic Defuzzification and Decision Explanation:** Receiving crisp mathematical output $z^* = 0.42$ and rule firing vector $w_j$, the language model synthesizes an auditable, natural-language explanation, grounding every assertion in the underlying specification coordinates ([Chapter 20](ch20-explanation-engine.md)).
 
 #### 7.4.3. Software Optimization of Fuzzy Computing: SIMD and SMT Verification
 
@@ -998,7 +998,7 @@ Software execution of fuzzy rule engines on general-purpose CPUs leverages speci
 
 - **SIMD Vectorization (AVX2 / AVX-512 / ARM Neon):** Because piecewise-linear membership functions (triangular, trapezoidal) and Gödel T-norms rely exclusively on comparisons ($\min(a, b)$ and $\max(a, b)$), a 256-bit or 512-bit vector register can compute 8 or 16 membership valuations per clock cycle using intrinsic instructions (`_mm256_min_ps` / `_mm256_max_ps`). This enables evaluating 10,000 fuzzy rules in under 5 microseconds without heap allocation.
 - **Static Look-Up Tables (LUT):** Precomputing complex sigmoidal or Gaussian membership functions into static lookup arrays eliminates costly calls to `exp` within real-time control loops.
-- **Formal Rule Space Verification via SMT Solvers (Z3 / CVC5):** The fuzzy rule base is formally audited to guarantee complete coverage over the input domain (eliminating dead zones where $`\sum w_j = 0`$) and to verify consistency (preventing contradictory outputs under identical inputs; see [Chapter 23](ch23-knowledge-base-verification.md)).
+- **Formal Rule Space Verification via SMT Solvers (Z3 / CVC5):** The fuzzy rule base is formally audited to guarantee complete coverage over the input domain (eliminating dead zones where $\sum w_j = 0$) and to verify consistency (preventing contradictory outputs under identical inputs; see [Chapter 23](ch23-knowledge-base-verification.md)).
 
 #### 7.4.4. Hardware Acceleration of Fuzzy Computing: FPGA, Analog Cores, and Crossbars
 
@@ -1026,7 +1026,7 @@ flowchart TD
    - Fuzzy inference engines synthesize directly into pure combinational logic without requiring hardware DSP multiplier blocks (for Mamdani architectures with minimum T-norms).
    - They provide strictly deterministic execution latencies below 20 nanoseconds with zero jitter, satisfying stringent certification audits.
 2. **Analog Subthreshold Silicon (Takeshi Yamakawa and Carver Mead Architectures):**
-   - As explored in [Appendix D](appendix-d-analog-expert-systems-and-neuromorphic-computing.md#L204-L260), subthreshold MOSFET channel physics naturally implements smooth sigmoidal membership functions via exponential drain-current dependence on gate voltage ($`I_d \propto \exp(V_{gs})`$).
+   - As explored in [Appendix D](appendix-d-analog-expert-systems-and-neuromorphic-computing.md#L204-L260), subthreshold MOSFET channel physics naturally implements smooth sigmoidal membership functions via exponential drain-current dependence on gate voltage ($I_d \propto \exp(V_{gs})$).
    - Conjunction T-norms are computed via diode-based current-mode minimum selectors.
    - Rule arbitration is resolved via Lazzaro–Mead Winner-Take-All (WTA) analog circuits exhibiting $O(1)$ time complexity relative to the number of rules. Consuming mere nanowatts of power, these circuits integrate fuzzy arbitration directly onto sensor dies.
 3. **Memristive Crossbars (In-Memory Computing):**
@@ -1047,7 +1047,7 @@ Mathematical notation:
 - $\Theta$ is the frame of discernment (the exhaustive set of mutually exclusive hypotheses), and $2^{\Theta}$ is its power set;
 - $m$ assigns to each subset $A \subseteq \Theta$ a basic belief assignment $m(A) \in [0, 1]$;
 - $\varnothing$ represents the empty set, which carries zero mass by definition;
-- $`\sum_{A\subseteq\Theta}`$ sums belief assignments over all subsets $A$, with the sum evaluating to 1.
+- $\sum_{A\subseteq\Theta}$ sums belief assignments over all subsets $A$, with the sum evaluating to 1.
 
 Belief mass can be allocated to individual hypotheses or to composite subsets, representing true epistemic ignorance. Two independent evidence sources are combined via Dempster's rule of combination, whose formulation and worked calculation appear in [Chapter 4](ch04-evolution-from-bayes-to-evidence-ai.md). However, uncritical fusion is hazardous: when sources fundamentally conflict, classical Dempster normalization masks the discord, producing an illusion of absolute certainty centered on an arbitrary marginal hypothesis (Zadeh's paradox).
 
@@ -1060,9 +1060,9 @@ K=\sum_{B\cap C=\varnothing}m_1(B)\,m_2(C)
 Parameters and components:
 
 - $K \in [0, 1]$ is the dimensionless conflict mass between two independent evidence sources ($K = 0$ indicates total compatibility, while $K = 1$ denotes complete contradiction);
-- $`m_1(B) \in [0, 1]`$ is the belief mass from source 1 allocated to subset $B \subseteq \Theta$;
-- $`m_2(C) \in [0, 1]`$ is the belief mass from source 2 allocated to subset $C \subseteq \Theta$;
-- $`\sum_{B\cap C=\varnothing}`$ sums mass products across all disjoint subset pairs ($B\cap C = \varnothing$).
+- $m_1(B) \in [0, 1]$ is the belief mass from source 1 allocated to subset $B \subseteq \Theta$;
+- $m_2(C) \in [0, 1]$ is the belief mass from source 2 allocated to subset $C \subseteq \Theta$;
+- $\sum_{B\cap C=\varnothing}$ sums mass products across all disjoint subset pairs ($B\cap C = \varnothing$).
 
 **Operational Engineering Application:**
 1. *Invocation Lifecycle Phase:* Conflict mass $K$ is computed automatically by multi-sensor fusion gateways or consensus arbitrators immediately prior to aggregating findings.
@@ -1072,7 +1072,7 @@ Parameters and components:
    - If $K \ge 0.50$: severe epistemic conflict detected; Dempster combination is strictly blocked.
 3. *System Action:* When $K \ge 0.50$, automated fusion aborts. The system quarantines both reports, logs an audit event, escalates to a human arbitrator (Human-in-the-Loop), or triggers a fail-safe state instead of generating false confidence.
 
-Consider the drone scenario: frame of discernment $\Theta=\{\text{target},\text{no target}\}$; the camera assigns $`m_1(\{\text{target}\})=0.8`$ and $`m_1(\Theta)=0.2`$ (ignorance); the thermal sensor assigns $`m_2(\{\text{no target}\})=0.7`$ and $`m_2(\Theta)=0.3`$. The conflict mass is $K=0.8\cdot0.7=0.56$: more than half the total belief mass falls into direct contradiction. Naive normalization would yield a mass of 0.545 for "target", despite the severe contradiction. Because $K = 0.56 > 0.50$, the safety gateway blocks normalization.
+Consider the drone scenario: frame of discernment $\Theta=\{\text{target},\text{no target}\}$; the camera assigns $m_1(\{\text{target}\})=0.8$ and $m_1(\Theta)=0.2$ (ignorance); the thermal sensor assigns $m_2(\{\text{no target}\})=0.7$ and $m_2(\Theta)=0.3$. The conflict mass is $K=0.8\cdot0.7=0.56$: more than half the total belief mass falls into direct contradiction. Naive normalization would yield a mass of 0.545 for "target", despite the severe contradiction. Because $K = 0.56 > 0.50$, the safety gateway blocks normalization.
 
 Lotfi Zadeh demonstrated the extreme pathology of unconstrained normalization [[24]](#src-24). Physician A assigns belief 0.99 to meningitis and 0.01 to a brain tumor. Physician B assigns 0.99 to concussion and 0.01 to a brain tumor. Both clinicians view a brain tumor as virtually impossible. Yet Dempster's rule yields a belief mass of 1.0 for a brain tumor: the conflict $K=0.9999$ is discarded via normalization, leaving only the single hypothesis where both sources exhibited marginal overlap. The Go program below illustrates both scenarios.
 
@@ -1192,8 +1192,8 @@ Case-based reasoning (CBR) addresses novel problems by retrieving analogous hist
 where:
 
 - $q$ is the query case, $c$ is an archival case, and $m$ is the count of monitored attributes;
-- $`q_i`$ and $`c_i`$ are attribute values, and $`\mathrm{sim}_i(q_i,c_i) \in [0, 1]`$ calculates localized feature similarity;
-- $`w_i \ge 0`$ is the feature weight, with at least one weight strictly positive;
+- $q_i$ and $c_i$ are attribute values, and $\mathrm{sim}_i(q_i,c_i) \in [0, 1]$ calculates localized feature similarity;
+- $w_i \ge 0$ is the feature weight, with at least one weight strictly positive;
 - The numerator aggregates weighted similarities, and the denominator normalizes by total weight, constraining $\mathrm{sim}(q,c) \in [0, 1]$.
 
 Consider an illustrative scenario: a current defect and an archival defect involve the identical software component (similarity 1.0, weight 0.5), exhibit similar symptoms (similarity 0.6, weight 0.3), and run on adjacent firmware builds (similarity 0.5, weight 0.2). With normalized weights summing to 1.0, the composite similarity is $0.5\cdot1.0 + 0.3\cdot0.6 + 0.2\cdot0.5 = 0.78$.
@@ -1213,9 +1213,9 @@ h_v^{(\ell+1)}=\sigma\Big(W_0\,h_v^{(\ell)}+\sum_{u\in N(v)}\frac{1}{c_{uv}}\,W_
 ```
 
 - $v$ denotes a target graph node, and $\ell$ indexes the convolutional layer;
-- $`h_v^{(\ell)}`$ and $`h_v^{(\ell+1)}`$ are node embedding vectors before and after layer aggregation;
+- $h_v^{(\ell)}$ and $h_v^{(\ell+1)}$ are node embedding vectors before and after layer aggregation;
 - $N(v)$ represents the neighbor set of node $v$, where $u$ designates an individual neighbor;
-- $`c_{uv}`$ is a normalization constant for edge $(u, v)$, while $`W_0`$ and $`W_1`$ are trainable parameter matrices;
+- $c_{uv}$ is a normalization constant for edge $(u, v)$, while $W_0$ and $W_1$ are trainable parameter matrices;
 - $\sigma$ is a non-linear activation function applied to the aggregated sum.
 
 Across multiple layers, a node's representation incorporates topological context across multi-hop neighborhoods. A GNN can prioritize graph regions for human inspection (e.g., flagging requirements adjacent to historically fragile components). However, a GNN does not establish causality or replace deterministic traceability; every automated hint must be verified against explicit nodes, edges, and primary sources.
@@ -1230,19 +1230,19 @@ R_a\sqsubseteq R_b\iff\forall x,y:\ R_a(x,y)\Rightarrow R_b(x,y)
 
 where:
 
-- $`R_a`$ and $`R_b`$ denote typed binary relations between entities $x$ and $y$;
-- $`R_a(x,y)`$ asserts that tuple $(x, y)$ is linked via $`R_a`$, and $`R_b(x,y)`$ asserts linkage via $`R_b`$;
+- $R_a$ and $R_b$ denote typed binary relations between entities $x$ and $y$;
+- $R_a(x,y)$ asserts that tuple $(x, y)$ is linked via $R_a$, and $R_b(x,y)$ asserts linkage via $R_b$;
 - $\sqsubseteq$ denotes relation subsumption, $\forall x,y$ quantifies over all entity pairs, and $\Rightarrow$ denotes material implication;
 - $\iff$ denotes logical equivalence, formalizing the subrelation property.
 
-This formulation establishes that $`R_a`$ is a subproperty of $`R_b`$ if every entity pair linked by $`R_a`$ is necessarily linked by $`R_b`$. For instance, "mandatory requirement" specializes "regulatory requirement". In W3C RDF Schema, this is expressed via `rdfs:subPropertyOf` [[28]](#src-28). The inference engine applies this rule to match facts against queries:
+This formulation establishes that $R_a$ is a subproperty of $R_b$ if every entity pair linked by $R_a$ is necessarily linked by $R_b$. For instance, "mandatory requirement" specializes "regulatory requirement". In W3C RDF Schema, this is expressed via `rdfs:subPropertyOf` [[28]](#src-28). The inference engine applies this rule to match facts against queries:
 
 ```math
 (s,R_f,o)\models(s,R_q,?)\iff R_f\sqsubseteq^{\ast}R_q
 ```
 
-- In triple $`(s,R_f,o)`$, symbols $s$, $`R_f`$, and $o$ denote subject, asserted relation, and object;
-- $`(s,R_q,?)`$ represents a query template over relation $`R_q`$, where $?$ designates the queried object;
+- In triple $(s,R_f,o)$, symbols $s$, $R_f$, and $o$ denote subject, asserted relation, and object;
+- $(s,R_q,?)$ represents a query template over relation $R_q$, where $?$ designates the queried object;
 - $\models$ denotes semantic satisfaction, $\sqsubseteq$ denotes subproperty inclusion, and $\sqsubseteq^{\ast}$ denotes its reflexive-transitive closure;
 - $\iff$ denotes logical equivalence.
 
@@ -1267,13 +1267,13 @@ d_i^{\pm}&=\sqrt{\sum_{j=1}^{m}\big(v_{ij}-v_j^{\pm}\big)^{2}},\qquad C_i=\frac{
 
 Notation:
 
-- $`x_{ij}`$ is the raw score of alternative $i$ under criterion $j$, where $n$ is the number of alternatives and $m$ is the number of criteria;
-- $`w_j`$ is the normalized weight of criterion $j$, and $`v_{ij}`$ is the weighted normalized score;
-- $`v_j^{+}`$ and $`v_j^{-}`$ are coordinates of the positive-ideal and negative-ideal solutions for criterion $j$;
-- $`d_i^{+}`$ and $`d_i^{-}`$ denote the Euclidean distances from alternative $i$ to the ideal and anti-ideal benchmarks;
-- $`C_i \in [0, 1]`$ is the relative closeness coefficient of alternative $i$ to the ideal solution.
+- $x_{ij}$ is the raw score of alternative $i$ under criterion $j$, where $n$ is the number of alternatives and $m$ is the number of criteria;
+- $w_j$ is the normalized weight of criterion $j$, and $v_{ij}$ is the weighted normalized score;
+- $v_j^{+}$ and $v_j^{-}$ are coordinates of the positive-ideal and negative-ideal solutions for criterion $j$;
+- $d_i^{+}$ and $d_i^{-}$ denote the Euclidean distances from alternative $i$ to the ideal and anti-ideal benchmarks;
+- $C_i \in [0, 1]$ is the relative closeness coefficient of alternative $i$ to the ideal solution.
 
-A higher $`C_i`$ indicates that an alternative is closer to the positive-ideal solution and further from the negative-ideal benchmark. Prior to calculation, criteria polarities must be aligned (normalizing costs into benefits), and weights must be justified. The Go program below evaluates both weighted-sum and TOPSIS algorithms across the three release scenarios from [Chapter 4](ch04-evolution-from-bayes-to-evidence-ai.md).
+A higher $C_i$ indicates that an alternative is closer to the positive-ideal solution and further from the negative-ideal benchmark. Prior to calculation, criteria polarities must be aligned (normalizing costs into benefits), and weights must be justified. The Go program below evaluates both weighted-sum and TOPSIS algorithms across the three release scenarios from [Chapter 4](ch04-evolution-from-bayes-to-evidence-ai.md).
 
 <details>
 <summary>Go Implementation: Weighted-Sum and TOPSIS Multi-Criteria Decision Evaluation</summary>
@@ -1356,7 +1356,7 @@ Optimization formalizes how to select the best configuration under explicit oper
 
 - $x$ represents a candidate solution vector, $\mathcal{X}$ is the domain of candidate configurations, and $x\in\mathcal{X}$ enforces domain feasibility;
 - $f(x)$ is the objective cost function to be minimized;
-- $`g_j(x)`$ represents the function for constraint $j$, where $`g_j(x)\le0`$ indicates satisfaction, and $k$ denotes total constraint count;
+- $g_j(x)$ represents the function for constraint $j$, where $g_j(x)\le0$ indicates satisfaction, and $k$ denotes total constraint count;
 - $\min$ indicates minimization, and $j=1,\dots,k$ indexes the constraint suite.
 
 The result is a feasible solution minimizing the cost function, or a formal proof that no feasible solution exists. An engineering example: selecting a minimal test suite covering all high-risk requirements while respecting an 8-hour test bench execution limit. The model cannot violate any codified constraint.
@@ -1391,13 +1391,13 @@ The BM25 (*Best Matching 25*) scoring function, formulated by Stephen Robertson 
 ```
 
 - $q$ is the query, $t$ iterates over query terms, and $\sum$ aggregates individual term scores;
-- $d$ is the document, $`|d|`$ is its length in tokens, and $\mathrm{avgdl}$ is the average document length across the corpus;
+- $d$ is the document, $|d|$ is its length in tokens, and $\mathrm{avgdl}$ is the average document length across the corpus;
 - $\mathrm{tf}(t,d)$ is the term frequency within document $d$, and $\mathrm{IDF}(t)$ is its inverse document frequency weight;
-- $`k_1 \ge 0`$ governs term frequency saturation, typically calibrated within $[1.2, 2.0]$;
+- $k_1 \ge 0$ governs term frequency saturation, typically calibrated within $[1.2, 2.0]$;
 - $b \in [0, 1]$ controls document length penalty, commonly set to $0.75$;
-- $`|d|/\mathrm{avgdl}`$ normalizes document length relative to the corpus average.
+- $|d|/\mathrm{avgdl}$ normalizes document length relative to the corpus average.
 
-The fractional term scales sub-linearly with term frequency. For an average-length document with $`k_1=1.2`$, a single term occurrence yields a multiplier of 1.0, whereas ten occurrences yield $10\cdot2.2/11.2 \approx 1.96$. Repeating a keyword ten times does not make a document ten times more relevant. BM25 scores are unbounded and do not represent probabilities; scores across disparate queries or corpus indices cannot be directly compared.
+The fractional term scales sub-linearly with term frequency. For an average-length document with $k_1=1.2$, a single term occurrence yields a multiplier of 1.0, whereas ten occurrences yield $10\cdot2.2/11.2 \approx 1.96$. Repeating a keyword ten times does not make a document ten times more relevant. BM25 scores are unbounded and do not represent probabilities; scores across disparate queries or corpus indices cannot be directly compared.
 
 ### 10.2. Dense Vector Representations and Contrastive Space Geometry
 
@@ -1409,8 +1409,8 @@ f_{\theta}(s)=e_s\in\mathbb{R}^{d}
 
 Notation:
 
-- $s$ is a text passage, and $`f_{\theta}`$ is an embedding encoder parameterized by weights $\theta$;
-- $`e_s`$ is the dense embedding vector generated for passage $s$;
+- $s$ is a text passage, and $f_{\theta}$ is an embedding encoder parameterized by weights $\theta$;
+- $e_s$ is the dense embedding vector generated for passage $s$;
 - $\mathbb{R}^{d}$ denotes the $d$-dimensional Euclidean space, where $d$ typically ranges from hundreds to thousands;
 - $\in$ denotes vector space membership.
 
@@ -1469,8 +1469,8 @@ S_{\mathrm{hybrid}}(q,d)=\alpha\,\widetilde{S}_{\mathrm{BM25}}(q,d)+(1-\alpha)\,
 
 where:
 
-- $q$ is the query, $d$ is a candidate document, and $`S_{\mathrm{hybrid}}(q,d)`$ is the aggregated hybrid score;
-- $`\widetilde{S}_{\mathrm{BM25}}`$ and $`\widetilde{S}_{\mathrm{vec}}`$ are normalized lexical and dense scores scaled to a common interval;
+- $q$ is the query, $d$ is a candidate document, and $S_{\mathrm{hybrid}}(q,d)$ is the aggregated hybrid score;
+- $\widetilde{S}_{\mathrm{BM25}}$ and $\widetilde{S}_{\mathrm{vec}}$ are normalized lexical and dense scores scaled to a common interval;
 - $\alpha \in [0, 1]$ balances the lexical component, while $1 - \alpha$ weights the semantic signal.
 
 Parameter $\alpha$ must be empirically calibrated on a held-out benchmark of domain queries, rather than arbitrarily selected. When raw scores cannot be reliably calibrated to a common scale, Reciprocal Rank Fusion (RRF) is employed, combining candidates based strictly on ordinal ranking positions:
@@ -1482,20 +1482,20 @@ Parameter $\alpha$ must be empirically calibrated on a held-out benchmark of dom
 where:
 
 - $d$ is a candidate passage, $R$ is the set of rankers, and $r$ designates a specific ranker (e.g., BM25);
-- $`\mathrm{rank}_r(d)`$ is the ordinal position of document $d$ within ranker $r$'s output (starting at rank 1);
+- $\mathrm{rank}_r(d)$ is the ordinal position of document $d$ within ranker $r$'s output (starting at rank 1);
 - $k$ is a smoothing constant, canonically calibrated to $k = 60$ [[38]](#src-38);
-- $`\sum_{r\in R}`$ sums reciprocal ranks across all retrieval channels.
+- $\sum_{r\in R}$ sums reciprocal ranks across all retrieval channels.
 
 Higher RRF values designate higher composite priority. Consider an example: Document X ranks 1st in BM25 but 10th in dense retrieval, yielding an RRF score of $1/61 + 1/70 \approx 0.0307$. Document Y ranks 3rd in both channels, yielding $2/63 \approx 0.0317$. Consistently high placement across both channels propels Document Y ahead of Document X.
 
 **Runtime Control Flow, Hardware Constraints, and the Relevance Admission Gateway:**
-1. **Relevance Threshold Filtering ($`\tau_{\mathrm{rel}}`$):** Following candidate fusion, the pool passes through an admission gate. If the highest candidate score satisfies $`\max_d S_{\mathrm{hybrid}}(q, d) < \tau_{\mathrm{rel}} = 0.35`$, the pipeline halts generation and returns status `ERR_NO_RELEVANT_EVIDENCE`, shielding the downstream LLM from hallucinating over irrelevant context.
-2. **Context Window Hardware Budget (Budget Cutoff):** Exactly $K = 5$ top-ranked chunks are forwarded to the generative model or reranker. At an average chunk size of 300 tokens, this guarantees a fixed KV-cache footprint of 1,500 tokens, eliminating GPU VRAM Out-of-Memory (OOM) risks and bounding execution latency within a deterministic timeout of $`T_{\mathrm{infer}} \le 120\,\text{ms}`$.
+1. **Relevance Threshold Filtering ($\tau_{\mathrm{rel}}$):** Following candidate fusion, the pool passes through an admission gate. If the highest candidate score satisfies $\max_d S_{\mathrm{hybrid}}(q, d) < \tau_{\mathrm{rel}} = 0.35$, the pipeline halts generation and returns status `ERR_NO_RELEVANT_EVIDENCE`, shielding the downstream LLM from hallucinating over irrelevant context.
+2. **Context Window Hardware Budget (Budget Cutoff):** Exactly $K = 5$ top-ranked chunks are forwarded to the generative model or reranker. At an average chunk size of 300 tokens, this guarantees a fixed KV-cache footprint of 1,500 tokens, eliminating GPU VRAM Out-of-Memory (OOM) risks and bounding execution latency within a deterministic timeout of $T_{\mathrm{infer}} \le 120\,\text{ms}$.
 
 **Worked Selection Example:**
 A CAN bus diagnostic query retrieves two candidate passages:
-- Passage $`d_1`$ (protocol specification): $`\widetilde{S}_{\mathrm{BM25}} = 0.82`$, $`\widetilde{S}_{\mathrm{vec}} = 0.40`$;
-- Passage $`d_2`$ (schematic diagram): $`\widetilde{S}_{\mathrm{BM25}} = 0.30`$, $`\widetilde{S}_{\mathrm{vec}} = 0.88`$.
+- Passage $d_1$ (protocol specification): $\widetilde{S}_{\mathrm{BM25}} = 0.82$, $\widetilde{S}_{\mathrm{vec}} = 0.40$;
+- Passage $d_2$ (schematic diagram): $\widetilde{S}_{\mathrm{BM25}} = 0.30$, $\widetilde{S}_{\mathrm{vec}} = 0.88$.
 Under calibrated weighting $\alpha = 0.55$:
 ```math
 S_{\mathrm{hybrid}}(q, d_1) = 0{,}55 \cdot 0{,}82 + 0{,}45 \cdot 0{,}40 = 0{,}451 + 0{,}180 = 0{,}631
@@ -1503,19 +1503,19 @@ S_{\mathrm{hybrid}}(q, d_1) = 0{,}55 \cdot 0{,}82 + 0{,}45 \cdot 0{,}40 = 0{,}45
 ```math
 S_{\mathrm{hybrid}}(q, d_2) = 0{,}55 \cdot 0{,}30 + 0{,}45 \cdot 0{,}88 = 0{,}165 + 0{,}396 = 0{,}561
 ```
-Both passages clear admission threshold $`\tau_{\mathrm{rel}} = 0.35`$ and are admitted into the prompt context with priority $`d_1 \succ d_2`$.
+Both passages clear admission threshold $\tau_{\mathrm{rel}} = 0.35$ and are admitted into the prompt context with priority $d_1 \succ d_2$.
 
 ### 10.4. RAG Architecture: Context Compression and Fact Loss Prevention
 
-An autoregressive large language model (LLM) is trained to predict subsequent tokens. For a sequence of tokens $`x_1,\dots,x_n`$, the joint probability of the sequence decomposes into a product of conditional probabilities:
+An autoregressive large language model (LLM) is trained to predict subsequent tokens. For a sequence of tokens $x_1,\dots,x_n$, the joint probability of the sequence decomposes into a product of conditional probabilities:
 
 ```math
 P(x_1,\dots,x_n)=\prod_{t=1}^{n}P(x_t\mid x_1,\dots,x_{t-1})
 ```
 
-- $`x_1,\dots,x_n`$ denotes the token sequence, where $n$ is sequence length, and $`x_t`$ is the token at position $t$;
+- $x_1,\dots,x_n$ denotes the token sequence, where $n$ is sequence length, and $x_t$ is the token at position $t$;
 - $t$ indexes token positions, and $\prod$ denotes sequential multiplication of conditional probabilities;
-- $`P(x_t\mid x_1,\dots,x_{t-1})`$ is the conditional probability of token $`x_t`$ given preceding context; for $t=1$, the context is empty;
+- $P(x_t\mid x_1,\dots,x_{t-1})$ is the conditional probability of token $x_t$ given preceding context; for $t=1$, the context is empty;
 - Each term and the global sequence probability are bounded within $[0, 1]$.
 
 The model evaluates sequence likelihood based on contextual fluency, reflecting linguistic probability rather than factual truth. At each decoding step, raw logit scores for vocabulary tokens $v \in \mathcal{V}$ are normalized via softmax:
@@ -1525,9 +1525,9 @@ P(x_{t+1}=v\mid x_{\le t})=\frac{\exp(a_v)}{\sum_{u\in\mathcal{V}}\exp(a_u)}
 ```
 
 - $\mathcal{V}$ is the discrete token vocabulary, and $v \in \mathcal{V}$ is a candidate token;
-- $`a_v`$ is the unnormalized logit score for token $v$, and $`\exp(a_v)`$ is its exponential;
-- $`x_{\le t}`$ denotes the accumulated context up to position $t$, and the denominator sums exponentiated logits across vocabulary $\mathcal{V}$;
-- The output defines a categorical probability distribution where $`\sum_{v\in\mathcal{V}} P(x_{t+1}=v\mid x_{\le t}) = 1`$.
+- $a_v$ is the unnormalized logit score for token $v$, and $\exp(a_v)$ is its exponential;
+- $x_{\le t}$ denotes the accumulated context up to position $t$, and the denominator sums exponentiated logits across vocabulary $\mathcal{V}$;
+- The output defines a categorical probability distribution where $\sum_{v\in\mathcal{V}} P(x_{t+1}=v\mid x_{\le t}) = 1$.
 
 Softmax produces a probability distribution over vocabulary continuations. This metric indicates statistical likelihood given the prompt, not factual validity: the mathematical formulation contains no inherent constraint enforcing adherence to valid engineering baselines. Constraining generation via formal grammars is detailed in [Chapter 13](ch13-language-variability-vs-determinism.md); without external grounding, a language model is not a knowledge base.
 
@@ -1540,11 +1540,11 @@ The foundational operation of the Transformer architecture, introduced by Ashish
 where:
 
 - $Q$ is the query matrix, $K$ is the key matrix, and $V$ is the value matrix;
-- $K^{\mathsf T}$ is the transpose of $K$, and $`d_k`$ is the dimensionality of key vectors;
-- $QK^{\mathsf T}$ calculates pairwise alignment logits between queries and keys, scaled by $`\sqrt{d_k}`$, while $\mathrm{softmax}$ normalizes scores into attention weights;
+- $K^{\mathsf T}$ is the transpose of $K$, and $d_k$ is the dimensionality of key vectors;
+- $QK^{\mathsf T}$ calculates pairwise alignment logits between queries and keys, scaled by $\sqrt{d_k}$, while $\mathrm{softmax}$ normalizes scores into attention weights;
 - Multiplying by $V$ computes a weighted combination of value vectors, where each row sums to 1.
 
-Scaling by $`\sqrt{d_k}`$ prevents logits from growing excessively large in high dimensions. Each row in the resulting output matrix is a convex combination of value vectors, enabling the network to relate distant tokens across context. However, attention weights do not constitute formal explanations, evidentiary citations, or proof of causality.
+Scaling by $\sqrt{d_k}$ prevents logits from growing excessively large in high dimensions. Each row in the resulting output matrix is a convex combination of value vectors, enabling the network to relate distant tokens across context. However, attention weights do not constitute formal explanations, evidentiary citations, or proof of causality.
 
 ```mermaid
 flowchart LR
@@ -1580,10 +1580,10 @@ Retrieval-Augmented Generation (RAG) integrates information retrieval with gener
 P(y\mid x)\approx\sum_{d\in D_k}p(d\mid x)\,P(y\mid x,d)
 ```
 
-- $x$ is the input query, $y$ is the generated response, and $`D_k`$ is the set of $k$ retrieved passages;
+- $x$ is the input query, $y$ is the generated response, and $D_k$ is the set of $k$ retrieved passages;
 - $p(d\mid x)$ is the retrieval weight of passage $d$ given query $x$, forming the retrieval distribution;
 - $P(y\mid x,d)$ is the conditional probability of response $y$ conditioned on query $x$ and passage $d$;
-- $`\sum_{d\in D_k}`$ marginalizes over retrieved passages, where $\approx$ denotes numerical approximation over top-$k$ candidates.
+- $\sum_{d\in D_k}$ marginalizes over retrieved passages, where $\approx$ denotes numerical approximation over top-$k$ candidates.
 
 This formulation marginalizes output likelihood across retrieved chunks, weighted by retrieval confidence. Retrieval supplies factual evidence to the generator, but cannot guarantee that passages are uncorrupted, legally valid, or correctly interpreted. Production systems require baseline version validation, access control filtering, explicit citation tracking, and justified refusal when evidence is insufficient. The complete pipeline from query to proof bundle is formalized in [Chapter 19](ch19-from-question-to-evidence.md).
 
@@ -1605,18 +1605,18 @@ where:
 - $\tilde{y}=z-\hat{z}$ is the measurement innovation vector (the residual);
 - $P^{-}$ is the state prediction error covariance matrix, $H$ is the measurement matrix mapping state space to measurement space, and $R$ is the sensor noise covariance matrix;
 - $S=HP^{-}H^{\mathsf T}+R$ is the innovation covariance matrix; $\mathsf T$ denotes matrix transposition, and $S^{-1}$ denotes matrix inversion;
-- $`d_M \ge 0`$ is the dimensionless Mahalanobis distance; under nominal linear-Gaussian assumptions, $`d_M^2`$ follows a chi-squared ($\chi^2$) distribution with $m$ degrees of freedom [[42]](#src-42), [[43]](#src-43).
+- $d_M \ge 0$ is the dimensionless Mahalanobis distance; under nominal linear-Gaussian assumptions, $d_M^2$ follows a chi-squared ($\chi^2$) distribution with $m$ degrees of freedom [[42]](#src-42), [[43]](#src-43).
 
-Normalizing by the full covariance matrix accounts for axis-dependent variance and cross-correlations. An acceptance gate is established using the $\chi^2$ cumulative distribution function, assuming the filter remains calibrated. For example, given $S=\mathrm{diag}(4, 1)$, an innovation $\tilde{y}=(4, 0)$ yields $`d_M=2.0`$, whereas $\tilde{y}=(0, 3.5)$ yields $`d_M=3.5`$; at a 99% confidence threshold for two degrees of freedom ($`d_M^2 \le 9.21`$), the former is accepted while the latter is rejected. Filter covariances are updated via Kalman filtering [[42]](#src-42); measurement gating methodologies are formalized by Yaakov Bar-Shalom and colleagues [[43]](#src-43).
+Normalizing by the full covariance matrix accounts for axis-dependent variance and cross-correlations. An acceptance gate is established using the $\chi^2$ cumulative distribution function, assuming the filter remains calibrated. For example, given $S=\mathrm{diag}(4, 1)$, an innovation $\tilde{y}=(4, 0)$ yields $d_M=2.0$, whereas $\tilde{y}=(0, 3.5)$ yields $d_M=3.5$; at a 99% confidence threshold for two degrees of freedom ($d_M^2 \le 9.21$), the former is accepted while the latter is rejected. Filter covariances are updated via Kalman filtering [[42]](#src-42); measurement gating methodologies are formalized by Yaakov Bar-Shalom and colleagues [[43]](#src-43).
 
-Consider an illustrative scenario: measurement is two-dimensional; horizontal axis noise has standard deviation $`\sigma_x = 2`$ pixels, vertical noise has $`\sigma_y = 1`$ pixel, and errors are uncorrelated ($S=\mathrm{diag}(4, 1)$). At a 99% confidence level with two degrees of freedom, the acceptance threshold is $`d_M^2 \le 9.21`$ ($`d_M \le 3.03`$).
+Consider an illustrative scenario: measurement is two-dimensional; horizontal axis noise has standard deviation $\sigma_x = 2$ pixels, vertical noise has $\sigma_y = 1$ pixel, and errors are uncorrelated ($S=\mathrm{diag}(4, 1)$). At a 99% confidence level with two degrees of freedom, the acceptance threshold is $d_M^2 \le 9.21$ ($d_M \le 3.03$).
 
-| Innovation $\tilde{y}$, pixels | Euclidean Distance | $`d_M`$ | Gating Verdict |
+| Innovation $\tilde{y}$, pixels | Euclidean Distance | $d_M$ | Gating Verdict |
 |---|---:|---:|---|
 | $(4;\ 0)$ | 4.0 | 2.0 | Accepted: deviation along high-noise axis |
 | $(0;\ 3.5)$ | 3.5 | 3.5 | Rejected: deviation along high-precision axis |
 
-Euclidean distance incorrectly flags the first innovation as a larger anomaly, failing to recognize that a 4-pixel drift along an axis with $\sigma = 2$ is routine. The Mahalanobis distance correctly rejects the second innovation: a 3.5-pixel drift on an axis with $\sigma = 1$ represents a statistically improbable failure event. If $`d_M`$ falls within the acceptance gate, the filter incorporates the measurement. If $`d_M`$ breaches the gate, the measurement is quarantined, and the vehicle dead-reckons on inertial data. If consecutive measurements are rejected, the navigation system enters a degraded-confidence mode and logs a safety event. GPS-denied autonomous navigation test benches on NVIDIA Jetson Orin and Xilinx Virtex platforms are examined in [Appendix C](appendix-c-autonomous-navigation-and-geosearch.md), hardware PDK implementations of analog Mahalanobis gates appear in [Appendix D](appendix-d-analog-expert-systems-and-neuromorphic-computing.md), and edge-to-backend workload partitioning is covered in [Chapter 22](ch22-cybernetics-edge-to-backend.md).
+Euclidean distance incorrectly flags the first innovation as a larger anomaly, failing to recognize that a 4-pixel drift along an axis with $\sigma = 2$ is routine. The Mahalanobis distance correctly rejects the second innovation: a 3.5-pixel drift on an axis with $\sigma = 1$ represents a statistically improbable failure event. If $d_M$ falls within the acceptance gate, the filter incorporates the measurement. If $d_M$ breaches the gate, the measurement is quarantined, and the vehicle dead-reckons on inertial data. If consecutive measurements are rejected, the navigation system enters a degraded-confidence mode and logs a safety event. GPS-denied autonomous navigation test benches on NVIDIA Jetson Orin and Xilinx Virtex platforms are examined in [Appendix C](appendix-c-autonomous-navigation-and-geosearch.md), hardware PDK implementations of analog Mahalanobis gates appear in [Appendix D](appendix-d-analog-expert-systems-and-neuromorphic-computing.md), and edge-to-backend workload partitioning is covered in [Chapter 22](ch22-cybernetics-edge-to-backend.md).
 
 ```mermaid
 flowchart TD
@@ -1642,7 +1642,7 @@ Operational Boundary: The Mahalanobis gate detects transient innovations inconsi
 
 Interfacing an expert system with a cyber-physical platform exposes it to a combinatorial explosion of telemetry: dozens of sensors monitoring vibration frequencies, temperatures, currents, and pressures span a massive phase space. Formulating production rules over every individual micro-variable yields an unmaintainable, brittle knowledge base. The fundamental systems question arises: how can high-dimensional dynamic chaos be mathematically reduced to a compact set of discrete concepts?
 
-The theoretical solution is provided by **Hermann Haken's synergetics**—the physical theory of self-organization in open non-equilibrium systems [[43a]](#src-43a). The cornerstone of synergetics is the **Slaving Principle**: near critical instability points, the collective behavior of a complex system with infinite degrees of freedom is fully governed by a small number of macroscopic variables—**order parameters** $\xi$, while thousands of rapidly decaying stable modes $`y_j`$ are rigidly slaved to these slow macroscopic variables:
+The theoretical solution is provided by **Hermann Haken's synergetics**—the physical theory of self-organization in open non-equilibrium systems [[43a]](#src-43a). The cornerstone of synergetics is the **Slaving Principle**: near critical instability points, the collective behavior of a complex system with infinite degrees of freedom is fully governed by a small number of macroscopic variables—**order parameters** $\xi$, while thousands of rapidly decaying stable modes $y_j$ are rigidly slaved to these slow macroscopic variables:
 
 ```math
 y_j(t) \approx h_j(\xi(t)), \qquad \dot{\xi} = \lambda \xi - \beta \xi^3 + F(t)
@@ -1650,8 +1650,8 @@ y_j(t) \approx h_j(\xi(t)), \qquad \dot{\xi} = \lambda \xi - \beta \xi^3 + F(t)
 
 where:
 - $\xi$ is the system order parameter (a long-lived low-dimensional macroscopic collective mode);
-- $`y_j`$ denotes rapidly relaxing microscopic variables (high-frequency channels of individual physical sensors);
-- $`h_j`$ is the nonlinear mapping function expressing the slaving of micro-states to the order parameter;
+- $y_j$ denotes rapidly relaxing microscopic variables (high-frequency channels of individual physical sensors);
+- $h_j$ is the nonlinear mapping function expressing the slaving of micro-states to the order parameter;
 - $\lambda$ is the control parameter (governing distance to the critical bifurcation threshold or phase transition);
 - $\beta > 0$ is the nonlinear saturation coefficient stabilizing the system in the post-bifurcation state;
 - $F(t)$ represents stochastic noise (measurement fluctuations).
@@ -1659,10 +1659,10 @@ where:
 For an evidence-governed expert system, Haken's slaving principle fulfills two decisive architectural functions:
 
 1. **Ontological State Space Reduction:**  
-   The expert system does not inspect individual camera pixels or millivolt noise spikes. It evaluates *semantic order parameters* (e.g., $`\xi_1 = \text{"rotor cavitation imbalance"}`$, $`\xi_2 = \text{"loss of navigation integrity"}`$, $`\xi_3 = \text{"thermal path breakdown"}`$). Proving that micro-variables are slaved to $\xi$ allows the rule engine to enforce safety invariants over a compact conceptual graph, rather than executing combinatorial searches over raw telemetry.
+   The expert system does not inspect individual camera pixels or millivolt noise spikes. It evaluates *semantic order parameters* (e.g., $\xi_1 = \text{"rotor cavitation imbalance"}$, $\xi_2 = \text{"loss of navigation integrity"}$, $\xi_3 = \text{"thermal path breakdown"}$). Proving that micro-variables are slaved to $\xi$ allows the rule engine to enforce safety invariants over a compact conceptual graph, rather than executing combinatorial searches over raw telemetry.
 2. **Bifurcation Forecasting via Critical Slowing Down:**  
-   As an engineering system approaches a physical bifurcation (e.g., aerodynamic stall on a drone wing or thermal runaway of a power MOSFET), control parameter $\lambda \to 0$. Consequently, the system relaxation time following perturbations diverges toward infinity: $`\tau = 1/|\lambda| \to \infty`$.  
-   Mathematically, this causes a sharp increase in telemetry variance and causes the lag-1 autocorrelation coefficient to approach unity: $`\rho_1 \to 1`$. An expert system tracks this phenomenon as a **pre-bifurcation indicator**, alerting operators to impending instability long before physical parameters cross critical threshold limits.
+   As an engineering system approaches a physical bifurcation (e.g., aerodynamic stall on a drone wing or thermal runaway of a power MOSFET), control parameter $\lambda \to 0$. Consequently, the system relaxation time following perturbations diverges toward infinity: $\tau = 1/|\lambda| \to \infty$.  
+   Mathematically, this causes a sharp increase in telemetry variance and causes the lag-1 autocorrelation coefficient to approach unity: $\rho_1 \to 1$. An expert system tracks this phenomenon as a **pre-bifurcation indicator**, alerting operators to impending instability long before physical parameters cross critical threshold limits.
 
 > [!NOTE]
 > **Author's Model of Synergetic Dimensionality Reduction and Pre-Bifurcation CSD Diagnostics**
@@ -1713,7 +1713,7 @@ Level 1 (blue) is observational association: conditional probability $P(Y\mid X)
 
 Pearl's Level 2 causal analysis resolves a fundamental engineering question: how to quantify the true effect of a deliberate engineering intervention (such as mandating static analysis, adjusting clock frequency, or duplicating a sensor channel) when only historical observational data contaminated by confounders is available. Conflating active intervention $do(X)$ with passive correlation $P(Y\mid X)$ triggers Simpson's paradox, directing resources toward ineffective policies.
 
-The target engineering metric is the **pure causal effect of intervention** $P\big(Y\mid do(X=x)\big) \in [0, 1]$ and the resulting causal risk difference $`\Delta_{\mathrm{causal}} = P\big(Y=1\mid do(X=1)\big) - P\big(Y=1\mid do(X=0)\big)`$. If a conditioning set $Z$ satisfies the backdoor criterion—blocking all non-causal backdoor paths from $X$ to $Y$ while containing no descendants of $X$—the interventional effect is calculated via Pearl's adjustment formula [[46]](#src-46):
+The target engineering metric is the **pure causal effect of intervention** $P\big(Y\mid do(X=x)\big) \in [0, 1]$ and the resulting causal risk difference $\Delta_{\mathrm{causal}} = P\big(Y=1\mid do(X=1)\big) - P\big(Y=1\mid do(X=0)\big)$. If a conditioning set $Z$ satisfies the backdoor criterion—blocking all non-causal backdoor paths from $X$ to $Y$ while containing no descendants of $X$—the interventional effect is calculated via Pearl's adjustment formula [[46]](#src-46):
 
 ```math
 P\big(Y\mid do(X=x)\big)=\sum_{z}P\big(Y\mid X=x,\,Z=z\big)\,P(Z=z)
@@ -1728,17 +1728,17 @@ Parameters and components:
 - $z$ iterates across all discrete states of confounder $Z$;
 - $P(Y\mid X=x, Z=z)$ is the local conditional probability of outcome within stratum $z$;
 - $P(Z=z)$ is the marginal population share of stratum $z$;
-- $`\sum_z`$ aggregates weighted contributions across strata, yielding an unbiased causal estimate.
+- $\sum_z$ aggregates weighted contributions across strata, yielding an unbiased causal estimate.
 
 **Operational Engineering Application:**
 1. *Invocation Lifecycle Phase:* Evaluated by quality process auditing subsystems during ASPICE or ISO 26262-8 audits when validating proposed workflow modifications.
 2. *Result Interpretation:*
-   - Causal risk difference $`\Delta_{\mathrm{causal}} = P(Y=1\mid do(X=1)) - P(Y=1\mid do(X=0))`$ quantifies the absolute reduction in failure rate directly attributable to policy $X$;
-   - If $`\Delta_{\mathrm{causal}} < 0`$, policy $X$ demonstrably improves reliability (e.g., $`\Delta_{\mathrm{causal}} = -0.075`$ represents a 7.5 percentage-point reduction in defect rate);
-   - If $`\Delta_{\mathrm{causal}} \approx 0`$, despite strong correlation in raw logs ($P(Y\mid X) \neq P(Y)$), the apparent relationship is spurious, driven entirely by confounder $Z$.
+   - Causal risk difference $\Delta_{\mathrm{causal}} = P(Y=1\mid do(X=1)) - P(Y=1\mid do(X=0))$ quantifies the absolute reduction in failure rate directly attributable to policy $X$;
+   - If $\Delta_{\mathrm{causal}} < 0$, policy $X$ demonstrably improves reliability (e.g., $\Delta_{\mathrm{causal}} = -0.075$ represents a 7.5 percentage-point reduction in defect rate);
+   - If $\Delta_{\mathrm{causal}} \approx 0$, despite strong correlation in raw logs ($P(Y\mid X) \neq P(Y)$), the apparent relationship is spurious, driven entirely by confounder $Z$.
 3. *System Action:* The expert system blocks policy change recommendations until the underlying causal DAG is substantiated by architectural models and all backdoor paths through $Z$ are blocked.
 
-Applying the adjustment formula to our code review scenario with equal proportions of simple and complex tasks: mandating reviews yields $0.5\cdot10\% + 0.5\cdot30\% = 20\%$ defects, whereas prohibiting reviews yields $0.5\cdot15\% + 0.5\cdot40\% = 27.5\%$. The pure causal effect of mandating reviews is $`\Delta_{\mathrm{causal}} = 0.20 - 0.275 = -0.075`$, confirming a true 7.5% defect reduction, directly contradicting the naive aggregate correlation.
+Applying the adjustment formula to our code review scenario with equal proportions of simple and complex tasks: mandating reviews yields $0.5\cdot10\% + 0.5\cdot30\% = 20\%$ defects, whereas prohibiting reviews yields $0.5\cdot15\% + 0.5\cdot40\% = 27.5\%$. The pure causal effect of mandating reviews is $\Delta_{\mathrm{causal}} = 0.20 - 0.275 = -0.075$, confirming a true 7.5% defect reduction, directly contradicting the naive aggregate correlation.
 
 ```mermaid
 flowchart LR
@@ -1782,12 +1782,12 @@ Counterfactual queries require a Structural Causal Model (SCM), in which every s
 X_i=f_i\big(\mathrm{Pa}_i,U_i\big),\qquad i=1,\dots,n
 ```
 
-- $`X_i`$ denotes the endogenous system variable indexed by $i$, where $i=1,\dots,n$ indexes all variables;
-- $`\mathrm{Pa}_i`$ represents the set of direct causal parents of $`X_i`$;
-- $`U_i`$ represents unobserved background factors (exogenous noise), and $`f_i`$ is the structural mechanism governing $`X_i`$;
-- The functional notation specifies that $`X_i`$ is determined uniquely by its direct causes and exogenous disturbance.
+- $X_i$ denotes the endogenous system variable indexed by $i$, where $i=1,\dots,n$ indexes all variables;
+- $\mathrm{Pa}_i$ represents the set of direct causal parents of $X_i$;
+- $U_i$ represents unobserved background factors (exogenous noise), and $f_i$ is the structural mechanism governing $X_i$;
+- The functional notation specifies that $X_i$ is determined uniquely by its direct causes and exogenous disturbance.
 
-An SCM formalizes physical mechanisms. A counterfactual inquiry might ask: would the actuator have survived had the thermal protection circuit triggered 20 milliseconds earlier, under the exact operational temperature, load, and voltage conditions observed during the failure? To evaluate this, the model infers exogenous noise $U$ from factual telemetry, modifies the protection threshold function, and evaluates the counterfactual outcome. Accuracy depends on the correctness of structural equations $`f_i`$; counterfactual modeling augments, but does not replace, empirical physical experimentation.
+An SCM formalizes physical mechanisms. A counterfactual inquiry might ask: would the actuator have survived had the thermal protection circuit triggered 20 milliseconds earlier, under the exact operational temperature, load, and voltage conditions observed during the failure? To evaluate this, the model infers exogenous noise $U$ from factual telemetry, modifies the protection threshold function, and evaluates the counterfactual outcome. Accuracy depends on the correctness of structural equations $f_i$; counterfactual modeling augments, but does not replace, empirical physical experimentation.
 
 Pearl's ladder dictates an epistemic hierarchy for expert systems. A correlation between firmware build versions and sensor faults is an observational hypothesis (Level 1). A controlled diagnostic routine is an intervention demonstrating active effect (Level 2). A definitive claim that a specific hardware revision caused an operational failure requires a structural causal model referencing verified engineering equations (Level 3). The expert system must tag every claim with its corresponding causal level.
 
@@ -1839,7 +1839,7 @@ The mathematical apparatus of critical expert systems demands strict modularity:
 
 - **Mykola Fedchyk:**  
   *“Professor Geoffrey, that is precisely why in Section 6.5 of this monograph, Dempster's paradox is not swept under the rug, but treated as a first-class diagnostic alarm!  
-  When the evidentiary conflict mass approaches unity ($`k \to 1`$), the engine categorically rejects blind conjunctive fusion and unprincipled smooth interpolation.  
+  When the evidentiary conflict mass approaches unity ($k \to 1$), the engine categorically rejects blind conjunctive fusion and unprincipled smooth interpolation.  
   In a safety-critical cyber-physical system, smoothly interpolating between two mutually exclusive physical hypotheses—such as 'brake line pressure is 0 bar' versus 'brake line pressure is 150 bar'—produces a catastrophic hallucination: assuming pressure is 75 bar.  
   Our mathematical architecture triggers deterministic defensive bifurcation: under high conflict, it either invokes Judea Pearl's causal $do(\cdot)$ operator to actively probe physical sensors, or executes a typed `DISP_REFUSE` safety transition into a Fail-Closed state. We refuse to mask sensor contradictions behind continuous weights—we make epistemic conflict visible, measurable, and safe.”*
 

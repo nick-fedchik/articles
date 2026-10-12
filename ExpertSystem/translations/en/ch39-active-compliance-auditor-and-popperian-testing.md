@@ -14,7 +14,7 @@
 
 In mission-critical cyber-physical systems (ISO 26262 ASIL D, ISO/SAE 21434 CAL 4, DO-178C DAL A, Automotive SPICE 4.0), manual compliance reporting and passive verification inevitably precipitate catastrophic failures. When functional safety engineers are forced to cross-reference thousands of requirements across disconnected spreadsheets, cognitive fatigue fosters "compliance theatre" (*Compliance Theatre*)—the perfunctory checking of boxes absent mathematical validation of edge states. Overlooking a single unmitigated single-point fault (SPFM < 99%) or an unaddressed attack vector on an in-vehicle communication bus can cause fatal vehicular accidents, massive autonomous vehicle recalls, and severe personal legal liability for certifying auditors.
 
-This chapter resolves this crisis by establishing the transition from a passive consultative oracle to an Active Domain Knowledge Auditor. Grounded in Karl Popper's falsification principle ($`\mathcal{F}(\mathcal{H}, \mathcal{K})`$ for an engineering hypothesis $`\mathcal{H}`$ against a normative corpus $`\mathcal{K}`$) and the methodological foundations of this monograph [[8]](#src-8), the evidence-governed expert system seizes the interrogation initiative: it autonomously mines counterexamples, prevents theoretical drift (*Anti-Theory Drift Principle*) via the rule of epistemic necessity, pinpoints normative collisions between functional safety (*Safety*) and cybersecurity (*Security*) mandates, synthesizes mathematically rigorous certification artifacts (HARA, TARA, SAR, DFAR/FMEDA) with full bidirectional traceability ($100{,}0\%$), and designs falsifying test suites. Within the framework of Popperian dialectic and adversarial pair programming, it delineates the roles of the falsifier agent (*Popperian Red Teamer*) and the engineer agent (*Formal Implementer*), separates the advisory relevance zone (*Relevance*) from the decisive eligibility zone (*Eligibility*), and anchors the human in the control loop (*Human-in-the-Loop*) as the ultimate strategic arbiter.
+This chapter resolves this crisis by establishing the transition from a passive consultative oracle to an Active Domain Knowledge Auditor. Grounded in Karl Popper's falsification principle ($\mathcal{F}(\mathcal{H}, \mathcal{K})$ for an engineering hypothesis $\mathcal{H}$ against a normative corpus $\mathcal{K}$) and the methodological foundations of this monograph [[8]](#src-8), the evidence-governed expert system seizes the interrogation initiative: it autonomously mines counterexamples, prevents theoretical drift (*Anti-Theory Drift Principle*) via the rule of epistemic necessity, pinpoints normative collisions between functional safety (*Safety*) and cybersecurity (*Security*) mandates, synthesizes mathematically rigorous certification artifacts (HARA, TARA, SAR, DFAR/FMEDA) with full bidirectional traceability ($100{,}0\%$), and designs falsifying test suites. Within the framework of Popperian dialectic and adversarial pair programming, it delineates the roles of the falsifier agent (*Popperian Red Teamer*) and the engineer agent (*Formal Implementer*), separates the advisory relevance zone (*Relevance*) from the decisive eligibility zone (*Eligibility*), and anchors the human in the control loop (*Human-in-the-Loop*) as the ultimate strategic arbiter.
 
 ---
 
@@ -165,23 +165,23 @@ The objective of the deterministic expert engine is to execute a symbolic search
 ```
 
 where:
-- $`\mathcal{F}(\mathcal{H}, \mathcal{K})`$ is the set of identified normative falsifiers for hypothesis $`\mathcal{H}`$ within rule base $`\mathcal{K}`$;
-- $`\nu_k`$ is an atomic deontic clause of the standard;
-- $`\models`$ denotes semantic entailment of a normative violation.
+- $\mathcal{F}(\mathcal{H}, \mathcal{K})$ is the set of identified normative falsifiers for hypothesis $\mathcal{H}$ within rule base $\mathcal{K}$;
+- $\nu_k$ is an atomic deontic clause of the standard;
+- $\models$ denotes semantic entailment of a normative violation.
 
 **Actionable Closed-Loop Engineering Decisions:**
 
 #### 1. Verification Flow Control and System Verdicts
 
-If $`\mathcal{F}(\mathcal{H}, \mathcal{K}) \neq \emptyset`$ (at least one refutation is discovered):
+If $\mathcal{F}(\mathcal{H}, \mathcal{K}) \neq \emptyset$ (at least one refutation is discovered):
 
 ```math
 \mathrm{Verdict} = \mathbf{FALSIFIED} \quad \bigl( \mathrm{Refusal}(\rho), \quad \mathrm{EBX} = \mathrm{SHA256}(\mathrm{Quote}), \quad \mathrm{Clause} = \text{ISO 26262-5:2018 Clause 8.4.3} \bigr)
 ```
 
-**System Action:** The continuous integration pipeline (CI/CD) immediately terminates with exit code `EX_SAFETY_VIOLATION`. The engine synthesizes a cryptographic refusal token $`\mathrm{Refusal}(\rho)`$ signed with Ed25519, inhibits the flashing of the binary firmware image onto the target electronic control unit (ECU), and files a blocking issue in the tracking system (Jira/GitLab) linking directly to the verbatim byte offset of the violated standard.
+**System Action:** The continuous integration pipeline (CI/CD) immediately terminates with exit code `EX_SAFETY_VIOLATION`. The engine synthesizes a cryptographic refusal token $\mathrm{Refusal}(\rho)$ signed with Ed25519, inhibits the flashing of the binary firmware image onto the target electronic control unit (ECU), and files a blocking issue in the tracking system (Jira/GitLab) linking directly to the verbatim byte offset of the violated standard.
 
-If $`\mathcal{F}(\mathcal{H}, \mathcal{K}) = \emptyset`$ (no normative counterexample is found):
+If $\mathcal{F}(\mathcal{H}, \mathcal{K}) = \emptyset$ (no normative counterexample is found):
 
 ```math
 \mathrm{Verdict} = \mathbf{PROVISIONALLY\_CORROBORATED}
@@ -190,13 +190,13 @@ If $`\mathcal{F}(\mathcal{H}, \mathcal{K}) = \emptyset`$ (no normative counterex
 **System Action:** The system returns a verdict of provisional corroboration, issues a cryptographically verifiable compliance gate certificate, and unlocks progression to hardware-in-the-loop (HIL) physical simulation.
 
 #### 2. Hardware Dimensioning and Latency
-The counterexample search time is strictly bounded by $`t_{\mathrm{eval}} \le 1.0\,\text{ms}`$ through the bitmask indexing of normative clauses residing in block RAM (BRAM) footprints below $`< 512\,\text{MB}`$.
+The counterexample search time is strictly bounded by $t_{\mathrm{eval}} \le 1.0\,\text{ms}$ through the bitmask indexing of normative clauses residing in block RAM (BRAM) footprints below $< 512\,\text{MB}$.
 
 #### 3. Worked Numerical Example
-- A design engineer submits a hypothesis asserting the adequacy of a single-channel ADC with $`90\%`$ diagnostic coverage for an ASIL D subsystem.
-- The symbolic engine traverses the knowledge base in $`210\,\mu\text{s}`$ and retrieves atom $`\nu_{418}`$ (ISO 26262-5, Clause 8.4.3: mandatory SPFM $`\ge 99\%`$).
-- $`\mathcal{F}(\mathcal{H}, \mathcal{K}) = \{\nu_{418}\} \neq \emptyset \implies \mathrm{Verdict} = \mathbf{FALSIFIED}`$.
-- **System Action:** A blocking diagnostic protocol is generated identifying the metric deficit: $`\Delta \mathrm{SPFM} = 9.0\%`$. The code commit is automatically rejected.
+- A design engineer submits a hypothesis asserting the adequacy of a single-channel ADC with $90\%$ diagnostic coverage for an ASIL D subsystem.
+- The symbolic engine traverses the knowledge base in $210\,\mu\text{s}$ and retrieves atom $\nu_{418}$ (ISO 26262-5, Clause 8.4.3: mandatory SPFM $\ge 99\%$).
+- $\mathcal{F}(\mathcal{H}, \mathcal{K}) = \{\nu_{418}\} \neq \emptyset \implies \mathrm{Verdict} = \mathbf{FALSIFIED}$.
+- **System Action:** A blocking diagnostic protocol is generated identifying the metric deficit: $\Delta \mathrm{SPFM} = 9.0\%$. The code commit is automatically rejected.
 
 ### 3.3. Anti-Theory Drift Principle and Parsimonious Knowledge Modeling
 
@@ -205,38 +205,38 @@ In the engineering of complex expert systems, the aspiration to build a universa
 #### 3.3.1. Popperian Falsifiability Criterion and the Rule of Epistemic Necessity
 
 1. **Popperian Falsifiability Criterion for Ontologies:**
-A formal knowledge model $`\mathcal{M}`$ is evaluated not by the cardinality of theoretical abstractions or concepts it is potentially capable of describing, but by its ability to strictly and unerringly reject an invalid, redundant, or contradictory statement from a set of generated counterexamples $`\mathcal{C}`$:
+A formal knowledge model $\mathcal{M}$ is evaluated not by the cardinality of theoretical abstractions or concepts it is potentially capable of describing, but by its ability to strictly and unerringly reject an invalid, redundant, or contradictory statement from a set of generated counterexamples $\mathcal{C}$:
 
 ```math
 \mathrm{RejectionRate}(\mathcal{M}, \mathcal{C}) = \frac{\lvert \lbrace c \in \mathcal{C} \mid \mathcal{M} \models \neg c \rbrace \rvert}{\lvert \mathcal{C} \rvert} \ge \tau_{\mathrm{falsify}} = 1{,}00
 ```
 
 where:
-- $`\mathcal{M}`$ — formalized ontological domain model;
-- $`\mathcal{C}`$ — set of benchmark counterexamples, anomalous states, and conflicting requirements synthesized by the falsifier;
-- $`\tau_{\mathrm{falsify}} = 1{,}00`$ — normative threshold of absolute demarcation selectivity (any missed contradiction demonstrates excessive ontology vagueness).
+- $\mathcal{M}$ — formalized ontological domain model;
+- $\mathcal{C}$ — set of benchmark counterexamples, anomalous states, and conflicting requirements synthesized by the falsifier;
+- $\tau_{\mathrm{falsify}} = 1{,}00$ — normative threshold of absolute demarcation selectivity (any missed contradiction demonstrates excessive ontology vagueness).
 
 2. **Rule of Epistemic Necessity (Lex Parsimoniae):**
-Any new predicate, relation, or taxonomic level of abstraction $`\Delta \mathcal{P}`$ in the knowledge base must be strictly justified by an immediate knowledge deficit or identified collision within the processed engineering artifacts $`\mathcal{E}_{\mathrm{deficit}}`$:
+Any new predicate, relation, or taxonomic level of abstraction $\Delta \mathcal{P}$ in the knowledge base must be strictly justified by an immediate knowledge deficit or identified collision within the processed engineering artifacts $\mathcal{E}_{\mathrm{deficit}}$:
 
 ```math
 \forall p \in \Delta \mathcal{P}, \quad \exists e \in \mathcal{E}_{\mathrm{deficit}} : \mathrm{Resolves}(p, e) \land \neg \exists q \in \mathcal{P}_{\mathrm{existing}} (\mathrm{Expressible}(q, e))
 ```
 
 where:
-- $`\mathcal{P}_{\mathrm{existing}}`$ — established basis of typed first-order logic (FOL) predicates;
-- $`\mathcal{E}_{\mathrm{deficit}}`$ — set of recorded empirical or normative verification deficits.
+- $\mathcal{P}_{\mathrm{existing}}$ — established basis of typed first-order logic (FOL) predicates;
+- $\mathcal{E}_{\mathrm{deficit}}$ — set of recorded empirical or normative verification deficits.
 
-If an engineering proposition can be unambiguously verified by the simpler apparatus of the existing basis without introducing redundant conceptual superstructures, the introduction of $`\Delta \mathcal{P}`$ is classified as a critical methodological design flaw.
+If an engineering proposition can be unambiguously verified by the simpler apparatus of the existing basis without introducing redundant conceptual superstructures, the introduction of $\Delta \mathcal{P}$ is classified as a critical methodological design flaw.
 
 #### 3.3.2. Actionable Closed Loop of Ontology Parsimony
 
 1. **Control Flow & Runtime Decisions:**
-   During knowledge base compilation, the ontological analyzer validates every predicate against the rule of epistemic necessity. If for a candidate predicate $`\mathrm{Resolves}(p, e) = \mathrm{false}`$ or it is semantically derivable from the existing basis $`\mathcal{P}_{\mathrm{existing}}`$, the compiler halts image generation with error code `ERR_THEORY_DRIFT` and issues a `REFUSAL` token. If regression testing reveals that $`\mathrm{RejectionRate}(\mathcal{M}, \mathcal{C}) < 1{,}00`$, the knowledge base is rejected as over-permissive (*Over-permissive*), blocking its handover to certification audit.
+   During knowledge base compilation, the ontological analyzer validates every predicate against the rule of epistemic necessity. If for a candidate predicate $\mathrm{Resolves}(p, e) = \mathrm{false}$ or it is semantically derivable from the existing basis $\mathcal{P}_{\mathrm{existing}}$, the compiler halts image generation with error code `ERR_THEORY_DRIFT` and issues a `REFUSAL` token. If regression testing reveals that $\mathrm{RejectionRate}(\mathcal{M}, \mathcal{C}) < 1{,}00$, the knowledge base is rejected as over-permissive (*Over-permissive*), blocking its handover to certification audit.
 2. **Hardware Dimensioning:**
-   Each superfluous taxonomic level and redundant relation increases the resolution search depth $`d`$, triggering a combinatorial explosion in unification time $`T_{\mathrm{unif}} \propto \mathcal{O}(2^d)`$. Restricting ontology depth to $`d \le 4`$ and eliminating theoretical drift guarantees linear scanning of BRAM memory ($`< 512\,\text{KB}`$) and an inference response time of $`t_{\mathrm{eval}} \le 1{,}0\,\text{ms}`$ without risking microcontroller hardware stack exhaustion.
+   Each superfluous taxonomic level and redundant relation increases the resolution search depth $d$, triggering a combinatorial explosion in unification time $T_{\mathrm{unif}} \propto \mathcal{O}(2^d)$. Restricting ontology depth to $d \le 4$ and eliminating theoretical drift guarantees linear scanning of BRAM memory ($< 512\,\text{KB}$) and an inference response time of $t_{\mathrm{eval}} \le 1{,}0\,\text{ms}$ without risking microcontroller hardware stack exhaustion.
 3. **Worked Numerical Example:**
-   A developer attempts to introduce an abstract class "Universal Quantum-Synergetic Sensor State" in place of a pair of deterministic predicates `VoltageInRange(v)` and `ValidCRC(frame)`. In a falsification benchmark, $`\lvert \mathcal{C} \rvert = 100`$ malformed frames containing floating noise and bus glitches are synthesized. The blurred meta-model rejects only 42 anomalies ($`\mathrm{RejectionRate} = 0{,}42 < 1{,}00`$), leaking 58 critical failures. The parsimonious basis $`\mathcal{P}_{\mathrm{existing}}`$ rejects $`100`$ out of $`100`$ anomalies ($`\mathrm{RejectionRate} = 1{,}00`$) in $`72\,\mu\text{s}`$. The compiler rejects the superstructure, safeguarding system determinism.
+   A developer attempts to introduce an abstract class "Universal Quantum-Synergetic Sensor State" in place of a pair of deterministic predicates `VoltageInRange(v)` and `ValidCRC(frame)`. In a falsification benchmark, $\lvert \mathcal{C} \rvert = 100$ malformed frames containing floating noise and bus glitches are synthesized. The blurred meta-model rejects only 42 anomalies ($\mathrm{RejectionRate} = 0{,}42 < 1{,}00$), leaking 58 critical failures. The parsimonious basis $\mathcal{P}_{\mathrm{existing}}$ rejects $100$ out of $100$ anomalies ($\mathrm{RejectionRate} = 1{,}00$) in $72\,\mu\text{s}$. The compiler rejects the superstructure, safeguarding system determinism.
 
 ---
 
@@ -258,7 +258,7 @@ By mapping extracted assets against the STRIDE and MITRE ATT&CK for ICS ontologi
 \mathrm{Threat} = \langle \mathrm{Asset}, \ \mathrm{Property}, \ \mathrm{Damage} \rangle
 ```
 
-where $`\mathrm{Asset} = \text{SteerAngle}`$, $`\mathrm{Property} = \text{Integrity}`$, and $`\mathrm{Damage}`$ corresponds to unauthorized steering actuation at cruising velocity.
+where $\mathrm{Asset} = \text{SteerAngle}$, $\mathrm{Property} = \text{Integrity}$, and $\mathrm{Damage}$ corresponds to unauthorized steering actuation at cruising velocity.
 
 #### 4.1.3. Attack Path Analysis & Feasibility
 The engine constructs the traversal graph of the in-vehicle network and computes the attack feasibility vector according to the Attack Potential methodology (Elapsed Time, Specialist Expertise, Knowledge of Item, Window of Opportunity, Equipment).
@@ -269,11 +269,11 @@ Rather than dedicating weeks to clerical compilation, the engineer receives an a
 ### 4.2. DFAR and FMEDA Automation (ISO 26262): Mathematical Rigor of Metrics
 
 Compiling a DFAR/FMEDA dossier requires component-level mathematical reliability modeling:
-- $`\lambda`$ — total component failure rate (expressed in FIT, $10^{-9}\,\text{failures}/\text{h}$);
-- $`\lambda_s`$ — safe failure rate;
-- $`\lambda_{\mathrm{spf}}`$ — single-point dangerous failure rate directly violating a safety goal;
-- $`\lambda_{\mathrm{rf}}`$ — residual failure rate;
-- $`\lambda_{\mathrm{mpf,lat}}`$ and $`\lambda_{\mathrm{mpf,det}}`$ — latent and detected multiple-point failure rates.
+- $\lambda$ — total component failure rate (expressed in FIT, $10^{-9}\,\text{failures}/\text{h}$);
+- $\lambda_s$ — safe failure rate;
+- $\lambda_{\mathrm{spf}}$ — single-point dangerous failure rate directly violating a safety goal;
+- $\lambda_{\mathrm{rf}}$ — residual failure rate;
+- $\lambda_{\mathrm{mpf,lat}}$ and $\lambda_{\mathrm{mpf,det}}$ — latent and detected multiple-point failure rates.
 
 #### 4.2.1. Single-Point Fault Metric (SPFM)
 
@@ -293,15 +293,15 @@ For ASIL D safety architectures, the target threshold requires:
 
 **Actionable Closed-Loop Engineering Decisions:**
 1. **Automated Certification and Release Gate:**
-   - **Normative Compliance** ($`\mathrm{SPFM} \ge 0.99`$ and $`\mathrm{LFM} \ge 0.90`$): The system automatically compiles the certification artifact `SAR.gsn` with state `APPROVED_FOR_AUDIT`, signs it with an Ed25519 digital signature, and dispatches the dossier to the assessment body (TÜV / Dekra).
-   - **Normative Non-Compliance** ($`\mathrm{SPFM} < 0.99`$ or $`\mathrm{LFM} < 0.90`$): Compilation of the SAR dossier is blocked. The engine initiates diagnostic backtracking (*Diagnostic Backtracking*) and presents the engineer with minimal targeted corrective interventions:
+   - **Normative Compliance** ($\mathrm{SPFM} \ge 0.99$ and $\mathrm{LFM} \ge 0.90$): The system automatically compiles the certification artifact `SAR.gsn` with state `APPROVED_FOR_AUDIT`, signs it with an Ed25519 digital signature, and dispatches the dossier to the assessment body (TÜV / Dekra).
+   - **Normative Non-Compliance** ($\mathrm{SPFM} < 0.99$ or $\mathrm{LFM} < 0.90$): Compilation of the SAR dossier is blocked. The engine initiates diagnostic backtracking (*Diagnostic Backtracking*) and presents the engineer with minimal targeted corrective interventions:
      * Increasing the diagnostic coverage of the watchdog timer ($K_{\mathrm{wdg}}$);
      * Or introducing a redundant hardware comparator with dual-sampling logic.
 2. **Worked Numerical Sizing and Remediation Example:**
-   - For a microcontroller, the total observed failure rate is $`\sum \lambda = 120\,\text{FIT}`$.
-   - Safe and diagnosed single-point failures account for $`\sum (\lambda_s + \lambda_{\mathrm{spf\_mitigated}}) = 118.1\,\text{FIT}`$.
-   - Calculating metric: $`\mathrm{SPFM} = 118.1 / 120 = 0.9841 = 98.41\% < 99\%`$.
-   - **System Action:** Release is blocked. The engine issues a prescriptive recommendation: "Metric deficit $`\Delta = 0.59\%`$. Increasing watchdog diagnostic coverage from $`60\%`$ to $`90\%`$ reduces unmitigated faults by $`1.2\,\text{FIT}`$, raising $`\mathrm{SPFM}`$ to $`119.3 / 120 = 99.42\% \ge 99\%`$." Upon committing the schematic revision, re-computation unlocks the certification gate.
+   - For a microcontroller, the total observed failure rate is $\sum \lambda = 120\,\text{FIT}$.
+   - Safe and diagnosed single-point failures account for $\sum (\lambda_s + \lambda_{\mathrm{spf\_mitigated}}) = 118.1\,\text{FIT}$.
+   - Calculating metric: $\mathrm{SPFM} = 118.1 / 120 = 0.9841 = 98.41\% < 99\%$.
+   - **System Action:** Release is blocked. The engine issues a prescriptive recommendation: "Metric deficit $\Delta = 0.59\%$. Increasing watchdog diagnostic coverage from $60\%$ to $90\%$ reduces unmitigated faults by $1.2\,\text{FIT}$, raising $\mathrm{SPFM}$ to $119.3 / 120 = 99.42\% \ge 99\%$." Upon committing the schematic revision, re-computation unlocks the certification gate.
 
 ### 4.3. SAR Automation: An Evidence Canvas for TÜV / Dekra Auditors
 The Safety Assessment Report (SAR) represents the capstone of a functional safety lifecycle. The expert system structures the SAR as an argumentation tree formatted in the **Goal Structuring Notation (GSN)** of Kelly and Weaver [[6]](#src-6):
@@ -361,12 +361,12 @@ To objectively evaluate test suite sufficiency, the expert system computes the r
 \mathrm{TraceabilityCoverage} = \frac{\lvert \mathcal{R} \cap \mathcal{T} \rvert}{\lvert \mathcal{R} \rvert} = 1{,}00
 ```
 
-where $`\mathcal{R}`$ is the complete set of formalized requirements from standard clauses and system specifications (*requirements*), and $`\mathcal{T}`$ is the subset of requirements corroborated through deterministic, executed test suites (*test-verified*).
+where $\mathcal{R}$ is the complete set of formalized requirements from standard clauses and system specifications (*requirements*), and $\mathcal{T}$ is the subset of requirements corroborated through deterministic, executed test suites (*test-verified*).
 
 **Actionable Closed-Loop Engineering Decisions:**
-- **Complete Traceability Coverage** ($`\mathrm{TraceabilityCoverage} = 1.00`$): The ASPICE SWE.4 quality gate transitions to `PASSED`. The CI/CD pipeline compiles the final cryptographically signed release manifest for assessor submission.
-- **Incomplete Traceability Coverage** ($`\mathrm{TraceabilityCoverage} < 1.00`$): The pipeline terminates with exit code `EX_COMPLIANCE_GAP`. The system isolates the delta $`\mathcal{R}_{\mathrm{missing}} = \mathcal{R} \setminus \mathcal{T}`$ and synthesizes targeted prompts for the System 1 generator (LLM Proposer) to produce the missing test cases.
-- **Worked Numerical Example:** An architectural specification comprises $`\lvert \mathcal{R} \rvert = 142`$ formal requirements. Executed suites verify $`\lvert \mathcal{R} \cap \mathcal{T} \rvert = 141`$ requirements. Computed coverage: $`\mathrm{TraceabilityCoverage} = 141 / 142 \approx 0.993 < 1.00`$. **System Action:** Release is blocked; System 1 is dispatched to synthesize targeted test cases for unverified requirement $`R_{87}`$ (controller behavior under transient CAN bus under-voltage dips).
+- **Complete Traceability Coverage** ($\mathrm{TraceabilityCoverage} = 1.00$): The ASPICE SWE.4 quality gate transitions to `PASSED`. The CI/CD pipeline compiles the final cryptographically signed release manifest for assessor submission.
+- **Incomplete Traceability Coverage** ($\mathrm{TraceabilityCoverage} < 1.00$): The pipeline terminates with exit code `EX_COMPLIANCE_GAP`. The system isolates the delta $\mathcal{R}_{\mathrm{missing}} = \mathcal{R} \setminus \mathcal{T}$ and synthesizes targeted prompts for the System 1 generator (LLM Proposer) to produce the missing test cases.
+- **Worked Numerical Example:** An architectural specification comprises $\lvert \mathcal{R} \rvert = 142$ formal requirements. Executed suites verify $\lvert \mathcal{R} \cap \mathcal{T} \rvert = 141$ requirements. Computed coverage: $\mathrm{TraceabilityCoverage} = 141 / 142 \approx 0.993 < 1.00$. **System Action:** Release is blocked; System 1 is dispatched to synthesize targeted test cases for unverified requirement $R_{87}$ (controller behavior under transient CAN bus under-voltage dips).
 
 ---
 
@@ -409,7 +409,7 @@ flowchart TD
    - Tooling: SMT/SAT solvers for hardware boundaries, adversarial boundary vectors, data structure fuzzing, descriptor exhaustion attacks, and custody integrity auditing.
 2. **Role of the "Formal Implementer" (System Engineer Agent):**
    - **Prohibition of Verbal Apologetics:** The engineer is strictly forbidden from excusing defects with declarative explanations. Any identified counterexample is treated as mandatory grounds for implementing a strictly typed invariant.
-   - **Fail-Closed Principle ($`\mathrm{ZHR} = 1{,}000000`$):** If a condition is absent or a fact is ambiguous, the system returns a deterministic typed rejection (`REFUSAL`, `UNSUPPORTED_CONDITION`), eliminating unconstrained hallucinations.
+   - **Fail-Closed Principle ($\mathrm{ZHR} = 1{,}000000$):** If a condition is absent or a fact is ambiguous, the system returns a deterministic typed rejection (`REFUSAL`, `UNSUPPORTED_CONDITION`), eliminating unconstrained hallucinations.
 3. **Role of the "Chief Architect" (Human Arbiter in the Loop):**
    - Sets the immutable philosophical invariant: *«Sapiens dominabitur astris»* (The wise shall rule the stars)—demanding uncompromising scientific discipline and rejecting spaghetti code.
    - Enforces governance across Karl Wiegers's 5 project dimensions: Quality is an immutable constraint (flexibility = 0); Scope serves as the primary degree of freedom managed through disciplined release phasing.
@@ -422,16 +422,16 @@ Every modification of system code is governed by the mathematical law of closed 
 \mathrm{Defect}_{\mathrm{Audit}} \implies \mathrm{SWR} \implies \mathrm{ADR} \implies \mathrm{Task} \implies \mathrm{FailClosedCode} \implies \mathrm{AdversarialProof}
 ```
 
-where each audit defect $`\mathrm{Defect}_{\mathrm{Audit}}`$ is transformed into a formal software requirement $`\mathrm{SWR}`$, an architectural decision record $`\mathrm{ADR}`$, a decomposed work $`\mathrm{Task}`$, fail-closed compliant implementation $`\mathrm{FailClosedCode}`$, and culminates in a rigorous formal proof of zero regressions $`\mathrm{AdversarialProof}`$. The *Analysis-First* rule strictly prohibits authoring code without an agreed architectural requirement.
+where each audit defect $\mathrm{Defect}_{\mathrm{Audit}}$ is transformed into a formal software requirement $\mathrm{SWR}$, an architectural decision record $\mathrm{ADR}$, a decomposed work $\mathrm{Task}$, fail-closed compliant implementation $\mathrm{FailClosedCode}$, and culminates in a rigorous formal proof of zero regressions $\mathrm{AdversarialProof}$. The *Analysis-First* rule strictly prohibits authoring code without an agreed architectural requirement.
 
 #### 7.1.1. Actionable Closed Loop of Popperian Adversarial Governance
 
 1. **Control Flow & Runtime Decisions:**
-   Upon detection of a counterexample by the Red Teamer agent, the CI/CD pipeline instantly halts release progression and transitions task status to `DEFECT_DETECTED`. The Implementer is obligated to draft an ADR and introduce a Fail-Closed validation. Any direct code merge attempt without Red Teamer endorsement is blocked at the repository branch protection gate. Only after the Red Teamer verifies exhaustion of the attack surface ($`\mathrm{Status} = \mathrm{VERIFIED}`$) does the human Chief Architect affix the final cryptographic signature transitioning the state to `PRODUCTION_READY`.
+   Upon detection of a counterexample by the Red Teamer agent, the CI/CD pipeline instantly halts release progression and transitions task status to `DEFECT_DETECTED`. The Implementer is obligated to draft an ADR and introduce a Fail-Closed validation. Any direct code merge attempt without Red Teamer endorsement is blocked at the repository branch protection gate. Only after the Red Teamer verifies exhaustion of the attack surface ($\mathrm{Status} = \mathrm{VERIFIED}$) does the human Chief Architect affix the final cryptographic signature transitioning the state to `PRODUCTION_READY`.
 2. **Hardware Dimensioning:**
-   Adversarial modeling requires dedicated deterministic compute resources for the SAT/SMT solver. Restricting the per-invariant solver timeout to $`t_{\mathrm{solver}} \le 5{,}0\,\text{s}`$ and capping process memory at $`M_{\mathrm{solver}} \le 2\,\text{GB}`$ prevents verification server hangs, guaranteeing full audit cycle completion in $`< 15\,\text{min}`$ on an 8-core CI/CD worker.
+   Adversarial modeling requires dedicated deterministic compute resources for the SAT/SMT solver. Restricting the per-invariant solver timeout to $t_{\mathrm{solver}} \le 5{,}0\,\text{s}$ and capping process memory at $M_{\mathrm{solver}} \le 2\,\text{GB}$ prevents verification server hangs, guaranteeing full audit cycle completion in $< 15\,\text{min}$ on an 8-core CI/CD worker.
 3. **Worked Numerical Example:**
-   During an audit of an inverter control unit, the Red Teamer synthesizes a vector with boundary value $`V_{\mathrm{attack}} = \text{0x7FFF\_FFFF\_0000}`$, which, due to bit shift `[47:16]` (defect `ENV-01`), inverts current sign from positive to negative, triggering an erroneous emergency braking command. The Implementer registers ADR-104, replacing naive shifting with hardware saturation accompanied by overflow flag checking. The Red Teamer executes 1,000 mutation iterations, observing: $`\mathrm{Failures} = 0`$, $`\mathrm{Status} = \mathrm{SATURATED\_FAIL\_CLOSED}`$. The vulnerability is eliminated at the architectural level.
+   During an audit of an inverter control unit, the Red Teamer synthesizes a vector with boundary value $V_{\mathrm{attack}} = \text{0x7FFF\_FFFF\_0000}$, which, due to bit shift `[47:16]` (defect `ENV-01`), inverts current sign from positive to negative, triggering an erroneous emergency braking command. The Implementer registers ADR-104, replacing naive shifting with hardware saturation accompanied by overflow flag checking. The Red Teamer executes 1,000 mutation iterations, observing: $\mathrm{Failures} = 0$, $\mathrm{Status} = \mathrm{SATURATED\_FAIL\_CLOSED}$. The vulnerability is eliminated at the architectural level.
 
 ### 7.2. Neuro-Symbolic Authority Watershed: Relevance Zone vs. Eligibility Zone
 
@@ -439,8 +439,8 @@ To guarantee the reliability of mission-critical systems, the author formulates 
 
 | Processing Path | Component | Architectural Role | Authority & Verdict Status |
 |---|---|---|---|
-| **System 1 (Relevance Zone)** | SLM / LLM / Heuristic Parser | Initial reconnaissance, user intent analysis, extraction of semantic terms and synonyms | **Strictly Advisory.** Possesses no authority to declare a proposition normatively true or certified. Confidence strictly $`\mathrm{Conf} < 1{,}00`$. |
-| **System 2 (Eligibility Zone)** | Deterministic EVM / EISA micro-ops, SAT, ASPIC+ | Normative verification, physical boundary checking, hardware interlocking | **Exclusive and Decisive.** Mathematical proof of compliance with the primary source backed by byte-level custody (%ebx, SHA-256) and $`\mathrm{ZHR} = 1{,}000000`$. |
+| **System 1 (Relevance Zone)** | SLM / LLM / Heuristic Parser | Initial reconnaissance, user intent analysis, extraction of semantic terms and synonyms | **Strictly Advisory.** Possesses no authority to declare a proposition normatively true or certified. Confidence strictly $\mathrm{Conf} < 1{,}00$. |
+| **System 2 (Eligibility Zone)** | Deterministic EVM / EISA micro-ops, SAT, ASPIC+ | Normative verification, physical boundary checking, hardware interlocking | **Exclusive and Decisive.** Mathematical proof of compliance with the primary source backed by byte-level custody (%ebx, SHA-256) and $\mathrm{ZHR} = 1{,}000000$. |
 
 No finding or recommendation produced by a System 1 component may alter the state of a certification gate without passing through the deterministic filter of System 2.
 
@@ -633,7 +633,7 @@ Globally recognized authorities in systems safety engineering and information sy
 
 *Disclaimer:* This discussion is a heuristic virtual simulation conducted exclusively within the monograph's scholarly and pedagogical context. The opponents' arguments and stances are synthesized from their published works, academic papers, and monographs; they do not claim to be verbatim real-world quotes and serve critical rationalism (Popperian falsification) of the author's engineering hypotheses.
 
-**Chapter Thesis.** Manual certification auditing in safety-critical cyber-physical systems (ISO 26262 ASIL D, ISO/SAE 21434 CAL 4, DO-178C DAL A) inevitably degenerates into "Compliance Theatre" driven by cognitive fatigue. Verifiable safety is achieved only through transitioning to an Active Domain Knowledge Auditor (`ActiveComplianceAuditor`) grounded in Karl Popper's falsification principle $`\mathcal{F}(\mathcal{H}, \mathcal{K})`$, an adversarial pair consisting of a Popperian Red Teamer and a Formal Implementer, the Anti-Theory Drift Principle, dynamic Safety-Security conflict resolution, and strict architectural isolation of the advisory Relevance zone from the decisive Eligibility zone under the supreme stewardship of a Human-in-the-Loop.
+**Chapter Thesis.** Manual certification auditing in safety-critical cyber-physical systems (ISO 26262 ASIL D, ISO/SAE 21434 CAL 4, DO-178C DAL A) inevitably degenerates into "Compliance Theatre" driven by cognitive fatigue. Verifiable safety is achieved only through transitioning to an Active Domain Knowledge Auditor (`ActiveComplianceAuditor`) grounded in Karl Popper's falsification principle $\mathcal{F}(\mathcal{H}, \mathcal{K})$, an adversarial pair consisting of a Popperian Red Teamer and a Formal Implementer, the Anti-Theory Drift Principle, dynamic Safety-Security conflict resolution, and strict architectural isolation of the advisory Relevance zone from the decisive Eligibility zone under the supreme stewardship of a Human-in-the-Loop.
 
 **Dialogue with Nancy Leveson: Compliance Auditing Methodology and Emergent Properties of Complex Systems**
 
@@ -645,7 +645,7 @@ Globally recognized authorities in systems safety engineering and information sy
 
 - **Nancy Leveson:** System safety is fundamentally a continuous, dynamic control challenge across time. If an auditor autonomously synthesizes mathematically neat HARA, SAR, and DFAR dossiers from a fixed domain ontology, engineers will treat these machine-generated artifacts as an infallible digital oracle (*automation bias*). Yet operational environments inevitably suffer unforeseen physical degradation and changing plant dynamics. This induces severe theoretical drift (*Theory Drift*): formal proofs remain internally coherent inside the auditor's code, but completely diverge from actual plant physics. How does the active auditor detect when its internal formal models cease to mirror physical reality?
 
-- **Mykola Fedchyk:** To eliminate the threat of theoretical drift, we enforce the Anti-Theory Drift Principle, governed by the rule of epistemic necessity. The auditor never operates in a closed symbolic vacuum: it runs in a closed loop with physical telemetry (Hardware-in-the-Loop, HIL). Every certification hypothesis $`\mathcal{H}`$ is subjected to relentless attacks by an autonomous falsifier agent (*Popperian Red Teamer*), which continuously synthesizes anomalous physical stress tests at the boundaries of model assumptions. If bench telemetry reveals even a single discrepancy between predicted behavior and physical sensor feedback, the hypothesis's normative certification status is instantly revoked. The system enters an epistemic deficit state, mandating manual physical re-validation by a human engineer.
+- **Mykola Fedchyk:** To eliminate the threat of theoretical drift, we enforce the Anti-Theory Drift Principle, governed by the rule of epistemic necessity. The auditor never operates in a closed symbolic vacuum: it runs in a closed loop with physical telemetry (Hardware-in-the-Loop, HIL). Every certification hypothesis $\mathcal{H}$ is subjected to relentless attacks by an autonomous falsifier agent (*Popperian Red Teamer*), which continuously synthesizes anomalous physical stress tests at the boundaries of model assumptions. If bench telemetry reveals even a single discrepancy between predicted behavior and physical sensor feedback, the hypothesis's normative certification status is instantly revoked. The system enters an epistemic deficit state, mandating manual physical re-validation by a human engineer.
 
 **Dialogue with Bruce Schneier: Harmonizing Functional Safety and Cybersecurity Requirements in Critical Systems**
 
@@ -657,7 +657,7 @@ Globally recognized authorities in systems safety engineering and information sy
 
 - **Bruce Schneier:** In security practice, adversaries attack not just the system, but the auditing mechanisms themselves. If you bifurcate your pipeline into an advisory Relevance zone (where LLMs suggest test scenarios) and a decisive Eligibility zone (where deterministic rules verify compliance), a sophisticated attacker will target the advisory channel. Through semantic prompt injection or requirement poisoning, an attacker could trigger thousands of pseudo-relevant edge-case tests, causing a denial of service (DoS) in the SMT solver or cognitively overwhelming the human-in-the-loop. How do you protect the compliance verification pipeline itself against adversarial manipulation and cognitive exhaustion?
 
-- **Mykola Fedchyk:** The advisory Relevance zone is treated as an untrusted environment with zero execution authority. Every LLM test proposal must pass strict computational quotas ($`\mathrm{CPU}_{\mathrm{budget}}`$, memory ceilings, and SMT execution deadlines). The Eligibility gate never ingests raw unstructured natural language; it parses only strongly typed AST structures representing concrete safety directives, stripping any ungrounded entities. Furthermore, the human specialist is never overwhelmed by alert floods: the auditor applies a rigorous counterexample minimization filter, bubbling up only the single, irreducibly verified counterexample that provably violates a core safety invariant. Adversarial denial of service is thus systematically defused at the symbolic validation layer before reaching the human engineer.
+- **Mykola Fedchyk:** The advisory Relevance zone is treated as an untrusted environment with zero execution authority. Every LLM test proposal must pass strict computational quotas ($\mathrm{CPU}_{\mathrm{budget}}$, memory ceilings, and SMT execution deadlines). The Eligibility gate never ingests raw unstructured natural language; it parses only strongly typed AST structures representing concrete safety directives, stripping any ungrounded entities. Furthermore, the human specialist is never overwhelmed by alert floods: the auditor applies a rigorous counterexample minimization filter, bubbling up only the single, irreducibly verified counterexample that provably violates a core safety invariant. Adversarial denial of service is thus systematically defused at the symbolic validation layer before reaching the human engineer.
 
 **Synthesis.** The active compliance auditing methodology synthesizes Leveson's systems safety theory with Schneier's cryptographic realism into a resilient engineering paradigm:
 1. Immunity to emergent hazards and theoretical drift is achieved through continuous closed-loop Popperian falsification against physical hardware (HIL);
@@ -677,10 +677,10 @@ Globally recognized authorities in systems safety engineering and information sy
 
 > [!NOTE]
 > **Practical application of Popperian falsification criteria on physical hardware test benches:**
-> - [Appendix B. Robotics and Cyber-Physical Systems](appendix-b-robotics-and-cyber-physical-systems.md) — Popperian falsification criterion of the ASIL D hypothesis for a heterogeneous Jetson AGX Orin + Xilinx Virtex FPGA tandem ($`P(T_{\mathrm{loop}} > T_{\mathrm{wdg}}) > 10^{-9}`$ per hour).
-> - [Appendix C. Autonomous Navigation Without GNSS](appendix-c-autonomous-navigation-and-geosearch.md) — Falsification of UAV navigational resilience under EW and GNSS spoofing ($`P(\mathrm{drift} > 5\ \mathrm{m}) > 10^{-6}`$).
-> - [Appendix D. Analog Expert Systems and Hardware Inference](appendix-d-analog-expert-systems-and-neuromorphic-computing.md) — Falsification of analog Mahalanobis gateway validity under thermal drift ($`P(\mathrm{MissedEmergency}) > 0`$).
-> - [Appendix E. Mixed-Signal Neuromorphic Expert Systems](appendix-e-mixed-signal-neuromorphic-expert-systems.md) — Popperian refutation of neuromorphic evidence contracts when exceeding margin gates ($`M(\mathbf{x}) < \gamma_{\mathrm{margin}}`$).
+> - [Appendix B. Robotics and Cyber-Physical Systems](appendix-b-robotics-and-cyber-physical-systems.md) — Popperian falsification criterion of the ASIL D hypothesis for a heterogeneous Jetson AGX Orin + Xilinx Virtex FPGA tandem ($P(T_{\mathrm{loop}} > T_{\mathrm{wdg}}) > 10^{-9}$ per hour).
+> - [Appendix C. Autonomous Navigation Without GNSS](appendix-c-autonomous-navigation-and-geosearch.md) — Falsification of UAV navigational resilience under EW and GNSS spoofing ($P(\mathrm{drift} > 5\ \mathrm{m}) > 10^{-6}$).
+> - [Appendix D. Analog Expert Systems and Hardware Inference](appendix-d-analog-expert-systems-and-neuromorphic-computing.md) — Falsification of analog Mahalanobis gateway validity under thermal drift ($P(\mathrm{MissedEmergency}) > 0$).
+> - [Appendix E. Mixed-Signal Neuromorphic Expert Systems](appendix-e-mixed-signal-neuromorphic-expert-systems.md) — Popperian refutation of neuromorphic evidence contracts when exceeding margin gates ($M(\mathbf{x}) < \gamma_{\mathrm{margin}}$).
 
 ---
 

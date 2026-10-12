@@ -12,7 +12,7 @@
 
 In industrial vibration monitoring, continuous gas chromatography, and autonomous critical infrastructure inspection systems, the continuous operation of the digital sampling pipeline (analog-to-digital converter plus microcontroller) rapidly exhausts battery reserves, precluding long-term maintenance-free deployment. The introduction of ultra-low-power analog and neuromorphic anomaly detectors as asynchronous wake-up triggers (*wake-up triggers*) carries an insidious failure mode: due to component parameter variance, non-linearity, and thermal drift, the analog tier may silently miss the inception of bearing spalling or a hazardous gas leak, while the digital expert system remains entirely oblivious to the uncaptured catastrophe due to the forfeiture of byte-for-byte evidence reproducibility.
 
-This appendix resolves the challenge of preserving comprehensive verifiability and operational reliability within mixed-signal analog-digital architectures. The author investigates two complementary integration vectors (analog → digital and digital → analog) and formalizes the **evidence contract of mixed-signal computing**: a mathematical error and thermal calibration model, a safety margin gate ($`M(\mathbf{x}) \ge \gamma_{\text{margin}}`$), an imperative digital recomputation policy within the uncertainty envelope, and statistical false-negative auditing (a dual-measurement protocol) that guarantees the preservation of certification-grade safety envelopes while radically slashing power dissipation.
+This appendix resolves the challenge of preserving comprehensive verifiability and operational reliability within mixed-signal analog-digital architectures. The author investigates two complementary integration vectors (analog → digital and digital → analog) and formalizes the **evidence contract of mixed-signal computing**: a mathematical error and thermal calibration model, a safety margin gate ($M(\mathbf{x}) \ge \gamma_{\text{margin}}$), an imperative digital recomputation policy within the uncertainty envelope, and statistical false-negative auditing (a dual-measurement protocol) that guarantees the preservation of certification-grade safety envelopes while radically slashing power dissipation.
 
 ---
 
@@ -90,15 +90,15 @@ This architecture provides a direct physical analog to a symbolic production rul
 
 Where:
 
-- $`\text{match}_r(\mathbf{x})`$ is a boolean predicate: true if row $r$ matches the input feature vector, and false otherwise;
+- $\text{match}_r(\mathbf{x})$ is a boolean predicate: true if row $r$ matches the input feature vector, and false otherwise;
 - $r$ is the row index within the analog CAM, identifying an individual rule constraint set;
 - $\mathbf{x}$ is the input feature vector (e.g., vibration amplitude and casing temperature);
-- $`x_j`$ is the scalar value of the $j$-th feature;
+- $x_j$ is the scalar value of the $j$-th feature;
 - $d$ is the total dimensionality of the feature space;
-- $`l_{rj}`$ and $`u_{rj}`$ are the lower and upper bounds, respectively, for feature $j$ in rule row $r$;
-- $`\bigwedge_{j=1}^{d}`$ represents the logical conjunction over all $d$ feature constraints: the rule fires if and only if all interval conditions are simultaneously satisfied.
+- $l_{rj}$ and $u_{rj}$ are the lower and upper bounds, respectively, for feature $j$ in rule row $r$;
+- $\bigwedge_{j=1}^{d}$ represents the logical conjunction over all $d$ feature constraints: the rule fires if and only if all interval conditions are simultaneously satisfied.
 
-In the bearing monitoring rule above, $d=2$: for the vibration feature, $`l_{r1}=0.8`$ g and $`u_{r1}=1.5`$ g; for casing temperature, $`l_{r2}=70^\circ\text{C}`$, while $`u_{r2}`$ corresponds to the full-scale upper limit of the temperature sensor. Because these boundary values are physically stored as electrical conductances, conductance drift over time shifts the effective decision boundaries of the rule. The digital supervisor must therefore periodically audit the programmed conductance states to ensure physical intervals remain synchronized with the canonical rule definitions in the knowledge base; otherwise, the in-memory rule will silently diverge from the audited knowledge repository.
+In the bearing monitoring rule above, $d=2$: for the vibration feature, $l_{r1}=0.8$ g and $u_{r1}=1.5$ g; for casing temperature, $l_{r2}=70^\circ\text{C}$, while $u_{r2}$ corresponds to the full-scale upper limit of the temperature sensor. Because these boundary values are physically stored as electrical conductances, conductance drift over time shifts the effective decision boundaries of the rule. The digital supervisor must therefore periodically audit the programmed conductance states to ensure physical intervals remain synchronized with the canonical rule definitions in the knowledge base; otherwise, the in-memory rule will silently diverge from the audited knowledge repository.
 
 ### 3.3. Bayesian Inference
 
@@ -147,10 +147,10 @@ Where:
 - $R$ is the half-scale range of the converter (the ADC resolves inputs spanning $-R$ to $+R$);
 - $b$ is the resolution of the ADC, representing the number of output bits;
 - $2^{b}$ is the total number of discrete quantization bins;
-- $`\sigma_q`$ is the standard deviation of the quantization error, derived under the standard assumption that quantization error is uniformly distributed over the interval $[-q/2, q/2]$;
+- $\sigma_q$ is the standard deviation of the quantization error, derived under the standard assumption that quantization error is uniformly distributed over the interval $[-q/2, q/2]$;
 - $\sqrt{12}$ originates from the variance of a uniform distribution over an interval of width $q$, which evaluates to $q^{2}/12$.
 
-For representative system parameters $R=12$ and $b=6$, the quantization step is $q=0.375$, yielding a standard deviation $`\sigma_q \approx 0.108`$ in risk score units. These exact parameters govern the numerical simulation model presented below.
+For representative system parameters $R=12$ and $b=6$, the quantization step is $q=0.375$, yielding a standard deviation $\sigma_q \approx 0.108$ in risk score units. These exact parameters govern the numerical simulation model presented below.
 
 At first glance, quantization error appears trivial to eliminate by simply increasing ADC resolution. In mixed-signal hardware, however, every additional bit of resolution carries a severe physical penalty. The sampled voltage across an ADC sample-and-hold capacitor contains thermal Nyquist-Johnson noise characterized by variance:
 
@@ -160,12 +160,12 @@ At first glance, quantization error appears trivial to eliminate by simply incre
 
 Where:
 
-- $`\overline{v_n^{2}}`$ is the mean-squared thermal noise voltage across the sampling capacitor, representing noise variance in $\text{V}^2$;
-- $`k_B`$ is the Boltzmann constant ($`k_B \approx 1.38 \times 10^{-23}\ \text{J/K}`$);
+- $\overline{v_n^{2}}$ is the mean-squared thermal noise voltage across the sampling capacitor, representing noise variance in $\text{V}^2$;
+- $k_B$ is the Boltzmann constant ($k_B \approx 1.38 \times 10^{-23}\ \text{J/K}$);
 - $T$ is the absolute thermodynamic temperature in kelvins;
 - $C$ is the sampling capacitance of the ADC front-end in farads.
 
-For an operational temperature $T=300$ K and capacitance $C=1$ pF, the root-mean-square thermal noise voltage is $`\sqrt{k_B T/C} \approx 64\ \mu\text{V}`$. Because noise voltage is inversely proportional to the square root of capacitance, suppressing thermal noise requires increasing the physical capacitor size. To add a single bit of resolution, the quantization step $q$ must be halved; maintaining the signal-to-noise ratio requires halving the RMS noise voltage, which demands a fourfold increase in sampling capacitance $C$. In turn, quadrupling $C$ quadruples the dynamic energy $CV^{2}$ required to charge the sampling capacitor to operating voltage $V$. In thermal-noise-limited regimes, every additional bit of ADC resolution scales the conversion energy expenditure by approximately a factor of four. This physical relationship underpins modern ADC figures of merit, whose historical scaling trajectories are surveyed by Boris Murmann [[20]](#src-20). Earlier foundational work by Walden established that at sampling frequencies below approximately 2 MS/s, ADC resolution is strictly thermal-noise-limited, whereas between 2 MS/s and 4 GS/s, resolution degrades by approximately one bit for every doubling of sampling rate due to aperture jitter [[21]](#src-21).
+For an operational temperature $T=300$ K and capacitance $C=1$ pF, the root-mean-square thermal noise voltage is $\sqrt{k_B T/C} \approx 64\ \mu\text{V}$. Because noise voltage is inversely proportional to the square root of capacitance, suppressing thermal noise requires increasing the physical capacitor size. To add a single bit of resolution, the quantization step $q$ must be halved; maintaining the signal-to-noise ratio requires halving the RMS noise voltage, which demands a fourfold increase in sampling capacitance $C$. In turn, quadrupling $C$ quadruples the dynamic energy $CV^{2}$ required to charge the sampling capacitor to operating voltage $V$. In thermal-noise-limited regimes, every additional bit of ADC resolution scales the conversion energy expenditure by approximately a factor of four. This physical relationship underpins modern ADC figures of merit, whose historical scaling trajectories are surveyed by Boris Murmann [[20]](#src-20). Earlier foundational work by Walden established that at sampling frequencies below approximately 2 MS/s, ADC resolution is strictly thermal-noise-limited, whereas between 2 MS/s and 4 GS/s, resolution degrades by approximately one bit for every doubling of sampling rate due to aperture jitter [[21]](#src-21).
 
 For in-memory computing, this physical constraint reveals an uncomfortable architectural reality: domain conversion overhead can entirely consume the energy savings achieved by analog multiplication. The architects of the ISAAC neural accelerator—noting that prior works failed to account for end-to-end converter overheads—were forced to devise specialized bit-serial encoding schemes specifically to mitigate the dominant latency and power dissipation of peripheral ADCs [[22]](#src-22). Consequently, specifying ADC resolution is not a minor implementation detail; it represents a fundamental architectural commitment balancing energy efficiency against admissible rule error margins.
 
@@ -179,11 +179,11 @@ Notation in the drift model [[23]](#src-23):
 
 - $G(t)$ is the device conductance at elapsed time $t$, expressed in siemens;
 - $t$ is the elapsed physical time since the programming pulse;
-- $`t_0`$ is the baseline reference time at which initial conductance $`G(t_0)`$ was verified;
+- $t_0$ is the baseline reference time at which initial conductance $G(t_0)$ was verified;
 - $\nu$ is the empirical drift exponent: larger values signify accelerated conductance decay;
 - The negative exponent $-\nu$ reflects power-law rather than exponential decay: conductance relaxation proceeds rapidly immediately post-programming and attenuates logarithmically over time.
 
-For a representative drift exponent $\nu=0.05$, at an operating time $`t = 100 t_0`$, device conductance decays to $100^{-0.05} \approx 0.79$ of its programmed value. Joshi et al. demonstrated that combining hardware-aware training with periodic digital compensation of batch-normalization scale factors maintains ResNet-32 accuracy above 93.5% on CIFAR-10 over a 24-hour window, despite storing each synaptic weight within a differential pair of PCM cells [[24]](#src-24). While promising, this empirical result highlights an operational boundary: a 24-hour laboratory verification does not guarantee stability over a year-long autonomous deployment.
+For a representative drift exponent $\nu=0.05$, at an operating time $t = 100 t_0$, device conductance decays to $100^{-0.05} \approx 0.79$ of its programmed value. Joshi et al. demonstrated that combining hardware-aware training with periodic digital compensation of batch-normalization scale factors maintains ResNet-32 accuracy above 93.5% on CIFAR-10 over a 24-hour window, despite storing each synaptic weight within a differential pair of PCM cells [[24]](#src-24). While promising, this empirical result highlights an operational boundary: a 24-hour laboratory verification does not guarantee stability over a year-long autonomous deployment.
 
 Mead foresaw this challenge in 1990: an analog computing system must continuously adapt to the parameter variations of its constituent components [[1]](#src-1). For an evidence-governed expert system, this yields an imperative operational rule: the calibration state of an analog coprocessor is a first-class, versioned engineering artifact, identical in status to a symbolic rule definition or system requirements document. Whenever an inference verdict relies on an analog calculation, the accompanying justification package must record the calibration version identifier, elapsed time since device programming, and operating temperature—in strict accordance with the provenance tracking mandates formalized in [Chapter 9](ch09-engineering-knowledge-graph-traceability.md).
 
@@ -240,11 +240,11 @@ Where:
 
 - $\hat\sigma$ is the empirical root-mean-square error estimate derived from canary evaluations;
 - $m$ is the number of canary evaluation cycles;
-- $`\tilde s_i`$ is the analog accelerator output for the $i$-th reference vector;
-- $`s_i`$ is the exact digital reference solution for that same vector;
-- $`\sum_{i=1}^{m}`$ denotes summation over all $m$ canary vectors.
+- $\tilde s_i$ is the analog accelerator output for the $i$-th reference vector;
+- $s_i$ is the exact digital reference solution for that same vector;
+- $\sum_{i=1}^{m}$ denotes summation over all $m$ canary vectors.
 
-This formulation evaluates the sample root-mean-square error: differences are squared, averaged, and rooted. Suppose $m=4$ canary evaluations yield residuals $`\tilde s_i - s_i`$ of $0.2$, $-0.3$, $0.1$, and $-0.4$. The resulting estimate is $\hat\sigma = \sqrt{(0.04 + 0.09 + 0.01 + 0.16)/4} = \sqrt{0.075} \approx 0.27$. While this four-sample calculation illustrates the arithmetic, real-world mission-critical implementations employ larger ensembles (e.g., $m=512$) to achieve statistical confidence.
+This formulation evaluates the sample root-mean-square error: differences are squared, averaged, and rooted. Suppose $m=4$ canary evaluations yield residuals $\tilde s_i - s_i$ of $0.2$, $-0.3$, $0.1$, and $-0.4$. The resulting estimate is $\hat\sigma = \sqrt{(0.04 + 0.09 + 0.01 + 0.16)/4} = \sqrt{0.075} \approx 0.27$. While this four-sample calculation illustrates the arithmetic, real-world mission-critical implementations employ larger ensembles (e.g., $m=512$) to achieve statistical confidence.
 
 The terminology deliberately evokes the historical practice of coal miners carrying caged canaries underground as an early-warning detection system against toxic gas: a canary calculation provides the earliest operational indication that analog hardware behavior has drifted outside its certified calibration envelope.
 
@@ -257,11 +257,11 @@ To quantify the protective capability of the margin gate and analyze the failure
 Where:
 
 - $\sigma^{2}$ is the aggregate error variance of the analog dot-product computation;
-- $`\sigma_w`$ is the standard deviation of conductance noise expressed as a fraction of full-scale weight magnitude ($`\sigma_w = 0.05`$);
-- $`x_j`$ is the $j$-th element of the input vector;
+- $\sigma_w$ is the standard deviation of conductance noise expressed as a fraction of full-scale weight magnitude ($\sigma_w = 0.05$);
+- $x_j$ is the $j$-th element of the input vector;
 - $n=64$ is the total length of the feature vector;
-- $`\sum_{j=1}^{n}x_j^{2}`$ represents the squared Euclidean norm of the input: larger input norms induce higher accumulated read noise. For uniform inputs on $[-1, 1)$, the expected value of $`x_j^{2}`$ is $1/3$, yielding an expected sum of $64/3$;
-- $`\sigma_q`$ is the 6-bit ADC quantization error derived previously ($0.108$).
+- $\sum_{j=1}^{n}x_j^{2}$ represents the squared Euclidean norm of the input: larger input norms induce higher accumulated read noise. For uniform inputs on $[-1, 1)$, the expected value of $x_j^{2}$ is $1/3$, yielding an expected sum of $64/3$;
+- $\sigma_q$ is the 6-bit ADC quantization error derived previously ($0.108$).
 
 This yields an expected error standard deviation $\sigma \approx 0.26$ for a freshly calibrated die. The Go program below evaluates five operational scenarios across one million Monte Carlo trials each. The listing depends exclusively on the Go standard library and is executed via `go run main.go`.
 
@@ -400,9 +400,9 @@ drifted die, recalibrated gate              0.467       25        8.1
 
 Without margin gate protection, the raw analog accelerator commits 6,718 erroneous classifications per million evaluations. Activating the margin gate with fresh calibration data ($m=512$ canaries yielding $\hat\sigma \approx 0.272$) suppresses errors down to a single false decision per million, requiring digital recomputation for only 5.4% of the query volume located near the decision boundary. For rare-event detection, this operational overhead is exceptionally advantageous: 94.6% of all incoming telemetry is resolved entirely in the ultra-low-power analog domain.
 
-Next, the simulation doubles the conductance noise ($`\sigma_w = 0.10`$), emulating physical aging and drift. Operating unmitigated, the error count escalates to 11,960 per million. Maintaining the margin gate under the stale calibration baseline ($\hat\sigma = 0.272$) offers partial mitigation (235 errors per million), but violates its safety specification: the analytical bound $\Phi(-3)$ was predicated on known variance, whereas the physical variance has doubled. Dispatched canary re-evaluation updates the estimate to $\hat\sigma \approx 0.467$, which immediately suppresses errors to 25 per million at the expense of an 8.1% digital recomputation rate.
+Next, the simulation doubles the conductance noise ($\sigma_w = 0.10$), emulating physical aging and drift. Operating unmitigated, the error count escalates to 11,960 per million. Maintaining the margin gate under the stale calibration baseline ($\hat\sigma = 0.272$) offers partial mitigation (235 errors per million), but violates its safety specification: the analytical bound $\Phi(-3)$ was predicated on known variance, whereas the physical variance has doubled. Dispatched canary re-evaluation updates the estimate to $\hat\sigma \approx 0.467$, which immediately suppresses errors to 25 per million at the expense of an 8.1% digital recomputation rate.
 
-The residual 25 errors observed under recalibration also possess an exact physical explanation. The underlying variance scales dynamically with the input vector norm via $`\sum x_j^{2}`$, whereas the margin gate utilizes a scalar average estimate $\hat\sigma$. For input vectors exhibiting unusually large norms, physical noise exceeds the scalar estimate, rendering the uniform margin gate marginally permissive. A higher-assurance margin gate dynamically evaluates $\sigma(\mathbf{x})$ on a per-vector basis. The fundamental engineering conclusion is unequivocal: **the safety guarantees of a margin gate remain valid if and only if the underlying calibration remains active; consequently, canary evaluations are an essential phase of runtime inference, not optional offline maintenance**. These numbers reflect a simplified model and do not predict the exact behavior of a specific silicon die; for production accelerators, empirical error models are constructed from physical laboratory characterization.
+The residual 25 errors observed under recalibration also possess an exact physical explanation. The underlying variance scales dynamically with the input vector norm via $\sum x_j^{2}$, whereas the margin gate utilizes a scalar average estimate $\hat\sigma$. For input vectors exhibiting unusually large norms, physical noise exceeds the scalar estimate, rendering the uniform margin gate marginally permissive. A higher-assurance margin gate dynamically evaluates $\sigma(\mathbf{x})$ on a per-vector basis. The fundamental engineering conclusion is unequivocal: **the safety guarantees of a margin gate remain valid if and only if the underlying calibration remains active; consequently, canary evaluations are an essential phase of runtime inference, not optional offline maintenance**. These numbers reflect a simplified model and do not predict the exact behavior of a specific silicon die; for production accelerators, empirical error models are constructed from physical laboratory characterization.
 
 The margin gate represents a specific manifestation of the broader mixed-precision computing paradigm. Le Gallo et al. formalized mixed-precision in-memory computing: an analog crossbar executes the bulk low-precision computation, while an auxiliary digital processor iteratively refines the solution; utilizing 998,752 PCM elements, the authors solved a system of 5,000 linear equations to full 64-bit floating-point precision [[25]](#src-25). The margin gate applies this exact division of labor to symbolic rule evaluation: the analog accelerator resolves the decisive majority of clear-cut queries, while the digital supervisor resolves the critical minority where substrate approximation could alter the logical conclusion.
 
@@ -414,8 +414,8 @@ Operating a margin gate carries an energy cost that must be incorporated into sy
 
 Where:
 
-- $`E_{\text{analog}}`$ is the total energy consumed by a single analog execution cycle, inclusive of DAC and ADC conversions, in joules;
-- $`E_{\text{digital}}`$ is the energy dissipated by a purely digital implementation of the same inference kernel, in joules;
+- $E_{\text{analog}}$ is the total energy consumed by a single analog execution cycle, inclusive of DAC and ADC conversions, in joules;
+- $E_{\text{digital}}$ is the energy dissipated by a purely digital implementation of the same inference kernel, in joules;
 - $r$ is the empirical fraction of queries routed by the margin gate to digital recomputation ($0 \le r \le 1$);
 - $c$ is the ratio of canary evaluation cycles to productive inference cycles (e.g., $c=0.01$ indicates one canary cycle per 100 inference evaluations);
 - The left-hand side represents the expected energy expenditure of the mixed-signal path per decision (analog execution plus amortized canaries and fractional digital recomputations); the right-hand side is the energy consumed by the purely digital baseline.
@@ -529,7 +529,7 @@ Consequently, any production release of a mixed-signal expert system must packag
 We synthesize a comprehensive verification methodology for mixed-signal expert systems. Validating a mixed-signal system differs fundamentally from testing a digital system: because physical hardware is inherently noisy, identical test vectors yield non-identical analog responses. Verification must therefore proceed across five sequential, cumulative stages:
 
 1. **Differential Testing.** The analog hardware and its digital reference model process an identical ensemble of test vectors. The resulting residual distribution yields an empirical error model: mean bias, standard deviation, tail distributions, and dependence on input vector norm.
-2. **Environmental Boundary Testing.** The empirical error model is characterized across operational extremes of ambient temperature, supply voltage rails, and post-programming elapsed time, accounting for the power-law dynamics of conductance drift [[23]](#src-23). The final output is not a static scalar $\sigma$, but a parameterized error envelope $`\sigma(T, V_{\text{dd}}, t)`$.
+2. **Environmental Boundary Testing.** The empirical error model is characterized across operational extremes of ambient temperature, supply voltage rails, and post-programming elapsed time, accounting for the power-law dynamics of conductance drift [[23]](#src-23). The final output is not a static scalar $\sigma$, but a parameterized error envelope $\sigma(T, V_{\text{dd}}, t)$.
 3. **Hardware Fault Injection.** Synthetic hardware faults—such as stuck-at-conductance cells, ADC offset shifts, and dead neuron circuits—are injected into the physical testbed or its simulator. The expert system must reliably detect these degradation signatures via canary checks and fail over to the digital execution path, rather than emitting a high-confidence false verdict.
 4. **Statistical Acceptance Auditing.** The empirical false-acceptance rate and detector miss rate are quantified within formal confidence intervals; in zero-defect test spaces, sample sizes are governed by the Rule of Three [[26]](#src-26).
 5. **Segregation of Operational Authority.** An analog or neuromorphic inference output is strictly prohibited from triggering an irreversible real-world action without digital supervisor authorization. The formal contracts governing actuation are detailed in [Chapter 21](ch21-from-recommendation-to-action.md), while [Chapter 27](ch27-safety-case-gsn-synthesis.md) demonstrates how empirical error models and calibration logs are integrated into a formal Goal Structuring Notation (GSN) safety case.
@@ -564,7 +564,7 @@ Offloading computational workloads to unconventional accelerators requires prese
 1. **Differential Testing Testbed with Digital Twin Runtime:**
    * Parallel execution of millions of test vectors across the physical neuromorphic chip and an FP64/FP32 digital reference model.
    * Constructing the empirical error distribution kernel $f(\epsilon)$, characterizing heavy distribution tails (*heavy tails*), and quantifying the critical margin threshold:
-     $$`M(\mathbf{x}) \ge \gamma_{\text{margin}}.`$$
+     $$M(\mathbf{x}) \ge \gamma_{\text{margin}}.$$
 2. **Hardware Canary Generator and Periodic Miss Auditing:**
    * Automated injection of synthetic canary stimuli into the input data stream every 50 operational cycles. If the analog subsystem fails to correctly resolve a canary vector, a digital safety interlock immediately isolates the analog path and transfers supervisory control to an FPGA/MCU-based deterministic rule engine.
 
@@ -611,7 +611,7 @@ The empirical hypothesis asserting that a mixed-signal neuromorphic-symbolic arc
 1. The probability of an undetected analog error resulting from compounded physical noise and thermal drift exceeds the certified normative failure budget:
    $$P(\text{undetected error}) > 10^{-9}\ \text{per hour of continuous operation};$$
 2. The latency required to detect accuracy degradation or a canary benchmark failure exceeds the certified Fault Tolerant Time Interval (FTTI):
-   $$`T_{\text{detect}} > \tau_{\text{FTTI}}.`$$
+   $$T_{\text{detect}} > \tau_{\text{FTTI}}.$$
 
 ---
 

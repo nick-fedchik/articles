@@ -116,7 +116,7 @@ C_{	ext{req}}(r)=rac{1}{m}\sum_{j=1}^{m} I_j(r)
 
 Parameter der strukturellen Vollständigkeit:
 
-- $r$ bezeichnet die evaluierte Anforderung, $`m > 0`$ ist die Gesamtzahl obligatorischer Schemaattribute und $j$ indiziert das jeweilige Feld;
+- $r$ bezeichnet die evaluierte Anforderung, $m > 0$ ist die Gesamtzahl obligatorischer Schemaattribute und $j$ indiziert das jeweilige Feld;
 - $I_j(r)$ nimmt den Wert 1 an, wenn das Attribut $j$ mit einem typkonformen, nicht-trivialen Wert belegt ist, andernfalls 0;
 - $\sum_{j=1}^{m}$ summiert die Prüfergebnisse über alle Schemaattribute, und die Division durch $m$ normiert den Wert auf das Intervall $[0, 1]$.
 
@@ -1020,7 +1020,7 @@ Das Team wählt exakt eines dieser Artefakte aus, fixiert ein minimales Schema u
 > *Haftungsausschluss:* Diese Diskussion ist eine simulierte heuristische Synthese, generiert ausschließlich im wissenschaftlichen und didaktischen Kontext dieser Monografie auf der Grundlage veröffentlichter Schriften, Monografien und öffentlicher Vorträge der geladenen Experten. Sie stellt kein Wortprotokoll realer Unterredungen dar, erhebt keinen Anspruch auf gegenwärtige Äußerungen realer Personen und dient als methodisches Instrument des kritischen Rationalismus zur Falsifikation der Hypothesen des Autors. Jeder Gesprächspartner debattiert direkt und ausschließlich mit dem Autor der Monografie (Mykola Fedchyk).
 
 **These des Kapitels (Mykola Fedchyk):**  
-Ingenieurtechnische Artefakte (Anforderungen, Datenblätter, CAD-Zeichnungen, Testspezifikationen) werden ausschließlich durch dreidimensionale Erdung zu verifizierten Daten für eine evidenzbasierte Wissensbasis: kryptografische Verwahrung der Primärquelle ($`\mathcal{G}`$), 2D-räumliche Verortung von Tabellenzellen im Dokumentenraum und physikalische Einheitennormalisierung nach dem UCUM-Standard mit kontrafaktischer Constraint-Validierung. Das Dokument ist lediglich eine flüchtige Projektion über typisierten Daten.
+Ingenieurtechnische Artefakte (Anforderungen, Datenblätter, CAD-Zeichnungen, Testspezifikationen) werden ausschließlich durch dreidimensionale Erdung zu verifizierten Daten für eine evidenzbasierte Wissensbasis: kryptografische Verwahrung der Primärquelle ($\mathcal{G}$), 2D-räumliche Verortung von Tabellenzellen im Dokumentenraum und physikalische Einheitennormalisierung nach dem UCUM-Standard mit kontrafaktischer Constraint-Validierung. Das Dokument ist lediglich eine flüchtige Projektion über typisierten Daten.
 
 **Dialog mit David Parnas: Strukturierte Ingenieurdokumentation versus automatisierte Aufnahme unformalisierter Texte**
 
@@ -1029,7 +1029,7 @@ Ingenieurtechnische Artefakte (Anforderungen, Datenblätter, CAD-Zeichnungen, Te
 
 - **Mykola Fedchyk:**  
   *„Herr Professor Parnas, Ihre Kritik unpräziser Spezifikationen ist das Fundament ingenieurtechnischer Strenge: Eine Maschine kann aus mehrdeutiger Prosa keinen eindeutigen Vertrag ableiten.  
-  Exakt aus diesem Grund versucht unsere Artefakt-Ingestion-Pipeline keineswegs, fehlerhafte Anforderungen magisch zu 'reparieren'. Sie erfüllt eine völlig andere Funktion: Sie transformiert passive Dateien in ein relationales Modell unter strikter Wahrung der bijektiven Abbildung auf primäre Byte-Bereiche ($`\mathcal{G}`$). Weist eine normative Aussage im Quell-PDF Unschärfen auf – etwa fehlende numerische Toleranzen oder unzulässige Wertebereiche nach Ihrem Four-Variable-Modell –, erfindet der Anforderungs-Linter keine Werte; er emittiert einen typisierten Spezifikationsdefekt und stoppt das Freigabetor in der CI/CD-Pipeline. Wir ersetzen mathematische Disziplin nicht – wir erzwingen sie automatisiert, indem jede Anforderung in ein prüfbares Prädikat über Systemzustände überführt wird.“*
+  Exakt aus diesem Grund versucht unsere Artefakt-Ingestion-Pipeline keineswegs, fehlerhafte Anforderungen magisch zu 'reparieren'. Sie erfüllt eine völlig andere Funktion: Sie transformiert passive Dateien in ein relationales Modell unter strikter Wahrung der bijektiven Abbildung auf primäre Byte-Bereiche ($\mathcal{G}$). Weist eine normative Aussage im Quell-PDF Unschärfen auf – etwa fehlende numerische Toleranzen oder unzulässige Wertebereiche nach Ihrem Four-Variable-Modell –, erfindet der Anforderungs-Linter keine Werte; er emittiert einen typisierten Spezifikationsdefekt und stoppt das Freigabetor in der CI/CD-Pipeline. Wir ersetzen mathematische Disziplin nicht – wir erzwingen sie automatisiert, indem jede Anforderung in ein prüfbares Prädikat über Systemzustände überführt wird.“*
 
 - **David L. Parnas (Gegenangriff):**  
   *„Doch wenn Ihr Linter den Großteil bestehender Ingenieurdokumente wegen mangelnder mathematischer Strenge zurückweist: Wie sollen reale Industrieunternehmen Ihr Expertensystem einführen, ohne laufende Entwicklungsprogramme vollständig zu lähmen? Führt die Forderung nach sofortiger, lückenloser Formalisierung nicht zur schlichten Verweigerung durch die Ingenieurteams?“*
@@ -1044,7 +1044,7 @@ Ingenieurtechnische Artefakte (Anforderungen, Datenblätter, CAD-Zeichnungen, Te
 
 - **Mykola Fedchyk:**  
   *„Herr Dr. Frederick Brooks, Ihre Mahnung bezüglich akzidenteller Komplexität ist vollkommen berechtigt: Eine naive automatische Ingestion-Pipeline würde am Formatierungsrauschen ersticken. Exakt deshalb etabliert dieses Kapitel das Paradigma: 'Ein Dokument ist lediglich eine flüchtige Projektion, während ein Ingenieurartefakt als typisierte Daten geboren werden muss.'  
-  Für Bestandsdokumente (Legacy-PDFs und CAD) setzen wir auf strikte dreidimensionale Isolation: Der Parser errät niemals mehrdeutige Semantik. Sinkt das Konfidenzniveau von OCR oder Sprachmodellextraktion unter die geforderte Zertifizierungsschwelle, wird das Artefakt isoliert und ein unveränderliches Erdungstupel $`\mathcal{G}`$ erzeugt.  
+  Für Bestandsdokumente (Legacy-PDFs und CAD) setzen wir auf strikte dreidimensionale Isolation: Der Parser errät niemals mehrdeutige Semantik. Sinkt das Konfidenzniveau von OCR oder Sprachmodellextraktion unter die geforderte Zertifizierungsschwelle, wird das Artefakt isoliert und ein unveränderliches Erdungstupel $\mathcal{G}$ erzeugt.  
   Keine extrahierte Regel gelangt ohne digitale Signatur eines zertifizierten Domänenexperten über das Human-in-the-Loop-Tor in die produktive Regelbasis. Wir versprechen keine magische 'Silberkugel', die Formatierungsrauschen auflöst; wir konstruieren ein hermetisches Schutztor, das dieses Rauschen an der Systemgrenze abfängt und ausschließlich mathematisch verifizierte Invarianten in den Kern einlässt.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  

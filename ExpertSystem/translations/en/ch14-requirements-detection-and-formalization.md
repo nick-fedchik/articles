@@ -83,7 +83,7 @@ Therefore, deontic modality and syntactic structure must be analyzed concurrentl
 
 Within the architecture of an automated knowledge acquisition system ([Chapter 10](ch10-knowledge-acquisition-systems.md)), the preliminary lexical linting stage serves as the first deterministic barrier preceding abstract syntax tree (AST) construction. In industrial engineering practice, requirements specifications are permeated with informal, ambiguous terminology: superlative and comparative qualitative adjectives ("acceptable latency", "sufficient cooling level", "high reliability", "minimal power consumption"). If such ungrounded predicates enter the rule base without strict numerical grounding, symbolic SMT solvers cannot synthesize a definitive boundary invariant for them, and probabilistic language models hallucinate speculative tolerance limits. The resultant failure mode is either automated prover deadlock (`REQ_DEFECT_DEADLOCK`) or catastrophic oversight of hazardous conditions during hardware deployment.
 
-To prevent this defect, the author engineered a specialized Semantic Ambiguity Linter (*Ambiguity Linter*) operating against a closed dictionary of toxic descriptors $`\mathcal{D}_{\mathrm{toxic}}`$ (defined in accordance with ISO/IEC/IEEE 29148 guidelines [[13]](#src-13)). Any requirement containing a qualitative adjective unanchored to a quantified physical SI interval is immediately blocked by the compiler:
+To prevent this defect, the author engineered a specialized Semantic Ambiguity Linter (*Ambiguity Linter*) operating against a closed dictionary of toxic descriptors $\mathcal{D}_{\mathrm{toxic}}$ (defined in accordance with ISO/IEC/IEEE 29148 guidelines [[13]](#src-13)). Any requirement containing a qualitative adjective unanchored to a quantified physical SI interval is immediately blocked by the compiler:
 
 ```math
 \text{Incorrect: } \mathrm{FastResponse}(\mathrm{ECU}) \quad \longrightarrow \quad \text{Correct: } t_{\mathrm{resp}} \le 150\,\mu\text{s}
@@ -98,17 +98,17 @@ To deterministically resolve such contradictions, a lexicographical preference o
 ```
 
 Parameters and components of the lexicographical rank:
-- $`\mathrm{Tier}(\mathrm{Source}) \in \{1, 2, 3\}`$ — hierarchical rank of the normative knowledge source: $`\mathrm{Tier}(\text{International harmonized standard ISO/IEC}) = 3 \succ \mathrm{Tier}(\text{Enterprise technical specifications}) = 2 \succ \mathrm{Tier}(\text{Engineering heuristic}) = 1`$;
-- $`\mathrm{ModalityRank}(M) \in \{1, 2\}`$ — imperative weight of the deontic modality category: $`\mathrm{ModalityRank}(\text{PROHIBITION}) = \mathrm{ModalityRank}(\text{OBLIGATION}) = 2 \succ \mathrm{ModalityRank}(\text{PERMISSION}) = 1`$. Explicit prohibition and categorical obligation hold strict lexicographical precedence over permissive authorization;
-- $`\mathrm{Specificity}(\mathcal{R}) \in \mathbb{N}`$ — length of the context predicate constraint chain (a specialized rule supersedes a general one according to the *Lex Specialis Derogat Legi Generali* principle).
+- $\mathrm{Tier}(\mathrm{Source}) \in \{1, 2, 3\}$ — hierarchical rank of the normative knowledge source: $\mathrm{Tier}(\text{International harmonized standard ISO/IEC}) = 3 \succ \mathrm{Tier}(\text{Enterprise technical specifications}) = 2 \succ \mathrm{Tier}(\text{Engineering heuristic}) = 1$;
+- $\mathrm{ModalityRank}(M) \in \{1, 2\}$ — imperative weight of the deontic modality category: $\mathrm{ModalityRank}(\text{PROHIBITION}) = \mathrm{ModalityRank}(\text{OBLIGATION}) = 2 \succ \mathrm{ModalityRank}(\text{PERMISSION}) = 1$. Explicit prohibition and categorical obligation hold strict lexicographical precedence over permissive authorization;
+- $\mathrm{Specificity}(\mathcal{R}) \in \mathbb{N}$ — length of the context predicate constraint chain (a specialized rule supersedes a general one according to the *Lex Specialis Derogat Legi Generali* principle).
 
 #### 1.2.1. Actionable Closed Loop of Deontic Ranking
 1. **Control Flow & Runtime Decisions:**
-   When two mutually contradictory rules collide ($`\mathcal{R}_1 \land \neg \mathcal{R}_2`$), the knowledge arbiter evaluates the difference vector $`\Delta \mathbf{r} = \mathrm{Rank}(\mathcal{R}_1) - \mathrm{Rank}(\mathcal{R}_2)`$. If $`\Delta \mathbf{r} > \mathbf{0}`$, rule $`\mathcal{R}_1`$ deterministically prevails (*Strict Undercut*), while $`\mathcal{R}_2`$ is marked as temporarily overridden; if $`\Delta \mathbf{r} = \mathbf{0}`$ (collision of equipotent norms), the system engages a *Fail-Closed* security perimeter emitting a `QUALIFIED_CONFLICT` verdict and escalating to the lead systems architect.
+   When two mutually contradictory rules collide ($\mathcal{R}_1 \land \neg \mathcal{R}_2$), the knowledge arbiter evaluates the difference vector $\Delta \mathbf{r} = \mathrm{Rank}(\mathcal{R}_1) - \mathrm{Rank}(\mathcal{R}_2)$. If $\Delta \mathbf{r} > \mathbf{0}$, rule $\mathcal{R}_1$ deterministically prevails (*Strict Undercut*), while $\mathcal{R}_2$ is marked as temporarily overridden; if $\Delta \mathbf{r} = \mathbf{0}$ (collision of equipotent norms), the system engages a *Fail-Closed* security perimeter emitting a `QUALIFIED_CONFLICT` verdict and escalating to the lead systems architect.
 2. **Hardware Dimensioning:**
    Evaluating the rank formula executes in strictly bounded $O(1)$ time over a packed 64-bit integer `uint64` (allocating 16 bits for Tier, 16 bits for modality, and 32 bits for specificity), requiring merely 8 bytes of storage per rule and enabling linear sorting of 100,000 rules within controller SRAM in under $1.8\,\text{ms}$.
 3. **Worked Numerical Example:**
-   Suppose an ISO 26262 ASIL D standard clause prohibits transitioning into regenerative braking upon a CAN bus fault ($`\mathrm{Tier} = 3, M = \text{PROHIBITION} \to 2, \mathrm{Specificity} = 4`$), while a local maintenance workshop guideline permits it for calibration purposes ($`\mathrm{Tier} = 2, M = \text{PERMISSION} \to 1, \mathrm{Specificity} = 2`$). The lexicographical rank vector of the standard clause $`\langle 3, 2, 4 \rangle`$ strictly dominates the local guideline vector $`\langle 2, 1, 2 \rangle`$ on the primary coordinate ($3 > 2$). The system deterministically blocks the hazardous action, precluding safety-critical operational failure.
+   Suppose an ISO 26262 ASIL D standard clause prohibits transitioning into regenerative braking upon a CAN bus fault ($\mathrm{Tier} = 3, M = \text{PROHIBITION} \to 2, \mathrm{Specificity} = 4$), while a local maintenance workshop guideline permits it for calibration purposes ($\mathrm{Tier} = 2, M = \text{PERMISSION} \to 1, \mathrm{Specificity} = 2$). The lexicographical rank vector of the standard clause $\langle 3, 2, 4 \rangle$ strictly dominates the local guideline vector $\langle 2, 1, 2 \rangle$ on the primary coordinate ($3 > 2$). The system deterministically blocks the hazardous action, precluding safety-critical operational failure.
 
 > [!NOTE]
 > **Three Coordinates of Lexicographical Requirement Ranking $\mathrm{Rank}(\mathcal{R})$**
@@ -141,7 +141,7 @@ To guarantee complete deontic and cryptographic integrity, the author implemente
 ```
 
 Parameters and scanning rules:
-- The grammar treats the pair $`\langle\mathrm{MODAL}, \mathrm{NEGATION}\rangle`$ as an indivisible binary atom;
+- The grammar treats the pair $\langle\mathrm{MODAL}, \mathrm{NEGATION}\rangle$ as an indivisible binary atom;
 - Any intervening whitespace or newline delimiters within a maximum linguistic window of $W \le 3$ tokens cannot break the deontic context;
 - Complete preservation of physical coordinates is guaranteed by the `GroundedToken` data structure:
 
@@ -165,7 +165,7 @@ To eliminate linter blind spots, a scanning algorithm utilizing `utf8.DecodeRune
 2. **Hardware Dimensioning:**
    The `GroundedToken` struct occupies exactly 32 bytes of memory (16-byte `string` header, 8-byte `ByteStart`, 8-byte `ByteEnd`, 4-byte `Line`, 4-byte `Column`). A token buffer of 1,000,000 tokens for an entire comprehensive standard requires only 32 MB of RAM, fitting comfortably within the working memory of an engineering workstation.
 3. **Worked Numerical Example:**
-   Consider parsing the string `The ECU shall\nnot disable cooling` comprising 33 bytes at starting offset $14\,200$: a naive tokenizer generated $`\text{SHALL}`$ with span $[14\,208, 14\,213]$ (an invariant obligating the system to disable cooling!). The span-preserving tokenizer forms an atomic quantifier `shall not` spanning the unified interval $[14\,208, 14\,217]$ with computed SHA-256 hash $`H = \text{0x9f8a\dots}`$, preventing battery thermal runaway.
+   Consider parsing the string `The ECU shall\nnot disable cooling` comprising 33 bytes at starting offset $14\,200$: a naive tokenizer generated $\text{SHALL}$ with span $[14\,208, 14\,213]$ (an invariant obligating the system to disable cooling!). The span-preserving tokenizer forms an atomic quantifier `shall not` spanning the unified interval $[14\,208, 14\,217]$ with computed SHA-256 hash $H = \text{0x9f8a\dots}$, preventing battery thermal runaway.
 
 ---
 
@@ -233,11 +233,11 @@ To construct an impermeable neuro-symbolic barrier, language generation within t
 ```
 
 Parameters and components of the closed decoding space:
-- $`\mathcal{K}`$ — active formally verified knowledge package;
-- $`\mathrm{Entities}(\mathcal{K})`$ — finite set of verified component and signal identifiers (`BMS_Relay`, `Cell_Voltage`, `PreCharge_Resistor`);
-- $`\mathrm{Predicates}(\mathcal{K})`$ — set of formalized relational predicates and tolerance boundaries (`exceeds`, `is_equal`, `activates`);
-- $`\mathrm{Units}(\mathcal{K})`$ — standardized physical units conforming to the SI system (`ms`, `V`, `A`, `deg_C`);
-- $`\mathrm{Keywords}_{\mathrm{EARS}} = \{\text{WHEN}, \text{WHILE}, \text{IF}, \text{THEN}, \text{WHERE}, \text{THE}, \text{SHALL}, \text{SHALL NOT}\}`$ — reserved normative tokens of EARS syntax.
+- $\mathcal{K}$ — active formally verified knowledge package;
+- $\mathrm{Entities}(\mathcal{K})$ — finite set of verified component and signal identifiers (`BMS_Relay`, `Cell_Voltage`, `PreCharge_Resistor`);
+- $\mathrm{Predicates}(\mathcal{K})$ — set of formalized relational predicates and tolerance boundaries (`exceeds`, `is_equal`, `activates`);
+- $\mathrm{Units}(\mathcal{K})$ — standardized physical units conforming to the SI system (`ms`, `V`, `A`, `deg_C`);
+- $\mathrm{Keywords}_{\mathrm{EARS}} = \{\text{WHEN}, \text{WHILE}, \text{IF}, \text{THEN}, \text{WHERE}, \text{THE}, \text{SHALL}, \text{SHALL NOT}\}$ — reserved normative tokens of EARS syntax.
 
 During autoregressive generation of each token, the syntactic decoder applies a binary logit mask over the output vocabulary layer:
 
@@ -245,17 +245,17 @@ During autoregressive generation of each token, the syntactic decoder applies a 
 \mathrm{Logit}'(w) = \begin{cases} \mathrm{Logit}(w), & \text{if } w \in \mathcal{V}_{\mathrm{valid}} \text{ and transition is permitted by the GBNF automaton}, \\ -\infty, & \text{otherwise.} \end{cases}
 ```
 
-Any attempt to emit a token outside the closed lexicon or violating EARS grammar is deterministically pruned with zero probability ($`P(w) = 0`$).
+Any attempt to emit a token outside the closed lexicon or violating EARS grammar is deterministically pruned with zero probability ($P(w) = 0$).
 
-When a refusal verdict (`REFUSAL`) is issued, the system generates explanations not via unconstrained text generation, but through direct traversal of the formal proof graph: the exact violated precondition is reported (e.g., $`T_{\mathrm{sensor}} = 135^\circ\text{C} > T_{\mathrm{max}} = 125^\circ\text{C}`$), the normative span is cited with its absolute physical byte offset, and a minimal corrective counterfactual action is generated in strict deontic form.
+When a refusal verdict (`REFUSAL`) is issued, the system generates explanations not via unconstrained text generation, but through direct traversal of the formal proof graph: the exact violated precondition is reported (e.g., $T_{\mathrm{sensor}} = 135^\circ\text{C} > T_{\mathrm{max}} = 125^\circ\text{C}$), the normative span is cited with its absolute physical byte offset, and a minimal corrective counterfactual action is generated in strict deontic form.
 
 #### 2.1.1. Actionable Closed Loop of Grammar Masking
 1. **Control Flow & Runtime Decisions:**
    Upon loading the rule base, the syntactic compiler compiles the GBNF grammar specification into a finite state machine. When an engineer submits a query, the input message is normalized to one of 4 canonical EARS templates. If the model attempts to generate a token invalid under current state transitions, the semantic gateway immediately terminates generation with an `EARS_SYNTAX_REJECT` error, saving GPU/NPU compute cycles from speculative expansion.
 2. **Hardware Dimensioning:**
-   The bitmask table for a vocabulary of $`\lvert \mathcal{V}_{\mathrm{valid}} \rvert = 4096`$ tokens occupies exactly 512 bytes (64 `uint64` words), guaranteed to fit inside the ultra-fast L1 instruction cache ($32\,\text{KB}$) of an NPU accelerator or CPU core, executing logit masking in a single cycle ($< 1\,\text{ns}$).
+   The bitmask table for a vocabulary of $\lvert \mathcal{V}_{\mathrm{valid}} \rvert = 4096$ tokens occupies exactly 512 bytes (64 `uint64` words), guaranteed to fit inside the ultra-fast L1 instruction cache ($32\,\text{KB}$) of an NPU accelerator or CPU core, executing logit masking in a single cycle ($< 1\,\text{ns}$).
 3. **Worked Numerical Example:**
-   Suppose the language model attempts to emit a nonexistent entity `battery_fluid_viscosity` (absent from the $`\mathcal{V}_{\mathrm{valid}}`$ lexicon containing 1,850 authorized entities). The logit of the initial token is instantly masked to $-\infty$, while an authorized alternative token `cell_temperature` with raw logit $14.2$ receives normalized probability $1.00$. The query deterministically compiles into *"If cell temperature exceeds 65 deg_C, then BMS shall open main relay"*, eliminating hallucination risks.
+   Suppose the language model attempts to emit a nonexistent entity `battery_fluid_viscosity` (absent from the $\mathcal{V}_{\mathrm{valid}}$ lexicon containing 1,850 authorized entities). The logit of the initial token is instantly masked to $-\infty$, while an authorized alternative token `cell_temperature` with raw logit $14.2$ receives normalized probability $1.00$. The query deterministically compiles into *"If cell temperature exceeds 65 deg_C, then BMS shall open main relay"*, eliminating hallucination risks.
 
 > [!NOTE]
 > **Five Canonical EARS Templates for Eliminating Requirements Ambiguity**
@@ -286,17 +286,17 @@ Parameters and formal contract components:
 - $\mathbf{x} \in \mathcal{X} \subseteq \mathbb{R}^n$ represents the vector of continuous and discrete input signals from sensor telemetry (cell voltages, pack current, temperatures, command flags);
 - $\mathbf{y} \in \mathcal{Y} \subseteq \mathbb{R}^m$ represents the vector of control actions emitted by the system (PWM duty cycles, contactor driver signals);
 - $s, s' \in \mathcal{S}$ denote the current and successor operational states of the controller;
-- $`\Phi_{\mathrm{pre}}(s,\mathbf{x}): \mathcal{S} \times \mathcal{X} \to \{\text{True}, \text{False}\}`$ is the contract precondition predicate, unifying the active state (`While`), discrete event trigger (`When`), and fault condition (`If`);
-- $`\Phi_{\mathrm{post}}(s',\mathbf{y}): \mathcal{S} \times \mathcal{Y} \to \{\text{True}, \text{False}\}`$ is the postcondition predicate defining the mandatory response (`shall`);
-- $\mathcal{T}(s,s'): \mathcal{S} \times \mathcal{S} \to \{\text{True}, \text{False}\}$ specifies the automaton transition relation, constraining permissible state transitions and switching time budgets $`\Delta t \le t_{\mathrm{timeout}}`$.
+- $\Phi_{\mathrm{pre}}(s,\mathbf{x}): \mathcal{S} \times \mathcal{X} \to \{\text{True}, \text{False}\}$ is the contract precondition predicate, unifying the active state (`While`), discrete event trigger (`When`), and fault condition (`If`);
+- $\Phi_{\mathrm{post}}(s',\mathbf{y}): \mathcal{S} \times \mathcal{Y} \to \{\text{True}, \text{False}\}$ is the postcondition predicate defining the mandatory response (`shall`);
+- $\mathcal{T}(s,s'): \mathcal{S} \times \mathcal{S} \to \{\text{True}, \text{False}\}$ specifies the automaton transition relation, constraining permissible state transitions and switching time budgets $\Delta t \le t_{\mathrm{timeout}}$.
 
 Practical application and engineering conclusions:
-- **Completeness verification (Non-blocking):** An SMT solver verifies that for every state-input pair $(s, \mathbf{x})$ satisfying $`\Phi_{\mathrm{pre}}`$, there exists at least one valid successor state and control output. If an input vector $\mathbf{x}^*$ is discovered for which no transition exists, the verifier flags an incompleteness defect: `REQ_DEFECT_DEADLOCK`.
-- **Determinism verification:** If an identical pair $(s, \mathbf{x})$ admits contradictory successor pairs $`(s'_1, \mathbf{y}_1) \ne (s'_2, \mathbf{y}_2)`$, the verifier flags an ambiguity defect: `REQ_DEFECT_AMBIGUITY`. Non-deterministic specifications are blocked from baseline deployment until reconciled by the systems architect.
+- **Completeness verification (Non-blocking):** An SMT solver verifies that for every state-input pair $(s, \mathbf{x})$ satisfying $\Phi_{\mathrm{pre}}$, there exists at least one valid successor state and control output. If an input vector $\mathbf{x}^*$ is discovered for which no transition exists, the verifier flags an incompleteness defect: `REQ_DEFECT_DEADLOCK`.
+- **Determinism verification:** If an identical pair $(s, \mathbf{x})$ admits contradictory successor pairs $(s'_1, \mathbf{y}_1) \ne (s'_2, \mathbf{y}_2)$, the verifier flags an ambiguity defect: `REQ_DEFECT_AMBIGUITY`. Non-deterministic specifications are blocked from baseline deployment until reconciled by the systems architect.
 
 ### 3.2. Linear Temporal Logic (LTL) for Temporal Invariants
 
-Embedded systems operate over continuous physical time; hence, static propositional predicates are insufficient. Amir Pnueli introduced Linear Temporal Logic (LTL) to reason formally about concurrent and reactive programs [[8]](#src-8). Within LTL, the modal operator $\Box$ represents "always (globally in all future states)", while $\Diamond$ denotes "eventually (in some future state)". Metric Temporal Logic (MTL), formulated for real-time systems by Ron Koymans, augments these modalities with explicit temporal bounds, such that $`\Diamond_{\le\tau}`$ specifies "eventually within a maximum time bound $\tau$" [[9]](#src-9). Signal Temporal Logic (STL), introduced by Maler and Nickovic, extends these formulations over continuous real-valued signals, such as electrical current or thermal gradients [[10]](#src-10).
+Embedded systems operate over continuous physical time; hence, static propositional predicates are insufficient. Amir Pnueli introduced Linear Temporal Logic (LTL) to reason formally about concurrent and reactive programs [[8]](#src-8). Within LTL, the modal operator $\Box$ represents "always (globally in all future states)", while $\Diamond$ denotes "eventually (in some future state)". Metric Temporal Logic (MTL), formulated for real-time systems by Ron Koymans, augments these modalities with explicit temporal bounds, such that $\Diamond_{\le\tau}$ specifies "eventually within a maximum time bound $\tau$" [[9]](#src-9). Signal Temporal Logic (STL), introduced by Maler and Nickovic, extends these formulations over continuous real-valued signals, such as electrical current or thermal gradients [[10]](#src-10).
 
 Two canonical property archetypes dominate safety specifications. A **safety invariant** asserts that a catastrophic system state can never occur:
 
@@ -327,11 +327,11 @@ Parameters and temporal tolerances:
 - $\mathit{FaultTriggered} \in \{\text{True}, \text{False}\}$ denotes the discrete latch indicating fault inception (e.g., cell overtemperature $> 60\,^{\circ}\text{C}$ or CAN communication bus-off);
 - $\mathit{SafeStateAchieved} \in \{\text{True}, \text{False}\}$ records the verified fact that the system has entered its certified safe state (contactors opened, high-voltage bus discharged);
 - $\tau \in \mathbb{R}_{> 0}$ is the maximum allowable response latency in milliseconds ($\text{ms}$), strictly bounded by the safety standard's Fault Tolerant Time Interval: $\tau \le \text{FTTI} - \Delta t_{\mathrm{margin}}$ (e.g., $\tau = 50\,\text{ms}$ under an $\text{FTTI} = 100\,\text{ms}$);
-- $`\Diamond_{\le\tau}`$ is the MTL metric temporal operator "eventually within the next $\tau$ time units".
+- $\Diamond_{\le\tau}$ is the MTL metric temporal operator "eventually within the next $\tau$ time units".
 
 Practical application and engineering conclusions:
-- **Testbench verification:** During Hardware-in-the-Loop (HIL) fault-injection testing, the end-to-end response latency is empirically measured: $`\Delta t_{\mathrm{meas}} = t_{\mathrm{safe}} - t_{\mathrm{fault}}`$.
-- **Pass/Fail criterion:** The test suite passes if and only if $`\max(\Delta t_{\mathrm{meas}}) \le \tau`$. If any single test run yields $`\Delta t_{\mathrm{meas}} > \tau`$, the automated harness raises a blocking fault `E_FTTI_TIMEOUT_BREACH`, and the requirement is rejected as unachievable on the target hardware architecture.
+- **Testbench verification:** During Hardware-in-the-Loop (HIL) fault-injection testing, the end-to-end response latency is empirically measured: $\Delta t_{\mathrm{meas}} = t_{\mathrm{safe}} - t_{\mathrm{fault}}$.
+- **Pass/Fail criterion:** The test suite passes if and only if $\max(\Delta t_{\mathrm{meas}}) \le \tau$. If any single test run yields $\Delta t_{\mathrm{meas}} > \tau$, the automated harness raises a blocking fault `E_FTTI_TIMEOUT_BREACH`, and the requirement is rejected as unachievable on the target hardware architecture.
 
 ```mermaid
 flowchart LR
@@ -365,17 +365,17 @@ flowchart LR
 
 > [!TIP]
 > **The Vacuous Truth Pitfall**  
-> In formal logic, the conditional expression $A \Rightarrow B$ evaluates to true whenever $A = \text{False}$ (*ex falso quodlibet*). If during automated testing the antecedent $\mathit{FaultTriggered}$ is never asserted by the testbench harness (for instance, if an environment simulator fails to synthesize a cell thermal excursion above $100\,^{\circ}\text{C}$), an automated verifier will report: *"Requirement successfully verified at 100%!"*. In reality, the safe-state transition logic was never exercised. To prevent vacuous verification, the auditing pipeline must accompany every implication with an antecedent reachability test, verifying that $`\Diamond\,\Phi_{\mathrm{pre}}`$ is satisfied in at least one execution trace.
+> In formal logic, the conditional expression $A \Rightarrow B$ evaluates to true whenever $A = \text{False}$ (*ex falso quodlibet*). If during automated testing the antecedent $\mathit{FaultTriggered}$ is never asserted by the testbench harness (for instance, if an environment simulator fails to synthesize a cell thermal excursion above $100\,^{\circ}\text{C}$), an automated verifier will report: *"Requirement successfully verified at 100%!"*. In reality, the safe-state transition logic was never exercised. To prevent vacuous verification, the auditing pipeline must accompany every implication with an antecedent reachability test, verifying that $\Diamond\,\Phi_{\mathrm{pre}}$ is satisfied in at least one execution trace.
 
 The table below maps canonical EARS templates to representative formal logical representations. These mappings represent pedagogical illustrations rather than a singular universal compiler: the choice of temporal model, time step discretization, and quantifier domain remains an explicit formalization decision.
 
 | EARS Template | Natural Language Requirement Example | Formal Logical Representation |
 |---|---|---|
-| Ubiquitous | The CAN controller shall support extended 29-bit identifiers. | $`\Box\,\mathit{Supports}(\mathit{CAN},\mathit{Ext29})`$ |
-| Event-Driven | When the E-STOP button is pressed, the motor driver shall disable gate drive outputs within 5 ms. | $`\Box\bigl(\mathit{Pressed}\Rightarrow\Diamond_{\le5\,\mathrm{ms}}\,\mathit{Disabled}\bigr)`$ |
-| State-Driven | While in PRE-CHARGE mode, the BMS shall limit the pre-charge resistor current to 10 A. | $`\Box\bigl(\mathit{State}=\mathit{PRECHARGE}\Rightarrow\mathit{Current}\le10\,\mathrm{A}\bigr)`$ |
-| Unwanted Behavior | If the cell temperature exceeds 65 °C, then the cooling controller shall activate the refrigerant pump at 100% duty cycle. | $`\Box\bigl(\mathit{Temp}>65\Rightarrow\mathit{PumpDuty}=1.0\bigr)`$ |
-| Optional Feature | Where the hardware watchdog is populated, the CPU supervisor shall toggle the WDI pin every 50 ms. | $`\mathit{HasWatchdog}\Rightarrow\Box\,(\mathit{ToggleInterval}=50\,\mathrm{ms})`$ |
+| Ubiquitous | The CAN controller shall support extended 29-bit identifiers. | $\Box\,\mathit{Supports}(\mathit{CAN},\mathit{Ext29})$ |
+| Event-Driven | When the E-STOP button is pressed, the motor driver shall disable gate drive outputs within 5 ms. | $\Box\bigl(\mathit{Pressed}\Rightarrow\Diamond_{\le5\,\mathrm{ms}}\,\mathit{Disabled}\bigr)$ |
+| State-Driven | While in PRE-CHARGE mode, the BMS shall limit the pre-charge resistor current to 10 A. | $\Box\bigl(\mathit{State}=\mathit{PRECHARGE}\Rightarrow\mathit{Current}\le10\,\mathrm{A}\bigr)$ |
+| Unwanted Behavior | If the cell temperature exceeds 65 °C, then the cooling controller shall activate the refrigerant pump at 100% duty cycle. | $\Box\bigl(\mathit{Temp}>65\Rightarrow\mathit{PumpDuty}=1.0\bigr)$ |
+| Optional Feature | Where the hardware watchdog is populated, the CPU supervisor shall toggle the WDI pin every 50 ms. | $\mathit{HasWatchdog}\Rightarrow\Box\,(\mathit{ToggleInterval}=50\,\mathrm{ms})$ |
 
 These mappings must be validated against quantifier scopes, temporal deadlines, concurrency semantics, cancellation conditions, and signal naming bindings. Systems engineers must distinguish between the existence of a permissible response and universal conformance across all operational execution traces.
 
@@ -458,11 +458,11 @@ flowchart LR
 
 This taxonomy classifies defects by their engineering consequences: an ambiguous requirement is interpreted inconsistently across engineering teams; a non-verifiable requirement cannot be validated by an automated test; a non-atomic requirement prevents clean 1:1 test traceability; and an omitted alternative branch forces downstream software developers to invent ad-hoc recovery behavior.
 
-**Ambiguity and vague terminology.** Words such as *fast*, *promptly*, *immediately*, *as soon as possible*, *user-friendly*, *robust*, *adequate*, *approximately*, or *etc.* lack physical dimensions. The expert system flags these tokens and recommends quantifiable replacements: substituting *promptly* with an explicit time bound (e.g., $`t \le 15\,\text{ms}`$), or replacing *approximately* with a nominal value and tolerance band.
+**Ambiguity and vague terminology.** Words such as *fast*, *promptly*, *immediately*, *as soon as possible*, *user-friendly*, *robust*, *adequate*, *approximately*, or *etc.* lack physical dimensions. The expert system flags these tokens and recommends quantifiable replacements: substituting *promptly* with an explicit time bound (e.g., $t \le 15\,\text{ms}$), or replacing *approximately* with a nominal value and tolerance band.
 
 **Non-atomicity.** The statement *"The gateway shall parse the incoming CAN message, verify the CRC, update the internal state machine, and transmit an acknowledgment frame"* bundles four distinct actions under a single modal verb. If the CRC check fails, the requirement's fulfillment status becomes indeterminate ("partially fulfilled"), violating ISO 26262 requirements that mandate distinct verification tests mapped to atomic requirements.
 
-**Missing alternative branch.** The requirement *"If the battery temperature exceeds 55 °C, the cooling fan shall turn ON"* fails to specify when the fan must turn OFF. If the deactivation threshold is set identically to $55\,^{\circ}\text{C}$, the control relay will oscillate around the boundary (*chattering*). The correct engineering pattern requires explicit hysteresis: activating when $`T > 55\,^{\circ}\mathrm{C}`$ and deactivating only when $`T \le 48\,^{\circ}\mathrm{C}`$. Without a paired requirement, the implementer will select an arbitrary threshold that bypasses architectural review.
+**Missing alternative branch.** The requirement *"If the battery temperature exceeds 55 °C, the cooling fan shall turn ON"* fails to specify when the fan must turn OFF. If the deactivation threshold is set identically to $55\,^{\circ}\text{C}$, the control relay will oscillate around the boundary (*chattering*). The correct engineering pattern requires explicit hysteresis: activating when $T > 55\,^{\circ}\mathrm{C}$ and deactivating only when $T \le 48\,^{\circ}\mathrm{C}$. Without a paired requirement, the implementer will select an arbitrary threshold that bypasses architectural review.
 
 **Agentless passive voice.** As established, requirements lacking a grammatical subject cannot be assigned to an architectural component. The expert system flags these instances, prompting the author to designate the specific hardware or software entity responsible for execution.
 
@@ -912,9 +912,9 @@ Transforming unstructured technical standards into verifiable mathematical invar
   *“Across massive cyber-physical platforms, EARS requirements partition across multiple architectural tiers: System-level EARS, Subsystem EARS, and Software EARS. Frequently, a subsystem safety requirement aligns impeccably with local EARS patterns, yet directly conflicts with a top-level system availability requirement. How can your syntactic linter and formal translation engine detect and reconcile such vertical hierarchical collisions without requiring constant human intervention from systems architects?”*
 
 - **Mykola Fedchyk:**  
-  *“Mr. Mavin, we resolve this through deterministic lexicographical ranking $`\mathrm{Rank}(\mathcal{R})`$ and automated extraction of Minimal Unsatisfiable Cores (MUC) within Z3.  
+  *“Mr. Mavin, we resolve this through deterministic lexicographical ranking $\mathrm{Rank}(\mathcal{R})$ and automated extraction of Minimal Unsatisfiable Cores (MUC) within Z3.  
   Safety requirements of paramount integrity (ASIL D / DO-178C Level A) strictly dominate operational convenience or energy optimization goals.  
-  When our pipeline compiles the multi-tier conjunction into an SMT-LIB formula and the solver emits `unsat`, the system does not simply fail: it extracts the exact conflicting span grounding tuple $`\mathcal{G}`$ across both specification tiers and constructs an automated Counter-Example Trace: 'Safety requirement SYS-REQ-104 mandates actuator cutoff within $15\,\text{ms}$, whereas operational requirement SW-REQ-210 requires a $40\,\text{ms}$ diagnostic settling period'. This provides architects with an exact mathematical diagnosis rather than weeks of cross-departmental friction.”*
+  When our pipeline compiles the multi-tier conjunction into an SMT-LIB formula and the solver emits `unsat`, the system does not simply fail: it extracts the exact conflicting span grounding tuple $\mathcal{G}$ across both specification tiers and constructs an automated Counter-Example Trace: 'Safety requirement SYS-REQ-104 mandates actuator cutoff within $15\,\text{ms}$, whereas operational requirement SW-REQ-210 requires a $40\,\text{ms}$ diagnostic settling period'. This provides architects with an exact mathematical diagnosis rather than weeks of cross-departmental friction.”*
 
 **Dialogue with Pamela Zave: Formalization in SMT Predicates and Completeness of the Four-Variable Domain Model**
 
@@ -942,9 +942,9 @@ Deterministic detection and formalization of normative requirements establishes 
 ## Conclusions
 
 1. **Demarcation Criteria and Modality Conventions:** Candidate normative requirements are identified based on document drafting conventions and structural context (RFC 2119, ISO/IEC Directives), parsed into strongly typed intermediate representations, audited, and only then compiled. Unknown fields and ambiguous temporal scopes halt compilation rather than being filled with speculative defaults.
-2. **Semantic Linting and Deontic Ordering:** The semantic ambiguity linter prunes toxic vague descriptors by enforcing physical SI tolerances, while lexicographical preference ordering $`\mathrm{Rank}(\mathcal{R})`$ deterministically resolves normative collisions in favor of higher-tier sources and imperative prohibitions and obligations ($`\text{PROHIBITION} \succ \text{PERMISSION}`$).
+2. **Semantic Linting and Deontic Ordering:** The semantic ambiguity linter prunes toxic vague descriptors by enforcing physical SI tolerances, while lexicographical preference ordering $\mathrm{Rank}(\mathcal{R})$ deterministically resolves normative collisions in favor of higher-tier sources and imperative prohibitions and obligations ($\text{PROHIBITION} \succ \text{PERMISSION}$).
 3. **Indivisibility of Modal Quantifiers and Span Protection:** The use of composite deontic atoms (`MUST NOT`) and the span-preserving `GroundedToken` tokenizer eliminates polarity inversion vulnerabilities caused by line breaks and ensures byte-exact SHA-256 provenance custody of source texts, while Unicode-aware UTF-8 boundary analysis eliminates blind spots on punctuation boundaries.
-4. **Neuro-Symbolic Validity Barrier (GBNF):** Grammar-constrained decoding grounded in a closed lexicon $`\mathcal{V}_{\mathrm{valid}}`$ and EARS grammar strictly isolates the heuristic relevance zone from the proof-carrying validity zone, pruning unauthorized logit transitions to $-\infty$ and producing direct counterfactual explanations via proof-graph traversal without generative hallucinations.
+4. **Neuro-Symbolic Validity Barrier (GBNF):** Grammar-constrained decoding grounded in a closed lexicon $\mathcal{V}_{\mathrm{valid}}$ and EARS grammar strictly isolates the heuristic relevance zone from the proof-carrying validity zone, pruning unauthorized logit transitions to $-\infty$ and producing direct counterfactual explanations via proof-graph traversal without generative hallucinations.
 5. **Formalization Alignment with SMT Solvers:** Mapping structured EARS requirements into first-order logic, LTL, and SMT-LIB enables automated detection of latent contradictions, deadlocks, and missing fallback branches via the Z3 solver prior to committing any implementation code.
 6. **Practical Verifiability of the Pipeline:** A deterministic pipeline in Go delivers rigorous end-to-end requirement audits, verifying trigger retention, safety invariants, and generating certifiable audit trails directly traced to source byte offsets.
 
@@ -959,7 +959,7 @@ Deterministic detection and formalization of normative requirements establishes 
 5. Why does a requirement lacking an alternative conditional branch present severe risks for relay-actuated control loops, and how does engineering hysteresis remediate this hazard?
 6. How does the semantic ambiguity linter block vague qualitative adjectives, and how does lexicographical preference ordering resolve collisions between norms of divergent authority tiers?
 7. Why can a newline character between `MUST` and `NOT` cause a catastrophic requirement polarity inversion in ASIL D safety-critical systems, and how do `GroundedToken` data structures guarantee cryptographic evidence custody?
-8. How do GBNF grammar-constrained decoding and the closed lexicon $`\mathcal{V}_{\mathrm{valid}}`$ establish an impermeable barrier between the heuristic relevance zone and the symbolic validity zone?
+8. How do GBNF grammar-constrained decoding and the closed lexicon $\mathcal{V}_{\mathrm{valid}}$ establish an impermeable barrier between the heuristic relevance zone and the symbolic validity zone?
 
 ---
 

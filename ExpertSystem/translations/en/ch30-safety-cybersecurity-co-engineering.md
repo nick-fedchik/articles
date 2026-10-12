@@ -16,7 +16,7 @@ Consider an autonomous logistics hauler or an unmanned vehicle on a highway. A c
 
 Functional safety and cybersecurity address distinct classes of hazards and threats, yet they apply protective measures to the very same physical controllers, communication buses, and timing budgets. ISO/SAE 21434 establishes the automotive cybersecurity engineering context [[1]](#src-1), whereas the ISO 26262 series defines the functional safety lifecycle [[2]](#src-2). A safe system state is always contingent on situational context, operational mode, and the specific item architecture; it can never be reduced to blindly cutting power or ignoring anomalies.
 
-In the context of evidence-grounded expert systems, the co-engineering of functional safety and cybersecurity is not merely a detached reference topic in systems engineering, but a foundational pillar of knowledge base verification: it is the expert system that provides formal discovery of mutually exclusive or hazardous rules before they reach the execution pipeline. The central question of this chapter is: **how does an expert system uncover latent conflicts between functional safety and cybersecurity requirements at the design stage without supplanting domain analysis or engineering responsibility?** This chapter presents explicit requirement linkages, metric evaluation of TARA attack feasibility ($`F_{\mathrm{attack}}`$) linked to GSN certification goals, a tri-tier defense against autonomous agent sandbox escapes via eBPF LSM and hardware interlocks, pedagogical timing and traceability verification checks, signed evidence records, and software tool qualification. The warehouse controller update case study is synthetic: it serves to illustrate the method rather than claim the applicability of automotive standards to warehouse equipment. The expert system prepares material for technical assessment; it does not issue product certification.
+In the context of evidence-grounded expert systems, the co-engineering of functional safety and cybersecurity is not merely a detached reference topic in systems engineering, but a foundational pillar of knowledge base verification: it is the expert system that provides formal discovery of mutually exclusive or hazardous rules before they reach the execution pipeline. The central question of this chapter is: **how does an expert system uncover latent conflicts between functional safety and cybersecurity requirements at the design stage without supplanting domain analysis or engineering responsibility?** This chapter presents explicit requirement linkages, metric evaluation of TARA attack feasibility ($F_{\mathrm{attack}}$) linked to GSN certification goals, a tri-tier defense against autonomous agent sandbox escapes via eBPF LSM and hardware interlocks, pedagogical timing and traceability verification checks, signed evidence records, and software tool qualification. The warehouse controller update case study is synthetic: it serves to illustrate the method rather than claim the applicability of automotive standards to warehouse equipment. The expert system prepares material for technical assessment; it does not issue product certification.
 
 ---
 
@@ -83,9 +83,9 @@ T_{\mathrm{escape\_detect}} + T_{\mathrm{interlock\_trip}} \le T_{\mathrm{hazard
 ```
 
 where:
-- $`T_{\mathrm{escape\_detect}}`$ is the worst-case detection time of an anomalous system call or memory modification by the eBPF LSM module, in microseconds ($\mu\text{s}$);
-- $`T_{\mathrm{interlock\_trip}}`$ is the physical opening time of the hardware contactor or FPGA safety trip, in milliseconds ($\text{ms}$);
-- $`T_{\mathrm{hazard\_onset}}`$ is the physical onset time of a hazardous condition from the moment an unauthorized command is dispatched (mechanical FTTI of the actuator), in milliseconds ($\text{ms}$).
+- $T_{\mathrm{escape\_detect}}$ is the worst-case detection time of an anomalous system call or memory modification by the eBPF LSM module, in microseconds ($\mu\text{s}$);
+- $T_{\mathrm{interlock\_trip}}$ is the physical opening time of the hardware contactor or FPGA safety trip, in milliseconds ($\text{ms}$);
+- $T_{\mathrm{hazard\_onset}}$ is the physical onset time of a hazardous condition from the moment an unauthorized command is dispatched (mechanical FTTI of the actuator), in milliseconds ($\text{ms}$).
 
 #### 1.2.1. Actionable Closed Loop of Hardware Interlock Dimensioning
 
@@ -94,17 +94,17 @@ where:
    - The hardware interlock signaling line drops to logic low (Fail-Closed, `disp_refuse = 1`), de-energizing the main actuator contactor coil at the physical layer;
    - The expert system engine revokes all active session certificates and blocks the communication channel pending a physical safety audit by a human operator.
 2. **Hardware Dimensioning and Infrastructure Constraints:**
-   - The eBPF LSM filter must complete its Ring-0 privilege map verification within $`T_{\mathrm{escape\_detect}} \le 1.5\,\mu\text{s}`$ to prevent operational runtime latency degradation;
-   - The hardware safety relay (e.g., Siemens SIRIUS 3SK or integrated FPGA EPU trigger) is selected with a guaranteed trip time of $`T_{\mathrm{interlock\_trip}} \le 5.0\,\text{ms}`$;
-   - The maximum execution budget for Z3 SMT formal verification is constrained by a hard watchdog timer: $`T_{\mathrm{SMT\_timeout}} \le 50\,\text{ms}`$.
+   - The eBPF LSM filter must complete its Ring-0 privilege map verification within $T_{\mathrm{escape\_detect}} \le 1.5\,\mu\text{s}$ to prevent operational runtime latency degradation;
+   - The hardware safety relay (e.g., Siemens SIRIUS 3SK or integrated FPGA EPU trigger) is selected with a guaranteed trip time of $T_{\mathrm{interlock\_trip}} \le 5.0\,\text{ms}$;
+   - The maximum execution budget for Z3 SMT formal verification is constrained by a hard watchdog timer: $T_{\mathrm{SMT\_timeout}} \le 50\,\text{ms}$.
 3. **Worked Numerical Example:**
-   In an autonomous robotic workcell, an industrial manipulator transfers a $45\,\text{kg}$ payload at velocity $v = 1.8\,\text{m/s}$. The minimum standoff distance to the operator optical safety curtain is $`d_{\mathrm{margin}} = 0.15\,\text{m}`$, yielding a hazard onset time budget:
-   $`T_{\mathrm{hazard\_onset}} = \frac{0.15\,\text{m}}{1.8\,\text{m/s}} \approx 83.3\,\text{ms}`$.
+   In an autonomous robotic workcell, an industrial manipulator transfers a $45\,\text{kg}$ payload at velocity $v = 1.8\,\text{m/s}$. The minimum standoff distance to the operator optical safety curtain is $d_{\mathrm{margin}} = 0.15\,\text{m}$, yielding a hazard onset time budget:
+   $T_{\mathrm{hazard\_onset}} = \frac{0.15\,\text{m}}{1.8\,\text{m/s}} \approx 83.3\,\text{ms}$.
    An autonomous agent driven by a multimodal model generates an out-of-boundary trajectory and attempts to override safety boundaries via a local daemon vulnerability by calling `unshare(CLONE_NEWNS)`.
-   - The eBPF LSM interception and reset signal latency: $`T_{\mathrm{escape\_detect}} = 1.2\,\mu\text{s} \approx 0.0012\,\text{ms}`$;
-   - Hardware safety trigger actuation time: $`T_{\mathrm{interlock\_trip}} = 4.2\,\text{ms}`$.
+   - The eBPF LSM interception and reset signal latency: $T_{\mathrm{escape\_detect}} = 1.2\,\mu\text{s} \approx 0.0012\,\text{ms}$;
+   - Hardware safety trigger actuation time: $T_{\mathrm{interlock\_trip}} = 4.2\,\text{ms}$.
    Total cutoff latency:
-   $`0.0012\,\text{ms} + 4.2\,\text{ms} = 4.2012\,\text{ms} \ll 83.3\,\text{ms}`$.
+   $0.0012\,\text{ms} + 4.2\,\text{ms} = 4.2012\,\text{ms} \ll 83.3\,\text{ms}$.
    **Verdict:** The expert system eliminates the hazard of operator injury at the hardware level long before the manipulator reaches the critical boundary, completely neutralizing the agent's software exploit.
 
 ```mermaid
@@ -214,17 +214,17 @@ The formula is applicable strictly to a non-empty, validated set of hazards with
 
 Notation for the impact evaluation scale:
 
-- $`\text{SafetyImpact}_{\text{TARA}}(\text{Threat})`$ represents the derived threat impact category according to the pedagogical policy;
+- $\text{SafetyImpact}_{\text{TARA}}(\text{Threat})$ represents the derived threat impact category according to the pedagogical policy;
 - $\text{Threat}$ denotes the analyzed cyberattack vector;
-- $`\text{ImpactedHazards}(\text{Threat})`$ is the set of physical hazards triggered by this attack vector;
+- $\text{ImpactedHazards}(\text{Threat})$ is the set of physical hazards triggered by this attack vector;
 - $H$ denotes an individual hazard within the agreed set; all quantifiers in the formula are bound to this set;
 - $\text{Severity}(H)$ represents the severity classification of the hazard per ISO 26262;
-- $`S_3`$ corresponds to life-threatening injuries with survival uncertain, or fatal injuries;
-- $`S_2`$ corresponds to severe injuries and life-threatening injuries with survival probable;
-- $`S_1`$ corresponds to light to moderate injuries;
-- $`S_0`$ corresponds to no injuries.
+- $S_3$ corresponds to life-threatening injuries with survival uncertain, or fatal injuries;
+- $S_2$ corresponds to severe injuries and life-threatening injuries with survival probable;
+- $S_1$ corresponds to light to moderate injuries;
+- $S_0$ corresponds to no injuries.
 
-Under this pedagogical policy, if at least one confirmed hazard carries severity level $`S_3`$, the threat impact is assigned the rating $\text{Severe}$. However, establishing causality between a cyber threat and a physical hazard remains rigorous engineering work. An evaluation derived for one operational scenario cannot be mechanically extrapolated to another item or operating state.
+Under this pedagogical policy, if at least one confirmed hazard carries severity level $S_3$, the threat impact is assigned the rating $\text{Severe}$. However, establishing causality between a cyber threat and a physical hazard remains rigorous engineering work. An evaluation derived for one operational scenario cannot be mechanically extrapolated to another item or operating state.
 
 #### 2.1.1. Attack Feasibility Rating under ISO/SAE 21434
 
@@ -235,48 +235,48 @@ F_{\mathrm{attack}} = t_{\mathrm{elapsed}} + e_{\mathrm{expertise}} + k_{\mathrm
 ```
 
 where the metric factor values are calibrated by the standard's scale:
-- $`t_{\mathrm{elapsed}} \in [0, 19]`$: elapsed time spent preparing and mounting the attack ($< 1$ day = $0$, $1$ week = $1$, $1$ month = $4$, $6$ months = $10$, $> 6$ months = $19$);
-- $`e_{\mathrm{expertise}} \in [0, 8]`$: attacker expertise level (Layman = $0$, Proficient = $3$, Expert = $6$, Multiple Experts = $8$);
-- $`k_{\mathrm{knowledge}} \in [0, 7]`$: knowledge of the target item/system (Public = $0$, Restricted = $3$, Confidential/Proprietary = $7$);
-- $`w_{\mathrm{window}} \in [0, 10]`$: window of opportunity and interface access (Unlimited/Remote = $0$, Easy/OBD-II = $1$, Moderate/Internal CAN = $4$, Difficult/Encrypted Enclave = $10$);
-- $`q_{\mathrm{equipment}} \in [0, 9]`$: required hardware and software equipment (Standard = $0$, Specialized/SDR = $4$, Bespoke/IC-probing = $9$).
+- $t_{\mathrm{elapsed}} \in [0, 19]$: elapsed time spent preparing and mounting the attack ($< 1$ day = $0$, $1$ week = $1$, $1$ month = $4$, $6$ months = $10$, $> 6$ months = $19$);
+- $e_{\mathrm{expertise}} \in [0, 8]$: attacker expertise level (Layman = $0$, Proficient = $3$, Expert = $6$, Multiple Experts = $8$);
+- $k_{\mathrm{knowledge}} \in [0, 7]$: knowledge of the target item/system (Public = $0$, Restricted = $3$, Confidential/Proprietary = $7$);
+- $w_{\mathrm{window}} \in [0, 10]$: window of opportunity and interface access (Unlimited/Remote = $0$, Easy/OBD-II = $1$, Moderate/Internal CAN = $4$, Difficult/Encrypted Enclave = $10$);
+- $q_{\mathrm{equipment}} \in [0, 9]$: required hardware and software equipment (Standard = $0$, Specialized/SDR = $4$, Bespoke/IC-probing = $9$).
 
-The numerical sum of points $`F_{\mathrm{attack}}`$ deterministically maps into a feasibility category:
-- **High:** $`F_{\mathrm{attack}} \le 13`$;
-- **Medium:** $`14 \le F_{\mathrm{attack}} \le 19`$;
-- **Low:** $`20 \le F_{\mathrm{attack}} \le 24`$;
-- **Very Low:** $`F_{\mathrm{attack}} \ge 25`$.
+The numerical sum of points $F_{\mathrm{attack}}$ deterministically maps into a feasibility category:
+- **High:** $F_{\mathrm{attack}} \le 13$;
+- **Medium:** $14 \le F_{\mathrm{attack}} \le 19$;
+- **Low:** $20 \le F_{\mathrm{attack}} \le 24$;
+- **Very Low:** $F_{\mathrm{attack}} \ge 25$.
 
 #### 2.1.2. Synthesis of Security-Informed Safety Cases in GSN Notation
 
-In safety-security co-engineering, the functional safety of an item is no longer formulated exclusively via random hardware failure rates $`\lambda_{\mathrm{fail}}`$. In Goal Structuring Notation (GSN, see [Chapter 27](ch27-safety-case-gsn-synthesis.md)), each safety goal $`G_{\mathrm{safe}}`$ is formally bound to cybersecurity countermeasures:
+In safety-security co-engineering, the functional safety of an item is no longer formulated exclusively via random hardware failure rates $\lambda_{\mathrm{fail}}$. In Goal Structuring Notation (GSN, see [Chapter 27](ch27-safety-case-gsn-synthesis.md)), each safety goal $G_{\mathrm{safe}}$ is formally bound to cybersecurity countermeasures:
 
 ```math
 \mathrm{Status}(G_{\mathrm{safe}}) = \mathrm{Status}(\mathrm{SafetyClaim}) \land \left( F_{\mathrm{attack}} \ge 20 \lor \mathrm{Mitigation}(A) = \text{Verified} \right)
 ```
 
-- If an attack on a sensor channel is feasible ($`F_{\mathrm{attack}} < 20`$, High or Medium feasibility), the safety goal $`G_{\mathrm{safe}}`$ **cannot be considered closed** unless a cryptographic mitigation is implemented and formally proven to hold: $`\mathrm{Mitigation}(A) = \text{Verified}`$ (e.g., Ed25519 hardware frame signing or monotonic counter freshness checks to prevent Replay Attacks);
+- If an attack on a sensor channel is feasible ($F_{\mathrm{attack}} < 20$, High or Medium feasibility), the safety goal $G_{\mathrm{safe}}$ **cannot be considered closed** unless a cryptographic mitigation is implemented and formally proven to hold: $\mathrm{Mitigation}(A) = \text{Verified}$ (e.g., Ed25519 hardware frame signing or monotonic counter freshness checks to prevent Replay Attacks);
 - This eliminates the scenario where an automated driving system holds a formal ASIL D certificate for random physical failures, yet risks loss of control via injection of unauthenticated spoofed frames on the sensor bus.
 
 #### 2.1.3. Actionable Closed Loop of TARA Arbitration
 
 1. **Control Flow and Runtime Decisions:**
-   - The expert system evaluates the vector $`F_{\mathrm{attack}}`$ for each sensor interface (CAN FD, isoUART, Ethernet);
-   - If the calculated score is $`F_{\mathrm{attack}} \le 19`$ (High or Medium), the system strictly enforces `CRYPTO_STRICT_AUTH` across the communication stack, mandating hardware verification of HMAC-SHA256 or Ed25519 signatures on every incoming telemetry frame;
+   - The expert system evaluates the vector $F_{\mathrm{attack}}$ for each sensor interface (CAN FD, isoUART, Ethernet);
+   - If the calculated score is $F_{\mathrm{attack}} \le 19$ (High or Medium), the system strictly enforces `CRYPTO_STRICT_AUTH` across the communication stack, mandating hardware verification of HMAC-SHA256 or Ed25519 signatures on every incoming telemetry frame;
    - If cryptographic authentication fails within the allotted timing deadline, the frame is flagged with `SPOOFING_DETECTED` and discarded; the Kalman filter then relies on predictive state extrapolation without updates from the compromised channel.
 2. **Hardware Dimensioning and Infrastructure Constraints:**
-   - Asymmetric Ed25519 signature verification on automotive safety microcontroller cores (Infineon AURIX TC397 at $`300\,\text{MHz}`$) consumes $`t_{\mathrm{verify}} \approx 180\,\mu\text{s}`$, which represents less than $`1\%`$ of a typical functional safety budget of $`\mathrm{FTTI} = 50\,\text{ms}`$;
+   - Asymmetric Ed25519 signature verification on automotive safety microcontroller cores (Infineon AURIX TC397 at $300\,\text{MHz}$) consumes $t_{\mathrm{verify}} \approx 180\,\mu\text{s}$, which represents less than $1\%$ of a typical functional safety budget of $\mathrm{FTTI} = 50\,\text{ms}$;
    - The Hardware Security Module (HSM / TPM) must sustain a throughput of at least $2500$ signature verifications per second to prevent message queue starvation (DoS attack on the communication stack).
 3. **Worked Numerical Example:**
    A TARA evaluation is conducted on the isoUART sensor bus of an electric vehicle's high-voltage traction battery pack. An adversary attempts to spoof cell voltage telemetry to induce thermal runaway or trigger an untimely contactor opening:
-   - Attack preparation time: $`t_{\mathrm{elapsed}} = 1`$ (under one week in a lab);
-   - Attacker expertise: $`e_{\mathrm{expertise}} = 3`$ (proficient engineer);
-   - Knowledge of the system: $`k_{\mathrm{knowledge}} = 3`$ (restricted supplier schematics and register maps);
-   - Interface access: $`w_{\mathrm{window}} = 1`$ (access via under-hood service diagnostics port);
-   - Equipment required: $`q_{\mathrm{equipment}} = 1`$ (standard CAN/UART logger and oscilloscope).
+   - Attack preparation time: $t_{\mathrm{elapsed}} = 1$ (under one week in a lab);
+   - Attacker expertise: $e_{\mathrm{expertise}} = 3$ (proficient engineer);
+   - Knowledge of the system: $k_{\mathrm{knowledge}} = 3$ (restricted supplier schematics and register maps);
+   - Interface access: $w_{\mathrm{window}} = 1$ (access via under-hood service diagnostics port);
+   - Equipment required: $q_{\mathrm{equipment}} = 1$ (standard CAN/UART logger and oscilloscope).
    Calculating the attack feasibility score:
-   $`F_{\mathrm{attack}} = 1 + 3 + 3 + 1 + 1 = 9 \le 13 \implies \text{High}`$.
-   **Verdict:** The attack feasibility is rated as $\text{High}$. A standard CRC32 checksum is inadequate to satisfy safety goal $`G_{\mathrm{safe}}`$ under ISO 26262 ASIL D. The expert system synthesizes a mandatory normative requirement: integrate hardware-enforced frame authentication via a crypto-companion IC with asymmetric signatures and anti-replay counters. Only when a formal verification artifact proving this countermeasure is present will the system issue certification clearance.
+   $F_{\mathrm{attack}} = 1 + 3 + 3 + 1 + 1 = 9 \le 13 \implies \text{High}$.
+   **Verdict:** The attack feasibility is rated as $\text{High}$. A standard CRC32 checksum is inadequate to satisfy safety goal $G_{\mathrm{safe}}$ under ISO 26262 ASIL D. The expert system synthesizes a mandatory normative requirement: integrate hardware-enforced frame authentication via a crypto-companion IC with asymmetric signatures and anti-replay counters. Only when a formal verification artifact proving this countermeasure is present will the system issue certification clearance.
 
 ### 2.2. Co-Engineering Timing Budget: FTTI vs. ARTI
 
@@ -334,7 +334,7 @@ Automating architectural decisions based solely on a pair of classification leve
 
 In this joint risk model:
 
-- $`\mathcal{R}_{\text{co-eng}}`$ represents the selection of additional verification and mitigation measures prescribed by project policy, rather than a scalar failure probability;
+- $\mathcal{R}_{\text{co-eng}}$ represents the selection of additional verification and mitigation measures prescribed by project policy, rather than a scalar failure probability;
 - $\Psi$ is a mapping function translating the category tuple into defense and verification requirements;
 - $\text{ASIL}(H)$ denotes the Automotive Safety Integrity Level per ISO 26262 (ranging from QM to ASIL D);
 - $\text{CAL}(\text{Threat})$ denotes the Cybersecurity Assurance Level per ISO/SAE 21434 (ranging from CAL 1 to CAL 4).
@@ -434,8 +434,8 @@ A ReqIF file is a standardized XML document where each requirement is encapsulat
 
 The Automotive SPICE 4.0 process assessment model [[6]](#src-6) and the aerospace standard DO-178C have distinct operational domains; they are not equivalent standards. Automotive SPICE 4.0 mandates ensuring consistency and establishing bidirectional traceability, notably between software and system requirements (Base Practice SWE.1.BP5) and between verification measures and software requirements (SWE.6.BP4); verification results are separately traced to verification measures [[6]](#src-6). The formal invariants below represent a pedagogical verification profile for a subset of these links, rather than an exhaustive translation of the standard's base practices. Profile thresholds and permissible exceptions must be justified for the specific project rather than treated as universal certification mandates.
 
-**Invariant Governing Absence of Orphan Requirements ($`\mathcal{I}_{\text{no-orphan}}`$).**  
-Every software requirement $`r \in \text{Reqs}_{\text{SWE.1}}`$ must refine at least one upstream system requirement $`s \in \text{Reqs}_{\text{SYS.2}}`$:
+**Invariant Governing Absence of Orphan Requirements ($\mathcal{I}_{\text{no-orphan}}$).**  
+Every software requirement $r \in \text{Reqs}_{\text{SWE.1}}$ must refine at least one upstream system requirement $s \in \text{Reqs}_{\text{SYS.2}}$:
 
 ```math
 \forall r \in \text{Reqs}_{\text{SWE.1}} : \exists s \in \text{Reqs}_{\text{SYS.2}} \quad \text{Refines}(r, s).
@@ -444,13 +444,13 @@ Every software requirement $`r \in \text{Reqs}_{\text{SWE.1}}`$ must refine at l
 Traceability invariant notation:
 
 - $r$ denotes an individual software requirement at the SWE.1 level;
-- $`\text{Reqs}_{\text{SWE.1}}`$ is the complete set of subsystem software requirements;
+- $\text{Reqs}_{\text{SWE.1}}$ is the complete set of subsystem software requirements;
 - $s$ denotes a system requirement at the architectural SYS.2 level;
 - $\text{Refines}(r, s)$ represents the refinement and decomposition relationship from system requirement $s$ to detailed software requirement $r$.
 
 This invariant validates the presence of links among known requirements. It does not prove the absence of unintended functionality in source code. Derived requirements may follow an alternative agreed justification rationale; they should not be rejected simply due to the absence of a direct parent specification object.
 
-**Invariant Governing Test Coverage Completeness ($`\mathcal{I}_{\text{test-cov}}`$).**  
+**Invariant Governing Test Coverage Completeness ($\mathcal{I}_{\text{test-cov}}$).**  
 For every high-integrity requirement ($\text{ASIL} \ge B$ or $\text{CAL} \ge 3$), there must exist at least one approved verification test record exhibiting a passing status:
 
 ```math
@@ -461,7 +461,7 @@ Test coverage condition notation:
 
 - $r$ is a verifiable requirement at the SWE.1 level;
 - $\text{ASIL}(r)$ and $\text{CAL}(r)$ denote the safety and cybersecurity integrity levels assigned to the requirement;
-- $t$ is a verification test within the test suite $`\text{Tests}_{\text{SWE.6}}`$;
+- $t$ is a verification test within the test suite $\text{Tests}_{\text{SWE.6}}$;
 - $\text{Verifies}(t, r)$ establishes the verification mapping from test $t$ to requirement $r$;
 - $\text{Status}(t) = \text{Passed}$ confirms successful test execution on the target test bench.
 
@@ -477,7 +477,7 @@ The Modified Condition/Decision Coverage (MC/DC) criterion demonstrates that eac
 where:
 
 - $M$ denotes a source code module implementing ASIL D safety functions;
-- $`\text{Coverage}_{\text{MC/DC}}(M)`$ is the proportion of conditions for which independent outcome influence has been demonstrated, bounded between 0 and 1.0;
+- $\text{Coverage}_{\text{MC/DC}}(M)$ is the proportion of conditions for which independent outcome influence has been demonstrated, bounded between 0 and 1.0;
 - A value of 1.0 (100%) signifies that independent effect has been verified for every condition within every decision across the module.
 
 For an expression such as `if (crc_ok && auth_valid && !timeout)`, each of the three Boolean conditions requires a test pair in which the evaluated condition toggles, causing the overall decision outcome to flip. Under Unique-Cause MC/DC, all other conditions in the test pair must remain strictly identical; Masking MC/DC permits other conditions to vary provided their effects are logically masked. The chosen coverage variant and justifications for any unachieved conditions must be documented in the verification plan.
@@ -1069,7 +1069,7 @@ The foundational authority in security engineering and pioneer of safety-securit
 
 - **John Rushby:** In our formulation of Assurance 2.0, an assurance case is valid only to the extent that it explicitly anticipates, formalizes, and evaluates *defeaters*—plausible real-world conditions under which a safety claim fails. SMT solvers are peerless within the closed world of first-order theories and predefined axioms. However, emergent cyber-physical attack vectors and systemic failures inevitably exploit the ontological gap between your closed mathematical model and the open socio-technical reality. How can your automated GSN synthesis accommodate defeaters that were never conceived or axiomatized in your SMT theories?
 
-- **Mykola Fedchyk:** Professor Rushby, your Assurance 2.0 paradigm serves as the exact epistemic foundation for our dynamic GSN argumentation synthesis. We never treat an SMT solver as an omniscient closed-world oracle. The SMT solver strictly guarantees closed-world consistency and timing invariants ($`\mathrm{FHTI} \le \mathrm{FTTI}`$) across codified ISO 26262 and TARA constraints. Concurrently, our engineering knowledge graph maintains an active link to the open world: it dynamically binds external CVE threat feeds, TARA intelligence updates, and eBPF LSM runtime telemetry directly to GSN *Defeater* nodes that actively challenge established safety claims. When a novel defeater emerges—such as an ExploitGym sandbox escape or a zero-day advisory—the argumentation engine automatically invalidates the affected safety branch, transitions the platform into a fail-closed Degraded Operational State, and alerts human safety managers. We unite closed formal deductive proofs with an open-world Popperian falsification loop.
+- **Mykola Fedchyk:** Professor Rushby, your Assurance 2.0 paradigm serves as the exact epistemic foundation for our dynamic GSN argumentation synthesis. We never treat an SMT solver as an omniscient closed-world oracle. The SMT solver strictly guarantees closed-world consistency and timing invariants ($\mathrm{FHTI} \le \mathrm{FTTI}$) across codified ISO 26262 and TARA constraints. Concurrently, our engineering knowledge graph maintains an active link to the open world: it dynamically binds external CVE threat feeds, TARA intelligence updates, and eBPF LSM runtime telemetry directly to GSN *Defeater* nodes that actively challenge established safety claims. When a novel defeater emerges—such as an ExploitGym sandbox escape or a zero-day advisory—the argumentation engine automatically invalidates the affected safety branch, transitions the platform into a fail-closed Degraded Operational State, and alerts human safety managers. We unite closed formal deductive proofs with an open-world Popperian falsification loop.
 
 **Synthesis:** Safety and security co-engineering reconciles the false choice between runtime isolation and blind specification trust: the mathematical rigor of SMT solvers guarantees internal consistency of regulatory invariants and timing budgets, cryptographic consortium protocols neutralize supply chain economic distortions, and continuous defeater monitoring in Assurance 2.0 / GSN exposes safety arguments to ongoing empirical falsification against evolving open-world cyber threats.
 
@@ -1094,7 +1094,7 @@ A signed evidence record does not constitute product certification, nor does an 
 9. What automated verification checks can be performed over paired CycloneDX and OpenVEX artifacts, and why does a `not_affected` status remain a vendor assertion rather than an established mathematical fact?
 10. How does the co-engineering timing budget in Section 2.2 correspond to the categories of unsafe control actions in STPA-Sec?
 11. Why are purely software-based filters and system prompts incapable of preventing autonomous agent sandbox escapes (as evidenced by the ExploitGym benchmark), and what role is played by the triad of eBPF LSM, Z3 SMT solver, and physical hardware interlocks?
-12. How does the attack feasibility rating scale $`F_{\mathrm{attack}}`$ defined in ISO/SAE 21434 integrate into Goal Structuring Notation (GSN), and why can an ASIL D safety goal not be deemed closed when $`F_{\mathrm{attack}} \le 19`$ without verified cryptographic mitigations?
+12. How does the attack feasibility rating scale $F_{\mathrm{attack}}$ defined in ISO/SAE 21434 integrate into Goal Structuring Notation (GSN), and why can an ASIL D safety goal not be deemed closed when $F_{\mathrm{attack}} \le 19$ without verified cryptographic mitigations?
 
 ---
 

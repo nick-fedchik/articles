@@ -147,7 +147,7 @@ Aufschlüsselung der formalen Variablen:
 - $\cup$ bezeichnet die Mengenvereinigung, und die geschweiften Klammern definieren die neu generierten Fakten;
 - $H$ ist der Regelkopf, $B_1,\dots,B_k$ sind die Rumpfbedingungen, und $\in$ symbolisiert die Mengenzugehörigkeit;
 - $\mid$ wird als „für die gilt“ gelesen, und $\subseteq$ bezeichnet die Teilmengenrelation;
-- Die Bedingung $`\{B_1,\dots,B_k\}\subseteq I`$ stellt sicher, dass sämtliche Prämissen der Regel bereits in der Faktenmenge $I$ enthalten sind.
+- Die Bedingung $\{B_1,\dots,B_k\}\subseteq I$ stellt sicher, dass sämtliche Prämissen der Regel bereits in der Faktenmenge $I$ enthalten sind.
 
 Der Operator $T_P$ ist monoton und zieht niemals bereits etablierte Fakten zurück: Jeder Inferenzschritt fügt neue Fakten hinzu oder belässt die Menge unverändert. Die Inferenz startet mit der initialen Menge verifizierter Fakten $F$ und wendet den Operator iterativ an:
 
@@ -164,7 +164,7 @@ Bedeutung der Parameter:
 
 Da Datalog keine Funktionssymbole enthält, bleibt die Menge aller bildbaren atomaren Fakten endlich. Folglich existiert stets ein endlicher Schritt $n$, an dem $I_{n+1}=I_n$ gilt. Die Menge $I_n$ bildet den kleinsten Fixpunkt (*Least Fixed Point*, LFP): Keine Regel des Programms vermag diese Menge weiter zu vergrößern. Maarten van Emden und Robert Kowalski bewiesen, dass dieser Fixpunkt die exakte modelltheoretische Semantik des Logikprogramms konstituiert [[4]](#src-4). Das Ergebnis ist vollständig unabhängig von der Auswertungsreihenfolge der Regeln, was absolute Reproduzierbarkeit garantiert.
 
-Praktische Wissensbasen erfordern häufig Negation: „Anforderung wurde nicht verifiziert“. Unbeschränkte Negation führt jedoch bei zirkulären Abhängigkeiten wie $`P\leftarrow\mathrm{not}\,P`$ zu semantischen Paradoxien ohne stabilen Wahrheitswert. Das Konzept der stratifizierten Negation (*stratified negation*) nach Krzysztof Apt, Howard Blair und Adrian Walker unterteilt das Programm in Schichten (Strata): Eine Regel darf Fakten mittels Negation nur dann referenzieren, wenn diese auf einer strikt niedrigeren Schicht vollständig ausintegriert und fixiert wurden [[5]](#src-5). Zunächst wird der Fixpunkt von Stratum 1 berechnet; auf dessen unveränderlicher Faktenbasis wird anschließend der Fixpunkt von Stratum 2 evaluiert. Das folgende Go-Programm führt diese Schichtenberechnung für die beiden Anforderungen aus dem Eingangsszenario durch.
+Praktische Wissensbasen erfordern häufig Negation: „Anforderung wurde nicht verifiziert“. Unbeschränkte Negation führt jedoch bei zirkulären Abhängigkeiten wie $P\leftarrow\mathrm{not}\,P$ zu semantischen Paradoxien ohne stabilen Wahrheitswert. Das Konzept der stratifizierten Negation (*stratified negation*) nach Krzysztof Apt, Howard Blair und Adrian Walker unterteilt das Programm in Schichten (Strata): Eine Regel darf Fakten mittels Negation nur dann referenzieren, wenn diese auf einer strikt niedrigeren Schicht vollständig ausintegriert und fixiert wurden [[5]](#src-5). Zunächst wird der Fixpunkt von Stratum 1 berechnet; auf dessen unveränderlicher Faktenbasis wird anschließend der Fixpunkt von Stratum 2 evaluiert. Das folgende Go-Programm führt diese Schichtenberechnung für die beiden Anforderungen aus dem Eingangsszenario durch.
 
 <details>
 <summary>Beispiel in Go: Inferenz bis zum Fixpunkt mit stratifizierter Negation</summary>
@@ -287,11 +287,11 @@ v(A\land B)=\min\big(v(A),v(B)\big),\qquad v(A\lor B)=\max\big(v(A),v(B)\big),\q
 
 Notation:
 
-- $A$ und $B$ sind Aussagen, und $v(A)$ sowie $v(B)$ sind deren Wahrheitswerte aus der Menge $`\{0,\tfrac12,1\}`$;
+- $A$ und $B$ sind Aussagen, und $v(A)$ sowie $v(B)$ sind deren Wahrheitswerte aus der Menge $\{0,\tfrac12,1\}$;
 - $\land$ steht für das logische UND, $\lor$ für das logische ODER, und $\lnot$ bezeichnet die Negation;
 - $\min$ wählt das Minimum der Werte, $\max$ das Maximum, und $1-v(A)$ errechnet den negierten Wahrheitswert.
 
-Das Ergebnis jeder Operation liegt strikt in $`\{0,\tfrac12,1\}`$. Eine Konjunktion ist falsch, sobald mindestens ein Operand falsch ist; sie ist unbekannt, wenn kein Operand falsch, aber mindestens einer unbekannt ist. Eine Disjunktion ist wahr, sobald mindestens ein Operand wahr ist.
+Das Ergebnis jeder Operation liegt strikt in $\{0,\tfrac12,1\}$. Eine Konjunktion ist falsch, sobald mindestens ein Operand falsch ist; sie ist unbekannt, wenn kein Operand falsch, aber mindestens einer unbekannt ist. Eine Disjunktion ist wahr, sobald mindestens ein Operand wahr ist.
 
 ```math
 v(A\Rightarrow B)=\max\big(1-v(A),\,v(B)\big)
@@ -612,8 +612,8 @@ wobei $\mathbf{z}_A, \mathbf{z}_B \in \mathbb{R}^d$ dichte semantische Einbettun
 3. **Analogie-Sperrung (`Refusal`):** Ist $\mathrm{Sim}_{\text{metric}} < 0{,}65$, wird der Fall als irrelevant verworfen, was Fehlschlüsse durch unzulässige Analogien unterbindet.
 
 **Numerisches Berechnungsbeispiel:**
-Die Diagnose analysiert einen Spannungseinbruch an einem BMS-Controller anhand zweier Telemetrieparameter: Referenzspannungsabweichung $V_{\mathrm{ref}}$ ($w_1 = 0{,}6$, $\sigma_1 = 0{,}1\,\text{V}$) und Leistungsschaltertemperatur $T_{\mathrm{FET}}$ ($w_2 = 0{,}4$, $\sigma_2 = 5\,^\circ\text{C}$).
-Die Abweichungen zum Archivfall betragen: $\Delta V = 0{,}02\,\text{V}$, $\Delta T = 1{,}5\,^\circ\text{C}$.
+Die Diagnose analysiert einen Spannungseinbruch an einem BMS-Controller anhand zweier Telemetrieparameter: Referenzspannungsabweichung $V_{\mathrm{ref}}$ ($w_1 = 0{,}6$, $\sigma_1 = 0{,}1\,\text{V}$) und Leistungsschaltertemperatur $T_{\mathrm{FET}}$ ($w_2 = 0{,}4$, $\sigma_2 = 5^\circ\text{C}$).
+Die Abweichungen zum Archivfall betragen: $\Delta V = 0{,}02\,\text{V}$, $\Delta T = 1{,}5^\circ\text{C}$.
 
 ```math
 d_W = \sqrt{0{,}6 \cdot \left(\frac{0{,}02}{0{,}1}\right)^2 + 0{,}4 \cdot \left(\frac{1{,}5}{5}\right)^2} = \sqrt{0{,}6 \cdot 0{,}04 + 0{,}4 \cdot 0{,}09} = \sqrt{0{,}024 + 0{,}036} = \sqrt{0{,}060} \approx 0{,}245
@@ -1744,7 +1744,7 @@ Der mathematische Apparat kritischer Expertensysteme erfordert strikte Modularit
 
 - **Mykola Fedchyk:**  
   *„Herr Professor Geoffrey, exakt aus diesem Grund wird das Dempster-Paradoxon in Abschnitt 6.5 dieser Monografie nicht verschleiert, sondern als erstrangiges diagnostisches Alarmsignal behandelt!  
-  Wenn die Evidenz-Konfliktmasse gegen Eins strebt ($`k \to 1`$), verweigert das System kategorisch die blinde konjunktive Verknüpfung und die willkürliche weiche Interpolation.  
+  Wenn die Evidenz-Konfliktmasse gegen Eins strebt ($k \to 1$), verweigert das System kategorisch die blinde konjunktive Verknüpfung und die willkürliche weiche Interpolation.  
   In einem sicherheitskritischen cyber-physischen System führt die weiche Interpolation zwischen zwei unvereinbaren physikalischen Zuständen – etwa ‚Bremsdruck beträgt 0 bar‘ und ‚Bremsdruck beträgt 150 bar‘ – zu einer lebensgefährlichen Halluzination: der Annahme, der Druck liege bei 75 bar.  
   Unsere mathematische Architektur erzwingt eine deterministische Sicherheitsverzweigung: Bei hohem Konflikt aktiviert sie entweder den kausalen $do(\cdot)$-Operator von Judea Pearl zur aktiven Sondierung der Sensorik oder vollzieht eine typisierte Verweigerung `DISP_REFUSE` in den fehlersicheren Zustand (Fail-Closed). Wir übertünchen Sensorkonflikte nicht mit glatten Gewichten – wir machen epistemische Konflikte sichtbar, messbar und beherrschbar.“*
 

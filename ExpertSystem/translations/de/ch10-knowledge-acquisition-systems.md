@@ -126,28 +126,28 @@ Die Analyse industrieller Erfahrungen führender Technologieunternehmen (Alphabe
 ```
 
 ### 3.1. Die Illusion der Skalierung durch Brute-Force (Brute-Force Scaling Illusion)
-* **Wesen der Falle:** Die Annahme, dass eine massive Steigerung des Trainingsaufwands ($`10^{26} \to 10^{28}\,\text{FLOPs}`$) oder der Einsatz gigantischer Rechencluster mit Hunderttausenden von Beschleunigern faktische Halluzinationen automatisch eliminieren würde.
+* **Wesen der Falle:** Die Annahme, dass eine massive Steigerung des Trainingsaufwands ($10^{26} \to 10^{28}\,\text{FLOPs}$) oder der Einsatz gigantischer Rechencluster mit Hunderttausenden von Beschleunigern faktische Halluzinationen automatisch eliminieren würde.
 * **Warum dies eine Sackgasse ist:** Das Theorem von Adam Kalai und Santosh Vempala (STOC 2024, Nature 2026) beweist die mathematische Unvermeidbarkeit von Konfabulationen für jedes kalibrierte Sprachmodell unter Bedingungen unvollständiger Information in den Modellgewichten. Eine Vergrößerung der Netzwerkparameter (von 7B auf 405B) reduziert zwar triviale Fehler, macht die verbleibenden Halluzinationen in komplexen normativen Domänen jedoch **weitaus subtiler, vordergründig plausibler und damit extrem gefährlich für den menschlichen Entscheider**.
-* **Architekturlösung:** Eine Null-Halluzinations-Rate ($`\mathrm{ZHR} = 1{,}000000`$) wird nicht über die Modellgröße erzielt, sondern durch ein externes, isoliertes Zulassungsgateway, das die kryptographische Evidenzkustodie von Zitaten im kanonischen Quelltext verifiziert.
+* **Architekturlösung:** Eine Null-Halluzinations-Rate ($\mathrm{ZHR} = 1{,}000000$) wird nicht über die Modellgröße erzielt, sondern durch ein externes, isoliertes Zulassungsgateway, das die kryptographische Evidenzkustodie von Zitaten im kanonischen Quelltext verifiziert.
 
 ### 3.2. Grenzen von flachem Vektor-RAG (Flat Cosine Vector RAG)
 * **Wesen der Falle:** Der Wissensabruf stützt sich ausschließlich auf die Kosinus-Ähnlichkeit kontinuierlicher Vektoreinbettungen ganzer Sätze oder Absätze.
-* **Warum dies eine Sackgasse ist:** Kontinuierliche Vektorräume erfassen zwar thematische Verwandtschaft, sind jedoch **vollkommen blind gegenüber deontischen Modalitäten und logischer Polarität**. So weisen die Anforderungen *„Das System muss die Notbremse bei einem Busfehler aktivieren“* und *„Dem System ist es strikt untersagt, die Notbremse bei einem Busfehler zu aktivieren“* eine semantische Kosinus-Ähnlichkeit von $`\approx 0{,}95`$ auf. Ein flacher Vektor-Retriever liefert die diametral entgegengesetzte Norm als hochgradig „relevant“ zurück, was zu fatalen Steuerbefehlen im Aktor führen kann.
+* **Warum dies eine Sackgasse ist:** Kontinuierliche Vektorräume erfassen zwar thematische Verwandtschaft, sind jedoch **vollkommen blind gegenüber deontischen Modalitäten und logischer Polarität**. So weisen die Anforderungen *„Das System muss die Notbremse bei einem Busfehler aktivieren“* und *„Dem System ist es strikt untersagt, die Notbremse bei einem Busfehler zu aktivieren“* eine semantische Kosinus-Ähnlichkeit von $\approx 0{,}95$ auf. Ein flacher Vektor-Retriever liefert die diametral entgegengesetzte Norm als hochgradig „relevant“ zurück, was zu fatalen Steuerbefehlen im Aktor führen kann.
 * **Architekturlösung:** Verwendung strukturierter Syntaxrahmen, explizite Extraktion deontischer Operatoren (`MUST`, `MUST NOT`, `SHOULD`, `MAY`) und Indexierung anhand geschlossener Ontologie-Vokabulare.
 
 ### 3.3. Rekursive Verzerrungen der Selbstevaluierung (LLM-as-a-Judge Bias)
 * **Wesen der Falle:** Der Einsatz eines großen Sprachmodells (beispielsweise GPT-4 oder Claude) zur Bewertung der sachlichen Korrektheit der Ausgaben eines anderen Modells ohne Einbindung deterministischer Orakel.
 * **Warum dies eine Sackgasse ist:** Es entsteht der Effekt systemischer Schmeichelei (*Sycophancy*): Neuronale Netze tendieren dazu, erfundene Aussagen positiv zu bewerten, wenn diese in einem selbstbewussten, akademischen Tonfall formuliert sind. Rekursives Nachtraining anhand solcher Urteile führt zum *Modellkollaps* nach Shumailov et al. (Nature 2024), bei dem synthetische Fehler die statistische Verteilung der Wissensbasis lawinenartig verzerren.
-* **Architekturlösung:** Implementierung eines deterministischen popperschen Falsifikationszyklus: Ein Faktum wird erst dann akzeptiert, wenn die positive Aussage $`F^+`$ einen byteweisen Quellabgleich besteht und ein synthetisiertes Gegenbeispiel $`F^-`$ durch logische Invarianten deterministisch widerlegt wird.
+* **Architekturlösung:** Implementierung eines deterministischen popperschen Falsifikationszyklus: Ein Faktum wird erst dann akzeptiert, wenn die positive Aussage $F^+$ einen byteweisen Quellabgleich besteht und ein synthetisiertes Gegenbeispiel $F^-$ durch logische Invarianten deterministisch widerlegt wird.
 
 ### 3.4. Cloud-basierte Theorembeweiser im kritischen Regelkreis (Heavy Cloud Provers)
 * **Wesen der Falle:** Der Versuch, interaktive Theorembeweiser (Lean 4, Coq, Isabelle) direkt in den operativen Echtzeit-Steuerungszyklus eingebetteter Steuergeräte in der Automobil- oder Avionikindustrie zu integrieren.
-* **Warum dies eine Sackgasse ist:** Interaktive Beweiser wurden für die Grundlagenmathematik konzipiert, nicht für die harten Ressourcenbudgets von Echtzeitbetriebssystemen (RTOS). Die Taktiksuche erfordert Gigabytes an RAM und dauert Sekunden bis Minuten. Für sicherheitskritische Systeme nach ASIL D liegt das Latenzbudget für Reaktionen jedoch im Mikrosekundenbereich ($`< 100\,\mu\text{s}`$).
+* **Warum dies eine Sackgasse ist:** Interaktive Beweiser wurden für die Grundlagenmathematik konzipiert, nicht für die harten Ressourcenbudgets von Echtzeitbetriebssystemen (RTOS). Die Taktiksuche erfordert Gigabytes an RAM und dauert Sekunden bis Minuten. Für sicherheitskritische Systeme nach ASIL D liegt das Latenzbudget für Reaktionen jedoch im Mikrosekundenbereich ($< 100\,\mu\text{s}$).
 * **Architekturlösung:** Eine dedizierte virtuelle Maschine mit festem, deterministischem Mikrocode (EISA / Datalog), die in linearer Zeit mit null dynamischen Speicherallokationen ausgeführt oder direkt in FPGA-Hardware gegossen wird.
 
 ### 3.5. Semantic-Web-Overhead in eingebetteten Systemen (RDF/OWL Bloat)
 * **Wesen der Falle:** Die Speicherung ingenieurtechnischen Wissens in klassischen W3C-Triple-Stores (RDF-Tripel, OWL-Ontologien, SPARQL-Endpunkte).
-* **Warum dies eine Sackgasse ist:** Die textuelle Serialisierung langer URIs, die extreme Atomisierung von Daten in isolierte Subjekt-Prädikat-Objekt-Knoten und die kombinatorische Komplexität von $`O(N^3)`$ bei tiefen Mehrfachtabellen-JOINs führen zu exzessivem Speicherbedarf. Solche Strukturen können nicht direkt über den Systemaufruf `mmap` in den Speicher adressiert werden.
+* **Warum dies eine Sackgasse ist:** Die textuelle Serialisierung langer URIs, die extreme Atomisierung von Daten in isolierte Subjekt-Prädikat-Objekt-Knoten und die kombinatorische Komplexität von $O(N^3)$ bei tiefen Mehrfachtabellen-JOINs führen zu exzessivem Speicherbedarf. Solche Strukturen können nicht direkt über den Systemaufruf `mmap` in den Speicher adressiert werden.
 * **Architekturlösung:** Unveränderliche binäre Wissenscontainer (*Knowledge Packs*) mit 64-Byte-ausgerichteten Headern, CSR-Indizes (*Compressed Sparse Row*) und Deserialisierung ohne Laufzeit-Overhead ($0\ \text{B/op}$).
 
 ### 3.6. Reine Software-Leitplanken statt hardwarebasierter Invarianten (Soft Guardrails)
@@ -430,7 +430,7 @@ Ein neueres Modell ist kein Selbstzweck: Maßgeblich ist eine messbare Reduktion
 
 ### 10.1. Zweidimensionale räumliche Tabellenrekonstruktion in PDF für die Mikroelektronik
 
-Die zweidimensionale räumliche Rekonstruktion von Tabellenstrukturen in PDF-Dokumenten ist eine kritische Bastion zur Wahrung der Datenintegrität, da über $`80\,\%`$ der fundamentalen Parameter von Mikrocontrollern und Halbleiterbauelementen (Grenzbetriebsspannungen, Bus-Timing-Diagramme, Stromaufnahmen, Temperaturgrenzen) ausschließlich in Form komplexer Matrizen publiziert werden. Die sequentielle Extraktion flachen Textes aus dem PDF-Befehlsstrom zerstört unweigerlich das räumliche Dokumentengitter: Nicht-adaptive Parser zerreißen tief- und hochgestellte Indizes ($`V_{\mathrm{DD}}`$, $`T_j`$, $`I_{\mathrm{OL}}`$), fragmentieren mehrzeilige Beschreibungen in Tabellenzellen oder verlieren physikalische Maßeinheiten, was eine nachfolgende formale Verifikation verunmöglicht.
+Die zweidimensionale räumliche Rekonstruktion von Tabellenstrukturen in PDF-Dokumenten ist eine kritische Bastion zur Wahrung der Datenintegrität, da über $80\,\%$ der fundamentalen Parameter von Mikrocontrollern und Halbleiterbauelementen (Grenzbetriebsspannungen, Bus-Timing-Diagramme, Stromaufnahmen, Temperaturgrenzen) ausschließlich in Form komplexer Matrizen publiziert werden. Die sequentielle Extraktion flachen Textes aus dem PDF-Befehlsstrom zerstört unweigerlich das räumliche Dokumentengitter: Nicht-adaptive Parser zerreißen tief- und hochgestellte Indizes ($V_{\mathrm{DD}}$, $T_j$, $I_{\mathrm{OL}}$), fragmentieren mehrzeilige Beschreibungen in Tabellenzellen oder verlieren physikalische Maßeinheiten, was eine nachfolgende formale Verifikation verunmöglicht.
 
 Zur deterministischen Wiederherstellung der Tabellentopologie wird ein räumliches Modell der algorithmischen Geometrie auf Basis umschreibender Rechtecke (*Bounding Boxes*) eingesetzt:
 
@@ -440,24 +440,24 @@ Zur deterministischen Wiederherstellung der Tabellentopologie wird ein räumlich
 
 Parameter und Dimensionen der vertikalen Überlappung:
 
-- $`F_a, F_b`$ sind benachbarte Textfragmente innerhalb der Seite;
-- $`Y_{a1}, Y_{a2}`$ sowie $`Y_{b1}, Y_{b2}`$ bezeichnen die unteren und oberen vertikalen Koordinaten der Fragmentrechtecke (in typografischen Punkten, $\text{pt}$);
-- $`H_a = Y_{a2} - Y_{a1}`$ und $`H_b = Y_{b2} - Y_{b1}`$ bestimmen die Zeichenhöhe der jeweiligen Fragmente ($\text{pt}$);
-- $`\theta_{\mathrm{vertical}} = 0{,}50`$ ist der dimensionslose ingenieurtechnische Schwellenwert der Zeilenbindung.
+- $F_a, F_b$ sind benachbarte Textfragmente innerhalb der Seite;
+- $Y_{a1}, Y_{a2}$ sowie $Y_{b1}, Y_{b2}$ bezeichnen die unteren und oberen vertikalen Koordinaten der Fragmentrechtecke (in typografischen Punkten, $\text{pt}$);
+- $H_a = Y_{a2} - Y_{a1}$ und $H_b = Y_{b2} - Y_{b1}$ bestimmen die Zeichenhöhe der jeweiligen Fragmente ($\text{pt}$);
+- $\theta_{\mathrm{vertical}} = 0{,}50$ ist der dimensionslose ingenieurtechnische Schwellenwert der Zeilenbindung.
 
 **Systemwirkung (Actionable Closed Loop):**
 
-1. **Laufzeitsteuerung und Berechnungsfluss:** Wenn der berechnete Wert $`\mathrm{Overlap}(F_a, F_b) \ge 0{,}50`$ erfüllt, führt der Algorithmus die Fragmente zu einer einzigen logischen Tabellenzeile zusammen und kompensiert den vertikalen Glyphenversatz tiefgestellter Indizes gegenüber der dominierenden Schriftgrundlinie. Gilt $\mathrm{Overlap} < 0{,}50$, wird eine neue Zeile initiiert. Spaltengrenzen werden ohne starre Pixelkonstanten anhand lokaler Minima im Histogramm der horizontalen Projektion des ausgedünnten Textes detektiert.
+1. **Laufzeitsteuerung und Berechnungsfluss:** Wenn der berechnete Wert $\mathrm{Overlap}(F_a, F_b) \ge 0{,}50$ erfüllt, führt der Algorithmus die Fragmente zu einer einzigen logischen Tabellenzeile zusammen und kompensiert den vertikalen Glyphenversatz tiefgestellter Indizes gegenüber der dominierenden Schriftgrundlinie. Gilt $\mathrm{Overlap} < 0{,}50$, wird eine neue Zeile initiiert. Spaltengrenzen werden ohne starre Pixelkonstanten anhand lokaler Minima im Histogramm der horizontalen Projektion des ausgedünnten Textes detektiert.
 2. **Hardware-Dimensionierung und Ressourcen:** Der Algorithmus der räumlichen Verschmelzung ist als Sweep-Line-Verfahren mit einer Zeitkomplexität von $O(N \log N)$ und einem Speicherbedarf von $O(N)$ implementiert. Für ein 100-seitiges Datenblatt eines Mikrocontrollers ($N = 25\,000$ Fragmente) belegt der Puffer aktiver Bounding Boxes maximal $3{,}2\,\text{MB}$ RAM, was eine deterministische Ausführung ohne Latenzspitzen selbst auf eingebetteten Prüfständen garantiert.
-3. **Praktisches Zahlenbeispiel:** Haupttextfragment $`F_a = [100, 200, 140, 212]`$ ($`H_a = 12\,\text{pt}`$), Subskript-Fragment $`F_b = [142, 196, 160, 206]`$ ($`H_b = 10\,\text{pt}`$). Es gilt $\min(212, 206) = 206$, $\max(200, 196) = 200$. Die Überlappungshöhe beträgt $206 - 200 = 6\,\text{pt}$. Die minimale Höhe ist $\min(12, 10) = 10\,\text{pt}$. Daraus ergibt sich $`\mathrm{Overlap}(F_a, F_b) = 6 / 10 = 0{,}60 \ge 0{,}50`$. Das System verschmilzt die Fragmente deterministisch zur einheitlichen Parameterkennung $`V_{\mathrm{DD}}`$.
+3. **Praktisches Zahlenbeispiel:** Haupttextfragment $F_a = [100, 200, 140, 212]$ ($H_a = 12\,\text{pt}$), Subskript-Fragment $F_b = [142, 196, 160, 206]$ ($H_b = 10\,\text{pt}$). Es gilt $\min(212, 206) = 206$, $\max(200, 196) = 200$. Die Überlappungshöhe beträgt $206 - 200 = 6\,\text{pt}$. Die minimale Höhe ist $\min(12, 10) = 10\,\text{pt}$. Daraus ergibt sich $\mathrm{Overlap}(F_a, F_b) = 6 / 10 = 0{,}60 \ge 0{,}50$. Das System verschmilzt die Fragmente deterministisch zur einheitlichen Parameterkennung $V_{\mathrm{DD}}$.
 
-Jede extrahierte numerische Tabellenzelle $`C_{i,j}`$ unterliegt der Regel strikter Einheitenvererbung vom Spaltenheader $`H_j`$ gemäß dem internationalen Standard UCUM (*Unified Code for Units of Measure*) [[31]](#src-31):
+Jede extrahierte numerische Tabellenzelle $C_{i,j}$ unterliegt der Regel strikter Einheitenvererbung vom Spaltenheader $H_j$ gemäß dem internationalen Standard UCUM (*Unified Code for Units of Measure*) [[31]](#src-31):
 
 ```math
 \mathrm{Atom}(C_{i,j}) = \langle \mathrm{Param} = \mathrm{Name}_i, \, \mathrm{Value} = \mathrm{Val}_{i,j}, \, \mathrm{Unit} = \mathrm{ResolveUnit}(H_j), \, \mathrm{BBox} = \mathrm{Union}(\mathrm{Box}_{i,j}, \mathrm{Box}_{H_j}) \rangle
 ```
 
-Findet die Funktion $`\mathrm{ResolveUnit}(H_j)`$ weder im Zelltext noch im Spaltenkopf eine gültige Maßeinheit, blockiert das Systemgateway die Generierung einer quantitativen Inferenzregel und registriert ein Quarantäneereignis `DATA_DEFECT_NO_UNIT`. Die vereinheitlichte räumliche Koordinate $`\mathrm{BBox} = [X_1, Y_1, X_2, Y_2]`$ wird im Stammdatenpass des Wissensobjekts verankert und ermöglicht dem menschlichen Auditor eine verzögerungsfreie visuelle Kustodie der Primärquelle im PDF-Viewer.
+Findet die Funktion $\mathrm{ResolveUnit}(H_j)$ weder im Zelltext noch im Spaltenkopf eine gültige Maßeinheit, blockiert das Systemgateway die Generierung einer quantitativen Inferenzregel und registriert ein Quarantäneereignis `DATA_DEFECT_NO_UNIT`. Die vereinheitlichte räumliche Koordinate $\mathrm{BBox} = [X_1, Y_1, X_2, Y_2]$ wird im Stammdatenpass des Wissensobjekts verankert und ermöglicht dem menschlichen Auditor eine verzögerungsfreie visuelle Kustodie der Primärquelle im PDF-Viewer.
 
 ## 11. Empirisches Experiment des Autors zur Wissenserkennung in technischer Dokumentation
 
@@ -541,7 +541,7 @@ Ohne formale mathematische Kriterien verbleiben Qualitätsurteile über Textfrag
 
 Erläuterung der Variablen:
 - $x$ repräsentiert das Eingangsdokument, $y$ ein Klassenlabel und $\hat y(x)$ das vorhergesagte Label;
-- $p(y\mid x)$ ist die geschätzte Wahrscheinlichkeit des Labels gegeben $x$; $`\max_y`$ ermittelt die maximale Konfidenz und $`\argmax_y`$ das zugehörige Label;
+- $p(y\mid x)$ ist die geschätzte Wahrscheinlichkeit des Labels gegeben $x$; $\max_y$ ermittelt die maximale Konfidenz und $\argmax_y$ das zugehörige Label;
 - $\tau$ bezeichnet den numerischen Konfidenzschwellenwert; $\mathrm{AutoAllowed}(x)$ ist ein boolescher Indikator, der angibt, ob automatische Freigaben für dieses Dokument zulässig sind;
 - $\land$ repräsentiert die logische Konjunktion; sind die Bedingungen nicht simultan erfüllt, greift der Ausweichpfad der Expertenprüfung.
 
@@ -555,8 +555,8 @@ J(A,B)=\frac{|A\cap B|}{|A\cup B|},\qquad \Pr\big[h_{\min}(A)=h_{\min}(B)\big]=J
 
 Erläuterung der Variablen:
 - $A$ und $B$ bezeichnen die Mengen der Shingles zweier Dokumente; $A\cap B$ ist deren Schnittmenge, $A\cup B$ deren Vereinigungsmenge;
-- $`|X|`$ ist die Mächtigkeit der Menge $X$; $J(A,B)$ ist der Jaccard-Ähnlichkeitskoeffizient;
-- $`h_{\min}(A)`$ ist das Minimum einer kollisionsresistenten Hash-Funktion über der Menge $A$;
+- $|X|$ ist die Mächtigkeit der Menge $X$; $J(A,B)$ ist der Jaccard-Ähnlichkeitskoeffizient;
+- $h_{\min}(A)$ ist das Minimum einer kollisionsresistenten Hash-Funktion über der Menge $A$;
 - Die zweite Gleichung belegt, dass die Kollisionswahrscheinlichkeit der minimalen Hashes exakt der Jaccard-Ähnlichkeit entspricht.
 
 Die Ähnlichkeit $J$ liegt im Intervall $[0, 1]$. Weisen zwei Dokumente bei 5 distinkten Shingles 3 gemeinsame Sequenzen auf, gilt $J = 3/5 = 0{,}6$. Der MinHash-Algorithmus nutzt unabhängige Hash-Funktionen, um $J$ über Signaturen effizient ohne paarweisen Vollvergleich abzuschätzen [[13]](#src-13). SimHash approximiert die Kosinus-Ähnlichkeit, während dichte Vektoreinbettungen Paraphrasen aufdecken. Ein Ähnlichkeitswert erzeugt stets nur einen Fusionskandidaten.
@@ -584,8 +584,8 @@ R(c)=w_{\text{source}}(c)\cdot F(t)\cdot a_{\text{scope}}(c)\cdot q_{\text{extra
 ```
 
 Erläuterung der Variablen:
-- $c$ repräsentiert die zu prüfende Sachbehauptung; $`w_{\text{source}}(c)`$ ist das Vertrauensgewicht der Primärquelle;
-- $F(t)$ ist der Frischewert; $`a_{\text{scope}}(c)`$ bewertet die formale Anwendbarkeit auf Produkt und Zielversion; $`q_{\text{extract}}(c)`$ beziffert die Konfidenz der Informationsextraktion;
+- $c$ repräsentiert die zu prüfende Sachbehauptung; $w_{\text{source}}(c)$ ist das Vertrauensgewicht der Primärquelle;
+- $F(t)$ ist der Frischewert; $a_{\text{scope}}(c)$ bewertet die formale Anwendbarkeit auf Produkt und Zielversion; $q_{\text{extract}}(c)$ beziffert die Konfidenz der Informationsextraktion;
 - Alle Faktoren liegen im Intervall $[0, 1]$; das Produkt sinkt signifikant, sobald auch nur ein Faktor degradiert;
 - $R(c)$ dient rein als Steuerungsindikator für die Begutachtungswarteschlange, nicht als statistische Wahrscheinlichkeit der sachlichen Wahrheit.
 
@@ -607,21 +607,21 @@ Zur quantitativen Bestimmung des ingenieurtechnischen Nutzens von Fragmenten wir
 
 Parameter und Gewichtungskoeffizienten der Wissensdichte:
 
-- $`N_{\mathrm{deontic}}`$ ist die Anzahl deontischer Operatoren (`SHALL`, `MUST`, `PROHIBITED`, `REQUIRED`);
-- $`N_{\mathrm{entities}}`$ ist die Anzahl erkannter Hard- oder Software-Entitäten der Projektontologie;
-- $`N_{\mathrm{tables}}`$ ist die Anzahl strukturierter Tabellenzeilen und verknüpfter Parametermatrizen;
-- $`N_{\mathrm{quantities}}`$ ist die Anzahl numerischer Werte mit validierten physikalischen SI-Maßeinheiten;
-- $`L_{\mathrm{tokens}}`$ ist die Gesamtlänge des Fragments in Token des lexikalischen Analysators;
-- $`w_d = 0{,}35, \, w_e = 0{,}25, \, w_t = 0{,}25, \, w_q = 0{,}15`$ sind empirisch kalibrierte Gewichte ($\sum w = 1{,}00$).
+- $N_{\mathrm{deontic}}$ ist die Anzahl deontischer Operatoren (`SHALL`, `MUST`, `PROHIBITED`, `REQUIRED`);
+- $N_{\mathrm{entities}}$ ist die Anzahl erkannter Hard- oder Software-Entitäten der Projektontologie;
+- $N_{\mathrm{tables}}$ ist die Anzahl strukturierter Tabellenzeilen und verknüpfter Parametermatrizen;
+- $N_{\mathrm{quantities}}$ ist die Anzahl numerischer Werte mit validierten physikalischen SI-Maßeinheiten;
+- $L_{\mathrm{tokens}}$ ist die Gesamtlänge des Fragments in Token des lexikalischen Analysators;
+- $w_d = 0{,}35, \, w_e = 0{,}25, \, w_t = 0{,}25, \, w_q = 0{,}15$ sind empirisch kalibrierte Gewichte ($\sum w = 1{,}00$).
 
 **Systemwirkung (Actionable Closed Loop):**
 
 1. **Laufzeitsteuerung und Berechnungsfluss:** Anhand des berechneten $\mathrm{KDI}$-Werts klassifiziert das Zulassungsgateway die Fragmente in drei stratigraphische Kategorien:
-   - $`\mathrm{KDI} \ge 0{,}15 \implies \mathrm{RICH\_ORE}`$ (reiches Erz): Das Fragment wird unverzüglich an den Regelcompiler und die Prädikatensynthese weitergeleitet;
-   - $`0{,}05 \le \mathrm{KDI} < 0{,}15 \implies \mathrm{POOR\_ORE}`$ (armes Erz): Das Fragment erfordert eine tiefe syntaktische Abhängigkeitsanalyse und eine Kontexterweiterung;
+   - $\mathrm{KDI} \ge 0{,}15 \implies \mathrm{RICH\_ORE}$ (reiches Erz): Das Fragment wird unverzüglich an den Regelcompiler und die Prädikatensynthese weitergeleitet;
+   - $0{,}05 \le \mathrm{KDI} < 0{,}15 \implies \mathrm{POOR\_ORE}$ (armes Erz): Das Fragment erfordert eine tiefe syntaktische Abhängigkeitsanalyse und eine Kontexterweiterung;
    - $\mathrm{KDI} < 0{,}05 \implies \mathrm{SLAG}$ (Informationsschlacke): Der Block wird verworfen und ohne Vektorisierung im Index ausgeschieden.
 2. **Hardware-Dimensionierung und infrastrukturelle Grenzen:** Das Ausfiltern von Schlacke bei $\mathrm{KDI} < 0{,}05$ reduziert das Volumen gespeicherter Vektoreinbettungen und Konnektivitätsgraphen um $68\,\%$, was $14{,}2\,\text{GB}$ Arbeitsspeicher in den Indexierungs-Clusterknoten einspart und die Suchlatenz um das $3{,}4$-Fache beschleunigt.
-3. **Praktisches Zahlenbeispiel:** Ein technischer Textblock mit $`L_{\mathrm{tokens}} = 120`$ Token umfasst $`N_{\mathrm{deontic}} = 6`$ normative Vorgaben, $`N_{\mathrm{entities}} = 14`$ registrierte Mikrocontroller-Entitäten, $`N_{\mathrm{tables}} = 1`$ Zeile einer Betriebsmodustabelle und $`N_{\mathrm{quantities}} = 8`$ Spannungs- und Stromparameter. Der Zähler der Formel ergibt: $0{,}35 \cdot 6 + 0{,}25 \cdot 14 + 0{,}25 \cdot 1 + 0{,}15 \cdot 8 = 2{,}10 + 3{,}50 + 0{,}25 + 1{,}20 = 7{,}05$. Daraus berechnet sich $\mathrm{KDI} = 7{,}05 / 120 = 0{,}05875$. Da $0{,}05 \le 0{,}05875 < 0{,}15$ gilt, stuft das Gateway den Block deterministisch als $`\mathrm{POOR\_ORE}`$ ein und übergibt ihn der vertieften syntaktischen Parsing-Pipeline anstatt ihn zu verwerfen.
+3. **Praktisches Zahlenbeispiel:** Ein technischer Textblock mit $L_{\mathrm{tokens}} = 120$ Token umfasst $N_{\mathrm{deontic}} = 6$ normative Vorgaben, $N_{\mathrm{entities}} = 14$ registrierte Mikrocontroller-Entitäten, $N_{\mathrm{tables}} = 1$ Zeile einer Betriebsmodustabelle und $N_{\mathrm{quantities}} = 8$ Spannungs- und Stromparameter. Der Zähler der Formel ergibt: $0{,}35 \cdot 6 + 0{,}25 \cdot 14 + 0{,}25 \cdot 1 + 0{,}15 \cdot 8 = 2{,}10 + 3{,}50 + 0{,}25 + 1{,}20 = 7{,}05$. Daraus berechnet sich $\mathrm{KDI} = 7{,}05 / 120 = 0{,}05875$. Da $0{,}05 \le 0{,}05875 < 0{,}15$ gilt, stuft das Gateway den Block deterministisch als $\mathrm{POOR\_ORE}$ ein und übergibt ihn der vertieften syntaktischen Parsing-Pipeline anstatt ihn zu verwerfen.
 
 Eine besondere Gefahr stellen hexadezimale Tabellen des Registerraums (Memory Maps) dar, die aufgrund ihrer hohen Dichte numerischer Codes und Sonderzeichen von naiven Textfiltern häufig als „zufälliger Binärmüll“ verworfen werden. Zu ihrem Schutz wird die Shannon-Entropie auf Byte-Ebene herangezogen:
 
@@ -629,7 +629,7 @@ Eine besondere Gefahr stellen hexadezimale Tabellen des Registerraums (Memory Ma
 H(X) = -\sum_{i=0}^{255} P(b_i) \log_2 P(b_i)
 ```
 
-wobei $`P(b_i)`$ die empirische Auftrittswahrscheinlichkeit des Bytes mit dem Wert $`b_i \in [0, 255]`$ im untersuchten Block $X$ bezeichnet.
+wobei $P(b_i)$ die empirische Auftrittswahrscheinlichkeit des Bytes mit dem Wert $b_i \in [0, 255]$ im untersuchten Block $X$ bezeichnet.
 
 **Systemwirkung (Actionable Closed Loop):**
 
@@ -637,7 +637,7 @@ wobei $`P(b_i)`$ die empirische Auftrittswahrscheinlichkeit des Bytes mit dem We
 2. **Hardware-Dimensionierung und Ressourcen:** Der Aufbau des 256-Elemente-Byte-Histogramms erfolgt allokationsfrei in einem $1\,\text{KB}$ großen Puffer im L1-Cache des Prozessors und garantiert eine Rechenzeit von unter $12\,\mu\text{s}$ pro $4\,\text{KB}$-Block auf ARM Cortex-A78AE Kernen.
 3. **Praktisches Zahlenbeispiel:** Ein $4\,\text{KB}$ großer Block einer Peripherie-Adresskarte weist eine Entropie von $H(X) = 7{,}34\,\text{Bit/Byte}$ auf. Der Scanner identifiziert 32 Vorkommen hexadezimaler Adressen `0xF020...`, verhindert das fehlerhafte Verwerfen und garantiert die lückenlose Erhaltung der Registertabelle.
 
-Alle zugelassenen Fragmente wahren die strikte Unveränderlichkeit des primären Bytebestands (*Bit-for-Bit Provenance*): Die Normalisierung von Zeilenumbrüchen (`CRLF` $\to$ `LF`) ist in den Quelldateien des Repositorys untersagt; Zitate referenzieren ausnahmslos Byte-Offset-Intervalle $`[\mathrm{byte\_start}, \mathrm{byte\_end}]`$ relativ zum kanonischen Datei-Container.
+Alle zugelassenen Fragmente wahren die strikte Unveränderlichkeit des primären Bytebestands (*Bit-for-Bit Provenance*): Die Normalisierung von Zeilenumbrüchen (`CRLF` $\to$ `LF`) ist in den Quelldateien des Repositorys untersagt; Zitate referenzieren ausnahmslos Byte-Offset-Intervalle $[\mathrm{byte\_start}, \mathrm{byte\_end}]$ relativ zum kanonischen Datei-Container.
 
 > [!NOTE]
 > **Zweistufige Autoren-Entropieselektionsschleuse (KDI und Schutz von Hardware-Registerkarten)**
@@ -671,8 +671,8 @@ Erläuterung der Variablen:
 - Die Doppelsumme aggregiert alle Validierungsergebnisse, während der Vorfaktor $1/(N\lvert M \rvert)$ den relativen Erfüllungsgrad berechnet.
 
 **Laufzeitsteuerung und Service Level Objectives (SLOs):**
-- **Sicherheitsrelevante Attribute:** Für Schutzklasse, Quellen-ID und Normenversion gilt eine strikte Null-Fehler-Toleranz: $`C_{\mathrm{meta, sec}} = 1{,}00`$. Weist auch nur ein Pflichtfeld einen Defekt auf, wird das gesamte Paket unverzüglich in die Quarantäne-Warteschlange `quarantine_ingest_queue` isoliert;
-- **Allgemeiner Pipeline-Schwellenwert:** Für sekundäre deskriptive Attribute gilt $`C_{\text{meta}} \ge \tau_{\mathrm{meta}} = 0{,}98`$. Sinkt der Wert unter 0,98, löst das System das Ereignis `HALT_INGESTION` aus und stoppt Aktualisierungen des Produktionsindex.
+- **Sicherheitsrelevante Attribute:** Für Schutzklasse, Quellen-ID und Normenversion gilt eine strikte Null-Fehler-Toleranz: $C_{\mathrm{meta, sec}} = 1{,}00$. Weist auch nur ein Pflichtfeld einen Defekt auf, wird das gesamte Paket unverzüglich in die Quarantäne-Warteschlange `quarantine_ingest_queue` isoliert;
+- **Allgemeiner Pipeline-Schwellenwert:** Für sekundäre deskriptive Attribute gilt $C_{\text{meta}} \ge \tau_{\mathrm{meta}} = 0{,}98$. Sinkt der Wert unter 0,98, löst das System das Ereignis `HALT_INGESTION` aus und stoppt Aktualisierungen des Produktionsindex.
 
 **Numerisches Rechenbeispiel:**
 Ein Ingest-Paket von $N = 500$ Fragmenten umfasst $\lvert M \rvert = 6$ Pflichtfelder ($3\,000$ Prüfpunkte). Der Validator stellt 45 fehlende sekundäre Tags fest:
@@ -681,7 +681,7 @@ Ein Ingest-Paket von $N = 500$ Fragmenten umfasst $\lvert M \rvert = 6$ Pflichtf
 C_{\text{meta}} = \frac{3\,000 - 45}{3\,000} = \frac{2\,955}{3\,000} = 0{,}985 \ge 0{,}98
 ```
 
-Da $`C_{\text{meta}} = 0{,}985`$ den Schwellenwert erfüllt und alle Sicherheitsattribute fehlerfrei vorliegen, wird das Paket für die Vektorisierung freigegeben.
+Da $C_{\text{meta}} = 0{,}985$ den Schwellenwert erfüllt und alle Sicherheitsattribute fehlerfrei vorliegen, wird das Paket für die Vektorisierung freigegeben.
 
 **Widerrufslatenz:**
 Die Widerrufslatenz wird durch die am langsamsten reagierende Replikatskopie bestimmt:
@@ -692,15 +692,15 @@ L_{\text{revoke}}(s)=\max_{j\in D(s)}t_{\text{removed},j}-t_{\text{revoke}}
 
 Erläuterung der Variablen:
 - $s$ bezeichnet die widerrufene Primärquelle, $D(s)$ die Menge aller daraus abgeleiteten Derivate und $j$ ein spezifisches Derivat;
-- $`t_{\text{removed},j}`$ ist der Zeitstempel der physischen Löschung des Derivats $j$, $`t_{\text{revoke}}`$ der Zeitpunkt des formalen Widerrufs;
-- $`L_{\text{revoke}}(s)`$ beziffert die Gesamtlatenz bis zum vollständigen Erlöschen aller abgeleiteten Datenbestände.
+- $t_{\text{removed},j}$ ist der Zeitstempel der physischen Löschung des Derivats $j$, $t_{\text{revoke}}$ der Zeitpunkt des formalen Widerrufs;
+- $L_{\text{revoke}}(s)$ beziffert die Gesamtlatenz bis zum vollständigen Erlöschen aller abgeleiteten Datenbestände.
 
 **Laufzeitsteuerung und Notfall-Timeout:**
-- Normatives Zeitlimit für den Widerruf: $`L_{\text{revoke}}(s) \le \tau_{\mathrm{revoke}} = 300\,\text{s}`$ (maximal 5 Minuten für die kaskadierende Bereinigung von SQL-Tabellen, Vektorindizes und lokalen Caches);
+- Normatives Zeitlimit für den Widerruf: $L_{\text{revoke}}(s) \le \tau_{\mathrm{revoke}} = 300\,\text{s}$ (maximal 5 Minuten für die kaskadierende Bereinigung von SQL-Tabellen, Vektorindizes und lokalen Caches);
 - Überschreitet die Dauer 300 Sekunden, schaltet das System in den Schutzmodus `FAIL_SAFE_REVOCATION`: Anfragen an den betroffenen Wissensbereich werden am API-Gateway hart blockiert, bis die Purge-Bestätigung vorliegt.
 
 **Numerisches Rechenbeispiel:**
-Der Widerruf einer ungültig gewordenen Spezifikation erfolgt um $`t_{\text{revoke}} = 10{:}00{:}00`$. Die relationale Wissensbasis schließt die Löschung um $10{:}01{:}15$ ab, der Vektorindex um $10{:}02{:}30$ und ein Edge-Cache um $10{:}04{:}20$:
+Der Widerruf einer ungültig gewordenen Spezifikation erfolgt um $t_{\text{revoke}} = 10{:}00{:}00$. Die relationale Wissensbasis schließt die Löschung um $10{:}01{:}15$ ab, der Vektorindex um $10{:}02{:}30$ und ein Edge-Cache um $10{:}04{:}20$:
 
 ```math
 L_{\text{revoke}}(s) = 10{:}04{:}20 - 10{:}00{:}00 = 260\,\text{s} \le 300\,\text{s}
@@ -721,8 +721,8 @@ Erläuterung der Variablen:
 - Die Formel beschreibt den stationären Zustand eines stabilen Wartesystems.
 
 **Hardware-Dimensionierung und Backpressure-Steuerung:**
-- Die erforderliche Pufferkapazität berechnet sich als $`M_{\mathrm{queue}} = L \cdot S_{\mathrm{item}}`$, wobei $`S_{\mathrm{item}}`$ die mittlere serialisierte Paketgröße eines Kandidaten darstellt;
-- Überschreitet die reale Warteschlange das Limit $`L_{\mathrm{max}} = 2 \cdot L`$, aktiviert das KAS Backpressure: Konnektoren drosseln die Abfragerate externer Quellen, bis sich $W$ wieder normalisiert hat.
+- Die erforderliche Pufferkapazität berechnet sich als $M_{\mathrm{queue}} = L \cdot S_{\mathrm{item}}$, wobei $S_{\mathrm{item}}$ die mittlere serialisierte Paketgröße eines Kandidaten darstellt;
+- Überschreitet die reale Warteschlange das Limit $L_{\mathrm{max}} = 2 \cdot L$, aktiviert das KAS Backpressure: Konnektoren drosseln die Abfragerate externer Quellen, bis sich $W$ wieder normalisiert hat.
 
 **Numerisches Rechenbeispiel:**
 Bei einer Ankunftsrate von $\lambda = 50\,\text{Kandidaten/Tag}$ und einer Begutachtungsdauer von $W = 4\,\text{Tagen}$ ergibt sich:
@@ -731,13 +731,13 @@ Bei einer Ankunftsrate von $\lambda = 50\,\text{Kandidaten/Tag}$ und einer Begut
 L = 50 \cdot 4 = 200\,\text{Kandidaten}
 ```
 
-Bei einer durchschnittlichen Objektgröße von $`S_{\mathrm{item}} = 64\,\text{KB}`$ benötigt der In-Memory-Puffer (z. B. in Redis):
+Bei einer durchschnittlichen Objektgröße von $S_{\mathrm{item}} = 64\,\text{KB}$ benötigt der In-Memory-Puffer (z. B. in Redis):
 
 ```math
 M_{\mathrm{queue}} = 200 \cdot 64\,\text{KB} = 12\,800\,\text{KB} = 12{,}5\,\text{MB}
 ```
 
-Verdoppelt sich der Zustrom auf $\lambda = 100$ ohne personelle Verstärkung, wächst die Warteschlange auf 400 Elemente ($25\,\text{MB}$) an, erreicht $`L_{\mathrm{max}}`$ und zwingt die KAS-Crawler zur Drosselung.
+Verdoppelt sich der Zustrom auf $\lambda = 100$ ohne personelle Verstärkung, wächst die Warteschlange auf 400 Elemente ($25\,\text{MB}$) an, erreicht $L_{\mathrm{max}}$ und zwingt die KAS-Crawler zur Drosselung.
 
 Im Operator-Dashboard des Autors visualisiert das System Triage-Status, Konfidenzwerte, Relevanz, Informationsdichte, Duplikatsstatus, Frische, Quellenreputation, Pipeline-Fortschritt, Übertragungszuverlässigkeit sowie Konsumenten-Feedback (akzeptiert, in Inferenz verwendet, Duplikat, abgelehnt, veraltet, richtlinienblockiert). Handlungsbedarf besteht bei der Erfassung von Fehlerursachencodes, dem prozentualen Anteil formal zertifizierter Quellen und der Modellkalibrierung. Ein Warnzustand auf dem KAS-Dashboard signalisiert unmissverständlich: Auch wenn die Ausgaben des Sprachmodells überzeugend formuliert sind, darf ihnen fachlich nicht vertraut werden.
 
@@ -762,7 +762,7 @@ Das KAS erhält die vorhandene ingenieurtechnische Struktur und zwingt das Unter
 
 Die Übersetzung hardwarenaher Beschreibungen in die symbolische Wissensbasis des Expertensystems ist ein kritisches Bindeglied des Embedded Engineering, da Mikrocontroller und Systems-on-Chip (SoC) von Klassen wie Infineon AURIX, ARM Cortex-R/M oder NXP S32K Zehntausende Hardware-Steuerregister umfassen. Beschreibungen dieser Komponenten werden von Halbleiterherstellern in formalisierten XML-Schemata bereitgestellt: **IEEE 1685 IP-XACT** [[29]](#src-29) und **ARM CMSIS-SVD** [[30]](#src-30).
 
-Der Versuch eines naiven Imports solcher Metamodelle über Standard-Skripting-Engines birgt ein fatales Risiko: Die Verwendung von Gleitkommazahlen einfacher Genauigkeit (`float32`) zur Speicherung von Adressen führt zum Abschneiden niederwertiger Bits oberhalb von $`16\,\text{MB}`$ ($`2^{24}`$), da die Mantisse von `float32` lediglich 24 Bits umfasst. Infolgedessen werden Registeradressen wie `0xF0000004` katastrophal zu `0xF0000000` gerundet, was fatale Kollisionen von Hardwareblöcken im Inferenzraum provoziert.
+Der Versuch eines naiven Imports solcher Metamodelle über Standard-Skripting-Engines birgt ein fatales Risiko: Die Verwendung von Gleitkommazahlen einfacher Genauigkeit (`float32`) zur Speicherung von Adressen führt zum Abschneiden niederwertiger Bits oberhalb von $16\,\text{MB}$ ($2^{24}$), da die Mantisse von `float32` lediglich 24 Bits umfasst. Infolgedessen werden Registeradressen wie `0xF0000004` katastrophal zu `0xF0000000` gerundet, was fatale Kollisionen von Hardwareblöcken im Inferenzraum provoziert.
 
 Um absolute Exaktheit zu gewährleisten, erfolgt die Adressübersetzung ausnahmslos in vorzeichenloser 64-Bit-Ganzzahlarithmetik gemäß der Formel deterministischer Adressauflösung:
 
@@ -772,18 +772,18 @@ A_{\mathrm{phys}} = A_{\mathrm{base}} + \Delta_{\mathrm{block}} + \Delta_{\mathr
 
 Parameter und Adressoffsets:
 
-- $`A_{\mathrm{phys}}`$ ist die resultierende absolute physische Registeradresse im Speicher des Controllers (Datentyp `uint64`);
-- $`A_{\mathrm{base}}`$ bezeichnet die physische Basisadresse des Peripheriemoduls (z. B. CAN-Controller oder GTM-Timer);
-- $`\Delta_{\mathrm{block}}`$ ist der Offset des Adressunterblocks relativ zur Modulbasis;
-- $`\Delta_{\mathrm{reg}}`$ ist der Offset des Zielregisters innerhalb des Blocks;
-- $`\Delta_{\mathrm{dim}}`$ bestimmt die Adressschrittweite bei der Indizierung von Register-Arrays;
-- $`N_{\mathrm{dim}}`$ ist die Dimension des Arrays (Anzahl der Hardware-Kanäle) und $i$ der Kanalindex.
+- $A_{\mathrm{phys}}$ ist die resultierende absolute physische Registeradresse im Speicher des Controllers (Datentyp `uint64`);
+- $A_{\mathrm{base}}$ bezeichnet die physische Basisadresse des Peripheriemoduls (z. B. CAN-Controller oder GTM-Timer);
+- $\Delta_{\mathrm{block}}$ ist der Offset des Adressunterblocks relativ zur Modulbasis;
+- $\Delta_{\mathrm{reg}}$ ist der Offset des Zielregisters innerhalb des Blocks;
+- $\Delta_{\mathrm{dim}}$ bestimmt die Adressschrittweite bei der Indizierung von Register-Arrays;
+- $N_{\mathrm{dim}}$ ist die Dimension des Arrays (Anzahl der Hardware-Kanäle) und $i$ der Kanalindex.
 
 **Systemwirkung (Actionable Closed Loop):**
 
-1. **Laufzeitsteuerung und Berechnungsfluss:** Für jede generierte Adressierungsregel prüft der Evaluator die strikte Invariante $`A_{\mathrm{phys}} + S_{\mathrm{reg}} \le \mathrm{MAX\_ADDR}`$ (wobei $`S_{\mathrm{reg}}`$ die Registerbreite in Bytes ist). Wird ein arithmetischer Überlauf oder eine Adressbereichsüberlappung verschiedener Module detektiert, bricht der Wissenscompiler die Faktengenerierung sofort mit dem Status `PARSER_ADDR_OVERFLOW` ab und erzeugt eine Eskalationsmeldung für den Ingenieur.
+1. **Laufzeitsteuerung und Berechnungsfluss:** Für jede generierte Adressierungsregel prüft der Evaluator die strikte Invariante $A_{\mathrm{phys}} + S_{\mathrm{reg}} \le \mathrm{MAX\_ADDR}$ (wobei $S_{\mathrm{reg}}$ die Registerbreite in Bytes ist). Wird ein arithmetischer Überlauf oder eine Adressbereichsüberlappung verschiedener Module detektiert, bricht der Wissenscompiler die Faktengenerierung sofort mit dem Status `PARSER_ADDR_OVERFLOW` ab und erzeugt eine Eskalationsmeldung für den Ingenieur.
 2. **Hardware-Dimensionierung und Ressourcen:** Die Verwendung ausgerichteter 64-Bit-Ganzzahlen ermöglicht die direkte Projektion von Adressdeskriptoren in die Speicherschutztabellen (MPU / SMMU) ohne Konvertierungsaufwand ($0\,\text{ns}$ Overhead pro Taktzyklus der Inferenz).
-3. **Praktisches Zahlenbeispiel:** Für das Kommunikationsmodul eines Infineon AURIX Controllers sind vorgegeben: $`A_{\mathrm{base}} = \mathtt{0xF0200000}`$, $`\Delta_{\mathrm{block}} = \mathtt{0x4000}`$, der Registeroffset der Nachrichtenkonfiguration $`\Delta_{\mathrm{reg}} = \mathtt{0x0020}`$, die Schrittweite des Objekt-Arrays $`\Delta_{\mathrm{dim}} = \mathtt{0x0040}`$ für Kanal $i = 3$. Daraus berechnet sich: $`A_{\mathrm{phys}} = \mathtt{0xF0200000} + \mathtt{0x4000} + \mathtt{0x0020} + 3 \cdot \mathtt{0x0040} = \mathtt{0xF02040E0}`$. In einem System mit `float32`-Darstellung gingen die niederwertigen Bits $\mathtt{0xE0}$ vollständig verloren, wohingegen die Integer-Pipeline des KAS die exakte physische Adresse $\mathtt{0xF02040E0}$ unverfälscht fixiert.
+3. **Praktisches Zahlenbeispiel:** Für das Kommunikationsmodul eines Infineon AURIX Controllers sind vorgegeben: $A_{\mathrm{base}} = \mathtt{0xF0200000}$, $\Delta_{\mathrm{block}} = \mathtt{0x4000}$, der Registeroffset der Nachrichtenkonfiguration $\Delta_{\mathrm{reg}} = \mathtt{0x0020}$, die Schrittweite des Objekt-Arrays $\Delta_{\mathrm{dim}} = \mathtt{0x0040}$ für Kanal $i = 3$. Daraus berechnet sich: $A_{\mathrm{phys}} = \mathtt{0xF0200000} + \mathtt{0x4000} + \mathtt{0x0020} + 3 \cdot \mathtt{0x0040} = \mathtt{0xF02040E0}$. In einem System mit `float32`-Darstellung gingen die niederwertigen Bits $\mathtt{0xE0}$ vollständig verloren, wohingegen die Integer-Pipeline des KAS die exakte physische Adresse $\mathtt{0xF02040E0}$ unverfälscht fixiert.
 
 Hardware-Registerzugriffsmodi werden eindeutig auf deontische Modalitäten der symbolischen Basis abgebildet:
 
@@ -844,7 +844,7 @@ Der Autor hat sich für die Architektur eines eigenständigen, lokal operierende
 
 Bevor ein Dokument rechenintensive Phasen des syntaktischen und semantischen Parsings durchläuft, muss das KAS den Typ des Datenstroms deterministisch identifizieren. Fehler an dieser Stelle führen zu Systemabstürzen spezialisierter Parser (etwa beim Versuch, Binärarchive als UTF-8 zu interpretieren) oder zum Verlust der Byte-Exaktheit, was den Beweiswert der extrahierten Fakten zerstört.
 
-Die Formaterkennung folgt dem Prinzip des vorsorglichen Prüfens (*Pre-Ingestion Sniffing*): Statt die Datei vollständig in den Arbeitsspeicher zu laden, liest das System lediglich einen festen Initialpuffer $`B_{\text{peek}}`$ ein (typischerweise 512–1024 Bytes). Die Analyse erfolgt kaskadierend über drei Ebenen:
+Die Formaterkennung folgt dem Prinzip des vorsorglichen Prüfens (*Pre-Ingestion Sniffing*): Statt die Datei vollständig in den Arbeitsspeicher zu laden, liest das System lediglich einen festen Initialpuffer $B_{\text{peek}}$ ein (typischerweise 512–1024 Bytes). Die Analyse erfolgt kaskadierend über drei Ebenen:
 
 ```mermaid
 flowchart TD
@@ -963,7 +963,7 @@ Direkt aus dieser Konsole heraus kann der Operator den Mikrocode des Wissens im 
 
 ### 16.1. Zweistufiger Compiler für technisches Wissen: Abhängigkeitsanalyse und 7D-SI-Dimensionsvektoren
 
-Die Übersetzung natürlichsprachlicher technischer Spezifikationen in ausführbaren Mikrocode des Expertensystems ist die anspruchsvollste Phase im KAS-Betrieb, an der heuristische reguläre Ausdrücke und gleitende Wortfenster systematisch scheitern. Feste Fenstergrößen (beispielsweise vier Wörter links und rechts des Modalverbs „shall“) zerreißen komplexe Nominalphrasen (wie *„Core supply voltage supervisor under low-power sleep mode with external clock“*) und verfälschen das Passiv (*Passive Voice*), in dem über $`40\,\%`$ der Anforderungen internationaler Normen formuliert sind. Infolgedessen werden Register oder Busse fälschlicherweise als Subjekt der Pflicht anstelle des Software-Treibers deklariert.
+Die Übersetzung natürlichsprachlicher technischer Spezifikationen in ausführbaren Mikrocode des Expertensystems ist die anspruchsvollste Phase im KAS-Betrieb, an der heuristische reguläre Ausdrücke und gleitende Wortfenster systematisch scheitern. Feste Fenstergrößen (beispielsweise vier Wörter links und rechts des Modalverbs „shall“) zerreißen komplexe Nominalphrasen (wie *„Core supply voltage supervisor under low-power sleep mode with external clock“*) und verfälschen das Passiv (*Passive Voice*), in dem über $40\,\%$ der Anforderungen internationaler Normen formuliert sind. Infolgedessen werden Register oder Busse fälschlicherweise als Subjekt der Pflicht anstelle des Software-Treibers deklariert.
 
 Zur Beseitigung dieser Schwachstelle implementiert das KAS einen zweistufigen deterministischen Wissenscompiler. Die erste Stufe führt ein syntaktisches Parsing des Satzes nach dem Formalismus der universellen Abhängigkeiten (*Universal Dependencies*, UD) [[32]](#src-32) durch:
 
@@ -1029,8 +1029,8 @@ N^{*}=\frac{T_{0,\text{ACC}}-T_{0,\text{CPU}}}{1/q_{\text{CPU}}-1/q_{\text{ACC}}
 ```
 
 Erläuterung der Variablen:
-- $`N^{*}`$ ist die Losgröße, bei der die Gesamtlaufzeiten von CPU und Beschleuniger exakt identisch sind;
-- Die Zählerdifferenz hat die Einheit Sekunden, die Nennerdifferenz Sekunden pro Fragment; das Ergebnis $`N^{*}`$ hat folglich die Dimension Fragmente;
+- $N^{*}$ ist die Losgröße, bei der die Gesamtlaufzeiten von CPU und Beschleuniger exakt identisch sind;
+- Die Zählerdifferenz hat die Einheit Sekunden, die Nennerdifferenz Sekunden pro Fragment; das Ergebnis $N^{*}$ hat folglich die Dimension Fragmente;
 - Ein sinnvoller Schnittpunkt existiert, wenn der Beschleuniger im Durchsatz überlegen ist, jedoch höhere Kaltstartkosten aufweist.
 
 Für Batchgrößen $N > N^*$ ist der Beschleuniger überlegen; für kleinere Losgrößen $N < N^*$ liefert die CPU das schnellere Resultat. Unter Vernachlässigung dynamischer Batch-Effekte, Queueing-Delays und thermischer Drosselung dient $N^*$ als solide Richtgröße zur Auslastungssteuerung.
@@ -1320,10 +1320,10 @@ Der evolutionäre Übergang von passiver Dokumentenakkumulation zu selektiver Wi
 Anstelle eines passiven Ingests etabliert das KAS-Subsystem einen aktiven Wissenserkennungsfilter (*Knowledge Detection Filter*), der eine zweistufige Selektion durchsetzt:
 
 1. **Triade epistemischer Selektion:**
-   Jedes eingehende Textfragment $`D`$ wird vor der Aufnahme in den Index anhand dreier Dimensionen analysiert:
+   Jedes eingehende Textfragment $D$ wird vor der Aufnahme in den Index anhand dreier Dimensionen analysiert:
    - *Faktensättigung:* Detektion des Vorhandenseins deontischer Modalitäten (`SHALL`, `MUST`, `CRITICAL`), formaler prädikativer Relationen und numerischer Toleranzintervalle mit obligatorischen physikalischen SI-Maßeinheiten;
    - *Ontologische Bindung:* Berechnung der Schnittmengendichte extrahierter Termini mit dem kanonischen Begriffsgraphen und den Projektspezifikationen;
-   - *Epistemischer Konfidenzwert:* Berechnung eines integralen Nützlichkeitskoeffizienten $`\tau(D) \in [0, 1]`$. Fragmente, für die $`\tau(D) < \tau_{\mathrm{threshold}}`$ gilt, werden als Informationsrauschen deterministisch verworfen.
+   - *Epistemischer Konfidenzwert:* Berechnung eines integralen Nützlichkeitskoeffizienten $\tau(D) \in [0, 1]$. Fragmente, für die $\tau(D) < \tau_{\mathrm{threshold}}$ gilt, werden als Informationsrauschen deterministisch verworfen.
 
 2. **Vorabprüfung auf Widerspruchsfreiheit (Pre-Ingestion Contradiction Check):**
    Extrahierte Prädikate werden bereits vor dem Schreiben in die Datenbank gegen den axiomatischen Kern des Wissenssystems abgeglichen. Enthält ein Kandidat Aussagen, die einen geltenden zertifizierten Standard widerlegen (z. B. im Widerspruch zu den Anforderungen an den diagnostischen Deckungsgrad nach ISO 26262 stehen), vermengt das System widersprüchliche Normen keineswegs im Vektorraum. Stattdessen wird ein formaler argumentativer Defeater (*defeater*) synthetisiert, der Kandidat in Quarantäne blockiert und ein Eskalationsbericht mit Nennung der Primärquellen beider Konfliktaussagen an den Knowledge Engineer übermittelt.
@@ -1370,7 +1370,7 @@ Die ingenieurtechnische Wissensakquisition (KAS) aus tausendseitigen technischen
 
 - **Mykola Fedchyk:**  
   *„Herr Professor Tom, Skalierbarkeit wird durch eine zweistufige automatisierte Triage auf Basis formaler SMT-Beweiszertifikate gesichert.  
-  Über 90% der routinemäßigen Regelkandidaten, die zum axiomatischen Kern logisch orthogonal sind ($`Th(\Sigma \cup \{R\}) \not\vdash \bot`$) und über eine kryptografisch signierte Primärquellenkette verfügen, erhalten ein maschinelles Konsistenzzertifikat und werden ohne menschliches Zutun auf der operativen Ebene freigeschaltet.  
+  Über 90% der routinemäßigen Regelkandidaten, die zum axiomatischen Kern logisch orthogonal sind ($Th(\Sigma \cup \{R\}) \not\vdash \bot$) und über eine kryptografisch signierte Primärquellenkette verfügen, erhalten ein maschinelles Konsistenzzertifikat und werden ohne menschliches Zutun auf der operativen Ebene freigeschaltet.  
   Das Expertenkomitee (Human-in-the-Loop) wird strikt ausnahmebasiert einberufen: nur wenn der SMT-Solver einen logischen Widerspruch zwischen Quellen detektiert oder wenn eine Regel fundamentale Sicherheitsinvarianten höchster Kritikalität (ASIL D / SIL 4) berührt. Wir degradieren Fachexperten nicht zu Fließbandprüfern – wir übergeben ihnen einen mathematisch isolierten Konflikt samt minimalem Gegenbeispiel, was die Entscheidungszeit von Stunden auf wenige Sekunden verkürzt.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  

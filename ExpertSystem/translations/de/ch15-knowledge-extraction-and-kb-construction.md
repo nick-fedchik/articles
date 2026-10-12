@@ -465,11 +465,11 @@ V_R \ge V_D - V_C
 ```
 
 Parameter und mathematische Komponenten der Formel:
-- $`V_R \in \mathbb{R}_{\ge 0}`$ — entropische Varietät der Reglerzustände (die interne Fähigkeit des Segmentierungsmechanismus, Größe, Grenzen und semantische Kapazität des FAU-Fensters zu adaptieren);
-- $`V_D \in \mathbb{R}_{> 0}`$ — entropische Varietät und strukturelle Variabilität des eingehenden normativen Textes (syntaktische Komplexität von Sätzen, Vorhandensein verschachtelter Bedingungsstrukturen, Ausnahmen, Anmerkungen und Spezifikationstabellen);
-- $`V_C \in \mathbb{R}_{\ge 0}`$ — zulässige Restentropie (Streuung der semantischen Unsicherheit am Ausgang des Segmentierers, bei der der Extraktor Fakten ohne Verlust prädikativer Verknüpfungen eindeutig typisieren kann; für missionskritische Systeme wird $`V_C \to 0`$ gefordert).
+- $V_R \in \mathbb{R}_{\ge 0}$ — entropische Varietät der Reglerzustände (die interne Fähigkeit des Segmentierungsmechanismus, Größe, Grenzen und semantische Kapazität des FAU-Fensters zu adaptieren);
+- $V_D \in \mathbb{R}_{> 0}$ — entropische Varietät und strukturelle Variabilität des eingehenden normativen Textes (syntaktische Komplexität von Sätzen, Vorhandensein verschachtelter Bedingungsstrukturen, Ausnahmen, Anmerkungen und Spezifikationstabellen);
+- $V_C \in \mathbb{R}_{\ge 0}$ — zulässige Restentropie (Streuung der semantischen Unsicherheit am Ausgang des Segmentierers, bei der der Extraktor Fakten ohne Verlust prädikativer Verknüpfungen eindeutig typisieren kann; für missionskritische Systeme wird $V_C \to 0$ gefordert).
 
-Ein starrer Block mit einer festen Länge von $`N = 512`$ Tokens ist vollkommen rigide: Er besitzt konstante räumliche Grenzen, weshalb seine regulatorische Varietät hinsichtlich der Erkennung semantischer Brüche identisch null ist ($`V_R = 0`$). Da die Komplexität der Fachsprache hoch ist ($`V_D \gg 0`$), wird Ashbys Bedingung $`0 \ge V_D - V_C`$ grob verletzt. Die Folge ist ein unausweichlicher semantischer Kollaps: das Abreißen von Prädikaten und Halluzinationen des Sprachmodells während der Extraktionsphase.
+Ein starrer Block mit einer festen Länge von $N = 512$ Tokens ist vollkommen rigide: Er besitzt konstante räumliche Grenzen, weshalb seine regulatorische Varietät hinsichtlich der Erkennung semantischer Brüche identisch null ist ($V_R = 0$). Da die Komplexität der Fachsprache hoch ist ($V_D \gg 0$), wird Ashbys Bedingung $0 \ge V_D - V_C$ grob verletzt. Die Folge ist ein unausweichlicher semantischer Kollaps: das Abreißen von Prädikaten und Halluzinationen des Sprachmodells während der Extraktionsphase.
 
 #### 2. Gleitendes Fensterprotokoll der semantischen Annotation
 
@@ -489,32 +489,32 @@ Zur Selektion von FAU-Kandidateinheiten während der Extraktion oder zur Beantwo
 ```
 
 Parameter und mathematische Komponenten der Formel:
-- $`d \in \mathcal{D}_{\mathrm{FAU}}`$ ist eine strukturelle FAU-Einheit (normative Klausel, Artikel oder Tabelle);
-- $`m \in \{\mathrm{BM25}, \mathrm{Dense}\}`$ bezeichnet heterogene Retrieval-Kanäle (spärlicher lexikalischer Index exakter Treffer und dichter semantischer Vektorindex HNSW);
-- $`\mathrm{rank}_m(d) \in \mathbb{N}_{\ge 1}`$ ist die Rangposition des Kandidaten $d$ in der Ausgabeliste des Kanals $m$ ($1$ für den ersten Rang; ist das Dokument im Kanalergebnis nicht vorhanden, wird $`\mathrm{rank}_m(d) = \infty`$ gesetzt, was einen Null-Summanden liefert);
-- $`k \in \mathbb{N}_{> 0}`$ — empirischer Glättungshyperparameter (kanonisch $k = 60$), der zufällige Rangsspitzen in einem Einzelkanal nivelliert;
-- $`\mathrm{RRF}(d) \in (0, \frac{2}{k+1}]`$ ist der aggregierte positionsbasierte Konsens-Score.
+- $d \in \mathcal{D}_{\mathrm{FAU}}$ ist eine strukturelle FAU-Einheit (normative Klausel, Artikel oder Tabelle);
+- $m \in \{\mathrm{BM25}, \mathrm{Dense}\}$ bezeichnet heterogene Retrieval-Kanäle (spärlicher lexikalischer Index exakter Treffer und dichter semantischer Vektorindex HNSW);
+- $\mathrm{rank}_m(d) \in \mathbb{N}_{\ge 1}$ ist die Rangposition des Kandidaten $d$ in der Ausgabeliste des Kanals $m$ ($1$ für den ersten Rang; ist das Dokument im Kanalergebnis nicht vorhanden, wird $\mathrm{rank}_m(d) = \infty$ gesetzt, was einen Null-Summanden liefert);
+- $k \in \mathbb{N}_{> 0}$ — empirischer Glättungshyperparameter (kanonisch $k = 60$), der zufällige Rangsspitzen in einem Einzelkanal nivelliert;
+- $\mathrm{RRF}(d) \in (0, \frac{2}{k+1}]$ ist der aggregierte positionsbasierte Konsens-Score.
 
 #### 3.5.1. Geschlossener Kreis der ingenieurtechnischen Berechnung des FAU-Semantikfensters
 
 1. **Steuerung von Laufzeit und Rechenfluss (Control Flow & Runtime Decisions):**
-   - Die Segmentierungs-Laufzeitumgebung überwacht den Zähler offener Anaphern $`B_{\mathrm{anaphora}}`$ und das Flag deontischer Unvollständigkeit $`F_{\mathrm{deontic}}`$. Solange $`B_{\mathrm{anaphora}} > 0`$ oder $`F_{\mathrm{deontic}} = \mathrm{true}`$, verharrt das gleitende Fenster im Zustand `EXPAND` und blockiert Übergaben an die Indizierungswarteschlange.
-   - Die Übergabe des Blocks an den Index (`FLUSH_FAU`) ist ausschließlich bei $`B_{\mathrm{anaphora}} = 0 \land F_{\mathrm{deontic}} = \mathrm{false}`$ gestattet.
-   - Erreicht das Fenster aufgrund übermäßig verschachtelter Formulierungen die harte Hardwaregrenze von $`L_{\mathrm{max}} = 2048`$ Tokens, ohne dass die Schließbedingungen eintreten, aktiviert die Laufzeit den Schutzstatus `DEGRADED_SPLIT`. In diesem Fall wird der Bruch am letzten Satztrennzeichen fixiert, ein Audit-Ereignis `WARN_ANAPHORA_DISRUPTED` erzeugt und der letzte Satz zwangsweise als Kontextpräfix in das Folgefenster kopiert.
-   - Bei der Kandidatenselektion aus dem Pool zur Übergabe an den Extraktor greift ein kombinierter Schwellenwert: Es werden maximal $`K_{\mathrm{pool}} = 20`$ Fragmente mit einem Score $`\mathrm{RRF}(d) \ge 0{,}025`$ übernommen. Gilt $`\max_{d} \mathrm{RRF}(d) < \tau_{\mathrm{min}}`$, bricht der Prozess mit dem Fehler `E_NO_CONFIDENT_RETRIEVAL` ab, was die Weiterleitung verrauschten Kontexts unterbindet.
+   - Die Segmentierungs-Laufzeitumgebung überwacht den Zähler offener Anaphern $B_{\mathrm{anaphora}}$ und das Flag deontischer Unvollständigkeit $F_{\mathrm{deontic}}$. Solange $B_{\mathrm{anaphora}} > 0$ oder $F_{\mathrm{deontic}} = \mathrm{true}$, verharrt das gleitende Fenster im Zustand `EXPAND` und blockiert Übergaben an die Indizierungswarteschlange.
+   - Die Übergabe des Blocks an den Index (`FLUSH_FAU`) ist ausschließlich bei $B_{\mathrm{anaphora}} = 0 \land F_{\mathrm{deontic}} = \mathrm{false}$ gestattet.
+   - Erreicht das Fenster aufgrund übermäßig verschachtelter Formulierungen die harte Hardwaregrenze von $L_{\mathrm{max}} = 2048$ Tokens, ohne dass die Schließbedingungen eintreten, aktiviert die Laufzeit den Schutzstatus `DEGRADED_SPLIT`. In diesem Fall wird der Bruch am letzten Satztrennzeichen fixiert, ein Audit-Ereignis `WARN_ANAPHORA_DISRUPTED` erzeugt und der letzte Satz zwangsweise als Kontextpräfix in das Folgefenster kopiert.
+   - Bei der Kandidatenselektion aus dem Pool zur Übergabe an den Extraktor greift ein kombinierter Schwellenwert: Es werden maximal $K_{\mathrm{pool}} = 20$ Fragmente mit einem Score $\mathrm{RRF}(d) \ge 0{,}025$ übernommen. Gilt $\max_{d} \mathrm{RRF}(d) < \tau_{\mathrm{min}}$, bricht der Prozess mit dem Fehler `E_NO_CONFIDENT_RETRIEVAL` ab, was die Weiterleitung verrauschten Kontexts unterbindet.
 2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
-   - Für einen Pool von $`N_{\mathrm{workers}} = 16`$ parallelen Extraktoren wird für jedes FAU-Fenster ein Ringpuffer der Größe $`L_{\mathrm{max}} \times S_{\mathrm{token}} = 2048 \times 64\,\text{Bytes} = 128\,\text{KB}`$ reserviert.
-   - Der Gesamtspeicherbedarf für alle parallelen Fenster beläuft sich auf $`16 \times 128\,\text{KB} = 2\,\text{MB}`$, was garantiert vollständig in den ultraschnellen L3-Cache moderner x86_64- oder ARM-Cortex-Prozessoren ($16\text{--}64\,\text{MB}$) passt. Dies gewährleistet eine latenzfreie Textverarbeitung ohne DRAM-Zugriffsverzögerungen bei einem Durchsatz von über $`1{,}4\,\text{GB/s}`$.
+   - Für einen Pool von $N_{\mathrm{workers}} = 16$ parallelen Extraktoren wird für jedes FAU-Fenster ein Ringpuffer der Größe $L_{\mathrm{max}} \times S_{\mathrm{token}} = 2048 \times 64\,\text{Bytes} = 128\,\text{KB}$ reserviert.
+   - Der Gesamtspeicherbedarf für alle parallelen Fenster beläuft sich auf $16 \times 128\,\text{KB} = 2\,\text{MB}$, was garantiert vollständig in den ultraschnellen L3-Cache moderner x86_64- oder ARM-Cortex-Prozessoren ($16\text{--}64\,\text{MB}$) passt. Dies gewährleistet eine latenzfreie Textverarbeitung ohne DRAM-Zugriffsverzögerungen bei einem Durchsatz von über $1{,}4\,\text{GB/s}$.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
    - Betrachtet wird die Analyse von Klausel 4.2 der Spezifikation eines Traktionsinverters nach ISO 26262 mit einem Gesamtumfang von 610 Tokens.
    - Naives festes Chunking mit 512 Tokens zerschneidet die Klausel beim 512. Token: Der erste Block enthält den Imperativ „Der Inverter muss die Spannung innerhalb von 10 ms abschalten“, während der zweite Block die kritische Ausnahme transportiert: „ausgenommen im Modus der dynamischen Notbremsung bei einer Statorwicklungstemperatur unter 120 °C“. Erhält die Inferenzmaschine lediglich den ersten Block, leitet sie fälschlich eine unbedingte Spannungsabschaltung ab, was im Prüfstandsversuch zum Ausfall der Lenkkraftunterstützung führt.
-   - Der FAU-Mechanismus erkennt die offene deontische Ausnahme ($`F_{\mathrm{deontic}} = \mathrm{true}`$) und hält das Fenster bis zum 610. Token offen ($`L = 610 \le L_{\mathrm{max}}`$). Bei einer ingenieurtechnischen Suchanfrage belegt der vollständig erhaltene Block Rang 2 im BM25-Kanal ($`\mathrm{rank}_{\mathrm{BM25}} = 2`$) und Rang 3 im HNSW-Kanal ($`\mathrm{rank}_{\mathrm{Dense}} = 3`$). Gemäß RRF-Formel mit $k = 60$:
+   - Der FAU-Mechanismus erkennt die offene deontische Ausnahme ($F_{\mathrm{deontic}} = \mathrm{true}$) und hält das Fenster bis zum 610. Token offen ($L = 610 \le L_{\mathrm{max}}$). Bei einer ingenieurtechnischen Suchanfrage belegt der vollständig erhaltene Block Rang 2 im BM25-Kanal ($\mathrm{rank}_{\mathrm{BM25}} = 2$) und Rang 3 im HNSW-Kanal ($\mathrm{rank}_{\mathrm{Dense}} = 3$). Gemäß RRF-Formel mit $k = 60$:
 
 ```math
 \mathrm{RRF}(d) = \frac{1}{60 + 2} + \frac{1}{60 + 3} = \frac{1}{62} + \frac{1}{63} \approx 0{,}01613 + 0{,}01587 = 0{,}03200 \ge 0{,}025.
 ```
 
-   - Dank des Werts $`0{,}03200 \ge 0{,}025`$ passiert der Chunk das Selektionstor und wird als integre deontische Norm mit allen Bedingungen und Ausnahmen an die Extraktion übergeben.
+   - Dank des Werts $0{,}03200 \ge 0{,}025$ passiert der Chunk das Selektionstor und wird als integre deontische Norm mit allen Bedingungen und Ausnahmen an die Extraktion übergeben.
 
 Auch die Wahl des Einbettungsmodells (*Embedding Model*) bedarf zwingend einer empirischen Validierung am eigenen Fachkorpus: Der vergleichende MTEB-Benchmark (*Massive Text Embedding Benchmark*) belegt, dass kein Modell über universelle Überlegenheit in sämtlichen Domänen verfügt [[13]](#src-13).
 
@@ -1164,19 +1164,19 @@ Der Import technischer Spezifikationen ist ausschließlich aus Repositorien und 
 #### 2. Symbolische Überprüfung auf semantische Vergiftung mittels SMT-Solver
 
 Alle extrahierten Regeln und Parameter unterliegen automatisierten Störungstests mithilfe eines formalen SMT-Solvers (Z3):
-- **Schwellenwert-Sensitivitätsprüfung (Threshold Sensitivity Check):** Der Algorithmus vergleicht die extrahierte Ansprechschwelle $`\theta_{\mathrm{new}}`$ mit dem Referenzstandard $`\theta_{\mathrm{std}}`$ und verifiziert die Einhaltung der sicheren Toleranzinvariante:
+- **Schwellenwert-Sensitivitätsprüfung (Threshold Sensitivity Check):** Der Algorithmus vergleicht die extrahierte Ansprechschwelle $\theta_{\mathrm{new}}$ mit dem Referenzstandard $\theta_{\mathrm{std}}$ und verifiziert die Einhaltung der sicheren Toleranzinvariante:
 
 ```math
 \Delta \theta = \lvert \theta_{\mathrm{new}} - \theta_{\mathrm{std}} \rvert \le \epsilon_{\mathrm{safety}}
 ```
 
 Parameter und mathematische Komponenten der Formel:
-- $`\theta_{\mathrm{new}} \in \mathbb{R}`$ — numerischer Wert des physikalischen oder Systemparameters, extrahiert aus dem neuen Spezifikationsartefakt;
-- $`\theta_{\mathrm{std}} \in \mathbb{R}`$ — im zertifizierten Basisstandard des Systems festgelegter Referenzwert des Parameters;
-- $`\epsilon_{\mathrm{safety}} \in \mathbb{R}_{\ge 0}`$ — durch das Sicherheitsprofil reglementierte maximal zulässige Verschiebung des Parameters;
-- $`\Delta \theta \in \mathbb{R}_{\ge 0}`$ — absolute Abweichung der vorgeschlagenen Änderung.
+- $\theta_{\mathrm{new}} \in \mathbb{R}$ — numerischer Wert des physikalischen oder Systemparameters, extrahiert aus dem neuen Spezifikationsartefakt;
+- $\theta_{\mathrm{std}} \in \mathbb{R}$ — im zertifizierten Basisstandard des Systems festgelegter Referenzwert des Parameters;
+- $\epsilon_{\mathrm{safety}} \in \mathbb{R}_{\ge 0}$ — durch das Sicherheitsprofil reglementierte maximal zulässige Verschiebung des Parameters;
+- $\Delta \theta \in \mathbb{R}_{\ge 0}$ — absolute Abweichung der vorgeschlagenen Änderung.
 
-- **Erkennung logischer Inversionen (Axiomatic Inversion Detection):** Der SMT-Solver prüft die gemeinsame Erfüllbarkeit des Regelkandidaten $`R_{\mathrm{candidate}}`$ mit dem unantastbaren axiomatischen Kern des Systems $`\mathcal{A}_{\mathrm{core}}`$. Wird die Unerfüllbarkeit $`\mathcal{A}_{\mathrm{core}} \cup \{ R_{\mathrm{candidate}} \} \vdash \bot`$ bewiesen, wird die Regel als logischer Sabotageversuch eingestuft.
+- **Erkennung logischer Inversionen (Axiomatic Inversion Detection):** Der SMT-Solver prüft die gemeinsame Erfüllbarkeit des Regelkandidaten $R_{\mathrm{candidate}}$ mit dem unantastbaren axiomatischen Kern des Systems $\mathcal{A}_{\mathrm{core}}$. Wird die Unerfüllbarkeit $\mathcal{A}_{\mathrm{core}} \cup \{ R_{\mathrm{candidate}} \} \vdash \bot$ bewiesen, wird die Regel als logischer Sabotageversuch eingestuft.
 
 #### 3. Obligatorisches Human-in-the-Loop-Qualifikationstor
 
@@ -1185,23 +1185,23 @@ Keine Regel, die die Ansteuerung von Notfall-Aktoren oder Änderungen von funkti
 #### 10.3.1. Geschlossener Kreis der ingenieurtechnischen Berechnung des Schutzes vor Wissensvergiftung
 
 1. **Steuerung von Laufzeit und Rechenfluss (Control Flow & Runtime Decisions):**
-   - Bei Verletzung der Ungleichung $`\Delta \theta \le \epsilon_{\mathrm{safety}}`$ oder Erkennung eines Widerspruchs zum axiomatischen Kern $`\mathcal{A}_{\mathrm{core}}`$ stoppt das Tor den Paketimport unverzüglich, markiert die Regel mit dem Urteil `POISON_DETECTED` (Fail-Closed), isoliert die Eingabedatei im Quarantäneverzeichnis und setzt eine Alarmmeldung der Priorität `CRITICAL_SECURITY_ALERT` an das zentrale SIEM-System (Security Information and Event Management) ab.
+   - Bei Verletzung der Ungleichung $\Delta \theta \le \epsilon_{\mathrm{safety}}$ oder Erkennung eines Widerspruchs zum axiomatischen Kern $\mathcal{A}_{\mathrm{core}}$ stoppt das Tor den Paketimport unverzüglich, markiert die Regel mit dem Urteil `POISON_DETECTED` (Fail-Closed), isoliert die Eingabedatei im Quarantäneverzeichnis und setzt eine Alarmmeldung der Priorität `CRITICAL_SECURITY_ALERT` an das zentrale SIEM-System (Security Information and Event Management) ab.
    - Passiert eine Regel die SMT-Prüfung erfolgreich und betrifft sie unkritische Allgemeinparameter (wie Textformatierungen oder Timeouts informativer Meldungen), erhält sie das Urteil `ACCEPT` und wird automatisch in den Release-Kandidaten integriert.
    - Betrifft die Regel kritische Systeme der funktionalen Sicherheit (ASIL C/D, SIL 3/4), setzt die Laufzeit eine `QUALIFIED_HOLD`-Sperre und wartet auf die kryptografische Autorisierung durch den zertifizierten Ingenieur im Regelkreis (Human-in-the-Loop).
 2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
-   - Zum Schutz vor Denial-of-Service-Angriffen (DoS) durch absichtlich erzeugte, exponentiell komplexe Formeln (SMT Hard Instances) wird der Z3-Prozess in einer Linux-Sandbox (cgroups v2 und seccomp-bpf) isoliert, mit einem strikten Ausführungszeitlimit von $`T_{\mathrm{smt\_timeout}} = 500\,\text{ms}`$ pro Regel und einem virtuellen Speicherlimit von $`M_{\mathrm{smt}} = 512\,\text{MB}`$.
+   - Zum Schutz vor Denial-of-Service-Angriffen (DoS) durch absichtlich erzeugte, exponentiell komplexe Formeln (SMT Hard Instances) wird der Z3-Prozess in einer Linux-Sandbox (cgroups v2 und seccomp-bpf) isoliert, mit einem strikten Ausführungszeitlimit von $T_{\mathrm{smt\_timeout}} = 500\,\text{ms}$ pro Regel und einem virtuellen Speicherlimit von $M_{\mathrm{smt}} = 512\,\text{MB}$.
    - Die Überschreitung eines dieser Limits wird als Versuch der Ressourcenerschöpfung gewertet (`E_SMT_RESOURCE_EXHAUSTION`), was zum sofortigen Zwangsabbruch des Prozesses (`SIGKILL`) und zur Zurückweisung der Regel führt.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
    - Ausgangsszenario: Betrachtet wird das automatisierte Update der Wissensbasis für die Traktionswechselrichter-Steuerung eines Elektrofahrzeugs gemäß ISO 26262 (ASIL D).
-   - Der zertifizierte Basisstandard definiert die Schutzabschaltschwelle bei einer Hochvolt-Zwischenkreisspannung von $`\theta_{\mathrm{std}} = 400\,\mathrm{V}`$ mit einer Sicherheitstoleranz von $`\epsilon_{\mathrm{safety}} = 5\,\mathrm{V}`$ (Arbeitsauslösebereich $395\text{--}405\,\mathrm{V}$).
-   - Ein Angreifer kompromittiert eine inoffizielle Errata-Mitteilung und schleust eine manipulierte Modifikation ein, die die Abschaltschwelle auf $`\theta_{\mathrm{new}} = 435\,\mathrm{V}`$ anhebt, um eine Schutzdegradation und den thermischen Durchbruch der Invertertransistoren zu provozieren.
+   - Der zertifizierte Basisstandard definiert die Schutzabschaltschwelle bei einer Hochvolt-Zwischenkreisspannung von $\theta_{\mathrm{std}} = 400\,\mathrm{V}$ mit einer Sicherheitstoleranz von $\epsilon_{\mathrm{safety}} = 5\,\mathrm{V}$ (Arbeitsauslösebereich $395\text{--}405\,\mathrm{V}$).
+   - Ein Angreifer kompromittiert eine inoffizielle Errata-Mitteilung und schleust eine manipulierte Modifikation ein, die die Abschaltschwelle auf $\theta_{\mathrm{new}} = 435\,\mathrm{V}$ anhebt, um eine Schutzdegradation und den thermischen Durchbruch der Invertertransistoren zu provozieren.
    - Der SMT-Solver berechnet die Abweichungsdelta:
 
 ```math
 \Delta \theta = \lvert 435 - 400 \rvert = 35\,\mathrm{V}.
 ```
 
-   - Da $`35\,\mathrm{V} > 5\,\mathrm{V}`$, ist die Bedingung $`\Delta \theta \le \epsilon_{\mathrm{safety}}`$ grob verletzt. Der Solver generiert den formalen Beweis der Unerfüllbarkeit des sicheren Betriebs (`UNSAT`).
+   - Da $35\,\mathrm{V} > 5\,\mathrm{V}$, ist die Bedingung $\Delta \theta \le \epsilon_{\mathrm{safety}}$ grob verletzt. Der Solver generiert den formalen Beweis der Unerfüllbarkeit des sicheren Betriebs (`UNSAT`).
    - Das Zulassungstor weist der Regel den Status `POISON_DETECTED` zu, blockiert deren Aufnahme in die Wissensbasis, schützt damit Hardware im Wert von $45\,000\,\text{EUR}$ vor physischer Zerstörung und generiert einen kryptografisch signierten Bericht über den Vergiftungsversuch für das Cybersicherheitsteam.
 
 Kandidaten haben die Zulassungsregeln erhalten und die Schutzbarrieren gegen Wissensvergiftung passiert, doch es verändern sich nicht nur Fakten: Der Wissensingenieur modifiziert auch Konzepte und Axiome, anhand derer Fakten interpretiert werden. Vor der Beantwortung von Anfragen muss der Ontologiekandidat als eigenständiges Artefakt validiert werden.
@@ -1353,7 +1353,7 @@ Diese Gegenüberstellung kontrastiert eine mathematisch prüfbare Inferenzarchit
 > *Disclaimer:* Diese Diskussion ist eine simulierte heuristische Synthese, die ausschließlich im wissenschaftlich-pädagogischen Rahmen dieser Monografie auf Basis der veröffentlichten Werke, Monografien und Vorträge der eingeladenen Forscher generiert wurde. Sie stellt weder ein wörtliches Zitat noch eine reale Äußerung lebender Personen dar, sondern dient als Instrument des kritischen Rationalismus zur Falsifikation der Hypothesen des Autors. Jeder Gesprächspartner debattiert direkt und ausschließlich mit dem Autor der Monografie (Mykola Fedchyk).
 
 **These des Kapitels (Mykola Fedchyk):**  
-Der Aufbau einer beweisbaren technischen Wissensbasis erfordert die Abkehr von naivem statischem Chunking zugunsten gleitender semantischer Annotationseinheiten (FAU) nach dem Gesetz von Ashby, die bytegenaue Erdung von Fakten über das Tupel $`\mathcal{G}`$, einen multimodalen Speicher sowie ein mehrstufiges Popper’sches Zulassungstor mit SMT-Prüfung zum Schutz vor epistemischer Wissensvergiftung (MITRE ATLAS).
+Der Aufbau einer beweisbaren technischen Wissensbasis erfordert die Abkehr von naivem statischem Chunking zugunsten gleitender semantischer Annotationseinheiten (FAU) nach dem Gesetz von Ashby, die bytegenaue Erdung von Fakten über das Tupel $\mathcal{G}$, einen multimodalen Speicher sowie ein mehrstufiges Popper’sches Zulassungstor mit SMT-Prüfung zum Schutz vor epistemischer Wissensvergiftung (MITRE ATLAS).
 
 **Dialog mit Oren Etzioni: Planetare Open IE und schwebende Annotationseinheiten (FAU)**
 
@@ -1363,7 +1363,7 @@ Der Aufbau einer beweisbaren technischen Wissensbasis erfordert die Abkehr von n
 - **Mykola Fedchyk:**  
   *„Herr Professor Oren Etzioni, Open IE ist ein hervorragendes Paradigma für Allzweck-Suchmaschinen, bei denen 80 % Präzision ein akzeptabler Kompromiss sind. Doch in der Kernkraftwerkstechnik, Eisenbahnsicherung oder Avionik führt eine einzige halluzinierte oder unvollständige semantische Relation zu fatalen Unfällen mit Menschenverlusten!  
   Nach W. Ross Ashbys kybernetischem Gesetz der erforderlichen Varietät muss das Steuerungssystem der Extraktion mindestens dieselbe strukturelle Varietät aufweisen wie das normative Quelldokument. Deshalb haben wir festes Chunking verworfen und gleitende Einheiten FAU geschaffen, die das visuelle Layout technischer Tabellen, Graphen und Absätze respektieren.  
-  Jeder zugelassene Fakt ist untrennbar an das Tupel $`\mathcal{G} = \langle \mathrm{DocID}, \mathrm{SHA256}, \mathrm{StartByte}, \mathrm{EndByte}, \mathrm{Predicate} \rangle`$ gekoppelt. Fehlt einem Faktkandidaten der physikalische Byte-Nachweis im Primärdokument, wird er verworfen. Wir opfern spekulativen Durchsatz bewusst zugunsten unerschütterlicher Beweisintegrität.“*
+  Jeder zugelassene Fakt ist untrennbar an das Tupel $\mathcal{G} = \langle \mathrm{DocID}, \mathrm{SHA256}, \mathrm{StartByte}, \mathrm{EndByte}, \mathrm{Predicate} \rangle$ gekoppelt. Fehlt einem Faktkandidaten der physikalische Byte-Nachweis im Primärdokument, wird er verworfen. Wir opfern spekulativen Durchsatz bewusst zugunsten unerschütterlicher Beweisintegrität.“*
 
 **Fortsetzung des Dialogs mit Oren Etzioni: Ontologie-Evolution und zusammengesetzte Relationen in technischen Normen**
 
@@ -1371,7 +1371,7 @@ Der Aufbau einer beweisbaren technischen Wissensbasis erfordert die Abkehr von n
   *„Aber wie steht es um kompositionelle und domänenübergreifende Relationen, die a priori in Ihrer vordefinierten Ontologie fehlen? Open IE extrahiert beliebige relationale Phrasen direkt aus unstrukturiertem Text ('X inhibiert vorübergehend Y unter Bedingung Z'), was die Entdeckung unvorhergesehener physikalischer Wechselwirkungen zwischen Subsystemen ermöglicht. Wenn Ihre Extraktionspipeline die vorherige formale Spezifikation jedes Prädikats in OWL/RDF vorschreibt, verwerfen Sie unweigerlich kritische empirische Befunde und seltene Fehlerzustände von Komponenten, die von Ingenieuren in nicht-standardisierter Sprache beschrieben werden.“*
 
 - **Mykola Fedchyk:**  
-  *„Herr Professor Oren Etzioni, das System verwirft unbekannte Relationen weder stillschweigend, noch lässt es sie leichtfertig in den Entscheidungskern der Laufzeit ein. Nicht erkannte Konstruktionen werden mit dem Status `UNRECOGNIZED_RELATION_CANDIDATE` markiert, wobei die vollständige Byte-Custody $`\mathcal{G}`$ gewahrt bleibt, und in eine isolierte Triage-Warteschlange für Ingenieure geleitet (*Discovery Staging Buffer*).  
+  *„Herr Professor Oren Etzioni, das System verwirft unbekannte Relationen weder stillschweigend, noch lässt es sie leichtfertig in den Entscheidungskern der Laufzeit ein. Nicht erkannte Konstruktionen werden mit dem Status `UNRECOGNIZED_RELATION_CANDIDATE` markiert, wobei die vollständige Byte-Custody $\mathcal{G}$ gewahrt bleibt, und in eine isolierte Triage-Warteschlange für Ingenieure geleitet (*Discovery Staging Buffer*).  
   Dort isoliert ein linguistischer Parser das syntaktische Skelett und generiert einen Vorschlag zur Ontologieerweiterung via Pull Request an das Wissens-Repository.  
   Doch solange ein Kandidaten-Prädikat keinen streng typisierten Vertrag, keine geprüften SI-Einheiten und keine formale Freigabe durch einen Zertifizierungsingenieur erhalten hat, besitzt es keinerlei Befugnis, die Regelausführung in autonomen Fahrzeugen oder der Avionik zu beeinflussen. Wir unterstützen die Evolution des Wissens vollauf, jedoch ausschließlich über einen disziplinierten Release-Zyklus, niemals über das Chaos unkontrollierter Vektorcluster.“*
 
@@ -1391,12 +1391,12 @@ Der Aufbau einer beweisbaren technischen Wissensbasis erfordert die Abkehr von n
   *„In dynamischen Themenmodellen (Dynamic Topic Models) verfolgen wir, wie die Bedeutung technischer Begriffe über Jahrzehnte hinweg kontinuierlich driftet: Das operative Konzept eines 'sicheren Zustands' in Automobilstandards der 1990er Jahre unterscheidet sich grundlegend von seiner Wortverteilung in der ISO 26262:2018. Ihre Popper’sche Dichotomie deutet jeden Parameter- oder Kontextdrift als feindliche Vergiftung oder semantische Anomalie. Blockiert diese diskrete Rigidität nicht die natürliche Evolution der normativen Sprache beim Übergang zwischen Standardgenerationen?“*
 
 - **Mykola Fedchyk:**  
-  *„Herr Professor David Blei, wir erfassen die Begriffsevolution nicht durch statistisches Verwischen von Wahrscheinlichkeiten, sondern durch strikte bitemporale Gültigkeit $`[T_{\mathrm{valid\_start}}, T_{\mathrm{valid\_end}}]`$ und versionierte Namensräume.  
+  *„Herr Professor David Blei, wir erfassen die Begriffsevolution nicht durch statistisches Verwischen von Wahrscheinlichkeiten, sondern durch strikte bitemporale Gültigkeit $[T_{\mathrm{valid\_start}}, T_{\mathrm{valid\_end}}]$ und versionierte Namensräume.  
   Wird eine neue Fassung der ISO 26262 ratifiziert, 'trainiert' das Expertensystem nicht etwa Themenverteilungen um und überschreibt alte Axiome. Die frühere Definition verbleibt unverändert in ihrem historischen Zeitschnitt, um bereits ausgelieferte und zertifizierte Fahrzeuge abzusichern, während die novellierte Norm als unabhängiges, unveränderliches RDF-Quad mit Bindung an die Neufassung registriert wird.  
-  Der SMT-Solver prüft die Konsistenz und Erfüllbarkeit der Fakten strikt innerhalb des abgegrenzten Ziel-Release-Kontexts $`S_v`$. Dadurch schließen wir das Risiko temporaler Kontamination vollständig aus, bei der neuere Bestimmungen ohne ingenieurtechnische Neuqualifizierung fälschlicherweise auf Retrofit-Systeme angewendet würden.“*
+  Der SMT-Solver prüft die Konsistenz und Erfüllbarkeit der Fakten strikt innerhalb des abgegrenzten Ziel-Release-Kontexts $S_v$. Dadurch schließen wir das Risiko temporaler Kontamination vollständig aus, bei der neuere Bestimmungen ohne ingenieurtechnische Neuqualifizierung fälschlicherweise auf Retrofit-Systeme angewendet würden.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
-Die Konstruktion einer beweisbaren technischen Wissensbasis ist ein streng verifizierter Prozess: Gleitende Annotationseinheiten (FAU) bewahren die topologische Struktur normativer Spezifikationen, die bytegenaue Verankerung $`\mathcal{G}`$ sichert die lückenlose Beweiskette, und das Popper’sche Zulassungstor mit SMT-Filterung garantiert die mathematische Immunität der Wissensbasis gegen Halluzinationen und epistemische Vergiftung.
+Die Konstruktion einer beweisbaren technischen Wissensbasis ist ein streng verifizierter Prozess: Gleitende Annotationseinheiten (FAU) bewahren die topologische Struktur normativer Spezifikationen, die bytegenaue Verankerung $\mathcal{G}$ sichert die lückenlose Beweiskette, und das Popper’sche Zulassungstor mit SMT-Filterung garantiert die mathematische Immunität der Wissensbasis gegen Halluzinationen und epistemische Vergiftung.
 
 ## Fazit
 

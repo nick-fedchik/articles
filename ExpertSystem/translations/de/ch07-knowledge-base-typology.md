@@ -335,10 +335,10 @@ Bedeutung der Notation:
 
 - $\mathrm{Assertion}(S,R,V)$ repräsentiert die Tatsachenbehauptung „Subjekt $S$ steht über Relation $R$ in Beziehung zu Wert $V$“;
 - $\leftarrow$ indiziert die normative Bindung der Behauptung an die nachfolgende Liste stützender Primärbelege;
-- $`D_i`$ bezeichnet das Quelldokument inklusive exakter Versionskennung, $`\mathrm{span}_i`$ markiert die exakten Textkoordinaten im Dokument, und $`h_i`$ ist der kryptografische Hashwert dieses Textfragments;
+- $D_i$ bezeichnet das Quelldokument inklusive exakter Versionskennung, $\mathrm{span}_i$ markiert die exakten Textkoordinaten im Dokument, und $h_i$ ist der kryptografische Hashwert dieses Textfragments;
 - $k$ ist die Anzahl unabhängiger Belege, die diese exakte Aussage stützen.
 
-Identische Tripel $(S,R,V)$ werden unter Akkumulation ihrer Zitate zusammengefasst; divergierende Werte $`V_1, V_2, \dots`$ bleiben nebeneinander persistent erhalten. Erst zur Abfragezeit evaluiert die Inferenzmaschine den gültigen Wert unter Berücksichtigung von Dokumentenhierarchie, Zeitstempel, Gültigkeitslinie und Zieljurisdiktion. Liegt ein unauflösbarer Widerspruch vor, erzeugt das System eine explizite Konfliktwarnung anstelle einer stillschweigenden Mehrheitsglättung.
+Identische Tripel $(S,R,V)$ werden unter Akkumulation ihrer Zitate zusammengefasst; divergierende Werte $V_1, V_2, \dots$ bleiben nebeneinander persistent erhalten. Erst zur Abfragezeit evaluiert die Inferenzmaschine den gültigen Wert unter Berücksichtigung von Dokumentenhierarchie, Zeitstempel, Gültigkeitslinie und Zieljurisdiktion. Liegt ein unauflösbarer Widerspruch vor, erzeugt das System eine explizite Konfliktwarnung anstelle einer stillschweigenden Mehrheitsglättung.
 
 > [!NOTE]
 > **Autorenprinzip der verlustfreien evidenzbasierten Zitataggregation für widersprüchliche Fakten**
@@ -409,7 +409,7 @@ v(\mathrm{parent}(x),s), & \text{якщо дозволено успадкува�
 Erläuterung der Parameter:
 
 - $x$ bezeichnet die Objektinstanz, und $s$ identifiziert den abzufragenden Slot;
-- $`v_{\text{явне}}(x,s)`$ ist der explizit an der Instanz $x$ definierte Wert;
+- $v_{\text{явне}}(x,s)$ ist der explizit an der Instanz $x$ definierte Wert;
 - $\mathrm{parent}(x)$ referenziert den übergeordneten Eltern-Frame, und $v(\mathrm{parent}(x),s)$ liefert den dort hinterlegten Standardwert;
 - $\bot$ kennzeichnet den undefinierten Zustand (Wert unbekannt);
 - Die Fallunterscheidung definiert die Priorität: Explizite Belegungen überschreiben ererbte Standardwerte; fehlen beide, resultiert der Unbekannt-Status $\bot$.
@@ -428,7 +428,7 @@ Interpretation der Formeln:
 
 - $\textsf{SafetyRequirement}$ bezeichnet das Konzept der Sicherheitsanforderungen, $\textsf{Requirement}$ die Oberklasse aller Systemanforderungen;
 - $\sqsubseteq$ ist der Subsumtionsoperator (Subklassenbeziehung);
-- $`\exists\,\textsf{verifiedBy}.\textsf{VerificationTest}`$ definiert die Klasse aller Individuen, die über mindestens eine Kante `verifiedBy` mit einer Instanz der Klasse $\textsf{VerificationTest}$ verknüpft sind;
+- $\exists\,\textsf{verifiedBy}.\textsf{VerificationTest}$ definiert die Klasse aller Individuen, die über mindestens eine Kante `verifiedBy` mit einer Instanz der Klasse $\textsf{VerificationTest}$ verknüpft sind;
 - $\exists$ bezeichnet die existenzielle Quantifizierung über die Relation, und der Punkt trennt die Eigenschaft vom Zielkonzept.
 
 Das erste Axiom besagt, dass jede Sicherheitsanforderung eine Anforderung ist. Das zweite Axiom postuliert, dass für jede Sicherheitsanforderung mindestens ein Verifikationstest existieren muss. Unter der Open-World-Semantik von OWL (*Web Ontology Language*) bleibt eine Wissensbasis auch dann widerspruchsfrei, wenn zu REQ-42 noch kein konkreter Test im Graphen hinterlegt ist: Die Logik nimmt an, dass ein solcher Test in der realen Welt existiert, dem System aber noch nicht mitgeteilt wurde (anonymer Zeuge). Das Fehlen des Tripels `REQ-42 verifiedBy TEST-17` löst daher keinen logischen Fehler aus. Soll das Fehlen dieser Kante am Release-Gate jedoch als Verstoß gewertet werden, bedarf es geschlossener Validierungsregeln, wie sie der W3C-Standard SHACL (*Shapes Constraint Language*) bereitstellt [[3]](#src-3).
@@ -628,18 +628,18 @@ Bei der Bearbeitung einer neuen Anforderung identifiziert das CBR-Modul CASE-008
 Bestandteile der Bewertungsfunktion:
 
 - $q$ bezeichnet das aktuelle Problem (Query), und $c$ repräsentiert den historischen Fall (Case);
-- $m$ ist die Anzahl betrachteter Attribute, $j$ der Attributindex, und $`w_j`$ das zugehörige Gewicht;
-- $`\mathrm{sim}_j(q_j,c_j)\in[0,1]`$ ist die lokale Ähnlichkeitsfunktion (z. B. exakter String-Abgleich, normalisierte euklidische Distanz für Spannungswerte oder Kosinusähnlichkeit);
-- $`g(q,c)\in\{0,1\}`$ ist das binäre Anwendbarkeits-Gateway: Eine logische 1 autorisiert den Vergleich, eine 0 annulliert die Ähnlichkeit vollständig (Hard Constraint);
+- $m$ ist die Anzahl betrachteter Attribute, $j$ der Attributindex, und $w_j$ das zugehörige Gewicht;
+- $\mathrm{sim}_j(q_j,c_j)\in[0,1]$ ist die lokale Ähnlichkeitsfunktion (z. B. exakter String-Abgleich, normalisierte euklidische Distanz für Spannungswerte oder Kosinusähnlichkeit);
+- $g(q,c)\in\{0,1\}$ ist das binäre Anwendbarkeits-Gateway: Eine logische 1 autorisiert den Vergleich, eine 0 annulliert die Ähnlichkeit vollständig (Hard Constraint);
 - Die gewichtete Summe wird durch die Summe der Gewichte normalisiert und durch $g(q,c)$ maskiert.
 
 **Laufzeitsteuerung und ingenieurtechnische Schwellenwerte:**
-- **Automatisierte Wiederverwendung:** Gilt $`\mathrm{sim}(q, c) \ge \tau_{\mathrm{reuse}} = 0{,}85`$ und $g(q, c) = 1$, generiert die Engine automatisch einen adaptierten Verifikationsplan;
+- **Automatisierte Wiederverwendung:** Gilt $\mathrm{sim}(q, c) \ge \tau_{\mathrm{reuse}} = 0{,}85$ und $g(q, c) = 1$, generiert die Engine automatisch einen adaptierten Verifikationsplan;
 - **Qualifizierte Eskalation (`QUALIFIED_ANALOGY`):** Liegt der Wert im Intervall $0{,}60 \le \mathrm{sim}(q, c) < 0{,}85$, wird der Fall dem leitenden Ingenieur mit expliziter Ausweisung der abweichenden Parameter zur manuellen Adaption vorgelegt;
 - **Ablehnung der Analogie (`REJECT`):** Bei $\mathrm{sim}(q, c) < 0{,}60$ oder $g(q, c) = 0$ blockiert der Algorithmus die Übernahme historischer Entwürfe und erzwingt eine Neuentwicklung aus First Principles.
 
 **Numerisches Berechnungsbeispiel:**
-Das System vergleicht eine neue Sicherheitsanforderung $q$ (Spannungsüberwachung) mit Fall $c$. Attribute: ASIL-Klasse ($`w_1 = 0{,}4`$, exakte Übereinstimmung $`\mathrm{sim}_1 = 1{,}0`$), Spannungsbereich ($`w_2 = 0{,}3`$, Ähnlichkeit $`\mathrm{sim}_2 = 0{,}8`$) und Busprotokoll ($`w_3 = 0{,}3`$, Teilübereinstimmung $`\mathrm{sim}_3 = 0{,}5`$). Das Gateway ist erfüllt: $g(q, c) = 1$.
+Das System vergleicht eine neue Sicherheitsanforderung $q$ (Spannungsüberwachung) mit Fall $c$. Attribute: ASIL-Klasse ($w_1 = 0{,}4$, exakte Übereinstimmung $\mathrm{sim}_1 = 1{,}0$), Spannungsbereich ($w_2 = 0{,}3$, Ähnlichkeit $\mathrm{sim}_2 = 0{,}8$) und Busprotokoll ($w_3 = 0{,}3$, Teilübereinstimmung $\mathrm{sim}_3 = 0{,}5$). Das Gateway ist erfüllt: $g(q, c) = 1$.
 ```math
 \mathrm{sim}(q, c) = 1 \cdot \frac{0{,}4 \cdot 1{,}0 + 0{,}3 \cdot 0{,}8 + 0{,}3 \cdot 0{,}5}{0{,}4 + 0{,}3 + 0{,}3} = \frac{0{,}40 + 0{,}24 + 0{,}15}{1{,}0} = 0{,}79
 ```
@@ -683,7 +683,7 @@ flowchart TB
 
 ## 11. Constraint-Basen: Raum zulässiger Konfigurationen (CSP)
 
-Eine Constraint-Wissensbasis beschreibt ein technisches System nicht über starre Abläufe, sondern über Variablen, deren Definitionsbereiche und relationale Randbedingungen (*Constraints*), die eine gültige Konfiguration niemals verletzen darf: Leistungsbudgets, Pinbelegungen, Temperaturbereiche, Bus-Bandbreiten oder Zertifizierungskriterien. Für $n$ Entscheidungsvariablen $`x_1,\dots,x_n`$ mit Domänen $`D_1,\dots,D_n`$ lautet das formale Erfüllbarkeitsproblem (*Constraint Satisfaction Problem*, CSP):
+Eine Constraint-Wissensbasis beschreibt ein technisches System nicht über starre Abläufe, sondern über Variablen, deren Definitionsbereiche und relationale Randbedingungen (*Constraints*), die eine gültige Konfiguration niemals verletzen darf: Leistungsbudgets, Pinbelegungen, Temperaturbereiche, Bus-Bandbreiten oder Zertifizierungskriterien. Für $n$ Entscheidungsvariablen $x_1,\dots,x_n$ mit Domänen $D_1,\dots,D_n$ lautet das formale Erfüllbarkeitsproblem (*Constraint Satisfaction Problem*, CSP):
 
 ```math
 \text{знайти } \mathbf{x}\in D_1\times\dots\times D_n\ \text{ таке, що }\ \bigwedge_{i=1}^{k}C_i(\mathbf{x})=\text{істина}
@@ -691,8 +691,8 @@ Eine Constraint-Wissensbasis beschreibt ein technisches System nicht über starr
 
 Mathematische Struktur:
 
-- $`\mathbf{x} = (x_1, \dots, x_n)`$ ist der Vektor der Variablenbelegungen, $`D_i`$ der zulässige Wertebereich der Variablen $`x_i`$, und das kartesische Produkt $`D_1\times\dots\times D_n`$ der gesamte kombinatorische Suchraum;
-- $`C_i(\mathbf{x})`$ repräsentiert die $i$-te Randbedingung, $k$ ist die Gesamtzahl der Constraints, und $\text{істина}$ (True) indiziert deren Erfüllung;
+- $\mathbf{x} = (x_1, \dots, x_n)$ ist der Vektor der Variablenbelegungen, $D_i$ der zulässige Wertebereich der Variablen $x_i$, und das kartesische Produkt $D_1\times\dots\times D_n$ der gesamte kombinatorische Suchraum;
+- $C_i(\mathbf{x})$ repräsentiert die $i$-te Randbedingung, $k$ ist die Gesamtzahl der Constraints, und $\text{істина}$ (True) indiziert deren Erfüllung;
 - Die Konjunktion $\bigwedge$ erzwingt die simultane Gültigkeit sämtlicher Randbedingungen;
 - Der Operator $\in$ bindet die Belegung an den Raum der zulässigen Konfigurationen.
 
@@ -770,8 +770,8 @@ Eine Kante in einem Bayesschen Netz repräsentiert eine statistische Abhängigke
 Komponenten der Metrik:
 
 - $N$ ist die Anzahl der bewerteten Prognosen, $i$ der Laufindex;
-- $`p_i\in[0,1]`$ ist die vom Modell vorhergesagte Wahrscheinlichkeit des Ereignisses im $i$-ten Test;
-- $`y_i\in\{0,1\}`$ ist das tatsächliche empirische Ergebnis (1 bei Eintritt, 0 bei Nichteintritt);
+- $p_i\in[0,1]$ ist die vom Modell vorhergesagte Wahrscheinlichkeit des Ereignisses im $i$-ten Test;
+- $y_i\in\{0,1\}$ ist das tatsächliche empirische Ergebnis (1 bei Eintritt, 0 bei Nichteintritt);
 - Der Brier-Score ist das mittlere quadratische Residuum; ein Wert von 0 signalisiert perfekte Prognosen, 0,25 entspricht uninformiertem Raten.
 
 **Laufzeitsteuerung und Kalibrierungsschwellen:**
@@ -801,13 +801,13 @@ Eine unscharfe Wissensbasis (*Fuzzy Knowledge Base*) formalisiert kontinuierlich
 Funktionscharakteristik:
 
 - $g$ quantifiziert die Verifikationslücke auf einer Skala von 0 bis 10;
-- $`\mu_{\text{високий}}(g)\in[0,1]`$ drückt den Grad der Zugehörigkeit zum Konzept „Hohes Risiko“ aus;
+- $\mu_{\text{високий}}(g)\in[0,1]$ drückt den Grad der Zugehörigkeit zum Konzept „Hohes Risiko“ aus;
 - Für $g \le 5$ ist das Risiko vernachlässigbar (Wert 0), ab $g \ge 9$ gilt es als vollumfänglich hoch (Wert 1);
 - Dazwischen skaliert der Term $\frac{g-5}{4}$ die Unsicherheit linear zwischen 0 und 1.
 
 **Laufzeitsteuerung und operativer $\alpha$-Schnitt:**
-- Bei $`\mu_{\text{високий}}(g) \ge \alpha_{\mathrm{cut}} = 0{,}70`$ blockiert die Pipeline das Release automatisch unter Ausgabe der Statusmeldung `RELEASE_BLOCKED_HIGH_RISK`;
-- Liegt $`\mu_{\text{високий}}(g) < 0{,}30`$, wird die Freigabe erteilt;
+- Bei $\mu_{\text{високий}}(g) \ge \alpha_{\mathrm{cut}} = 0{,}70$ blockiert die Pipeline das Release automatisch unter Ausgabe der Statusmeldung `RELEASE_BLOCKED_HIGH_RISK`;
+- Liegt $\mu_{\text{високий}}(g) < 0{,}30$, wird die Freigabe erteilt;
 - Im Bereich $[0{,}30; 0{,}70)$ erzwingt das System die Freigabe durch den Functional Safety Manager.
 
 **Berechnungsbeispiel:**
@@ -815,7 +815,7 @@ Für REQ-42 beträgt die Nachweislücke vor Ausführung von TEST-17 $g = 8$.
 ```math
 \mu_{\text{високий}}(8) = \frac{8-5}{4} = \frac{3}{4} = 0{,}75
 ```
-Wegen $`\mu_{\text{високий}}(8) = 0{,}75 \ge \alpha_{\mathrm{cut}} = 0{,}70`$ blockiert das System den Releaseprozess unmittelbar.
+Wegen $\mu_{\text{високий}}(8) = 0{,}75 \ge \alpha_{\mathrm{cut}} = 0{,}70$ blockiert das System den Releaseprozess unmittelbar.
 
 ## 14. Dokumenten- und Vektorindizes: Kandidatenabruf versus formaler Beweis
 
@@ -828,9 +828,9 @@ Ein Dokumentenindex sucht Fragmente nach Schlagwörtern und Feldern (BM25), wäh
 Konstruktion des Einbettungsvektors:
 
 - $x$ ist das Textfragment, $n$ die Tokenanzahl, $i$ der Tokenindex;
-- $`h_i`$ bezeichnet den Vektor des Tokens $i$, und die Maske $`m_i \in \{0,1\}`$ filtert Padding-Tokens aus;
+- $h_i$ bezeichnet den Vektor des Tokens $i$, und die Maske $m_i \in \{0,1\}$ filtert Padding-Tokens aus;
 - $\bar h(x)$ ist der unnormalisierte Schwerpunktvektor;
-- Division durch die euklidische Norm $`\lVert\bar h(x)\rVert_2`$ transformiert den Vektor auf die Einheitskugel ($e(x)$).
+- Division durch die euklidische Norm $\lVert\bar h(x)\rVert_2$ transformiert den Vektor auf die Einheitskugel ($e(x)$).
 
 Für normalisierte Vektoren entspricht die Kosinusähnlichkeit dem Skalarprodukt $e(q)^{\mathsf T}e(d) \in [-1, 1]$. Annäherungsverfahren wie HNSW (*Hierarchical Navigable Small World* Graphen [[19]](#src-19)) beschleunigen die Vektorsuche massiv, führen jedoch eine Fehlerrate über den Recall ein. Das Zusammenführen lexikalischer und semantischer Suchergebnisse erfolgt über Rangfusionsverfahren wie Reciprocal Rank Fusion (RRF [[20]](#src-20); [Kapitel 6](ch06-applied-mathematics-for-expert-systems.md)). Reranking-Modelle mit Late Interaction (ColBERTv2 [[21]](#src-21)) verfeinern die Relevanz weiter, können jedoch Berechtigungen, Versionen und Gültigkeiten prinzipbedingt nicht verifizieren.
 
@@ -916,7 +916,7 @@ Der Typ `deterministic_under_snapshot` unterscheidet sich fundamental von einer 
 
 Aus den praktischen Erfahrungen des Autors ergibt sich eine Mahnung zur Nüchternheit: Im vom Autor entwickelten Expertensystem operieren ein deterministischer semantischer Parser, strikte Provenienzmetadaten und hybrides Retrieval via BM25 und Vektorsuche mit Late Fusion stabil im Produktionseinsatz. Dies rechtfertigt jedoch noch nicht die Bezeichnung als vollautonome neuro-symbolische Wissensbasis: Vollständige Reasoner, SMT-Solver und lückenlose automatische Beweisbäume befinden sich in realen Industrieumgebungen oft noch in der Härtungsphase.
 
-Ein fundamentales Sicherheitsaxiom betrifft den Informationsfluss: Die Sicherheitsstufe einer abgeleiteten Konklusion darf niemals geringer sein als die restriktivste Stufe ihrer Prämissen. Nach dem Sicherheitsgitter-Modell von Dorothy Denning [[24]](#src-24) gilt für eine Konklusion $h\theta$ aus Prämissen $`b_i\theta`$:
+Ein fundamentales Sicherheitsaxiom betrifft den Informationsfluss: Die Sicherheitsstufe einer abgeleiteten Konklusion darf niemals geringer sein als die restriktivste Stufe ihrer Prämissen. Nach dem Sicherheitsgitter-Modell von Dorothy Denning [[24]](#src-24) gilt für eine Konklusion $h\theta$ aus Prämissen $b_i\theta$:
 
 ```math
 L(h\theta)=\bigsqcup_{i}L(b_i\theta)
@@ -1074,13 +1074,13 @@ Die Theorie verteilter Datenbanksysteme unterscheidet primäre und abgeleitete h
 - **Vertikale Fragmentierung:** Ein Fragment enthält eine Teilmenge der Attribute für alle Entitäten (z. B. Trennung von Fakten, Vollzitaten, Vokabular und Indizes wie in [Kapitel 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md));
 - **Abgeleitete horizontale Fragmentierung:** Die Fragmentierung einer abhängigen Struktur folgt der Partitionierung der übergeordneten Entität (z. B. Zitate residieren im selben Fragment wie die von ihnen gestützte Aussage).
 
-Jede mathematisch korrekte Fragmentierung muss drei Invarianten erfüllen. Für die Wissensmenge $K$ und Fragmente $`F_1,\dots,F_n`$ gilt:
+Jede mathematisch korrekte Fragmentierung muss drei Invarianten erfüllen. Für die Wissensmenge $K$ und Fragmente $F_1,\dots,F_n$ gilt:
 
 ```math
 K \subseteq \bigcup_{i=1}^{n} F_i \quad(\text{повнота}), \qquad F_i \cap F_j = \varnothing \ \ (i \neq j) \quad(\text{неперетин}), \qquad \bigcup_{i=1}^{n} F_i = K \quad(\text{відновлюваність})
 ```
 
-- $K$ ist die Gesamtheit aller Wissenselemente, $`F_i`$ das $i$-te Fragment, $n$ die Anzahl der Fragmente;
+- $K$ ist die Gesamtheit aller Wissenselemente, $F_i$ das $i$-te Fragment, $n$ die Anzahl der Fragmente;
 - **Vollständigkeit** garantiert, dass kein Element verloren geht;
 - **Disjunktheit** stellt sicher, dass kein Element in mehreren Fragmenten dupliziert wird;
 - **Rekonstruierbarkeit** verlangt, dass die verlustfreie Vereinigung aller Fragmente exakt $K$ ergibt.
@@ -1116,11 +1116,11 @@ Die Güte einer Partitionierung lässt sich formal quantifizieren. Bilden semant
 - **Optimierungssperre:** Bei $\mathrm{cut}(P) > 0{,}05$ stoppt der Compiler die Manifest-Generierung mit dem Fehler `ERR_EXCESSIVE_GRAPH_CUT` und initiiert ein METIS-Graphpartitionierungsverfahren [[29]](#src-29).
 
 **Berechnungsbeispiel:**
-Für $n = 4$ Knoten, $\lvert K \rvert = 40\,000$ Entitäten und $\lvert E \rvert = 12\,000$ Relationen: Partitionierung $`P_1`$ (nach Artefakttyp) zerschneidet $3\,600$ Kanten. Partitionierung $`P_2`$ (nach Systemcode und Version) zerschneidet lediglich $480$ Kanten bei $`\max_s \lvert P_2^{-1}(s)\rvert = 11\,500`$:
+Für $n = 4$ Knoten, $\lvert K \rvert = 40\,000$ Entitäten und $\lvert E \rvert = 12\,000$ Relationen: Partitionierung $P_1$ (nach Artefakttyp) zerschneidet $3\,600$ Kanten. Partitionierung $P_2$ (nach Systemcode und Version) zerschneidet lediglich $480$ Kanten bei $\max_s \lvert P_2^{-1}(s)\rvert = 11\,500$:
 ```math
 \mathrm{cut}(P_2) = \frac{480}{12\,000} = 0{,}040 \le 0{,}05, \qquad \beta(P_2) = \frac{11\,500}{40\,000 / 4} = \frac{11\,500}{10\,000} = 1{,}15 \le 1{,}25
 ```
-Topologie $`P_2`$ erfüllt alle Sicherheitskriterien und wird im Cluster-Manifest autorisiert [[30]](#src-30), [[31]](#src-31).
+Topologie $P_2$ erfüllt alle Sicherheitskriterien und wird im Cluster-Manifest autorisiert [[30]](#src-30), [[31]](#src-31).
 
 ### 17.4. Ingenieurtechnische Partitionierungsmerkmale für Wissensgraphen: Release, Konfiguration, Sicherheitsstufe
 
@@ -1233,7 +1233,7 @@ Kaskadierende Qualitätsmetriken müssen kausal verknüpft sein: Bleibt eine Ant
 > *Haftungsausschluss:* Diese Diskussion ist eine simulierte heuristische Synthese, generiert ausschließlich im wissenschaftlichen und didaktischen Kontext dieser Monografie auf der Grundlage veröffentlichter Schriften, Monografien und öffentlicher Vorträge der geladenen Experten. Sie stellt kein Wortprotokoll realer Unterredungen dar, erhebt keinen Anspruch auf gegenwärtige Äußerungen realer Personen und dient als methodisches Instrument des kritischen Rationalismus zur Falsifikation der Hypothesen des Autors. Jeder Gesprächspartner debattiert direkt und ausschließlich mit dem Autor der Monografie (Mykola Fedchyk).
 
 **These des Kapitels (Mykola Fedchyk):**  
-Eine moderne Wissensbasisarchitektur für geschäftskritische Systeme (Mission-Critical) muss auf einem strikten neuro-symbolischen Dualismus beruhen: Ein statistischer neuronaler Verarbeitungstrakt lokaler SLMs extrahiert und bewertet Relevanz (Relevance), während ein deterministischer symbolischer EVM-Kern auf Basis typisierter Mikro-Ontologien und unveränderlicher binärer Wissenspakete kompromisslos über die normative Zulassung (Eligibility) in beschränkter Latenzzeit $`O(1)`$ entscheidet.
+Eine moderne Wissensbasisarchitektur für geschäftskritische Systeme (Mission-Critical) muss auf einem strikten neuro-symbolischen Dualismus beruhen: Ein statistischer neuronaler Verarbeitungstrakt lokaler SLMs extrahiert und bewertet Relevanz (Relevance), während ein deterministischer symbolischer EVM-Kern auf Basis typisierter Mikro-Ontologien und unveränderlicher binärer Wissenspakete kompromisslos über die normative Zulassung (Eligibility) in beschränkter Latenzzeit $O(1)$ entscheidet.
 
 **Dialog mit Edward Feigenbaum: Trennung von Erfassung und Inferenz im Lebenszyklus von Regeln**
 
@@ -1275,7 +1275,7 @@ Eine moderne Wissensbasisarchitektur für geschäftskritische Systeme (Mission-C
   Dies ermöglicht eine modulare Sicherheitsüberprüfung (Modular Safety Case), bei der fahrzeugweite Sicherheitseigenschaften mathematisch aus lokalen Teiltheoremen abgeleitet werden – ohne das Risiko kombinatorischer Explosion zur Laufzeit. Wir haben die Vision Ihrer Mikrotheorien in das streng typisierte Paradigma des vertragsbasierten Entwurfs übertragen.“*
 
 **Synthese und wissenschaftliches Urteil des Kapitels:**  
-Die neuro-symbolische Typologie von Wissensbasen löst die historischen Paradoxa der künstlichen Intelligenz auf: Statistische Perzeption und lokale Sprachmodelle gewährleisten ein schnelles semantisches Routing (Relevance), während ein streng typisierter symbolischer Kern mit geschlossenen Mikro-Ontologien mathematische Beweisbarkeit, deterministische $`O(1)`$-Latenzen und rechtliche Unanfechtbarkeit garantiert (Eligibility).
+Die neuro-symbolische Typologie von Wissensbasen löst die historischen Paradoxa der künstlichen Intelligenz auf: Statistische Perzeption und lokale Sprachmodelle gewährleisten ein schnelles semantisches Routing (Relevance), während ein streng typisierter symbolischer Kern mit geschlossenen Mikro-Ontologien mathematische Beweisbarkeit, deterministische $O(1)$-Latenzen und rechtliche Unanfechtbarkeit garantiert (Eligibility).
 
 ## Fazit
 

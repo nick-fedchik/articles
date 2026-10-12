@@ -80,10 +80,10 @@ a_t\sim\mu_t(a\mid x_t),
 \qquad y_{t+d}\sim P(y\mid x_t,a_t,e_t).
 ```
 
-- In diesem Gleichungspaar bezeichnet $t$ den Entscheidungszeitpunkt, $`x_t`$ den Kontextvektor, $`a_t`$ die gewählte Aktion und $`\mu_t(a\mid x_t)`$ die Auswahlwahrscheinlichkeit der Aktion unter dem Kontext $`x_t`$;
-- $\sim$ symbolisiert die stochastische Ziehung eines Werts gemäß der angegebenen Verteilung, während $`P(y\mid x_t,a_t,e_t)`$ die bedingte Verteilung des Ergebnisses $y$ in Abhängigkeit von Kontext, Aktion und Umgebungsumfeld formal definiert;
-- $`o_t`$ ist die unmittelbare Beobachtung, die separat im Protokoll fixiert wird, während $`y_{t+d}`$ das finale Ergebnis darstellt, das erst mit einer zeitlichen Verzögerung von $d$ Schritten verfügbar wird;
-- $`e_t`$ repräsentiert den Zustand der Umgebung, der zumeist nur partiell beobachtbar ist.
+- In diesem Gleichungspaar bezeichnet $t$ den Entscheidungszeitpunkt, $x_t$ den Kontextvektor, $a_t$ die gewählte Aktion und $\mu_t(a\mid x_t)$ die Auswahlwahrscheinlichkeit der Aktion unter dem Kontext $x_t$;
+- $\sim$ symbolisiert die stochastische Ziehung eines Werts gemäß der angegebenen Verteilung, während $P(y\mid x_t,a_t,e_t)$ die bedingte Verteilung des Ergebnisses $y$ in Abhängigkeit von Kontext, Aktion und Umgebungsumfeld formal definiert;
+- $o_t$ ist die unmittelbare Beobachtung, die separat im Protokoll fixiert wird, während $y_{t+d}$ das finale Ergebnis darstellt, das erst mit einer zeitlichen Verzögerung von $d$ Schritten verfügbar wird;
+- $e_t$ repräsentiert den Zustand der Umgebung, der zumeist nur partiell beobachtbar ist.
 
 Die Interpretation ist eindeutig: Das Protokoll registriert exakt, mit welcher Wahrscheinlichkeit die Logging-Policy eine Aktion im gegebenen Kontext gewählt hat, und verknüpft diese Aktion anschließend mit dem Ergebnis, das zu einem späteren Zeitpunkt eintrifft. Wahrscheinlichkeitswerte liegen strikt im Intervall $[0, 1]$; die mathematische Formulierung erhebt ein nach einer Aktion beobachtetes Resultat keineswegs per se zum Kausalbeweis. Für die Systemdiagnose aus [Kapitel 24](ch24-system-diagnosis.md) kann die Aktion beispielsweise in einer synchronen Erfassung von Versorgungsspannung und Taktsignal bestehen, das Ergebnis in einer zwei Tage später verifizierten Ausfallursache und die finale Garantiestatistik in Monatsdaten. Ein minimaler Feedback-Datensatz für eine derartige Episode besitzt die folgende Struktur:
 
@@ -218,10 +218,10 @@ Für Protokolle kontextbezogener Entscheidungen lässt sich der Erwartungswert e
 ```
 
 - In dieser Schätzformel ist $N$ die Gesamtzahl protokollierter Episoden, und $i$ indiziert die einzelne Episode;
-- $`x_i`$ ist der Kontextvektor, $`a_i`$ die ausgeführte Aktion, $`r_i`$ die beobachtete Belohnung (*Reward*) und $\pi$ die zu evaluierende Ziel-Policy;
-- $`\mu(a_i\mid x_i)`$ ist die Auswahlwahrscheinlichkeit der Aktion im Protokoll, während $`\pi(a_i\mid x_i)`$ deren Wahrscheinlichkeit unter der Ziel-Policy darstellt;
-- Der Quotient beider Wahrscheinlichkeiten bildet das Wichtigkeitsgewicht (*Importance Weight*); $`\sum_{i=1}^{N}`$ summiert die gewichteten Belohnungen, und die Division durch $N$ liefert den Erwartungswert;
-- $`\widehat V_{\mathrm{IPS}}(\pi)`$ ist der geschätzte Gesamtwert der Ziel-Policy.
+- $x_i$ ist der Kontextvektor, $a_i$ die ausgeführte Aktion, $r_i$ die beobachtete Belohnung (*Reward*) und $\pi$ die zu evaluierende Ziel-Policy;
+- $\mu(a_i\mid x_i)$ ist die Auswahlwahrscheinlichkeit der Aktion im Protokoll, während $\pi(a_i\mid x_i)$ deren Wahrscheinlichkeit unter der Ziel-Policy darstellt;
+- Der Quotient beider Wahrscheinlichkeiten bildet das Wichtigkeitsgewicht (*Importance Weight*); $\sum_{i=1}^{N}$ summiert die gewichteten Belohnungen, und die Division durch $N$ liefert den Erwartungswert;
+- $\widehat V_{\mathrm{IPS}}(\pi)$ ist der geschätzte Gesamtwert der Ziel-Policy.
 
 Jeder historische Eintrag wird somit exakt proportional zum Wahrscheinlichkeitsverhältnis zwischen Ziel- und Logging-Policy rekalibriert. Für zwei hypothetische Episoden mit Gewichten 2 und 1 sowie Belohnungen 1 und 0 beträgt die Schätzung $(2\cdot1+1\cdot0)/2=1$. Das Ergebnis besitzt die Einheit der Belohnung und setzt zwingend voraus, dass jede Aktion, die die Ziel-Policy wählen kann, in der Logging-Policy eine strikt positive Wahrscheinlichkeit besaß. Diese fundamentale mathematische Voraussetzung ist die Überlappung (*Common Support* / *Policy Overlap*):
 
@@ -229,28 +229,28 @@ Jeder historische Eintrag wird somit exakt proportional zum Wahrscheinlichkeitsv
 \pi(a\mid x)>0\Rightarrow\mu(a\mid x)>0.
 ```
 
-- Für diese Überlappungsbedingung bezeichnet $`\pi(a\mid x)`$ die Aktionswahrscheinlichkeit unter der Ziel-Policy und $`\mu(a\mid x)`$ unter der Logging-Policy;
+- Für diese Überlappungsbedingung bezeichnet $\pi(a\mid x)$ die Aktionswahrscheinlichkeit unter der Ziel-Policy und $\mu(a\mid x)$ unter der Logging-Policy;
 - $x$ ist der Kontext, $a$ die Aktion, und $>0$ deklariert eine strikt positive Wahrscheinlichkeit;
 - $\Rightarrow$ fordert, dass jede Aktion mit strikt positiver Wahrscheinlichkeit unter der Ziel-Policy auch im Protokoll eine strikt positive Wahrscheinlichkeit besitzen muss;
 - $\Rightarrow$ ist die logische Implikation: Kann die Ziel-Policy eine Aktion auswählen, muss auch die Logging-Policy dieser Aktion eine Wahrscheinlichkeit größer null zuweisen.
 
 Diese Bedingung erzwingt die Überlappung der Aktionsräume, garantiert jedoch keineswegs eine geringe Varianz: Sehr kleine Wahrscheinlichkeiten im Nenner erzeugen extrem große Gewichte, die die Schätzung destabilisieren.
 
-Kleine Werte für $`\mu(a_i\mid x_i)`$ führen zu gewaltigen Wichtigkeitsgewichten und explodierender Varianz. Ein Kappen der Gewichte (*Weight Truncation*) reduziert die Varianz, führt jedoch eine systematische Verzerrung ein. Doppelt-robuste Schätzer (*Doubly Robust Estimators*), verfeinert von Miroslav Dudík, John Langford und Lihong Li, kombinieren ein gelerntes Belohnungsmodell mit einer Propensity-Korrektur [[4]](#src-4), heben die zugrunde liegenden Modellannahmen jedoch nicht auf. Wie viel statistische Information nach der Gewichtung verbleibt, misst der effektive Stichprobenumfang (*Effective Sample Size*, ESS) für die Gewichte $`w_i`$ nach Art B. Owen [[5]](#src-5):
+Kleine Werte für $\mu(a_i\mid x_i)$ führen zu gewaltigen Wichtigkeitsgewichten und explodierender Varianz. Ein Kappen der Gewichte (*Weight Truncation*) reduziert die Varianz, führt jedoch eine systematische Verzerrung ein. Doppelt-robuste Schätzer (*Doubly Robust Estimators*), verfeinert von Miroslav Dudík, John Langford und Lihong Li, kombinieren ein gelerntes Belohnungsmodell mit einer Propensity-Korrektur [[4]](#src-4), heben die zugrunde liegenden Modellannahmen jedoch nicht auf. Wie viel statistische Information nach der Gewichtung verbleibt, misst der effektive Stichprobenumfang (*Effective Sample Size*, ESS) für die Gewichte $w_i$ nach Art B. Owen [[5]](#src-5):
 
 ```math
 \mathrm{ESS}=\frac{\left(\sum_iw_i\right)^2}{\sum_iw_i^2}.
 ```
 
-- Hierbei repräsentieren die Gewichte $`w_i`$ die Wichtigkeitsgewichte der Episoden $i$, und die Summen erstrecken sich über alle erfassten Episoden;
+- Hierbei repräsentieren die Gewichte $w_i$ die Wichtigkeitsgewichte der Episoden $i$, und die Summen erstrecken sich über alle erfassten Episoden;
 - Der Zähler quadriert die Gesamtsumme der Gewichte, während der Nenner die Summe der quadrierten Einzelgewichte berechnet;
 - $\mathrm{ESS}$ ist der effektive Stichprobenumfang, mithin die Anzahl ungewichteter, unabhängiger Beobachtungen mit äquivalentem Informationsgehalt.
 
 **Praktische Anwendung und ingenieurtechnische Konsequenzen (Closed-Loop Decision):**
 1. **Kriterien für das Validierungs-Dispatching von Policies:**
-   - **Wenn $`\mathrm{ESS} / N \ge \tau_{\mathrm{ess}} = 0{,}30`$ (die effektive Stichprobengröße beträgt mindestens 30 % des Protokollumfangs $N$):** Die IPS-Schätzung $`\widehat V_{\mathrm{IPS}}(\pi)`$ wird als statistisch belastbar eingestuft und für die ingenieurtechnische Release-Entscheidung zugelassen;
-   - **Wenn $`\mathrm{ESS} / N < 0{,}30`$:** Die Varianz der Wichtigkeitsgewichte $`w_i`$ ist unzulässig hoch (wenige seltene Ausreißer-Episoden dominieren die Summe). Ein autonomes Deployment wird blockiert; das System schaltet automatisch auf eine regularisierte Schätzung mit gekappten Gewichten (*Truncated IPS*) oder einen doppelt-robusten Schätzer (*Doubly Robust Estimator*) um.
-2. **Praktisches Zahlenbeispiel:** Für eine Stichprobe aus drei Episoden mit den Gewichten 1, 1 und 2 ergibt sich: $`\mathrm{ESS} = 4^2 / (1^2 + 1^2 + 2^2) = 16 / 6 \approx 2{,}67`$. Der relative Anteil beträgt $`\mathrm{ESS} / N = 2{,}67 / 3 \approx 0{,}89 \ge 0{,}30`$. **Systemreaktion:** Die Gewichtung ist stabil; die statistische Zuverlässigkeitsschwelle wird überschritten.
+   - **Wenn $\mathrm{ESS} / N \ge \tau_{\mathrm{ess}} = 0{,}30$ (die effektive Stichprobengröße beträgt mindestens 30 % des Protokollumfangs $N$):** Die IPS-Schätzung $\widehat V_{\mathrm{IPS}}(\pi)$ wird als statistisch belastbar eingestuft und für die ingenieurtechnische Release-Entscheidung zugelassen;
+   - **Wenn $\mathrm{ESS} / N < 0{,}30$:** Die Varianz der Wichtigkeitsgewichte $w_i$ ist unzulässig hoch (wenige seltene Ausreißer-Episoden dominieren die Summe). Ein autonomes Deployment wird blockiert; das System schaltet automatisch auf eine regularisierte Schätzung mit gekappten Gewichten (*Truncated IPS*) oder einen doppelt-robusten Schätzer (*Doubly Robust Estimator*) um.
+2. **Praktisches Zahlenbeispiel:** Für eine Stichprobe aus drei Episoden mit den Gewichten 1, 1 und 2 ergibt sich: $\mathrm{ESS} = 4^2 / (1^2 + 1^2 + 2^2) = 16 / 6 \approx 2{,}67$. Der relative Anteil beträgt $\mathrm{ESS} / N = 2{,}67 / 3 \approx 0{,}89 \ge 0{,}30$. **Systemreaktion:** Die Gewichtung ist stabil; die statistische Zuverlässigkeitsschwelle wird überschritten.
 
 Das nachfolgende Python-Programm rekonstruiert das einführende Steckverbinder-Szenario. Es modelliert zwei Kontexte (Kälte und Wärme) sowie drei primäre Prüfmaßnahmen. Bei Kälte lokalisiert die Steckverbinderprüfung den Defekt mit einer Wahrscheinlichkeit von 0,60; bei Wärme ist die Prüfung der Spannungsversorgung mit 0,45 am effektivsten. Die neue Ziel-Policy wählt bei Kälte den Steckverbinder und bei Wärme die Spannungsversorgung; der theoretische Erwartungswert dieser Ziel-Policy beträgt somit exakt $0{,}5\cdot0{,}60+0{,}5\cdot0{,}45=0{,}525$. Das Programm sammelt jeweils 200.000 Episoden unter zwei unterschiedlichen Logging-Policies und evaluiert die Ziel-Policy auf beiden Datensätzen. Erfordert ausschließlich die Python 3.10+ Standardbibliothek.
 
@@ -408,7 +408,7 @@ Nicht jeder Einbruch einer Leistungsmetrik erfordert ein Nachtraining von Modell
 P_t(X)\ne P_{t+1}(X).
 ```
 
-- Kovariatendrift wird beschrieben durch $`P_t(X)`$ und $`P_{t+1}(X)`$, die Verteilungen der Eingangsmerkmale in den Zeitintervallen $t$ und $t+1$;
+- Kovariatendrift wird beschrieben durch $P_t(X)$ und $P_{t+1}(X)$, die Verteilungen der Eingangsmerkmale in den Zeitintervallen $t$ und $t+1$;
 - $X$ ist die Zufallsvariable der Eingangsdaten, und $\ne$ zeigt an, dass sich die Verteilungscharakteristiken signifikant unterscheiden.
 
 In der Praxis haben sich die relativen Häufigkeiten oder Merkmalskombinationen verschoben; die Wahrscheinlichkeitswerte verbleiben im Intervall $[0, 1]$, doch die Formel offenbart die physikalische Ursache nicht.
@@ -419,7 +419,7 @@ In der Praxis haben sich die relativen Häufigkeiten oder Merkmalskombinationen 
 P_t(Y)\ne P_{t+1}(Y).
 ```
 
-- Bei einem Prior-Shift bezeichnen $`P_t(Y)`$ und $`P_{t+1}(Y)`$ die Klassenverteilungen des Zielmerkmals $Y$ in den Intervallen $t$ und $t+1$;
+- Bei einem Prior-Shift bezeichnen $P_t(Y)$ und $P_{t+1}(Y)$ die Klassenverteilungen des Zielmerkmals $Y$ in den Intervallen $t$ und $t+1$;
 - $Y$ repräsentiert die Zielgröße bzw. das Fehlerklassen-Label, und $\ne$ markiert die statistische Diskrepanz.
 
 Folglich verschieben sich die Grundhäufigkeiten der Klassen im Einsatzfeld, ohne dass sich zwingend die funktionale Ursache-Wirkungs-Beziehung geändert hat.
@@ -430,7 +430,7 @@ Folglich verschieben sich die Grundhäufigkeiten der Klassen im Einsatzfeld, ohn
 P_t(Y\mid X)\ne P_{t+1}(Y\mid X).
 ```
 
-- Hierbei sind $`P_t(Y\mid X)`$ und $`P_{t+1}(Y\mid X)`$ die bedingten Verteilungen des Ergebnisses $Y$ gegeben die Merkmale $X$ in den beiden Zeitabschnitten;
+- Hierbei sind $P_t(Y\mid X)$ und $P_{t+1}(Y\mid X)$ die bedingten Verteilungen des Ergebnisses $Y$ gegeben die Merkmale $X$ in den beiden Zeitabschnitten;
 - $\mid$ bezeichnet die mathematische Bedingung, und $\ne$ belegt, dass sich die kausale Abbildung von den Symptomen auf das Ergebnis transformiert hat.
 
 Diese drei Gleichungen differenzieren präzise zwischen Verschiebungen der Eingangsgrößen, der A-priori-Klassenhäufigkeiten und der bedingten Inferenzbeziehung.
@@ -496,13 +496,13 @@ Alle vier Indikatoren sollten nicht über absolute Schwellenwerte, sondern über
 S_t = \max\left(0,\; S_{t-1} + x_t - \mu_0 - k\right), \qquad S_0 = 0
 ```
 
-- $`x_t`$ ist die Indikatormessung im Zeitintervall $t$ (beispielsweise die Konfidenzvarianz des aktuellen Tages);
-- $`\mu_0`$ ist das Referenzniveau des Indikators im historisch stabilen Betriebszustand;
+- $x_t$ ist die Indikatormessung im Zeitintervall $t$ (beispielsweise die Konfidenzvarianz des aktuellen Tages);
+- $\mu_0$ ist das Referenzniveau des Indikators im historisch stabilen Betriebszustand;
 - $k$ ist die zulässige Toleranzschranke: Abweichungen kleiner als $k$ werden ignoriert (üblicherweise als halbe zu detektierende Verschiebung gewählt);
-- $`S_t`$ ist die akkumulierte Summe der Schwellenüberschreitungen (strikt nicht-negativ); $`S_0 = 0`$ bildet den Startwert;
-- Ein Alarm wird ausgelöst, sobald $`S_t`$ einen vordefinierten Schwellenwert $h$ übersteigt, der den Trade-off zwischen Erkennungsverzögerung und Fehlalarmrate determiniert.
+- $S_t$ ist die akkumulierte Summe der Schwellenüberschreitungen (strikt nicht-negativ); $S_0 = 0$ bildet den Startwert;
+- Ein Alarm wird ausgelöst, sobald $S_t$ einen vordefinierten Schwellenwert $h$ übersteigt, der den Trade-off zwischen Erkennungsverzögerung und Fehlalarmrate determiniert.
 
-Der CUSUM-Algorithmus akkumuliert geringfügige, aber systematische Überschreitungen des Referenzniveaus und schlägt erst bei signifikanter Akkumulation an. Isolierte Einzelausreißer führen nicht zum Alarm, da nachfolgende reguläre Perioden die Summe deterministisch auf null zurückführen. Ein ingenieurtechnisches Rechenbeispiel verdeutlicht das Prinzip: Die Konfidenzvarianz im Steuerungsbereich des Batteriemanagementsystems betrug im stabilen Referenzmonat $`\mu_0 = 0{,}040`$; die Toleranz sei $k = 0{,}005$ und der Alarmschwellenwert $h = 0{,}030$. Nach Veröffentlichung einer neuen Normrevision registriert das System an fünf aufeinanderfolgenden Tagen Werte von 0,046; 0,049; 0,052; 0,055; 0,058. Die kumulative Summe $`S_t`$ wächst entsprechend: $0{,}001 \to 0{,}005 \to 0{,}012 \to 0{,}022 \to 0{,}035$. Am fünften Tag wird der Schwellenwert $h$ überschritten und Alarm ausgelöst – die klassische Benchmark-Erfolgsquote zeigt zu diesem Zeitpunkt noch keinerlei messbare Verschlechterung.
+Der CUSUM-Algorithmus akkumuliert geringfügige, aber systematische Überschreitungen des Referenzniveaus und schlägt erst bei signifikanter Akkumulation an. Isolierte Einzelausreißer führen nicht zum Alarm, da nachfolgende reguläre Perioden die Summe deterministisch auf null zurückführen. Ein ingenieurtechnisches Rechenbeispiel verdeutlicht das Prinzip: Die Konfidenzvarianz im Steuerungsbereich des Batteriemanagementsystems betrug im stabilen Referenzmonat $\mu_0 = 0{,}040$; die Toleranz sei $k = 0{,}005$ und der Alarmschwellenwert $h = 0{,}030$. Nach Veröffentlichung einer neuen Normrevision registriert das System an fünf aufeinanderfolgenden Tagen Werte von 0,046; 0,049; 0,052; 0,055; 0,058. Die kumulative Summe $S_t$ wächst entsprechend: $0{,}001 \to 0{,}005 \to 0{,}012 \to 0{,}022 \to 0{,}035$. Am fünften Tag wird der Schwellenwert $h$ überschritten und Alarm ausgelöst – die klassische Benchmark-Erfolgsquote zeigt zu diesem Zeitpunkt noch keinerlei messbare Verschlechterung.
 
 Frühindikatoren können Fehlalarme auslösen: Eine saisonale Häufung neuartiger Fragestellungen erhöht die Varianz, ohne dass die Wissensbasis korrumpiert wäre. Ein Frühwarnsignal triggert daher niemals ein unreflektiertes automatisches Update, sondern initiiert zielgerichtete Verifikationsprozesse: Einen fokussierten Benchmark-Test auf dem betroffenen Domänen-Slice sowie einen Suchauftrag an das Wissensakquisitionsmodul zur Beschaffung autorisierter Primärquellen ([Kapitel 10](ch10-knowledge-acquisition-systems.md)). Die Validität jedes Frühindikators muss retrospektive Relevanz aufweisen: Er verbleibt nur dann im aktiven Monitoring, wenn er historische Systemausfälle zuverlässig antizipiert hat. Steht die Notwendigkeit einer Modell- oder Wissensaktualisierung fest, folgt unmittelbar die nächste fundamentale Kernfrage: Wie wird gesichert, dass die Neuversion bewährte historische Funktionsmodi nicht zerstört?
 
@@ -516,16 +516,16 @@ F_T=\frac{1}{T-1}\sum_{i=1}^{T-1}
 ```
 
 - $T$ ist die Gesamtzahl sequenziell bearbeiteter Aufgaben, und $i$ indiziert eine historische Aufgabe oder einen spezifischen Daten-Slice;
-- $`a_{k,i}`$ ist die Leistungsmetrik auf Aufgabe $i$, nachdem das System bis einschließlich Aufgabe $k$ trainiert wurde; $`a_{T,i}`$ ist die Performanz auf demselben Slice nach Abschluss der finalen Aufgabe $T$;
-- $`\max_{i\le k\le T-1}`$ ermittelt die maximale historische Performanz auf Aufgabe $i$ in allen Zwischenstadien von $i$ bis $T-1$;
-- $`\sum_{i=1}^{T-1}`$ summiert die Qualitätsverluste über alle historischen Aufgaben, und die Division durch $T-1$ liefert das arithmetische Mittel;
-- $`F_T`$ beziffert das mittlere Vergessen in den Einheiten der gewählten Performanzmetrik.
+- $a_{k,i}$ ist die Leistungsmetrik auf Aufgabe $i$, nachdem das System bis einschließlich Aufgabe $k$ trainiert wurde; $a_{T,i}$ ist die Performanz auf demselben Slice nach Abschluss der finalen Aufgabe $T$;
+- $\max_{i\le k\le T-1}$ ermittelt die maximale historische Performanz auf Aufgabe $i$ in allen Zwischenstadien von $i$ bis $T-1$;
+- $\sum_{i=1}^{T-1}$ summiert die Qualitätsverluste über alle historischen Aufgaben, und die Division durch $T-1$ liefert das arithmetische Mittel;
+- $F_T$ beziffert das mittlere Vergessen in den Einheiten der gewählten Performanzmetrik.
 
 **Praktische Anwendung und ingenieurtechnische Konsequenzen (Closed-Loop Decision):**
 1. **Release-Gate für kontinuierliches Lernen (Continual Learning Release Gate):**
-   - **Wenn $`F_T \le \tau_{\mathrm{forget}} = 0{,}02`$ und das maximale Vergessen auf jedem individuellen kritischen Slice $`\max_i (\dots) \le 0{,}05`$:** Das Update der Wissensbasis oder Modellgewichte besteht die Prüfung und wird für ein Canary-Deployment zugelassen;
-   - **Wenn $`F_T > 0{,}02`$ oder auf mindestens einem geschützten Sicherheits-Slice eine Regression von $> 0{,}05$ registriert wird:** Das Rollout der neuen Version wird kategorisch blockiert. Das System aktiviert automatisch eine Wissenserhaltungsstrategie: Wiederherstellung des Replay-Puffers mit einer Erhöhung des Anteils historischer Trainingsbeispiele auf $25\,\%$ oder Verstärkung des EWC-/L2-Regularisierungskoeffizienten zur Konservierung synaptischer Gewichte.
-2. **Praktisches Zahlenbeispiel:** Bei $T=4$ Aufgaben betrug der Qualitätsverlust auf den drei vorherigen Slices: Slice 1: $0{,}01$, Slice 2: $0{,}00$, Slice 3: $0{,}03$. Das durchschnittliche Vergessen beträgt: $`F_4 = \frac{0{,}01 + 0{,}00 + 0{,}03}{3} = \frac{0{,}04}{3} \approx 0{,}013 = 1{,}3\% \le 2{,}0\%`$. Maximaler Einbruch: $0{,}03 \le 0{,}05$. **Systemreaktion:** Die Regression liegt innerhalb der definierten technischen Toleranzgrenzen; das Release-Gate genehmigt die Integration des neuen Modells.
+   - **Wenn $F_T \le \tau_{\mathrm{forget}} = 0{,}02$ und das maximale Vergessen auf jedem individuellen kritischen Slice $\max_i (\dots) \le 0{,}05$:** Das Update der Wissensbasis oder Modellgewichte besteht die Prüfung und wird für ein Canary-Deployment zugelassen;
+   - **Wenn $F_T > 0{,}02$ oder auf mindestens einem geschützten Sicherheits-Slice eine Regression von $> 0{,}05$ registriert wird:** Das Rollout der neuen Version wird kategorisch blockiert. Das System aktiviert automatisch eine Wissenserhaltungsstrategie: Wiederherstellung des Replay-Puffers mit einer Erhöhung des Anteils historischer Trainingsbeispiele auf $25\,\%$ oder Verstärkung des EWC-/L2-Regularisierungskoeffizienten zur Konservierung synaptischer Gewichte.
+2. **Praktisches Zahlenbeispiel:** Bei $T=4$ Aufgaben betrug der Qualitätsverlust auf den drei vorherigen Slices: Slice 1: $0{,}01$, Slice 2: $0{,}00$, Slice 3: $0{,}03$. Das durchschnittliche Vergessen beträgt: $F_4 = \frac{0{,}01 + 0{,}00 + 0{,}03}{3} = \frac{0{,}04}{3} \approx 0{,}013 = 1{,}3\% \le 2{,}0\%$. Maximaler Einbruch: $0{,}03 \le 0{,}05$. **Systemreaktion:** Die Regression liegt innerhalb der definierten technischen Toleranzgrenzen; das Release-Gate genehmigt die Integration des neuen Modells.
 
 David Lopez-Paz und Marc'Aurelio Ranzato erweiterten dieses Spektrum um Metriken für Rückwärts- und Vorwärtstransfer (*Backward and Forward Transfer*) zwischen Aufgaben [[11]](#src-11). Ein negativer Vergessenswert auf einem Slice belegt, dass das Training der neuen Aufgabe das Verständnis der historischen Aufgabe verbessert hat. Aggregierte Mittelwerte dürfen jedoch niemals kritische Einbrüche verdecken. Die Vergessensmetrik wird stets für das Gesamtsystem sowie separat für geschützte Risikogruppen berechnet: Alte Hardware-Revisionen, seltene, aber sicherheitskritische Fehlermodi und Sensorquellen alternativer Zulieferer. Versagt das System in einer dieser Kernkategorien, kann kein noch so hoher durchschnittlicher Gewinn auf aktuellen Daten ein Deployment rechtfertigen.
 
@@ -544,11 +544,11 @@ Die prominenteste Methode regularisierter Wissenskonsolidierung ist die elastisc
 +\frac{\lambda}{2}\sum_iF_i\left(\theta_i-\theta_i^*\right)^2.
 ```
 
-- Für jeden Modellparameter $`\theta_i`$ repräsentiert $`\theta_i^*`$ dessen optimalen Zustand nach dem Training historischer Aufgaben; $`F_i`$ schätzt die epistemische Bedeutung dieses Parameters über die Diagonalelemente der Fisher-Informationsmatrix ab;
-- $\mathcal L(\theta)$ ist die Gesamtverlustfunktion, $`\mathcal L_{\text{new}}(\theta)`$ der Verlustterm auf den neuen Trainingsdaten, und $`\sum_i`$ summiert die quadratischen Abweichungsstrafen über alle Modellparameter;
+- Für jeden Modellparameter $\theta_i$ repräsentiert $\theta_i^*$ dessen optimalen Zustand nach dem Training historischer Aufgaben; $F_i$ schätzt die epistemische Bedeutung dieses Parameters über die Diagonalelemente der Fisher-Informationsmatrix ab;
+- $\mathcal L(\theta)$ ist die Gesamtverlustfunktion, $\mathcal L_{\text{new}}(\theta)$ der Verlustterm auf den neuen Trainingsdaten, und $\sum_i$ summiert die quadratischen Abweichungsstrafen über alle Modellparameter;
 - $\lambda$ ist der nicht-negative Hyperparameter zur Steuerung der Konsolidierungsstärke; die quadrierte Differenz bestraft Abweichungen vom historischen Optimum, und der Faktor $1/2$ skaliert den Regularisierungsterm.
 
-Für beispielhafte Parameter $\lambda=3$, $`F_i=2`$ und $`\theta_i-\theta_i^*=0{,}1`$ beträgt die Strafe für einen Einzelparameter $(3/2)\cdot2\cdot0{,}1^2=0{,}03$. Eine höhere Fisher-Information oder eine stärkere Parameterverschiebung erhöht den Strafterm drastisch. EWC garantiert jedoch keine vollständige Abwesenheit von Vergessen: Es operiert unter spezifischen mathematischen Näherungen.
+Für beispielhafte Parameter $\lambda=3$, $F_i=2$ und $\theta_i-\theta_i^*=0{,}1$ beträgt die Strafe für einen Einzelparameter $(3/2)\cdot2\cdot0{,}1^2=0{,}03$. Eine höhere Fisher-Information oder eine stärkere Parameterverschiebung erhöht den Strafterm drastisch. EWC garantiert jedoch keine vollständige Abwesenheit von Vergessen: Es operiert unter spezifischen mathematischen Näherungen.
 
 Ein Replay-Puffer ist ein streng reguliertes Architekturelement, kein rein technisches Detail. Das Persistieren historischer Nutzerepisoden kann gesetzliche Aufbewahrungsfristen, Datenschutzvorgaben (DSGVO) oder Lizenzrechte verletzen; synthetische Replay-Daten wiederum reproduzieren unweigerlich die Halluzinationen des Lehrermodells. In sicherheitskritischen Expertensystemen ist es daher architektonisch zumeist robuster, dynamisches Faktenwissen nicht in neuronale Gewichte einzubrennen, sondern versionierte Wissensgraphen und strukturierte Retrieval-Indizes anzupassen, wie in [Kapitel 25](ch25-how-expert-systems-learn.md) dargelegt.
 
@@ -609,7 +609,7 @@ H(Y\mid x)=-\sum_yP(y\mid x)\log P(y\mid x).
 ```
 
 - Die Shannon-Entropie $H(Y\mid x)$ beziffert die epistemische Unsicherheit der Zielgröße $Y$ für die konkrete Eingabe $x$;
-- $P(y\mid x)$ ist die modellierte Wahrscheinlichkeit der Klasse $y$ unter Eingabe $x$, und $`\sum_y`$ summiert über den gesamten diskreten Klassenraum;
+- $P(y\mid x)$ ist die modellierte Wahrscheinlichkeit der Klasse $y$ unter Eingabe $x$, und $\sum_y$ summiert über den gesamten diskreten Klassenraum;
 - $\log$ bezeichnet die Logarithmusfunktion: Basis 2 liefert die Einheit Bits (Shannons), die Basis $e$ Nats;
 - Das negative Vorzeichen garantiert die Nicht-Negativität des Entropiewerts bei normierten Wahrscheinlichkeitsverteilungen.
 
@@ -624,9 +624,9 @@ x^*=\arg\max_{x\in U}
 ```
 
 - Das Kriterium selektiert den optimalen Fall $x^*$ aus der Menge ungelabelter Fälle $U$;
-- $`\arg\max_{x\in U}`$ wählt diejenige Instanz aus, die den Quotienten aus erwarteter Verlustreduktion und Gesamtaufwand maximiert;
-- $`\mathbb E[\Delta L_{\text{рішення}}\mid\text{мітка}(x)]`$ beziffert den Erwartungswert der Reduktion des operativen Entscheidungsverlusts nach Vorliegen der Ground-Truth-Annotation für Fall $x$;
-- $`C_{\text{фахівець}}(x)`$, $`C_{\text{доказ}}(x)`$ und $`C_{\text{ризик}}(x)`$ quantifizieren die Kosten der Fachexpertenarbeitszeit, die Generierung formaler Evidenznachweise sowie das mit der Prüfung verbundene operative Risiko;
+- $\arg\max_{x\in U}$ wählt diejenige Instanz aus, die den Quotienten aus erwarteter Verlustreduktion und Gesamtaufwand maximiert;
+- $\mathbb E[\Delta L_{\text{рішення}}\mid\text{мітка}(x)]$ beziffert den Erwartungswert der Reduktion des operativen Entscheidungsverlusts nach Vorliegen der Ground-Truth-Annotation für Fall $x$;
+- $C_{\text{фахівець}}(x)$, $C_{\text{доказ}}(x)$ und $C_{\text{ризик}}(x)$ quantifizieren die Kosten der Fachexpertenarbeitszeit, die Generierung formaler Evidenznachweise sowie das mit der Prüfung verbundene operative Risiko;
 - Der Nenner summiert die Verifikationskosten auf einer einheitlichen ökonomischen Skala; der bedingte Erwartungswert wird über die A-priori-Wahrscheinlichkeiten möglicher Labels berechnet.
 
 Das Expertensystem eskaliert somit gezielt diejenigen Fälle an den Fachexperten, die den maximalen Sicherheits- und Genauigkeitsgewinn pro Kosteneinheit versprechen. Der Fachexperte agiert dabei nicht als unfehlbares Orakel: Expertenuneinigkeit, Enthaltungen und formale Kompetenzgrenzen werden gemäß dem Protokoll aus [Kapitel 11](ch11-knowledge-elicitation-from-experts.md) erfasst. Eine von einem Sprachmodell generierte Pseudo-Annotation darf niemals als unabhängige Verifikation desselben Modells herangezogen werden. Menschliche Expertise wird exakt dort eingebunden, wo ein verifiziertes Label geschäftskritische oder sicherheitsrelevante Entscheidungen signifikant transformiert.
@@ -641,20 +641,20 @@ Wenn ein Expertensystem sequenzielle Diagnoseprüfungen anordnet, erschöpft sic
 ```
 
 - Bei der Berechnung des kumulierten Bedauernsverlusts repräsentiert $T$ die Gesamtzahl der Entscheidungsschritte und $t$ den diskreten Zeitschritt;
-- $`a_t`$ ist die zum Zeitpunkt $t$ tatsächlich ausgeführte Aktion, $A$ die Menge aller zulässigen Aktionen und $`\ell_t(a)`$ der Verlust der Aktion $a$ im Schritt $t$;
-- $`\sum_{t=1}^{T}`$ akkumuliert die realisierten Verluste über das Zeitintervall, während $`\min_{a\in A}`$ den Verlust der besten retrospektiv fixierten statischen Einzelaktion ermittelt;
-- $`\mathrm{Regret}_T`$ quantifiziert die Performanzdifferenz zwischen den gewählten Aktionen und der hypothetisch optimalen statischen Vergleichsaktion.
+- $a_t$ ist die zum Zeitpunkt $t$ tatsächlich ausgeführte Aktion, $A$ die Menge aller zulässigen Aktionen und $\ell_t(a)$ der Verlust der Aktion $a$ im Schritt $t$;
+- $\sum_{t=1}^{T}$ akkumuliert die realisierten Verluste über das Zeitintervall, während $\min_{a\in A}$ den Verlust der besten retrospektiv fixierten statischen Einzelaktion ermittelt;
+- $\mathrm{Regret}_T$ quantifiziert die Performanzdifferenz zwischen den gewählten Aktionen und der hypothetisch optimalen statischen Vergleichsaktion.
 
 Erzielen die gewählten Aktionen in zwei Schritten beispielsweise einen kumulierten Verlust von 3, während die beste statische Einzelaktion einen Verlust von 2 verursacht hätte, beträgt der Regret exakt 1 Verlusteinheit. In nicht-stationären Umgebungen greift ein statischer Vergleichsmaßstab mitunter zu kurz; zudem kann ein niedriger Regret eine einzelne katastrophale Fehlentscheidung nicht kompensieren. Harte Sicherheitsrestriktionen aus [Kapitel 21](ch21-from-recommendation-to-action.md) bleiben daher stets als orthogonale Schutzbarrieren aktiv.
 
-Methoden der sicheren Policy-Verbesserung (*Safe Policy Improvement*) vergleichen die Kandidaten-Policy $\pi$ formal mit der Baseline-Policy $`\pi_b`$, unter der die historischen Daten erhoben wurden. Romain Laroche, Paul Trichelair und Rémi Tachet des Combes etablieren im SPIBB-Verfahren (*Safe Policy Improvement with Baseline Bootstrapping*) den mathematischen Beweis, dass eine neu trainierte Policy nicht schlechter als die Baseline abschneidet, indem sie in Zuständen hoher Unsicherheit deterministisch auf die Baseline zurückfällt [[19]](#src-19). Ein ingenieurtechnisches Zulassungsgate kombiniert die untere Konfidenzschranke (*Lower Confidence Bound*, LCB) der Performanzdifferenz:
+Methoden der sicheren Policy-Verbesserung (*Safe Policy Improvement*) vergleichen die Kandidaten-Policy $\pi$ formal mit der Baseline-Policy $\pi_b$, unter der die historischen Daten erhoben wurden. Romain Laroche, Paul Trichelair und Rémi Tachet des Combes etablieren im SPIBB-Verfahren (*Safe Policy Improvement with Baseline Bootstrapping*) den mathematischen Beweis, dass eine neu trainierte Policy nicht schlechter als die Baseline abschneidet, indem sie in Zuständen hoher Unsicherheit deterministisch auf die Baseline zurückfällt [[19]](#src-19). Ein ingenieurtechnisches Zulassungsgate kombiniert die untere Konfidenzschranke (*Lower Confidence Bound*, LCB) der Performanzdifferenz:
 
 ```math
 \mathrm{LCB}_{1-\alpha}\left(V(\pi)-V(\pi_b)\right)\ge-\varepsilon
 ```
 
-- In diesem Zulassungskriterium bezeichnet $\pi$ die evaluierte Kandidaten-Policy und $`\pi_b`$ die bewährte operative Baseline-Policy;
-- $V(\pi)$ und $`V(\pi_b)`$ sind die geschätzten Gesamterwartungswerte beider Policies, und $`\mathrm{LCB}_{1-\alpha}`$ bezeichnet die untere Schranke des zweiseitigen Konfidenzintervalls zum Konfidenzniveau $1-\alpha$;
+- In diesem Zulassungskriterium bezeichnet $\pi$ die evaluierte Kandidaten-Policy und $\pi_b$ die bewährte operative Baseline-Policy;
+- $V(\pi)$ und $V(\pi_b)$ sind die geschätzten Gesamterwartungswerte beider Policies, und $\mathrm{LCB}_{1-\alpha}$ bezeichnet die untere Schranke des zweiseitigen Konfidenzintervalls zum Konfidenzniveau $1-\alpha$;
 - $\alpha$ deklariert die Irrtumswahrscheinlichkeit außerhalb des Intervalls ($0<\alpha<1$), und $\varepsilon$ beziffert die maximal tolerierbare Performanzdegradation;
 - $\ge$ erzwingt, dass die untere Konfidenzgrenze der Differenz nicht unter $-\varepsilon$ abfallen darf.
 
@@ -667,7 +667,7 @@ F_{\text{крит}}(\pi)=0,
 \qquad \pi(a\mid x)=0\ \text{для заборонених пар }(x,a).
 ```
 
-- Hierbei bezeichnet $`F_{\text{крит}}(\pi)`$ die Anzahl kritischer Sicherheitsverletzungen unter Policy $\pi$; die Gleichheit mit null erzwingt das vollständige Fehlen derartiger Ausfälle;
+- Hierbei bezeichnet $F_{\text{крит}}(\pi)$ die Anzahl kritischer Sicherheitsverletzungen unter Policy $\pi$; die Gleichheit mit null erzwingt das vollständige Fehlen derartiger Ausfälle;
 - $\pi(a\mid x)$ ist die Auswahlwahrscheinlichkeit von Aktion $a$ im Kontext $x$; für jede formal verbotene Kombination $(x,a)$ muss dieser Wert identisch null sein;
 - Beide Bedingungen müssen simultan und ausnahmslos erfüllt sein; $0$ repräsentiert die absolute Nullschranke.
 
@@ -763,7 +763,7 @@ flowchart LR
     class REJ,RB fail;
 ```
 
-Die Verknüpfung von Merkmalen zum exakten Entscheidungszeitpunkt (*Point-in-Time Join*) garantiert die strikte Abwesenheit von Zukunftsdaten. Das Datensatz-Manifest fixiert Rohdaten, Vorverarbeitungsschritte, Ausschlusskriterien und den Zeitpunkt der Label-Verfügbarkeit. Versionskandidaten werden schichtenspezifisch versioniert (`kb@8`, `retriever@5`, `calibration@3`, `model@12`, `policy@4`); das operative Systemmanifest bündelt sie als konsistenten atomaren Snapshot $`\mathcal{S}_v`$ wie in [Kapitel 25](ch25-how-expert-systems-learn.md) definiert. Das NIST AI Risk Management Framework fordert verbindliche Monitoring-Pläne nach dem Deployment inklusive mechanismenbasierter Erfassung und Evaluierung von Nutzerfeedback (Unterkategorie MANAGE 4.1) [[21]](#src-21); die dargestellte Pipeline erfüllt diese Vorgabe architektonisch, ohne dass ungeprüftes Feedback die formalen Release-Gates umgehen kann.
+Die Verknüpfung von Merkmalen zum exakten Entscheidungszeitpunkt (*Point-in-Time Join*) garantiert die strikte Abwesenheit von Zukunftsdaten. Das Datensatz-Manifest fixiert Rohdaten, Vorverarbeitungsschritte, Ausschlusskriterien und den Zeitpunkt der Label-Verfügbarkeit. Versionskandidaten werden schichtenspezifisch versioniert (`kb@8`, `retriever@5`, `calibration@3`, `model@12`, `policy@4`); das operative Systemmanifest bündelt sie als konsistenten atomaren Snapshot $\mathcal{S}_v$ wie in [Kapitel 25](ch25-how-expert-systems-learn.md) definiert. Das NIST AI Risk Management Framework fordert verbindliche Monitoring-Pläne nach dem Deployment inklusive mechanismenbasierter Erfassung und Evaluierung von Nutzerfeedback (Unterkategorie MANAGE 4.1) [[21]](#src-21); die dargestellte Pipeline erfüllt diese Vorgabe architektonisch, ohne dass ungeprüftes Feedback die formalen Release-Gates umgehen kann.
 
 Unterschiedliche Systemkomponenten unterliegen differenzierten Release-Zyklen:
 
@@ -857,7 +857,7 @@ Zu einer virtuellen intellektuellen Diskussion wurden der herausragende Theoreti
 
 **Fortsetzung des Dialogs mit Michael Jordan: Nicht gemessene Störfaktoren, Kausalitätslücken und Grenzen kontrafaktischer Neugewichtung**
 
-- **Michael I. Jordan:** Selbst wenn Sie Trägerverletzungen durch $`\pi_{\mathrm{log}}(a \mid x) > 0`$ ausschließen und die Varianz der Gewichte über $\mathrm{ESS}$ bändigen, basieren klassische inverse Propensity-Gewichtung (IPS) und doppelt robuste Schätzer fundamental auf der Annahme der Unverzerrtheit bzw. Exogenität (No Unmeasured Confounders). In der industriellen Praxis stützt ein Diagnosetechniker seine Entscheidung keineswegs nur auf die erfasste Telemetrie $X$, sondern auf den Geruch verschmorter Isolation, untypische Lagergeräusche oder seine eigene Tagesform — Einflussgrößen, die im digitalen Protokoll schlicht nicht existieren! Infolgedessen ist die geschätzte kontrafaktische Erwartung $\mathbb{E}[Y(a)]$ durch verborgene Störgrößen fatal verzerrt. Gesteht Ihr System die Grenzen seines epistemischen Horizonts ein, wenn beobachtete Korrelationen keinerlei kausale Bindekraft besitzen?
+- **Michael I. Jordan:** Selbst wenn Sie Trägerverletzungen durch $\pi_{\mathrm{log}}(a \mid x) > 0$ ausschließen und die Varianz der Gewichte über $\mathrm{ESS}$ bändigen, basieren klassische inverse Propensity-Gewichtung (IPS) und doppelt robuste Schätzer fundamental auf der Annahme der Unverzerrtheit bzw. Exogenität (No Unmeasured Confounders). In der industriellen Praxis stützt ein Diagnosetechniker seine Entscheidung keineswegs nur auf die erfasste Telemetrie $X$, sondern auf den Geruch verschmorter Isolation, untypische Lagergeräusche oder seine eigene Tagesform — Einflussgrößen, die im digitalen Protokoll schlicht nicht existieren! Infolgedessen ist die geschätzte kontrafaktische Erwartung $\mathbb{E}[Y(a)]$ durch verborgene Störgrößen fatal verzerrt. Gesteht Ihr System die Grenzen seines epistemischen Horizonts ein, wenn beobachtete Korrelationen keinerlei kausale Bindekraft besitzen?
 
 - **Mykola Fedchyk:** Herr Professor Jordan, dies berührt das Herzstück unserer epistemischen Philosophie: Betriebliche Korrelation darf niemals mit Kausalität gleichgesetzt werden. Zur Beherrschung ungemessener Störgrößen implementiert unsere Architektur kausale Identifikationsprüfungen auf der Basis von d-Separation und Judea Pearls do-Kalkül. Erstens fordern wir für sicherheitskritische Komponenten Instrumentalvariablen (Instrumental Variables) — beispielsweise die pseudozufällige Zuweisung von Inspektionsaufgaben über Wechselschichten oder hardwareseitig randomisierte Sensorabfrageintervalle. Zweitens wenden wir Rosenbaums Sensitivitätsanalyse (Rosenbaum Sensitivity Bounds) an: Lässt sich der statistische Zusammenhang zwischen Systemempfehlung und erfolgreicher Reparatur durch eine hypothetische verborgene Störgröße mit einer relativen Odds Ratio von $\Gamma \le 1{,}35$ auflösen, wird die Kandidaten-Policy unverzüglich mit dem typisierten Urteil `REFUSAL_UNMEASURED_CONFOUNDING` abgewiesen. Statt auf verrauschten Protokollen zu spekulieren, signalisiert das Expertensystem ein epistemisches Defizit und erzwingt ein gezieltes physikalisches Experiment.
 

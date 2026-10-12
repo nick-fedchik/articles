@@ -67,7 +67,7 @@ Das Expertensystem übersetzt deklarative ontologische Axiome in rigide numerisc
 \mathcal{E}_s = \left\{ y(t) \in \mathbb{R}^d \;\middle|\; y_{\min} \le y(t) \le y_{\max} \;\land\; \left\|\frac{dy}{dt}\right\| \le \Delta_{\max} \;\land\; \Phi(y(t), x_{\text{state}}) = 1 \right\}
 ```
 
-wobei $`y_{\min}`$ und $`y_{\max}`$ die stationären Grenzen des Sensorbereichs definieren, $`\Delta_{\max}`$ die physikalisch maximal zulässige Änderungsrate des Prozesses beschränkt und $`\Phi`$ ein boolesches Prädikat für die kontextuelle Konformität mit dem aktuellen Betriebsmodus des Aggregats $`x_{\text{state}}`$ darstellt, wie in [Kapitel 22](ch22-cybernetics-edge-to-backend.md) spezifiziert.
+wobei $y_{\min}$ und $y_{\max}$ die stationären Grenzen des Sensorbereichs definieren, $\Delta_{\max}$ die physikalisch maximal zulässige Änderungsrate des Prozesses beschränkt und $\Phi$ ein boolesches Prädikat für die kontextuelle Konformität mit dem aktuellen Betriebsmodus des Aggregats $x_{\text{state}}$ darstellt, wie in [Kapitel 22](ch22-cybernetics-edge-to-backend.md) spezifiziert.
 
 Exportiert das Expertensystem eine Gültigkeitshüllkurve an einen Signalprozessor oder ein Kalman-Filter, definiert es Innovationsschranken (*Innovation Gating*) auf Basis der Mahalanobis-Distanz nach Bar-Shalom et al. [[1]](#src-1):
 
@@ -76,21 +76,21 @@ d_M^2(t) = \tilde{y}^T(t) S^{-1}(t) \tilde{y}(t) \le \gamma_{\text{threshold}}
 ```
 
 **Parameter und messbare Größen:**
-- $`\tilde{y}(t) = y(t) - \hat{y}(t|t-1) \in \mathbb{R}^d`$ — Innovationsvektor (Residuum der Messvorhersage) der Dimension $`d`$;
-- $`S(t) \in \mathbb{S}_{++}^d`$ — symmetrische, positiv definite Kovarianzmatrix der Innovation der Dimension $`d \times d`$;
-- $`\gamma_{\text{threshold}} = \chi_d^2(1 - \alpha)`$ — Quantil der Chi-Quadrat-Verteilung mit $`d`$ Freiheitsgraden für das gewählte Signifikanzniveau $`\alpha`$ (z. B. $`\alpha = 0{,}01`$);
-- $`d_M^2(t) \ge 0`$ — dimensionsloses Quadrat der Mahalanobis-Distanz.
+- $\tilde{y}(t) = y(t) - \hat{y}(t|t-1) \in \mathbb{R}^d$ — Innovationsvektor (Residuum der Messvorhersage) der Dimension $d$;
+- $S(t) \in \mathbb{S}_{++}^d$ — symmetrische, positiv definite Kovarianzmatrix der Innovation der Dimension $d \times d$;
+- $\gamma_{\text{threshold}} = \chi_d^2(1 - \alpha)$ — Quantil der Chi-Quadrat-Verteilung mit $d$ Freiheitsgraden für das gewählte Signifikanzniveau $\alpha$ (z. B. $\alpha = 0{,}01$);
+- $d_M^2(t) \ge 0$ — dimensionsloses Quadrat der Mahalanobis-Distanz.
 
 **Operative Zustandsübergänge und numerisches Rechenbeispiel:**
-- Gilt $`d_M^2(t) \le \gamma_{\text{threshold}}`$, wird die Messung als physikalisch plausibel eingestuft und das Kalman-Filter aktualisiert den Zustandsvektor des Systems (`INNOVATION_ACCEPTED`);
-- Gilt $`d_M^2(t) > \gamma_{\text{threshold}}`$, wird der Messwert als Hüllkurvenanomalie klassifiziert (`INNOVATION_REJECTED`); die Beobachtung fließt nicht in die Zustandsschätzung ein, das Filter behält die A-priori-Prädiktion bei und das System generiert einen Vorfallbericht für den Sensortrakt;
-- Praktisches Rechenbeispiel: Betrachtet wird ein skalarer Öldruckkanal ($`d = 1`$). Bei einem Signifikanzniveau von $`\alpha = 0{,}01`$ beträgt der Schwellenwert $`\gamma_{\text{threshold}} = \chi_1^2(0{,}99) = 6{,}635`$. Der prädizierte Wert liege bei $`\hat{y} = 10{,}0\,\text{bar}`$, die Innovationsvarianz bei $`S = 0{,}25\,\text{bar}^2`$ (Standardabweichung $`\sigma = 0{,}5\,\text{bar}`$), und der aktuelle Sensorwert springt plötzlich auf $`y = 11{,}6\,\text{bar}`$. Das Residuum beträgt somit $`\tilde{y} = 11{,}6 - 10{,}0 = 1{,}6\,\text{bar}`$.
+- Gilt $d_M^2(t) \le \gamma_{\text{threshold}}$, wird die Messung als physikalisch plausibel eingestuft und das Kalman-Filter aktualisiert den Zustandsvektor des Systems (`INNOVATION_ACCEPTED`);
+- Gilt $d_M^2(t) > \gamma_{\text{threshold}}$, wird der Messwert als Hüllkurvenanomalie klassifiziert (`INNOVATION_REJECTED`); die Beobachtung fließt nicht in die Zustandsschätzung ein, das Filter behält die A-priori-Prädiktion bei und das System generiert einen Vorfallbericht für den Sensortrakt;
+- Praktisches Rechenbeispiel: Betrachtet wird ein skalarer Öldruckkanal ($d = 1$). Bei einem Signifikanzniveau von $\alpha = 0{,}01$ beträgt der Schwellenwert $\gamma_{\text{threshold}} = \chi_1^2(0{,}99) = 6{,}635$. Der prädizierte Wert liege bei $\hat{y} = 10{,}0\,\text{bar}$, die Innovationsvarianz bei $S = 0{,}25\,\text{bar}^2$ (Standardabweichung $\sigma = 0{,}5\,\text{bar}$), und der aktuelle Sensorwert springt plötzlich auf $y = 11{,}6\,\text{bar}$. Das Residuum beträgt somit $\tilde{y} = 11{,}6 - 10{,}0 = 1{,}6\,\text{bar}$.
 
 ```math
 d_M^2 = \frac{(1{,}6\,\text{bar})^2}{0{,}25\,\text{bar}^2} = \frac{2{,}56}{0{,}25} = 10{,}24.
 ```
 
-Da $`10{,}24 > 6{,}635`$ gilt, verwirft das Innovation Gating den Messwert (`INNOVATION_REJECTED`), wodurch eine Verfälschung des Kalman-Filters durch den abrupten Drucksprung zuverlässig verhindert wird.
+Da $10{,}24 > 6{,}635$ gilt, verwirft das Innovation Gating den Messwert (`INNOVATION_REJECTED`), wodurch eine Verfälschung des Kalman-Filters durch den abrupten Drucksprung zuverlässig verhindert wird.
 
 ### 2.2. Prädikatenregeln zur Störungserkennung und Erkennung von Sensorspoofing
 
@@ -101,11 +101,11 @@ Dank der Einbettung in die technische Ontologie deckt das Expertensystem konsist
 ```
 
 **Parameter und ingenieurtechnische Grenzwerte:**
-- $`v_{\text{GNSS}}(t), v_{\text{odo}}(t) \ge 0`$ — Momentane Schätzungen der Längsgeschwindigkeit aus dem GNSS-Empfänger und den Rad-Odometern ($`\text{km/h}`$);
-- $`\epsilon_v`$ — Maximal zulässige Geschwindigkeitstoleranz (z. B. $`\epsilon_v = 15{,}0\,\text{km/h}`$).
+- $v_{\text{GNSS}}(t), v_{\text{odo}}(t) \ge 0$ — Momentane Schätzungen der Längsgeschwindigkeit aus dem GNSS-Empfänger und den Rad-Odometern ($\text{km/h}$);
+- $\epsilon_v$ — Maximal zulässige Geschwindigkeitstoleranz (z. B. $\epsilon_v = 15{,}0\,\text{km/h}$).
 
 **Operative Handlungsabläufe und Beispiel:**
-- Registriert der Satellitenempfänger $`v_{\text{GNSS}} = 120\,\text{km/h}`$, während der Odometer $`v_{\text{odo}} = 5\,\text{km/h}`$ ausgibt, berechnet das Modul die Differenz: $`\lvert 120 - 5 \rvert = 115\,\text{km/h} > 15\,\text{km/h}`$.
+- Registriert der Satellitenempfänger $v_{\text{GNSS}} = 120\,\text{km/h}$, während der Odometer $v_{\text{odo}} = 5\,\text{km/h}$ ausgibt, berechnet das Modul die Differenz: $\lvert 120 - 5 \rvert = 115\,\text{km/h} > 15\,\text{km/h}$.
 - Das Expertensystem sendet unverzüglich eine Steueranweisung an den Signalprozessor, das Gewicht des kompromittierten GNSS-Kanals im Fusionsfilter dynamisch auf null zu setzen (`DegradeWeight(GNSS, 0)`). Die Navigation schaltet augenblicklich in den autonomen Koppelnavigationsmodus (Dead Reckoning) auf Basis der Inertialsensorik um.
 
 ---
@@ -116,21 +116,21 @@ Agieren externe Systeme als neuronale Klassifikatoren oder Regler, kann das Expe
 
 ### 3.1. Symbolische Wissensdistillation über semantische Verlustfunktionen
 
-Die symbolische Wissensdistillation (Symbolic Knowledge Distillation) überträgt prädikatenlogische Inferenzregeln direkt in die synaptischen Gewichte eines künstlichen neuronalen Netzes. Der Ansatz basiert auf dem Mechanismus der A-posteriori-Regularisierung nach Hu et al. [[2]](#src-2). Hierbei generiert das Expertensystem eine Zielwahrscheinlichkeitsverteilung $`q(y|x)`$, die eine Menge logischer Regeln $`\mathcal{R} = \{(r_k, \lambda_k)\}`$ erfüllt, indem die Kullback-Leibler-Divergenz bezüglich des neuronalen Basismodells $`p_\theta(y|x)`$ minimiert wird:
+Die symbolische Wissensdistillation (Symbolic Knowledge Distillation) überträgt prädikatenlogische Inferenzregeln direkt in die synaptischen Gewichte eines künstlichen neuronalen Netzes. Der Ansatz basiert auf dem Mechanismus der A-posteriori-Regularisierung nach Hu et al. [[2]](#src-2). Hierbei generiert das Expertensystem eine Zielwahrscheinlichkeitsverteilung $q(y|x)$, die eine Menge logischer Regeln $\mathcal{R} = \{(r_k, \lambda_k)\}$ erfüllt, indem die Kullback-Leibler-Divergenz bezüglich des neuronalen Basismodells $p_\theta(y|x)$ minimiert wird:
 
 ```math
 \min_{q} \text{KL}(q(y|x) \parallel p_\theta(y|x)) - \sum_{k} \lambda_k \mathbb{E}_{q}[\mathbf{1}_{r_k}(x, y)]
 ```
 
-wobei $`\mathbf{1}_{r_k}(x, y)`$ den Wert 1 annimmt, wenn das Paar $`(x, y)`$ die Regel $`r_k`$ erfüllt, und $`\lambda_k \ge 0`$ das Gewicht bzw. die Strenge der Regel bestimmt. Die geschlossene Lösung dieses Optimierungsproblems entspricht einer Gibbs-Verteilung:
+wobei $\mathbf{1}_{r_k}(x, y)$ den Wert 1 annimmt, wenn das Paar $(x, y)$ die Regel $r_k$ erfüllt, und $\lambda_k \ge 0$ das Gewicht bzw. die Strenge der Regel bestimmt. Die geschlossene Lösung dieses Optimierungsproblems entspricht einer Gibbs-Verteilung:
 
 ```math
 q^*(y|x) \propto p_\theta(y|x) \exp\left( \sum_k \lambda_k \mathbf{1}_{r_k}(x, y) \right)
 ```
 
-Die resultierende Verteilung $`q^*(y|x)`$ dient als weiches Zielmuster (Soft Labels) für das überwachte Training des Student-Netzwerks über eine Kreuzentropie-Verlustfunktion.
+Die resultierende Verteilung $q^*(y|x)$ dient als weiches Zielmuster (Soft Labels) für das überwachte Training des Student-Netzwerks über eine Kreuzentropie-Verlustfunktion.
 
-Für die direkte, durchgängige Differenzierbarkeit logischer Beschränkungen im Gradientenabstieg werden semantische Verlustfunktionen nach Xu et al. [[3]](#src-3) eingesetzt. Ist eine formale Regel als aussagenlogische Formel $`\alpha`$ über den Ausgängen des Klassifikators formuliert, definiert sich der semantische Verlust als der negative Logarithmus der Erfüllungswahrscheinlichkeit dieser Formel:
+Für die direkte, durchgängige Differenzierbarkeit logischer Beschränkungen im Gradientenabstieg werden semantische Verlustfunktionen nach Xu et al. [[3]](#src-3) eingesetzt. Ist eine formale Regel als aussagenlogische Formel $\alpha$ über den Ausgängen des Klassifikators formuliert, definiert sich der semantische Verlust als der negative Logarithmus der Erfüllungswahrscheinlichkeit dieser Formel:
 
 ```math
 \mathcal{L}_{\text{semantic}}(\theta, \alpha) = -\log \sum_{y \models \alpha} \prod_{j: y_j = 1} p_\theta(\hat{y}_j = 1 \mid x) \prod_{j: y_j = 0} (1 - p_\theta(\hat{y}_j = 1 \mid x))
@@ -142,7 +142,7 @@ Während der Fehlerrückführung (Backpropagation) bestraft der Gradient des sem
 
 Beim Reinforcement Learning (RL) erkundet ein Agent den Zustandsraum nach dem Trial-and-Error-Prinzip. In sicherheitskritischen Domänen kann eine unkontrollierte Exploration zur mechanischen Zerstörung des Systems oder zum Eintritt in irreversible Gefahrenzustände führen.
 
-Das Expertensystem implementiert hierfür die Architektur des formalen Shieldings nach Alshiekh et al. [[4]](#src-4). Der Schutzschild wird aus Sicherheitsspezifikationen synthetisiert, die in linearer temporaler Logik (Linear Temporal Logic, LTL) formalisiert sind. Das Expertensystem berechnet für jeden Zeitschritt die Menge der sicheren Aktionen im aktuellen Zustand $`\mathcal{A}_{\text{safe}}(s_t) \subseteq \mathcal{A}`$. Wählt der Agent eine Aktion $`a_t \notin \mathcal{A}_{\text{safe}}(s_t)`$, greift der Schutzschild ein, ersetzt den Befehl durch die nächstgelegene zulässige sichere Aktion $`a_t' = \arg\min_{a \in \mathcal{A}_{\text{safe}}} \|a - a_t\|`$ und speist eine Strafkomponente in die Belohnungsfunktion des Agenten ein. Auf diese Weise lernt das externe Modell, seine Zielfunktion ausschließlich innerhalb der physikalisch und normativ sicheren Grenzen zu optimieren.
+Das Expertensystem implementiert hierfür die Architektur des formalen Shieldings nach Alshiekh et al. [[4]](#src-4). Der Schutzschild wird aus Sicherheitsspezifikationen synthetisiert, die in linearer temporaler Logik (Linear Temporal Logic, LTL) formalisiert sind. Das Expertensystem berechnet für jeden Zeitschritt die Menge der sicheren Aktionen im aktuellen Zustand $\mathcal{A}_{\text{safe}}(s_t) \subseteq \mathcal{A}$. Wählt der Agent eine Aktion $a_t \notin \mathcal{A}_{\text{safe}}(s_t)$, greift der Schutzschild ein, ersetzt den Befehl durch die nächstgelegene zulässige sichere Aktion $a_t' = \arg\min_{a \in \mathcal{A}_{\text{safe}}} \|a - a_t\|$ und speist eine Strafkomponente in die Belohnungsfunktion des Agenten ein. Auf diese Weise lernt das externe Modell, seine Zielfunktion ausschließlich innerhalb der physikalisch und normativ sicheren Grenzen zu optimieren.
 
 ---
 
@@ -208,15 +208,15 @@ Werden Wissensbestände zwischen unabhängig voneinander entwickelten Informatio
 
 ### 5.1. Konservative Erweiterungen und Modullokalität
 
-Gemäß der Theorie der Ontologiemodularität nach Cuenca Grau et al. [[8]](#src-8) ist der Export eines Wissensmoduls $`\mathcal{M}`$ aus einer Ursprungsontologie $`\mathcal{O}_1`$ in ein Zielsystem $`\mathcal{O}_2`$ genau dann korrekt, wenn $`\mathcal{M}`$ eine **konservative Erweiterung (Conservative Extension)** bezüglich der gewählten Signatur $`\Sigma`$ darstellt:
+Gemäß der Theorie der Ontologiemodularität nach Cuenca Grau et al. [[8]](#src-8) ist der Export eines Wissensmoduls $\mathcal{M}$ aus einer Ursprungsontologie $\mathcal{O}_1$ in ein Zielsystem $\mathcal{O}_2$ genau dann korrekt, wenn $\mathcal{M}$ eine **konservative Erweiterung (Conservative Extension)** bezüglich der gewählten Signatur $\Sigma$ darstellt:
 
 ```math
 \mathcal{O}_1 \models \psi \iff \mathcal{M} \models \psi \quad \text{für alle Formeln } \psi \text{ über der Signatur } \Sigma
 ```
 
 Dies garantiert zwei fundamentale Systemeigenschaften:
-1. **Importsicherheit:** Der Import des Moduls verändert keinerlei semantische Relationen zwischen den internen Begriffen der Zielontologie, die nicht zur gemeinsamen Signatur $`\Sigma`$ gehören.
-2. **Inferenzvollständigkeit:** Sämtliche logischen Folgerungen über der Signatur $`\Sigma`$, die in der vollständigen Ursprungsontologie $`\mathcal{O}_1`$ ableitbar waren, lassen sich exklusiv aus dem extrahierten Modul $`\mathcal{M}`$ ableiten, ohne dass die gesamte Wissensbasis geladen werden muss.
+1. **Importsicherheit:** Der Import des Moduls verändert keinerlei semantische Relationen zwischen den internen Begriffen der Zielontologie, die nicht zur gemeinsamen Signatur $\Sigma$ gehören.
+2. **Inferenzvollständigkeit:** Sämtliche logischen Folgerungen über der Signatur $\Sigma$, die in der vollständigen Ursprungsontologie $\mathcal{O}_1$ ableitbar waren, lassen sich exklusiv aus dem extrahierten Modul $\mathcal{M}$ ableiten, ohne dass die gesamte Wissensbasis geladen werden muss.
 
 ### 5.2. Regeln zur Erhaltung semantischer Typen
 
@@ -232,37 +232,37 @@ In anspruchsvollen Industrie- und Verteidigungsprojekten enthält die Wissensbas
 
 ### 6.1. Mehrstufige Sicherheit auf Basis des Denning-Sicherheitsgitters
 
-Die Zugriffskontrolle stützt sich auf das klassische Gittermodell sicherer Informationsflüsse nach Denning [[9]](#src-9) sowie das Bell-LaPadula-Modell [[10]](#src-10). Die Menge der Sicherheitsmarkierungen bildet ein partiell geordnetes Gitter $`(\mathcal{L}, \le, \sqcap, \sqcup)`$:
+Die Zugriffskontrolle stützt sich auf das klassische Gittermodell sicherer Informationsflüsse nach Denning [[9]](#src-9) sowie das Bell-LaPadula-Modell [[10]](#src-10). Die Menge der Sicherheitsmarkierungen bildet ein partiell geordnetes Gitter $(\mathcal{L}, \le, \sqcap, \sqcup)$:
 
 ```math
 \mathcal{L} = \mathcal{C} \times 2^{\mathcal{K}}
 ```
 
-wobei $`\mathcal{C} = \{\text{Public} < \text{Internal} < \text{Restricted} < \text{Critical}\}`$ eine lineare Hierarchie von Vertraulichkeitsstufen definiert und $`\mathcal{K}`$ eine Menge kategorialer Beschränkungen (Kompartimente, z. B. spezifische Projektnamen oder Konsortien) darstellt.
+wobei $\mathcal{C} = \{\text{Public} < \text{Internal} < \text{Restricted} < \text{Critical}\}$ eine lineare Hierarchie von Vertraulichkeitsstufen definiert und $\mathcal{K}$ eine Menge kategorialer Beschränkungen (Kompartimente, z. B. spezifische Projektnamen oder Konsortien) darstellt.
 
-Die Sicherheitsmarkierung eines Subjekts $`L_s = (c_s, K_s)`$ dominiert die Markierung eines Wissensobjekts $`L_o = (c_o, K_o)`$ genau dann, wenn gilt:
+Die Sicherheitsmarkierung eines Subjekts $L_s = (c_s, K_s)$ dominiert die Markierung eines Wissensobjekts $L_o = (c_o, K_o)$ genau dann, wenn gilt:
 
 ```math
 L_s \ge L_o \iff (c_s \ge c_o) \land (K_o \subseteq K_s)
 ```
 
 **Parameter und Gitterbedingungen:**
-- $`c_s, c_o \in \mathcal{C}`$ — Klassifikationsstufen des Subjekts und Objekts in der geordneten Menge $`\text{Public} < \text{Internal} < \text{Restricted} < \text{Critical}`$;
-- $`K_s, K_o \subseteq \mathcal{K}`$ — Mengen zugewiesener Freigabekategorien (Kompartimente);
-- $`L_s = (c_s, K_s), L_o = (c_o, K_o)`$ — kombinierte Sicherheitsmarkierungen.
+- $c_s, c_o \in \mathcal{C}$ — Klassifikationsstufen des Subjekts und Objekts in der geordneten Menge $\text{Public} < \text{Internal} < \text{Restricted} < \text{Critical}$;
+- $K_s, K_o \subseteq \mathcal{K}$ — Mengen zugewiesener Freigabekategorien (Kompartimente);
+- $L_s = (c_s, K_s), L_o = (c_o, K_o)$ — kombinierte Sicherheitsmarkierungen.
 
 **Regel des sicheren Wissensexports und Rechenbeispiel:**
-- Eine Aussage $`f`$ mit der Markierung $`L_o = L(f)`$ wird einem Drittsystem mit der Freigabe $`L_s = L_{\text{recipient}}`$ genau dann bereitgestellt, wenn die Freigabe des Empfängers die Markierung des Faktums dominiert: $`L_s \ge L_o`$.
-- Gilt $`L_s \not\ge L_o`$, verwirft das Export-Gateway das Faktum deterministisch mit dem Status `REJECT_CLEARANCE_VIOLATION`.
-- Praxisbeispiel: Ein externes Diagnosesystem besitzt die Freigabe $`L_s = (\text{Internal}, \{\text{Avionics}, \text{Telemetry}\})`$. Die Wissensbasis enthält ein Faktum $`f_1`$ mit $`L(f_1) = (\text{Internal}, \{\text{Telemetry}\})`$ und eine kritische Kalibrierungsregel $`f_2`$ mit $`L(f_2) = (\text{Restricted}, \{\text{Avionics}\})`$.
-  - Für $`f_1`$: $`c_s = \text{Internal} \ge c_o = \text{Internal}`$ und $`K_o = \{\text{Telemetry}\} \subseteq K_s`$, somit gilt $`L_s \ge L(f_1)`$ → Export autorisiert (`EXPORT_PERMITTED`);
-  - Für $`f_2`$: $`c_s = \text{Internal} < c_o = \text{Restricted}`$, somit gilt $`L_s \not\ge L(f_2)`$ → Das Faktum wird vom Gateway abgewiesen (`EXPORT_DENIED`).
+- Eine Aussage $f$ mit der Markierung $L_o = L(f)$ wird einem Drittsystem mit der Freigabe $L_s = L_{\text{recipient}}$ genau dann bereitgestellt, wenn die Freigabe des Empfängers die Markierung des Faktums dominiert: $L_s \ge L_o$.
+- Gilt $L_s \not\ge L_o$, verwirft das Export-Gateway das Faktum deterministisch mit dem Status `REJECT_CLEARANCE_VIOLATION`.
+- Praxisbeispiel: Ein externes Diagnosesystem besitzt die Freigabe $L_s = (\text{Internal}, \{\text{Avionics}, \text{Telemetry}\})$. Die Wissensbasis enthält ein Faktum $f_1$ mit $L(f_1) = (\text{Internal}, \{\text{Telemetry}\})$ und eine kritische Kalibrierungsregel $f_2$ mit $L(f_2) = (\text{Restricted}, \{\text{Avionics}\})$.
+  - Für $f_1$: $c_s = \text{Internal} \ge c_o = \text{Internal}$ und $K_o = \{\text{Telemetry}\} \subseteq K_s$, somit gilt $L_s \ge L(f_1)$ → Export autorisiert (`EXPORT_PERMITTED`);
+  - Für $f_2$: $c_s = \text{Internal} < c_o = \text{Restricted}$, somit gilt $L_s \not\ge L(f_2)$ → Das Faktum wird vom Gateway abgewiesen (`EXPORT_DENIED`).
 
 ### 6.2. Selektive Beweisoffenlegung über Merkle-Bäume
 
 Fordert ein externes Auditsystem den Nachweis an, dass eine spezifische Anforderung oder ein Prüffall tatsächlich Teil eines freigegebenen Wissensbasis-Releases ist, würde eine vollständige Offenlegung der Wissensbasis vertrauliche Details über Firmware, Architektur oder Parametrisierung preisgeben.
 
-Zur Lösung dieses Dilemmas setzt das Expertensystem kryptographische Merkle-Bäume ein [[11]](#src-11). Die Wurzel des Baums $`R_{\text{Merkle}}`$ wird im öffentlichen Release-Zertifikat publiziert ([Kapitel 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)). Um das Vorhandensein eines spezifischen Faktums $`f_i`$ mit dem Hash $`H(f_i)`$ nachzuweisen, generiert das Expertensystem einen kompakten Authentifizierungspfad der Länge $`O(\log N)`$, der als **Merkle-Inklusionsbeweis (Merkle Inclusion Proof)** bezeichnet wird:
+Zur Lösung dieses Dilemmas setzt das Expertensystem kryptographische Merkle-Bäume ein [[11]](#src-11). Die Wurzel des Baums $R_{\text{Merkle}}$ wird im öffentlichen Release-Zertifikat publiziert ([Kapitel 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)). Um das Vorhandensein eines spezifischen Faktums $f_i$ mit dem Hash $H(f_i)$ nachzuweisen, generiert das Expertensystem einen kompakten Authentifizierungspfad der Länge $O(\log N)$, der als **Merkle-Inklusionsbeweis (Merkle Inclusion Proof)** bezeichnet wird:
 
 ```math
 \pi(f_i) = \langle h_1, h_2, \dots, h_{\lceil \log_2 N \rceil} \rangle
@@ -275,12 +275,12 @@ H(\dots H(H(f_i), h_1) \dots) = R_{\text{Merkle}}
 ```
 
 **Parameter und numerisches Verifikationsbeispiel:**
-- $`N`$ — Gesamtzahl der im Wissenspaket ZKP4 fixierten Fakten;
-- $`H(f_i)`$ — kryptographischer SHA-256-Hash des Zielfaktums $`f_i`$;
-- $`\lceil \log_2 N \rceil`$ — Länge des Authentifizierungspfads des Merkle-Inklusionsbeweises;
-- $`R_{\text{Merkle}}`$ — im öffentlichen Release-Zertifikat beglaubigter Wurzel-Hash.
-- Stimmt der berechnete Wurzel-Hash exakt mit $`R_{\text{Merkle}}`$ überein, wird das Faktum als authentisch anerkannt (`PROOF_VALID`); weicht das Ergebnis auch nur um ein einziges Bit ab, wird die Transaktion verworfen (`PROOF_INVALID`).
-- Beispielrechnung: Für eine Wissensbasis mit $`N = 1024`$ Fakten beträgt die Pfadlänge lediglich $`\lceil \log_2 1024 \rceil = 10`$ Zwischen-Hashes zu je 32 Byte (Gesamtgröße des Beweises nur $`320\,\text{Byte}`$ anstelle einer Übertragung des Gesamtdatensatzes von $`32\,\text{KB}`$). Die Verifikation des Hash-Pfads beansprucht auf einem ARM Cortex-A72-Prozessor weniger als $`12\,\mu\text{s}`$ und garantiert damit Echtzeitfähigkeit.
+- $N$ — Gesamtzahl der im Wissenspaket ZKP4 fixierten Fakten;
+- $H(f_i)$ — kryptographischer SHA-256-Hash des Zielfaktums $f_i$;
+- $\lceil \log_2 N \rceil$ — Länge des Authentifizierungspfads des Merkle-Inklusionsbeweises;
+- $R_{\text{Merkle}}$ — im öffentlichen Release-Zertifikat beglaubigter Wurzel-Hash.
+- Stimmt der berechnete Wurzel-Hash exakt mit $R_{\text{Merkle}}$ überein, wird das Faktum als authentisch anerkannt (`PROOF_VALID`); weicht das Ergebnis auch nur um ein einziges Bit ab, wird die Transaktion verworfen (`PROOF_INVALID`).
+- Beispielrechnung: Für eine Wissensbasis mit $N = 1024$ Fakten beträgt die Pfadlänge lediglich $\lceil \log_2 1024 \rceil = 10$ Zwischen-Hashes zu je 32 Byte (Gesamtgröße des Beweises nur $320\,\text{Byte}$ anstelle einer Übertragung des Gesamtdatensatzes von $32\,\text{KB}$). Die Verifikation des Hash-Pfads beansprucht auf einem ARM Cortex-A72-Prozessor weniger als $12\,\mu\text{s}$ und garantiert damit Echtzeitfähigkeit.
 
 ---
 
@@ -312,7 +312,7 @@ Ein angreifender Knoten sendet (selbst unter Vorlage eines gültigen Zugriffszer
 Ziel: Das Außerkraftsetzen von Sicherheitsverriegelungen im kritischen Moment.
 
 #### 7.2.2. Verdeckte semantische Drift (Stealth Semantic Drift)
-Der Angriff erfolgt schleichend über einen längeren Zeitraum: Sekündlich werden minimale Deltas numerischer Schwellenwerte oder Toleranzen übermittelt (beispielsweise driftet der Maximalstrom um $`+0{,}1\%`$ pro Beobachtung). Isoliert betrachtet passiert jedes Faktum die lokalen Filter, doch die kumulative Wirkung führt das Gesamtsystem schleichend aus dem sicheren Betriebsbereich.
+Der Angriff erfolgt schleichend über einen längeren Zeitraum: Sekündlich werden minimale Deltas numerischer Schwellenwerte oder Toleranzen übermittelt (beispielsweise driftet der Maximalstrom um $+0{,}1\%$ pro Beobachtung). Isoliert betrachtet passiert jedes Faktum die lokalen Filter, doch die kumulative Wirkung führt das Gesamtsystem schleichend aus dem sicheren Betriebsbereich.
 
 #### 7.2.3. Induktion von Solver-Zyklen (Cyclic Denial-of-Reasoning)
 Einschleusen zyklischer Abhängigkeiten zwischen neu definierten Prädikaten:
@@ -324,7 +324,7 @@ P_1(x) \leftarrow P_2(x), \quad P_2(x) \leftarrow P_3(x), \quad P_3(x) \leftarro
 Dies provoziert eine exponentielle Explosion des Rechenaufwands oder ein Einfrieren der Inferenzmaschine bei Resolutionsverfahren und der Fixpunktberechnung.
 
 #### 7.2.4. Sybil-Angriff im Feedback-Kanal (Sybil Consensus Poisoning)
-Kompromittierung eines Pools von Sensorknoten zur koordinierten Übermittlung identischer Schein-Gegenbeispiele. Dadurch wird der statistische Schwellenwert $`N_{\text{threshold}}`$ künstlich überschritten, sodass das System eine fabrizierte Anomalie fälschlicherweise als reale Veränderung der physikalischen Umgebung interpretiert.
+Kompromittierung eines Pools von Sensorknoten zur koordinierten Übermittlung identischer Schein-Gegenbeispiele. Dadurch wird der statistische Schwellenwert $N_{\text{threshold}}$ künstlich überschritten, sodass das System eine fabrizierte Anomalie fälschlicherweise als reale Veränderung der physikalischen Umgebung interpretiert.
 
 ### 7.3. Zulassungsgateway und Lebenszyklus der Wissensquarantäne
 
@@ -368,14 +368,14 @@ Die Interaktion zwischen Systemen ist ein bidirektionaler Prozess. Operieren unt
 
 Registriert ein externer Signalprozessor das Verlassen einer definierten Gültigkeitshüllkurve oder stellt ein neuronales Klassifikationsmodell eine hohe Vorhersageentropie fest, wird ein strukturierter Anomaliebericht erzeugt. Diese Berichte werden in eine Feedback-Warteschlange (Feedback Queue) eingesteuert.
 
-Ein Feedback-Kollektor aggregiert die Vorfälle. Ein vereinzelter Ausreißer kann auf ein flüchtiges Sensorrauschen zurückzuführen sein und rechtfertigt keine Regelrevision. Übersteigt jedoch die Anzahl gleichartiger Gegenbeispiele für ein Signal den statistischen Schwellenwert $`N_{\text{threshold}}`$, markiert der Kollektor das Phänomen als persistente Anomalie, die auf eine reale Veränderung der physikalischen Umgebungsbedingungen hindeutet.
+Ein Feedback-Kollektor aggregiert die Vorfälle. Ein vereinzelter Ausreißer kann auf ein flüchtiges Sensorrauschen zurückzuführen sein und rechtfertigt keine Regelrevision. Übersteigt jedoch die Anzahl gleichartiger Gegenbeispiele für ein Signal den statistischen Schwellenwert $N_{\text{threshold}}$, markiert der Kollektor das Phänomen als persistente Anomalie, die auf eine reale Veränderung der physikalischen Umgebungsbedingungen hindeutet.
 
 ### 8.2. Speisung des kontinuierlichen Lernzyklus
 
 Die akkumulierten, verifizierten Gegenbeispiele dienen als Primäreingabe für:
 - Die Erweiterung der Prüfungsmatrix aus [Kapitel 25](ch25-how-expert-systems-learn.md): Das neue Gegenbeispiel wird in die Menge der obligatorischen negativen oder Randwerttests aufgenommen und bildet eine neue Härteprüfung.
 - Algorithmen zur Erkennung von Systemdrift aus [Kapitel 26](ch26-continual-learning.md): Der Berichtsstrom wird mit statistischen CUSUM-Tests (Cumulative Sum) analysiert, um eine schleichende Sensordegradation oder Arbeitspunktverschiebung frühzeitig zu detektieren.
-- Die Adaption von Gültigkeitshüllkurven: Der Wissensingenieur oder ein automatisierter Optimierer formuliert angepasste Grenzen $`\mathcal{E}_s'`$, die vor der Freigabe eines neuen Wissenspaket-Releases den vollständigen Zyklus der formalen Prüfung durchlaufen.
+- Die Adaption von Gültigkeitshüllkurven: Der Wissensingenieur oder ein automatisierter Optimierer formuliert angepasste Grenzen $\mathcal{E}_s'$, die vor der Freigabe eines neuen Wissenspaket-Releases den vollständigen Zyklus der formalen Prüfung durchlaufen.
 
 ---
 

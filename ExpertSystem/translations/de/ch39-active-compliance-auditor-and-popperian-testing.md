@@ -12,9 +12,9 @@
 
 ## Abstract
 
-Beim Entwurf missionskritischer cyber-physikalischer Systeme (ISO 26262 ASIL D, ISO/SAE 21434 CAL 4, DO-178C DAL A, Automotive SPICE 4.0) führen die rein manuelle Aufbereitung normativer Berichte und eine passive Verifikation unausweichlich zu verheerenden Konsequenzen. Müssen Sicherheitsingenieure tausende Einzelanforderungen in statischen Tabellen abgleichen, führt die kognitive Überlastung zum sogenannten „Compliance-Theater“ (*Compliance Theatre*) — dem rein formalen Abhaken von Checklisten ohne mathematische Verifikation kritischer Grenzzustände. Das Übersehen eines einzigen verdeckten Einzelfehlers ($`\mathrm{SPFM} < 99\%`$) oder eines unberücksichtigten Angriffsvektors auf den fahrzeuginternen Bus hat fatale Unfälle, teure Rückrufaktionen autonomer Flotten sowie die persönliche strafrechtliche Haftung der Auditoren zur Folge.
+Beim Entwurf missionskritischer cyber-physikalischer Systeme (ISO 26262 ASIL D, ISO/SAE 21434 CAL 4, DO-178C DAL A, Automotive SPICE 4.0) führen die rein manuelle Aufbereitung normativer Berichte und eine passive Verifikation unausweichlich zu verheerenden Konsequenzen. Müssen Sicherheitsingenieure tausende Einzelanforderungen in statischen Tabellen abgleichen, führt die kognitive Überlastung zum sogenannten „Compliance-Theater“ (*Compliance Theatre*) — dem rein formalen Abhaken von Checklisten ohne mathematische Verifikation kritischer Grenzzustände. Das Übersehen eines einzigen verdeckten Einzelfehlers ($\mathrm{SPFM} < 99\%$) oder eines unberücksichtigten Angriffsvektors auf den fahrzeuginternen Bus hat fatale Unfälle, teure Rückrufaktionen autonomer Flotten sowie die persönliche strafrechtliche Haftung der Auditoren zur Folge.
 
-Dieses Kapitel überwindet diese Krise durch den Übergang von einem passiven Auskunftsorakel zu einem aktiven Auditor für Domänenwissen (*Active Compliance Auditor*). Auf Basis des Falsifikationsprinzips von Karl Popper ($`\mathcal{F}(\mathcal{H}, \mathcal{K})`$ für die Entwurfshypothese $`\mathcal{H}`$ und die Normenbasis $`\mathcal{K}`$) sowie der Grundlegung dieser Monographie [[8]](#src-8) übernimmt das evidenzbasierte Expertensystem die Initiative zur systematischen Untersuchung des Systementwurfs: Es sucht autonom nach Gegenbeispielen, verhindert theoretischen Drift (*Anti-Theory Drift Principle*) durch die Regel der epistemischen Notwendigkeit, deckt normative Widersprüche zwischen Anforderungen der funktionalen Sicherheit (*Safety*) und des Cyber-Schutzes (*Security*) auf, generiert strikte Zertifizierungsartefakte (HARA, TARA, SAR, DFAR/FMEDA) mit vollständiger Rückverfolgbarkeit ($100{,}0\%$) und entwirft falsifizierende Prüfszenarien. Im Rahmen popperianischer Dialektik und adversarialen Pair Programmings werden die Rollen des Falsifikator-Agenten (*Popperian Red Teamer*) und des Systemingenieur-Agenten (*Formal Implementer*) klar voneinander abgegrenzt, die beratende Relevanzzone (*Relevance Zone*) von der entscheidenden Berechtigungszone (*Eligibility Zone*) getrennt und der Mensch im Regelkreis (*Human-in-the-Loop*) als oberste Schiedsinstanz des Systems verankert.
+Dieses Kapitel überwindet diese Krise durch den Übergang von einem passiven Auskunftsorakel zu einem aktiven Auditor für Domänenwissen (*Active Compliance Auditor*). Auf Basis des Falsifikationsprinzips von Karl Popper ($\mathcal{F}(\mathcal{H}, \mathcal{K})$ für die Entwurfshypothese $\mathcal{H}$ und die Normenbasis $\mathcal{K}$) sowie der Grundlegung dieser Monographie [[8]](#src-8) übernimmt das evidenzbasierte Expertensystem die Initiative zur systematischen Untersuchung des Systementwurfs: Es sucht autonom nach Gegenbeispielen, verhindert theoretischen Drift (*Anti-Theory Drift Principle*) durch die Regel der epistemischen Notwendigkeit, deckt normative Widersprüche zwischen Anforderungen der funktionalen Sicherheit (*Safety*) und des Cyber-Schutzes (*Security*) auf, generiert strikte Zertifizierungsartefakte (HARA, TARA, SAR, DFAR/FMEDA) mit vollständiger Rückverfolgbarkeit ($100{,}0\%$) und entwirft falsifizierende Prüfszenarien. Im Rahmen popperianischer Dialektik und adversarialen Pair Programmings werden die Rollen des Falsifikator-Agenten (*Popperian Red Teamer*) und des Systemingenieur-Agenten (*Formal Implementer*) klar voneinander abgegrenzt, die beratende Relevanzzone (*Relevance Zone*) von der entscheidenden Berechtigungszone (*Eligibility Zone*) getrennt und der Mensch im Regelkreis (*Human-in-the-Loop*) als oberste Schiedsinstanz des Systems verankert.
 
 ---
 
@@ -169,23 +169,23 @@ Die Aufgabe des Expertensystems besteht darin, in einer Latenz von $t < 1\ \math
 ```
 
 wobei:
-- $`\mathcal{F}(\mathcal{H}, \mathcal{K})`$ die Menge der identifizierten normativen Falsifikatoren der Hypothese $`\mathcal{H}`$ innerhalb der Regelbasis $`\mathcal{K}`$ darstellt;
-- $`\nu_k`$ eine atomare deontische Norm des Standards bezeichnet;
-- $`\models`$ die Relation der logischen Folgerung (semantische Ableitung einer Normverletzung) ist.
+- $\mathcal{F}(\mathcal{H}, \mathcal{K})$ die Menge der identifizierten normativen Falsifikatoren der Hypothese $\mathcal{H}$ innerhalb der Regelbasis $\mathcal{K}$ darstellt;
+- $\nu_k$ eine atomare deontische Norm des Standards bezeichnet;
+- $\models$ die Relation der logischen Folgerung (semantische Ableitung einer Normverletzung) ist.
 
 **Praktische Anwendung und ingenieurtechnische Konsequenzen (Closed-Loop Decision):**
 
 #### 1. Steuerung des Verifikationsflusses und Systementscheidungen
 
-Gilt $`\mathcal{F}(\mathcal{H}, \mathcal{K}) \neq \emptyset`$ (mindestens ein Falsifikator wurde gefunden):
+Gilt $\mathcal{F}(\mathcal{H}, \mathcal{K}) \neq \emptyset$ (mindestens ein Falsifikator wurde gefunden):
 
 ```math
 \mathrm{Verdict} = \mathbf{FALSIFIED} \quad \bigl( \mathrm{Refusal}(\rho), \quad \mathrm{EBX} = \mathrm{SHA256}(\mathrm{Quote}), \quad \mathrm{Clause} = \text{ISO 26262-5:2018 Clause 8.4.3} \bigr)
 ```
 
-**Systemreaktion:** Die CI/CD-Pipeline stoppt unverzüglich mit dem Fehlercode `EX_SAFETY_VIOLATION`. Das System erzeugt ein kryptographisch mit Ed25519 signiertes Ablehnungstoken $`\mathrm{Refusal}(\rho)`$, blockiert das Flashen des Firmware-Images in das Zielsteuergerät (ECU) und legt im Issue-Tracker (Jira/GitLab) ein Fehlerticket mit Verweis auf das exakte bytegenaue Fragment des Standards an.
+**Systemreaktion:** Die CI/CD-Pipeline stoppt unverzüglich mit dem Fehlercode `EX_SAFETY_VIOLATION`. Das System erzeugt ein kryptographisch mit Ed25519 signiertes Ablehnungstoken $\mathrm{Refusal}(\rho)$, blockiert das Flashen des Firmware-Images in das Zielsteuergerät (ECU) und legt im Issue-Tracker (Jira/GitLab) ein Fehlerticket mit Verweis auf das exakte bytegenaue Fragment des Standards an.
 
-Gilt $`\mathcal{F}(\mathcal{H}, \mathcal{K}) = \emptyset`$ (kein normatives Gegenbeispiel auffindbar):
+Gilt $\mathcal{F}(\mathcal{H}, \mathcal{K}) = \emptyset$ (kein normatives Gegenbeispiel auffindbar):
 
 ```math
 \mathrm{Verdict} = \mathbf{PROVISIONALLY\_CORROBORATED}
@@ -194,13 +194,13 @@ Gilt $`\mathcal{F}(\mathcal{H}, \mathcal{K}) = \emptyset`$ (kein normatives Gege
 **Systemreaktion:** Das System erteilt das Urteil der vorläufigen Bewährung, stellt ein digitales Zertifikat über das Bestehen des Normen-Gateways aus und gibt das System für Hardware-in-the-Loop-Prüfungen (HIL) frei.
 
 #### 2. Hardware-Dimensionierung und Latenz
-Die Falsifikationszeit wird dank der Vorab-Indizierung von Normen in Bitmasken des BRAM-Speichers ($`< 512\,\text{MB}`$) strikt auf $`t_{\mathrm{eval}} \le 1{,}0\,\text{ms}`$ begrenzt.
+Die Falsifikationszeit wird dank der Vorab-Indizierung von Normen in Bitmasken des BRAM-Speichers ($< 512\,\text{MB}$) strikt auf $t_{\mathrm{eval}} \le 1{,}0\,\text{ms}$ begrenzt.
 
 #### 3. Praktisches numerisches Beispiel
-- Ein Entwickler postuliert die Zulässigkeit eines einkanaligen ADC mit einem diagnostischen Deckungsgrad von $`90\%`$ für ein ASIL-D-Subsystem.
-- Die symbolische Inferenzmaschine identifiziert innerhalb von $`210\,\mu\text{s}`$ das Normatom $`\nu_{418}`$ (ISO 26262-5, Abschn. 8.4.3: Zwingende Forderung nach $`\mathrm{SPFM} \ge 99\%`$).
-- $`\mathcal{F}(\mathcal{H}, \mathcal{K}) = \{\nu_{418}\} \neq \emptyset \implies \mathrm{Verdict} = \mathbf{FALSIFIED}`$.
-- **Systemreaktion:** Es wird ein Blockadeprotokoll mit Ausweis des Defizits erzeugt: $`\Delta \mathrm{SPFM} = 9{,}0\%`$. Der Commit wird im Repository abgewiesen.
+- Ein Entwickler postuliert die Zulässigkeit eines einkanaligen ADC mit einem diagnostischen Deckungsgrad von $90\%$ für ein ASIL-D-Subsystem.
+- Die symbolische Inferenzmaschine identifiziert innerhalb von $210\,\mu\text{s}$ das Normatom $\nu_{418}$ (ISO 26262-5, Abschn. 8.4.3: Zwingende Forderung nach $\mathrm{SPFM} \ge 99\%$).
+- $\mathcal{F}(\mathcal{H}, \mathcal{K}) = \{\nu_{418}\} \neq \emptyset \implies \mathrm{Verdict} = \mathbf{FALSIFIED}$.
+- **Systemreaktion:** Es wird ein Blockadeprotokoll mit Ausweis des Defizits erzeugt: $\Delta \mathrm{SPFM} = 9{,}0\%$. Der Commit wird im Repository abgewiesen.
 
 ### 3.3. Prinzip des Anti-Theorie-Drifts und der sparsamen Wissensmodellierung
 
@@ -209,38 +209,38 @@ In der Praxis des Entwurfs komplexer Expertensysteme führt das Bestreben, eine 
 #### 3.3.1. Popperianisches Falsifizierbarkeitskriterium und die Regel der epistemischen Notwendigkeit
 
 1. **Popperianisches Falsifizierbarkeitskriterium der Ontologie:**
-Ein formales Wissensmodell $`\mathcal{M}`$ wird nicht nach der Anzahl theoretischer Abstraktionen oder Begriffe bewertet, die es potenziell beschreiben könnte, sondern nach seiner Fähigkeit, unzutreffende, redundante oder widersprüchliche Aussagen aus einer Menge generierter Gegenbeispiele $`\mathcal{C}`$ strikt und fehlerfrei zurückzuweisen:
+Ein formales Wissensmodell $\mathcal{M}$ wird nicht nach der Anzahl theoretischer Abstraktionen oder Begriffe bewertet, die es potenziell beschreiben könnte, sondern nach seiner Fähigkeit, unzutreffende, redundante oder widersprüchliche Aussagen aus einer Menge generierter Gegenbeispiele $\mathcal{C}$ strikt und fehlerfrei zurückzuweisen:
 
 ```math
 \mathrm{RejectionRate}(\mathcal{M}, \mathcal{C}) = \frac{\lvert \lbrace c \in \mathcal{C} \mid \mathcal{M} \models \neg c \rbrace \rvert}{\lvert \mathcal{C} \rvert} \ge \tau_{\mathrm{falsify}} = 1{,}00
 ```
 
 wobei:
-- $`\mathcal{M}`$ das formalisierte ontologische Modell des Fachbereichs ist;
-- $`\mathcal{C}`$ die Menge der vom Falsifikator generierten Prüf-Gegenbeispiele, anomalen Zustände und widersprüchlichen Anforderungen darstellt;
-- $`\tau_{\mathrm{falsify}} = 1{,}00`$ die normative Schwelle absoluter Abgrenzungsselektivität ist (jedes Übersehen eines Widerspruchs belegt eine übermäßige Unschärfe der Ontologie).
+- $\mathcal{M}$ das formalisierte ontologische Modell des Fachbereichs ist;
+- $\mathcal{C}$ die Menge der vom Falsifikator generierten Prüf-Gegenbeispiele, anomalen Zustände und widersprüchlichen Anforderungen darstellt;
+- $\tau_{\mathrm{falsify}} = 1{,}00$ die normative Schwelle absoluter Abgrenzungsselektivität ist (jedes Übersehen eines Widerspruchs belegt eine übermäßige Unschärfe der Ontologie).
 
 2. **Regel der epistemischen Notwendigkeit (Lex Parsimoniae):**
-Jedes neue Prädikat, jede neue Relation oder taxonomische Abstraktionsebene $`\Delta \mathcal{P}`$ in der Wissensbasis muss strikt durch ein unmittelbares Wissensdefizit oder eine nachgewiesene Kollision in den verarbeiteten technischen Artefakten $`\mathcal{E}_{\mathrm{deficit}}`$ begründet sein:
+Jedes neue Prädikat, jede neue Relation oder taxonomische Abstraktionsebene $\Delta \mathcal{P}$ in der Wissensbasis muss strikt durch ein unmittelbares Wissensdefizit oder eine nachgewiesene Kollision in den verarbeiteten technischen Artefakten $\mathcal{E}_{\mathrm{deficit}}$ begründet sein:
 
 ```math
 \forall p \in \Delta \mathcal{P}, \quad \exists e \in \mathcal{E}_{\mathrm{deficit}} : \mathrm{Resolves}(p, e) \land \neg \exists q \in \mathcal{P}_{\mathrm{existing}} (\mathrm{Expressible}(q, e))
 ```
 
 wobei:
-- $`\mathcal{P}_{\mathrm{existing}}`$ die vorhandene Basis typisierter Prädikate erster Stufe (FOL) ist;
-- $`\mathcal{E}_{\mathrm{deficit}}`$ die Menge erfasster empirischer oder normativer Verifikationsdefizite bezeichnet.
+- $\mathcal{P}_{\mathrm{existing}}$ die vorhandene Basis typisierter Prädikate erster Stufe (FOL) ist;
+- $\mathcal{E}_{\mathrm{deficit}}$ die Menge erfasster empirischer oder normativer Verifikationsdefizite bezeichnet.
 
-Lässt sich eine ingenieurtechnische Aussage mit dem einfacheren Apparat der bestehenden Basis ohne Erzeugung redundanter konzeptioneller Überbauten eindeutig verifizieren, so gilt die Einführung von $`\Delta \mathcal{P}`$ als kritischer methodischer Entwurfsfehler.
+Lässt sich eine ingenieurtechnische Aussage mit dem einfacheren Apparat der bestehenden Basis ohne Erzeugung redundanter konzeptioneller Überbauten eindeutig verifizieren, so gilt die Einführung von $\Delta \mathcal{P}$ als kritischer methodischer Entwurfsfehler.
 
 #### 3.3.2. Geschlossener Kreis der ingenieurtechnischen Berechnung der Ontologiesparsamkeit
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
-   Bei der Kompilierung der Wissensbasis prüft der Ontologie-Analysator jedes Prädikat anhand der Regel der epistemischen Notwendigkeit. Ergibt sich für ein neues Prädikat $`\mathrm{Resolves}(p, e) = \mathrm{false}`$ oder lässt es sich semantisch aus der bestehenden Basis $`\mathcal{P}_{\mathrm{existing}}`$ ableiten, bricht der Compiler die Image-Generierung mit dem Fehlercode `ERR_THEORY_DRIFT` ab und erzeugt das Ablehnungstoken `REFUSAL`. Zeigt sich beim Regressionstest, dass $`\mathrm{RejectionRate}(\mathcal{M}, \mathcal{C}) < 1{,}00`$ ist, wird die Wissensbasis als übermäßig permissiv (*Over-permissive*) verworfen, was ihre Weitergabe an das Zertifizierungs-Audit blockiert.
+   Bei der Kompilierung der Wissensbasis prüft der Ontologie-Analysator jedes Prädikat anhand der Regel der epistemischen Notwendigkeit. Ergibt sich für ein neues Prädikat $\mathrm{Resolves}(p, e) = \mathrm{false}$ oder lässt es sich semantisch aus der bestehenden Basis $\mathcal{P}_{\mathrm{existing}}$ ableiten, bricht der Compiler die Image-Generierung mit dem Fehlercode `ERR_THEORY_DRIFT` ab und erzeugt das Ablehnungstoken `REFUSAL`. Zeigt sich beim Regressionstest, dass $\mathrm{RejectionRate}(\mathcal{M}, \mathcal{C}) < 1{,}00$ ist, wird die Wissensbasis als übermäßig permissiv (*Over-permissive*) verworfen, was ihre Weitergabe an das Zertifizierungs-Audit blockiert.
 2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
-   Jede überflüssige taxonomische Ebene und redundante Relation erhöht die Resolutionstiefe $`d`$, was zu einem kombinatorischen Anstieg der Unifikationszeit $`T_{\mathrm{unif}} \propto \mathcal{O}(2^d)`$ führt. Die Begrenzung der Ontologietiefe auf $`d \le 4`$ und die Eliminierung theoretischen Drifts garantieren ein lineares Scanning des BRAM-Speichers ($`< 512\,\text{KB}`$) sowie eine Inferenz-Antwortzeit von $`t_{\mathrm{eval}} \le 1{,}0\,\text{ms}`$ ohne das Risiko eines Hardware-Stack-Überlaufs im Mikrocontroller.
+   Jede überflüssige taxonomische Ebene und redundante Relation erhöht die Resolutionstiefe $d$, was zu einem kombinatorischen Anstieg der Unifikationszeit $T_{\mathrm{unif}} \propto \mathcal{O}(2^d)$ führt. Die Begrenzung der Ontologietiefe auf $d \le 4$ und die Eliminierung theoretischen Drifts garantieren ein lineares Scanning des BRAM-Speichers ($< 512\,\text{KB}$) sowie eine Inferenz-Antwortzeit von $t_{\mathrm{eval}} \le 1{,}0\,\text{ms}$ ohne das Risiko eines Hardware-Stack-Überlaufs im Mikrocontroller.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   Ein Entwickler versucht, anstelle des deterministischen Prädikatenpaars `VoltageInRange(v)` und `ValidCRC(frame)` eine abstrakte Klasse „Universeller quanten-synergetischer Sensorzustand“ einzuführen. Im Falsifikations-Benchmark wurden $`\lvert \mathcal{C} \rvert = 100`$ fehlerhafte Pakete mit transientem Rauschen und Busfehlern erzeugt. Das vage Metamodell wies lediglich 42 Anomalien zurück ($`\mathrm{RejectionRate} = 0{,}42 < 1{,}00`$) und ließ 58 kritische Ausfälle passieren. Die sparsame Basis $`\mathcal{P}_{\mathrm{existing}}`$ wies $`100`$ von $`100`$ Anomalien ($`\mathrm{RejectionRate} = 1{,}00`$) in einer Zeit von $`72\,\mu\text{s}`$ zurück. Der Compiler lehnte die konzeptionelle Überfrachtung ab und bewahrte den Determinismus des Gesamtsystems.
+   Ein Entwickler versucht, anstelle des deterministischen Prädikatenpaars `VoltageInRange(v)` und `ValidCRC(frame)` eine abstrakte Klasse „Universeller quanten-synergetischer Sensorzustand“ einzuführen. Im Falsifikations-Benchmark wurden $\lvert \mathcal{C} \rvert = 100$ fehlerhafte Pakete mit transientem Rauschen und Busfehlern erzeugt. Das vage Metamodell wies lediglich 42 Anomalien zurück ($\mathrm{RejectionRate} = 0{,}42 < 1{,}00$) und ließ 58 kritische Ausfälle passieren. Die sparsame Basis $\mathcal{P}_{\mathrm{existing}}$ wies $100$ von $100$ Anomalien ($\mathrm{RejectionRate} = 1{,}00$) in einer Zeit von $72\,\mu\text{s}$ zurück. Der Compiler lehnte die konzeptionelle Überfrachtung ab und bewahrte den Determinismus des Gesamtsystems.
 
 ---
 
@@ -262,7 +262,7 @@ Durch Verknüpfung der Schutzgüter mit STRIDE- und MITRE ATT&CK for ICS-Ontolog
 \mathrm{Threat} = \langle \mathrm{Asset}, \ \mathrm{Property}, \ \mathrm{Damage} \rangle
 ```
 
-wobei beispielsweise $`\mathrm{Asset} = \text{SteerAngle}`$, $`\mathrm{Property} = \text{Integrity}`$ und $`\mathrm{Damage}`$ das unautorisierte Verreißen der Lenkung bei Autobahntempo ist.
+wobei beispielsweise $\mathrm{Asset} = \text{SteerAngle}$, $\mathrm{Property} = \text{Integrity}$ und $\mathrm{Damage}$ das unautorisierte Verreißen der Lenkung bei Autobahntempo ist.
 
 #### 4.1.3. Analyse von Angriffspfaden und Machbarkeit (Attack Path Analysis & Feasibility)
 Das System traversiert den Konnektivitätsgraphen des Bordnetzes und berechnet den Vektor der Angriffsmachbarkeit nach der Attack-Potential-Methodik (Zeitaufwand, Fachwissen des Angreifers, Kenntnis des Systems, Angriffsfenster, erforderliche Ausrüstung).
@@ -273,11 +273,11 @@ Statt wochenlanger manueller Arbeit erhält der Cybersicherheitsingenieur eine v
 ### 4.2. Automatisierung von DFAR und FMEDA (ISO 26262): Mathematische Exaktheit der Metriken
 
 Die Aufbereitung eines DFAR-/FMEDA-Berichts verlangt präzise mathematische Zuverlässigkeitsberechnungen auf Bauteilebene:
-- $`\lambda`$ — Gesamtausfallrate der Komponente (FIT, $10^{-9}\,\text{Ausfälle}/\text{h}$);
-- $`\lambda_s`$ — Rate sicherer Ausfälle (*Safe Faults*);
-- $`\lambda_{\mathrm{spf}}`$ — Rate gefährlicher Einzelfehler (*Single-Point Faults*), die unmittelbar zur Verletzung des Sicherheitsziels führen;
-- $`\lambda_{\mathrm{rf}}`$ — Rate verbleibender Restfehler (*Residual Faults*);
-- $`\lambda_{\mathrm{mpf,lat}}`$ und $`\lambda_{\mathrm{mpf,det}}`$ — Raten latenter bzw. aufgedeckter Mehrfachfehler (*Multiple-Point Faults*).
+- $\lambda$ — Gesamtausfallrate der Komponente (FIT, $10^{-9}\,\text{Ausfälle}/\text{h}$);
+- $\lambda_s$ — Rate sicherer Ausfälle (*Safe Faults*);
+- $\lambda_{\mathrm{spf}}$ — Rate gefährlicher Einzelfehler (*Single-Point Faults*), die unmittelbar zur Verletzung des Sicherheitsziels führen;
+- $\lambda_{\mathrm{rf}}$ — Rate verbleibender Restfehler (*Residual Faults*);
+- $\lambda_{\mathrm{mpf,lat}}$ und $\lambda_{\mathrm{mpf,det}}$ — Raten latenter bzw. aufgedeckter Mehrfachfehler (*Multiple-Point Faults*).
 
 #### 4.2.1. Metrik für einkanalige Fehler (SPFM)
 
@@ -297,15 +297,15 @@ Für ASIL-D liegt der normative Schwellenwert bei:
 
 **Praktische Anwendung und ingenieurtechnische Konsequenzen (Closed-Loop Decision):**
 1. **Automatisierte Zertifizierung und Release-Gateway:**
-   - **Normkonformität** ($`\mathrm{SPFM} \ge 0{,}99`$ und $`\mathrm{LFM} \ge 0{,}90`$): Das System kompiliert das Nachweisartefakt `SAR.gsn` mit dem Status `APPROVED_FOR_AUDIT`, signiert es digital und leitet es an die Auditoren (TÜV/Dekra) weiter.
-   - **Normabweichung** ($`\mathrm{SPFM} < 0{,}99`$ oder $`\mathrm{LFM} < 0{,}90`$): Die SAR-Erzeugung wird gesperrt. Das System schaltet auf diagnostisches Backtracking (*Diagnostic Backtracking*) um und liefert dem Ingenieur minimale Entwurfskorrekturen:
+   - **Normkonformität** ($\mathrm{SPFM} \ge 0{,}99$ und $\mathrm{LFM} \ge 0{,}90$): Das System kompiliert das Nachweisartefakt `SAR.gsn` mit dem Status `APPROVED_FOR_AUDIT`, signiert es digital und leitet es an die Auditoren (TÜV/Dekra) weiter.
+   - **Normabweichung** ($\mathrm{SPFM} < 0{,}99$ oder $\mathrm{LFM} < 0{,}90$): Die SAR-Erzeugung wird gesperrt. Das System schaltet auf diagnostisches Backtracking (*Diagnostic Backtracking*) um und liefert dem Ingenieur minimale Entwurfskorrekturen:
      * Erhöhung des diagnostischen Deckungsgrads des Watchdogs ($K_{\mathrm{wdg}}$);
      * oder Einbindung eines Hardware-Komparators mit redundanter Signalabtastung.
 2. **Praktisches numerisches Rechenbeispiel:**
-   - Für einen Mikrocontroller wird eine Gesamtausfallrate von $`\sum \lambda = 120\,\text{FIT}`$ erfasst.
-   - Die sicheren und beherrschten Einzelfehler summieren sich auf $`\sum (\lambda_s + \lambda_{\mathrm{spf\_mitigated}}) = 118{,}1\,\text{FIT}`$.
-   - Berechnung: $`\mathrm{SPFM} = 118{,}1 / 120 = 0{,}9841 = 98{,}41\% < 99\%`$.
-   - **Systemreaktion:** Release-Blockade. Das System generiert folgende Handlungsempfehlung: „Defizit $`\Delta = 0{,}59\%`$. Eine Erhöhung der Watchdog-Abdeckung von $`60\%`$ auf $`90\%`$ reduziert ungeschützte Ausfälle um $`1{,}2\,\text{FIT}`$, wodurch die $`\mathrm{SPFM}`$ auf $`119{,}3 / 120 = 99{,}42\% \ge 99\%`$ steigt“. Nach Übernahme der Schaltungsanpassung schaltet die erneute Inferenz das Zertifizierungs-Gateway frei.
+   - Für einen Mikrocontroller wird eine Gesamtausfallrate von $\sum \lambda = 120\,\text{FIT}$ erfasst.
+   - Die sicheren und beherrschten Einzelfehler summieren sich auf $\sum (\lambda_s + \lambda_{\mathrm{spf\_mitigated}}) = 118{,}1\,\text{FIT}$.
+   - Berechnung: $\mathrm{SPFM} = 118{,}1 / 120 = 0{,}9841 = 98{,}41\% < 99\%$.
+   - **Systemreaktion:** Release-Blockade. Das System generiert folgende Handlungsempfehlung: „Defizit $\Delta = 0{,}59\%$. Eine Erhöhung der Watchdog-Abdeckung von $60\%$ auf $90\%$ reduziert ungeschützte Ausfälle um $1{,}2\,\text{FIT}$, wodurch die $\mathrm{SPFM}$ auf $119{,}3 / 120 = 99{,}42\% \ge 99\%$ steigt“. Nach Übernahme der Schaltungsanpassung schaltet die erneute Inferenz das Zertifizierungs-Gateway frei.
 
 ### 4.3. Automatisierung von SAR: Evidenzgewebe für Auditoren von TÜV und Dekra
 
@@ -367,12 +367,12 @@ Zur quantitativen Bewertung der Güte des generierten Testprogramms ermittelt da
 \mathrm{TraceabilityCoverage} = \frac{\lvert \mathcal{R} \cap \mathcal{T} \rvert}{\lvert \mathcal{R} \rvert} = 1{,}00
 ```
 
-wobei $`\mathcal{R}`$ die Gesamtmenge der formalisierten Anforderungen aus Standards und Systemspezifikation (*Requirements*) bezeichnet und $`\mathcal{T}`$ die Teilmenge der Anforderungen darstellt, für die deterministische Testfälle generiert und erfolgreich ausgeführt wurden (*Test-Verified*).
+wobei $\mathcal{R}$ die Gesamtmenge der formalisierten Anforderungen aus Standards und Systemspezifikation (*Requirements*) bezeichnet und $\mathcal{T}$ die Teilmenge der Anforderungen darstellt, für die deterministische Testfälle generiert und erfolgreich ausgeführt wurden (*Test-Verified*).
 
 **Praktische Anwendung und ingenieurtechnische Konsequenzen (Closed-Loop Decision):**
-- **Vollständige Rückverfolgbarkeit** ($`\mathrm{TraceabilityCoverage} = 1{,}00`$): Das ASPICE SWE.4-Qualitäts-Gateway wechselt in den Zustand `PASSED`. Die CI/CD-Pipeline erzeugt das finale, kryptographisch signierte Build-Manifest für die Zertifizierungsstelle.
-- **Unvollständige Rückverfolgbarkeit** ($`\mathrm{TraceabilityCoverage} < 1{,}00`$): Die Pipeline stoppt mit dem Fehler `EX_COMPLIANCE_GAP`. Das System berechnet die Differenzmenge $`\mathcal{R}_{\mathrm{missing}} = \mathcal{R} \setminus \mathcal{T}`$ und erzeugt automatisiert zielgerichtete Prompts für System 1 (LLM Proposer), um die fehlenden Testfälle synthetisieren zu lassen.
-- **Praktisches numerisches Beispiel:** Eine Spezifikation umfasst $`\lvert \mathcal{R} \rvert = 142`$ Anforderungen. Verifiziert sind $`\lvert \mathcal{R} \cap \mathcal{T} \rvert = 141`$ Anforderungen. Abdeckung: $`\mathrm{TraceabilityCoverage} = 141 / 142 \approx 0{,}993 < 1{,}00`$. **Systemreaktion:** Release gesperrt; System 1 erhält den gezielten Syntheseauftrag für die einzige ungedeckte Anforderung $`R_{87}`$ (Verhalten bei transientem Spannungsabfall auf dem CAN-Bus).
+- **Vollständige Rückverfolgbarkeit** ($\mathrm{TraceabilityCoverage} = 1{,}00$): Das ASPICE SWE.4-Qualitäts-Gateway wechselt in den Zustand `PASSED`. Die CI/CD-Pipeline erzeugt das finale, kryptographisch signierte Build-Manifest für die Zertifizierungsstelle.
+- **Unvollständige Rückverfolgbarkeit** ($\mathrm{TraceabilityCoverage} < 1{,}00$): Die Pipeline stoppt mit dem Fehler `EX_COMPLIANCE_GAP`. Das System berechnet die Differenzmenge $\mathcal{R}_{\mathrm{missing}} = \mathcal{R} \setminus \mathcal{T}$ und erzeugt automatisiert zielgerichtete Prompts für System 1 (LLM Proposer), um die fehlenden Testfälle synthetisieren zu lassen.
+- **Praktisches numerisches Beispiel:** Eine Spezifikation umfasst $\lvert \mathcal{R} \rvert = 142$ Anforderungen. Verifiziert sind $\lvert \mathcal{R} \cap \mathcal{T} \rvert = 141$ Anforderungen. Abdeckung: $\mathrm{TraceabilityCoverage} = 141 / 142 \approx 0{,}993 < 1{,}00$. **Systemreaktion:** Release gesperrt; System 1 erhält den gezielten Syntheseauftrag für die einzige ungedeckte Anforderung $R_{87}$ (Verhalten bei transientem Spannungsabfall auf dem CAN-Bus).
 
 ---
 
@@ -415,7 +415,7 @@ flowchart TD
    - Werkzeugkasten: SMT-/SAT-Solver für Hardware-Grenzwerte, adversariale Randvektoren, Datenstruktur-Fuzzing, Angriffe auf Deskriptor-Erschöpfung und Überprüfung von Custody-Verletzungen.
 2. **Rolle „Formal Implementer“ (Systemingenieur-Agent):**
    - **Verbot verbaler Apologie:** Dem Ingenieur ist es strikt untersagt, Mängel durch narrative Begründungen zu rechtfertigen. Jedes gefundene Gegenbeispiel gilt als zwingender Anlass zur Einführung einer streng typisierten Invariante.
-   - **Fail-Closed-Prinzip ($`\mathrm{ZHR} = 1{,}000000`$):** Fehlt eine Bedingung oder ist ein Sachverhalt mehrdeutig, gibt das System eine deterministische, typisierte Verweigerung zurück (`REFUSAL`, `UNSUPPORTED_CONDITION`), wodurch unkontrollierte Halluzinationen ausgeschlossen werden.
+   - **Fail-Closed-Prinzip ($\mathrm{ZHR} = 1{,}000000$):** Fehlt eine Bedingung oder ist ein Sachverhalt mehrdeutig, gibt das System eine deterministische, typisierte Verweigerung zurück (`REFUSAL`, `UNSUPPORTED_CONDITION`), wodurch unkontrollierte Halluzinationen ausgeschlossen werden.
 3. **Rolle „Chief Architect“ (Menschlicher Schiedsrichter im Regelkreis):**
    - Gibt die unumstößliche philosophische Invariante vor: *«Sapiens dominabitur astris»* (Der Weise wird über die Gestirne herrschen) — die Forderung nach absoluter wissenschaftlicher Disziplin und der Zurückweisung von Spaghetti-Code.
    - Gewährleistet die Steuerung nach den 5 Dimensionen von Karl Wiegers: Qualität (Quality) ist eine unverrückbare Randbedingung (Flexibilität = 0); Umfang (Scope) bildet den primären Freiheitsgrad durch durchdachte Release-Phasierung.
@@ -428,16 +428,16 @@ Jede Änderung am Systemcode unterliegt der mathematischen Regel der geschlossen
 \mathrm{Defect}_{\mathrm{Audit}} \implies \mathrm{SWR} \implies \mathrm{ADR} \implies \mathrm{Task} \implies \mathrm{FailClosedCode} \implies \mathrm{AdversarialProof}
 ```
 
-wobei jeder Audit-Defekt $`\mathrm{Defect}_{\mathrm{Audit}}`$ in eine formale Softwareanforderung $`\mathrm{SWR}`$, eine Architekturentscheidung $`\mathrm{ADR}`$, ein dekomponiertes Arbeitspaket $`\mathrm{Task}`$ sowie in nach dem Fail-Closed-Standard gehärteten Code $`\mathrm{FailClosedCode}`$ überführt wird und mit einem strengen formalen Beweis der Regressionsfreiheit $`\mathrm{AdversarialProof}`$ abschließt. Die Regel *Analysis-First* verbietet das Schreiben von Code ohne vorab abgestimmte Architekturanforderung kategorisch.
+wobei jeder Audit-Defekt $\mathrm{Defect}_{\mathrm{Audit}}$ in eine formale Softwareanforderung $\mathrm{SWR}$, eine Architekturentscheidung $\mathrm{ADR}$, ein dekomponiertes Arbeitspaket $\mathrm{Task}$ sowie in nach dem Fail-Closed-Standard gehärteten Code $\mathrm{FailClosedCode}$ überführt wird und mit einem strengen formalen Beweis der Regressionsfreiheit $\mathrm{AdversarialProof}$ abschließt. Die Regel *Analysis-First* verbietet das Schreiben von Code ohne vorab abgestimmte Architekturanforderung kategorisch.
 
 #### 7.1.1. Geschlossener Kreis der popperianischen adversarialen Steuerung
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
-   Wird durch den Red-Teamer-Agenten ein Gegenbeispiel entdeckt, blockiert die CI/CD-Pipeline sofort den Release-Fortschritt und setzt den Aufgabenstatus auf `DEFECT_DETECTED`. Der Implementer ist verpflichtet, ein ADR auszuarbeiten und eine Fail-Closed-Prüfung zu implementieren. Der Versuch eines direkten Code-Merges ohne Verifikation durch den Red Teamer wird am Repository-Gateway abgewiesen. Erst nachdem der Red Teamer die Erschöpfung des Angriffsraums bestätigt hat ($`\mathrm{Status} = \mathrm{VERIFIED}`$), setzt der menschliche Chefarchitekt die finale kryptographische Signatur zur Freigabe auf `PRODUCTION_READY`.
+   Wird durch den Red-Teamer-Agenten ein Gegenbeispiel entdeckt, blockiert die CI/CD-Pipeline sofort den Release-Fortschritt und setzt den Aufgabenstatus auf `DEFECT_DETECTED`. Der Implementer ist verpflichtet, ein ADR auszuarbeiten und eine Fail-Closed-Prüfung zu implementieren. Der Versuch eines direkten Code-Merges ohne Verifikation durch den Red Teamer wird am Repository-Gateway abgewiesen. Erst nachdem der Red Teamer die Erschöpfung des Angriffsraums bestätigt hat ($\mathrm{Status} = \mathrm{VERIFIED}$), setzt der menschliche Chefarchitekt die finale kryptographische Signatur zur Freigabe auf `PRODUCTION_READY`.
 2. **Hardware-Dimensionierung und infrastrukturelle Beschränkungen (Hardware Dimensioning):**
-   Die adversariale Modellierung erfordert dedizierte, deterministische Rechenressourcen für den SAT-/SMT-Solver. Ein striktes Zeitlimit pro Invariante von $`t_{\mathrm{solver}} \le 5{,}0\,\text{s}`$ und eine Speicherbegrenzung von $`M_{\mathrm{solver}} \le 2\,\text{GB}`$ pro Prozess verhindern ein Einfrieren des Verifikationsservers und garantieren den Abschluss des vollständigen Audit-Zyklus in $`< 15\,\text{min}`$ auf einer 8-Kern-CI/CD-Maschine.
+   Die adversariale Modellierung erfordert dedizierte, deterministische Rechenressourcen für den SAT-/SMT-Solver. Ein striktes Zeitlimit pro Invariante von $t_{\mathrm{solver}} \le 5{,}0\,\text{s}$ und eine Speicherbegrenzung von $M_{\mathrm{solver}} \le 2\,\text{GB}$ pro Prozess verhindern ein Einfrieren des Verifikationsservers und garantieren den Abschluss des vollständigen Audit-Zyklus in $< 15\,\text{min}$ auf einer 8-Kern-CI/CD-Maschine.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   Beim Audit einer Inverter-Steuereinheit erzeugt der Red Teamer einen Vektor mit dem Grenzwert $`V_{\mathrm{attack}} = \text{0x7FFF\_FFFF\_0000}`$, der durch Bit-Verschiebung in `[47:16]` (Defekt `ENV-01`) das Stromvorzeichen von positiv zu negativ invertiert und ein fehlerhaftes Notbremssignal auslöst. Der Implementer dokumentiert ADR-104 und ersetzt den naiven Shift durch eine Hardware-Sättigung mit Überlauf-Flag-Prüfung. Der Red Teamer wiederholt 1000 Mutationsläufe und verifiziert: $`\mathrm{Failures} = 0`$, $`\mathrm{Status} = \mathrm{SATURATED\_FAIL\_CLOSED}`$. Der Defekt ist auf Systemebene vollständig behoben.
+   Beim Audit einer Inverter-Steuereinheit erzeugt der Red Teamer einen Vektor mit dem Grenzwert $V_{\mathrm{attack}} = \text{0x7FFF\_FFFF\_0000}$, der durch Bit-Verschiebung in `[47:16]` (Defekt `ENV-01`) das Stromvorzeichen von positiv zu negativ invertiert und ein fehlerhaftes Notbremssignal auslöst. Der Implementer dokumentiert ADR-104 und ersetzt den naiven Shift durch eine Hardware-Sättigung mit Überlauf-Flag-Prüfung. Der Red Teamer wiederholt 1000 Mutationsläufe und verifiziert: $\mathrm{Failures} = 0$, $\mathrm{Status} = \mathrm{SATURATED\_FAIL\_CLOSED}$. Der Defekt ist auf Systemebene vollständig behoben.
 
 ### 7.2. Neuro-symbolische Wasserscheide der Befugnisse: Relevanzzone gegen Berechtigungszone
 
@@ -445,8 +445,8 @@ Zur Gewährleistung der Zuverlässigkeit missionskritischer Systeme formuliert d
 
 | Verarbeitungspfad | Komponente | Rolle in der Architektur | Befugnisse und Status der Urteile |
 |---|---|---|---|
-| **System 1 (Relevanzzone / Relevance Zone)** | SLM / LLM / Heuristischer Parser | Primäre Erkundung, Absichtsanalyse des Benutzers, Extraktion semantischer Terme und Synonyme | **Ausschließlich beratend (Advisory).** Keine Befugnis, Aussagen als normativ wahr oder zertifiziert zu deklarieren. Konfidenz strikt $`\mathrm{Conf} < 1{,}00`$. |
-| **System 2 (Berechtigungszone / Eligibility Zone)** | Deterministische Mikrobefehle der EVM / EISA, SAT, ASPIC+ | Normative Verifikation, Zulassung anhand physikalischer Grenzen, Hardware-Sperren | **Ausschlaggebend und endgültig (Decisive).** Mathematischer Nachweis der Übereinstimmung mit der Primärquelle inklusive bytegenauer Custody (%ebx, SHA-256) und $`\mathrm{ZHR} = 1{,}000000`$. |
+| **System 1 (Relevanzzone / Relevance Zone)** | SLM / LLM / Heuristischer Parser | Primäre Erkundung, Absichtsanalyse des Benutzers, Extraktion semantischer Terme und Synonyme | **Ausschließlich beratend (Advisory).** Keine Befugnis, Aussagen als normativ wahr oder zertifiziert zu deklarieren. Konfidenz strikt $\mathrm{Conf} < 1{,}00$. |
+| **System 2 (Berechtigungszone / Eligibility Zone)** | Deterministische Mikrobefehle der EVM / EISA, SAT, ASPIC+ | Normative Verifikation, Zulassung anhand physikalischer Grenzen, Hardware-Sperren | **Ausschlaggebend und endgültig (Decisive).** Mathematischer Nachweis der Übereinstimmung mit der Primärquelle inklusive bytegenauer Custody (%ebx, SHA-256) und $\mathrm{ZHR} = 1{,}000000$. |
 
 Keine Schlussfolgerung und keine Empfehlung der System-1-Komponente kann den Zustand des Zertifizierungs-Gateways verändern, ohne das deterministische Sieb von System 2 passiert zu haben.
 
@@ -639,7 +639,7 @@ Zu dieser virtuellen intellektuellen Diskussion wurden weltweit anerkannte Koryp
 
 *Disclaimer:* Diese Diskussion ist eine heuristische virtuelle Simulation im wissenschaftlich-pädagogischen Kontext der Monografie. Die Positionen und Argumente der Kontrahenten wurden auf der Basis ihrer Veröffentlichungen, Fachaufsätze und Monografien synthetisiert; sie erheben keinen Anspruch auf wörtliche Zitate und dienen der kritischen Rationalisierung (Popper'schen Falsifikation) der ingenieurtechnischen Hypothesen des Autors.
 
-**Kapitelthese.** Manuelle Zertifizierungsaudits in sicherheitskritischen cyber-physischen Systemen (ISO 26262 ASIL D, ISO/SAE 21434 CAL 4, DO-178C DAL A) verkommen infolge kognitiver Ermüdung unvermeidlich zum „Compliance-Theater“ (*Compliance Theatre*). Belastbare Sicherheit wird erst durch den Übergang zu einem Aktiven Domänenwissens-Auditor (`ActiveComplianceAuditor`) erreicht, der auf Karl Poppers Falsifikationsprinzip $`\mathcal{F}(\mathcal{H}, \mathcal{K})`$, einem zweiseitigen Tandem aus Falsifikator-Agent (*Popperian Red Teamer*) und Ingenieur-Agent (*Formal Implementer*), dem Anti-Theorie-Drift-Prinzip, dynamischer Safety-Security-Konfliktauflösung sowie der strikten Trennung zwischen beratender Relevanzzone und entscheidender Berechtigungszone unter der obersten Hoheit des Menschen im Regelkreis (*Human-in-the-Loop*) beruht.
+**Kapitelthese.** Manuelle Zertifizierungsaudits in sicherheitskritischen cyber-physischen Systemen (ISO 26262 ASIL D, ISO/SAE 21434 CAL 4, DO-178C DAL A) verkommen infolge kognitiver Ermüdung unvermeidlich zum „Compliance-Theater“ (*Compliance Theatre*). Belastbare Sicherheit wird erst durch den Übergang zu einem Aktiven Domänenwissens-Auditor (`ActiveComplianceAuditor`) erreicht, der auf Karl Poppers Falsifikationsprinzip $\mathcal{F}(\mathcal{H}, \mathcal{K})$, einem zweiseitigen Tandem aus Falsifikator-Agent (*Popperian Red Teamer*) und Ingenieur-Agent (*Formal Implementer*), dem Anti-Theorie-Drift-Prinzip, dynamischer Safety-Security-Konfliktauflösung sowie der strikten Trennung zwischen beratender Relevanzzone und entscheidender Berechtigungszone unter der obersten Hoheit des Menschen im Regelkreis (*Human-in-the-Loop*) beruht.
 
 **Dialog mit Nancy Leveson: Compliance-Audit-Methodik und emergente Eigenschaften komplexer Systeme**
 
@@ -651,7 +651,7 @@ Zu dieser virtuellen intellektuellen Diskussion wurden weltweit anerkannte Koryp
 
 - **Nancy Leveson:** Systemsicherheit ist ein dynamisches Regelungsproblem über die Zeit. Wenn ein Auditor mathematisch saubere HARA-, SAR- und DFAR-Dossiers autonom aus einer starren Ontologie generiert, neigen Ingenieure dazu, diese maschinellen Beweise als unfehlbares Orakel zu betrachten (*automation bias*). Doch die reale Betriebsumgebung unterliegt unvermeidlich physikalischer Alterung und Parameterveränderungen. Es droht fataler Theoriedrift (*Theory Drift*): Die formalen Beweise bleiben im Auditorcode logisch fehlerfrei, driften aber vollständig an der realen Anlagenphysik vorbei. Wie erkennt Ihr aktiver Auditor, dass sein internes Formalmodell die physische Realität nicht mehr abbildet?
 
-- **Mykola Fedchyk:** Um die Gefahr theoretischen Drifts zu bannen, erzwingen wir das Anti-Theorie-Drift-Prinzip (*Anti-Theory Drift Principle*), gesteuert durch die Regel epistemischer Notwendigkeit. Der Auditor verharrt niemals im rein symbolischen Elfenbeinturm: Er arbeitet im geschlossenen Regelkreis mit realer Hardware (Hardware-in-the-Loop, HIL). Jede Zertifizierungshypothese $`\mathcal{H}`$ wird permanent von einem autonomen Falsifikator-Agenten (*Popperian Red Teamer*) attackiert, der im Prüfstand gezielt physikalische Grenzlasten generiert. Weicht die Prüfstandstelemetrie auch nur bei einem einzigen Messwert von den Modellannahmen ab, verliert die Hypothese augenblicklich ihren normativen Zertifizierungsstatus. Das System wechselt in den Zustand epistemischen Defizits und verlangt zwingend die physische Neubewertung durch den Fachexperten.
+- **Mykola Fedchyk:** Um die Gefahr theoretischen Drifts zu bannen, erzwingen wir das Anti-Theorie-Drift-Prinzip (*Anti-Theory Drift Principle*), gesteuert durch die Regel epistemischer Notwendigkeit. Der Auditor verharrt niemals im rein symbolischen Elfenbeinturm: Er arbeitet im geschlossenen Regelkreis mit realer Hardware (Hardware-in-the-Loop, HIL). Jede Zertifizierungshypothese $\mathcal{H}$ wird permanent von einem autonomen Falsifikator-Agenten (*Popperian Red Teamer*) attackiert, der im Prüfstand gezielt physikalische Grenzlasten generiert. Weicht die Prüfstandstelemetrie auch nur bei einem einzigen Messwert von den Modellannahmen ab, verliert die Hypothese augenblicklich ihren normativen Zertifizierungsstatus. Das System wechselt in den Zustand epistemischen Defizits und verlangt zwingend die physische Neubewertung durch den Fachexperten.
 
 **Dialog mit Bruce Schneier: Harmonisierung von Safety- und Security-Anforderungen in kritischen Systemen**
 
@@ -663,7 +663,7 @@ Zu dieser virtuellen intellektuellen Diskussion wurden weltweit anerkannte Koryp
 
 - **Bruce Schneier:** In der Praxis attackiert ein raffinierter Gegner nicht nur das Zielsystem, sondern auch dessen Prüfmechanismen. Wenn Sie Ihre Architektur in eine beratende Relevanzzone (*Relevance*), in der LLMs Testvektoren vorschlagen, und eine entscheidende Berechtigungszone (*Eligibility*), in der deterministische Regeln walten, aufspalten, wird der Angreifer den Beraterkanal ins Visier nehmen. Durch semantische Prompt-Injections oder manipulierte Spezifikationen könnte ein Angreifer Tausende scheinbar relevanter Randfallprüfungen generieren, die den SMT-Solver lahmlegen (DoS) oder den Menschen im Regelkreis kognitiv erschöpfen. Wie schützen Sie Ihre Verifikationspipeline vor dieser Form der Vergiftung und Sabotage?
 
-- **Mykola Fedchyk:** Die beratende Relevanzzone wird architektonisch als potenziell kompromittierte Umgebung ohne jede Ausführungsautorität behandelt. Jeder Testvorschlag eines neuronalen Netzes unterliegt harten Rechenbudgets ($`\mathrm{CPU}_{\mathrm{budget}}`$, Speicherdeckelungen und SMT-Timeouts). Das Berechtigungstor akzeptiert niemals unstrukturierten Text, sondern ausschließlich streng typisierte AST-Strukturen formaler Sicherheitsdirektiven, aus denen ungesicherte Entitäten vorab getilgt werden. Zudem wird der Fachexperte niemals mit Warnungsfluten überschüttet: Der Auditor filtert und minimiert Gegenbeispiele radikal und leitet ausschließlich das eine, irreduzible Gegenbeispiel mit mathematisch verifiziertem Invariantenbruch an den Ingenieur weiter. Ein feindlicher Erschöpfungsangriff wird somit bereits auf der Ebene symbolischer Vorfilter neutralisiert.
+- **Mykola Fedchyk:** Die beratende Relevanzzone wird architektonisch als potenziell kompromittierte Umgebung ohne jede Ausführungsautorität behandelt. Jeder Testvorschlag eines neuronalen Netzes unterliegt harten Rechenbudgets ($\mathrm{CPU}_{\mathrm{budget}}$, Speicherdeckelungen und SMT-Timeouts). Das Berechtigungstor akzeptiert niemals unstrukturierten Text, sondern ausschließlich streng typisierte AST-Strukturen formaler Sicherheitsdirektiven, aus denen ungesicherte Entitäten vorab getilgt werden. Zudem wird der Fachexperte niemals mit Warnungsfluten überschüttet: Der Auditor filtert und minimiert Gegenbeispiele radikal und leitet ausschließlich das eine, irreduzible Gegenbeispiel mit mathematisch verifiziertem Invariantenbruch an den Ingenieur weiter. Ein feindlicher Erschöpfungsangriff wird somit bereits auf der Ebene symbolischer Vorfilter neutralisiert.
 
 **Synthese.** Die Methodik des aktiven Compliance-Audits verschmilzt Levesons systemische Sicherheitstheorie mit Schneiers kryptografischem Realismus zu einem belastbaren Ingenieurparadigma:
 1. Schutz vor emergenten Havarien und theoretischem Modelldrift wird durch permanente Popper'sche Falsifikation im geschlossenen Regelkreis mit realer Hardware (HIL) garantiert;

@@ -14,7 +14,7 @@
 
 In sicherheitskritischen Industrieanlagen, der Kernenergie und der Avionik (IEC 61508 SIL 3, ISO 26262 ASIL D, DO-178C DAL A) führt die direkte Einbindung generativer Sprachmodelle in Entscheidungsprozesse unausweichlich zu katastrophalen Havarien. Aufgrund der autoregressiven Natur der Kreuzentropie-Minimierung besitzen neuronale Netze kein internes Kriterium für physikalische Wahrheit: Bei unvollständiger Datenlage füllen sie Informationslücken mit plausiblen Erfindungen (maschinellen Halluzinationen oder Konfabulationen). So kann ein Modell beispielsweise mit hoher statistischer Konfidenz die Blockierung eines Sicherheits-Überströmventils empfehlen oder frei erfundene Festigkeitstoleranzen ausgeben, was zum Bersten von Rohrleitungen und zu Personenschäden führt. Rekursive Selbstüberprüfungen des Modells verschärfen das Problem lediglich, und das in Unternehmen populäre Entwurfsmuster „LLM-as-a-Judge“ erzeugt durch Ausfälle gemeinsamer Ursache (Common-Mode Failures) und kognitive Verzerrungen des Modellschiedsrichters eine trügerische Kontrollillusion.
 
-Dieses Kapitel löst das Halluzinationsproblem durch die mathematische Widerlegung des neuronalen Schiedsrichtermusters, die Aberkennung des Status einer Wissensquelle für das Sprachmodell und dessen strikte Unterordnung unter ein deterministisches Expertensystem. Untersucht werden die Diagnose des Verhaltenssyndroms der „Boxiness“ (Boxiness Artifacts) von Modellen nach aggressivem Alignment (RLHF, DPO): Mehrdeutigkeitskollaps (Ambiguity Collapse), verfrühte Schließung von Schlussfolgerungen (Over-Closure), Werkzeugreflex (Tool Reflex) und korporative Abstraktion (Enterprise Abstraction). Es wird ein architektonischer Kompensationsmechanismus durch die automatische Generierung dynamischer kognitiver Reparatur-Patches (Cognitive Repair Patches) und Zwischenschichten (Cognitive Shims) vorgeschlagen. Untersucht werden die Architektur eines zweistufigen Verifikations-Gateways (grammatikgesteuertes AST-Decoding und bytegenaue SHA-256-Hash-Prüfung von Zitaten mit einer Zielmetrik von $`\mathrm{ZHR} = 1{,}00`$), die mathematische Formalisierung des epistemischen Wissensdefizits, eine garantierte Fail-Closed-Verweigerungspolitik (`Fail-Closed Gate`), die symbolische Abduktion nach Charles Sanders Peirce zur sokratischen Klärung sowie prädikative Echtzeit-Schilde (Safety Shields) zur hardwarenahen Abschirmung neuronaler Netze.
+Dieses Kapitel löst das Halluzinationsproblem durch die mathematische Widerlegung des neuronalen Schiedsrichtermusters, die Aberkennung des Status einer Wissensquelle für das Sprachmodell und dessen strikte Unterordnung unter ein deterministisches Expertensystem. Untersucht werden die Diagnose des Verhaltenssyndroms der „Boxiness“ (Boxiness Artifacts) von Modellen nach aggressivem Alignment (RLHF, DPO): Mehrdeutigkeitskollaps (Ambiguity Collapse), verfrühte Schließung von Schlussfolgerungen (Over-Closure), Werkzeugreflex (Tool Reflex) und korporative Abstraktion (Enterprise Abstraction). Es wird ein architektonischer Kompensationsmechanismus durch die automatische Generierung dynamischer kognitiver Reparatur-Patches (Cognitive Repair Patches) und Zwischenschichten (Cognitive Shims) vorgeschlagen. Untersucht werden die Architektur eines zweistufigen Verifikations-Gateways (grammatikgesteuertes AST-Decoding und bytegenaue SHA-256-Hash-Prüfung von Zitaten mit einer Zielmetrik von $\mathrm{ZHR} = 1{,}00$), die mathematische Formalisierung des epistemischen Wissensdefizits, eine garantierte Fail-Closed-Verweigerungspolitik (`Fail-Closed Gate`), die symbolische Abduktion nach Charles Sanders Peirce zur sokratischen Klärung sowie prädikative Echtzeit-Schilde (Safety Shields) zur hardwarenahen Abschirmung neuronaler Netze.
 
 ---
 
@@ -51,11 +51,11 @@ P(E_1 \cap E_2) \neq P(E_1) \cdot P(E_2)
 ```
 
 wobei:
-- $`E_1`$ — das Ereignis des Auftretens einer Halluzination (Konfabulation) im Generator-Modell;
-- $`E_2`$ — das Ereignis der Billigung dieser Halluzination durch das Schiedsrichter-Modell;
-- $`P(E_1 \cap E_2)`$ — die Gesamtwahrscheinlichkeit des Eindringens eines ungeprüften Defekts in die operative Entscheidungsumgebung.
+- $E_1$ — das Ereignis des Auftretens einer Halluzination (Konfabulation) im Generator-Modell;
+- $E_2$ — das Ereignis der Billigung dieser Halluzination durch das Schiedsrichter-Modell;
+- $P(E_1 \cap E_2)$ — die Gesamtwahrscheinlichkeit des Eindringens eines ungeprüften Defekts in die operative Entscheidungsumgebung.
 
-Da beide Modelle auf ähnlichen natürlichsprachlichen Korpora trainiert wurden, weisen sie stark korrelierte kognitive Verzerrungen auf ($`P(E_2 \mid E_1) \gg P(E_2)`$):
+Da beide Modelle auf ähnlichen natürlichsprachlichen Korpora trainiert wurden, weisen sie stark korrelierte kognitive Verzerrungen auf ($P(E_2 \mid E_1) \gg P(E_2)$):
 1. **Stilverzerrung (Style Bias):** Das Schiedsrichter-Modell bewertet vordergründig geschliffene Formulierungen, akademischen Satzbau und das Fehlen lexikalischer Wiederholungen fälschlich als Indikator für Wahrheit und billigt erfundene Aussagen allein deshalb, weil sie in makelloser Sprache verfasst sind.
 2. **Weitschweifigkeitsverzerrung (Verbosity Bias):** Umfangreiche, weitschweifige Konfabulationen voller pseudowissenschaftlicher Terminologie und verschachtelter Nebensätze erhalten vom Schiedsrichter-Modell systematisch höhere Bewertungen als prägnante, aber exakte Antworten.
 3. **Autoritätsverzerrung (Authority Bias):** Selbstbewusst vorgetragene Unwahrheiten (beispielsweise das apodiktische „gemäß Abschnitt 4.2 der Norm beträgt der Wert 25 bar“) führen beim Schiedsrichter-Modell zu einer falschen Übereinstimmung, während die ehrliche und metrologisch korrekte Antwort „die Information ist im bereitgestellten Fragment nicht enthalten“ als unzureichend hilfreich abgestraft wird.
@@ -67,9 +67,9 @@ Das Schiedsrichter-Modell bewertet lediglich die statistische Plausibilität des
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**  
    Das Architekturreglement evidenzbasierter Systeme entzieht generativen Modellen kategorisch das Recht, faktische Korrektheit autonom zu bewerten. Die Ausgabe jedes Modells wird ausnahmslos auf den Status einer bloßen „Kandidatenaussage“ (*Candidate Assertion*) herabgestuft, die zwingend ein bytegenaues Primärquellenzitat, einen Dokumentbezeichner und ein typisiertes Prädikat enthalten muss. Erkennt eine CI/CD-Pipeline eine Konfiguration, in der ein LLM als Wahrheitsschiedsrichter für kritische Entscheidungen eingesetzt wird, vergibt der Validator das Verdikt `ARCHITECTURE_NON_COMPLIANT`, stoppt das Deployment und fordert den Ersatz des neuronalen Schiedsrichters durch ein deterministisches bytegenaues Zulassungsgate.
 2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**  
-   Der Ersatz eines sekundären Schiedsrichtermodells der 70B-Klasse (das 2 NVIDIA A100/H100 80GB-Beschleuniger mit einer Leistungsaufnahme von $`700\,\text{Watt}`$ bindet und $`800\dots 1500\,\text{ms}`$ Inferenzlatenz hinzufügt) durch einen deterministischen bytegenauen SHA-256-Validator und AST-Parser auf dem Host-Prozessor senkt die Leistungsaufnahme des Verifikationsknotens um das 50-Fache und verkürzt die Prüflatenz von $`1200\,\text{ms}`$ auf $`18\,\mu\text{s}`$ (eine Beschleunigung um fünf Größenordnungen).
+   Der Ersatz eines sekundären Schiedsrichtermodells der 70B-Klasse (das 2 NVIDIA A100/H100 80GB-Beschleuniger mit einer Leistungsaufnahme von $700\,\text{Watt}$ bindet und $800\dots 1500\,\text{ms}$ Inferenzlatenz hinzufügt) durch einen deterministischen bytegenauen SHA-256-Validator und AST-Parser auf dem Host-Prozessor senkt die Leistungsaufnahme des Verifikationsknotens um das 50-Fache und verkürzt die Prüflatenz von $1200\,\text{ms}$ auf $18\,\mu\text{s}$ (eine Beschleunigung um fünf Größenordnungen).
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**  
-   Im Entwurfssystem für Kabeltrassen einer Umspannstation erzeugte das primäre 14B-Modell eine gefährliche Halluzination: *„der zulässige Biegeradius für VPE-isolierte Kabel beträgt 5 Außendurchmesser“* (gemäß Norm IEC 60502 sind mindestens 15 Durchmesser vorgeschrieben), versehen mit einem plausiblen Verweis auf einen erfundenen Normabschnitt. Das sekundäre 70B-Schiedsrichtermodell bewertete diese Antwort mit `9/10` und vermerkte im Prüfbericht: *„Die Antwort ist präzise, strukturiert und belegt den Sachverhalt durch Normverweise“*. Das deterministische Gateway hingegen las die Originalbytes der Norm am angegebenen Offset aus, berechnete den SHA-256-Hash und blockierte den Release innerhalb von $`15\,\mu\text{s}`$ mit dem Fehlercode `DROP_UNGROUNDED`. Damit wurde die Verlegung eines Kabels mit unzulässigem Biegeradius verhindert, die unweigerlich zur Zerstörung des Mantels und zu einem Erdschluss geführt hätte.
+   Im Entwurfssystem für Kabeltrassen einer Umspannstation erzeugte das primäre 14B-Modell eine gefährliche Halluzination: *„der zulässige Biegeradius für VPE-isolierte Kabel beträgt 5 Außendurchmesser“* (gemäß Norm IEC 60502 sind mindestens 15 Durchmesser vorgeschrieben), versehen mit einem plausiblen Verweis auf einen erfundenen Normabschnitt. Das sekundäre 70B-Schiedsrichtermodell bewertete diese Antwort mit `9/10` und vermerkte im Prüfbericht: *„Die Antwort ist präzise, strukturiert und belegt den Sachverhalt durch Normverweise“*. Das deterministische Gateway hingegen las die Originalbytes der Norm am angegebenen Offset aus, berechnete den SHA-256-Hash und blockierte den Release innerhalb von $15\,\mu\text{s}$ mit dem Fehlercode `DROP_UNGROUNDED`. Damit wurde die Verlegung eines Kabels mit unzulässigem Biegeradius verhindert, die unweigerlich zur Zerstörung des Mantels und zu einem Erdschluss geführt hätte.
 
 ### 1.2. Diagnose des LLM-Verhaltenssyndroms der „Boxiness“ und automatische kognitive Reparatur-Patches
 
@@ -111,18 +111,18 @@ flowchart TD
 
 Auf Basis der Untersuchungen des Autors lassen sich vier grundlegende Klassen von Defekten alignierter Modelle unterscheiden [[17]](#src-17):
 
-1. **Ambiguity Collapse (Mehrdeutigkeitskollaps):** künstlicher Kollaps des Hypothesenraums. Liegen mehrere gleichwahrscheinliche Ursachen einer Fehlfunktion vor, wählt das Modell voreilig eine triviale Variante aus und verwirft unwahrscheinliche, aber kritische Anomalien. Mathematisch wird dies über einen drastischen Abfall der Entropie der Verteilung über den Hypothesenraum $`\mathcal{H}`$ erfasst:
+1. **Ambiguity Collapse (Mehrdeutigkeitskollaps):** künstlicher Kollaps des Hypothesenraums. Liegen mehrere gleichwahrscheinliche Ursachen einer Fehlfunktion vor, wählt das Modell voreilig eine triviale Variante aus und verwirft unwahrscheinliche, aber kritische Anomalien. Mathematisch wird dies über einen drastischen Abfall der Entropie der Verteilung über den Hypothesenraum $\mathcal{H}$ erfasst:
 
 ```math
 H(\mathcal{H}) = - \sum_{h \in \mathcal{H}} P(h) \log_2 P(h)
 ```
 
 Parameter und mathematische Komponenten der Formel:
-- $`\mathcal{H} = \{h_1, h_2, \dots, h_m\}`$ — Menge zulässiger physikalischer oder logischer Hypothesen über die Ursachen einer Systemanomalie;
-- $`P(h) \in [0, 1]`$ — vom Modell generierte subjektive oder statistische Wahrscheinlichkeit der Hypothese $h$;
-- $`H(\mathcal{H}) \in [0, \log_2 m]`$ — Informationsentropie des Hypothesenraums (gemessen in Bits oder Shannon).
+- $\mathcal{H} = \{h_1, h_2, \dots, h_m\}$ — Menge zulässiger physikalischer oder logischer Hypothesen über die Ursachen einer Systemanomalie;
+- $P(h) \in [0, 1]$ — vom Modell generierte subjektive oder statistische Wahrscheinlichkeit der Hypothese $h$;
+- $H(\mathcal{H}) \in [0, \log_2 m]$ — Informationsentropie des Hypothesenraums (gemessen in Bits oder Shannon).
 
-Registriert ein Prüfstand eine multifaktorielle Havarie, besitzt der reale Raum eine hohe Entropie ($`H(\mathcal{H}) \ge \tau_{\mathrm{entropy}}`$), doch ein Modell mit Mehrdeutigkeitskollaps erzwingt $`H(\mathcal{H}) \to 0`$, indem es $`P(h_1) \approx 1{,}0`$ zuweist.
+Registriert ein Prüfstand eine multifaktorielle Havarie, besitzt der reale Raum eine hohe Entropie ($H(\mathcal{H}) \ge \tau_{\mathrm{entropy}}$), doch ein Modell mit Mehrdeutigkeitskollaps erzwingt $H(\mathcal{H}) \to 0$, indem es $P(h_1) \approx 1{,}0$ zuweist.
 
 2. **Over-Closure (Verfrühte Schließung von Schlussfolgerungen):** Fällung eines kategorischen Urteils ohne Spezifikation physikalischer Randbedingungen und ohne Aufforderung zu zusätzlichen Hardware-Messungen.
 3. **Tool Reflex (Werkzeugreflex):** die parasitäre Neigung des Modells, analytische Berechnungen an externe Werkzeuge oder Websuchen zu delegieren („Lass uns auf Google suchen“), anstatt eine direkte deduktive Ableitung aus den bereitgestellten lokalen Axiomen der Spezifikation auszuführen.
@@ -135,17 +135,17 @@ Anstelle eines extrem langsamen, kostspieligen und riskanten Feintunings des Mod
 #### 1.2.1. Geschlossener Kreis der ingenieurtechnischen Berechnung von Boxiness-Diagnose und Patch-Injektion
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
-   - Der Verhaltens-Sondenmonitor scannt die Ausgabe des Modells auf Marker von Boxiness (floskelhafte Euphemismen, Null-Entropie $`H(\mathcal{H}) < \tau_{\mathrm{entropy}}`$ bei unbestimmtem Zustand, Fehlen numerischer Parameter).
+   - Der Verhaltens-Sondenmonitor scannt die Ausgabe des Modells auf Marker von Boxiness (floskelhafte Euphemismen, Null-Entropie $H(\mathcal{H}) < \tau_{\mathrm{entropy}}$ bei unbestimmtem Zustand, Fehlen numerischer Parameter).
    - Bei Detektion eines Defekts wird der Ausgabestrom sofort abgefangen (`INTERCEPT_BOXINESS`), die Antwort wird nicht an den Operator durchgestellt, und die Laufzeit injiziert den entsprechenden kognitiven Patch (`FORCE_HYPOTHESIS_BRANCHING`, `MANDATE_ENGINEERING_METRICS` oder `BLOCK_TOOL_DELEGATION`) und stößt eine erneute Generierung mit zwingender Entfaltung des Argumentationsbaums an.
-   - Beseitigt das Modell die Euphemismen auch nach $`N_{\mathrm{retry}} = 2`$ Wiederholungen nicht, aktiviert die Laufzeit den Degradationsmodus `FAIL_BOXINESS_ESCALATE` mit Übergabe der Anfrage an einen symbolischen SMT-Solver oder die Warteschlange eines qualifizierten Ingenieurs im Regelkreis (Human-in-the-Loop).
+   - Beseitigt das Modell die Euphemismen auch nach $N_{\mathrm{retry}} = 2$ Wiederholungen nicht, aktiviert die Laufzeit den Degradationsmodus `FAIL_BOXINESS_ESCALATE` mit Übergabe der Anfrage an einen symbolischen SMT-Solver oder die Warteschlange eines qualifizierten Ingenieurs im Regelkreis (Human-in-the-Loop).
 2. **Hardware-Dimensionierung und Infrastrukturbeschränkungen (Hardware Dimensioning):**
-   - Der Sondenmonitor ist als kompilierter Aho-Corasick- und AST-Detektor in Go implementiert, der den Tokenstrom auf dem Host-Prozessor in weniger als $`0{,}35\,\text{ms}`$ analysiert.
-   - Die Injektion des Reparatur-Patches vergrößert das Kontextfenster lediglich um $120\text{--}180$ Tokens ($< 2{,}5\%$ eines 8K-Kontextfensters), was praktisch keine Auswirkungen auf die KV-Cache-Allokation im GPU-Speicher hat (unter $`4{,}5\,\text{MB}`$ VRAM pro aktiver Sitzung) und die extrem niedrige Latenz des Entscheidungsunterstützungssystems bewahrt.
+   - Der Sondenmonitor ist als kompilierter Aho-Corasick- und AST-Detektor in Go implementiert, der den Tokenstrom auf dem Host-Prozessor in weniger als $0{,}35\,\text{ms}$ analysiert.
+   - Die Injektion des Reparatur-Patches vergrößert das Kontextfenster lediglich um $120\text{--}180$ Tokens ($< 2{,}5\%$ eines 8K-Kontextfensters), was praktisch keine Auswirkungen auf die KV-Cache-Allokation im GPU-Speicher hat (unter $4{,}5\,\text{MB}$ VRAM pro aktiver Sitzung) und die extrem niedrige Latenz des Entscheidungsunterstützungssystems bewahrt.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   - Auf einem Prüfstand für Traktionsantriebe wird eine Überhitzung der Impulsfilterdrossel L1 ($`T = 118^\circ\text{C}`$ bei maximal zulässigen $`105^\circ\text{C}`$) bei Nennlaststrom festgestellt.
-   - Die primäre Antwort eines kommerziellen alignierten LLMs enthielt einen typischen korporativen Euphemismus: *„Eine Überhitzung induktiver Komponenten kann durch verschiedene Faktoren der Betriebsumgebung verursacht werden. Prüfen Sie die elektrischen Verbindungen und konsultieren Sie das Betriebshandbuch des Herstellers“* ($`H(\mathcal{H}) = 0`$, keinerlei konkrete technische Hypothese).
+   - Auf einem Prüfstand für Traktionsantriebe wird eine Überhitzung der Impulsfilterdrossel L1 ($T = 118^\circ\text{C}$ bei maximal zulässigen $105^\circ\text{C}$) bei Nennlaststrom festgestellt.
+   - Die primäre Antwort eines kommerziellen alignierten LLMs enthielt einen typischen korporativen Euphemismus: *„Eine Überhitzung induktiver Komponenten kann durch verschiedene Faktoren der Betriebsumgebung verursacht werden. Prüfen Sie die elektrischen Verbindungen und konsultieren Sie das Betriebshandbuch des Herstellers“* ($H(\mathcal{H}) = 0$, keinerlei konkrete technische Hypothese).
    - Die Sonde registrierte das Artefakt Enterprise Abstraction (`SCORE_EVASION = 0.94 > 0.60`) sowie das Fehlen ingenieurtechnischer Metriken. Die Laufzeit fing die Antwort ab und wandte den Reparatur-Patch `DECONSTRUCT_BOXINESS` an, der das Modell verpflichtete, eine parallele Berechnung dreier physikalischer Hypothesen durchzuführen: 1) Kernsättigung durch Verschiebung der PWM-Schaltfrequenz, 2) anomaler Anstieg des äquivalenten Serienwiderstands (ESR) des benachbarten Filterkondensators, 3) Degradation der Wärmeleitschnittstelle.
-   - In der erneuten Generierung berechnete das Modell den Arbeitspunkt der Induktivität und wies nach, dass bei einem Absinken der PWM-Frequenz auf $`f_{\mathrm{sw}} = 95\,\text{kHz}`$ (statt nominal $`125\,\text{kHz}`$) die Stromwelligkeitsamplitude auf $`\Delta I_L = 2{,}1\,\text{A} > I_{\mathrm{sat}} = 1{,}8\,\text{A}`$ ansteigt, was die Drossel in die Sättigung treibt und eine exponentielle Überhitzung verursacht. Dank des Patches wurde der Defekt im Code des PWM-Generators lokalisiert, noch bevor die Leistungseinheit Schaden nahm.
+   - In der erneuten Generierung berechnete das Modell den Arbeitspunkt der Induktivität und wies nach, dass bei einem Absinken der PWM-Frequenz auf $f_{\mathrm{sw}} = 95\,\text{kHz}$ (statt nominal $125\,\text{kHz}$) die Stromwelligkeitsamplitude auf $\Delta I_L = 2{,}1\,\text{A} > I_{\mathrm{sat}} = 1{,}8\,\text{A}$ ansteigt, was die Drossel in die Sättigung treibt und eine exponentielle Überhitzung verursacht. Dank des Patches wurde der Defekt im Code des PWM-Generators lokalisiert, noch bevor die Leistungseinheit Schaden nahm.
 
 ## 2. Deterministische Evidenztherapie: Das zweistufige Gateway für Null-Halluzinationen
 
@@ -181,7 +181,7 @@ flowchart TD
 
 Die erste Schutzstufe greift direkt in den Generierungsprozess auf der Ebene der Token-Auswahl ein. Willard und Louf formulierten das Paradigma des effizienten geführten Decodings (*Efficient Guided Generation*), wie es in Frameworks wie Outlines implementiert ist [[4]](#src-4). Anstelle eines unbeschränkten Freitextstroms definiert der Ingenieur eine strikte Zielgrammatik in Form eines JSON-Schemas oder eines abstrakten Syntaxbaums (*AST*) der Domänenontologie.
 
-Bei jedem Schritt des autoregressiven Decodings analysiert ein endlicher Automat (FSM) die bereits erzeugte Zeichenkette und bildet eine Bitmaske zulässiger Folgezustände. Sämtliche Vokabular-Token des Modells, die die Grammatik verletzen würden, werden durch Setzen ihrer Logits auf $`-\infty`$ hart unterdrückt. Das Sprachmodell ist physisch unfähig, unerlaubte Felder zu erzeugen, Pflichtbezeichner auszulassen oder in Prosa abzuschweifen. Das Ergebnis ist ein syntaktisch valider AST-Kandidat.
+Bei jedem Schritt des autoregressiven Decodings analysiert ein endlicher Automat (FSM) die bereits erzeugte Zeichenkette und bildet eine Bitmaske zulässiger Folgezustände. Sämtliche Vokabular-Token des Modells, die die Grammatik verletzen würden, werden durch Setzen ihrer Logits auf $-\infty$ hart unterdrückt. Das Sprachmodell ist physisch unfähig, unerlaubte Felder zu erzeugen, Pflichtbezeichner auszulassen oder in Prosa abzuschweifen. Das Ergebnis ist ein syntaktisch valider AST-Kandidat.
 
 ### 2.2. Bytegenaues Zulassungs-Gateway und kryptographische Erdung
 
@@ -191,24 +191,24 @@ Syntaktische Konformität garantiert noch keine inhaltliche Wahrheit. Das erzeug
 2. **Bytegenaue Zitat-Verifikation:** Jede Tatsachenbehauptung muss exakte Byte-Offsets in der kanonischen Primärquellendatei (`byte_start`, `byte_end`) sowie den SHA-256-Prüfhash des Textsegments deklarieren. Ein isoliertes, KI-freies Prüfmodul liest die entsprechenden Bytes direkt vom Datenträger, berechnet den Hashwert und vergleicht die Zeichenkette Takt für Takt. Weicht auch nur ein einziges Zeichen ab oder ist ein Offset verschoben, wird die Aussage als `HALLUCINATED_QUOTE` markiert.
 3. **Abgleich numerischer Grenzwerte und Einheiten:** Enthält die Aussage numerische Parameter (etwa den Druckgrenzwert von 16 bar), prüft ein deterministischer Zahlenextraktor, ob genau dieser Wert im verifizierten Zitat tatsächlich vorkommt.
 
-Die Zero-Hallucination Rate (*ZHR*) ist definiert als das Verhältnis der getätigten Systemaussagen $`\mathcal{C}_{\mathrm{asserted}}`$, die über eine vollständige bytegenaue Evidenzkette zu einer Primärquelle verfügen $`\mathcal{C}_{\mathrm{grounded}}`$:
+Die Zero-Hallucination Rate (*ZHR*) ist definiert als das Verhältnis der getätigten Systemaussagen $\mathcal{C}_{\mathrm{asserted}}$, die über eine vollständige bytegenaue Evidenzkette zu einer Primärquelle verfügen $\mathcal{C}_{\mathrm{grounded}}$:
 
 ```math
 \mathrm{ZHR} = \frac{\lvert\mathcal{C}_{\mathrm{grounded}}\rvert}{\lvert\mathcal{C}_{\mathrm{asserted}}\rvert}.
 ```
 
 **Parameter und zulässige Wertebereiche:**
-- $`\mathcal{C}_{\mathrm{asserted}}`$ — Menge aller assertorischen Schlussfolgerungen, Empfehlungen und Parameter, die das System während einer Analysesitzung generiert ($`\lvert\mathcal{C}_{\mathrm{asserted}}\rvert \ge 1`$);
-- $`\mathcal{C}_{\mathrm{grounded}} \subseteq \mathcal{C}_{\mathrm{asserted}}`$ — Teilmenge der Aussagen, für die die bytegenaue Primärquellenverifikation anhand des SHA-256-Referenzhashes sowie der Abgleich numerischer Grenzwerte erfolgreich abgeschlossen wurden;
-- $`\mathrm{ZHR} \in [0, 1]`$ — normierter Koeffizient der Halluzinationsfreiheit.
+- $\mathcal{C}_{\mathrm{asserted}}$ — Menge aller assertorischen Schlussfolgerungen, Empfehlungen und Parameter, die das System während einer Analysesitzung generiert ($\lvert\mathcal{C}_{\mathrm{asserted}}\rvert \ge 1$);
+- $\mathcal{C}_{\mathrm{grounded}} \subseteq \mathcal{C}_{\mathrm{asserted}}$ — Teilmenge der Aussagen, für die die bytegenaue Primärquellenverifikation anhand des SHA-256-Referenzhashes sowie der Abgleich numerischer Grenzwerte erfolgreich abgeschlossen wurden;
+- $\mathrm{ZHR} \in [0, 1]$ — normierter Koeffizient der Halluzinationsfreiheit.
 
 **Operative Entscheidungen und Berechnungsbeispiel:**
-- **Zertifizierungsschwelle:** Für sicherheitskritische Umgebungen gilt die kompromisslose ingenieurtechnische Schranke: $`\tau_{\mathrm{ZHR}} = 1{,}000000`$.
-- **Freigabe zur Ausführung:** Gilt $`\mathrm{ZHR} = 1{,}00`$, erhält das Ergebnispaket ein kryptographisches Integritätszertifikat mit Ed25519-Signatur und wird an den Aktor oder den Operator übergeben (`EMIT_GROUNDED`).
-- **Blockierung bei Defizit:** Gilt $`\mathrm{ZHR} < 1{,}00`$ (wurde auch nur eine einzige ungesicherte Behauptung identifiziert), löst das System einen Sicherheits-Interrupt aus: Die Antwort wird unverzüglich verworfen (`DROP_UNGROUNDED`), die unbestätigte Aussage mit `HALLUCINATED_QUOTE` protokolliert und das Expertensystem wechselt in die Behandlung des epistemischen Defizits.
+- **Zertifizierungsschwelle:** Für sicherheitskritische Umgebungen gilt die kompromisslose ingenieurtechnische Schranke: $\tau_{\mathrm{ZHR}} = 1{,}000000$.
+- **Freigabe zur Ausführung:** Gilt $\mathrm{ZHR} = 1{,}00$, erhält das Ergebnispaket ein kryptographisches Integritätszertifikat mit Ed25519-Signatur und wird an den Aktor oder den Operator übergeben (`EMIT_GROUNDED`).
+- **Blockierung bei Defizit:** Gilt $\mathrm{ZHR} < 1{,}00$ (wurde auch nur eine einzige ungesicherte Behauptung identifiziert), löst das System einen Sicherheits-Interrupt aus: Die Antwort wird unverzüglich verworfen (`DROP_UNGROUNDED`), die unbestätigte Aussage mit `HALLUCINATED_QUOTE` protokolliert und das Expertensystem wechselt in die Behandlung des epistemischen Defizits.
 
 **Praktisches Rechenbeispiel:**  
-Bei der Analyse der Betriebsvorschrift einer Umspannstation generierte das Sprachmodell ein Set von $`\lvert\mathcal{C}_{\mathrm{asserted}}\rvert = 50`$ Einzelaussagen. Für 49 Aussagen stimmten die bytegenauen SHA-256-Hashes exakt mit den Artikeln der DIN EN 61936-1 überein. Bei einer Aussage rundete das Modell jedoch den Mindestsicherheitsabstand eigenmächtig von $`2{,}20\,\text{m}`$ auf $`2{,}50\,\text{m}`$, wodurch das Byte-Zitat divergierte ($`\lvert\mathcal{C}_{\mathrm{grounded}}\rvert = 49`$). Die Kennzahl ergab:
+Bei der Analyse der Betriebsvorschrift einer Umspannstation generierte das Sprachmodell ein Set von $\lvert\mathcal{C}_{\mathrm{asserted}}\rvert = 50$ Einzelaussagen. Für 49 Aussagen stimmten die bytegenauen SHA-256-Hashes exakt mit den Artikeln der DIN EN 61936-1 überein. Bei einer Aussage rundete das Modell jedoch den Mindestsicherheitsabstand eigenmächtig von $2{,}20\,\text{m}$ auf $2{,}50\,\text{m}$, wodurch das Byte-Zitat divergierte ($\lvert\mathcal{C}_{\mathrm{grounded}}\rvert = 49$). Die Kennzahl ergab:
 
 ```math
 \mathrm{ZHR} = \frac{49}{50} = 0{,}980000 < 1{,}000000.
@@ -223,15 +223,15 @@ Das Sicherheits-Gateway blockierte die Ausgabe des Gesamtberichts unverzüglich 
 | Grammatik-Shield (Stufe 1) | Endliche Automaten auf Logit-Ebene | Syntax- und Schemaverletzungen | Faktische Korrektheit der Werte |
 | Bytegenaues Gateway (Stufe 2) | SHA-256-Hash-Verifikation von Dateislices | Gefälschte Zitate, erfundene Zahlen | Vollständigkeit des externen Wissenskorpus |
 
-### 2.3. Popper'scher Zyklus der Hypothesenfalsifikation ($`F^+`$ gegen $`F^-`$)
+### 2.3. Popper'scher Zyklus der Hypothesenfalsifikation ($F^+$ gegen $F^-$)
 
 Selbst wenn ein Aussagenkandidat des Sprachmodells das Syntaxschema erfüllt und ein reales Zitat enthält, verbleibt ein latentes Risiko: das Ausblenden des Kontextes (*Contextual Omission*). Eine Norm kann beispielsweise vorgeben: *„Die Übertragungsrate für CAN FD darf auf bis zu 5 Mbit/s angehoben werden“*, während der unmittelbar folgende Absatz eine kritische Ausnahme formuliert: *„ausgenommen Leitungsstränge mit einer Länge von über 15 Metern, bei denen die maximale Rate auf 2 Mbit/s begrenzt ist“*. Zitiert das Modell isoliert den ersten Satz, ist das Zitat buchstabengetreu korrekt, die Schlussfolgerung für eine lange Leitung führt jedoch zum Zusammenbruch der Buskommunikation.
 
 Zum Schutz vor derart selektiven Fehlurteilen implementiert das evidenzbasierte Expertensystem den **Popper'schen Zyklus der Hypothesenfalsifikation**, basierend auf der Erkenntnistheorie von Karl Popper [[14]](#src-14). Das Grundprinzip lautet: Keine endliche Zahl bestätigender Beobachtungen kann eine Hypothese endgültig verifizieren, doch ein einziges valides Gegenbeispiel falsifiziert sie unwiderruflich.
 
 Im Prozess der Wissenszulassung wird dieses Prinzip als obligatorische Paargenerierung formalisiert:
-1. **Generierung der Antithese:** Zu jedem Kandidatenfakt $`F^+`$ („Behauptung: Die Norm ist anwendbar“) muss der Hypothesengenerator zwingend eine gerichtete Antithese formulieren — das Gegenbeispiel $`F^-`$ („Widerlegung: Es existieren Ausnahmen, Bedingungen oder Defeater, die die Anwendung der Norm aufheben“).
-2. **Deterministische Verifikation:** Beide Aussagen $`F^+`$ und $`F^-`$ werden an den deterministischen Verifikationskern übergeben, der eine unabhängige, bytegenaue Verankerung im kanonischen Quelltext mittels SHA-256 durchführt.
+1. **Generierung der Antithese:** Zu jedem Kandidatenfakt $F^+$ („Behauptung: Die Norm ist anwendbar“) muss der Hypothesengenerator zwingend eine gerichtete Antithese formulieren — das Gegenbeispiel $F^-$ („Widerlegung: Es existieren Ausnahmen, Bedingungen oder Defeater, die die Anwendung der Norm aufheben“).
+2. **Deterministische Verifikation:** Beide Aussagen $F^+$ und $F^-$ werden an den deterministischen Verifikationskern übergeben, der eine unabhängige, bytegenaue Verankerung im kanonischen Quelltext mittels SHA-256 durchführt.
 
 Die operative Entscheidung des Zulassungs-Gateways folgt der strikten Falsifikationsregel:
 
@@ -240,13 +240,13 @@ Die operative Entscheidung des Zulassungs-Gateways folgt der strikten Falsifikat
 ```
 
 **Parameter und logische Variablen:**
-- $`\mathcal{V}(F^+) \in \{\mathrm{TRUE}, \mathrm{FALSE}\}`$ — Verifikationsstatus der positiven Behauptung (Vorliegen eines bytegenau belegten Quellenzitats der Regel);
-- $`\mathcal{V}(F^-) \in \{\mathrm{TRUE}, \mathrm{FALSE}\}`$ — Verifikationsstatus der Antithese (Vorliegen eines bytegenau belegten Gegenbeispiels oder einer aktiven Ausnahmebedingung);
-- $`\mathrm{Status}(F) \in \{\mathrm{ACCEPT}, \mathrm{REFUSAL}\}`$ — operative Entscheidung des Gateways.
+- $\mathcal{V}(F^+) \in \{\mathrm{TRUE}, \mathrm{FALSE}\}$ — Verifikationsstatus der positiven Behauptung (Vorliegen eines bytegenau belegten Quellenzitats der Regel);
+- $\mathcal{V}(F^-) \in \{\mathrm{TRUE}, \mathrm{FALSE}\}$ — Verifikationsstatus der Antithese (Vorliegen eines bytegenau belegten Gegenbeispiels oder einer aktiven Ausnahmebedingung);
+- $\mathrm{Status}(F) \in \{\mathrm{ACCEPT}, \mathrm{REFUSAL}\}$ — operative Entscheidung des Gateways.
 
 **Zustandsübergänge und praktisches Szenario:**
-- Eine Aussage wird ausschließlich dann in die Wissensbasis übernommen, wenn $`F^+`$ vollständig verifiziert und $`F^-`$ deterministisch widerlegt ist. Findet das Gegenbeispiel $`F^-`$ eine Bestätigung im Quelltext, erkennt das System eine normative Kollision (`CONTRADICTION_DEFEATED`) und blockiert die gefährliche Handlungsempfehlung.
-- Praktisches Beispiel: Betrachtet wird die Norm *„Die Übertragungsrate für CAN FD darf auf bis zu 5 Mbit/s eingestellt werden“* ($`F^+`$). Das generierte Popper'sche Gegenbeispiel $`F^-`$ prüft die Ausnahme: *„Die Kabellänge überschreitet 15 Meter“*. Weist die Eingabe des Anwenders eine Leitungslänge von $`L = 22\,\text{m}`$ aus, stellt der Kern fest: $`\mathcal{V}(F^+) = \mathrm{TRUE}`$ (die allgemeine Regel existiert) und $`\mathcal{V}(F^-) = \mathrm{TRUE}`$ (die Ausnahme greift!). Da $`\mathcal{V}(F^-) = \mathrm{TRUE}`$, liefert das Gateway $`\mathrm{Status}(F) = \mathrm{REFUSAL}`$ (`CONTRADICTION_DEFEATED`) und blockiert das Umschalten des Transceivers auf 5 Mbit/s, wodurch Rahmenfehler auf dem physikalischen Bus abgewendet werden.
+- Eine Aussage wird ausschließlich dann in die Wissensbasis übernommen, wenn $F^+$ vollständig verifiziert und $F^-$ deterministisch widerlegt ist. Findet das Gegenbeispiel $F^-$ eine Bestätigung im Quelltext, erkennt das System eine normative Kollision (`CONTRADICTION_DEFEATED`) und blockiert die gefährliche Handlungsempfehlung.
+- Praktisches Beispiel: Betrachtet wird die Norm *„Die Übertragungsrate für CAN FD darf auf bis zu 5 Mbit/s eingestellt werden“* ($F^+$). Das generierte Popper'sche Gegenbeispiel $F^-$ prüft die Ausnahme: *„Die Kabellänge überschreitet 15 Meter“*. Weist die Eingabe des Anwenders eine Leitungslänge von $L = 22\,\text{m}$ aus, stellt der Kern fest: $\mathcal{V}(F^+) = \mathrm{TRUE}$ (die allgemeine Regel existiert) und $\mathcal{V}(F^-) = \mathrm{TRUE}$ (die Ausnahme greift!). Da $\mathcal{V}(F^-) = \mathrm{TRUE}$, liefert das Gateway $\mathrm{Status}(F) = \mathrm{REFUSAL}$ (`CONTRADICTION_DEFEATED`) und blockiert das Umschalten des Transceivers auf 5 Mbit/s, wodurch Rahmenfehler auf dem physikalischen Bus abgewendet werden.
 
 ```mermaid
 sequenceDiagram
@@ -287,10 +287,10 @@ sequenceDiagram
 
 Empirische Untersuchungen auf industrieller Embedded-Hardware (Seeed Studio reServer Industrial J501 auf Basis des NVIDIA Jetson AGX Orin 64GB unter aktiver Kühlung im Betriebsmodus `MODE_30W`) bestätigen diese Gesetzmäßigkeit. Bei Prüfungen von Modellen der Klassen 7B und 14B gegen technische Standards (RFC 9110 HTTP Semantics und ISO 26262-4 ASIL D) zeigten unbeschränkte Basismodelle ohne Syntaxbegrenzung eine systematische Strukturdegeneration: Abweichungen vom Schema `GroundFactSpec`, verfälschte JSON-Schlüssel und das Auslassen kritischer Defeater (Bedingungsklauseln `unless`).
 
-Der kombinierte Einsatz von GBNF-Grammatiken und kontrastiven Popper'schen Paaren $`(F^+, F^-)`$ sicherte demgegenüber:
+Der kombinierte Einsatz von GBNF-Grammatiken und kontrastiven Popper'schen Paaren $(F^+, F^-)$ sicherte demgegenüber:
 1. **0,00 % Syntaxausschuss:** kein einziges fehlerhaftes Token oder invalider AST dank Logit-Maskierung auf Softmax-Ebene;
-2. **Absolute Wissensfalsifizierbarkeit:** Der EVM-Kern [[15]](#src-15) verifizierte sämtliche positiven Fakten $`F^+`$ deterministisch über die bytegenaue Quellencustody im Prozessorregister `%ebx` und falsifizierte synthetisierte Gegenbeispiele $`F^-`$ mit Defeater-Auslassungen (`DEFEATER_OMISSION`) oder Modalitätsinversionen (`DEONTIC_MODALITY_INVERSION`);
-3. **Kompromisslose Evidenzmetrik** ($`\mathrm{ZHR} = 1{,}000000`$): Kein ungesicherter oder widersprüchlicher Fakt drang in die Wissensbasis ein, wobei die thermische Reserve des Siliziumchips unter aktiver Kühlung $`+56^\circ\text{C}`$ bis zur Drosselungsgrenze (99°C) betrug.
+2. **Absolute Wissensfalsifizierbarkeit:** Der EVM-Kern [[15]](#src-15) verifizierte sämtliche positiven Fakten $F^+$ deterministisch über die bytegenaue Quellencustody im Prozessorregister `%ebx` und falsifizierte synthetisierte Gegenbeispiele $F^-$ mit Defeater-Auslassungen (`DEFEATER_OMISSION`) oder Modalitätsinversionen (`DEONTIC_MODALITY_INVERSION`);
+3. **Kompromisslose Evidenzmetrik** ($\mathrm{ZHR} = 1{,}000000$): Kein ungesicherter oder widersprüchlicher Fakt drang in die Wissensbasis ein, wobei die thermische Reserve des Siliziumchips unter aktiver Kühlung $+56^\circ\text{C}$ bis zur Drosselungsgrenze (99°C) betrug.
 
 ```mermaid
 xychart-beta
@@ -306,31 +306,31 @@ Reicht das Wissen eines Expertensystems zur Beantwortung einer Frage nicht aus, 
 
 Klassische relationale Datenbanken stützen sich auf die Closed-World-Assumption (*CWA*): Was nicht in der Tabelle steht, gilt als definitiv falsch. Das evidenzbasierte Knowledge Engineering verwendet hingegen die Open-World-Assumption (*OWA*): Ist eine Relation zwischen Entitäten nicht in der Faktenbasis verzeichnet, gilt sie als **unbekannt**, keinesfalls als falsch.
 
-Erfordert eine Anfrage $`Q`$ den Beweis einer Menge notwendiger Zielprädikate $`\mathcal{P}_{\mathrm{required}}(Q)`$, während die aktuelle Wissensbasis lediglich den Beweis einer Teilmenge $`\mathcal{P}_{\mathrm{proven}}(Q) \subseteq \mathcal{P}_{\mathrm{required}}(Q)`$ gestattet, so bemisst sich das epistemische Wissensdefizit $`D_{\mathrm{epistemic}}(Q)`$ wie folgt:
+Erfordert eine Anfrage $Q$ den Beweis einer Menge notwendiger Zielprädikate $\mathcal{P}_{\mathrm{required}}(Q)$, während die aktuelle Wissensbasis lediglich den Beweis einer Teilmenge $\mathcal{P}_{\mathrm{proven}}(Q) \subseteq \mathcal{P}_{\mathrm{required}}(Q)$ gestattet, so bemisst sich das epistemische Wissensdefizit $D_{\mathrm{epistemic}}(Q)$ wie folgt:
 
 ```math
 D_{\mathrm{epistemic}}(Q) = 1 - \frac{\lvert\mathcal{P}_{\mathrm{proven}}(Q)\rvert}{\lvert\mathcal{P}_{\mathrm{required}}(Q)\rvert},\qquad D_{\mathrm{epistemic}} \in [0, 1].
 ```
 
 **Parameter und Grenzwerte:**
-- $`\mathcal{P}_{\mathrm{required}}(Q)`$ — Menge aller Zielprädikate und Attribute, die für eine vollständige deduktive Begründung der Antwort auf die Anfrage $`Q`$ erforderlich sind ($`\lvert\mathcal{P}_{\mathrm{required}}(Q)\rvert \ge 1`$);
-- $`\mathcal{P}_{\mathrm{proven}}(Q) \subseteq \mathcal{P}_{\mathrm{required}}(Q)`$ — Teilmenge von Prädikaten, für die in der Wissensbasis deterministisch bewiesene, geerdete Fakten mit $`\mathrm{ZHR} = 1{,}00`$ vorliegen;
-- $`D_{\mathrm{epistemic}}(Q) \in [0, 1]`$ — normierter Koeffizient des Wissensdefizits (0 entspricht vollständigem Wissen, 1 der völligen Abwesenheit relevanter Fakten).
+- $\mathcal{P}_{\mathrm{required}}(Q)$ — Menge aller Zielprädikate und Attribute, die für eine vollständige deduktive Begründung der Antwort auf die Anfrage $Q$ erforderlich sind ($\lvert\mathcal{P}_{\mathrm{required}}(Q)\rvert \ge 1$);
+- $\mathcal{P}_{\mathrm{proven}}(Q) \subseteq \mathcal{P}_{\mathrm{required}}(Q)$ — Teilmenge von Prädikaten, für die in der Wissensbasis deterministisch bewiesene, geerdete Fakten mit $\mathrm{ZHR} = 1{,}00$ vorliegen;
+- $D_{\mathrm{epistemic}}(Q) \in [0, 1]$ — normierter Koeffizient des Wissensdefizits (0 entspricht vollständigem Wissen, 1 der völligen Abwesenheit relevanter Fakten).
 
 **Operative Zustandsübergänge und Berechnungsbeispiel:**
-- Bei $`D_{\mathrm{epistemic}} = 0`$ generiert das System eine kategorische Antwort auf Basis vollständiger Deduktion (`ADMIT_DEDUCTIVE`).
-- Gilt $`D_{\mathrm{epistemic}} > 0`$, aktiviert das System zwingend das **Fail-Closed-Sicherheits-Gateway (Fail-Closed Gate)**.
+- Bei $D_{\mathrm{epistemic}} = 0$ generiert das System eine kategorische Antwort auf Basis vollständiger Deduktion (`ADMIT_DEDUCTIVE`).
+- Gilt $D_{\mathrm{epistemic}} > 0$, aktiviert das System zwingend das **Fail-Closed-Sicherheits-Gateway (Fail-Closed Gate)**.
 
 **Praktisches Szenario:**  
-Eine Anfrage $`Q`$ zur Einschaltung eines Hochspannungstransformators verlangt die Verifikation von vier zwingenden Vorbedingungen ($`\lvert\mathcal{P}_{\mathrm{required}}\rvert = 4`$): Isolationsgüte, Gasdruck des Schutzgases $`\mathrm{SF}_6`$, Kontakttemperatur und die bestätigte Öffnung der Erdungstrennschalter. Die Telemetrie bestätigt drei Prädikate; für den Endlagensensor der Erdungsmesser liegt jedoch kein gültiges, signiertes Prüfzertifikat vor ($`\lvert\mathcal{P}_{\mathrm{proven}}\rvert = 3`$). Das Defizit beträgt:
+Eine Anfrage $Q$ zur Einschaltung eines Hochspannungstransformators verlangt die Verifikation von vier zwingenden Vorbedingungen ($\lvert\mathcal{P}_{\mathrm{required}}\rvert = 4$): Isolationsgüte, Gasdruck des Schutzgases $\mathrm{SF}_6$, Kontakttemperatur und die bestätigte Öffnung der Erdungstrennschalter. Die Telemetrie bestätigt drei Prädikate; für den Endlagensensor der Erdungsmesser liegt jedoch kein gültiges, signiertes Prüfzertifikat vor ($\lvert\mathcal{P}_{\mathrm{proven}}\rvert = 3$). Das Defizit beträgt:
 
 ```math
 D_{\mathrm{epistemic}}(Q) = 1 - \frac{3}{4} = 0{,}250000.
 ```
 
-Da $`D_{\mathrm{epistemic}} = 0{,}25 > 0`$, verweigert das System die Ausgabe des Einschaltbefehls und generiert eine typisierte Sicherheitsverweigerung `Refusal(CALIBRATION_DEFICIT)`.
+Da $D_{\mathrm{epistemic}} = 0{,}25 > 0$, verweigert das System die Ausgabe des Einschaltbefehls und generiert eine typisierte Sicherheitsverweigerung `Refusal(CALIBRATION_DEFICIT)`.
 
-Der Verweigerungsoperator $`\mathrm{Refusal}(\rho)`$ stellt ein reguläres, typisiertes Ergebnis des Expertensystems dar. Der Ablehnungsgrund $`\rho`$ spezifiziert die genaue Ursache des Informationsdefizits:
+Der Verweigerungsoperator $\mathrm{Refusal}(\rho)$ stellt ein reguläres, typisiertes Ergebnis des Expertensystems dar. Der Ablehnungsgrund $\rho$ spezifiziert die genaue Ursache des Informationsdefizits:
 
 * `NO_EVIDENCE`: In den registrierten Dokumenten existieren keinerlei Entitäten oder Attribute, die in der Anfrage referenziert wurden;
 * `AMBIGUOUS_EVIDENCE`: Es wurden mehrere zueinander widersprüchliche Textbelege identifiziert, ohne dass ein semantisches oder temporales Vorrangkriterium vorliegt;
@@ -338,37 +338,37 @@ Der Verweigerungsoperator $`\mathrm{Refusal}(\rho)`$ stellt ein reguläres, typi
 * `CALIBRATION_DEFICIT`: Sensormessungen weisen keine deklarierte Messunsicherheit auf, oder das Kalibrierintervall des Messwertgebers ist abgelaufen;
 * `UNRESOLVED_DEFEATER`: Die logische Ableitung wird durch einen aktiven Defeater im Truth Maintenance System blockiert.
 
-Die Fail-Closed-Policy garantiert ein lückenloses Abfangen von Risiken ($`\text{FCP} = 100\%`$): Keine Entscheidung, die auf unvollständigen oder hypothetischen Prämissen beruht, wird an physische Aktoren weitergeleitet oder als normativ gültig publiziert.
+Die Fail-Closed-Policy garantiert ein lückenloses Abfangen von Risiken ($\text{FCP} = 100\%$): Keine Entscheidung, die auf unvollständigen oder hypothetischen Prämissen beruht, wird an physische Aktoren weitergeleitet oder als normativ gültig publiziert.
 
 ### 3.1. Geologische Stratifikation und Heatmaps des Wissensdefizits (KDI Sliding Window Heatmap)
 
 Das Wissensdefizit realer technischer Vorschriften ist selten homogen verteilt: Während manche Abschnitte präzise Zahlenwerte und lückenlose Regeln enthalten, begnügen sich andere mit vagen Absichtserklärungen. Fasst man die Wissensbasis als Schichtenmodell auf, lässt sich ihr Sättigungsgrad über den Knowledge Deficit Index (**KDI**) in einem gleitenden Fenster quantifizieren.
 
-Wird ein kanonisches Normdokument $`\mathcal{D}`$ in eine Sequenz gleitender Strukturfenster $`w \in \mathcal{W}`$ fester Größe zerlegt (etwa Slices von 256 Bytes mit einem Vorschub von 64 Bytes), ermittelt die KAS-Pipeline für jedes Fenster $`w`$ die Anzahl identifizierter normativer Anforderungen $`\mathcal{R}_{\mathrm{declared}}(w)`$ sowie die Anzahl der durch das Evidenz-Gateway zugelassenen Fakten $`\mathcal{F}_{\mathrm{admitted}}(w)`$:
+Wird ein kanonisches Normdokument $\mathcal{D}$ in eine Sequenz gleitender Strukturfenster $w \in \mathcal{W}$ fester Größe zerlegt (etwa Slices von 256 Bytes mit einem Vorschub von 64 Bytes), ermittelt die KAS-Pipeline für jedes Fenster $w$ die Anzahl identifizierter normativer Anforderungen $\mathcal{R}_{\mathrm{declared}}(w)$ sowie die Anzahl der durch das Evidenz-Gateway zugelassenen Fakten $\mathcal{F}_{\mathrm{admitted}}(w)$:
 
 ```math
 \mathrm{KDI}(w) = 1 - \frac{\lvert\mathcal{F}_{\mathrm{admitted}}(w)\rvert}{\lvert\mathcal{R}_{\mathrm{declared}}(w)\rvert},\qquad \mathrm{KDI}(w) \in [0, 1].
 ```
 
 **Parameter und Stratifikationsskala:**
-- $`\mathcal{R}_{\mathrm{declared}}(w)`$ — Menge der im Strukturfenster $`w`$ erfassten normativen Vorgaben und technischen Restriktionen ($`\lvert\mathcal{R}_{\mathrm{declared}}(w)\rvert \ge 1`$);
-- $`\mathcal{F}_{\mathrm{admitted}}(w)`$ — Teilmenge der Anforderungen des Fensters, die das bytegenaue Evidenz-Gateway erfolgreich passiert haben;
-- $`\mathrm{KDI}(w) \in [0, 1]`$ — fensterbezogener Wissensdefizit-Index.
+- $\mathcal{R}_{\mathrm{declared}}(w)$ — Menge der im Strukturfenster $w$ erfassten normativen Vorgaben und technischen Restriktionen ($\lvert\mathcal{R}_{\mathrm{declared}}(w)\rvert \ge 1$);
+- $\mathcal{F}_{\mathrm{admitted}}(w)$ — Teilmenge der Anforderungen des Fensters, die das bytegenaue Evidenz-Gateway erfolgreich passiert haben;
+- $\mathrm{KDI}(w) \in [0, 1]$ — fensterbezogener Wissensdefizit-Index.
 
 Anhand des KDI-Wertes teilt die Heatmap den Textkorpus in drei geologische Schichten ein:
 
-1. **Monolithische Basisschicht (*Grounded Bedrock*, $`\mathrm{KDI}(w) \le 0{,}05`$):** Bereich nahezu vollständiger Wissensabdeckung ($`> 95\%`$ der Vorgaben sind formalisiert und bytegenau belegt). Das Expertensystem arbeitet im direkten deterministischen Inferenzmodus ohne Klärungsbedarf.
-2. **Übergangskarst (*Transitional Karst*, $`0{,}05 < \mathrm{KDI}(w) \le 0{,}30`$):** Vorhandensein normativer Hohlräume, unvollständiger Parameter oder vager Bedingungen. Das System erlaubt kontrollierte abduktive Schlüsse nach Peirce, koppelt diese jedoch zwingend an einen sokratischen Klärungsdialog.
-3. **Epistemische Kaverne (*Epistemic Void*, $`\mathrm{KDI}(w) > 0{,}30`$):** Zone gravierenden Wissensmangels oder fehlender Formalisierung. Sämtliche Anfragen an diesen Bereich werden zwingend mit einer typisierten Sicherheitsverweigerung abgefangen (`HALT_REFUSE`).
+1. **Monolithische Basisschicht (*Grounded Bedrock*, $\mathrm{KDI}(w) \le 0{,}05$):** Bereich nahezu vollständiger Wissensabdeckung ($> 95\%$ der Vorgaben sind formalisiert und bytegenau belegt). Das Expertensystem arbeitet im direkten deterministischen Inferenzmodus ohne Klärungsbedarf.
+2. **Übergangskarst (*Transitional Karst*, $0{,}05 < \mathrm{KDI}(w) \le 0{,}30$):** Vorhandensein normativer Hohlräume, unvollständiger Parameter oder vager Bedingungen. Das System erlaubt kontrollierte abduktive Schlüsse nach Peirce, koppelt diese jedoch zwingend an einen sokratischen Klärungsdialog.
+3. **Epistemische Kaverne (*Epistemic Void*, $\mathrm{KDI}(w) > 0{,}30$):** Zone gravierenden Wissensmangels oder fehlender Formalisierung. Sämtliche Anfragen an diesen Bereich werden zwingend mit einer typisierten Sicherheitsverweigerung abgefangen (`HALT_REFUSE`).
 
 **Praktisches Berechnungsbeispiel:**  
-Beim Scannen des 256-Byte-Fensters $`w_{42}`$ einer Industrienorm identifizierte die Pipeline 8 deontische Anforderungen ($`\lvert\mathcal{R}_{\mathrm{declared}}(w_{42})\rvert = 8`$). 7 Anforderungen ließen sich als bytegenaue Fakten absichern; eine Anforderung verwies auf eine nicht aufgelöste externe Querneigung ($`\lvert\mathcal{F}_{\mathrm{admitted}}(w_{42})\rvert = 7`$). Der Defizit-Index beträgt:
+Beim Scannen des 256-Byte-Fensters $w_{42}$ einer Industrienorm identifizierte die Pipeline 8 deontische Anforderungen ($\lvert\mathcal{R}_{\mathrm{declared}}(w_{42})\rvert = 8$). 7 Anforderungen ließen sich als bytegenaue Fakten absichern; eine Anforderung verwies auf eine nicht aufgelöste externe Querneigung ($\lvert\mathcal{F}_{\mathrm{admitted}}(w_{42})\rvert = 7$). Der Defizit-Index beträgt:
 
 ```math
 \mathrm{KDI}(w_{42}) = 1 - \frac{7}{8} = 0{,}125000.
 ```
 
-Wegen $`0{,}05 < 0{,}125 \le 0{,}30`$ fällt das Fenster $`w_{42}`$ in die Schicht *Transitional Karst*. Das System schaltet automatisch in den sokratischen Klärungsdialog und fordert vom Operator die Parameter der externen Referenz an, bevor ein finales Urteil gefällt wird.
+Wegen $0{,}05 < 0{,}125 \le 0{,}30$ fällt das Fenster $w_{42}$ in die Schicht *Transitional Karst*. Das System schaltet automatisch in den sokratischen Klärungsdialog und fordert vom Operator die Parameter der externen Referenz an, bevor ein finales Urteil gefällt wird.
 
 ```mermaid
 stateDiagram-v2
@@ -397,11 +397,11 @@ stateDiagram-v2
 
 ## 4. Abduktive Schlüsse nach Peirce: Überwindung von Unvollständigkeit ohne Konfabulationen
 
-Eine kategorische Verweigerung $`\mathrm{Refusal}`$ bannt Gefahren, unterstützt den Ingenieur jedoch nicht bei der Problemlösung. Fehlen dem Menschen Fakten, erfindet er nicht willkürliche Daten, sondern formuliert eine fundierte Hypothese.
+Eine kategorische Verweigerung $\mathrm{Refusal}$ bannt Gefahren, unterstützt den Ingenieur jedoch nicht bei der Problemlösung. Fehlen dem Menschen Fakten, erfindet er nicht willkürliche Daten, sondern formuliert eine fundierte Hypothese.
 
 Charles Sanders Peirce begründete die erkenntnistheoretische Triade des Schließens: Die Deduktion leitet die Konsequenz aus Regel und Prämisse ab; die Induktion generalisiert aus wiederholten Beobachtungen eine Regel; die **Abduktion** schließt von einer bekannten Regel und einer beobachteten Wirkung auf die wahrscheinlichste Ursache bzw. Voraussetzung [[5]](#src-5).
 
-In einem evidenzbasierten Expertensystem wird die symbolische Abduktion wie folgt formalisiert: Wird das Zielereignis $`Q`$ beobachtet und enthält die Regelbasis die Invariante $`P \land \Delta \to Q`$, wobei der Kontext $`\Delta`$ verifiziert wahr ist, die Prämisse $`P`$ in der Faktenbasis jedoch fehlt, so bildet das System den abduktiven Schluss:
+In einem evidenzbasierten Expertensystem wird die symbolische Abduktion wie folgt formalisiert: Wird das Zielereignis $Q$ beobachtet und enthält die Regelbasis die Invariante $P \land \Delta \to Q$, wobei der Kontext $\Delta$ verifiziert wahr ist, die Prämisse $P$ in der Faktenbasis jedoch fehlt, so bildet das System den abduktiven Schluss:
 
 ```math
 \text{Abduktive Hypothese: Möglicherweise gilt } P.
@@ -418,7 +418,7 @@ Für die Pumpe P-7 stellt sich der Klärungsrahmen wie folgt dar:
 > - **Zielbehauptung:** Freigabe zur Spülung der Hauptleitung der Pumpe P-7.  
 > - **Verifizierte Fakten:** Spannungsversorgung getrennt, Medientemperatur stabil (22 °C).  
 > - **Fehlende zwingende Prämisse:** Zustand des Gegendrucksensors PT-104 ist nicht durch ein gültiges Kalibrierzertifikat belegt.  
-> - **Abduktive Hypothese:** Sofern der Leitungsdruck auf Atmosphärendruck entspannt wurde ($`< 0{,}2\,\text{bar}`$), ist die Spülung zulässig.  
+> - **Abduktive Hypothese:** Sofern der Leitungsdruck auf Atmosphärendruck entspannt wurde ($< 0{,}2\,\text{bar}$), ist die Spülung zulässig.  
 > - **Handlungsaufforderung an den Operator:** Führen Sie eine manuelle Druckentlastung durch oder bestätigen Sie die Anzeige des Manometers M-1.
 
 Die Abduktion erzeugt keine Scheingewissheit: Sie markiert messerscharf die Grenze zwischen dem, was mathematisch bewiesen ist, und dem, was einer physischen Vor-Ort-Überprüfung bedarf.
@@ -427,7 +427,7 @@ Die Abduktion erzeugt keine Scheingewissheit: Sie markiert messerscharf die Gren
 
 In Echtzeitsystemen, in denen neuronale Netze oder KI-Planer direkte Stellbefehle an physische Aktoren senden oder rechtlich bindende Aktionen auslösen, bleibt keine Zeit für Dialoge mit dem Operator. In solchen Domänen kommen **prädikative Sicherheits-Schilde (Safety Shields)** zum Einsatz, deren theoretische Grundlagen von Bettina Könighofer et al. [[6]](#src-6) sowie von Shalev-Shwartz, Shammah und Shashua im RSS-Modell (Mobileye Responsibility-Sensitive Safety) [[7]](#src-7) formuliert wurden.
 
-Ein Safety Shield ist ein deterministischer endlicher Automat, der formale Sicherheitsinvarianten $`\Phi = \{\phi_1, \phi_2, \dots, \phi_m\}`$ zur Ausführungszeit erzwingt. Der Schild wird unmittelbar zwischen den Aktionsvektor des Modells $`\mathbf{a} \in \mathcal{A}`$ und die Aktorik geschaltet.
+Ein Safety Shield ist ein deterministischer endlicher Automat, der formale Sicherheitsinvarianten $\Phi = \{\phi_1, \phi_2, \dots, \phi_m\}$ zur Ausführungszeit erzwingt. Der Schild wird unmittelbar zwischen den Aktionsvektor des Modells $\mathbf{a} \in \mathcal{A}$ und die Aktorik geschaltet.
 
 ```mermaid
 flowchart LR
@@ -441,13 +441,13 @@ flowchart LR
     SHIELD -->|"Wenn unsicher (a ∉ A_safe)"| SAFE["Korrekturaktion (a*) oder Not-Halt"]
 ```
 
-Mathematisch projiziert der Schild die gewünschte Aktion $`\mathbf{a}`$ auf den Unterraum zulässiger, sicherer Aktionen $`\mathcal{A}_{\mathrm{safe}}(s)`$:
+Mathematisch projiziert der Schild die gewünschte Aktion $\mathbf{a}$ auf den Unterraum zulässiger, sicherer Aktionen $\mathcal{A}_{\mathrm{safe}}(s)$:
 
 ```math
 \mathbf{a}^* = \arg\min_{\mathbf{a}' \in \mathcal{A}_{\mathrm{safe}}(s)} \|\mathbf{a}' - \mathbf{a}\|.
 ```
 
-Schlägt das neuronale Netz eine Aktion vor, die räumliche Mindestabstände, Druckgrenzwerte oder Verriegelungssequenzen verletzt, substituiert der Schild das Signal verzögerungsfrei durch die nächstgelegene sichere Korrekturaktion $`\mathbf{a}^*`$ oder leitet eine kontrollierte Notabschaltung ein — und zwar innerhalb einer Zeitspanne, die garantiert unter dem Fehlertoleranz-Zeitintervall (*Fault Tolerant Time Interval*, FTTI) liegt.
+Schlägt das neuronale Netz eine Aktion vor, die räumliche Mindestabstände, Druckgrenzwerte oder Verriegelungssequenzen verletzt, substituiert der Schild das Signal verzögerungsfrei durch die nächstgelegene sichere Korrekturaktion $\mathbf{a}^*$ oder leitet eine kontrollierte Notabschaltung ein — und zwar innerhalb einer Zeitspanne, die garantiert unter dem Fehlertoleranz-Zeitintervall (*Fault Tolerant Time Interval*, FTTI) liegt.
 
 In textgenerierenden Systemen entspricht diesem Konzept das prädikative Maskieren von Logits auf Vokabularebene: Würde die Selektion eines Tokens den Zustand des ontologischen Automaten in einen unzulässigen Bereich überführen, wird der entsprechende Softmax-Ausgang noch vor Vollendung des Wortes nulliert.
 
@@ -459,18 +459,18 @@ Das Expertensystem schützt die Außenwelt nicht nur zur Laufzeit vor Fehlern de
 
 Klassisches Reinforcement Learning from Human Feedback (*RLHF*) stützt sich auf subjektive Urteile menschlicher Annotatoren, die eloquente, aber sachlich falsche Antworten häufig bevorzugen. Rafailov et al. entwickelten mit der Direct Preference Optimization (*DPO*) [[8]](#src-8) ein Verfahren, das ohne separates Belohnungsmodell auskommt.
 
-Das Expertensystem generiert hierfür vollautomatisch fundierte Trainingspaare $`(x, y_w, y_l)`$:
-* $`x`$ ist die eingehende technische oder normative Anfrage;
-* $`y_w`$ ist die bevorzugte Antwort (*winning*), erzeugt unter Einbindung des bytegenauen Zitat-Gateways, verifizierter numerischer Grenzwerte und formaler Regeln;
-* $`y_l`$ ist die halluzinierte Antwort (*losing*), die vom Basismodell vorgeschlagen und vom Zulassungs-Gateway wegen fehlerhafter Zitate oder Regelverletzungen abgewiesen wurde.
+Das Expertensystem generiert hierfür vollautomatisch fundierte Trainingspaare $(x, y_w, y_l)$:
+* $x$ ist die eingehende technische oder normative Anfrage;
+* $y_w$ ist die bevorzugte Antwort (*winning*), erzeugt unter Einbindung des bytegenauen Zitat-Gateways, verifizierter numerischer Grenzwerte und formaler Regeln;
+* $y_l$ ist die halluzinierte Antwort (*losing*), die vom Basismodell vorgeschlagen und vom Zulassungs-Gateway wegen fehlerhafter Zitate oder Regelverletzungen abgewiesen wurde.
 
-Die DPO-Verlustfunktion optimiert die Modellparameter $`\theta`$ gegenüber dem Referenzmodell $`\pi_{\mathrm{ref}}`$:
+Die DPO-Verlustfunktion optimiert die Modellparameter $\theta$ gegenüber dem Referenzmodell $\pi_{\mathrm{ref}}$:
 
 ```math
 \mathcal{L}_{\mathrm{DPO}}(\theta; \pi_{\mathrm{ref}}) = -\mathbb{E}_{(x, y_w, y_l)}\left[\log \sigma\left(\beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\mathrm{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\mathrm{ref}}(y_l \mid x)}\right)\right].
 ```
 
-Hierbei bezeichnet $`\sigma`$ die logistische Funktion und $`\beta`$ einen Regularisierungsparameter. Das Modell wird gezielt für Konfabulationen bestraft und lernt, bei fehlenden Belegen eine typisierte Verweigerung zu artikulieren.
+Hierbei bezeichnet $\sigma$ die logistische Funktion und $\beta$ einen Regularisierungsparameter. Das Modell wird gezielt für Konfabulationen bestraft und lernt, bei fehlenden Belegen eine typisierte Verweigerung zu artikulieren.
 
 ### 6.2. Maschinelles Vergessen kompromittierter Fakten (Machine Unlearning)
 
@@ -480,7 +480,7 @@ Bourtoule et al. entwarfen die SISA-Architektur (*Sharded, Isolated, Sliced, Agg
 
 ### 6.3. Statistische Selbstkonsistenz und Robustheitsfilter (Self-Consistency)
 
-Bei komplexen Syllogismen greift das System auf das Paradigma der Selbstkonsistenz (*Self-Consistency*) nach Wang et al. zurück [[10]](#src-10): Das Modell erzeugt bei einer Temperatur $`T > 0`$ eine Schar von $`N`$ unabhängigen Inferenzpfaden, deren Ergebnisse aggregiert werden.
+Bei komplexen Syllogismen greift das System auf das Paradigma der Selbstkonsistenz (*Self-Consistency*) nach Wang et al. zurück [[10]](#src-10): Das Modell erzeugt bei einer Temperatur $T > 0$ eine Schar von $N$ unabhängigen Inferenzpfaden, deren Ergebnisse aggregiert werden.
 
 Im Expertensystem wird dieser Ansatz modifiziert: Die Mehrheitsentscheidung erfolgt nicht über Textoberflächen, sondern über strukturierte semantische Inferenzgraphen. Nur der verifizierte Konsenskern gelangt an das deterministische Gateway, was die Varianz drastisch senkt.
 
@@ -748,7 +748,7 @@ Zu dieser virtuellen intellektuellen Diskussion wurden herausragende Denker eing
 
 *Disclaimer:* Diese Diskussion ist eine heuristische virtuelle Simulation im wissenschaftlich-pädagogischen Kontext der Monografie. Die Positionen und Argumente der Kontrahenten wurden auf der Basis ihrer Veröffentlichungen, Fachaufsätze und philosophischen Werke synthetisiert; sie erheben keinen Anspruch auf wörtliche Zitate und dienen der kritischen Rationalisierung (Popper'schen Falsifikation) der ingenieurtechnischen Hypothesen des Autors.
 
-**Kapitelthese.** Aufgrund seiner autoregressiven Natur besitzt ein generatives Sprachmodell kein semantisches Wahrheitskriterium und leidet infolge aggressiven Alignments unter dem Verhaltenssyndrom der „Kästchenhaftigkeit“ (Boxiness Artifacts); neuronale Schiedsgerichtsbarkeit („LLM-as-a-Judge“) ist eine gefährliche Kontrollillusion mit Fehlern gemeinsamen Modus (Common-Mode Failures). Die einzig mathematisch belastbare Heilung maschineller Halluzinationen in sicherheitskritischen Systemen besteht darin, dem Modell den Status einer Wissensquelle abzuerkennen und es einem deterministischen zweistufigen Null-Halluzinations-Tor zu unterwerfen: grammatikgesteuerte AST-Dekodierung, bytegenaue Zitatabsicherung über SHA-256-Hashes ($`\mathrm{ZHR} = 1{,}00`$), echtzeitfähige Prädikatenschilde, Peirce'sche symbolische Abduktion für sokratische Dialoge und eine garantierte Fail-Closed-Richtlinie (`Fail-Closed Gate`).
+**Kapitelthese.** Aufgrund seiner autoregressiven Natur besitzt ein generatives Sprachmodell kein semantisches Wahrheitskriterium und leidet infolge aggressiven Alignments unter dem Verhaltenssyndrom der „Kästchenhaftigkeit“ (Boxiness Artifacts); neuronale Schiedsgerichtsbarkeit („LLM-as-a-Judge“) ist eine gefährliche Kontrollillusion mit Fehlern gemeinsamen Modus (Common-Mode Failures). Die einzig mathematisch belastbare Heilung maschineller Halluzinationen in sicherheitskritischen Systemen besteht darin, dem Modell den Status einer Wissensquelle abzuerkennen und es einem deterministischen zweistufigen Null-Halluzinations-Tor zu unterwerfen: grammatikgesteuerte AST-Dekodierung, bytegenaue Zitatabsicherung über SHA-256-Hashes ($\mathrm{ZHR} = 1{,}00$), echtzeitfähige Prädikatenschilde, Peirce'sche symbolische Abduktion für sokratische Dialoge und eine garantierte Fail-Closed-Richtlinie (`Fail-Closed Gate`).
 
 **Dialog mit Emily M. Bender: Zuverlässigkeit von Experten-Überbauten und Grenzen stochastischer Sprachmodelle**
 
@@ -760,7 +760,7 @@ Zu dieser virtuellen intellektuellen Diskussion wurden herausragende Denker eing
 
 - **Emily M. Bender:** Selbst wenn Sie das Sprachmodell zum reinen Hypothesengenerator degradieren, weisen moderne Modelle nach aggressivem Alignment (RLHF, DPO) erhebliche Verhaltensdeformationen auf: Ambiguitätskollaps (Ambiguity Collapse), voreiliges Schließen (Over-Closure), Werkzeugreflexe (Tool Reflex) und sterile Unternehmensabstraktion. Das Modell tendiert dazu, sofort eine geglättete „konforme“ Antwort auszugeben oder impulsiv das nächstbeste Werkzeug aufzurufen, statt Wissenslücken einzugestehen. Wenn Ihr primärer Hypothesengenerator durch dieses Boxiness-Syndrom verkümmert ist, erhält Ihr deterministisches Schleusentor einen drastisch verarmten und kognitiv verzerrten Alternativenstrom. Wie kompensieren Sie diese interne Erosion des Generators?
 
-- **Mykola Fedchyk:** Zur Kompensation des Boxiness-Syndroms setzen wir dynamische kognitive Reparatur-Patches (*Cognitive Repair Patches*) und Zwischenschichten (*Cognitive Shims*) ein. Diese fangen Token während des Samplings ab und erweitern den Suchbaum: Wird ein voreiliger Ambiguitätskollaps oder ein blinder Werkzeugreflex registriert, injiziert der Shim negative Randbedingungen und aktiviert grammatikgesteuertes AST-Decoding nach strikter BNF-Grammatik. Zudem verwerfen wir das fatale Muster „LLM-as-a-Judge“ kategorisch: Das Hypothesen-Schiedsgericht wird niemals einem anderen Modell mit denselben blinden Flecken übertragen, sondern verbleibt ausnahmslos beim deterministischen SMT-Solver und bytegenauen SHA-256-Zitatprüfungen, was eine echte Null-Halluzinations-Rate garantiert ($`\mathrm{ZHR} = 1{,}00`$).
+- **Mykola Fedchyk:** Zur Kompensation des Boxiness-Syndroms setzen wir dynamische kognitive Reparatur-Patches (*Cognitive Repair Patches*) und Zwischenschichten (*Cognitive Shims*) ein. Diese fangen Token während des Samplings ab und erweitern den Suchbaum: Wird ein voreiliger Ambiguitätskollaps oder ein blinder Werkzeugreflex registriert, injiziert der Shim negative Randbedingungen und aktiviert grammatikgesteuertes AST-Decoding nach strikter BNF-Grammatik. Zudem verwerfen wir das fatale Muster „LLM-as-a-Judge“ kategorisch: Das Hypothesen-Schiedsgericht wird niemals einem anderen Modell mit denselben blinden Flecken übertragen, sondern verbleibt ausnahmslos beim deterministischen SMT-Solver und bytegenauen SHA-256-Zitatprüfungen, was eine echte Null-Halluzinations-Rate garantiert ($\mathrm{ZHR} = 1{,}00$).
 
 **Dialog mit Charles Sanders Peirce: Prinzipien lebendiger Abduktion und deterministische relationale Abschlüsse**
 
@@ -776,7 +776,7 @@ Zu dieser virtuellen intellektuellen Diskussion wurden herausragende Denker eing
 
 **Synthese.** Die evidenzbasierte Therapie maschineller Halluzinationen verschmilzt Benders linguistischen Skeptizismus mit Peirces pragmatischer Logik zu einer geschlossenen Sicherheitsarchitektur:
 1. Das neuronale Modell wird jeder epistemischen Autorität beraubt; Boxiness-Artefakte werden über Cognitive Shims kompensiert, und „LLM-as-a-Judge“-Mechanismen werden zugunsten formaler SMT-Verifikation eliminiert;
-2. Das zweistufige Tor garantiert $`\mathrm{ZHR} = 1{,}00`$ durch die Verbindung von grammatikgeführtem AST-Decoding und kryptografischer Zitatabsicherung über SHA-256;
+2. Das zweistufige Tor garantiert $\mathrm{ZHR} = 1{,}00$ durch die Verbindung von grammatikgeführtem AST-Decoding und kryptografischer Zitatabsicherung über SHA-256;
 3. Symbolische Abduktion überführt epistemische Defizite in präzise sokratische Klärungsdialoge, während Hardware-Prädikatenschilde und die `Fail-Closed`-Richtlinie den deterministischen Übergang in sichere Betriebszustände ohne Risiko maschineller Konfabulationen erzwingen.
 
 ## Fazit
@@ -785,8 +785,8 @@ Maschinelle Halluzinationen sind die mathematisch unvermeidliche Konsequenz eine
 
 Die tatsächliche Überwindung von Halluzinationen gelingt nur durch eine strikte architektonische Funktionstrennung:
 1. Das Sprachmodell fungiert ausschließlich als Kandidatengenerator und semantischer Interpreter unstrukturierter Eingabetexte.
-2. Deterministische Verifikations-Gateways auf Basis von AST-Grammatiken, bytegenauer SHA-256-Hash-Prüfung von Zitaten und geschlossenen Ontologien gewährleisten das vollständige Ausfiltern von Konfabulationen ($`\text{ZHR} = 1{,}00`$).
-3. Epistemische Wissensdefizite werden nicht durch das Erfinden von Daten überbrückt, sondern durch typisierte Sicherheitsverweigerungen ($`\text{FCP} = 100\%`$) oder sokratische Klärungsdialoge auf Basis symbolischer Abduktion nach Charles Sanders Peirce gelöst.
+2. Deterministische Verifikations-Gateways auf Basis von AST-Grammatiken, bytegenauer SHA-256-Hash-Prüfung von Zitaten und geschlossenen Ontologien gewährleisten das vollständige Ausfiltern von Konfabulationen ($\text{ZHR} = 1{,}00$).
+3. Epistemische Wissensdefizite werden nicht durch das Erfinden von Daten überbrückt, sondern durch typisierte Sicherheitsverweigerungen ($\text{FCP} = 100\%$) oder sokratische Klärungsdialoge auf Basis symbolischer Abduktion nach Charles Sanders Peirce gelöst.
 4. Prädikative Safety Shields sichern das Laufzeitverhalten physischer Aktoren im Sub-Sekundenbereich ab.
 5. Das akkumulierte, verifizierte Domänenwissen dient als Referenz für die gezielte Ausrichtung der Sprachmodelle mittels DPO und für punktuelles Machine Unlearning veralteter Normen.
 
@@ -796,15 +796,15 @@ Auf diese Weise wandelt sich generative KI von einer unberechenbaren Gefahrenque
 
 1. Warum führt die Maximierung der statistischen Plausibilität von Token-Sequenzen gemäß dem Theorem von Kalai und Vempala unausweichlich zu Halluzinationen?
 2. Worin besteht der Unterschied zwischen grammatikgeführtem Decoding auf Logit-Ebene (Stufe 1) und dem bytegenauen Zulassungs-Gateway (Stufe 2)?
-3. Warum stellt das Ausblenden des Kontextes (*Contextual Omission*) eine gefährliche Form der Halluzination dar, und wie wird sie durch den Popper'schen Falsifikationszyklus ($`F^+`$ gegen $`F^-`$) unterbunden?
+3. Warum stellt das Ausblenden des Kontextes (*Contextual Omission*) eine gefährliche Form der Halluzination dar, und wie wird sie durch den Popper'schen Falsifikationszyklus ($F^+$ gegen $F^-$) unterbunden?
 4. Was misst die Metrik ZHR (*Zero-Hallucination Rate*), und unter welchen Bedingungen nimmt sie strikt den Wert 1,00 an?
 5. Wie unterscheidet sich die Reaktion eines Systems auf ein Wissensdefizit unter der Closed-World-Assumption (CWA) von der unter der Open-World-Assumption (OWA)?
 6. Wie wird der Knowledge Deficit Index (KDI) im gleitenden Fenster berechnet, und welche Erkenntnisse liefert seine stratigraphische Heatmap?
 7. Worin liegt der mathematische und epistemische Unterschied zwischen einem abduktiven Schluss nach Charles Sanders Peirce und einer Sprachmodell-Konfabulation?
 8. Wie arbeitet ein prädikativer Sicherheits-Schild (Safety Shield) zum Schutz physischer Aktoren, und welche Restriktion erzwingt das FTTI?
-9. Wie erzeugt das Expertensystem Trainingspaare $`(x, y_w, y_l)`$ für die Direct Preference Optimization (DPO) eines Sprachmodells?
+9. Wie erzeugt das Expertensystem Trainingspaare $(x, y_w, y_l)$ für die Direct Preference Optimization (DPO) eines Sprachmodells?
 10. Warum ist zielgerichtetes Vergessen (*Machine Unlearning*) nach der SISA-Architektur effizienter als das vollständige Nachtrainieren eines Modells bei Zurückziehung einer Norm?
-11. Warum erweist sich das Muster „LLM-as-a-Judge“ zur Eliminierung von Halluzinationen in missionskritischen Systemen als untauglich, und warum sind die Fehlerwahrscheinlichkeiten der Modelle nicht voneinander unabhängig ($`P(E_1 \cap E_2) \neq P(E_1) \cdot P(E_2)`$)?
+11. Warum erweist sich das Muster „LLM-as-a-Judge“ zur Eliminierung von Halluzinationen in missionskritischen Systemen als untauglich, und warum sind die Fehlerwahrscheinlichkeiten der Modelle nicht voneinander unabhängig ($P(E_1 \cap E_2) \neq P(E_1) \cdot P(E_2)$)?
 12. Worin besteht das Wesen des kognitiven „Boxiness“-Syndroms bei Sprachmodellen nach direktivem Alignment (RLHF/DPO), welche vier Klassen von Artefakten erzeugt es und wie stellen dynamische kognitive Reparatur-Patches die analytische Deduktion wieder her?
 
 ## Glossar

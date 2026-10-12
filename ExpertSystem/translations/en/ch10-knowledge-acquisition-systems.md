@@ -127,28 +127,28 @@ An analysis of global engineering experience across technology leaders (Alphabet
 ```
 
 ### 3.1. Brute-Force Scaling Illusion
-* **Core Fallacy:** The assumption that extreme scaling of pre-training compute ($`10^{26} 	o 10^{28}\,	ext{FLOPs}`$) or deploying massive clusters housing hundreds of thousands of GPU accelerators will autonomously eliminate factual hallucinations.
+* **Core Fallacy:** The assumption that extreme scaling of pre-training compute ($10^{26} 	o 10^{28}\,	ext{FLOPs}$) or deploying massive clusters housing hundreds of thousands of GPU accelerators will autonomously eliminate factual hallucinations.
 * **Why It Fails:** The theorem of Adam Kalai and Santosh Vempala (STOC 2024, Nature 2026) mathematically established the inevitability of confabulation for any calibrated autoregressive language model under conditions of epistemic incompleteness within its weights. Increasing parameter scale (from 7B to 405B) reduces trivial factual blunders, but renders residual hallucinations in dense regulatory domains **far more sophisticated, outwardly plausible, and perilous to human operators**.
-* **Architectural Resolution:** Achieving a zero hallucination rate ($`\mathrm{ZHR} = 1.000000`$) is not a function of parameter scale, but of an external, isolated admission gate that cryptographically validates quotation custody against immutable canonical sources.
+* **Architectural Resolution:** Achieving a zero hallucination rate ($\mathrm{ZHR} = 1.000000$) is not a function of parameter scale, but of an external, isolated admission gate that cryptographically validates quotation custody against immutable canonical sources.
 
 ### 3.2. Limitations of Flat Cosine Vector RAG
 * **Core Fallacy:** Retrieving knowledge solely based on the cosine similarity of continuous dense vector embeddings across text chunks.
-* **Why It Fails:** Dense embedding spaces capture broad topical affinities between sentences, but are **completely blind to deontic modality and logical polarity**. For example, the requirements *"The system MUST activate the emergency brake upon bus failure"* and *"The system MUST NOT activate the emergency brake upon bus failure"* exhibit a cosine similarity of $`pprox 0.95`$. A flat vector retriever frequently presents the diametrically opposite rule as the most "relevant," directly inducing catastrophic actuation commands.
+* **Why It Fails:** Dense embedding spaces capture broad topical affinities between sentences, but are **completely blind to deontic modality and logical polarity**. For example, the requirements *"The system MUST activate the emergency brake upon bus failure"* and *"The system MUST NOT activate the emergency brake upon bus failure"* exhibit a cosine similarity of $pprox 0.95$. A flat vector retriever frequently presents the diametrically opposite rule as the most "relevant," directly inducing catastrophic actuation commands.
 * **Architectural Resolution:** Deploying structured syntactic frames, explicit extraction of deontic operators (`MUST`, `MUST NOT`, `SHOULD`, `MAY`), and indexing against closed domain ontologies.
 
 ### 3.3. Recursive Self-Evaluation Bias (LLM-as-a-Judge Bias)
 * **Core Fallacy:** Utilizing a frontier large language model (e.g., GPT-4 or Claude) to validate the correctness of another model's outputs without grounding in deterministic oracles.
 * **Why It Fails:** A systematic sycophancy effect emerges: the judge model consistently validates fabricated assertions if they are delivered in an authoritative, academic tone. Recursive reinforcement training over such ungrounded evaluations triggers Shumailov's *model collapse* (Nature 2024), where synthetic errors avalanche, irreversibly corrupting the statistical distribution of the knowledge base.
-* **Architectural Resolution:** Enforcing a deterministic Popperian falsification cycle: a candidate fact is admitted if and only if the direct assertion $`F^+`$ passes byte-level verification while an artificially synthesized counter-example $`F^-`$ is deterministically refuted.
+* **Architectural Resolution:** Enforcing a deterministic Popperian falsification cycle: a candidate fact is admitted if and only if the direct assertion $F^+$ passes byte-level verification while an artificially synthesized counter-example $F^-$ is deterministically refuted.
 
 ### 3.4. Heavy Cloud Provers in the Critical Control Loop
 * **Core Fallacy:** Attempting to embed interactive theorem provers (Lean 4, Coq, Isabelle) directly into the hard real-time execution loop of an embedded automotive or avionics controller.
-* **Why It Fails:** Interactive provers were engineered for foundational mathematics, not for the microsecond timing budgets of real-time operating systems (RTOS). Tactic search demands gigabytes of RAM and induces latencies ranging from seconds to minutes. For ASIL D safety-critical systems, the maximum allowable reaction deadline is strictly sub-millisecond ($`< 100\,\mu	ext{s}`$).
+* **Why It Fails:** Interactive provers were engineered for foundational mathematics, not for the microsecond timing budgets of real-time operating systems (RTOS). Tactic search demands gigabytes of RAM and induces latencies ranging from seconds to minutes. For ASIL D safety-critical systems, the maximum allowable reaction deadline is strictly sub-millisecond ($< 100\,\mu	ext{s}$).
 * **Architectural Resolution:** A specialized virtual machine executing a fixed deterministic microcode (EISA / Datalog), running in linear time with zero dynamic RAM allocations or synthesized directly into FPGA hardware logic.
 
 ### 3.5. Semantic Web Overhead in Embedded Systems (RDF/OWL Bloat)
 * **Core Fallacy:** Persisting engineering knowledge in traditional W3C graph triplestores (RDF triples, OWL ontologies, SPARQL endpoints).
-* **Why It Fails:** Verbose text serialization of expansive URIs, extreme data fragmentation into atomic subject-predicate-object triples, and combinatorial complexity of $`O(N^3)`$ when evaluating multi-hop graph JOINs lead to explosive memory footprints. Such stores cannot be mapped directly into process virtual memory via the `mmap` system call.
+* **Why It Fails:** Verbose text serialization of expansive URIs, extreme data fragmentation into atomic subject-predicate-object triples, and combinatorial complexity of $O(N^3)$ when evaluating multi-hop graph JOINs lead to explosive memory footprints. Such stores cannot be mapped directly into process virtual memory via the `mmap` system call.
 * **Architectural Resolution:** Immutable binary Knowledge Pack containers featuring 64-byte aligned headers, Compressed Sparse Row (CSR) index matrices, and zero-copy deserialization ($0\ 	ext{B/op}$).
 
 ### 3.6. Software Guardrails Instead of Hardware Invariants (Soft Guardrails)
@@ -433,7 +433,7 @@ A "newer model" does not constitute a valid engineering criterion for upgrades: 
 
 ### 10.1. Two-Dimensional Spatial Table Reconstruction in PDF for Microelectronics
 
-Two-dimensional spatial reconstruction of tabular structures in PDF documentation is a critical defense line for data integrity, as over $`80\%`$ of fundamental microcontrollers and semiconductor component parameters (absolute maximum ratings, bus timing diagrams, supply currents, operating temperature boundaries) are published exclusively as complex matrices. Sequential flat text extraction from the PDF instruction stream inevitably destroys the document's spatial grid: naive parsers break subscript and superscript indices ($`V_{\mathrm{DD}}`$, $`T_j`$, $`I_{\mathrm{OL}}`$), fragment multi-line descriptions across cells, or drop physical units of measure, rendering subsequent formal verification impossible.
+Two-dimensional spatial reconstruction of tabular structures in PDF documentation is a critical defense line for data integrity, as over $80\%$ of fundamental microcontrollers and semiconductor component parameters (absolute maximum ratings, bus timing diagrams, supply currents, operating temperature boundaries) are published exclusively as complex matrices. Sequential flat text extraction from the PDF instruction stream inevitably destroys the document's spatial grid: naive parsers break subscript and superscript indices ($V_{\mathrm{DD}}$, $T_j$, $I_{\mathrm{OL}}$), fragment multi-line descriptions across cells, or drop physical units of measure, rendering subsequent formal verification impossible.
 
 To deterministically reconstruct table topology, a spatial computational geometry model of bounding boxes (*Bounding Boxes*) is applied:
 
@@ -545,7 +545,7 @@ How does a formal mathematical apparatus govern the selection of authoritative k
 Mathematical notation:
 
 - $x$ represents the input document, $y$ denotes a candidate class label, and $\hat y(x)$ is the assigned class prediction;
-- $p(y\mid x)$ is the estimated conditional probability of class $y$ given input $x$, $`\max_y`$ selects the maximum probability across all classes, and $`\arg\max_y`$ returns the corresponding optimal label;
+- $p(y\mid x)$ is the estimated conditional probability of class $y$ given input $x$, $\max_y$ selects the maximum probability across all classes, and $\arg\max_y$ returns the corresponding optimal label;
 - $\tau$ represents the confidence threshold, and $\mathrm{AutoAllowed}(x)$ is a boolean predicate indicating whether security policy permits automated classification for the given asset;
 - $\land$ represents logical conjunction ("AND"), $\ge$ denotes "greater than or equal to," and the alternative branch routes the document to human review whenever either condition is violated.
 
@@ -560,8 +560,8 @@ J(A,B)=\frac{|A\cap B|}{|A\cup B|},\qquad \Pr\big[h_{\min}(A)=h_{\min}(B)\big]=J
 Similarity parameters:
 
 - $A$ and $B$ represent the shingle sets extracted from two documents, $A\cap B$ is their intersection, and $A\cup B$ is their union;
-- $`|X|`$ denotes the cardinality of set $X$; therefore, $J(A,B)$ represents the ratio of shared shingles to total unique shingles across both sets;
-- $`h_{\min}(A)`$ denotes the minimum hash value produced by a random hash function across set $A$, and $\Pr[\cdot]$ denotes the probability of the enclosed event;
+- $|X|$ denotes the cardinality of set $X$; therefore, $J(A,B)$ represents the ratio of shared shingles to total unique shingles across both sets;
+- $h_{\min}(A)$ denotes the minimum hash value produced by a random hash function across set $A$, and $\Pr[\cdot]$ denotes the probability of the enclosed event;
 - The second equality states that the collision probability of the minimum hash values is mathematically identical to the Jaccard similarity.
 
 Jaccard similarity $J$ spans $[0, 1]$ (where 0 indicates disjoint sets and 1 indicates identity). Given three shared shingles out of five total unique shingles, $J = 3/5 = 0.6$, establishing that the probability of minimum hash collision is precisely 0.6. The MinHash algorithm leverages collision frequencies across multiple independent hash functions to estimate $J$ without requiring exhaustive all-pairs document comparisons [[13]](#src-13). While SimHash approximates cosine similarity and vector embeddings capture paraphrasing, similarity scores merely produce merge candidates.
@@ -591,8 +591,8 @@ R(c)=w_{\text{source}}(c)\cdot F(t)\cdot a_{\text{scope}}(c)\cdot q_{\text{extra
 
 Review priority parameters:
 
-- $c$ denotes the candidate claim, and $`w_{\text{source}}(c)`$ is the trust weight assigned to its source;
-- $F(t)$ represents the temporal freshness score, $`a_{\text{scope}}(c)`$ evaluates scope applicability to the target product baseline, and $`q_{\text{extract}}(c)`$ measures extraction confidence;
+- $c$ denotes the candidate claim, and $w_{\text{source}}(c)$ is the trust weight assigned to its source;
+- $F(t)$ represents the temporal freshness score, $a_{\text{scope}}(c)$ evaluates scope applicability to the target product baseline, and $q_{\text{extract}}(c)$ measures extraction confidence;
 - Every multiplicative factor is bounded within $[0, 1]$, and multiplication ensures that a deficit in any single factor degrades the aggregate score;
 - $R(c)$ represents an operational triage priority, not an epistemic probability of truth.
 
@@ -677,8 +677,8 @@ Metadata completeness parameters:
 - The double summation aggregates valid attributes across all chunks and fields, normalized by $1/(N\lvert M \rvert)$ to yield the mean completeness ratio.
 
 **Runtime Control and Service Level Objectives (SLOs):**
-- **Critical Security Attributes:** For access labels, source identifiers, and regulatory versions, completeness must be absolute: $`C_{\mathrm{meta, sec}} = 1.00`$. If a single mandatory security attribute is missing, the entire ingestion batch is instantly quarantined into `quarantine_ingest_queue`;
-- **Aggregate Pipeline Threshold:** For secondary descriptive fields, the minimum admission threshold is $`C_{\text{meta}} \ge \tau_{\mathrm{meta}} = 0.98`$. Falling below 0.98 triggers a `HALT_INGESTION` event, halting updates to production indices.
+- **Critical Security Attributes:** For access labels, source identifiers, and regulatory versions, completeness must be absolute: $C_{\mathrm{meta, sec}} = 1.00$. If a single mandatory security attribute is missing, the entire ingestion batch is instantly quarantined into `quarantine_ingest_queue`;
+- **Aggregate Pipeline Threshold:** For secondary descriptive fields, the minimum admission threshold is $C_{\text{meta}} \ge \tau_{\mathrm{meta}} = 0.98$. Falling below 0.98 triggers a `HALT_INGESTION` event, halting updates to production indices.
 
 **Worked Numerical Example:**
 An ingestion batch of $N = 500$ chunks requires $\lvert M \rvert = 6$ mandatory fields (totalling 3,000 audit points). The validation gate identifies 45 missing secondary technical tags:
@@ -687,7 +687,7 @@ An ingestion batch of $N = 500$ chunks requires $\lvert M \rvert = 6$ mandatory 
 C_{\text{meta}} = \frac{3\,000 - 45}{3\,000} = \frac{2\,955}{3\,000} = 0.985 \ge 0.98
 ```
 
-Because $`C_{\text{meta}} = 0.985 \ge 0.98`$ and all critical security attributes achieve 100% compliance, the batch is admitted to vectorization.
+Because $C_{\text{meta}} = 0.985 \ge 0.98$ and all critical security attributes achieve 100% compliance, the batch is admitted to vectorization.
 
 Revocation latency is dictated by the slowest downstream replica:
 
@@ -698,15 +698,15 @@ L_{\text{revoke}}(s)=\max_{j\in D(s)}t_{\text{removed},j}-t_{\text{revoke}}
 Revocation latency parameters:
 
 - $s$ denotes the revoked source, $D(s)$ is the set of its derived downstream copies, and $j$ indexes an individual copy;
-- $`t_{\text{removed},j}`$ is the timestamp when copy $j$ was purged, $`t_{\text{revoke}}`$ is the timestamp of the revocation event, and $\max$ resolves the latest purge time;
-- $`L_{\text{revoke}}(s)`$ represents the total elapsed time between revocation and the complete deletion of the final derived artifact.
+- $t_{\text{removed},j}$ is the timestamp when copy $j$ was purged, $t_{\text{revoke}}$ is the timestamp of the revocation event, and $\max$ resolves the latest purge time;
+- $L_{\text{revoke}}(s)$ represents the total elapsed time between revocation and the complete deletion of the final derived artifact.
 
 **Runtime Control and Emergency Quotas:**
-- Maximum permissible revocation latency: $`L_{\text{revoke}}(s) \le \tau_{\mathrm{revoke}} = 300\,\text{s}`$ (5 minutes for complete cascading purge across relational tables, vector stores, and local caches);
-- If $`L_{\text{revoke}}(s) > 300\,\text{s}`$, the system enters `FAIL_SAFE_REVOCATION` mode: queries addressing the affected domain are blocked at the API gateway until purge completion is cryptographically confirmed.
+- Maximum permissible revocation latency: $L_{\text{revoke}}(s) \le \tau_{\mathrm{revoke}} = 300\,\text{s}$ (5 minutes for complete cascading purge across relational tables, vector stores, and local caches);
+- If $L_{\text{revoke}}(s) > 300\,\text{s}$, the system enters `FAIL_SAFE_REVOCATION` mode: queries addressing the affected domain are blocked at the API gateway until purge completion is cryptographically confirmed.
 
 **Worked Numerical Example:**
-A superseded standard revision is revoked at $`t_{\text{revoke}} = 10{:}00{:}00`$. The primary knowledge base completes deletion at $10{:}01{:}15$, the vector index at $10{:}02{:}30$, and a replica cache at $10{:}04{:}20$:
+A superseded standard revision is revoked at $t_{\text{revoke}} = 10{:}00{:}00$. The primary knowledge base completes deletion at $10{:}01{:}15$, the vector index at $10{:}02{:}30$, and a replica cache at $10{:}04{:}20$:
 
 ```math
 L_{\text{revoke}}(s) = 10{:}04{:}20 - 10{:}00{:}00 = 260\,\text{s} \le 300\,\text{s}
@@ -727,8 +727,8 @@ Queueing parameters:
 - The equality describes steady-state queue performance under consistent accounting of arrivals, dwell times, and candidate counts.
 
 **Hardware Sizing and Backpressure Governance:**
-- The required queue buffer memory is sized as $`M_{\mathrm{queue}} = L \cdot S_{\mathrm{item}}`$, where $`S_{\mathrm{item}}`$ is the average serialized candidate packet size;
-- If the actual queue length exceeds $`L_{\mathrm{max}} = 2 \cdot L`$, the system engages backpressure: reducing crawler polling frequencies until dwell time $W$ restabilizes.
+- The required queue buffer memory is sized as $M_{\mathrm{queue}} = L \cdot S_{\mathrm{item}}$, where $S_{\mathrm{item}}$ is the average serialized candidate packet size;
+- If the actual queue length exceeds $L_{\mathrm{max}} = 2 \cdot L$, the system engages backpressure: reducing crawler polling frequencies until dwell time $W$ restabilizes.
 
 **Worked Numerical Example:**
 Given an arrival rate $\lambda = 50\,\text{candidates/day}$ and a mean review latency $W = 4\,\text{days}$:
@@ -737,13 +737,13 @@ Given an arrival rate $\lambda = 50\,\text{candidates/day}$ and a mean review la
 L = 50 \cdot 4 = 200\,\text{candidates}
 ```
 
-Assuming an average candidate size $`S_{\mathrm{item}} = 64\,\text{KB}`$, the persistent memory footprint required in Redis is:
+Assuming an average candidate size $S_{\mathrm{item}} = 64\,\text{KB}$, the persistent memory footprint required in Redis is:
 
 ```math
 M_{\mathrm{queue}} = 200 \cdot 64\,\text{KB} = 12\,800\,\text{KB} = 12.5\,\text{MB}
 ```
 
-If arrival rates surge to $\lambda = 100$ without expanding expert capacity, the queue swells to 400 elements ($25\,\text{MB}$), hitting the $`L_{\mathrm{max}}`$ threshold and triggering automated crawler backpressure.
+If arrival rates surge to $\lambda = 100$ without expanding expert capacity, the queue swells to 400 elements ($25\,\text{MB}$), hitting the $L_{\mathrm{max}}$ threshold and triggering automated crawler backpressure.
 
 In the author's implementation, the operator dashboard surfaces triage categories, chunk confidence scores, relevance and knowledge density, deduplication states, source freshness and reliability, pipeline progression, delivery health, and consumer feedback (admitted, cited in reasoning, duplicate, rejected, obsolete, policy-blocked). Missing capabilities include tracking rejection rates broken down by reason codes, calculating the proportion of chunks derived from certified baselines, displaying confidence calibration diagrams, and monitoring validity boundary violations: the dashboard reveals what was collected, but does not yet quantify evidential certitude. When the knowledge acquisition dashboard flashes red, fluent model answers remain perilous illusions.
 
@@ -768,7 +768,7 @@ KAS delivers pre-existing structured engineering semantics directly to the exper
 
 Translating low-level hardware descriptions into the symbolic knowledge base of an expert system is a critical facet of embedded systems engineering, where microcontrollers and Systems-on-Chip (SoC) such as Infineon AURIX, ARM Cortex-R/M, or NXP S32K incorporate tens of thousands of hardware control registers. Descriptions of these components are supplied by semiconductor manufacturers in formalized XML schemas: **IEEE 1685 IP-XACT** [[29]](#src-29) and **ARM CMSIS-SVD** [[30]](#src-30).
 
-Naive ingestion of such metamodels via standard scripting engines carries a fatal latent risk: using single-precision floating-point numbers (`float32`) to store memory addresses truncates lower-order bits beyond $`16\,\text{MB}`$ ($`2^{24}`$), because the `float32` mantissa provides only 24 bits of precision. As a result, register addresses such as `0xF0000004` are catastrophically rounded to `0xF0000000`, inducing address collisions and corrupting hardware peripheral reasoning.
+Naive ingestion of such metamodels via standard scripting engines carries a fatal latent risk: using single-precision floating-point numbers (`float32`) to store memory addresses truncates lower-order bits beyond $16\,\text{MB}$ ($2^{24}$), because the `float32` mantissa provides only 24 bits of precision. As a result, register addresses such as `0xF0000004` are catastrophically rounded to `0xF0000000`, inducing address collisions and corrupting hardware peripheral reasoning.
 
 To guarantee absolute precision, translation operates exclusively using unsigned 64-bit integer arithmetic via the deterministic address expansion formula:
 
@@ -850,7 +850,7 @@ The author implemented KAS as an independent, local-first service equipped with 
 
 Prior to routing a document to expensive syntactic and semantic parsing engines, the acquisition pipeline must deterministically identify the payload type. Failure at this junction induces two failure modes: parser crashes caused by malformed or mismatched data (e.g., passing a raw binary archive to a UTF-8 parser), or destruction of byte-level source fidelity, which invalidates the evidential standing of extracted claims.
 
-Format detection leverages pre-ingestion sniffing (*pre-ingestion sniffing*): rather than buffering entire files into memory, the system reads an initial byte slice $`B_{\text{peek}}`$ (typically 512–1024 bytes). Sniffing executes across three cascading tiers:
+Format detection leverages pre-ingestion sniffing (*pre-ingestion sniffing*): rather than buffering entire files into memory, the system reads an initial byte slice $B_{\text{peek}}$ (typically 512–1024 bytes). Sniffing executes across three cascading tiers:
 
 ```mermaid
 flowchart TD
@@ -898,7 +898,7 @@ Every normalization pass (e.g., stripping RFC page breaks or formatting tags) mu
 Following format identification, KAS routes the raw byte stream to its specialized handler. The dispatch mechanism depends directly upon deployment topology:
 
 #### 16.2.1. Standalone Operating Mode (Standalone CLI / TUI)
-For local analysis tools and single-node compilers, introducing network message brokers is unnecessary complexity. Dispatch executes via an in-process strategy registry (*In-Process Strategy Registry*). Execution overhead is negligible ($`T_{\text{dispatch}} \approx 0~\mu\text{s}`$), completely eliminating socket serialization latency.
+For local analysis tools and single-node compilers, introducing network message brokers is unnecessary complexity. Dispatch executes via an in-process strategy registry (*In-Process Strategy Registry*). Execution overhead is negligible ($T_{\text{dispatch}} \approx 0~\mu\text{s}$), completely eliminating socket serialization latency.
 
 #### 16.2.2. Distributed Enterprise Crawler Pipeline
 In high-throughput environments where crawlers continuously monitor external repositories, the pipeline is architected as an event-driven system anchored by the **NATS JetStream** message broker:
@@ -969,7 +969,7 @@ Directly within this view, the operator can execute a test verification run of t
 
 ### 16.1. Two-Pass Technical Knowledge Compiler: Dependency Parsing and 7D SI Dimensional Vectors
 
-Translating natural language engineering specifications into executable expert system microcode represents the most delicate phase of KAS operation, where heuristic regular expressions and sliding word windows systematically fail. Window constraints (such as capturing four words to the left and right of modal verb "shall") sever complex noun phrases (such as *"Core supply voltage supervisor under low-power sleep mode with external clock"*) and fatally distort passive voice (*Passive Voice*), in which over $`40\%`$ of international standard clauses are formulated. Consequently, a bus or register is mistakenly designated as the obligated actor instead of the software driver.
+Translating natural language engineering specifications into executable expert system microcode represents the most delicate phase of KAS operation, where heuristic regular expressions and sliding word windows systematically fail. Window constraints (such as capturing four words to the left and right of modal verb "shall") sever complex noun phrases (such as *"Core supply voltage supervisor under low-power sleep mode with external clock"*) and fatally distort passive voice (*Passive Voice*), in which over $40\%$ of international standard clauses are formulated. Consequently, a bus or register is mistakenly designated as the obligated actor instead of the software driver.
 
 To eliminate this vulnerability, KAS deploys a two-pass deterministic knowledge compiler. The first pass executes sentence syntactic parsing using Universal Dependencies (*Universal Dependencies*, UD) formalism [[32]](#src-32):
 
@@ -1026,12 +1026,12 @@ T_{\text{CPU}}(N)=T_{0,\text{CPU}}+\frac{N}{q_{\text{CPU}}},\qquad T_{\text{ACC}
 
 Processing latency parameters:
 
-- $N$ denotes the number of chunks in an ingestion batch, while $`T_{\text{CPU}}(N)`$ and $`T_{\text{ACC}}(N)`$ represent batch processing latencies on the CPU and hardware accelerator, respectively;
-- $`T_{0,\text{CPU}}`$ and $`T_{0,\text{ACC}}`$ represent device initialization latencies, including model loading, graph compilation, weight allocation, and context warmup;
-- $`q_{\text{CPU}}`$ and $`q_{\text{ACC}}`$ denote steady-state throughput in chunks per second, where $N/q$ yields the operational inference duration following initialization;
+- $N$ denotes the number of chunks in an ingestion batch, while $T_{\text{CPU}}(N)$ and $T_{\text{ACC}}(N)$ represent batch processing latencies on the CPU and hardware accelerator, respectively;
+- $T_{0,\text{CPU}}$ and $T_{0,\text{ACC}}$ represent device initialization latencies, including model loading, graph compilation, weight allocation, and context warmup;
+- $q_{\text{CPU}}$ and $q_{\text{ACC}}$ denote steady-state throughput in chunks per second, where $N/q$ yields the operational inference duration following initialization;
 - Both latency figures are measured in seconds; ACC denotes an arbitrary accelerator (GPU or NPU).
 
-The formula adds initialization overhead to steady-state execution time. If an accelerator provides superior steady-state throughput ($`q_{\text{ACC}} > q_{\text{CPU}}`$), execution times intersect at a break-even batch size:
+The formula adds initialization overhead to steady-state execution time. If an accelerator provides superior steady-state throughput ($q_{\text{ACC}} > q_{\text{CPU}}$), execution times intersect at a break-even batch size:
 
 ```math
 N^{*}=\frac{T_{0,\text{ACC}}-T_{0,\text{CPU}}}{1/q_{\text{CPU}}-1/q_{\text{ACC}}}
@@ -1039,11 +1039,11 @@ N^{*}=\frac{T_{0,\text{ACC}}-T_{0,\text{CPU}}}{1/q_{\text{CPU}}-1/q_{\text{ACC}}
 
 Break-even parameters:
 
-- $`N^{*}`$ represents the critical batch size where CPU and accelerator processing latencies are mathematically identical;
-- The numerator $`T_{0,\text{ACC}} - T_{0,\text{CPU}}`$ is measured in seconds, while the denominator $`1/q_{\text{CPU}} - 1/q_{\text{ACC}}`$ is measured in seconds per chunk, yielding a result in units of chunks;
+- $N^{*}$ represents the critical batch size where CPU and accelerator processing latencies are mathematically identical;
+- The numerator $T_{0,\text{ACC}} - T_{0,\text{CPU}}$ is measured in seconds, while the denominator $1/q_{\text{CPU}} - 1/q_{\text{ACC}}$ is measured in seconds per chunk, yielding a result in units of chunks;
 - A positive real break-even point exists when the accelerator provides higher throughput coupled with higher initialization latency; if accelerator startup is negligible, it dominates across all batch sizes.
 
-For batches exceeding $`N^{*}`$, the accelerator is mathematically optimal; for smaller batches, the CPU delivers lower latency to first result. Substituting the author\'s empirical measurements yields approximately 576 chunks. This model abstracts away pipeline saturation, dynamic batching queues, memory transfer overlaps, and thermal throttling; hence, $`N^{*}`$ serves as an explanatory diagnostic rather than a static platform constant.
+For batches exceeding $N^{*}$, the accelerator is mathematically optimal; for smaller batches, the CPU delivers lower latency to first result. Substituting the author\'s empirical measurements yields approximately 576 chunks. This model abstracts away pipeline saturation, dynamic batching queues, memory transfer overlaps, and thermal throttling; hence, $N^{*}$ serves as an explanatory diagnostic rather than a static platform constant.
 
 In controlled empirical benchmarks conducted by the author (isolated from production KAS traffic), the `all-MiniLM-L6-v2` embedding model produced virtually identical directional embeddings across CPU, GPU, and NPU: pairwise cosine similarities exceeded 0.9999. The NPU achieved the highest steady-state throughput (239.1 vectors/second) but required a 6.6 s initialization warmup; the CPU achieved 68.2 vectors/second with an initialization overhead of only 0.56 s. Substituting into the formula yields $N^{*} = (6.6 - 0.56) / (1/68.2 - 1/239.1) \approx 576$ chunks: for extended batches, the NPU is superior; for low-latency ad-hoc lookups, the CPU is optimal. These metrics reflect a single model architecture, target platform, and pinned OpenVINO 2026.2 runtime; newer releases [[24]](#src-24) require re-benchmarking, and high embedding similarity does not guarantee identical top-$k$ search rankings.
 
@@ -1124,7 +1124,7 @@ t_{\text{valid-from}}\le t<t_{\text{valid-to}}\quad\land\quad t_{\text{recorded-
 
 Bi-temporal interval parameters:
 
-- $`[t_{\text{valid-from}}, t_{\text{valid-to}})`$ represents the valid time interval of the fact, and $`[t_{\text{recorded-from}}, t_{\text{recorded-to}})`$ represents the transaction time interval during which KAS recorded it;
+- $[t_{\text{valid-from}}, t_{\text{valid-to}})$ represents the valid time interval of the fact, and $[t_{\text{recorded-from}}, t_{\text{recorded-to}})$ represents the transaction time interval during which KAS recorded it;
 - $t$ denotes the target physical world timestamp under inquiry, and $\tau$ denotes the historical KAS database snapshot timestamp under inspection;
 - Square brackets indicate closed inclusive boundaries, parentheses indicate open exclusive boundaries, and $\land$ enforces joint satisfaction;
 - The inequality operators $\le$ and $<$ evaluate temporal ordering, returning a boolean predicate for the candidate fact.
@@ -1334,10 +1334,10 @@ The evolutionary transition from passive document hoarding to selective knowledg
 Instead of passive ingestion, the KAS subsystem deploys an active *Knowledge Detection Filter* executing a two-stage selection:
 
 1. **Epistemic Selection Triad:**
-   Each input text chunk $`D`$ is evaluated prior to index admission across three dimensions:
+   Each input text chunk $D$ is evaluated prior to index admission across three dimensions:
    - *Factual Saturation:* detection of deontic modalities (`SHALL`, `MUST`, `CRITICAL`), formal predicate relations, and numerical tolerance intervals with mandatory SI physical units of measure;
    - *Ontological Grounding:* computation of intersection density between extracted terms and the project's canonical concept graph and specifications;
-   - *Epistemic Trust Score:* calculation of an integral utility metric $`\tau(D) \in [0, 1]`$. Chunks where $`\tau(D) < \tau_{\mathrm{threshold}}`$ are deterministically dropped as informational noise.
+   - *Epistemic Trust Score:* calculation of an integral utility metric $\tau(D) \in [0, 1]$. Chunks where $\tau(D) < \tau_{\mathrm{threshold}}$ are deterministically dropped as informational noise.
 
 2. **Pre-Ingestion Contradiction Check:**
    Extracted predicates are cross-checked against the axiomatic core of the knowledge system prior to database persistence. If a candidate contains an assertion refuting an active certified standard (for example, contradicting diagnostic coverage mandates under ISO 26262), the system does not average conflicting norms in vector space. Instead, a formal argumentative defeater (*defeater*) is generated, the candidate is locked in quarantine, and an escalation report detailing the primary sources of both conflicting assertions is transmitted to the knowledge engineer.
@@ -1384,7 +1384,7 @@ Engineering knowledge acquisition (KAS) across multi-thousand-page technical spe
 
 - **Mykola Fedchyk:**  
   *“Professor Tom, scalability is achieved through two-tier automated separation backed by formal SMT proof certificates.  
-  Over 90% of routine rule candidates that are logically orthogonal to the axiomatic core ($`Th(\Sigma \cup \{R\}) \not\vdash \bot`$) and anchored in cryptographically authenticated primary sources receive an automated certificate of consistency and are admitted to operational status without human intervention.  
+  Over 90% of routine rule candidates that are logically orthogonal to the axiomatic core ($Th(\Sigma \cup \{R\}) \not\vdash \bot$) and anchored in cryptographically authenticated primary sources receive an automated certificate of consistency and are admitted to operational status without human intervention.  
   The Human-in-the-Loop expert committee is invoked strictly on an exception-driven basis: only when the SMT solver flags a logical contradiction between sources or when a candidate alters an invariant of the highest criticality (ASIL D / SIL 4). Rather than forcing experts to manually inspect thousands of routine assertions, we present them with a mathematically localized conflict and a minimal counterexample, collapsing triage latency from hours to seconds.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
@@ -1397,7 +1397,7 @@ This chapter opened with a directory containing thousands of unvetted engineerin
 - Knowledge acquisition is an engineering discipline, and KAS is the software system orchestrating acquisition capabilities (connectors, parsers, chunking, triage, classification, deduplication, redaction, enrichment, linking, indexing, access control, curation, provenance tracking, and lifecycle management); no single capability alone determines whether a fragment is valid, authorized, and evidentially sound;
 - Security labels cascade to all derived artifacts, and confidentiality is upheld through multi-layered defense spanning initial collection to final revocation; untrusted files attack the parsing runtime, untrusted text attacks reasoning logic, and both planes demand dedicated defensive boundaries;
 - Empirical benchmarks across 9,746 RFC documents demonstrated that exact byte provenance is a necessary, but fundamentally insufficient, condition for verified knowledge, and that the benefits of structured representations must be proven independently for each operational task;
-- Formal filtering algorithms ($J$, $F$, $R$) establish operational review priorities without making ungrounded claims of empirical truth; operational telemetry ($`C_{\text{meta}}`$, $`L_{\text{revoke}}`$, Little\'s Law) quantifies pipeline health;
+- Formal filtering algorithms ($J$, $F$, $R$) establish operational review priorities without making ungrounded claims of empirical truth; operational telemetry ($C_{\text{meta}}$, $L_{\text{revoke}}$, Little\'s Law) quantifies pipeline health;
 - Bi-temporal modeling (Valid Time vs. Transaction Time) enables deterministic reconstruction of "what KAS knew then," while cryptographically signed manifests and atomic rollbacks establish knowledge bases as industrial-grade software dependencies governed by rigorous release engineering.
 
 Scope boundaries: The empirical figures and benchmarks presented reflect specific technical corpora, models, and hardware testbeds; the author\'s implementation represents a concrete engineering case study rather than an exclusive standard, with several properties (end-to-end redaction enforcement, structured validity bounds, instant cascading purge) representing active architectural targets. Documents capture only a fraction of organizational knowledge; human tacit expertise requires specialized elicitation techniques, which are investigated in [Chapter 11](ch11-knowledge-elicitation-from-experts.md), while linguistic analysis and normative requirement extraction are addressed in Chapters [12–15](part-03-knowledge-engineering-nlp.md).

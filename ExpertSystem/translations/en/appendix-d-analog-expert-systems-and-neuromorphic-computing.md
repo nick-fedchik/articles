@@ -65,7 +65,7 @@ flowchart LR
     G1m & G2m & Gim ==> Im
 ```
 
-The schematic is read from left to right. According to Ohm's law, the current flowing through an element at the intersection of the $i$-th row and $j$-th column equals the product of the input voltage $`V_i`$ and the element conductance $`G_{ij}=1/R_{ij}`$:
+The schematic is read from left to right. According to Ohm's law, the current flowing through an element at the intersection of the $i$-th row and $j$-th column equals the product of the input voltage $V_i$ and the element conductance $G_{ij}=1/R_{ij}$:
 
 ```math
 I_{ij}=G_{ij}\,V_i .
@@ -73,9 +73,9 @@ I_{ij}=G_{ij}\,V_i .
 
 Where:
 
-- $`I_{ij}`$ is the current through the element at the intersection of the $i$-th row and $j$-th column, in amperes;
-- $`G_{ij}`$ is the conductance of this element, in siemens; it is the reciprocal of resistance $`R_{ij}`$ and represents the connection weight physically stored in the device;
-- $`V_i`$ is the voltage on the $i$-th row, in volts; it encodes the input value, such as a normalized sensor signal.
+- $I_{ij}$ is the current through the element at the intersection of the $i$-th row and $j$-th column, in amperes;
+- $G_{ij}$ is the conductance of this element, in siemens; it is the reciprocal of resistance $R_{ij}$ and represents the connection weight physically stored in the device;
+- $V_i$ is the voltage on the $i$-th row, in volts; it encodes the input value, such as a normalized sensor signal.
 
 Thus, each crossbar cell independently computes the "input $\times$ weight" product without a CPU and without an instruction loop.
 
@@ -87,17 +87,17 @@ I_j=\sum_{i=1}^{N}G_{ij}\,V_i .
 
 Where:
 
-- $`I_j`$ is the output current of column $j$, in amperes;
-- $`\sum_{i=1}^{N}`$ is the summation across all rows from the 1st to the $N$-th, executed directly by physical law: currents converging at a circuit node add together;
+- $I_j$ is the output current of column $j$, in amperes;
+- $\sum_{i=1}^{N}$ is the summation across all rows from the 1st to the $N$-th, executed directly by physical law: currents converging at a circuit node add together;
 - $N$ is the number of crossbar rows, corresponding to the dimensionality of the input vector;
 - $i$ is the row index;
-- $`G_{ij}\,V_i`$ is the current contribution of row $i$ to column $j$.
+- $G_{ij}\,V_i$ is the current contribution of row $i$ to column $j$.
 
-The column calculates the weighted sum of the inputs—the dot product of the voltage vector and the conductance vector—while the entire crossbar completes the vector-matrix multiplication in a single physical step. Suppose, for example, that three rows are driven by voltages of $0.5$, $0.2$, and $0.8\ \text{V}$, and the conductances of the column elements are $2$, $1$, and $0.5\ \mu\text{S}$. The resulting output current is $`I_j=0.5\cdot 2 + 0.2\cdot 1 + 0.8\cdot 0.5 = 1.6\ \mu\text{A}`$. These numerical values are illustrative.
+The column calculates the weighted sum of the inputs—the dot product of the voltage vector and the conductance vector—while the entire crossbar completes the vector-matrix multiplication in a single physical step. Suppose, for example, that three rows are driven by voltages of $0.5$, $0.2$, and $0.8\ \text{V}$, and the conductances of the column elements are $2$, $1$, and $0.5\ \mu\text{S}$. The resulting output current is $I_j=0.5\cdot 2 + 0.2\cdot 1 + 0.8\cdot 0.5 = 1.6\ \mu\text{A}$. These numerical values are illustrative.
 
 All products and sums across the entire matrix emerge simultaneously. However, this does not imply infinitely fast computation: the step duration is constrained by the $RC$ settling times of the line resistances and parasitic capacitances, as well as by the digital-to-analog converters (DACs) at the inputs and analog-to-digital converters (ADCs) at the outputs. It is therefore rigorous to refer to a single parallel physical step for the entire matrix, while evaluating real chip throughput inclusive of data conversion overhead. Crossbar programming methodologies for vector-matrix acceleration are detailed by Hu et al. [[4]](#src-4), while the survey by Ielmini and Wong provides a comprehensive taxonomy of in-memory computing using resistive switching devices [[5]](#src-5). Conversion overheads and architectural mitigation techniques are examined in [Appendix E](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
 
-Electrical conductance cannot be negative, whereas expert rule weights frequently are. Consequently, weight $`w_{ij}`$ is typically encoded as the differential conductance between two complementary elements:
+Electrical conductance cannot be negative, whereas expert rule weights frequently are. Consequently, weight $w_{ij}$ is typically encoded as the differential conductance between two complementary elements:
 
 ```math
 w_{ij}\propto G_{ij}^{+}-G_{ij}^{-}.
@@ -105,12 +105,12 @@ w_{ij}\propto G_{ij}^{+}-G_{ij}^{-}.
 
 Where:
 
-- $`w_{ij}`$ is the connection weight between input $i$ and hypothesis $j$; the weight can be positive when the feature supports the hypothesis, or negative when it refutes it;
+- $w_{ij}$ is the connection weight between input $i$ and hypothesis $j$; the weight can be positive when the feature supports the hypothesis, or negative when it refutes it;
 - $\propto$ denotes proportionality;
-- $`G_{ij}^{+}`$ is the conductance of the element whose branch current supports the hypothesis;
-- $`G_{ij}^{-}`$ is the conductance of the element whose branch current refutes the hypothesis.
+- $G_{ij}^{+}$ is the conductance of the element whose branch current supports the hypothesis;
+- $G_{ij}^{-}$ is the conductance of the element whose branch current refutes the hypothesis.
 
-For example, a cell pair with $`G^{+}=5\ \mu\text{S}`$ and $`G^{-}=2\ \mu\text{S}`$ yields an effective weight proportional to $+3\ \mu\text{S}$, whereas a pair with $2\ \mu\text{S}$ and $5\ \mu\text{S}$ yields an effective weight proportional to $-3\ \mu\text{S}$. Differential encoding cancels common-mode shifts shared by both devices, but does not eliminate uncorrelated drift between the two distinct elements.
+For example, a cell pair with $G^{+}=5\ \mu\text{S}$ and $G^{-}=2\ \mu\text{S}$ yields an effective weight proportional to $+3\ \mu\text{S}$, whereas a pair with $2\ \mu\text{S}$ and $5\ \mu\text{S}$ yields an effective weight proportional to $-3\ \mu\text{S}$. Differential encoding cancels common-mode shifts shared by both devices, but does not eliminate uncorrelated drift between the two distinct elements.
 
 ## 3. Analog Operational Amplifier Integrator
 
@@ -122,17 +122,17 @@ V_{\text{out}}(t)=-\frac{1}{RC}\int_{0}^{t}V_{\text{in}}(\tau)\,d\tau+V_{\text{o
 
 Where:
 
-- $`V_{\text{out}}(t)`$ is the output voltage of the integrator at time $t$, in volts;
-- $`V_{\text{in}}(\tau)`$ is the input voltage at time $\tau$, in volts;
+- $V_{\text{out}}(t)$ is the output voltage of the integrator at time $t$, in volts;
+- $V_{\text{in}}(\tau)$ is the input voltage at time $\tau$, in volts;
 - $\tau$ is the integration variable representing time between $0$ and $t$;
 - $R$ is the resistance of the input resistor, in ohms;
 - $C$ is the capacitance of the feedback capacitor, in farads;
 - $RC$ is the integrator time constant, in seconds: the larger its value, the slower the output voltage evolves;
-- $`\int_{0}^{t}\ldots\,d\tau`$ denotes the definite integral, representing the accumulated area under the input voltage curve from $0$ to $t$;
-- $`V_{\text{out}}(0)`$ is the initial output voltage at which integration begins;
+- $\int_{0}^{t}\ldots\,d\tau$ denotes the definite integral, representing the accumulated area under the input voltage curve from $0$ to $t$;
+- $V_{\text{out}}(0)$ is the initial output voltage at which integration begins;
 - the negative sign indicates signal inversion by the inverting amplifier configuration.
 
-For instance, under a constant input voltage of $1\ \text{V}$, with $R=100\ \text{k}\Omega$ and $C=1\ \mu\text{F}$, the time constant is $RC=0.1\ \text{s}$, and over an interval of $0.05\ \text{s}$ the output shifts by $-(1/0.1)\cdot 1\cdot 0.05 = -0.5\ \text{V}$, assuming $`V_{\text{out}}(0)=0`$.
+For instance, under a constant input voltage of $1\ \text{V}$, with $R=100\ \text{k}\Omega$ and $C=1\ \mu\text{F}$, the time constant is $RC=0.1\ \text{s}$, and over an interval of $0.05\ \text{s}$ the output shifts by $-(1/0.1)\cdot 1\cdot 0.05 = -0.5\ \text{V}$, assuming $V_{\text{out}}(0)=0$.
 
 The circuit integrates continuously without temporal discretization, thereby bypassing numerical discretization step errors. Conversely, an actual operational amplifier exhibits input offset voltage and input bias currents, which are themselves integrated over time and produce steady output drift, while the output dynamic range is strictly bounded by the supply rails. Consequently, an analog integrator—such as one accumulating an acceleration signal in an inertial navigation node—requires periodic baseline resetting and digital recalibration. Here again, the core duality applies: a powerful physical primitive bounded by the necessity of digital supervision.
 
@@ -194,7 +194,7 @@ In practical engineering terms, a memristor "remembers" its historical current e
 
 In a broader engineering taxonomy, memristive devices encompass various non-volatile memory technologies whose conductance can be continuously programmed and sensed. Resistive random-access memory (*resistive random-access memory*, RRAM) modulates conductance via the formation and rupture of conductive nanoscale filaments across an oxide dielectric layer [[5]](#src-5). Phase-change memory (*phase-change memory*, PCM) switches a chalcogenide alloy between a high-resistance amorphous phase and a low-resistance crystalline phase [[8]](#src-8). The review by Sebastian et al. provides a comprehensive comparison of these and other memory mechanisms, including ferroelectric devices, in the context of in-memory computing [[2]](#src-2).
 
-Laboratory demonstrations have advanced well beyond isolated discrete components. Prezioso et al. demonstrated the training and operation of an integrated neuromorphic network utilizing metal-oxide memristor crossbars [[9]](#src-9), while Yao et al. implemented a fully integrated hardware convolutional neural network based on memristor arrays [[10]](#src-10). For expert rule engines, a particularly salient empirical milestone was achieved by Joshi et al., who stored each network weight across two differential PCM cells ($`G^{+}-G^{-}`$) and sustained inference precision over 24 hours via hardware-aware training and drift compensation [[11]](#src-11). PCM conductance experiences structural relaxation drift over time; the device physics model of this phenomenon [[8]](#src-8) and its implications for formal evidence guarantees are analyzed in [Appendix E](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
+Laboratory demonstrations have advanced well beyond isolated discrete components. Prezioso et al. demonstrated the training and operation of an integrated neuromorphic network utilizing metal-oxide memristor crossbars [[9]](#src-9), while Yao et al. implemented a fully integrated hardware convolutional neural network based on memristor arrays [[10]](#src-10). For expert rule engines, a particularly salient empirical milestone was achieved by Joshi et al., who stored each network weight across two differential PCM cells ($G^{+}-G^{-}$) and sustained inference precision over 24 hours via hardware-aware training and drift compensation [[11]](#src-11). PCM conductance experiences structural relaxation drift over time; the device physics model of this phenomenon [[8]](#src-8) and its implications for formal evidence guarantees are analyzed in [Appendix E](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
 
 Consider an expert rule with an associated confidence weight:
 
@@ -204,12 +204,12 @@ Consider an expert rule with an associated confidence weight:
 
 Where:
 
-- $`X_1`$ and $`X_2`$ are antecedent conditions (facts) that must hold concurrently, such as "vibration level is elevated";
+- $X_1$ and $X_2$ are antecedent conditions (facts) that must hold concurrently, such as "vibration level is elevated";
 - $\land$ denotes logical conjunction (AND);
 - $Y$ is the rule consequent, such as the hypothesis "workpiece defect present";
 - $w$ is the rule confidence weight, a scalar indicating the degree of belief ascribed to the inference.
 
-In an analog crossbar, this rule is mapped to a conductance cell pair: antecedents $`X_1`$ and $`X_2`$ are applied as input row voltages, consequent $Y$ corresponds to an output column line, and confidence weight $w$ is physically encoded as the conductance difference. Modifying an expert rule requires an in-situ write-verify reprogramming routine. Because this physical state is no longer a simple text record in a software repository, the nominal rule version in the knowledge base and the actual physical conductances on chip must be rigorously cross-audited.
+In an analog crossbar, this rule is mapped to a conductance cell pair: antecedents $X_1$ and $X_2$ are applied as input row voltages, consequent $Y$ corresponds to an output column line, and confidence weight $w$ is physically encoded as the conductance difference. Modifying an expert rule requires an in-situ write-verify reprogramming routine. Because this physical state is no longer a simple text record in a software repository, the nominal rule version in the knowledge base and the actual physical conductances on chip must be rigorously cross-audited.
 
 <a id="апаратна-нечітка-логіка-й-вибір-переможця"></a>
 <a id="L204-L260"></a>
@@ -252,16 +252,16 @@ I_d\approx I_0\exp\!\left(\frac{\kappa\,(V_{gs}-V_{th})}{U_T}\right)\left(1-\exp
 
 Where:
 
-- $`I_d`$ is the transistor drain current, in amperes;
-- $`I_0`$ is a process- and geometry-dependent scaling current, in amperes;
+- $I_d$ is the transistor drain current, in amperes;
+- $I_0$ is a process- and geometry-dependent scaling current, in amperes;
 - $\exp$ denotes the natural exponential function $e^{x}$;
-- $`V_{gs}`$ is the gate-to-source voltage, in volts;
-- $`V_{th}`$ is the transistor threshold voltage, in volts;
-- $`V_{ds}`$ is the drain-to-source voltage, in volts;
-- $`U_T=kT/q`$ is the thermal voltage, where $k$ is the Boltzmann constant, $T$ is absolute temperature, and $q$ is elementary charge ($`U_T \approx 25\ \text{mV}`$ at room temperature);
+- $V_{gs}$ is the gate-to-source voltage, in volts;
+- $V_{th}$ is the transistor threshold voltage, in volts;
+- $V_{ds}$ is the drain-to-source voltage, in volts;
+- $U_T=kT/q$ is the thermal voltage, where $k$ is the Boltzmann constant, $T$ is absolute temperature, and $q$ is elementary charge ($U_T \approx 25\ \text{mV}$ at room temperature);
 - $\kappa$ is the subthreshold gate coupling coefficient, a dimensionless parameter less than unity.
 
-The practical implications of this regime are critical. When $`V_{gs}`$ drops below threshold, the transistor does not abruptly cut off; instead, its channel current decays exponentially: every increment of approximately $`60/\kappa\ \text{mV}`$ in $`V_{gs}`$ at room temperature increases current by one decade (order of magnitude). When $`V_{ds}`$ exceeds a few thermal voltages ($`U_T`$), the term in the second parentheses approaches unity, rendering drain current virtually independent of drain voltage (saturation). Subthreshold operation and associated neuromorphic analog circuits are analyzed in depth in Carver Mead's foundational treatise on analog VLSI [[14]](#src-14). An MOS differential pair biased in this regime produces a smooth, sigmoidal transconductance characteristic, where modulating reference voltages directly sets the threshold boundary where an antecedent such as "high vibration" transitions from 0 to 1.
+The practical implications of this regime are critical. When $V_{gs}$ drops below threshold, the transistor does not abruptly cut off; instead, its channel current decays exponentially: every increment of approximately $60/\kappa\ \text{mV}$ in $V_{gs}$ at room temperature increases current by one decade (order of magnitude). When $V_{ds}$ exceeds a few thermal voltages ($U_T$), the term in the second parentheses approaches unity, rendering drain current virtually independent of drain voltage (saturation). Subthreshold operation and associated neuromorphic analog circuits are analyzed in depth in Carver Mead's foundational treatise on analog VLSI [[14]](#src-14). An MOS differential pair biased in this regime produces a smooth, sigmoidal transconductance characteristic, where modulating reference voltages directly sets the threshold boundary where an antecedent such as "high vibration" transitions from 0 to 1.
 
 When multiple candidate rules activate simultaneously, an expert system must resolve the conflict. A digital software loop searches for the maximum element sequentially across $K$ candidates in $O(K)$ time. In contrast, the analog Winner-Take-All (*winner-take-all*, WTA) circuit designed by Lazzaro et al. utilizes only a single differential transistor pair per input channel connected via a single common feedback bitline, achieving $O(N)$ interconnect complexity with respect to the input count [[15]](#src-15). Nonlinear feedback along the common line amplifies the channel possessing the largest input current while suppressing all competing lines:
 
@@ -274,14 +274,14 @@ I_{\text{bias}}, & k=\arg\max_j I_{\text{in},j},\\
 
 Where:
 
-- $`I_{\text{out},k}`$ is the output current of channel $k$, in amperes;
-- $`I_{\text{in},j}`$ is the input current of channel $j$, quantifying the activation strength of the $j$-th hypothesis, in amperes;
-- $`I_{\text{bias}`$ is the total bias current delivered exclusively to the winning channel, in amperes;
+- $I_{\text{out},k}$ is the output current of channel $k$, in amperes;
+- $I_{\text{in},j}$ is the input current of channel $j$, quantifying the activation strength of the $j$-th hypothesis, in amperes;
+- $I_{\text{bias}}$ is the total bias current delivered exclusively to the winning channel, in amperes;
 - $k$ is the specific channel index evaluated, and $j$ iterates across all candidate channels;
-- $`\arg\max_j I_{\text{in},j}`$ is the channel index associated with the maximum input current;
-- the piecewise bracket specifies the two regimes: the winner absorbs $`I_{\text{bias}}`$, while all losing channels are driven to zero.
+- $\arg\max_j I_{\text{in},j}$ is the channel index associated with the maximum input current;
+- the piecewise bracket specifies the two regimes: the winner absorbs $I_{\text{bias}}$, while all losing channels are driven to zero.
 
-For instance, if three competing hypotheses present input currents of $4$, $9$, and $7\ \text{nA}$, the bias current $`I_{\text{bias}}`$ is routed entirely to the second hypothesis, leaving channels one and three at zero.
+For instance, if three competing hypotheses present input currents of $4$, $9$, and $7\ \text{nA}$, the bias current $I_{\text{bias}}$ is routed entirely to the second hypothesis, leaving channels one and three at zero.
 
 The resolution of this hardware selection is fundamentally bounded by transistor mismatch: if two competing currents differ by a margin smaller than the circuit's random offset, the winning output is dictated by fabrication asymmetry rather than domain evidence. Consequently, the digital supervisor must interrogate the margin separating the winner from the runner-up candidate, directly mirroring the safety margin gateway detailed in [Appendix E](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
 
@@ -297,12 +297,12 @@ Where [[17]](#src-17):
 
 - $u(t)$ is the neuron membrane potential at time $t$, in volts;
 - $du/dt$ is the instantaneous rate of change of the potential, in volts per second;
-- $`\tau_m`$ is the membrane time constant, in seconds: smaller values cause the membrane to decay more rapidly toward rest;
-- $`u_{\text{rest}}`$ is the resting potential toward which the membrane relaxes in the absence of input current, in volts;
-- $`R_m`$ is the effective membrane resistance, in ohms;
-- $`I_{\text{syn}}(t)`$ is the incoming synaptic input current, in amperes.
+- $\tau_m$ is the membrane time constant, in seconds: smaller values cause the membrane to decay more rapidly toward rest;
+- $u_{\text{rest}}$ is the resting potential toward which the membrane relaxes in the absence of input current, in volts;
+- $R_m$ is the effective membrane resistance, in ohms;
+- $I_{\text{syn}}(t)$ is the incoming synaptic input current, in amperes.
 
-When the membrane potential crosses a firing threshold $`V_{\text{th}}`$, the neuron emits an action potential (spike) and resets its potential to $`u_{\text{reset}}`$. The equation describes two opposing physical forces: the leak term $`-(u-u_{\text{rest}})`$ dissipates charge toward resting equilibrium, while the drive term $`R_m\,I_{\text{syn}}`$ charges the membrane capacitance. Under a constant input current, the asymptotic potential approaches $`u_{\text{rest}}+R_m\,I_{\text{syn}}`$; firing events occur exclusively when this steady-state level exceeds the threshold $`V_{\text{th}}`$. A weak subthreshold stimulus generates zero spikes, whereas suprathreshold inputs induce spike trains whose firing rate scales with current magnitude. In an analog VLSI realization, the membrane is implemented via an integrated capacitor and the threshold is enforced by a comparator. Because information is represented by spike timings and pulse rates, the circuit dissipates active dynamic energy only when events occur, although static standby leakage persists.
+When the membrane potential crosses a firing threshold $V_{\text{th}}$, the neuron emits an action potential (spike) and resets its potential to $u_{\text{reset}}$. The equation describes two opposing physical forces: the leak term $-(u-u_{\text{rest}})$ dissipates charge toward resting equilibrium, while the drive term $R_m\,I_{\text{syn}}$ charges the membrane capacitance. Under a constant input current, the asymptotic potential approaches $u_{\text{rest}}+R_m\,I_{\text{syn}}$; firing events occur exclusively when this steady-state level exceeds the threshold $V_{\text{th}}$. A weak subthreshold stimulus generates zero spikes, whereas suprathreshold inputs induce spike trains whose firing rate scales with current magnitude. In an analog VLSI realization, the membrane is implemented via an integrated capacitor and the threshold is enforced by a comparator. Because information is represented by spike timings and pulse rates, the circuit dissipates active dynamic energy only when events occur, although static standby leakage persists.
 
 The natural physical data source for such architectures is the event-based vision sensor (Dynamic Vision Sensor, DVS). Each pixel independently monitors its illumination level and fires an asynchronous event whenever the temporal change in logarithmic intensity exceeds a contrast threshold:
 
@@ -348,7 +348,7 @@ Mixed-signal neuromorphic processors exist to support such event streams. DYNAP-
 
 A substantial class of expert system workloads reduces to constrained combinatorial optimization: dispatching repair crews across infrastructure assets, calculating kinematic trajectories, or associating sensor tracks with known objects. John Hopfield demonstrated that a recurrent network of continuous-variable neurons possesses a Lyapunov energy function that monotonically decreases over time [[23]](#src-23), and subsequently, in collaboration with David Tank, applied this architecture to solve complex optimization challenges, including the Traveling Salesperson Problem [[24]](#src-24).
 
-Consider an analog circuit comprising $N$ operational amplifiers interconnected via a conductance matrix $`T_{ij}`$:
+Consider an analog circuit comprising $N$ operational amplifiers interconnected via a conductance matrix $T_{ij}$:
 
 ```math
 C_i\frac{dU_i}{dt}=-\frac{U_i}{R_i}+\sum_{j=1}^{N}T_{ij}V_j+I_i .
@@ -356,16 +356,16 @@ C_i\frac{dU_i}{dt}=-\frac{U_i}{R_i}+\sum_{j=1}^{N}T_{ij}V_j+I_i .
 
 Where:
 
-- $`C_i`$ is the input capacitance of the $i$-th amplifier, in farads;
-- $`U_i`$ is the input voltage of the $i$-th amplifier, in volts;
-- $`R_i`$ is the input leakage resistance of that channel, in ohms;
-- $`V_j=g(U_j)`$ is the output voltage of the $j$-th amplifier, where $g$ represents a strictly monotonic sigmoidal activation function;
-- $`T_{ij}`$ is the interconnection conductance coupling the output of amplifier $j$ to the input of amplifier $i$; the matrix $`T_{ij}`$ encodes the optimization objective and penalty constraints, with $`T_{ij}=T_{ji}`$ and $`T_{ii}=0`$;
-- $`I_i`$ is an external input current encoding observed empirical facts, in amperes;
+- $C_i$ is the input capacitance of the $i$-th amplifier, in farads;
+- $U_i$ is the input voltage of the $i$-th amplifier, in volts;
+- $R_i$ is the input leakage resistance of that channel, in ohms;
+- $V_j=g(U_j)$ is the output voltage of the $j$-th amplifier, where $g$ represents a strictly monotonic sigmoidal activation function;
+- $T_{ij}$ is the interconnection conductance coupling the output of amplifier $j$ to the input of amplifier $i$; the matrix $T_{ij}$ encodes the optimization objective and penalty constraints, with $T_{ij}=T_{ji}$ and $T_{ii}=0$;
+- $I_i$ is an external input current encoding observed empirical facts, in amperes;
 - $N$ is the total count of interconnected amplifiers;
-- $`\sum_{j=1}^{N}T_{ij}V_j`$ is the net feedback current injected into the $i$-th node by all other amplifiers.
+- $\sum_{j=1}^{N}T_{ij}V_j$ is the net feedback current injected into the $i$-th node by all other amplifiers.
 
-Each amplifier accumulates weighted output currents from its peers, while capacitor $`C_i`$ integrates the net difference between the injected current and the internal leakage current $`U_i/R_i`$. Driven by this physical dynamics, the node voltages asymptotically "slide" toward a stable equilibrium representing a candidate solution. The Lyapunov energy function governing this circuit is formulated as:
+Each amplifier accumulates weighted output currents from its peers, while capacitor $C_i$ integrates the net difference between the injected current and the internal leakage current $U_i/R_i$. Driven by this physical dynamics, the node voltages asymptotically "slide" toward a stable equilibrium representing a candidate solution. The Lyapunov energy function governing this circuit is formulated as:
 
 ```math
 E=-\frac{1}{2}\sum_{i=1}^{N}\sum_{j=1}^{N}T_{ij}V_iV_j-\sum_{i=1}^{N}I_iV_i+\sum_{i=1}^{N}\frac{1}{R_i}\int_{0}^{V_i}g^{-1}(V)\,dV .
@@ -374,15 +374,15 @@ E=-\frac{1}{2}\sum_{i=1}^{N}\sum_{j=1}^{N}T_{ij}V_iV_j-\sum_{i=1}^{N}I_iV_i+\sum
 Where:
 
 - $E$ is the network scalar energy (Lyapunov function), which monotonically decreases as the physical circuit evolves;
-- the first term, $`-\tfrac12\sum\sum T_{ij}V_iV_j`$, accounts for pairwise interactions mediated across conductances $`T_{ij}`$;
-- the second term, $`-\sum I_iV_i`$, incorporates external bias currents representing empirical input facts;
+- the first term, $-\tfrac12\sum\sum T_{ij}V_iV_j$, accounts for pairwise interactions mediated across conductances $T_{ij}$;
+- the second term, $-\sum I_iV_i$, incorporates external bias currents representing empirical input facts;
 - the third integral term accounts for finite amplifier gain and input leakages; under high-gain amplifier conditions ($g$ approaching a step function), its magnitude becomes negligible [[23]](#src-23);
 - $g^{-1}$ is the inverse of the activation function $g$, with $V$ serving as the integration dummy variable;
-- $`\sum_{i=1}^{N}`$ and $`\sum_{j=1}^{N}`$ denote summations over all amplifiers in the network.
+- $\sum_{i=1}^{N}$ and $\sum_{j=1}^{N}$ denote summations over all amplifiers in the network.
 
 The energy functional can be conceptualized as an irregular potential landscape: circuit state trajectories naturally descend down the gradient toward valleys, where local minima correspond to candidate solution states.
 
-Because $`\partial E/\partial V_i=-\left(\sum_j T_{ij}V_j+I_i-U_i/R_i\right)=-C_i\,dU_i/dt`$, the time derivative of system energy evaluates to:
+Because $\partial E/\partial V_i=-\left(\sum_j T_{ij}V_j+I_i-U_i/R_i\right)=-C_i\,dU_i/dt$, the time derivative of system energy evaluates to:
 
 ```math
 \frac{dE}{dt}=\sum_{i=1}^{N}\frac{\partial E}{\partial V_i}\frac{dV_i}{dt}=-\sum_{i=1}^{N}C_i\,g'(U_i)\left(\frac{dU_i}{dt}\right)^{2}\le 0.
@@ -391,13 +391,13 @@ Because $`\partial E/\partial V_i=-\left(\sum_j T_{ij}V_j+I_i-U_i/R_i\right)=-C_
 Where:
 
 - $dE/dt$ is the instantaneous rate of change of network energy;
-- $`\partial E/\partial V_i`$ is the partial derivative of energy with respect to the output of amplifier $i$;
-- $`dV_i/dt`$ and $`dU_i/dt`$ are the time derivatives of the output and input voltages of amplifier $i$, respectively;
-- $`g'(U_i)`$ is the derivative of the activation function $g$ evaluated at $`U_i`$, representing the slope of the sigmoid curve.
+- $\partial E/\partial V_i$ is the partial derivative of energy with respect to the output of amplifier $i$;
+- $dV_i/dt$ and $dU_i/dt$ are the time derivatives of the output and input voltages of amplifier $i$, respectively;
+- $g'(U_i)$ is the derivative of the activation function $g$ evaluated at $U_i$, representing the slope of the sigmoid curve.
 
-The right-hand side is strictly non-positive because input capacitance $`C_i`$ is positive, slope $`g'(U_i)`$ is strictly positive for monotonic transfer functions, and the squared derivative term $`(dU_i/dt)^{2}`$ is non-negative. System energy cannot increase; it strictly dissipates until the circuit settles into a stationary state where $`dU_i/dt=0`$.
+The right-hand side is strictly non-positive because input capacitance $C_i$ is positive, slope $g'(U_i)$ is strictly positive for monotonic transfer functions, and the squared derivative term $(dU_i/dt)^{2}$ is non-negative. System energy cannot increase; it strictly dissipates until the circuit settles into a stationary state where $dU_i/dt=0$.
 
-While this mathematical derivation guarantees convergence, it provides no guarantee regarding the global optimality of the solution. The circuit frequently terminates in sub-optimal local minima, with solution quality dictated by how effectively penalty constraints were embedded within $`T_{ij}`$. The physical relaxation latency is governed by the circuit's $RC$ time constants. For mission-critical expert systems, a Hopfield network output is merely an unverified candidate: the digital supervisor must explicitly verify all domain constraints against the relaxed solution before admitting it as an verified fact. Modern evolutions of this paradigm, including Ising machines and probabilistic bits (p-bits), are explored in [Appendix E](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
+While this mathematical derivation guarantees convergence, it provides no guarantee regarding the global optimality of the solution. The circuit frequently terminates in sub-optimal local minima, with solution quality dictated by how effectively penalty constraints were embedded within $T_{ij}$. The physical relaxation latency is governed by the circuit's $RC$ time constants. For mission-critical expert systems, a Hopfield network output is merely an unverified candidate: the digital supervisor must explicitly verify all domain constraints against the relaxed solution before admitting it as an verified fact. Modern evolutions of this paradigm, including Ising machines and probabilistic bits (p-bits), are explored in [Appendix E](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
 
 ## 8. Engineering Case Study: Hardware Analog Mahalanobis Gateway
 
@@ -411,10 +411,10 @@ d_M^{2}=(\mathbf{z}-\hat{\mathbf{z}})^{\top}\mathbf{S}^{-1}(\mathbf{z}-\hat{\mat
 
 Where:
 
-- $`d_M^{2}`$ is the squared Mahalanobis distance, a scalar quantifying the discrepancy between observation and prediction normalized by statistical uncertainty;
+- $d_M^{2}$ is the squared Mahalanobis distance, a scalar quantifying the discrepancy between observation and prediction normalized by statistical uncertainty;
 - $\mathbf{z}$ is the raw observation vector, such as coordinates received from a physical sensor;
-- $`\hat{\mathbf{z}}`$ is the model-predicted measurement vector (the caret denotes an estimate);
-- $`\mathbf{z}-\hat{\mathbf{z}}`$ is the measurement innovation vector (the residual);
+- $\hat{\mathbf{z}}$ is the model-predicted measurement vector (the caret denotes an estimate);
+- $\mathbf{z}-\hat{\mathbf{z}}$ is the measurement innovation vector (the residual);
 - $\top$ denotes matrix transposition;
 - $\mathbf{S}$ is the innovation covariance matrix, with measurement variances along the main diagonal and cross-correlations off-diagonal;
 - $\mathbf{S}^{-1}$ is the inverse covariance matrix, scaling the innovation inversely by its uncertainty;
@@ -424,7 +424,7 @@ A digital microcontroller executes this quadratic form calculation over tens or 
 
 ### 8.2. Circuit for Uncorrelated Measurements
 
-Suppose the innovation is represented by two differential voltages, $`V_x=z_x-\hat z_x`$ and $`V_y=z_y-\hat z_y`$, and the sensor measurements are uncorrelated, such that $`\mathbf{S}=\mathrm{diag}(\sigma_x^{2},\sigma_y^{2})`$. Under these conditions:
+Suppose the innovation is represented by two differential voltages, $V_x=z_x-\hat z_x$ and $V_y=z_y-\hat z_y$, and the sensor measurements are uncorrelated, such that $\mathbf{S}=\mathrm{diag}(\sigma_x^{2},\sigma_y^{2})$. Under these conditions:
 
 ```math
 d_M^{2}=\frac{V_x^{2}}{\sigma_x^{2}}+\frac{V_y^{2}}{\sigma_y^{2}}\le\gamma .
@@ -432,12 +432,12 @@ d_M^{2}=\frac{V_x^{2}}{\sigma_x^{2}}+\frac{V_y^{2}}{\sigma_y^{2}}\le\gamma .
 
 Where:
 
-- $`V_x`$ and $`V_y`$ are the innovation components along the $x$ and $y$ axes, represented as physical voltages;
-- $`\sigma_x`$ and $`\sigma_y`$ are the standard deviations of measurement noise along these axes, expressed in the same physical units as $`V_x`$ and $`V_y`$;
-- $`\sigma_x^{2}`$ and $`\sigma_y^{2}`$ are the corresponding variances;
+- $V_x$ and $V_y$ are the innovation components along the $x$ and $y$ axes, represented as physical voltages;
+- $\sigma_x$ and $\sigma_y$ are the standard deviations of measurement noise along these axes, expressed in the same physical units as $V_x$ and $V_y$;
+- $\sigma_x^{2}$ and $\sigma_y^{2}$ are the corresponding variances;
 - $\gamma$ is the statistical gating threshold.
 
-Each component is weighted by the inverse of its variance, ensuring that measurements from higher-precision channels exert proportionally greater influence. Suppose that after voltage scaling, $`V_x=12`$ and $`V_y=5`$ arbitrary units, $`\sigma_x=\sigma_y=5`$ units, and the chi-squared threshold for two degrees of freedom at a 99% confidence level is $\gamma=9.21$, as established in [Appendix C](appendix-c-autonomous-navigation-and-geosearch.md). Then $`d_M^{2}=144/25+25/25=6.76`$, which falls comfortably below the threshold of $9.21$; the measurement is therefore admitted. These numerical figures are illustrative.
+Each component is weighted by the inverse of its variance, ensuring that measurements from higher-precision channels exert proportionally greater influence. Suppose that after voltage scaling, $V_x=12$ and $V_y=5$ arbitrary units, $\sigma_x=\sigma_y=5$ units, and the chi-squared threshold for two degrees of freedom at a 99% confidence level is $\gamma=9.21$, as established in [Appendix C](appendix-c-autonomous-navigation-and-geosearch.md). Then $d_M^{2}=144/25+25/25=6.76$, which falls comfortably below the threshold of $9.21$; the measurement is therefore admitted. These numerical figures are illustrative.
 
 ```mermaid
 flowchart LR
@@ -459,15 +459,15 @@ flowchart LR
 
 The analog architecture comprises three cascading stages:
 
-The **squaring unit** is realized by exploiting the square-law relationship between drain current and gate overdrive voltage in saturation-mode MOSFETs, $`I\propto(V_{gs}-V_{th})^{2}`$, or via a Gilbert multiplier cell.
+The **squaring unit** is realized by exploiting the square-law relationship between drain current and gate overdrive voltage in saturation-mode MOSFETs, $I\propto(V_{gs}-V_{th})^{2}$, or via a Gilbert multiplier cell.
 
-The **weighting stage** establishes conductances $`G_x=k_0/\sigma_x^{2}`$ and $`G_y=k_0/\sigma_y^{2}`$, where $`k_0`$ is a dimensional scaling constant; these conductances are implemented via precision thin-film resistors, digitally controlled potentiometers, or programmable memristive elements.
+The **weighting stage** establishes conductances $G_x=k_0/\sigma_x^{2}$ and $G_y=k_0/\sigma_y^{2}$, where $k_0$ is a dimensional scaling constant; these conductances are implemented via precision thin-film resistors, digitally controlled potentiometers, or programmable memristive elements.
 
-The **comparator stage** benchmarks the accumulated sum current against a reference current proportional to $\gamma$, with built-in hysteresis preventing spurious output oscillations when $`d_M^{2}`$ hovers near the threshold boundary.
+The **comparator stage** benchmarks the accumulated sum current against a reference current proportional to $\gamma$, with built-in hysteresis preventing spurious output oscillations when $d_M^{2}$ hovers near the threshold boundary.
 
 ### 8.3. Engineering Verification Criteria
 
-The latency and power consumption of this analog gateway are governed by the bandwidth of the squaring cells and the comparator response time. For any production implementation, these metrics must be validated via transistor-level SPICE simulations across all process, voltage, and temperature (PVT) corners and confirmed on fabricated silicon prototypes, rather than estimated from nominal datasheet specifications. Because the error covariance $\mathbf{S}$ dynamically evolves with operational conditions and sensor health, conductances $`G_x`$ and $`G_y`$ must be updated dynamically by the digital microcontroller, with each update recorded as a versioned calibration event. Crucially, when an observation yields a $`d_M^{2}`$ value within the comparator's uncertainty band around $\gamma$, the physical circuit's binary admission decision is inherently noisy. In this critical transition zone, the digital supervisor must intercept the signal and execute an exact floating-point recalculation. The analog gateway offloads high-volume nominal processing from the digital processor, but does not relieve the digital architecture of formal responsibility for boundary conditions.
+The latency and power consumption of this analog gateway are governed by the bandwidth of the squaring cells and the comparator response time. For any production implementation, these metrics must be validated via transistor-level SPICE simulations across all process, voltage, and temperature (PVT) corners and confirmed on fabricated silicon prototypes, rather than estimated from nominal datasheet specifications. Because the error covariance $\mathbf{S}$ dynamically evolves with operational conditions and sensor health, conductances $G_x$ and $G_y$ must be updated dynamically by the digital microcontroller, with each update recorded as a versioned calibration event. Crucially, when an observation yields a $d_M^{2}$ value within the comparator's uncertainty band around $\gamma$, the physical circuit's binary admission decision is inherently noisy. In this critical transition zone, the digital supervisor must intercept the signal and execute an exact floating-point recalculation. The analog gateway offloads high-volume nominal processing from the digital processor, but does not relieve the digital architecture of formal responsibility for boundary conditions.
 
 ## 9. Comparative Analysis of Digital and Analog Computing Substrates
 
@@ -558,7 +558,7 @@ The experimental infrastructure for evaluating ultra-low-power analog inference 
 
 To prevent epistemic degradation and loss of evidence integrity, the analog reflex tier functions under uninterrupted digital supervision:
 
-1. **Dynamic Conductance Calibration ($`G_{ij}`$):**
+1. **Dynamic Conductance Calibration ($G_{ij}$):**
    * Periodic recalibration of digital potentiometers or memristive arrays to match the evolving innovation covariance matrix $\mathbf{S}^{-1}$ estimated by a digital Kalman filter.
    * Logging of each discrete calibration transaction into an immutable register alongside cryptographic checksums of the device configuration parameters.
 2. **Canary Stimuli and Aging Detection:**

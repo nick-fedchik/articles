@@ -12,7 +12,7 @@
 
 ## Abstract
 
-Consider an autonomous vehicle or unmanned aerial vehicle (UAV, certified under ISO 26262 / DO-178C) where a legacy static expert system operates under a passive query-response model. Mid-flight, a primary pressure sensor malfunctions or a satellite datalink broadcasts an urgent airspace restriction (NOTAM notification). If the knowledge base was compiled as an immutable static monolith, the system continues to reason over stale premises, lacking any mechanism for instantaneous conclusion invalidation. Until an operator or an external supervisor script explicitly executes a polling query ("is airspace clearance still valid?"), the autopilot continues to traverse a hazardous or prohibited corridor. Conversely, attempting to recompile the entire static knowledge pack on the fly consumes several seconds and overloads the flight computer, catastrophically breaching hard real-time latency deadlines ($`< 5\,\text{ms}`$).
+Consider an autonomous vehicle or unmanned aerial vehicle (UAV, certified under ISO 26262 / DO-178C) where a legacy static expert system operates under a passive query-response model. Mid-flight, a primary pressure sensor malfunctions or a satellite datalink broadcasts an urgent airspace restriction (NOTAM notification). If the knowledge base was compiled as an immutable static monolith, the system continues to reason over stale premises, lacking any mechanism for instantaneous conclusion invalidation. Until an operator or an external supervisor script explicitly executes a polling query ("is airspace clearance still valid?"), the autopilot continues to traverse a hazardous or prohibited corridor. Conversely, attempting to recompile the entire static knowledge pack on the fly consumes several seconds and overloads the flight computer, catastrophically breaching hard real-time latency deadlines ($< 5\,\text{ms}$).
 
 The core engineering question of this chapter: **how can we design an expert system capable of reactively responding to external events and streaming telemetry in real time, cascadingly revoking compromised conclusions within milliseconds, and adapting its ontology without forfeiting byte-level determinism and formal evidence?**
 
@@ -42,7 +42,7 @@ While this methodology guarantees absolute byte-level auditability and determini
 2. **Pull-Driven Latency:**  
    The classical runtime waits passively for user or caller requests. It is fundamentally incapable of proactively warning about emerging cascading failures or autonomously transitioning downstream actuators into a verified fail-safe mode (*Fail-Safe Mode*).
 3. **Batch Rebuild Overhead:**  
-   Recompiling and re-verifying formal knowledge packs requires seconds or minutes of compute time. Conversely, responding to physical emergencies (such as a seized hydraulic valve or loss of satellite lock) requires deterministic ontological adaptation within single-digit milliseconds ($`< 5\,\text{ms}`$).
+   Recompiling and re-verifying formal knowledge packs requires seconds or minutes of compute time. Conversely, responding to physical emergencies (such as a seized hydraulic valve or loss of satellite lock) requires deterministic ontological adaptation within single-digit milliseconds ($< 5\,\text{ms}$).
 
 ### 1.1. Difference Between Simple Reactivity and Synergetic Self-Organization
 
@@ -52,7 +52,7 @@ A conventional Event-Driven Architecture (EDA) captures external signals through
 \text{Event} \longrightarrow \text{Action}
 ```
 
-However, a hardcoded "event $`\to`$ action" mapping represents merely first-order reflexive automation. It lacks the capacity to adapt its own internal model of the world when confronted with unforeseen, high-dimensional combinations of environmental factors.
+However, a hardcoded "event $\to$ action" mapping represents merely first-order reflexive automation. It lacks the capacity to adapt its own internal model of the world when confronted with unforeseen, high-dimensional combinations of environmental factors.
 
 Genuine **self-organization in an expert system (Self-Organizing Knowledge System)**, grounded in the foundational works of Hermann Haken [[1]](#src-1), [[2]](#src-2) and Ilya Prigogine [[3]](#src-3), emerges when an open system satisfies four criteria:
 * **Continuously operates far from thermodynamic equilibrium**, actively exchanging information with its operational environment;
@@ -101,13 +101,13 @@ To preserve the non-negotiable Evidence-Grounded Invariant, the system partition
 
 | Memory Tier | Storage Medium & Format | Mutability | Knowledge Content | Access Latency |
 |---|---|---|---|---|
-| **L0 (Golden Master)** | Binary file `mmap`, Read-Only | Strictly Immutable | Physical laws, baseline IETF/ISO standards, constitutional invariants | $`< 1\,\mu\text{s}`$ (Zero-Copy) |
-| **L1 (Streaming Delta)** | In-Memory (In-Memory CRDT) | Dynamic Streaming | Current hardware states, situational exceptions, defeasible conditions | $`< 100\,\text{ns}`$ |
+| **L0 (Golden Master)** | Binary file `mmap`, Read-Only | Strictly Immutable | Physical laws, baseline IETF/ISO standards, constitutional invariants | $< 1\,\mu\text{s}$ (Zero-Copy) |
+| **L1 (Streaming Delta)** | In-Memory (In-Memory CRDT) | Dynamic Streaming | Current hardware states, situational exceptions, defeasible conditions | $< 100\,\text{ns}$ |
 | **Quarantine Buffer** | Isolated Candidate Buffer | Temporary Isolated | Unverified facts from external agents pending SMT verification | Excluded from inference |
 
 ### 3.1. Fact Resolution Priority in Hybrid Memory
 When evaluating a predicate query for a composite key `Key = Subject#Predicate`:  
-1. **Active Defeater Verification:** If the target $`\text{Key}`$ is intercepted by an active $`\text{Defeater}`$, the query immediately aborts with an undercutting refusal (*Defeated State*).
+1. **Active Defeater Verification:** If the target $\text{Key}$ is intercepted by an active $\text{Defeater}$, the query immediately aborts with an undercutting refusal (*Defeated State*).
 2. **L1 Layer Lookup:** If an entry exists in the dynamic delta layer:
    - If marked as a deletion tombstone (*Tombstone*), the fact is treated as formally retracted.
    - Otherwise, the query resolves to the active dynamic L1 value.
@@ -115,7 +115,7 @@ When evaluating a predicate query for a composite key `Key = Subject#Predicate`:
 
 ### 3.2. Synergetics of Dynamic Knowledge Bases: Self-Organization, Dissipative Structures, and the Slaving Principle
 
-Through the lens of non-equilibrium thermodynamics and synergetics developed by Ilya Prigogine [[3]](#src-3) and Hermann Haken [[1]](#src-1), an expert system embedded in a physical operational environment constitutes an **open non-equilibrium information system**. The unceasing influx of external events (sensor telemetry, regulatory delta streams, asynchronous bus messages) establishes a continuous entropy flux with the environment $`\frac{dS_{\text{ext}}}{dt}`$, which in an unmanaged system monotonically increases internal disorder ($`dS_{\text{ext}}/dt > 0`$).
+Through the lens of non-equilibrium thermodynamics and synergetics developed by Ilya Prigogine [[3]](#src-3) and Hermann Haken [[1]](#src-1), an expert system embedded in a physical operational environment constitutes an **open non-equilibrium information system**. The unceasing influx of external events (sensor telemetry, regulatory delta streams, asynchronous bus messages) establishes a continuous entropy flux with the environment $\frac{dS_{\text{ext}}}{dt}$, which in an unmanaged system monotonically increases internal disorder ($dS_{\text{ext}}/dt > 0$).
 
 In a passive system, such unmanaged streams inevitably trigger **entropic collapse (epistemic poisoning)**: the accumulation of stale assertions, circular contradictions, degraded inference throughput, and compromised deduction. For the knowledge base to sustain high ontological coherence and sub-microsecond execution latencies, it must function as a **dissipative structure**, actively exporting entropy to its environment:
 
@@ -123,7 +123,7 @@ In a passive system, such unmanaged streams inevitably trigger **entropic collap
 \frac{dS_{\text{sys}}}{dt} = \frac{dS_{\text{int}}}{dt} + \frac{dS_{\text{ext}}}{dt}, \qquad \frac{dS_{\text{int}}}{dt} \ge 0, \qquad \frac{dS_{\text{sys}}}{dt} \le 0 \iff \frac{dS_{\text{ext}}}{dt} \le -\frac{dS_{\text{int}}}{dt}
 ```
 
-Here $`S_{\text{sys}}`$ denotes the informational entropy of the system itself, $`dS_{\text{int}}/dt \ge 0`$ represents internal entropy production generated by irreversible operational processes (which by the second law cannot be negative), and $`dS_{\text{ext}}/dt`$ represents the net entropy exchange with the operational environment. System coherence is preserved whenever the rate of entropy export ($`dS_{\text{ext}}/dt < 0`$) equals or exceeds internal entropy production. In this architectural context, "entropy" serves as a formal analogy quantifying the disorder, contradiction, and staleness of stored facts, rather than a raw thermodynamic measure.
+Here $S_{\text{sys}}$ denotes the informational entropy of the system itself, $dS_{\text{int}}/dt \ge 0$ represents internal entropy production generated by irreversible operational processes (which by the second law cannot be negative), and $dS_{\text{ext}}/dt$ represents the net entropy exchange with the operational environment. System coherence is preserved whenever the rate of entropy export ($dS_{\text{ext}}/dt < 0$) equals or exceeds internal entropy production. In this architectural context, "entropy" serves as a formal analogy quantifying the disorder, contradiction, and staleness of stored facts, rather than a raw thermodynamic measure.
 
 Within the architecture of a self-organizing knowledge base, this synergetic imperative is operationalized across **four fundamental laws of informational synergetics**:
 
@@ -131,9 +131,9 @@ Within the architecture of a self-organizing knowledge base, this synergetic imp
 A knowledge base at static equilibrium (an offline, read-only pack) is epistemically inert: it cannot adapt to environmental drift without an exhaustive rebuild. Self-organization can occur only **far from thermodynamic equilibrium**, sustained by an uninterrupted influx of epistemic impulses from sensors and telemetry buses. This continuous flux maintains the knowledge base in a state of dynamic criticality, sensitive to environmental phase shifts.
 
 #### 3.2.2. Haken's Slaving Principle and Semantic Order Parameters
-A physical environment generates millions of "fast" microscopic variables $`\mathbf{q}_{\text{fast}}`$ (accelerometer readings, bus rail voltages, microsecond pressure ripples, motor shaft speeds sampled at $`1\text{–}10\,\text{kHz}`$). Attempting to evaluate individual predicate rules over every raw microsecond sample inevitably causes combinatorial explosion and memory exhaustion.
+A physical environment generates millions of "fast" microscopic variables $\mathbf{q}_{\text{fast}}$ (accelerometer readings, bus rail voltages, microsecond pressure ripples, motor shaft speeds sampled at $1\text{–}10\,\text{kHz}$). Attempting to evaluate individual predicate rules over every raw microsecond sample inevitably causes combinatorial explosion and memory exhaustion.
 
-Under **Hermann Haken's slaving principle (Slaving Principle)**, the collective behavior of complex high-dimensional systems is governed not by myriad microscopic variables, but by a minimal set of slowly evolving collective variables: the **order parameters (Order Parameters)** $`\boldsymbol{\xi}_{\text{order}}`$:
+Under **Hermann Haken's slaving principle (Slaving Principle)**, the collective behavior of complex high-dimensional systems is governed not by myriad microscopic variables, but by a minimal set of slowly evolving collective variables: the **order parameters (Order Parameters)** $\boldsymbol{\xi}_{\text{order}}$:
 
 ```math
 \mathbf{q}_{\text{fast}}(t) = \mathbf{f}\bigl(\boldsymbol{\xi}_{\text{order}}(t), \text{noise}\bigr)
@@ -181,9 +181,9 @@ flowchart TD
 
 #### 3.2.3. Constrained Self-Organization under Truth Attractors
 In unconstrained physical synergetics, open systems may settle into chaotic attractors or divergent bifurcations (manifested in ungrounded language models as hallucinations). In safety-critical engineering, systems must operate exclusively under **constrained self-organization (Constrained Self-Organization)**:
-* **The L0 Golden Master (`mmap`) functions as an absolute phase truth attractor $`\mathcal{A}_{\text{truth}}`$:** No emergent restructuring within the dynamic L1 layer can alter, override, or suppress constitutional safety invariants, physical conservation laws, or certified operational boundaries defined in L0.
+* **The L0 Golden Master (`mmap`) functions as an absolute phase truth attractor $\mathcal{A}_{\text{truth}}$:** No emergent restructuring within the dynamic L1 layer can alter, override, or suppress constitutional safety invariants, physical conservation laws, or certified operational boundaries defined in L0.
 * **JTMS invalidation acts as entropy export:** The firing of an active defeater (*Active Defeater*) instantaneously prunes invalidated reasoning subgraphs, discharging informational entropy outward and returning the system's phase trajectory into a verified safe attractor basin (*Safe Attractor Basin*).
-* **The quarantine gate serves as a semi-permeable selective membrane:** Novel emergent facts emitted by peer agents cross the SMT admission gateway into L1 only after passing strict consistency checks against the invariants of $`\mathcal{A}_{\text{truth}}`$, shielding the runtime from epistemic poisoning.
+* **The quarantine gate serves as a semi-permeable selective membrane:** Novel emergent facts emitted by peer agents cross the SMT admission gateway into L1 only after passing strict consistency checks against the invariants of $\mathcal{A}_{\text{truth}}$, shielding the runtime from epistemic poisoning.
 
 #### 3.2.4. Edge Hardware Metabolism
 Self-organization is fundamentally a physical process requiring the continuous expenditure of free energy to reduce internal entropy locally (embodying Erwin Schrödinger's dictum: "the system feeds upon negative entropy"). In battery-powered autonomous platforms, this informational metabolism is executed by ultra-low-power Edge NPU/DSP co-processors (1–5 W), which continuously absorb sensor noise and preserve ontological coherence without waking the energy-intensive host CPU.
@@ -198,7 +198,7 @@ In Jon Doyle's classical Justification-Based Truth Maintenance System (JTMS) [[6
 \text{Node} = \langle \text{Datum}, \text{IN-List}, \text{OUT-List} \rangle
 ```
 
-where the $`\text{IN-List}`$ enumerates supporting facts that must hold true, while the $`\text{OUT-List}`$ enumerates defeaters that must remain false (or absent) for the datum to remain valid.
+where the $\text{IN-List}$ enumerates supporting facts that must hold true, while the $\text{OUT-List}$ enumerates defeaters that must remain false (or absent) for the datum to remain valid.
 
 ```mermaid
 flowchart TD
@@ -214,7 +214,7 @@ flowchart TD
     INF --> HALT["AUTONOMOUS ACTION:<br/>Immediate Emergency Valve Cutoff"]
 ```
 
-When a telemetry event signals a physical anomaly (for instance, reading divergence between redundant sensors exceeding $`3\sigma`$), the reactive engine instantiates an **active defeater (Active Defeater)**:
+When a telemetry event signals a physical anomaly (for instance, reading divergence between redundant sensors exceeding $3\sigma$), the reactive engine instantiates an **active defeater (Active Defeater)**:
 
 ```math
 \text{Fault}(\text{Sensor}_A) \implies \text{ActivateDefeater}(\text{SensorReading}_A)
@@ -254,10 +254,10 @@ flowchart LR
 ```
 
 ### 5.1. Re-Search: Evolutionary Knowledge Selection and Ashby's Law of Requisite Variety
-According to W. Ross Ashby's Law of Requisite Variety [[4]](#src-4), the internal variety of a regulator must match or exceed the variety of environmental perturbations it must counter. When the order parameter $`\boldsymbol{\xi}_{\text{order}}`$ registers operational drift (e.g., a satellite entering orbital eclipse or a drone encountering electronic jamming), the Re-Search microservice autonomously:
+According to W. Ross Ashby's Law of Requisite Variety [[4]](#src-4), the internal variety of a regulator must match or exceed the variety of environmental perturbations it must counter. When the order parameter $\boldsymbol{\xi}_{\text{order}}$ registers operational drift (e.g., a satellite entering orbital eclipse or a drone encountering electronic jamming), the Re-Search microservice autonomously:
 * Initiates predictive prefetching (*Prefetching*) of corresponding normative and procedural subgraphs from cold L0 storage into the ultra-fast L1 cache;
 * Ensures that memory-resident working sets contain precisely the rule sets required to mitigate emerging hazards before an emergency condition matures;
-* Operates over quantized matrix indices accelerated by an Edge NPU, consuming $`< 1.5\,\text{W}`$.
+* Operates over quantized matrix indices accelerated by an Edge NPU, consuming $< 1.5\,\text{W}$.
 
 ### 5.2. Re-Ranking: Adaptive Restructuring of Preference Lattices
 
@@ -268,22 +268,22 @@ Norms, objectives, and operational rules do not possess static, invariant weight
 ```
 
 where:
-- $`\gamma_{\text{crit}}`$ is the dimensionless pre-bifurcation environmental instability index;
-- $`\mathrm{Var}(\Delta \boldsymbol{\xi}_{\text{order}}(t))`$ is the running variance of order parameter fluctuations computed over a sliding temporal window;
-- $`\sigma_0^2`$ is the baseline variance of the order parameter measured during nominal (laminar) steady-state operation.
+- $\gamma_{\text{crit}}$ is the dimensionless pre-bifurcation environmental instability index;
+- $\mathrm{Var}(\Delta \boldsymbol{\xi}_{\text{order}}(t))$ is the running variance of order parameter fluctuations computed over a sliding temporal window;
+- $\sigma_0^2$ is the baseline variance of the order parameter measured during nominal (laminar) steady-state operation.
 
 **Practical Application and Closed-Loop Decision:**
 
 #### 5.2.1. Dispatch Criteria and State Phase Transitions
-**Nominal Regime** ($`\gamma_{\text{crit}} < 3.0`$, *Equilibrium Basin*): energy efficiency, trajectory precision, and resource conservation dominate:
+**Nominal Regime** ($\gamma_{\text{crit}} < 3.0$, *Equilibrium Basin*): energy efficiency, trajectory precision, and resource conservation dominate:
 
 ```math
 \mathrm{Priority}(\mathrm{FuelEfficiency}) \succ \mathrm{Priority}(\mathrm{EmergencyRedundancy})
 ```
 
-The runtime scheduler optimizes peripheral node power dissipation, while the edge NPU executes batched, quantized workloads at a baseline polling rate of $`10\,\text{Hz}`$.
+The runtime scheduler optimizes peripheral node power dissipation, while the edge NPU executes batched, quantized workloads at a baseline polling rate of $10\,\text{Hz}$.
 
-**Pre-Bifurcation Regime** ($`\gamma_{\text{crit}} \ge 3.0`$, *Critical Slowing Down*): the service executes an ontological phase shift prioritizing system survival (*Survival Dominance*):
+**Pre-Bifurcation Regime** ($\gamma_{\text{crit}} \ge 3.0$, *Critical Slowing Down*): the service executes an ontological phase shift prioritizing system survival (*Survival Dominance*):
 
 ```math
 \mathrm{Priority}(\mathrm{SafetyShield}) \gg \mathrm{Priority}(\mathrm{MissionGoal}) \gg \mathrm{Priority}(\mathrm{Efficiency})
@@ -292,14 +292,14 @@ The runtime scheduler optimizes peripheral node power dissipation, while the edg
 This guarantees that no optimization objective can inhibit or delay the activation of protective safety invariants as failure approaches.
 
 #### 5.2.2. Hardware Control and Sizing
-- Upon crossing the threshold $`\gamma_{\text{crit}} \ge 3.0`$, the runtime lattice restructuring latency must not exceed $`250\,\mu\text{s}`$;
-- The Edge NPU memory controller executes single-cycle SRAM bank switching, paging in the formal safety shield (Shielded Reinforcement Learning as formulated by Könighofer et al. [[10]](#src-10)) and elevating emergency telemetry DMA channels to top bus arbitration priority (sampling frequency escalates to $`1\,\text{kHz}`$).
+- Upon crossing the threshold $\gamma_{\text{crit}} \ge 3.0$, the runtime lattice restructuring latency must not exceed $250\,\mu\text{s}$;
+- The Edge NPU memory controller executes single-cycle SRAM bank switching, paging in the formal safety shield (Shielded Reinforcement Learning as formulated by Könighofer et al. [[10]](#src-10)) and elevating emergency telemetry DMA channels to top bus arbitration priority (sampling frequency escalates to $1\,\text{kHz}$).
 
 #### 5.2.3. Worked Numerical Example
-- Baseline vibration variance for a critical rotor bearing is established at $`\sigma_0^2 = 0.04\,\text{g}^2`$.
-- Telemetry registers an escalation in fluctuation variance to $`\mathrm{Var}(\Delta \boldsymbol{\xi}) = 0.15\,\text{g}^2`$.
-- Evaluation: $`\gamma_{\text{crit}} = 0.15 / 0.04 = 3.75 \ge 3.0`$.
-- **System Action:** Pre-bifurcation instability is confirmed; the Re-Ranking engine restructures rule priorities within $`180\,\mu\text{s}`$ into `Survival Dominance` mode, suppresses power boost commands, and initiates a controlled rotor deceleration sequence.
+- Baseline vibration variance for a critical rotor bearing is established at $\sigma_0^2 = 0.04\,\text{g}^2$.
+- Telemetry registers an escalation in fluctuation variance to $\mathrm{Var}(\Delta \boldsymbol{\xi}) = 0.15\,\text{g}^2$.
+- Evaluation: $\gamma_{\text{crit}} = 0.15 / 0.04 = 3.75 \ge 3.0$.
+- **System Action:** Pre-bifurcation instability is confirmed; the Re-Ranking engine restructures rule priorities within $180\,\mu\text{s}$ into `Survival Dominance` mode, suppresses power boost commands, and initiates a controlled rotor deceleration sequence.
 
 ### 5.3. Re-Thinking: Dissipation of Contradictions and AGM Defeasible Resolution
 When newly admitted telemetry generates logical contradictions against previously accepted working hypotheses (e.g., conflicting sensor cross-checks or mutually exclusive spatial constraints), the Re-Thinking engine executes **informational dissipation**:
@@ -311,7 +311,7 @@ When newly admitted telemetry generates logical contradictions against previousl
 
 ## 6. Energy-Efficient Edge Hardware Acceleration: NPU, DSP vs. Datacenter GPUs
 
-In cyber-physical deployments, reliance on battery power renders datacenter GPUs consuming $`200\text{–}700\,\text{W}`$ strictly unviable. The reactive expert system allocates responsibilities across a tiered hardware hierarchy:
+In cyber-physical deployments, reliance on battery power renders datacenter GPUs consuming $200\text{–}700\,\text{W}$ strictly unviable. The reactive expert system allocates responsibilities across a tiered hardware hierarchy:
 
 ```mermaid
 flowchart LR
@@ -321,9 +321,9 @@ flowchart LR
     NPU --> CPU["<b>3. Host CPU (Go Runtime)</b><br/>(ARM Cortex-A78, RISC-V)<br/>Deterministic symbolic inference, JTMS<br/>Power: 3–10 W"]
 ```
 
-* **DSP** ($`< 200\,\text{mW}`$): operates synchronously with sensor sampling ($`1\text{–}10\,\text{kHz}`$), validating physical boundary envelopes without waking the central processor.
-* **NPU** ($`1.5\text{–}5\,\text{W}`$): runs quantized small models (INT4 SLMs) and vector search indices to classify unstructured signals and perform rapid candidate re-ranking.
-* **Host CPU** ($`3\text{–}10\,\text{W}`$): executes deterministic symbolic inference, verifies Ed25519 cryptographic signatures, and maintains fact graph consistency.
+* **DSP** ($< 200\,\text{mW}$): operates synchronously with sensor sampling ($1\text{–}10\,\text{kHz}$), validating physical boundary envelopes without waking the central processor.
+* **NPU** ($1.5\text{–}5\,\text{W}$): runs quantized small models (INT4 SLMs) and vector search indices to classify unstructured signals and perform rapid candidate re-ranking.
+* **Host CPU** ($3\text{–}10\,\text{W}$): executes deterministic symbolic inference, verifies Ed25519 cryptographic signatures, and maintains fact graph consistency.
 
 The structural superiority of dedicated tensor accelerators over general-purpose processors was demonstrated by Jouppi et al. in their seminal TPU architecture analysis [[15]](#src-15): systolic array matrix multiplication forwards intermediate activations directly between adjacent arithmetic cells, bypassing power-hungry register files and multi-level cache hierarchies. In an energy-constrained edge expert system, this architectural paradigm provides an order-of-magnitude leap in energy efficiency (TOPS/Watt) for vector retrieval and quantized neural ranking, reserving scarce power budgets for host symbolic logic.
 
@@ -793,9 +793,9 @@ World-renowned luminaries of modern science and computer systems are invited to 
 **Synthesis:** Synergetic real-time reactivity in evidence-governed expert systems arises at the intersection of Haken's interdisciplinary physics and Patterson's rigorous microarchitectural discipline: the immutable cryptographic baseline L0 acts as an unyielding phase attractor of truth, while silicon NPU accelerators and deterministic CPU cores operate in tight hardware symbiosis over zero-copy TCM ring buffers. This enables the expert system to function as an open dissipative structure capable of adapting to sensor storms, cascading invalidations within milliseconds, and preserving byte-level proof custody within the strictest embedded edge power limits.
 
 ## Conclusions
-1. **Synergetic Self-Organization vs. Simple Reactivity:** Conventional reactivity ($`\mathrm{Event} \to \mathrm{Action}`$) is merely a mechanical reflex. Genuine knowledge base self-organization emerges within an open, non-equilibrium system governed by Prigogine's and Haken's laws, wherein millions of fast sensor variables are slaved to macroscopic order parameters, enabling autonomous ontological adaptation without human intervention.
-2. **Two-Tier Hybrid Memory as a Phase Attractor (L0/L1):** The immutable golden master (`mmap`) guarantees that non-linear synergetic dynamics within L1 remain strictly bounded (Constrained Self-Organization), precluding catastrophic hallucinations or epistemic poisoning ($`\text{ZHR} = 1.00`$, $`\text{FCP} = 100\%`$).
-3. **JTMS and Quarantine as Information Dissipation:** Active defeaters (*Active Defeaters*) instantaneously excise unstable reasoning branches, actively exporting informational entropy ($`dS_{\text{ext}}/dt < 0`$), while the quarantine buffer acts as a semi-permeable selective membrane filtering external propositions.
+1. **Synergetic Self-Organization vs. Simple Reactivity:** Conventional reactivity ($\mathrm{Event} \to \mathrm{Action}$) is merely a mechanical reflex. Genuine knowledge base self-organization emerges within an open, non-equilibrium system governed by Prigogine's and Haken's laws, wherein millions of fast sensor variables are slaved to macroscopic order parameters, enabling autonomous ontological adaptation without human intervention.
+2. **Two-Tier Hybrid Memory as a Phase Attractor (L0/L1):** The immutable golden master (`mmap`) guarantees that non-linear synergetic dynamics within L1 remain strictly bounded (Constrained Self-Organization), precluding catastrophic hallucinations or epistemic poisoning ($\text{ZHR} = 1.00$, $\text{FCP} = 100\%$).
+3. **JTMS and Quarantine as Information Dissipation:** Active defeaters (*Active Defeaters*) instantaneously excise unstable reasoning branches, actively exporting informational entropy ($dS_{\text{ext}}/dt < 0$), while the quarantine buffer acts as a semi-permeable selective membrane filtering external propositions.
 4. **The Re-Search, Re-Ranking, and Re-Thinking Triad as the Engine of Adaptation:** Ashby's Law of Requisite Variety is operationalized through autonomous normative subgraph prefetching (Re-Search), dynamic norm priority restructuring (Re-Ranking), and AGM-compliant contradiction resolution (Re-Thinking).
 5. **Edge Hardware Energy Metabolism:** Deploying ultra-low-power NPUs and DSPs (1–5 W) supplies the thermodynamic power necessary to drive informational anti-entropy mechanisms directly aboard autonomous platforms, eliminating cloud dependency.
 
@@ -808,7 +808,7 @@ Chapter 17 defines semantic tool requirements, Chapter 18 substantiates hardware
 The next thematic chapter, [Chapter 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md), completes the core track with the inter-system exchange contract. Candidates originating from events and external feedback undergo the procedures of [Part V](part-05-verification-and-learning.md). Domain-specific applications are gathered in the [appendices](README.md#appendices).
 
 ## Self-Check Questions
-1. What is the fundamental distinction between elementary event reactivity ($`\mathrm{Event} \to \mathrm{Action}`$) and synergetic knowledge base self-organization according to Hermann Haken?
+1. What is the fundamental distinction between elementary event reactivity ($\mathrm{Event} \to \mathrm{Action}$) and synergetic knowledge base self-organization according to Hermann Haken?
 2. How does Haken's slaving principle overcome the curse of dimensionality when processing high-frequency sensor streams (1–10 kHz)?
 3. Why is the L0 memory tier conceptualized as a global phase truth attractor for the dynamic L1 delta layer?
 4. How is a physical sensor fault event transformed into an active defeater (*Active Defeater*) within a Justification-Based Truth Maintenance System (JTMS)?

@@ -94,15 +94,15 @@ To prevent epistemic fabrications, the foundation of an evidence-governed expert
 
 Parameters and mathematical characteristics of the grounding tuple:
 
-- $`\mathrm{DocID} \in \{0, 1\}^{256}`$ is the SHA-256 cryptographic hash of the entire raw document file stored in the immutable artifact repository, ensuring global source uniqueness and tamper-evident integrity [[7]](#src-7);
-- $`\mathrm{ByteStart}, \mathrm{ByteEnd} \in \mathbb{N}_0`$ define the integer half-open byte interval $`[\mathrm{ByteStart}, \mathrm{ByteEnd})`$ within the binary stream of the raw file using zero-based indexing, where $`0 \le \mathrm{ByteStart} < \mathrm{ByteEnd} \le \text{FileSize}`$;
-- $`\mathrm{SectionPath} \in \mathcal{P}`$ is the canonical hierarchical path in the document heading tree (e.g., `"3.3/Mail Transactions"`);
-- $`H_{\mathrm{quote}} = \mathrm{SHA256}(\text{FileBytes}[\mathrm{ByteStart}:\mathrm{ByteEnd}])`$ is the SHA-256 cryptographic hash of the exact quoted byte slice;
-- The angle brackets $`\langle \cdot \rangle`$ designate a strictly ordered tuple; the omission of any component renders the candidate fact invalid for formal verification.
+- $\mathrm{DocID} \in \{0, 1\}^{256}$ is the SHA-256 cryptographic hash of the entire raw document file stored in the immutable artifact repository, ensuring global source uniqueness and tamper-evident integrity [[7]](#src-7);
+- $\mathrm{ByteStart}, \mathrm{ByteEnd} \in \mathbb{N}_0$ define the integer half-open byte interval $[\mathrm{ByteStart}, \mathrm{ByteEnd})$ within the binary stream of the raw file using zero-based indexing, where $0 \le \mathrm{ByteStart} < \mathrm{ByteEnd} \le \text{FileSize}$;
+- $\mathrm{SectionPath} \in \mathcal{P}$ is the canonical hierarchical path in the document heading tree (e.g., `"3.3/Mail Transactions"`);
+- $H_{\mathrm{quote}} = \mathrm{SHA256}(\text{FileBytes}[\mathrm{ByteStart}:\mathrm{ByteEnd}])$ is the SHA-256 cryptographic hash of the exact quoted byte slice;
+- The angle brackets $\langle \cdot \rangle$ designate a strictly ordered tuple; the omission of any component renders the candidate fact invalid for formal verification.
 
 Practical implementation and engineering conclusions:
-- **Automated authenticity verification:** Prior to evaluating a fact within resolution refutation or theorem proving, the inference engine reads the raw byte interval $`\text{FileBytes}[\mathrm{ByteStart}:\mathrm{ByteEnd}]`$ from disk, recomputes its SHA-256 digest, and asserts equivalence with $`H_{\mathrm{quote}}`$.
-- **Fail-safe quarantine:** If the source document is modified by even a single bit or displaced, the cryptographic hash verification fails ($`\mathrm{SHA256} \ne H_{\mathrm{quote}}`$). The engine immediately rejects the fact with error code `E_GROUNDING_INTEGRITY_VIOLATION`, quarantines all dependent rules, and emits an audit alert, completely preventing ungrounded knowledge from entering the decision loop.
+- **Automated authenticity verification:** Prior to evaluating a fact within resolution refutation or theorem proving, the inference engine reads the raw byte interval $\text{FileBytes}[\mathrm{ByteStart}:\mathrm{ByteEnd}]$ from disk, recomputes its SHA-256 digest, and asserts equivalence with $H_{\mathrm{quote}}$.
+- **Fail-safe quarantine:** If the source document is modified by even a single bit or displaced, the cryptographic hash verification fails ($\mathrm{SHA256} \ne H_{\mathrm{quote}}$). The engine immediately rejects the fact with error code `E_GROUNDING_INTEGRITY_VIOLATION`, quarantines all dependent rules, and emits an audit alert, completely preventing ungrounded knowledge from entering the decision loop.
 
 > [!NOTE]
 > **Five Components of the Authorial Evidence Grounding Tuple $\mathcal{E}$**
@@ -191,17 +191,17 @@ Engineering specifications abound with fixed numerical parameters: port numbers,
 
 Parameters and components of the typed fact:
 
-- $`\mathrm{Subject} \in \mathcal{C}`$ is the canonical identifier of an ontology concept in the problem domain (e.g., `smtp:local-part` or `bms:cell_voltage`);
-- $`\mathrm{Relation} \in \mathcal{R}`$ denotes a semantic relation linking the concept to a value selected from a closed domain ontology matrix (e.g., `hasMaxLength`, `hasTimeout`, `hasTolerance`);
-- $`\mathrm{Value} \in \mathbb{R} \cup \mathrm{String}`$ represents the scalar numerical or string value of the extracted engineering parameter;
-- $`\mathrm{Unit} \in \mathcal{U}_{\mathrm{SI}} \cup \mathcal{U}_{\mathrm{std}}`$ defines the strictly specified physical SI unit or normative protocol unit ($`\text{octet}`$, $`\text{bit/s}`$, $`\text{ms}`$, $`\text{mV}`$); for dimensionless constants, the canonical marker $`\text{dimensionless}`$ is assigned;
-- $`\mathcal{E}`$ is the cryptographic evidence grounding tuple anchored to the immutable source file.
+- $\mathrm{Subject} \in \mathcal{C}$ is the canonical identifier of an ontology concept in the problem domain (e.g., `smtp:local-part` or `bms:cell_voltage`);
+- $\mathrm{Relation} \in \mathcal{R}$ denotes a semantic relation linking the concept to a value selected from a closed domain ontology matrix (e.g., `hasMaxLength`, `hasTimeout`, `hasTolerance`);
+- $\mathrm{Value} \in \mathbb{R} \cup \mathrm{String}$ represents the scalar numerical or string value of the extracted engineering parameter;
+- $\mathrm{Unit} \in \mathcal{U}_{\mathrm{SI}} \cup \mathcal{U}_{\mathrm{std}}$ defines the strictly specified physical SI unit or normative protocol unit ($\text{octet}$, $\text{bit/s}$, $\text{ms}$, $\text{mV}$); for dimensionless constants, the canonical marker $\text{dimensionless}$ is assigned;
+- $\mathcal{E}$ is the cryptographic evidence grounding tuple anchored to the immutable source file.
 
 Practical application and engineering conclusions:
-- **Admission gate type and unit validation:** The admission gate automatically validates the dimensional compatibility of $`\mathrm{Unit}`$ against the formal signature of $`\mathrm{Relation}`$. If an octet count is assigned to a temporal duration or if a unit is undefined, the fact is unconditionally rejected with error code `E_INVALID_UNIT_DIMENSION`.
-- **Elimination of phantom facts:** The ordered tuple mandates the explicit presence of all five components. Any candidate assertion with an empty grounding $`\mathcal{E}`$ or an unverified primary source hash is blocked as a potential extractor hallucination.
+- **Admission gate type and unit validation:** The admission gate automatically validates the dimensional compatibility of $\mathrm{Unit}$ against the formal signature of $\mathrm{Relation}$. If an octet count is assigned to a temporal duration or if a unit is undefined, the fact is unconditionally rejected with error code `E_INVALID_UNIT_DIMENSION`.
+- **Elimination of phantom facts:** The ordered tuple mandates the explicit presence of all five components. Any candidate assertion with an empty grounding $\mathcal{E}$ or an unverified primary source hash is blocked as a potential extractor hallucination.
 
-For example, Section 4.5.3.1.1 of RFC 5321 stipulates: *"The maximum total length of a user name or other local-part is 64 octets"* [[2]](#src-2). The extractor compiles this sentence into the fact $`\langle \text{local-part}, \mathrm{maxLength}, 64, \text{octet}, \mathcal{E} \rangle`$, where $`\mathcal{E}`$ references the precise byte offsets of that sentence. Section 4.5.3.1.6 establishes a complementary constraint: the maximum total length of a text line, including CRLF, shall not exceed 1000 octets. Both facts are admitted as verifiable invariants against which the expert system deterministically audits mail server logs.
+For example, Section 4.5.3.1.1 of RFC 5321 stipulates: *"The maximum total length of a user name or other local-part is 64 octets"* [[2]](#src-2). The extractor compiles this sentence into the fact $\langle \text{local-part}, \mathrm{maxLength}, 64, \text{octet}, \mathcal{E} \rangle$, where $\mathcal{E}$ references the precise byte offsets of that sentence. Section 4.5.3.1.6 establishes a complementary constraint: the maximum total length of a text line, including CRLF, shall not exceed 1000 octets. Both facts are admitted as verifiable invariants against which the expert system deterministically audits mail server logs.
 
 #### 3.2.2. Normative Requirements
 
@@ -435,16 +435,16 @@ flowchart TD
 
 #### 3.4.1. Harvesting Symbols, Topology, and Lexicon (Symbol Harvesting)
 
-During Pass 1, the compiler produces no final normative facts; instead, it compiles a spatially-typed **Document Symbol Table** ($`\mathrm{SymbolTable}`$):
+During Pass 1, the compiler produces no final normative facts; instead, it compiles a spatially-typed **Document Symbol Table** ($\mathrm{SymbolTable}$):
 1. **Extraction of local definitions and glossaries:** The compiler identifies definitional constructs (`DEFINE`, `SHALL MEAN`, `IS DEFINED AS`, `STANDS FOR`) and registers newly introduced concepts, synonyms, and acronyms.
-2. **Construction of scope topology:** Every section, clause, and table in the specification establishes an isolated lexical namespace ($`\mathrm{Scope}`$). Explicitly declared actors (e.g., `Client`, `Server`, `Controller`, `Receiver`) are registered within their enclosing scopes.
+2. **Construction of scope topology:** Every section, clause, and table in the specification establishes an isolated lexical namespace ($\mathrm{Scope}$). Explicitly declared actors (e.g., `Client`, `Server`, `Controller`, `Receiver`) are registered within their enclosing scopes.
 3. **Automated candidate verb harvesting:** Restricting semantic parsing to a hardcoded list of verbs introduces blind spots. The compiler analyzes the corpus using computational lexicons (WordNet, VerbNet, the Academic Word List (AWL), and ISO/IEC/IEEE 24765 systems terminology). Domain-specific verbs exceeding empirical frequency thresholds are proposed to the admission gate as candidate additions to the multidimensional action ontology.
 
 #### 3.4.2. Semantic Binding and Anaphora Resolution
 
 During Pass 2, full syntactic and semantic parsing proceeds, parameterized by the populated Symbol Table:
-- **Typed Anaphora Resolution:** When the dependency parser encounters a pronoun (`it`, `this`, `they`) in the subject position of a normative statement, the compiler queries the active $`\mathrm{Scope}`$. The pronoun is deterministically resolved to the nearest syntactically dominant antecedent matching gender and number (e.g., within the scope of *"Handshake Protocol: Client"*, the statement *"It MUST compute the Finished verify_data..."* is bound unambiguously to subject `Client`).
-- **Invariance of evidence grounding:** Subject normalization to a canonical ontology symbol occurs exclusively within the semantic layer ($`\mathrm{Subject} = \text{"Client"}`$), whereas the grounding tuple $`\mathcal{E} = \langle \mathrm{DocID}, \mathrm{ByteStart}, \mathrm{ByteEnd}, \dots \rangle`$ and cryptographic hash $`H_{\mathrm{quote}}`$ strictly preserve the literal raw bytes of the source document containing the original token *"It"*.
+- **Typed Anaphora Resolution:** When the dependency parser encounters a pronoun (`it`, `this`, `they`) in the subject position of a normative statement, the compiler queries the active $\mathrm{Scope}$. The pronoun is deterministically resolved to the nearest syntactically dominant antecedent matching gender and number (e.g., within the scope of *"Handshake Protocol: Client"*, the statement *"It MUST compute the Finished verify_data..."* is bound unambiguously to subject `Client`).
+- **Invariance of evidence grounding:** Subject normalization to a canonical ontology symbol occurs exclusively within the semantic layer ($\mathrm{Subject} = \text{"Client"}$), whereas the grounding tuple $\mathcal{E} = \langle \mathrm{DocID}, \mathrm{ByteStart}, \mathrm{ByteEnd}, \dots \rangle$ and cryptographic hash $H_{\mathrm{quote}}$ strictly preserve the literal raw bytes of the source document containing the original token *"It"*.
 - **Materialization of ground atoms:** Pass 2 culminates in a verified set of ground knowledge atoms, completely liberated from ambiguous pronouns and strictly bound to canonical ontology symbols.
 
 ### 3.5. Theory of Floating Semantic Windows versus Naive Fixed Chunking
@@ -465,11 +465,11 @@ V_R \ge V_D - V_C
 ```
 
 Parameters and mathematical components of the formula:
-- $`V_R \in \mathbb{R}_{\ge 0}`$ is the entropic variety of regulator states (the internal capacity of the segmentation mechanism to dynamically adapt the boundary, size, and semantic capacity of the FAU window);
-- $`V_D \in \mathbb{R}_{> 0}`$ is the entropic variety and structural variability of the input normative text (syntactic sentence complexity, presence of nested conditional structures, exceptions, footnotes, and specification tables);
-- $`V_C \in \mathbb{R}_{\ge 0}`$ is the allowable residual entropy (the permissible semantic ambiguity at the segmenter output under which the extractor deterministically types facts without losing predicative cohesion; for mission-critical systems, $`V_C \to 0`$ is strictly mandated).
+- $V_R \in \mathbb{R}_{\ge 0}$ is the entropic variety of regulator states (the internal capacity of the segmentation mechanism to dynamically adapt the boundary, size, and semantic capacity of the FAU window);
+- $V_D \in \mathbb{R}_{> 0}$ is the entropic variety and structural variability of the input normative text (syntactic sentence complexity, presence of nested conditional structures, exceptions, footnotes, and specification tables);
+- $V_C \in \mathbb{R}_{\ge 0}$ is the allowable residual entropy (the permissible semantic ambiguity at the segmenter output under which the extractor deterministically types facts without losing predicative cohesion; for mission-critical systems, $V_C \to 0$ is strictly mandated).
 
-A fixed window of length $`N = 512`$ tokens is completely rigid: its spatial boundaries are constant, and consequently its regulatory variety with respect to detecting semantic ruptures is identically zero ($`V_R = 0`$). Because the syntactic complexity of engineering discourse is high ($`V_D \gg 0`$), Ashby's condition $`0 \ge V_D - V_C`$ is violated. The inevitable outcome is semantic collapse: severed predicates and generative hallucinations during model extraction.
+A fixed window of length $N = 512$ tokens is completely rigid: its spatial boundaries are constant, and consequently its regulatory variety with respect to detecting semantic ruptures is identically zero ($V_R = 0$). Because the syntactic complexity of engineering discourse is high ($V_D \gg 0$), Ashby's condition $0 \ge V_D - V_C$ is violated. The inevitable outcome is semantic collapse: severed predicates and generative hallucinations during model extraction.
 
 #### 2. Sliding Window Protocol of Semantic Annotation
 
@@ -489,32 +489,32 @@ To retrieve candidate FAUs during knowledge extraction or in response to enginee
 ```
 
 Parameters and mathematical components of the formula:
-- $`d \in \mathcal{D}_{\mathrm{FAU}}`$ represents a structural FAU (normative clause, article, or table);
-- $`m \in \{\mathrm{BM25}, \mathrm{Dense}\}`$ designates the heterogeneous retrieval channels (sparse lexical matching vs. dense HNSW vector search);
-- $`\mathrm{rank}_m(d) \in \mathbb{N}_{\ge 1}`$ is the ordinal rank of candidate $`d`$ in channel $`m`$ ($`1`$ denotes top rank; if a document is absent from a channel's top candidates, $`\mathrm{rank}_m(d) = \infty`$, yielding a zero term);
-- $`k \in \mathbb{N}_{> 0}`$ is the empirical smoothing hyperparameter (canonically $`k = 60`$), dampening the influence of rank outliers within any single channel;
-- $`\mathrm{RRF}(d) \in (0, \frac{2}{k+1}]`$ is the consolidated consensus score.
+- $d \in \mathcal{D}_{\mathrm{FAU}}$ represents a structural FAU (normative clause, article, or table);
+- $m \in \{\mathrm{BM25}, \mathrm{Dense}\}$ designates the heterogeneous retrieval channels (sparse lexical matching vs. dense HNSW vector search);
+- $\mathrm{rank}_m(d) \in \mathbb{N}_{\ge 1}$ is the ordinal rank of candidate $d$ in channel $m$ ($1$ denotes top rank; if a document is absent from a channel's top candidates, $\mathrm{rank}_m(d) = \infty$, yielding a zero term);
+- $k \in \mathbb{N}_{> 0}$ is the empirical smoothing hyperparameter (canonically $k = 60$), dampening the influence of rank outliers within any single channel;
+- $\mathrm{RRF}(d) \in (0, \frac{2}{k+1}]$ is the consolidated consensus score.
 
 #### 3.5.1. Actionable Closed Loop of FAU Semantic Window Dimensioning
 
 1. **Control Flow & Runtime Decisions:**
-   - The segmenter runtime tracks an unresolved anaphora counter $`B_{\mathrm{anaphora}}`$ and a deontic incompleteness flag $`F_{\mathrm{deontic}}`$. As long as $`B_{\mathrm{anaphora}} > 0`$ or $`F_{\mathrm{deontic}} = \mathrm{true}`$, the sliding window remains in the `EXPAND` state, blocking chunk emissions to the indexing queue.
-   - Committing a block to the index (`FLUSH_FAU`) is strictly authorized only when $`B_{\mathrm{anaphora}} = 0 \land F_{\mathrm{deontic}} = \mathrm{false}`$.
-   - If, due to excessively convoluted authorial phrasing, the window reaches the hard hardware limit $`L_{\mathrm{max}} = 2048`$ tokens without satisfying closure conditions, the runtime enters the protective `DEGRADED_SPLIT` state. A boundary split is executed at the final sentence delimiter, an audit event `WARN_ANAPHORA_DISRUPTED` is dispatched, and the terminating sentence is prepended as a context prefix to the succeeding window.
-   - During candidate pool selection for extractors, a compound filtering threshold is applied: at most $`K_{\mathrm{pool}} = 20`$ chunks satisfying $`\mathrm{RRF}(d) \ge 0.025`$ are retained. If $`\max_{d} \mathrm{RRF}(d) < \tau_{\mathrm{min}}`$, execution halts with error `E_NO_CONFIDENT_RETRIEVAL`, preventing the transmission of ungrounded or noisy context.
+   - The segmenter runtime tracks an unresolved anaphora counter $B_{\mathrm{anaphora}}$ and a deontic incompleteness flag $F_{\mathrm{deontic}}$. As long as $B_{\mathrm{anaphora}} > 0$ or $F_{\mathrm{deontic}} = \mathrm{true}$, the sliding window remains in the `EXPAND` state, blocking chunk emissions to the indexing queue.
+   - Committing a block to the index (`FLUSH_FAU`) is strictly authorized only when $B_{\mathrm{anaphora}} = 0 \land F_{\mathrm{deontic}} = \mathrm{false}$.
+   - If, due to excessively convoluted authorial phrasing, the window reaches the hard hardware limit $L_{\mathrm{max}} = 2048$ tokens without satisfying closure conditions, the runtime enters the protective `DEGRADED_SPLIT` state. A boundary split is executed at the final sentence delimiter, an audit event `WARN_ANAPHORA_DISRUPTED` is dispatched, and the terminating sentence is prepended as a context prefix to the succeeding window.
+   - During candidate pool selection for extractors, a compound filtering threshold is applied: at most $K_{\mathrm{pool}} = 20$ chunks satisfying $\mathrm{RRF}(d) \ge 0.025$ are retained. If $\max_{d} \mathrm{RRF}(d) < \tau_{\mathrm{min}}$, execution halts with error `E_NO_CONFIDENT_RETRIEVAL`, preventing the transmission of ungrounded or noisy context.
 2. **Hardware Dimensioning:**
-   - For an execution pool of $`N_{\mathrm{workers}} = 16`$ parallel extractors, each FAU window is allocated a circular ring buffer sized at $`L_{\mathrm{max}} \times S_{\mathrm{token}} = 2048 \times 64\,\text{bytes} = 128\,\text{KB}`$.
-   - The aggregate RAM footprint across all concurrent windows equals $`16 \times 128\,\text{KB} = 2\,\text{MB}`$, fitting entirely within the ultra-fast L3 cache of modern x86_64 or ARM Cortex processors ($`16\text{--}64\,\text{MB}`$). This eliminates DRAM latency bottlenecks, sustaining sustained processing throughput exceeding $`1.4\,\text{GB/s}`$.
+   - For an execution pool of $N_{\mathrm{workers}} = 16$ parallel extractors, each FAU window is allocated a circular ring buffer sized at $L_{\mathrm{max}} \times S_{\mathrm{token}} = 2048 \times 64\,\text{bytes} = 128\,\text{KB}$.
+   - The aggregate RAM footprint across all concurrent windows equals $16 \times 128\,\text{KB} = 2\,\text{MB}$, fitting entirely within the ultra-fast L3 cache of modern x86_64 or ARM Cortex processors ($16\text{--}64\,\text{MB}$). This eliminates DRAM latency bottlenecks, sustaining sustained processing throughput exceeding $1.4\,\text{GB/s}$.
 3. **Worked Numerical Example:**
    - Consider the ingestion of Clause 4.2 of an ISO 26262 electric vehicle traction inverter specification spanning 610 tokens.
    - A naive fixed chunking scheme of 512 tokens bisects the clause at token 512: the first chunk contains the mandate "the inverter MUST de-energize within 10 ms", while the second chunk contains the safety exception "except during emergency dynamic braking when stator winding temperature remains below 120 °C". Given only the first chunk, the inference engine deduces an unconditional de-energization obligation, provoking catastrophic steering loss during HIL test benches.
-   - The FAU sliding window detects the unclosed deontic exception ($`F_{\mathrm{deontic}} = \mathrm{true}`$) and holds the window open until token 610 ($`L = 610 \le L_{\mathrm{max}}`$). During retrieval on an engineer's query, this intact unit ranks 2nd in BM25 ($`\mathrm{rank}_{\mathrm{BM25}} = 2`$) and 3rd in HNSW ($`\mathrm{rank}_{\mathrm{Dense}} = 3`$). Applying the RRF formula with $`k = 60`$:
+   - The FAU sliding window detects the unclosed deontic exception ($F_{\mathrm{deontic}} = \mathrm{true}$) and holds the window open until token 610 ($L = 610 \le L_{\mathrm{max}}$). During retrieval on an engineer's query, this intact unit ranks 2nd in BM25 ($\mathrm{rank}_{\mathrm{BM25}} = 2$) and 3rd in HNSW ($\mathrm{rank}_{\mathrm{Dense}} = 3$). Applying the RRF formula with $k = 60$:
 
 ```math
 \mathrm{RRF}(d) = \frac{1}{60 + 2} + \frac{1}{60 + 3} = \frac{1}{62} + \frac{1}{63} \approx 0{,}01613 + 0{,}01587 = 0{,}03200 \ge 0{,}025.
 ```
 
-   - Because $`0.03200 \ge 0.025`$, the chunk clears the admission threshold and is forwarded to the extractor as an unbroken deontic requirement preserving all conditions and defeaters.
+   - Because $0.03200 \ge 0.025$, the chunk clears the admission threshold and is forwarded to the extractor as an unbroken deontic requirement preserving all conditions and defeaters.
 
 Embedding model selection must be validated against proprietary domain data. As established by the Massive Text Embedding Benchmark (MTEB), no single embedding model dominates across all retrieval tasks [[13]](#src-13). General leaderboards provide zero guarantee of efficacy on narrow-domain technical corpora; models must be benchmarked on curated golden datasets with known ground-truth targets.
 
@@ -542,20 +542,20 @@ A protocol or controller finite-state machine is formally defined by the 5-tuple
 
 Parameters and formal components:
 
-- $`S`$ is a non-empty, finite set of discrete system states (e.g., for SMTP: $`\{\text{Connected}, \text{Ready}, \text{MailOpen}, \text{HasRcpt}, \text{DataBody}\}`$; for BMS: $`\{\text{STANDBY}, \text{PRECHARGE}, \text{RUN}, \text{FAULT}\}`$);
-- $`\Sigma`$ is a finite input alphabet of events, protocol commands, or hardware interrupts;
-- $`\delta: S \times \Sigma \to S \cup \{\bot\}`$ denotes the state transition function, wherein the symbol $`\bot`$ explicitly designates a **forbidden transition** (an impermissible operational sequence);
-- $`s_0 \in S`$ is the designated initial state upon system reset;
-- $`F \subseteq S`$ is the set of permissible terminal or quiescent session termination states.
+- $S$ is a non-empty, finite set of discrete system states (e.g., for SMTP: $\{\text{Connected}, \text{Ready}, \text{MailOpen}, \text{HasRcpt}, \text{DataBody}\}$; for BMS: $\{\text{STANDBY}, \text{PRECHARGE}, \text{RUN}, \text{FAULT}\}$);
+- $\Sigma$ is a finite input alphabet of events, protocol commands, or hardware interrupts;
+- $\delta: S \times \Sigma \to S \cup \{\bot\}$ denotes the state transition function, wherein the symbol $\bot$ explicitly designates a **forbidden transition** (an impermissible operational sequence);
+- $s_0 \in S$ is the designated initial state upon system reset;
+- $F \subseteq S$ is the set of permissible terminal or quiescent session termination states.
 
 Practical application and engineering conclusions:
-- **Constant-time anomaly detection:** During telemetry or network traffic monitoring, each arriving event $`e \in \Sigma`$ is validated against the transition matrix $`\delta`$ in deterministic $`\mathcal{O}(1)`$ time.
-- **Fail-safe violation containment:** If for the current state-event pair $`(s, e)`$, the transition yields $`\delta(s, e) = \bot`$, the controller halts execution with fault code `E_PROTOCOL_SEQUENCE_VIOLATION`, preserves the current safe state $`s`$, and inhibits data corruption.
+- **Constant-time anomaly detection:** During telemetry or network traffic monitoring, each arriving event $e \in \Sigma$ is validated against the transition matrix $\delta$ in deterministic $\mathcal{O}(1)$ time.
+- **Fail-safe violation containment:** If for the current state-event pair $(s, e)$, the transition yields $\delta(s, e) = \bot$, the controller halts execution with fault code `E_PROTOCOL_SEQUENCE_VIOLATION`, preserves the current safe state $s$, and inhibits data corruption.
 
-Classical automata theory typically defines $`\delta`$ as a total function. In protocol engineering, a partial function with an explicit $`\bot`$ element is vastly superior, as forbidden transitions carry the highest diagnostic value. Furthermore, protocol automata emit response codes upon transition, operating effectively as Mealy machines; in this chapter, response codes are modeled as transition annotations.
+Classical automata theory typically defines $\delta$ as a total function. In protocol engineering, a partial function with an explicit $\bot$ element is vastly superior, as forbidden transitions carry the highest diagnostic value. Furthermore, protocol automata emit response codes upon transition, operating effectively as Mealy machines; in this chapter, response codes are modeled as transition annotations.
 
 > [!WARNING] Diagnostic Authority of Forbidden Transitions ($\bot$)
-> Academic discrete mathematics often totalizes transition functions by introducing a sink error state or simply discarding undefined transitions. For functional safety expert systems (ISO 26262, DO-178C), every pair $`(s, e)`$ where $`\delta(s, e) = \bot`$ represents an indispensable safety invariant. The set of forbidden transitions defines the threat model: attack surfaces, protocol violations, and hardware failure modes. The expert system's test generator ingests these forbidden transitions to synthesize negative test suites (*fault-injection test suites*): transmitting a `DATA` command before completing `EHLO`, commanding high-voltage contactor closure during precharge, or injecting an invalid packet ID on the CAN bus. If a device under test fails to reject such an event or fails to transition into a designated safe state, a safety violation is flagged prior to physical hardware deployment.
+> Academic discrete mathematics often totalizes transition functions by introducing a sink error state or simply discarding undefined transitions. For functional safety expert systems (ISO 26262, DO-178C), every pair $(s, e)$ where $\delta(s, e) = \bot$ represents an indispensable safety invariant. The set of forbidden transitions defines the threat model: attack surfaces, protocol violations, and hardware failure modes. The expert system's test generator ingests these forbidden transitions to synthesize negative test suites (*fault-injection test suites*): transmitting a `DATA` command before completing `EHLO`, commanding high-voltage contactor closure during precharge, or injecting an invalid packet ID on the CAN bus. If a device under test fails to reject such an event or fails to transition into a designated safe state, a safety violation is flagged prior to physical hardware deployment.
 
 ### 4.2. Engineering Case Study: SMTP Session Protocol
 
@@ -584,7 +584,7 @@ The diagram formalizes protocol sequencing: upon establishing a transport connec
 
 ### 4.3. Algorithm for Extracting Automaton Transitions from Text
 
-Technical specifications express state machines in two primary syntactic forms. The first consists of explicit transition tables with columns such as "Current State", "Event", "Next State", and "Response Code"; these are directly compiled into $`\delta`$ by tabular extractors. The second form consists of behavioral prose scattered across various chapters. In RFC 5321, the extractor detects four primary linguistic transition patterns:
+Technical specifications express state machines in two primary syntactic forms. The first consists of explicit transition tables with columns such as "Current State", "Event", "Next State", and "Response Code"; these are directly compiled into $\delta$ by tabular extractors. The second form consists of behavioral prose scattered across various chapters. In RFC 5321, the extractor detects four primary linguistic transition patterns:
 
 - **Precondition clauses.** *"A session that will contain mail transactions MUST first be initialized by the use of the EHLO command"* (Section 4.1.4): transition `MAIL FROM` is valid exclusively from states reachable subsequent to `EHLO`.
 - **State-specific prohibitions.** *"MAIL (or SEND, SOML, or SAML) MUST NOT be sent if a mail transaction is already open"* (Section 4.1.4): in states `MailOpen` and `HasRcpt`, the client is prohibited from issuing `MAIL FROM`.
@@ -599,21 +599,21 @@ For any given state, the extractor computes the whitelist of permissible incomin
 
 Parameters and components:
 
-- $`s \in S`$ is the active discrete state of automaton $`\mathcal{M}`$;
-- $`\Sigma`$ is the complete input alphabet of protocol commands or events;
-- $`e \in \Sigma`$ is a specific incoming command;
-- $`\delta(s, e) \neq \bot`$ is the boolean predicate filtering out all forbidden transitions ($`\bot`$);
-- $`\mathrm{ValidNext}(s) \subseteq \Sigma`$ is the closed whitelist of permissible next actions in state $`s`$.
+- $s \in S$ is the active discrete state of automaton $\mathcal{M}$;
+- $\Sigma$ is the complete input alphabet of protocol commands or events;
+- $e \in \Sigma$ is a specific incoming command;
+- $\delta(s, e) \neq \bot$ is the boolean predicate filtering out all forbidden transitions ($\bot$);
+- $\mathrm{ValidNext}(s) \subseteq \Sigma$ is the closed whitelist of permissible next actions in state $s$.
 
 Practical implementation and engineering conclusions:
-- **Whitelist gateway enforcement:** Network perimeter gateways and interface monitors implement security based directly on $`\mathrm{ValidNext}(s)`$. Any command $`e \notin \mathrm{ValidNext}(s)`$ is rejected immediately at deserialization time with a protocol error code (e.g., 503 in SMTP, or a bus abort in CAN) without touching downstream business logic.
-- **Fail-safe desynchronization prevention:** When a client issues an illegal command, the system does not enter an undefined error state; it remains in verified state $`s`$, preventing state desynchronization between sender and receiver.
+- **Whitelist gateway enforcement:** Network perimeter gateways and interface monitors implement security based directly on $\mathrm{ValidNext}(s)$. Any command $e \notin \mathrm{ValidNext}(s)$ is rejected immediately at deserialization time with a protocol error code (e.g., 503 in SMTP, or a bus abort in CAN) without touching downstream business logic.
+- **Fail-safe desynchronization prevention:** When a client issues an illegal command, the system does not enter an undefined error state; it remains in verified state $s$, preventing state desynchronization between sender and receiver.
 
-The extractor couples every transition and prohibition with its grounding tuple $`\mathcal{E}`$ anchored to the originating sentence.
+The extractor couples every transition and prohibition with its grounding tuple $\mathcal{E}$ anchored to the originating sentence.
 
 ### 4.4. Automated Generation of Negative Test Suites
 
-A formalized automaton enables the automated synthesis of negative conformance test suites. For every state $`s`$ and every command $`e \notin \mathrm{ValidNext}(s)`$, the system synthesizes a negative test case: drive the system into state $`s`$, inject command $`e`$, and assert the response. The expected test outcome is strictly dictated by the deontic modality of the source clause, demonstrating why [Chapter 14](ch14-requirements-detection-and-formalization.md) rigorously distinguishes MUST from MAY. The table below illustrates three tests generated from RFC 5321.
+A formalized automaton enables the automated synthesis of negative conformance test suites. For every state $s$ and every command $e \notin \mathrm{ValidNext}(s)$, the system synthesizes a negative test case: drive the system into state $s$, inject command $e$, and assert the response. The expected test outcome is strictly dictated by the deontic modality of the source clause, demonstrating why [Chapter 14](ch14-requirements-detection-and-formalization.md) rigorously distinguishes MUST from MAY. The table below illustrates three tests generated from RFC 5321.
 
 | Current State | Out-of-Order Command | RFC 5321 Specification Clause | Test Assertion & Expected Verdict |
 |---|---|---|---|
@@ -627,7 +627,7 @@ The completeness of an extracted automaton is strictly bounded by the completene
 
 ### 4.5. Transition Detection Patterns in Normative Text
 
-In industrial practice, technical specifications articulate state transitions using diverse syntactic styles. An advanced behavioral extractor employs four complementary pattern-matching strategies to detect transitions $`\delta(s, e) = s'`$:
+In industrial practice, technical specifications articulate state transitions using diverse syntactic styles. An advanced behavioral extractor employs four complementary pattern-matching strategies to detect transitions $\delta(s, e) = s'$:
 
 1. **Strategy A (Explicit Causal Predicates):** Sentences utilizing explicit transition verbs:
    <details>
@@ -750,27 +750,27 @@ The parameter extractor normalizes natural language descriptions into typed **`s
 
 Parameters and normalization components:
 
-- $`\mathcal{Q}`$ is a typed atom representing a normalized quantitative requirement, structured for ingestion by an SMT/arithmetic solver;
-- $`\text{Parameter} \in \mathcal{P}`$ is the canonical concept identifier in the domain ontology (e.g., `bms:max_cell_voltage`, `smtp:command_timeout`);
-- $`\text{Operator} \in \{ =, \le, \ge, <, >, \in [a, b] \}`$ denotes the comparison or set-inclusion operator;
-- $`\text{Value}_{\text{norm}} \in \mathbb{R}`$ is the scalar value strictly normalized to the canonical base SI unit or standard protocol unit;
-- $`\text{BaseUnit} \in \mathcal{U}_{\mathrm{SI}} \cup \mathcal{U}_{\mathrm{std}}`$ is the canonical dimension (second $`\text{s}`$, byte $`\text{B}`$, hertz $`\text{Hz}`$, volt $`\text{V}`$, octet $`\text{octet}`$);
-- $`\text{RawQuote}`$ is the verbatim primary source substring anchored by grounding tuple $`\mathcal{E}`$.
+- $\mathcal{Q}$ is a typed atom representing a normalized quantitative requirement, structured for ingestion by an SMT/arithmetic solver;
+- $\text{Parameter} \in \mathcal{P}$ is the canonical concept identifier in the domain ontology (e.g., `bms:max_cell_voltage`, `smtp:command_timeout`);
+- $\text{Operator} \in \{ =, \le, \ge, <, >, \in [a, b] \}$ denotes the comparison or set-inclusion operator;
+- $\text{Value}_{\text{norm}} \in \mathbb{R}$ is the scalar value strictly normalized to the canonical base SI unit or standard protocol unit;
+- $\text{BaseUnit} \in \mathcal{U}_{\mathrm{SI}} \cup \mathcal{U}_{\mathrm{std}}$ is the canonical dimension (second $\text{s}$, byte $\text{B}$, hertz $\text{Hz}$, volt $\text{V}$, octet $\text{octet}$);
+- $\text{RawQuote}$ is the verbatim primary source substring anchored by grounding tuple $\mathcal{E}$.
 
 Practical application and engineering conclusions:
-- **Automated inequality solving:** By projecting quantities onto a unified dimension $`\text{BaseUnit}`$, formal SMT provers (such as Z3) evaluate inequality systems directly. If a specification mandates $`\text{Value}_{\text{norm}} \ge 300.0\,\text{s}`$ while firmware configuration sets $`250\,\text{s}`$, the solver immediately synthesizes a counterexample proof of non-conformance.
-- **Fail-safe prefix normalization:** Ambiguous decimal and binary prefixes (e.g., `1 Mbps` as $`10^6\,\text{bit/s}`$ vs. $`2^{20}\,\text{bit/s}`$) mandate strict normalization conforming to IEC 80000-13; in cases of ambiguity, the admission gate rejects the parameter until confirmed by an engineer.
+- **Automated inequality solving:** By projecting quantities onto a unified dimension $\text{BaseUnit}$, formal SMT provers (such as Z3) evaluate inequality systems directly. If a specification mandates $\text{Value}_{\text{norm}} \ge 300.0\,\text{s}$ while firmware configuration sets $250\,\text{s}$, the solver immediately synthesizes a counterexample proof of non-conformance.
+- **Fail-safe prefix normalization:** Ambiguous decimal and binary prefixes (e.g., `1 Mbps` as $10^6\,\text{bit/s}$ vs. $2^{20}\,\text{bit/s}$) mandate strict normalization conforming to IEC 80000-13; in cases of ambiguity, the admission gate rejects the parameter until confirmed by an engineer.
 
 | Standard Specification Text | Extracted Operator | Normalized Value | Canonical Base Unit |
 |---|:---:|:---:|:---:|
-| *"Server MUST wait at least 5 minutes"* | $`\ge`$ | `300.0` | `s` (second) |
-| *"Maximum command length is 512 octets"* | $`\le`$ | `512` | `octet` (eight bits) |
-| *"CAN bus bit rate shall not exceed 1 Mbps"* | $`\le`$ | `1000000` | `bit/s` (decimal prefix M) |
-| *"Operating temperature is at least -40 °C and at most +85 °C"* | $`\in [-40, +85]`$ | `[-40, 85]` | `°C` (degrees Celsius) |
+| *"Server MUST wait at least 5 minutes"* | $\ge$ | `300.0` | `s` (second) |
+| *"Maximum command length is 512 octets"* | $\le$ | `512` | `octet` (eight bits) |
+| *"CAN bus bit rate shall not exceed 1 Mbps"* | $\le$ | `1000000` | `bit/s` (decimal prefix M) |
+| *"Operating temperature is at least -40 °C and at most +85 °C"* | $\in [-40, +85]$ | `[-40, 85]` | `°C` (degrees Celsius) |
 
 These table rows represent illustrative pedagogical examples rather than clauses from a single standard. Normalization preserves the original unit, exact decimal representation, and relational operator. An octet is never converted to a byte without an explicit definition of byte width; bit rate is never conflated with baud rate. Temperature values require affine conversion formulas, and ambiguous linguistic constructs such as "between" require explicit engineering confirmation of interval closure. Formal unit verification tools are detailed in [Chapter 14](ch14-requirements-detection-and-formalization.md).
 
-Through normalization, symbolic engines automatically solve systems of inequalities during requirements verification: $`250\ \text{s} < 300\ \text{s} \implies`$ **Violation of minimum timeout constraint**.
+Through normalization, symbolic engines automatically solve systems of inequalities during requirements verification: $250\ \text{s} < 300\ \text{s} \implies$ **Violation of minimum timeout constraint**.
 
 ---
 
@@ -839,7 +839,7 @@ flowchart TD
 
 The evolution of SMTP exemplifies these dynamics. RFC 821, published by Jon Postel in 1982 [[15]](#src-15), was superseded by RFC 2821 in 2001, which concurrently obsoleted RFC 974 and RFC 1869 [[16]](#src-16). RFC 2821 was subsequently obsoleted by RFC 5321 [[2]](#src-2). RFC 7504 does not supersede RFC 5321, but amends it by introducing reply codes 521 and 556 [[17]](#src-17). Furthermore, RFC 5321 is accompanied by errata records possessing divergent regulatory statuses: some are formally verified (*Verified*), while others are marked *Held for Document Update* [[18]](#src-18). An expert system must distinguish these categories: a verified erratum immediately alters the operational reading of a requirement, whereas an unverified notice merely registers an editorial note for the next revision cycle.
 
-The document lineage graph differentiates total supersession (*Obsoletes*), targeted amendments (*Updates*), and textual corrections (*Errata*). Deprecation (*Deprecates*) constitutes a distinct domain relation; its operational implications are governed by domain policies rather than global prohibitions. The formula below articulates an illustrative policy determining the status of rule $`P`$ within revision $`V`$:
+The document lineage graph differentiates total supersession (*Obsoletes*), targeted amendments (*Updates*), and textual corrections (*Errata*). Deprecation (*Deprecates*) constitutes a distinct domain relation; its operational implications are governed by domain policies rather than global prohibitions. The formula below articulates an illustrative policy determining the status of rule $P$ within revision $V$:
 
 ```math
 \mathrm{Status}(P, V) = \begin{cases}
@@ -852,19 +852,19 @@ The document lineage graph differentiates total supersession (*Obsoletes*), targ
 
 Parameters and boolean predicates of version lineage:
 
-- $`P \in \mathcal{R}_{\mathrm{rules}}`$ is a specific engineering requirement, fact, or invariant claiming validity;
-- $`V \in \mathcal{V}_{\mathrm{versions}}`$ designates the target release baseline or revision epoch of the normative corpus;
-- $`\mathrm{Lineage}(V) \subseteq \mathcal{D}`$ is the set of documents transitively linked via ancestral lineage to revision $`V`$;
-- $`\mathrm{Revokes}(D, P)`$ is a boolean predicate asserting that document $`D`$ explicitly revokes or obsoletes rule $`P`$;
-- $`\mathrm{Deprecates}(D, P)`$ asserts that rule $`P`$ is transitioned to deprecated status with a scheduled sunset;
-- $`\mathrm{Defines}(D, P)`$ asserts that rule $`P`$ is normatively defined within document $`D`$;
-- $`\mathrm{Status}(P, V) \in \{\mathrm{Active}, \mathrm{Deprecated}, \mathrm{Obsolete}, \mathrm{Unknown}\}`$ is the deterministic status of the rule.
+- $P \in \mathcal{R}_{\mathrm{rules}}$ is a specific engineering requirement, fact, or invariant claiming validity;
+- $V \in \mathcal{V}_{\mathrm{versions}}$ designates the target release baseline or revision epoch of the normative corpus;
+- $\mathrm{Lineage}(V) \subseteq \mathcal{D}$ is the set of documents transitively linked via ancestral lineage to revision $V$;
+- $\mathrm{Revokes}(D, P)$ is a boolean predicate asserting that document $D$ explicitly revokes or obsoletes rule $P$;
+- $\mathrm{Deprecates}(D, P)$ asserts that rule $P$ is transitioned to deprecated status with a scheduled sunset;
+- $\mathrm{Defines}(D, P)$ asserts that rule $P$ is normatively defined within document $D$;
+- $\mathrm{Status}(P, V) \in \{\mathrm{Active}, \mathrm{Deprecated}, \mathrm{Obsolete}, \mathrm{Unknown}\}$ is the deterministic status of the rule.
 
 Practical application and engineering conclusions:
-- **Rule validity gate:** The deductive inference engine is permitted to utilize rule $`P`$ in compliance proofs if and only if $`\mathrm{Status}(P, V) = \mathrm{Active}`$.
-- **Quarantine of superseded norms:** When a rule transitions to $`\mathrm{Obsolete}`$, it is immediately unindexed from the active reasoning graph and retained exclusively in historical audit archives. Any attempt to invoke an obsolete rule during active certification generates event `E_OBSOLETE_RULE_USAGE`.
+- **Rule validity gate:** The deductive inference engine is permitted to utilize rule $P$ in compliance proofs if and only if $\mathrm{Status}(P, V) = \mathrm{Active}$.
+- **Quarantine of superseded norms:** When a rule transitions to $\mathrm{Obsolete}$, it is immediately unindexed from the active reasoning graph and retained exclusively in historical audit archives. Any attempt to invoke an obsolete rule during active certification generates event `E_OBSOLETE_RULE_USAGE`.
 
-Under this policy, revocation takes precedence. If the domain model allows rule reinstatement, this simplified formulation is insufficient: time-ordered logs of definition, modification, and revocation events are required, bounded by explicit scope rules and source precedence. Incommensurable conflicting changes mandate human review. An $`\mathrm{Unknown}`$ status is never treated as active, nor is it cured by lexical quote similarity.
+Under this policy, revocation takes precedence. If the domain model allows rule reinstatement, this simplified formulation is insufficient: time-ordered logs of definition, modification, and revocation events are required, bounded by explicit scope rules and source precedence. Incommensurable conflicting changes mandate human review. An $\mathrm{Unknown}$ status is never treated as active, nor is it cured by lexical quote similarity.
 
 Re-grounding across revisions establishes candidate correspondences; it does not automatically transfer legal validity. An identical sentence may be relegated to an informative annex, receive a new precondition in its heading, or be qualified by a newly introduced exception in an adjacent clause. Once a matching quote is identified in a new revision, the pipeline must re-evaluate section roles, dependent definitions, modality, and surrounding normative context. Only a formally verified correspondence permits the creation of an active knowledge record; the antecedent record remains an archival artifact.
 
@@ -945,11 +945,11 @@ flowchart LR
 
 **The relational predicate store** indexes first-order facts across structured tables with indexes on subject and relation attributes. It powers deterministic queries such as: "Select all mandatory obligations governing the SMTP server in Section 3.3."
 
-**The concept, version, and state graph** maintains domain ontologies, document supersession lineages, and automaton transition topologies. It evaluates recursive graph traversals: "Is rule $`P`$ legally active in revision $`V`$?" or "Is state `Data` reachable without executing `RCPT TO`?".
+**The concept, version, and state graph** maintains domain ontologies, document supersession lineages, and automaton transition topologies. It evaluates recursive graph traversals: "Is rule $P$ legally active in revision $V$?" or "Is state `Data` reachable without executing `RCPT TO`?".
 
 **The immutable binary package** represents a compiled snapshot of the knowledge base optimized for the runtime inference engine. The package file is mapped directly into the virtual address space of the process via the POSIX `mmap` system call [[19]](#src-19), allowing the inference engine to traverse data structures without serialization overhead or memory copying. The package identifier is the cryptographic hash of its contents: any modification yields a new distinct package identifier, binding every generated proof to an immutable snapshot. Query latency is governed by internal index layouts (e.g., hash tables or sorted arrays) rather than the `mmap` mechanism itself.
 
-All three storage models can reside on a single compute node. When the knowledge base exceeds single-node capacity or when nodes require distinct domain profiles, the store is partitioned into shards. For a system evaluating regulatory validity, the shard key is the document family—the set of revisions transitively connected via the version graph (the set $`\mathrm{Lineage}(V)`$ from Section 8)—because rule validity can be computed only across the complete family. If a revoking revision resides on an unresponsive shard, an active rule status would be falsely returned instead of $`\mathrm{Obsolete}`$. Consequently, status queries require all relevant shards to respond. Sharding knowledge bases must not be confused with text chunking: structural chunking divides text for retrieval, whereas sharding partitions the knowledge base across compute nodes. Sharding formalisms are established in [Chapter 7](ch07-knowledge-base-typology.md), and high-performance binary package implementations are detailed in Section 10 of [Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md).
+All three storage models can reside on a single compute node. When the knowledge base exceeds single-node capacity or when nodes require distinct domain profiles, the store is partitioned into shards. For a system evaluating regulatory validity, the shard key is the document family—the set of revisions transitively connected via the version graph (the set $\mathrm{Lineage}(V)$ from Section 8)—because rule validity can be computed only across the complete family. If a revoking revision resides on an unresponsive shard, an active rule status would be falsely returned instead of $\mathrm{Obsolete}$. Consequently, status queries require all relevant shards to respond. Sharding knowledge bases must not be confused with text chunking: structural chunking divides text for retrieval, whereas sharding partitions the knowledge base across compute nodes. Sharding formalisms are established in [Chapter 7](ch07-knowledge-base-typology.md), and high-performance binary package implementations are detailed in Section 10 of [Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md).
 
 ### 9.1. High-Performance In-Memory Knowledge Graph (CSR) vs. External Graph DBMS
 
@@ -995,13 +995,13 @@ flowchart LR
 ```
 
 The CSR layout is organized across three contiguous memory buffers:
-- $`\mathrm{Entities}[\cdot]`$: A flat array of fixed-size structs (64 bytes, aligned to L1/L2 cache lines), containing the numeric concept ID, category flags, and the relationship slice: $`(\mathrm{Offset}, \mathrm{Count})`$;
-- $`\mathrm{Edges}[\cdot]`$: A contiguous array of target entity indexes and relationship types (deontic modality, syntactic dependency, causal link);
-- $`\mathrm{EvidencePool}[\cdot]`$: A pool of immutable primary source hashes and byte coordinates referenced by edges via 32-bit offsets.
+- $\mathrm{Entities}[\cdot]$: A flat array of fixed-size structs (64 bytes, aligned to L1/L2 cache lines), containing the numeric concept ID, category flags, and the relationship slice: $(\mathrm{Offset}, \mathrm{Count})$;
+- $\mathrm{Edges}[\cdot]$: A contiguous array of target entity indexes and relationship types (deontic modality, syntactic dependency, causal link);
+- $\mathrm{EvidencePool}[\cdot]$: A pool of immutable primary source hashes and byte coordinates referenced by edges via 32-bit offsets.
 
 Architectural advantages over external DBMSs:
 - **Zero-Copy instant instantiation:** The process mounts a multi-gigabyte knowledge base via `mmap` in sub-microsecond time; pages are demand-paged by the OS kernel;
-- **Throughput exceeding $`10^7`$ edge traversals per second per core:** Traversing the edges of an entity $`\mathrm{Edges}[\mathrm{Offset} \dots \mathrm{Offset}+\mathrm{Count}-1]`$ constitutes a purely sequential linear memory scan, maximizing hardware prefetcher efficiency;
+- **Throughput exceeding $10^7$ edge traversals per second per core:** Traversing the edges of an entity $\mathrm{Edges}[\mathrm{Offset} \dots \mathrm{Offset}+\mathrm{Count}-1]$ constitutes a purely sequential linear memory scan, maximizing hardware prefetcher efficiency;
 - **Deterministic memory locality:** Complete absence of heap fragmentation and dynamic pointers (all references are relative offsets within the mapped binary segment);
 - **Absolute integrity of evidence:** Every relationship struct directly embeds or references immutable primary source coordinates, enabling instantaneous byte-level verification without external network lookups.
 
@@ -1060,20 +1060,20 @@ P(w_t \mid w_{1:t-1}) = \mathrm{Softmax}\left( \frac{z_t + M(w_t, \text{State}_{
 ```
 
 **Parameters and engineering constraints:**
-- $`w_t \in V`$ is the candidate token at decoding step $`t`$ from the full vocabulary $`V`$ ($`\lvert V \rvert \in \{32000, 128000\}`$);
-- $`w_{1:t-1}`$ (or $`w_{<t}`$) represents the sequence of previously emitted tokens;
-- $`z_t \in \mathbb{R}`$ is the unconstrained real logit for the token computed by the model prior to softmax;
-- $`\tau > 0`$ is the decoding temperature (for deterministic engineering ingestion, $`\tau \to 0`$ or greedy decoding is enforced);
-- $`\text{State}_G`$ is the active state of the grammar-validating finite-state automaton;
-- $`M(w_t, \text{State}_G) \in \{0, -\infty\}`$ is the binary logit mask: $`0`$ for tokens permitted by the grammar, and $`-\infty`$ for all invalid tokens.
+- $w_t \in V$ is the candidate token at decoding step $t$ from the full vocabulary $V$ ($\lvert V \rvert \in \{32000, 128000\}$);
+- $w_{1:t-1}$ (or $w_{<t}$) represents the sequence of previously emitted tokens;
+- $z_t \in \mathbb{R}$ is the unconstrained real logit for the token computed by the model prior to softmax;
+- $\tau > 0$ is the decoding temperature (for deterministic engineering ingestion, $\tau \to 0$ or greedy decoding is enforced);
+- $\text{State}_G$ is the active state of the grammar-validating finite-state automaton;
+- $M(w_t, \text{State}_G) \in \{0, -\infty\}$ is the binary logit mask: $0$ for tokens permitted by the grammar, and $-\infty$ for all invalid tokens.
 
 **Operational execution and worked numerical example:**
-- Because $`e^{-\infty} = 0`$, the Softmax operation assigns exactly zero probability to any token violating the formal grammar. The model is mathematically incapable of emitting an invalid key or drifting beyond permissible deontic modalities (`MUST`, `SHOULD`, `MAY`, `MUST NOT`).
-- Worked calculation: When generating the modality field, the model considers $`t_1`$ (`"MUST"`, $`z_1 = 4.2`$), $`t_2`$ (`"SHOULD"`, $`z_2 = 3.8`$), and an invalid unconstrained token $`t_3`$ (`"Maybe"`, $`z_3 = 6.5`$). Without logit masking, token $`t_3`$ would dominate ($`p_3 \approx 0.86`$). The grammar automaton sets $`M(t_3) = -\infty`$, forcing its probability to zero ($`e^{-\infty} = 0`$). The resulting normalized probability:
+- Because $e^{-\infty} = 0$, the Softmax operation assigns exactly zero probability to any token violating the formal grammar. The model is mathematically incapable of emitting an invalid key or drifting beyond permissible deontic modalities (`MUST`, `SHOULD`, `MAY`, `MUST NOT`).
+- Worked calculation: When generating the modality field, the model considers $t_1$ (`"MUST"`, $z_1 = 4.2$), $t_2$ (`"SHOULD"`, $z_2 = 3.8$), and an invalid unconstrained token $t_3$ (`"Maybe"`, $z_3 = 6.5$). Without logit masking, token $t_3$ would dominate ($p_3 \approx 0.86$). The grammar automaton sets $M(t_3) = -\infty$, forcing its probability to zero ($e^{-\infty} = 0$). The resulting normalized probability:
 ```math
 P(t_1) = \frac{e^{4.2}}{e^{4.2} + e^{3.8} + 0} = \frac{66.69}{66.69 + 44.70} = \frac{66.69}{111.39} \approx 0.599.
 ```
-Token $`t_3`$ is completely eliminated by the generation gate, precluding syntactic defects in the resulting AST.
+Token $t_3$ is completely eliminated by the generation gate, precluding syntactic defects in the resulting AST.
 
 <details>
 <summary>Formal GBNF Grammar and Constrained Output</summary>
@@ -1110,11 +1110,11 @@ ws          ::= [ \t\n\r]*
 </details>
 
 #### 10.1.1. Bilateral Popperian Gate ($F^+$ vs. $F^-$)
-Verbatim byte matching proves the existence of a quote within an immutable artifact; it does not prove the correctness of its semantic interpretation. To guard against overgeneralization, the extractor generates a candidate fact $`F^+`$ alongside a contrasting counterexample or invalidating mutation $`F^-`$ (e.g., simulating the omission of a precondition or mutating an obligation into a permission).
+Verbatim byte matching proves the existence of a quote within an immutable artifact; it does not prove the correctness of its semantic interpretation. To guard against overgeneralization, the extractor generates a candidate fact $F^+$ alongside a contrasting counterexample or invalidating mutation $F^-$ (e.g., simulating the omission of a precondition or mutating an obligation into a permission).
 
 The admission gate evaluates both candidates through a deterministic rule engine:
-1. The positive fact $`F^+`$ must be accepted with full byte custody verification (`ACCEPT`, verified `%ebx` provenance);
-2. The contrasting counterexample $`F^-`$ must provoke a deterministic typed rejection (`REFUSAL`, Fail-Closed);
+1. The positive fact $F^+$ must be accepted with full byte custody verification (`ACCEPT`, verified `%ebx` provenance);
+2. The contrasting counterexample $F^-$ must provoke a deterministic typed rejection (`REFUSAL`, Fail-Closed);
 3. If the counterexample fails to trigger a refusal, the rule is diagnosed as under-constrained (*under-constrained rule defect*) and rejected.
 
 #### 10.1.2. Knowledge Density Index Heatmaps (KDI Heatmaps)
@@ -1169,19 +1169,19 @@ The ingestion of engineering specifications is restricted exclusively to reposit
 #### 2. Symbolic Verification of Semantic Poisoning via SMT Solver
 
 All extracted rules and parameters are subjected to automated perturbation analysis using a formal SMT solver (Z3):
-- **Threshold Sensitivity Check:** The algorithm compares the newly extracted operational threshold $`\theta_{\mathrm{new}}`$ against the baseline normative standard $`\theta_{\mathrm{std}}`$, validating compliance with the safety tolerance invariant:
+- **Threshold Sensitivity Check:** The algorithm compares the newly extracted operational threshold $\theta_{\mathrm{new}}$ against the baseline normative standard $\theta_{\mathrm{std}}$, validating compliance with the safety tolerance invariant:
 
 ```math
 \Delta \theta = \lvert \theta_{\mathrm{new}} - \theta_{\mathrm{std}} \rvert \le \epsilon_{\mathrm{safety}}
 ```
 
 Parameters and mathematical components of the formula:
-- $`\theta_{\mathrm{new}} \in \mathbb{R}`$ is the numerical value of the physical or system parameter extracted from the candidate specification artifact;
-- $`\theta_{\mathrm{std}} \in \mathbb{R}`$ is the baseline parameter value codified in the system's certified standard specification;
-- $`\epsilon_{\mathrm{safety}} \in \mathbb{R}_{\ge 0}`$ is the maximum allowable engineering drift tolerance permitted by the functional safety profile;
-- $`\Delta \theta \in \mathbb{R}_{\ge 0}`$ is the absolute parameter deviation of the proposed modification.
+- $\theta_{\mathrm{new}} \in \mathbb{R}$ is the numerical value of the physical or system parameter extracted from the candidate specification artifact;
+- $\theta_{\mathrm{std}} \in \mathbb{R}$ is the baseline parameter value codified in the system's certified standard specification;
+- $\epsilon_{\mathrm{safety}} \in \mathbb{R}_{\ge 0}$ is the maximum allowable engineering drift tolerance permitted by the functional safety profile;
+- $\Delta \theta \in \mathbb{R}_{\ge 0}$ is the absolute parameter deviation of the proposed modification.
 
-- **Axiomatic Inversion Detection:** The SMT solver asserts the joint satisfiability of the candidate rule $`R_{\mathrm{candidate}}`$ against the immutable axiomatic safety core of the system $`\mathcal{A}_{\mathrm{core}}`$. If a contradiction is formally derived ($`\mathcal{A}_{\mathrm{core}} \cup \{ R_{\mathrm{candidate}} \} \vdash \bot`$), the candidate is diagnosed as an adversarial subversion attempt.
+- **Axiomatic Inversion Detection:** The SMT solver asserts the joint satisfiability of the candidate rule $R_{\mathrm{candidate}}$ against the immutable axiomatic safety core of the system $\mathcal{A}_{\mathrm{core}}$. If a contradiction is formally derived ($\mathcal{A}_{\mathrm{core}} \cup \{ R_{\mathrm{candidate}} \} \vdash \bot$), the candidate is diagnosed as an adversarial subversion attempt.
 
 #### 3. Mandatory Human-in-the-Loop Qualification Gate
 
@@ -1190,24 +1190,24 @@ No rule governing emergency actuators or modifying functional safety integrity l
 #### 10.3.1. Actionable Closed Loop of Knowledge Poisoning Defense
 
 1. **Control Flow & Runtime Decisions:**
-   - Upon violation of the inequality $`\Delta \theta \le \epsilon_{\mathrm{safety}}`$ or detection of an inconsistency with the axiomatic core $`\mathcal{A}_{\mathrm{core}}`$, the gate halts package ingestion, marks the rule with verdict `POISON_DETECTED` (Fail-Closed), quarantines the source artifact, and dispatches a `CRITICAL_SECURITY_ALERT` notification to the enterprise Security Information and Event Management (SIEM) system.
+   - Upon violation of the inequality $\Delta \theta \le \epsilon_{\mathrm{safety}}$ or detection of an inconsistency with the axiomatic core $\mathcal{A}_{\mathrm{core}}$, the gate halts package ingestion, marks the rule with verdict `POISON_DETECTED` (Fail-Closed), quarantines the source artifact, and dispatches a `CRITICAL_SECURITY_ALERT` notification to the enterprise Security Information and Event Management (SIEM) system.
    - If the rule clears SMT verification and pertains to general non-critical parameters (e.g., text message formatting or informational timeout thresholds), it receives verdict `ACCEPT` and is integrated into the candidate release.
    - If the rule affects critical functional safety systems (ASIL C/D, SIL 3/4), the runtime enforces a `QUALIFIED_HOLD` lock, awaiting cryptographic authorization from a certified engineer in the loop (Human-in-the-Loop).
 2. **Hardware Dimensioning:**
-   - To defend against denial-of-service (DoS) attacks exploiting intentionally crafted exponential SMT hardness instances, the Z3 solver process is isolated inside a restricted Linux sandbox (cgroups v2 and seccomp-bpf) with a rigid execution timeout $`T_{\mathrm{smt\_timeout}} = 500\,\text{ms}`$ per rule and virtual memory ceiling $`M_{\mathrm{smt}} = 512\,\text{MB}`$.
+   - To defend against denial-of-service (DoS) attacks exploiting intentionally crafted exponential SMT hardness instances, the Z3 solver process is isolated inside a restricted Linux sandbox (cgroups v2 and seccomp-bpf) with a rigid execution timeout $T_{\mathrm{smt\_timeout}} = 500\,\text{ms}$ per rule and virtual memory ceiling $M_{\mathrm{smt}} = 512\,\text{MB}$.
    - Breaching either threshold triggers an immediate resource exhaustion error (`E_SMT_RESOURCE_EXHAUSTION`), precipitating forceful process termination (`SIGKILL`) and transitioning the candidate rule to rejected status.
 3. **Worked Numerical Example:**
    - Input scenario: Ingesting an automated knowledge update for an electric vehicle traction inverter controller under ISO 26262 (ASIL D).
-   - The certified baseline standard mandates a protective cutoff threshold on the high-voltage bus at $`\theta_{\mathrm{std}} = 400\,\text{V}`$ with a safety tolerance $`\epsilon_{\mathrm{safety}} = 5\,\text{V}`$ (valid operating range $`395\text{--}405\,\text{V}`$).
-   - An adversary compromises an unofficial errata mirror and introduces a malicious amendment, elevating the cutoff voltage to $`\theta_{\mathrm{new}} = 435\,\text{V}`$ to induce protection failure and thermal breakdown of the inverter power transistors.
+   - The certified baseline standard mandates a protective cutoff threshold on the high-voltage bus at $\theta_{\mathrm{std}} = 400\,\text{V}$ with a safety tolerance $\epsilon_{\mathrm{safety}} = 5\,\text{V}$ (valid operating range $395\text{--}405\,\text{V}$).
+   - An adversary compromises an unofficial errata mirror and introduces a malicious amendment, elevating the cutoff voltage to $\theta_{\mathrm{new}} = 435\,\text{V}$ to induce protection failure and thermal breakdown of the inverter power transistors.
    - The SMT solver evaluates the parameter drift:
 
 ```math
 \Delta \theta = \lvert 435 - 400 \rvert = 35\,\mathrm{V}.
 ```
 
-   - Because $`35\,\mathrm{V} > 5\,\mathrm{V}`$, the invariant $`\Delta \theta \le \epsilon_{\mathrm{safety}}`$ is severely violated. The solver outputs an unsatisfiability proof (`UNSAT`) for the safe operating invariant.
-   - The admission gate assigns verdict `POISON_DETECTED`, blocks rule ingestion—protecting $`45,000\,\text{EUR}`$ of physical power electronics from catastrophic destruction—and generates a cryptographically signed poisoning incident report for the cybersecurity operations center.
+   - Because $35\,\mathrm{V} > 5\,\mathrm{V}$, the invariant $\Delta \theta \le \epsilon_{\mathrm{safety}}$ is severely violated. The solver outputs an unsatisfiability proof (`UNSAT`) for the safe operating invariant.
+   - The admission gate assigns verdict `POISON_DETECTED`, blocks rule ingestion—protecting $45,000\,\text{EUR}$ of physical power electronics from catastrophic destruction—and generates a cryptographically signed poisoning incident report for the cybersecurity operations center.
 
 Candidates have satisfied admission rules and traversed the epistemic poisoning defense barriers; however, knowledge bases evolve beyond mere facts: knowledge engineers also alter the concepts and axioms through which facts are interpreted. Prior to deploying an ontology, the candidate model must be validated as an independent artifact.
 
@@ -1362,7 +1362,7 @@ This table contrasts formally verifiable deductive inference against baseline ge
 > *Disclaimer:* This discussion is a simulated heuristic synthesis generated exclusively within the scholarly and pedagogical scope of this monograph, grounded in the published works, monographs, and public lectures of the invited researchers. It does not represent verbatim transcripts of real-world dialogues nor does it claim contemporaneous statements by living persons; it functions as an instrument of critical rationalism to falsify the author's engineering hypotheses. Each participant engages in direct polemical debate exclusively with the author of the monograph (Mykola Fedchyk).
 
 **Chapter Thesis (Mykola Fedchyk):**  
-Constructing a verifiable engineering knowledge base demands abandoning naive fixed-size chunking in favor of Floating-size Annotation Units (FAU) governed by Ashby's law, byte-exact fact grounding via the tuple $`\mathcal{G}`$, multi-model storage, and a multi-stage Popperian admission gate with SMT verification to counter epistemic knowledge poisoning (MITRE ATLAS).
+Constructing a verifiable engineering knowledge base demands abandoning naive fixed-size chunking in favor of Floating-size Annotation Units (FAU) governed by Ashby's law, byte-exact fact grounding via the tuple $\mathcal{G}$, multi-model storage, and a multi-stage Popperian admission gate with SMT verification to counter epistemic knowledge poisoning (MITRE ATLAS).
 
 **Dialogue with Oren Etzioni: Planetary-Scale Open IE and Floating Annotation Units (FAU)**
 
@@ -1372,7 +1372,7 @@ Constructing a verifiable engineering knowledge base demands abandoning naive fi
 - **Mykola Fedchyk:**  
   *“Professor Oren Etzioni, Open IE is an outstanding paradigm for web-scale search engines where an 80% precision threshold is acceptable. However, in nuclear reactor safety, railway interlocking, or aerospace avionics, a single hallucinated or severed semantic relation induces catastrophic failures with direct loss of human life!  
   According to W. Ross Ashby's cybernetic Law of Requisite Variety, the control capacity of the extraction pipeline must match the structural variety of the normative source document. This is why we discarded fixed chunking and engineered Floating-size Annotation Units (FAU) that preserve the topological layout of technical tables, graphs, and clauses.  
-  Every admitted fact is indelibly bound by the tuple $`\mathcal{G} = \langle \mathrm{DocID}, \mathrm{SHA256}, \mathrm{StartByte}, \mathrm{EndByte}, \mathrm{Predicate} \rangle`$. If a candidate assertion lacks byte-level physical verification in the authoritative primary text, it is immediately discarded. We deliberately sacrifice speculative throughput to achieve uncompromising evidentiary certainty.”*
+  Every admitted fact is indelibly bound by the tuple $\mathcal{G} = \langle \mathrm{DocID}, \mathrm{SHA256}, \mathrm{StartByte}, \mathrm{EndByte}, \mathrm{Predicate} \rangle$. If a candidate assertion lacks byte-level physical verification in the authoritative primary text, it is immediately discarded. We deliberately sacrifice speculative throughput to achieve uncompromising evidentiary certainty.”*
 
 **Continued Dialogue with Oren Etzioni: Ontology Evolution and Composite Relations in Engineering Standards**
 
@@ -1380,7 +1380,7 @@ Constructing a verifiable engineering knowledge base demands abandoning naive fi
   *“What about compositional and cross-domain relations that are absent a priori from your pre-defined ontology? Open IE extracts arbitrary relational phrases directly from unstructured text ('X transiently inhibits Y under condition Z'), enabling the discovery of unforeseen physical interactions across complex subsystems. If your extraction pipeline mandates prior formal specification of every predicate in OWL/RDF, you will inevitably discard critical empirical findings and rare component failure modes expressed by engineers in non-standard phrasing.”*
 
 - **Mykola Fedchyk:**  
-  *“Professor Oren Etzioni, the system neither silently discards unrecognized relations nor recklessly admits them into the decision-making runtime. Unrecognized constructions are tagged with the status `UNRECOGNIZED_RELATION_CANDIDATE` while preserving full byte-level evidence custody $`\mathcal{G}`$, and routed to a quarantined engineering triage queue (*Discovery Staging Buffer*).  
+  *“Professor Oren Etzioni, the system neither silently discards unrecognized relations nor recklessly admits them into the decision-making runtime. Unrecognized constructions are tagged with the status `UNRECOGNIZED_RELATION_CANDIDATE` while preserving full byte-level evidence custody $\mathcal{G}$, and routed to a quarantined engineering triage queue (*Discovery Staging Buffer*).  
   There, a linguistic analyzer extracts the syntactic skeleton and drafts an ontology extension proposal via a pull request to the knowledge repository.  
   However, until a candidate predicate receives a strictly typed contract, verified SI units, and formal sign-off from a certification safety engineer, it possesses zero authority to influence rule execution in autonomous vehicles or flight control avionics. We fully support knowledge evolution, but exclusively through a disciplined engineering release cycle, never through the chaotic entropy of unconstrained vector clusters.”*
 
@@ -1400,12 +1400,12 @@ Constructing a verifiable engineering knowledge base demands abandoning naive fi
   *“In Dynamic Topic Models (DTM), we track how the meanings of technical terms drift smoothly across decades: the operational concept of 'safe state' in 1990s automotive guidelines differs markedly from its probabilistic distribution in ISO 26262:2018. Your Popperian dichotomy treats any parameter or context drift as adversarial poisoning or semantic anomaly. Doesn't this discrete rigidity obstruct the natural evolution of normative language as standards transition across generational revisions?”*
 
 - **Mykola Fedchyk:**  
-  *“Professor David Blei, we capture the evolution of terminology not by blurring statistical probabilities, but through strict bitemporal validity $`[T_{\mathrm{valid\_start}}, T_{\mathrm{valid\_end}}]`$ and version-scoped namespaces.  
+  *“Professor David Blei, we capture the evolution of terminology not by blurring statistical probabilities, but through strict bitemporal validity $[T_{\mathrm{valid\_start}}, T_{\mathrm{valid\_end}}]$ and version-scoped namespaces.  
   When a new revision of ISO 26262 is ratified, the expert system does not 'retrain topic distributions' to overwrite earlier axioms. The prior definition remains immutable within its historical temporal slice to service previously deployed, certified platforms, while the updated norm is committed as an independent immutable RDF Quad bound to the new edition.  
-  The SMT solver validates the logical satisfiability and consistency of facts strictly within the scoped target release context $`S_v`$. This completely eliminates temporal contamination, preventing newly minted rules from silently breaking legacy systems without explicit engineering re-qualification.”*
+  The SMT solver validates the logical satisfiability and consistency of facts strictly within the scoped target release context $S_v$. This completely eliminates temporal contamination, preventing newly minted rules from silently breaking legacy systems without explicit engineering re-qualification.”*
 
 **Synthesis and Scientific Verdict of the Chapter:**  
-The construction of a verifiable engineering knowledge base is a rigorously authenticated process: Floating-size Annotation Units (FAU) preserve the topological coherence of source specifications, byte-level grounding $`\mathcal{G}`$ enforces an unbroken chain of custody, and the Popperian admission gate with SMT verification provides mathematical immunity against hallucinations and adversarial epistemic poisoning.
+The construction of a verifiable engineering knowledge base is a rigorously authenticated process: Floating-size Annotation Units (FAU) preserve the topological coherence of source specifications, byte-level grounding $\mathcal{G}$ enforces an unbroken chain of custody, and the Popperian admission gate with SMT verification provides mathematical immunity against hallucinations and adversarial epistemic poisoning.
 
 ## Conclusions
 
@@ -1463,7 +1463,7 @@ Once knowledge content is extracted, the epistemic quality of its underlying war
 | Admission gate | Admission gate | A deterministic set of verification checks required prior to admitting candidate facts into the knowledge base |
 | Fail-Closed principle | Fail-closed | A safety design invariant whereby unverified or ambiguous candidates are rejected by default |
 | Finite-state machine | Finite-state machine | A formal model consisting of a finite set of discrete states, inputs, and event-driven transitions |
-| Transition function | Transition function | A mapping from a state-event pair to a subsequent state or an explicit prohibition ($`\bot`$) |
+| Transition function | Transition function | A mapping from a state-event pair to a subsequent state or an explicit prohibition ($\bot$) |
 | Negative test | Negative test | A test case that injects an invalid sequence or out-of-order event to assert correct error handling |
 | Document lineage | Document lineage | The directed graph of supersession, update, and errata relationships linking specifications |
 | Document family | Document family | The set of document revisions interconnected via lineage; the unit of knowledge base sharding |

@@ -14,7 +14,7 @@
 
 In mission-critical industrial facilities, nuclear power generation, and avionics (governed by IEC 61508 SIL 3, ISO 26262 ASIL D, and DO-178C Level A), directly integrating generative language models into autonomous decision-making loops inevitably precipitates catastrophic accidents. Due to the autoregressive nature of cross-entropy minimization, neural networks possess no internal criterion of physical truth: under conditions of informational deficit, they populate knowledge voids with plausible confabulations (machine hallucinations). For instance, an unconstrained model may authoritatively instruct an operator to lock down an emergency pressure relief valve or invent fictitious mechanical stress tolerances, resulting in pipeline ruptures, process destruction, and loss of life. Recursive self-verification by the model merely compounds the systemic defect, while the pervasive enterprise "LLM-as-a-Judge" pattern creates an illusion of control through Common-Mode Failures and cognitive biases of the judge model.
 
-This chapter resolves the problem of eradicating hallucinations by mathematically refuting neural arbitration, stripping the language model of its status as an authoritative knowledge source, and subordinating it to a deterministic expert system. We investigate the diagnosis of the behavioral "Boxiness" syndrome (Boxiness Artifacts) in models subjected to aggressive alignment (RLHF, DPO): Ambiguity Collapse, Over-Closure, Tool Reflex, and Enterprise Abstraction. An architectural mitigation mechanism is proposed via automated dynamic Cognitive Repair Patches and Cognitive Shims. We investigate the architecture of a dual-tier verification gate (combining grammar-guided Abstract Syntax Tree decoding and byte-level SHA-256 cryptographic citation validation achieving a metric of $`\mathrm{ZHR} = 1.00`$), the mathematical formalization of epistemic knowledge deficit, the fail-closed gate policy (`Fail-Closed Gate`), Peircean symbolic abduction for Socratic clarification dialogues, and real-time predicate safety shields for hardware-level neural network screening.
+This chapter resolves the problem of eradicating hallucinations by mathematically refuting neural arbitration, stripping the language model of its status as an authoritative knowledge source, and subordinating it to a deterministic expert system. We investigate the diagnosis of the behavioral "Boxiness" syndrome (Boxiness Artifacts) in models subjected to aggressive alignment (RLHF, DPO): Ambiguity Collapse, Over-Closure, Tool Reflex, and Enterprise Abstraction. An architectural mitigation mechanism is proposed via automated dynamic Cognitive Repair Patches and Cognitive Shims. We investigate the architecture of a dual-tier verification gate (combining grammar-guided Abstract Syntax Tree decoding and byte-level SHA-256 cryptographic citation validation achieving a metric of $\mathrm{ZHR} = 1.00$), the mathematical formalization of epistemic knowledge deficit, the fail-closed gate policy (`Fail-Closed Gate`), Peircean symbolic abduction for Socratic clarification dialogues, and real-time predicate safety shields for hardware-level neural network screening.
 
 ---
 
@@ -51,11 +51,11 @@ P(E_1 \cap E_2) \neq P(E_1) \cdot P(E_2)
 ```
 
 where:
-- $`E_1`$ is the event of a hallucination (confabulation) occurring in the generator model;
-- $`E_2`$ is the event of this hallucination being endorsed by the judge model;
-- $`P(E_1 \cap E_2)`$ is the joint probability of an unverified defect penetrating the operational decision-making environment.
+- $E_1$ is the event of a hallucination (confabulation) occurring in the generator model;
+- $E_2$ is the event of this hallucination being endorsed by the judge model;
+- $P(E_1 \cap E_2)$ is the joint probability of an unverified defect penetrating the operational decision-making environment.
 
-Because both models were trained on similar natural language corpora, they exhibit strongly correlated cognitive biases ($`P(E_2 \mid E_1) \gg P(E_2)`$):
+Because both models were trained on similar natural language corpora, they exhibit strongly correlated cognitive biases ($P(E_2 \mid E_1) \gg P(E_2)$):
 1. **Style Bias:** The judge model interprets superficial prose fluency, academic syntax, and absence of lexical repetition as hallmarks of truth, endorsing fabricated propositions simply because they are formulated in flawless language.
 2. **Verbosity Bias:** Expansive, verbose confabulations replete with pseudoscientific terminology and complex participial clauses systematically receive higher scores from the judge model than concise yet rigorously precise answers.
 3. **Authority Bias:** Confidently asserted falsehoods (e.g., categorical phrasing such as "pursuant to Clause 4.2 of the standard, the value is 25 bar") elicit false consensus from the judge model, whereas an honest, metrologically sound response such as "information is absent in the supplied excerpt" is penalized as unhelpful.
@@ -67,9 +67,9 @@ The judge model evaluates statistical plausibility rather than physical truth. L
 1. **Control Flow & Runtime Decisions:**  
    The architectural rules of evidence-governed systems strictly strip generative models of the authority to judge factual correctness. Any model output is relegated strictly to the status of a "Candidate Assertion", which must provide byte-level source citations, document identifiers, and typed predicates. If a CI/CD pipeline detects a configuration utilizing an LLM as a truth arbiter for critical decisions, the static verifier issues an `ARCHITECTURE_NON_COMPLIANT` verdict, halts deployment, and mandates replacing the neural judge with a deterministic byte-level admission gate.
 2. **Hardware Dimensioning:**  
-   Replacing a secondary 70B-class judge model (which requires two NVIDIA A100/H100 80GB accelerators consuming $`700\,\text{W}`$ and adds $`800\dots 1500\,\text{ms}`$ of inference latency) with a deterministic SHA-256 byte validator and AST parser executing on the host CPU reduces verification node power consumption by a factor of 50, and verification latency from $`1200\,\text{ms}`$ down to $`18\,\mu\text{s}`$ (a five orders of magnitude acceleration).
+   Replacing a secondary 70B-class judge model (which requires two NVIDIA A100/H100 80GB accelerators consuming $700\,\text{W}$ and adds $800\dots 1500\,\text{ms}$ of inference latency) with a deterministic SHA-256 byte validator and AST parser executing on the host CPU reduces verification node power consumption by a factor of 50, and verification latency from $1200\,\text{ms}$ down to $18\,\mu\text{s}$ (a five orders of magnitude acceleration).
 3. **Worked Numerical Example:**  
-   In a substation cable routing design system, a primary 14B model produced a hazardous hallucination: *"the permissible bending radius for XLPE-insulated cable is 5 outer diameters"* (IEC 60502 mandates a minimum of 15 diameters), appending a convincing reference to an invented clause of the standard. A secondary 70B judge model evaluated the answer as `9/10`, noting in its evaluation: *"The response is precise, structured, and cites the standard."* In contrast, the deterministic admission gate fetched the authentic bytes of the standard at the specified offset, computed the SHA-256 digest, and within $`15\,\mu\text{s}`$ blocked the release under error code `DROP_UNGROUNDED`—precluding the installation of cable with an inadmissible bending radius that would cause sheath rupture and catastrophic phase-to-ground short circuits.
+   In a substation cable routing design system, a primary 14B model produced a hazardous hallucination: *"the permissible bending radius for XLPE-insulated cable is 5 outer diameters"* (IEC 60502 mandates a minimum of 15 diameters), appending a convincing reference to an invented clause of the standard. A secondary 70B judge model evaluated the answer as `9/10`, noting in its evaluation: *"The response is precise, structured, and cites the standard."* In contrast, the deterministic admission gate fetched the authentic bytes of the standard at the specified offset, computed the SHA-256 digest, and within $15\,\mu\text{s}$ blocked the release under error code `DROP_UNGROUNDED`—precluding the installation of cable with an inadmissible bending radius that would cause sheath rupture and catastrophic phase-to-ground short circuits.
 
 ### 1.2. Diagnosis of LLM "Boxiness" Behavioral Syndrome and Automated Cognitive Repair Patches
 
@@ -111,18 +111,18 @@ flowchart TD
 
 Based on the author's investigations, four fundamental classes of alignment-induced defects are delineated:
 
-1. **Ambiguity Collapse:** Artificial truncation of the hypothesis space. When confronted with multiple equiprobable root causes of an anomaly, the model prematurely converges on a single trivial explanation, discarding low-probability yet safety-critical failure modes. Mathematically, this manifests as an abrupt collapse in the entropy of the hypothesis distribution $`\mathcal{H}`$:
+1. **Ambiguity Collapse:** Artificial truncation of the hypothesis space. When confronted with multiple equiprobable root causes of an anomaly, the model prematurely converges on a single trivial explanation, discarding low-probability yet safety-critical failure modes. Mathematically, this manifests as an abrupt collapse in the entropy of the hypothesis distribution $\mathcal{H}$:
 
 ```math
 H(\mathcal{H}) = - \sum_{h \in \mathcal{H}} P(h) \log_2 P(h)
 ```
 
 Parameters and mathematical components of the formula:
-- $`\mathcal{H} = \{h_1, h_2, \dots, h_m\}`$ is the set of admissible physical or logical hypotheses regarding the root cause of a system anomaly;
-- $`P(h) \in [0, 1]`$ is the subjective or statistical likelihood assigned to hypothesis $`h`$ generated by the model;
-- $`H(\mathcal{H}) \in [0, \log_2 m]`$ is the informational entropy of the hypothesis space (measured in bits or shannons).
+- $\mathcal{H} = \{h_1, h_2, \dots, h_m\}$ is the set of admissible physical or logical hypotheses regarding the root cause of a system anomaly;
+- $P(h) \in [0, 1]$ is the subjective or statistical likelihood assigned to hypothesis $h$ generated by the model;
+- $H(\mathcal{H}) \in [0, \log_2 m]$ is the informational entropy of the hypothesis space (measured in bits or shannons).
 
-When an engineering test bench records a multi-factor incident, the true hypothesis space exhibits high entropy ($`H(\mathcal{H}) \ge \tau_{\mathrm{entropy}}`$); however, a model exhibiting Ambiguity Collapse artificially drives $`H(\mathcal{H}) \to 0`$, assigning $`P(h_1) \approx 1.0`$.
+When an engineering test bench records a multi-factor incident, the true hypothesis space exhibits high entropy ($H(\mathcal{H}) \ge \tau_{\mathrm{entropy}}$); however, a model exhibiting Ambiguity Collapse artificially drives $H(\mathcal{H}) \to 0$, assigning $P(h_1) \approx 1.0$.
 
 2. **Over-Closure:** Delivering a categorical diagnosis without declaring physical boundary conditions or specifying prerequisites for supplementary hardware telemetry.
 3. **Tool Reflex:** The parasitic tendency of the model to delegate analytical deduction to external search engines or generic APIs ("let's search Google") instead of executing direct deductive derivation over the localized axiomatic specifications provided in context.
@@ -135,17 +135,17 @@ Rather than undertaking prohibitively slow, costly, and destabilizing model fine
 #### 1.2.1. Actionable Closed Loop of Boxiness Diagnosis and Repair Patch Injection
 
 1. **Control Flow & Runtime Decisions:**
-   - The behavioral probe monitor inspects model outputs for Boxiness markers (canned euphemisms, collapsed entropy $`H(\mathcal{H}) < \tau_{\mathrm{entropy}}`$ under an underdetermined state, and absence of numerical engineering tolerances).
+   - The behavioral probe monitor inspects model outputs for Boxiness markers (canned euphemisms, collapsed entropy $H(\mathcal{H}) < \tau_{\mathrm{entropy}}$ under an underdetermined state, and absence of numerical engineering tolerances).
    - Upon detecting a defect, the output stream is intercepted (`INTERCEPT_BOXINESS`), suppressing delivery to the operator. The runtime injects the corresponding Cognitive Repair Patch (`FORCE_HYPOTHESIS_BRANCHING`, `MANDATE_ENGINEERING_METRICS`, or `BLOCK_TOOL_DELEGATION`) and initiates re-generation with mandatory expansion of the reasoning tree.
-   - If after $`N_{\mathrm{retry}} = 2`$ retries the model fails to eliminate corporate evasions, the runtime triggers fail-safe escalation `FAIL_BOXINESS_ESCALATE`, routing the query to a symbolic SMT solver or the queue of a certified engineer in the loop (Human-in-the-Loop).
+   - If after $N_{\mathrm{retry}} = 2$ retries the model fails to eliminate corporate evasions, the runtime triggers fail-safe escalation `FAIL_BOXINESS_ESCALATE`, routing the query to a symbolic SMT solver or the queue of a certified engineer in the loop (Human-in-the-Loop).
 2. **Hardware Dimensioning:**
-   - The probe monitor is implemented as a compiled Go Aho-Corasick automaton and AST detector executing on the host CPU in under $`0.35\,\text{ms}`$.
-   - Injecting a repair patch adds merely $`120\text{--}180`$ tokens to the context ($`< 2.5\%`$ of an 8K window), requiring negligible GPU memory for KV caching (less than $`4.5\,\text{MB}`$ VRAM per active session) and preserving sub-millisecond response latency.
+   - The probe monitor is implemented as a compiled Go Aho-Corasick automaton and AST detector executing on the host CPU in under $0.35\,\text{ms}$.
+   - Injecting a repair patch adds merely $120\text{--}180$ tokens to the context ($< 2.5\%$ of an 8K window), requiring negligible GPU memory for KV caching (less than $4.5\,\text{MB}$ VRAM per active session) and preserving sub-millisecond response latency.
 3. **Worked Numerical Example:**
-   - On a traction drive test bench, an overtemperature event is registered on pulse filter choke L1 ($`T = 118^\circ\text{C}`$ against an allowable limit of $`105^\circ\text{C}`$) under rated load current.
-   - The baseline output of a commercial aligned LLM returned a typical corporate euphemism: *"Overheating in inductive components can stem from diverse operating environment factors. Verify electrical connections and consult vendor operating manuals"* ($`H(\mathcal{H}) = 0`$, offering zero concrete engineering hypotheses).
+   - On a traction drive test bench, an overtemperature event is registered on pulse filter choke L1 ($T = 118^\circ\text{C}$ against an allowable limit of $105^\circ\text{C}$) under rated load current.
+   - The baseline output of a commercial aligned LLM returned a typical corporate euphemism: *"Overheating in inductive components can stem from diverse operating environment factors. Verify electrical connections and consult vendor operating manuals"* ($H(\mathcal{H}) = 0$, offering zero concrete engineering hypotheses).
    - The probe flagged Enterprise Abstraction (`SCORE_EVASION = 0.94 > 0.60`) and total absence of engineering metrics. The runtime intercepted the response and injected patch `DECONSTRUCT_BOXINESS`, compelling the model to evaluate three distinct physical hypotheses in parallel: 1) core saturation due to PWM switching frequency drift, 2) anomalous rise in equivalent series resistance (ESR) of the adjacent filter capacitor, 3) degradation of the thermal interface material.
-   - In the re-generation pass, the model calculated the inductor operating point, demonstrating that dropping PWM frequency to $`f_{\mathrm{sw}} = 95\,\text{kHz}`$ (against nominal $`125\,\text{kHz}`$) increased ripple amplitude to $`\Delta I_L = 2.1\,\text{A} > I_{\mathrm{sat}} = 1.8\,\text{A}`$, driving the choke into core saturation and exponential thermal runaway. Through the patch, the defect was isolated to the PWM generator firmware prior to physical hardware failure.
+   - In the re-generation pass, the model calculated the inductor operating point, demonstrating that dropping PWM frequency to $f_{\mathrm{sw}} = 95\,\text{kHz}$ (against nominal $125\,\text{kHz}$) increased ripple amplitude to $\Delta I_L = 2.1\,\text{A} > I_{\mathrm{sat}} = 1.8\,\text{A}$, driving the choke into core saturation and exponential thermal runaway. Through the patch, the defect was isolated to the PWM generator firmware prior to physical hardware failure.
 
 ## 2. Deterministic Evidence-Governed Therapy: Dual-Tier Zero-Hallucination Gate
 
@@ -180,7 +180,7 @@ flowchart TD
 
 The first barrier intercepts the generation pipeline at the individual token selection step. Willard and Louf formalized the Efficient Guided Generation paradigm, implemented in tools such as Outlines [[4]](#src-4). Instead of admitting an unconstrained natural language stream, the engineer enforces a strict output grammar compiled into a finite state machine (FSM) matching a formal JSON Schema or domain ontology Abstract Syntax Tree (AST).
 
-At every step of autoregressive decoding, the FSM inspects the accumulated prefix and constructs a bitmask of permissible state transitions. Vocabulary tokens that violate the target schema are assigned an unnormalized logit of $`-\infty`$. Under this constraint, the model cannot produce an illegal field, omit a mandatory identifier, or emit ungrounded narrative filler. The output is guaranteed to be a syntactically valid statement tree.
+At every step of autoregressive decoding, the FSM inspects the accumulated prefix and constructs a bitmask of permissible state transitions. Vocabulary tokens that violate the target schema are assigned an unnormalized logit of $-\infty$. Under this constraint, the model cannot produce an illegal field, omit a mandatory identifier, or emit ungrounded narrative filler. The output is guaranteed to be a syntactically valid statement tree.
 
 ### 2.2. Byte-Level Admission Gate and Cryptographic Grounding
 
@@ -190,24 +190,24 @@ Syntactic validity does not guarantee semantic truth. The synthesized candidate 
 2. **Byte-level quotation verification:** Every factual claim must specify exact byte-level coordinates within the canonical immutable source document (`byte_start`, `byte_end`) alongside an expected SHA-256 cryptographic digest of the target text slice. An isolated verification module reads the specified byte range directly from non-volatile storage, computes the SHA-256 hash, and performs a byte-for-byte comparison. If a single character deviates or an offset is shifted, the claim is rejected as `HALLUCINATED_QUOTE`.
 3. **Numeric extrema and unit reconciliation:** If an assertion introduces a numerical value (such as the 16 bar pressure threshold), a dedicated extractor verifies that the numeric quantity and its physical dimension (conforming to UCUM standards) reside explicitly within the verified byte slice.
 
-The Zero-Hallucination Rate (ZHR) is defined as the ratio of admitted assertive outputs $`\mathcal{C}_{\mathrm{asserted}}`$ that possess an unbroken, byte-verified provenance trail to canonical primary sources $`\mathcal{C}_{\mathrm{grounded}}`$:
+The Zero-Hallucination Rate (ZHR) is defined as the ratio of admitted assertive outputs $\mathcal{C}_{\mathrm{asserted}}$ that possess an unbroken, byte-verified provenance trail to canonical primary sources $\mathcal{C}_{\mathrm{grounded}}$:
 
 ```math
 \mathrm{ZHR} = \frac{\lvert\mathcal{C}_{\mathrm{grounded}}\rvert}{\lvert\mathcal{C}_{\mathrm{asserted}}\rvert}.
 ```
 
 **Parameters and Admissible Ranges:**
-- $`\mathcal{C}_{\mathrm{asserted}}`$ — the set of all assertive conclusions, recommendations, and operational parameters emitted by the system across an operational session ($`\lvert\mathcal{C}_{\mathrm{asserted}}\rvert \ge 1`$);
-- $`\mathcal{C}_{\mathrm{grounded}} \subseteq \mathcal{C}_{\mathrm{asserted}}`$ — the subset of assertions for which byte-level source grounding against SHA-256 digests and numeric value matching have succeeded;
-- $`\mathrm{ZHR} \in [0, 1]`$ — the normalized zero-hallucination coefficient.
+- $\mathcal{C}_{\mathrm{asserted}}$ — the set of all assertive conclusions, recommendations, and operational parameters emitted by the system across an operational session ($\lvert\mathcal{C}_{\mathrm{asserted}}\rvert \ge 1$);
+- $\mathcal{C}_{\mathrm{grounded}} \subseteq \mathcal{C}_{\mathrm{asserted}}$ — the subset of assertions for which byte-level source grounding against SHA-256 digests and numeric value matching have succeeded;
+- $\mathrm{ZHR} \in [0, 1]$ — the normalized zero-hallucination coefficient.
 
 **Operational Decisions and Numerical Example:**
-- **Certification Threshold:** For safety-critical systems, an uncompromising engineering threshold is enforced: $`\tau_{\mathrm{ZHR}} = 1.000000`$.
-- **Admission to Execution:** If $`\mathrm{ZHR} = 1.00`$, the synthesized conclusion payload receives an Ed25519 digital signature certifying its integrity and is released to the consumer or physical actuator (`EMIT_GROUNDED`).
-- **Inhibition and Deficit:** If $`\mathrm{ZHR} < 1.00`$ (indicating even a single ungrounded assertion), a safety interrupt fires: the entire response payload is inhibited (`DROP_UNGROUNDED`), the unconfirmed proposition is flagged as `HALLUCINATED_QUOTE`, and the expert system transitions to epistemic deficit handling.
+- **Certification Threshold:** For safety-critical systems, an uncompromising engineering threshold is enforced: $\tau_{\mathrm{ZHR}} = 1.000000$.
+- **Admission to Execution:** If $\mathrm{ZHR} = 1.00$, the synthesized conclusion payload receives an Ed25519 digital signature certifying its integrity and is released to the consumer or physical actuator (`EMIT_GROUNDED`).
+- **Inhibition and Deficit:** If $\mathrm{ZHR} < 1.00$ (indicating even a single ungrounded assertion), a safety interrupt fires: the entire response payload is inhibited (`DROP_UNGROUNDED`), the unconfirmed proposition is flagged as `HALLUCINATED_QUOTE`, and the expert system transitions to epistemic deficit handling.
 
 **Practical Engineering Sizing:**  
-During an automated compliance audit of an electrical substation operating manual, an unconstrained model emitted a candidate set of $`\lvert\mathcal{C}_{\mathrm{asserted}}\rvert = 50`$ assertions. For 49 assertions, byte-level SHA-256 hashes matched the regulatory clauses of standard EN 61936-1 identically. For one assertion, however, the model rounded the minimum clearance distance from $`2.20\,\text{m}`$ to $`2.50\,\text{m}`$, resulting in a byte slice mismatch ($`\lvert\mathcal{C}_{\mathrm{grounded}}\rvert = 49`$). The metric evaluated to:
+During an automated compliance audit of an electrical substation operating manual, an unconstrained model emitted a candidate set of $\lvert\mathcal{C}_{\mathrm{asserted}}\rvert = 50$ assertions. For 49 assertions, byte-level SHA-256 hashes matched the regulatory clauses of standard EN 61936-1 identically. For one assertion, however, the model rounded the minimum clearance distance from $2.20\,\text{m}$ to $2.50\,\text{m}$, resulting in a byte slice mismatch ($\lvert\mathcal{C}_{\mathrm{grounded}}\rvert = 49$). The metric evaluated to:
 
 ```math
 \mathrm{ZHR} = \frac{49}{50} = 0{,}980000 < 1{,}000000.
@@ -222,15 +222,15 @@ The safety gate immediately blocked release of the entire compliance audit repor
 | Syntactic Shield (Tier 1) | Logit-level FSM masking | Syntax corruption, schema violations | Semantic and factual falsehood of admitted tokens |
 | Byte Gate (Tier 2) | SHA-256 byte slice verification | Fabricated citations, invented numbers | Completeness gaps in external knowledge corpus |
 
-### 2.3. Popperian Hypothesis Falsification Cycle ($`F^+`$ vs. $`F^-`$)
+### 2.3. Popperian Hypothesis Falsification Cycle ($F^+$ vs. $F^-$)
 
 Even if a candidate assertion generated by a language model complies with the target schema and includes an authentic citation, an insidious vulnerability remains: contextual omission (*contextual omission*). For example, an automotive specification may state: *"CAN FD communication baud rates may be configured up to 5 Mbit/s"*, while the subsequent paragraph specifies a critical constraint: *"with the exception of harness physical lengths exceeding 15 meters, where maximum throughput is restricted to 2 Mbit/s"*. If the model extracts only the former clause, the citation is technically genuine, yet the operational instruction for a long bus topology will cause catastrophic frame corruption.
 
 To defend against such selective delusions, the evidence-governed expert system executes a **Popperian hypothesis falsification cycle** grounded in Karl Popper's epistemology [[14]](#src-14). The foundational tenet of Popperian demarcation holds that no finite collection of confirmatory observations can conclusively establish a hypothesis, whereas a single authenticated counterexample conclusively falsifies it.
 
 Within the knowledge acquisition and admission gate, this principle is formalized as mandatory paired hypothesis generation:
-1. **Antithesis synthesis:** For every candidate assertion $`F^+`$ ("Assertion: clause is applicable"), the hypothesis generator is compelled to synthesize a targeted antithesis—a counterexample $`F^-`$ ("Falsification: exceptions, defeaters, or restricting conditions inhibit clause application").
-2. **Deterministic verification:** Both propositions $`F^+`$ and $`F^-`$ are routed to the deterministic verification core, which executes independent byte-level citation grounding against canonical source texts via SHA-256 cryptographic digests.
+1. **Antithesis synthesis:** For every candidate assertion $F^+$ ("Assertion: clause is applicable"), the hypothesis generator is compelled to synthesize a targeted antithesis—a counterexample $F^-$ ("Falsification: exceptions, defeaters, or restricting conditions inhibit clause application").
+2. **Deterministic verification:** Both propositions $F^+$ and $F^-$ are routed to the deterministic verification core, which executes independent byte-level citation grounding against canonical source texts via SHA-256 cryptographic digests.
 
 The admission gate decision is governed by the strict falsification rule:
 
@@ -239,13 +239,13 @@ The admission gate decision is governed by the strict falsification rule:
 ```
 
 **Parameters and Logical Variables:**
-- $`\mathcal{V}(F^+) \in \{\mathrm{TRUE}, \mathrm{FALSE}\}`$ — verification status of the positive proposition (presence of a byte-verified citation supporting the rule in the primary text);
-- $`\mathcal{V}(F^-) \in \{\mathrm{TRUE}, \mathrm{FALSE}\}`$ — verification status of the antithesis (presence of a byte-verified citation establishing an active exception or defeater);
-- $`\mathrm{Status}(F) \in \{\mathrm{ACCEPT}, \mathrm{REFUSAL}\}`$ — operational decision of the admission gate.
+- $\mathcal{V}(F^+) \in \{\mathrm{TRUE}, \mathrm{FALSE}\}$ — verification status of the positive proposition (presence of a byte-verified citation supporting the rule in the primary text);
+- $\mathcal{V}(F^-) \in \{\mathrm{TRUE}, \mathrm{FALSE}\}$ — verification status of the antithesis (presence of a byte-verified citation establishing an active exception or defeater);
+- $\mathrm{Status}(F) \in \{\mathrm{ACCEPT}, \mathrm{REFUSAL}\}$ — operational decision of the admission gate.
 
 **Operational State Transitions and Numerical Example:**
-- An assertion is admitted to the active knowledge base if and only if $`F^+`$ is conclusively grounded and $`F^-`$ is deterministically disproven. If the counterexample $`F^-`$ finds evidentiary grounding in the text, the system flags a normative conflict (`CONTRADICTION_DEFEATED`) and suppresses the hazardous recommendation.
-- Practical scenario: Consider the rule *"CAN FD baud rate may be set up to 5 Mbit/s"* ($`F^+`$). The synthesized Popperian counterexample $`F^-`$ tests the exception: *"cable harness length exceeds 15 meters"*. When telemetry provides line length $`L = 22\,\text{m}`$, the core resolves $`\mathcal{V}(F^+) = \mathrm{TRUE}`$ (general rule exists) and $`\mathcal{V}(F^-) = \mathrm{TRUE}`$ (exception condition active). Because $`\mathcal{V}(F^-) = \mathrm{TRUE}`$, the gate outputs $`\mathrm{Status}(F) = \mathrm{REFUSAL}`$ (`CONTRADICTION_DEFEATED`) and inhibits transceiver reconfiguration to 5 Mbit/s, preventing physical bus signal degradation.
+- An assertion is admitted to the active knowledge base if and only if $F^+$ is conclusively grounded and $F^-$ is deterministically disproven. If the counterexample $F^-$ finds evidentiary grounding in the text, the system flags a normative conflict (`CONTRADICTION_DEFEATED`) and suppresses the hazardous recommendation.
+- Practical scenario: Consider the rule *"CAN FD baud rate may be set up to 5 Mbit/s"* ($F^+$). The synthesized Popperian counterexample $F^-$ tests the exception: *"cable harness length exceeds 15 meters"*. When telemetry provides line length $L = 22\,\text{m}$, the core resolves $\mathcal{V}(F^+) = \mathrm{TRUE}$ (general rule exists) and $\mathcal{V}(F^-) = \mathrm{TRUE}$ (exception condition active). Because $\mathcal{V}(F^-) = \mathrm{TRUE}$, the gate outputs $\mathrm{Status}(F) = \mathrm{REFUSAL}$ (`CONTRADICTION_DEFEATED`) and inhibits transceiver reconfiguration to 5 Mbit/s, preventing physical bus signal degradation.
 
 ```mermaid
 sequenceDiagram
@@ -286,10 +286,10 @@ sequenceDiagram
 
 Empirical investigations conducted on dedicated embedded computing platforms (a Seeed Studio reServer Industrial J501 based on the NVIDIA Jetson AGX Orin 64GB under active cooling profile `MODE_30W`) unequivocally confirmed this fundamental regularity. When evaluating 7B and 14B parameter models on formal engineering corpora (RFC 9110 HTTP Semantics and ISO 26262-4 ASIL D specifications), unconstrained baseline models lacking syntactic enforcement exhibited systematic structural degradation: schema divergence from `GroundFactSpec`, corrupted JSON keys, and the total omission of critical defeaters (`unless` clauses).
 
-In contrast, deploying grammar-guided GBNF decoding coupled with contrasting Popperian pairs $`(F^+, F^-)`$ delivered:
+In contrast, deploying grammar-guided GBNF decoding coupled with contrasting Popperian pairs $(F^+, F^-)$ delivered:
 1. **0.00% syntactic defect rate:** Zero corrupted tokens or invalid AST structures as a direct result of logit masking prior to the softmax operator;
-2. **Absolute knowledge falsifiability:** The Epistemic Virtual Machine (EVM) core [[15]](#src-15) deterministically proved all positive claims $`F^+`$ via byte custody in the `%ebx` register, while deterministically refuting synthesized counterexamples $`F^-`$ characterized by defeater omissions (`DEFEATER_OMISSION`) or deontic modality inversion (`DEONTIC_MODALITY_INVERSION`);
-3. **Flawless certification metric ($`\mathrm{ZHR} = 1.000000`$):** Zero ungrounded or contradictory propositions entered the knowledge repository, with silicon thermal margins under active cooling maintaining a $`+56^\circ\text{C}`$ buffer below the thermal throttling threshold (99°C).
+2. **Absolute knowledge falsifiability:** The Epistemic Virtual Machine (EVM) core [[15]](#src-15) deterministically proved all positive claims $F^+$ via byte custody in the `%ebx` register, while deterministically refuting synthesized counterexamples $F^-$ characterized by defeater omissions (`DEFEATER_OMISSION`) or deontic modality inversion (`DEONTIC_MODALITY_INVERSION`);
+3. **Flawless certification metric ($\mathrm{ZHR} = 1.000000$):** Zero ungrounded or contradictory propositions entered the knowledge repository, with silicon thermal margins under active cooling maintaining a $+56^\circ\text{C}$ buffer below the thermal throttling threshold (99°C).
 
 ```mermaid
 xychart-beta
@@ -307,31 +307,31 @@ When an expert system encounters insufficient knowledge to resolve a query, this
 
 Relational databases operate under the Closed-World Assumption (CWA): any tuple absent from a table is presumed definitively false. Evidence-governed knowledge engineering enforces the Open-World Assumption (OWA): if an asserted relation is unrecorded in the fact base, it is classified as **unknown**, rather than false.
 
-Let query $`Q`$ require the proof of a set of target predicates $`\mathcal{P}_{\mathrm{required}}(Q)`$, while the current knowledge base deterministically proves only a subset $`\mathcal{P}_{\mathrm{proven}}(Q) \subseteq \mathcal{P}_{\mathrm{required}}(Q)`$. The measure of epistemic deficit $`D_{\mathrm{epistemic}}(Q)`$ is formalized as:
+Let query $Q$ require the proof of a set of target predicates $\mathcal{P}_{\mathrm{required}}(Q)$, while the current knowledge base deterministically proves only a subset $\mathcal{P}_{\mathrm{proven}}(Q) \subseteq \mathcal{P}_{\mathrm{required}}(Q)$. The measure of epistemic deficit $D_{\mathrm{epistemic}}(Q)$ is formalized as:
 
 ```math
 D_{\mathrm{epistemic}}(Q) = 1 - \frac{\lvert\mathcal{P}_{\mathrm{proven}}(Q)\rvert}{\lvert\mathcal{P}_{\mathrm{required}}(Q)\rvert},\qquad D_{\mathrm{epistemic}} \in [0, 1].
 ```
 
 **Parameters and Boundary Conditions:**
-- $`\mathcal{P}_{\mathrm{required}}(Q)`$ — the set of all target predicates and attributes necessary to fully substantiate the resolution of query $`Q`$ ($`\lvert\mathcal{P}_{\mathrm{required}}(Q)\rvert \ge 1`$);
-- $`\mathcal{P}_{\mathrm{proven}}(Q) \subseteq \mathcal{P}_{\mathrm{required}}(Q)`$ — the subset of predicates for which byte-grounded facts with $`\mathrm{ZHR} = 1.00`$ are verified within the repository;
-- $`D_{\mathrm{epistemic}}(Q) \in [0, 1]`$ — the normalized epistemic deficit coefficient (0 represents complete information, 1 represents the total absence of verified facts).
+- $\mathcal{P}_{\mathrm{required}}(Q)$ — the set of all target predicates and attributes necessary to fully substantiate the resolution of query $Q$ ($\lvert\mathcal{P}_{\mathrm{required}}(Q)\rvert \ge 1$);
+- $\mathcal{P}_{\mathrm{proven}}(Q) \subseteq \mathcal{P}_{\mathrm{required}}(Q)$ — the subset of predicates for which byte-grounded facts with $\mathrm{ZHR} = 1.00$ are verified within the repository;
+- $D_{\mathrm{epistemic}}(Q) \in [0, 1]$ — the normalized epistemic deficit coefficient (0 represents complete information, 1 represents the total absence of verified facts).
 
 **Operational Decisions and Numerical Example:**
-- When $`D_{\mathrm{epistemic}} = 0`$, the system emits a categorical answer substantiated by a complete deductive proof tree (`ADMIT_DEDUCTIVE`).
-- When $`D_{\mathrm{epistemic}} > 0`$, the system immediately trips the **fail-closed gate (Fail-Closed Gate)**.
+- When $D_{\mathrm{epistemic}} = 0$, the system emits a categorical answer substantiated by a complete deductive proof tree (`ADMIT_DEDUCTIVE`).
+- When $D_{\mathrm{epistemic}} > 0$, the system immediately trips the **fail-closed gate (Fail-Closed Gate)**.
 
 **Practical Sizing Scenario:**  
-A control query $`Q`$ requesting clearance to energize a high-voltage substation transformer demands verification of 4 mandatory preconditions ($`\lvert\mathcal{P}_{\mathrm{required}}\rvert = 4`$): dielectric insulation integrity, $`\mathrm{SF}_6`$ gas pressure within specification, busbar contact temperature nominal, and grounding disconnect switches confirmed open. Telemetry confirms 3 predicates, but the grounding switch position sensor fails to provide a cryptographically signed freshness token ($`\lvert\mathcal{P}_{\mathrm{proven}}\rvert = 3`$). The epistemic deficit evaluates to:
+A control query $Q$ requesting clearance to energize a high-voltage substation transformer demands verification of 4 mandatory preconditions ($\lvert\mathcal{P}_{\mathrm{required}}\rvert = 4$): dielectric insulation integrity, $\mathrm{SF}_6$ gas pressure within specification, busbar contact temperature nominal, and grounding disconnect switches confirmed open. Telemetry confirms 3 predicates, but the grounding switch position sensor fails to provide a cryptographically signed freshness token ($\lvert\mathcal{P}_{\mathrm{proven}}\rvert = 3$). The epistemic deficit evaluates to:
 
 ```math
 D_{\mathrm{epistemic}}(Q) = 1 - \frac{3}{4} = 0{,}250000.
 ```
 
-Because $`D_{\mathrm{epistemic}} = 0.25 > 0`$, the system inhibits the breaker close command and synthesizes a strongly typed refusal: `Refusal(CALIBRATION_DEFICIT)`.
+Because $D_{\mathrm{epistemic}} = 0.25 > 0$, the system inhibits the breaker close command and synthesizes a strongly typed refusal: `Refusal(CALIBRATION_DEFICIT)`.
 
-The typed refusal operator $`\mathrm{Refusal}(\rho)`$ is a first-class, structured outcome of the expert system. The refusal reason $`\rho`$ identifies the precise taxonomy of the knowledge deficit:
+The typed refusal operator $\mathrm{Refusal}(\rho)$ is a first-class, structured outcome of the expert system. The refusal reason $\rho$ identifies the precise taxonomy of the knowledge deficit:
 
 * `NO_EVIDENCE`: No recorded documents contain the entities or primary attributes identified in the query;
 * `AMBIGUOUS_EVIDENCE`: Mutually contradictory citations exist without an objective temporal or semantic precedence ranking;
@@ -339,37 +339,37 @@ The typed refusal operator $`\mathrm{Refusal}(\rho)`$ is a first-class, structur
 * `CALIBRATION_DEFICIT`: Sensor telemetry lacks certified calibration bounds or the sensor calibration interval has expired;
 * `UNRESOLVED_DEFEATER`: A candidate deductive path is blocked by an active defeater within the truth maintenance system.
 
-The fail-closed policy guarantees complete risk interception ($`\text{FCP} = 100\%`$): no operational decision relying on incomplete or unverified assumptions is ever transmitted to physical actuators or committed to official compliance records.
+The fail-closed policy guarantees complete risk interception ($\text{FCP} = 100\%$): no operational decision relying on incomplete or unverified assumptions is ever transmitted to physical actuators or committed to official compliance records.
 
 ### 3.1. Geological Stratification and Knowledge Deficit Heatmaps (KDI Sliding Window Heatmap)
 
 Knowledge deficits across industrial specifications are non-uniform: specific chapters provide rigorous numerical tolerances, while adjacent sections offer vague policy declarations. Viewing the repository as a geological core sample, fact density is quantified via the sliding-window **Knowledge Deficit Index (KDI)**.
 
-Let canonical regulatory document $`\mathcal{D}`$ be partitioned into a sequence of sliding structural windows $`w \in \mathcal{W}`$ of fixed size (such as 256-byte segments with a 64-byte overlap). For each window $`w`$, the knowledge acquisition system (KAS) identifies the count of declared normative requirements $`\mathcal{R}_{\mathrm{declared}}(w)`$ and the count of admitted, byte-grounded facts $`\mathcal{F}_{\mathrm{admitted}}(w)`$:
+Let canonical regulatory document $\mathcal{D}$ be partitioned into a sequence of sliding structural windows $w \in \mathcal{W}$ of fixed size (such as 256-byte segments with a 64-byte overlap). For each window $w$, the knowledge acquisition system (KAS) identifies the count of declared normative requirements $\mathcal{R}_{\mathrm{declared}}(w)$ and the count of admitted, byte-grounded facts $\mathcal{F}_{\mathrm{admitted}}(w)$:
 
 ```math
 \mathrm{KDI}(w) = 1 - \frac{\lvert\mathcal{F}_{\mathrm{admitted}}(w)\rvert}{\lvert\mathcal{R}_{\mathrm{declared}}(w)\rvert},\qquad \mathrm{KDI}(w) \in [0, 1].
 ```
 
 **Parameters and Stratification Scale:**
-- $`\mathcal{R}_{\mathrm{declared}}(w)`$ — the set of identified normative constraints and technical specifications within window $`w`$ ($`\lvert\mathcal{R}_{\mathrm{declared}}(w)\rvert \ge 1`$);
-- $`\mathcal{F}_{\mathrm{admitted}}(w)`$ — the subset of window requirements that have successfully passed byte-level admission;
-- $`\mathrm{KDI}(w) \in [0, 1]`$ — the localized window deficit index.
+- $\mathcal{R}_{\mathrm{declared}}(w)$ — the set of identified normative constraints and technical specifications within window $w$ ($\lvert\mathcal{R}_{\mathrm{declared}}(w)\rvert \ge 1$);
+- $\mathcal{F}_{\mathrm{admitted}}(w)$ — the subset of window requirements that have successfully passed byte-level admission;
+- $\mathrm{KDI}(w) \in [0, 1]$ — the localized window deficit index.
 
 The resulting deficit heatmap classifies the text corpus into three distinct geological strata:
 
-1. **Grounded Bedrock ($`\mathrm{KDI}(w) \le 0.05`$):** A stratum of near-complete formalization ($`> 95\%`$ of requirements formalized and backed by byte-accurate citations). The expert system operates in pure deterministic deduction without operator intervention.
-2. **Transitional Karst ($`0.05 < \mathrm{KDI}(w) \le 0.30`$):** Characterized by normative voids, ambiguous parameters, or underspecified constraints. The system permits bounded Peircean abduction, coupling conclusions with mandatory Socratic clarification dialogues.
-3. **Epistemic Void ($`\mathrm{KDI}(w) > 0.30`$):** Zones of acute knowledge absence or unformalized policy. Any query intersecting this stratum is terminated with a typed safety refusal (`HALT_REFUSE`).
+1. **Grounded Bedrock ($\mathrm{KDI}(w) \le 0.05$):** A stratum of near-complete formalization ($> 95\%$ of requirements formalized and backed by byte-accurate citations). The expert system operates in pure deterministic deduction without operator intervention.
+2. **Transitional Karst ($0.05 < \mathrm{KDI}(w) \le 0.30$):** Characterized by normative voids, ambiguous parameters, or underspecified constraints. The system permits bounded Peircean abduction, coupling conclusions with mandatory Socratic clarification dialogues.
+3. **Epistemic Void ($\mathrm{KDI}(w) > 0.30$):** Zones of acute knowledge absence or unformalized policy. Any query intersecting this stratum is terminated with a typed safety refusal (`HALT_REFUSE`).
 
 **Practical Sizing Example:**  
-During a sliding-window scan of window $`w_{42}`$ (256 bytes) across an industrial machinery standard, the pipeline extracts 8 deontic requirements ($`\lvert\mathcal{R}_{\mathrm{declared}}(w_{42})\rvert = 8`$). Of these, 7 requirements yield admitted byte-grounded facts, while one requirement contains an unresolved external reference ($`\lvert\mathcal{F}_{\mathrm{admitted}}(w_{42})\rvert = 7`$). The window deficit evaluates to:
+During a sliding-window scan of window $w_{42}$ (256 bytes) across an industrial machinery standard, the pipeline extracts 8 deontic requirements ($\lvert\mathcal{R}_{\mathrm{declared}}(w_{42})\rvert = 8$). Of these, 7 requirements yield admitted byte-grounded facts, while one requirement contains an unresolved external reference ($\lvert\mathcal{F}_{\mathrm{admitted}}(w_{42})\rvert = 7$). The window deficit evaluates to:
 
 ```math
 \mathrm{KDI}(w_{42}) = 1 - \frac{7}{8} = 0{,}125000.
 ```
 
-Because $`0.05 < 0.125 \le 0.30`$, window $`w_{42}`$ is classified as *Transitional Karst*. The system automatically switches into Socratic dialogue mode, prompting the operator for the missing referenced parameter before issuing a certified verdict.
+Because $0.05 < 0.125 \le 0.30$, window $w_{42}$ is classified as *Transitional Karst*. The system automatically switches into Socratic dialogue mode, prompting the operator for the missing referenced parameter before issuing a certified verdict.
 
 ```mermaid
 stateDiagram-v2
@@ -397,11 +397,11 @@ stateDiagram-v2
 
 ## 4. Peircean Abductive Closures: Overcoming Incompleteness Without Confabulation
 
-A categorical refusal $`\mathrm{Refusal}`$ halts unsafe execution, but fails to advance the engineering task. When human practitioners confront missing data, they do not invent random facts; they formulate grounded hypotheses.
+A categorical refusal $\mathrm{Refusal}$ halts unsafe execution, but fails to advance the engineering task. When human practitioners confront missing data, they do not invent random facts; they formulate grounded hypotheses.
 
 Charles Sanders Peirce established the foundational triad of logical inference: deduction derives consequences from rules and premises; induction generalizes rules from repeated observations; **abduction** infers the most plausible premise from a known rule and an observed consequence [[5]](#src-5).
 
-Symbolic abduction in an evidence-governed expert system is formalized as follows: given observed target goal $`Q`$, where the rule base contains deductive invariant $`P \land \Delta \to Q`$, context $`\Delta`$ is verified, but premise $`P`$ is unrecorded in the fact base, the engine synthesizes an abductive closure:
+Symbolic abduction in an evidence-governed expert system is formalized as follows: given observed target goal $Q$, where the rule base contains deductive invariant $P \land \Delta \to Q$, context $\Delta$ is verified, but premise $P$ is unrecorded in the fact base, the engine synthesizes an abductive closure:
 
 ```math
 \text{Abductive hypothesis: } P \text{ conditionally holds.}
@@ -418,7 +418,7 @@ For the P-7 pump scenario, the clarification frame is structured as follows:
 > - **Target Goal:** Authorization for line flushing of pump P-7.  
 > - **Established Facts:** Electrical isolation active, line temperature nominal (22 °C).  
 > - **Missing Mandatory Premise:** Calibration certificate for downstream pressure sensor PT-104 is expired.  
-> - **Abductive Hypothesis:** If line pressure has been vented to atmosphere ($`< 0.2\,\text{bar}`$), flushing is permissible.  
+> - **Abductive Hypothesis:** If line pressure has been vented to atmosphere ($< 0.2\,\text{bar}$), flushing is permissible.  
 > - **Operator Action Required:** Execute physical line bleed or confirm readings from manual pressure gauge M-1.
 
 Abduction creates no illusion of certainty: it demarcates the boundary between what is mathematically proved and what requires physical, external verification.
@@ -427,7 +427,7 @@ Abduction creates no illusion of certainty: it demarcates the boundary between w
 
 In hard real-time environments where neural networks or reinforcement learning agents generate continuous control signals for physical actuators or automated trading gateways, latency precludes interactive human dialogue. These architectures require **predicate safety shields (Neuro-Symbolic Shields)**, developed by Könighofer et al. [[6]](#src-6) and formalized by Shalev-Shwartz, Shammah, and Shashua in Mobileye's Responsibility-Sensitive Safety (RSS) framework [[7]](#src-7).
 
-A predicate safety shield is a deterministic finite-state automaton that enforces formal safety invariants $`\Phi = \{\phi_1, \phi_2, \dots, \phi_m\}`$. The shield sits directly on the control boundary between the neural model's candidate action vector $`\mathbf{a} \in \mathcal{A}`$ and the physical plant.
+A predicate safety shield is a deterministic finite-state automaton that enforces formal safety invariants $\Phi = \{\phi_1, \phi_2, \dots, \phi_m\}$. The shield sits directly on the control boundary between the neural model's candidate action vector $\mathbf{a} \in \mathcal{A}$ and the physical plant.
 
 ```mermaid
 flowchart LR
@@ -440,13 +440,13 @@ flowchart LR
     SHIELD -->|"If Hazardous (a ∉ A_safe)"| SAFE["Corrective Action (a*) or Emergency Shutdown"]
 ```
 
-Mathematically, the shield solves an online projection problem, mapping candidate action $`\mathbf{a}`$ onto the safe operational action envelope $`\mathcal{A}_{\mathrm{safe}}(s)`$:
+Mathematically, the shield solves an online projection problem, mapping candidate action $\mathbf{a}$ onto the safe operational action envelope $\mathcal{A}_{\mathrm{safe}}(s)$:
 
 ```math
 \mathbf{a}^* = \arg\min_{\mathbf{a}' \in \mathcal{A}_{\mathrm{safe}}(s)} \|\mathbf{a}' - \mathbf{a}\|.
 ```
 
-Should the neural model emit an action that violates spatial boundary buffers, exceeds critical thermal tolerances, or breaches interlock switching sequences, the predicate shield intervenes within a latency budget strictly below the system's Fault Tolerant Time Interval (FTTI), overriding the command with optimal safe action $`\mathbf{a}^*`$ or tripping an emergency de-energization interlock.
+Should the neural model emit an action that violates spatial boundary buffers, exceeds critical thermal tolerances, or breaches interlock switching sequences, the predicate shield intervenes within a latency budget strictly below the system's Fault Tolerant Time Interval (FTTI), overriding the command with optimal safe action $\mathbf{a}^*$ or tripping an emergency de-energization interlock.
 
 In generative language interfaces, the direct analog of this mechanism is vocabulary-level logit masking: if selecting a candidate token would drive the ontology parser into an unsafe or invalid state, the token's softmax logit is zeroed prior to sampling.
 
@@ -458,18 +458,18 @@ The expert system does not merely intercept model failures at runtime. It functi
 
 Conventional Reinforcement Learning from Human Feedback (RLHF) relies on subjective human annotator scoring, which frequently favors verbose, polite, yet factually incorrect outputs. Rafailov et al. formulated Direct Preference Optimization (DPO) [[8]](#src-8), eliminating the need for an unstable auxiliary reward model.
 
-The evidence-governed expert system systematically constructs gold-standard training triplets $`(x, y_w, y_l)`$:
-* $`x`$ represents the incoming engineering or regulatory query;
-* $`y_w`$ represents the winning completion (*winning*), generated with verified byte-level citations, bounded numeric ranges, and explicit logical justifications;
-* $`y_l`$ represents the losing completion (*losing*), generated by the unconstrained baseline model and rejected by the admission gate due to ungrounded claims, hallucinated citations, or schema violations.
+The evidence-governed expert system systematically constructs gold-standard training triplets $(x, y_w, y_l)$:
+* $x$ represents the incoming engineering or regulatory query;
+* $y_w$ represents the winning completion (*winning*), generated with verified byte-level citations, bounded numeric ranges, and explicit logical justifications;
+* $y_l$ represents the losing completion (*losing*), generated by the unconstrained baseline model and rejected by the admission gate due to ungrounded claims, hallucinated citations, or schema violations.
 
-The DPO loss optimizes model parameters $`\theta`$ relative to reference policy $`\pi_{\mathrm{ref}}`$:
+The DPO loss optimizes model parameters $\theta$ relative to reference policy $\pi_{\mathrm{ref}}$:
 
 ```math
 \mathcal{L}_{\mathrm{DPO}}(\theta; \pi_{\mathrm{ref}}) = -\mathbb{E}_{(x, y_w, y_l)}\left[\log \sigma\left(\beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\mathrm{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\mathrm{ref}}(y_l \mid x)}\right)\right].
 ```
 
-Here, $`\sigma`$ is the logistic sigmoid, and $`\beta`$ is a divergence regularization hyperparameter. The optimization landscape penalizes confabulation attempts, training the network to emit structured refusal tokens whenever source citations are absent.
+Here, $\sigma$ is the logistic sigmoid, and $\beta$ is a divergence regularization hyperparameter. The optimization landscape penalizes confabulation attempts, training the network to emit structured refusal tokens whenever source citations are absent.
 
 ### 6.2. Machine Unlearning of Compromised Facts
 
@@ -479,7 +479,7 @@ Bourtoule et al. introduced the SISA architecture (*Sharded, Isolated, Sliced, A
 
 ### 6.3. Statistical Self-Consistency and Robustness Filters
 
-For complex multi-step reasoning, Wang et al. proposed the Self-Consistency decoding strategy [[10]](#src-10): sampling $`N`$ independent reasoning trajectories under non-zero temperature and resolving the final answer via majority voting.
+For complex multi-step reasoning, Wang et al. proposed the Self-Consistency decoding strategy [[10]](#src-10): sampling $N$ independent reasoning trajectories under non-zero temperature and resolving the final answer via majority voting.
 
 In our evidence-governed framework, this approach is refined: consensus voting operates not over raw text tokens, but over normalized semantic proof trees. Only the corroborated core of assertions is passed to the deterministic gate, dramatically suppressing stochastic reasoning variance.
 
@@ -747,7 +747,7 @@ Distinguished thinkers whose foundational ideas shape our modern understanding o
 
 *Disclaimer:* This discussion is a heuristic virtual simulation conducted exclusively within the monograph's scholarly and pedagogical context. The opponents' arguments and stances are synthesized from their published works, academic papers, and philosophical treatises; they do not claim to be verbatim real-world quotes and serve critical rationalism (Popperian falsification) of the author's engineering hypotheses.
 
-**Chapter Thesis.** By its autoregressive nature, a generative language model lacks semantic truth criteria and suffers from behavioral "boxiness" artifacts following aggressive alignment; relying on neural arbitration ("LLM-as-a-Judge") is a dangerous illusion of control plagued by common-mode failures. The sole mathematically sound remediation of machine hallucinations in mission-critical systems is to strip the model of factual authority, subordinating it to a deterministic two-tier zero-hallucination gateway: grammar-guided AST decoding, byte-level citation grounding with SHA-256 hashes ($`\mathrm{ZHR} = 1{,}00`$), real-time predicate shields, Peircean symbolic abduction for Socratic clarification, and a guaranteed fail-closed policy (`Fail-Closed Gate`).
+**Chapter Thesis.** By its autoregressive nature, a generative language model lacks semantic truth criteria and suffers from behavioral "boxiness" artifacts following aggressive alignment; relying on neural arbitration ("LLM-as-a-Judge") is a dangerous illusion of control plagued by common-mode failures. The sole mathematically sound remediation of machine hallucinations in mission-critical systems is to strip the model of factual authority, subordinating it to a deterministic two-tier zero-hallucination gateway: grammar-guided AST decoding, byte-level citation grounding with SHA-256 hashes ($\mathrm{ZHR} = 1{,}00$), real-time predicate shields, Peircean symbolic abduction for Socratic clarification, and a guaranteed fail-closed policy (`Fail-Closed Gate`).
 
 **Dialogue with Emily M. Bender: Reliability of Expert Scaffolding and Limits of Stochastic Language Models**
 
@@ -759,7 +759,7 @@ Distinguished thinkers whose foundational ideas shape our modern understanding o
 
 - **Emily M. Bender:** Even if you demote the model to a mere textual hypothesis generator, models subject to aggressive alignment (RLHF, DPO) suffer from acute behavioral distortions: Ambiguity Collapse, Over-Closure, Tool Reflex, and hollow corporate abstraction. The model compulsively rushes to output a sanitized, superficial answer or invoke the first available tool rather than truthfully admitting epistemic uncertainty. If your hypothesis engine is constrained by this pervasive "boxiness" syndrome, your deterministic gateway will receive an impoverished, artificially truncated stream of candidate hypotheses. How do you mitigate this internal degradation of the generator?
 
-- **Mykola Fedchyk:** To neutralize post-alignment boxiness, we implement dynamic Cognitive Repair Patches and Cognitive Shims. These shims intercept tokens during sampling to forcibly expand the reasoning horizon: whenever premature option collapse or an impulsive tool reflex is detected, the shim injects negative constraints and activates grammar-guided AST decoding according to a strict BNF grammar. Furthermore, we categorically eliminate the flawed "LLM-as-a-Judge" pattern: hypothesis arbitration is never delegated to a peer model sharing identical cognitive blind spots, but is conducted exclusively by an SMT solver and byte-exact citation validators over SHA-256 hashes, ensuring an unyielding zero-hallucination rate ($`\mathrm{ZHR} = 1{,}00`$).
+- **Mykola Fedchyk:** To neutralize post-alignment boxiness, we implement dynamic Cognitive Repair Patches and Cognitive Shims. These shims intercept tokens during sampling to forcibly expand the reasoning horizon: whenever premature option collapse or an impulsive tool reflex is detected, the shim injects negative constraints and activates grammar-guided AST decoding according to a strict BNF grammar. Furthermore, we categorically eliminate the flawed "LLM-as-a-Judge" pattern: hypothesis arbitration is never delegated to a peer model sharing identical cognitive blind spots, but is conducted exclusively by an SMT solver and byte-exact citation validators over SHA-256 hashes, ensuring an unyielding zero-hallucination rate ($\mathrm{ZHR} = 1{,}00$).
 
 **Dialogue with Charles Sanders Peirce: Principles of Living Abduction and Deterministic Relational Closures**
 
@@ -775,7 +775,7 @@ Distinguished thinkers whose foundational ideas shape our modern understanding o
 
 **Synthesis.** Evidentiary remediation of machine hallucinations merges Bender's linguistic skepticism with Peirce's pragmatic logic into an integrated safety architecture:
 1. The neural model is stripped of epistemic authority; alignment-induced boxiness is compensated via Cognitive Shims, and "LLM-as-a-Judge" arbitration is discarded in favor of formal SMT verification;
-2. The two-tier gateway guarantees $`\mathrm{ZHR} = 1{,}00`$ through the combination of grammar-guided AST decoding and cryptographic byte-level citation grounding with SHA-256;
+2. The two-tier gateway guarantees $\mathrm{ZHR} = 1{,}00$ through the combination of grammar-guided AST decoding and cryptographic byte-level citation grounding with SHA-256;
 3. Symbolic abduction transforms epistemic deficits into structured Socratic clarification queries, while hardware predicate shields and the `Fail-Closed` policy enforce deterministic transitions into physically safe operating states without risk of machine confabulation.
 
 ## Conclusions
@@ -784,8 +784,8 @@ Machine hallucination is the inevitable consequence of optimizing statistical se
 
 Genuine remediation is achieved through clear architectural separation of concerns:
 1. The language model acts exclusively as an untrusted candidate proposal generator and unstructured text parser.
-2. Deterministic gates leveraging grammar-guided AST decoding, byte-level citation verification via SHA-256 hashes, and closed ontology registries enforce total elimination of confabulated outputs ($`\text{ZHR} = 1.00`$).
-3. Inherent epistemic deficits are resolved not through confabulation, but via strongly typed fail-closed refusals ($`\text{FCP} = 100\%`$) or Socratic clarification dialogues guided by Peircean symbolic abduction.
+2. Deterministic gates leveraging grammar-guided AST decoding, byte-level citation verification via SHA-256 hashes, and closed ontology registries enforce total elimination of confabulated outputs ($\text{ZHR} = 1.00$).
+3. Inherent epistemic deficits are resolved not through confabulation, but via strongly typed fail-closed refusals ($\text{FCP} = 100\%$) or Socratic clarification dialogues guided by Peircean symbolic abduction.
 4. Predicate safety shields guarantee the continuous, real-time safety envelope of physical actuators within sub-millisecond FTTI budgets.
 5. Accumulated verified knowledge serves as an authoritative ground-truth corpus for fine-tuning via DPO and targeted machine unlearning of obsolete norms.
 
@@ -794,15 +794,15 @@ Under this paradigm, artificial intelligence transforms from an unpredictable li
 ## Self-Check Questions
 1. Why does maximizing sequence likelihood inevitably precipitate machine hallucinations according to the Kalai–Vempala theorem?
 2. What distinguishes logit-level grammar-guided decoding (Tier 1) from the byte-level admission gate (Tier 2)?
-3. Why is contextual omission (selective quotation) a critical vulnerability, and how does the Popperian falsification cycle ($`F^+`$ vs. $`F^-`$) suppress it?
+3. Why is contextual omission (selective quotation) a critical vulnerability, and how does the Popperian falsification cycle ($F^+$ vs. $F^-$) suppress it?
 4. What does the Zero-Hallucination Rate (ZHR) measure, and under what operational condition does it strictly equal 1.00?
 5. How does system behavior under epistemic deficit differ fundamentally between the Closed-World Assumption (CWA) and the Open-World Assumption (OWA)?
 6. How is the sliding-window Knowledge Deficit Index (KDI) calculated, and what operational guidance does its stratification heatmap provide?
 7. What is the mathematical and epistemic difference between Peircean symbolic abduction and generative model confabulation?
 8. How does a predicate safety shield enforce actuator safety, and what constraints are imposed by the Fault Tolerant Time Interval (FTTI)?
-9. How does an expert system synthesize training triplets $`(x, y_w, y_l)`$ for Direct Preference Optimization (DPO)?
+9. How does an expert system synthesize training triplets $(x, y_w, y_l)$ for Direct Preference Optimization (DPO)?
 10. Why is modular machine unlearning under the SISA architecture vastly superior to full model retraining when repealing an invalidated regulatory standard?
-11. Why is the "LLM-as-a-Judge" pattern fundamentally flawed for eliminating hallucinations in mission-critical systems, and why are error probabilities between models non-independent ($`P(E_1 \cap E_2) \neq P(E_1) \cdot P(E_2)`$)?
+11. Why is the "LLM-as-a-Judge" pattern fundamentally flawed for eliminating hallucinations in mission-critical systems, and why are error probabilities between models non-independent ($P(E_1 \cap E_2) \neq P(E_1) \cdot P(E_2)$)?
 12. What is the nature of the cognitive "Boxiness" syndrome in language models following directive alignment (RLHF/DPO), which four artifact classes does it generate, and how do dynamic Cognitive Repair Patches restore analytical deduction?
 
 ## Glossary

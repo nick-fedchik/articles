@@ -10,7 +10,7 @@
 
 ## Abstract
 
-In diesem Kapitel wird die konzeptionelle Triade des Vertrauens in Systeme künstlicher Intelligenz innerhalb der sicherheitskritischen Ingenieurpraxis untersucht, die das symbolische Expertensystem, die evidenzbasierte Empfehlung und das Unternehmensgedächtnis für Forschung und Entwicklung (F&E) vereint. Es erfolgt eine klare Demarkation der Funktionen generativer Sprachmodelle (als semantische Schnittstelle und Werkzeug zur primären Textverarbeitung) von deterministischen Inferenzmaschinen. Definiert werden die Struktur des minimalen Evidenzdatensatzes einer Empfehlung, die Spezifikation eines kryptografischen Audit-Trails gemäß den Normen ISO 26262, ISO/SAE 21434 und dem W3C PROV-O-Modell sowie der Mechanismus einer ununterbrochenen kryptografischen Beweisverwahrung (Evidence Custody) mit bytegenauer Erdung normativer Fakten ($`\mathcal{G}`$). Es wird ein Protokoll zur mehrseitigen Schwellenwert-Autorisierung ($k$-of-$n$) von Wissensbasis-Änderungen auf Basis von Hardware-Sicherheitsmodulen (HSM) und RFC 3161-Zeitstempeln zum Schutz vor Insider-Bedrohungen (Insider Threat) vorgeschlagen. Zudem wird die Methodik zur Überführung passiver Dokumentation in einen aktiven relationalen Graphen des Unternehmensgedächtnisses nach dem SECI-Modell begründet, quantitative Reifemetriken für ingenieurtechnische Wissenstransferprozesse vorgestellt und die konzeptionellen Fundamente von Teil I der Monografie zusammengefasst.
+In diesem Kapitel wird die konzeptionelle Triade des Vertrauens in Systeme künstlicher Intelligenz innerhalb der sicherheitskritischen Ingenieurpraxis untersucht, die das symbolische Expertensystem, die evidenzbasierte Empfehlung und das Unternehmensgedächtnis für Forschung und Entwicklung (F&E) vereint. Es erfolgt eine klare Demarkation der Funktionen generativer Sprachmodelle (als semantische Schnittstelle und Werkzeug zur primären Textverarbeitung) von deterministischen Inferenzmaschinen. Definiert werden die Struktur des minimalen Evidenzdatensatzes einer Empfehlung, die Spezifikation eines kryptografischen Audit-Trails gemäß den Normen ISO 26262, ISO/SAE 21434 und dem W3C PROV-O-Modell sowie der Mechanismus einer ununterbrochenen kryptografischen Beweisverwahrung (Evidence Custody) mit bytegenauer Erdung normativer Fakten ($\mathcal{G}$). Es wird ein Protokoll zur mehrseitigen Schwellenwert-Autorisierung ($k$-of-$n$) von Wissensbasis-Änderungen auf Basis von Hardware-Sicherheitsmodulen (HSM) und RFC 3161-Zeitstempeln zum Schutz vor Insider-Bedrohungen (Insider Threat) vorgeschlagen. Zudem wird die Methodik zur Überführung passiver Dokumentation in einen aktiven relationalen Graphen des Unternehmensgedächtnisses nach dem SECI-Modell begründet, quantitative Reifemetriken für ingenieurtechnische Wissenstransferprozesse vorgestellt und die konzeptionellen Fundamente von Teil I der Monografie zusammengefasst.
 
 Ein erfahrener Ingenieur wechselt in ein anderes Team. Ein neu eingestellter Entwickler sieht im Quellcode einen deaktivierten Kommunikationsmodus und fragt: „Warum wird dieser Modus nicht genutzt?“ Die interne Suchmaschine liefert ein Dutzend Dokumente mit dem Wort „Modus“. Ein über der Dokumentation aufgesetzter Chatbot antwortet: „Aufgrund von Instabilitäten in der Datenverbindung.“ Wer jedoch die Abschaltung veranlasst hat, für welche Produktversion, nach welchem gescheiterten Testlauf und ob diese Entscheidung heute noch bindend ist, bleibt völlig unklar. Dem neuen Mitarbeiter bleiben lediglich zwei schlechte Handlungsoptionen, wie Michael Nygard sie bereits 2011 prägnant beschrieb: die alte Entscheidung blindlings zu akzeptieren oder sie blindlings abzuändern – ohne Kenntnis von Ursachen und Konsequenzen [[1]](#src-1).
 
@@ -350,23 +350,23 @@ Eine KI-Empfehlung wird nicht durch komplexere neuronale Netze evidenzbasiert, s
 Im Zertifizierungsaudit kritischer Systeme (gemäß den Normen ISO 26262, DO-178C, IEC 61508) stellt der Bruch der Datenrückverfolgbarkeitskette (*Broken Traceability Chain*) eine der verheerendsten Ursachen für den Vertrauensverlust in KI-Empfehlungen dar. Wenn ein Sprachmodell oder ein heuristischer Übersetzer ein Urteil mit Verweis auf eine Norm abgibt („gemäß Abs. 8.4.3 ISO 26262-5...“), haben Ingenieure oder Auditoren meist keine Möglichkeit, unmittelbar zu überprüfen, ob diese Bestimmung in dieser Fassung tatsächlich existiert oder ob sie während der Extraktion halluziniert oder verfälscht wurde. Jede Ungenauigkeit im Zitat oder der Verlust des Primärkontexts entzieht dem Urteil des Expertensystems die formale Rechtskraft und degradiert es zu einem unbeweisbaren Spielzeug. Zur Überwindung dieses Defekts wurde vom Autor das Konzept der **kryptografischen Beweisverwahrung (Evidence Custody) und bytegenauen Erdung von Ingenieurwissen** entwickelt und implementiert.
 
 1. **Unteilbares Erdungstupel (Span Grounding Tuple):**
-   Jeder normative Fakt und jede Regel, die in die Wissensbasis des Expertensystems aufgenommen wird, wird zwingend von einem kryptografisch geschützten Erdungstupel $`\mathcal{G}`$ begleitet:
+   Jeder normative Fakt und jede Regel, die in die Wissensbasis des Expertensystems aufgenommen wird, wird zwingend von einem kryptografisch geschützten Erdungstupel $\mathcal{G}$ begleitet:
 
 ```math
 \mathcal{G} = \langle \mathrm{DocID}, \ \mathrm{SHA256}(\mathrm{RawDoc}), \ \mathrm{StartByte}, \ \mathrm{EndByte}, \ \mathrm{NormalizedPredicate} \rangle
 ```
 
 wobei:
-- $`\mathrm{DocID}`$ — global eindeutige Kennung der Primärquelle (Norm, Datenblatt, Prüfprotokoll);
-- $`\mathrm{SHA256}(\mathrm{RawDoc})`$ — kryptografischer Hash-Wert der unmodifizierten Binärdatei der Primärquelle;
-- $`\mathrm{StartByte}, \ \mathrm{EndByte}`$ — exakte Byte-Offsets des Eingabe-Slices im Speicher (`mmap`), der die analysierte Festlegung enthält;
-- $`\mathrm{NormalizedPredicate}`$ — kanonisches Prädikat erster Stufe (FOL) oder deontischer EISA-Mikrocode, erzeugt durch einen deterministischen Übersetzer.
+- $\mathrm{DocID}$ — global eindeutige Kennung der Primärquelle (Norm, Datenblatt, Prüfprotokoll);
+- $\mathrm{SHA256}(\mathrm{RawDoc})$ — kryptografischer Hash-Wert der unmodifizierten Binärdatei der Primärquelle;
+- $\mathrm{StartByte}, \ \mathrm{EndByte}$ — exakte Byte-Offsets des Eingabe-Slices im Speicher (`mmap`), der die analysierte Festlegung enthält;
+- $\mathrm{NormalizedPredicate}$ — kanonisches Prädikat erster Stufe (FOL) oder deontischer EISA-Mikrocode, erzeugt durch einen deterministischen Übersetzer.
 
 2. **Isolation nicht-normativer Fakten (Non-Normative Isolation):**
    Der Evidenzkern des Systems etabliert eine strikte Demarkationslinie zwischen normativen Imperativen (`SHALL`, `MUST`, `REQUIRED`) und informativ-deskriptiven Fragmenten (Beispiele, informative Anhänge, Anmerkungen *Notes*). Jeder Text ohne deontische Modalität wird automatisch in eine isolierte Informationsklasse eingestuft: Er dient als heuristische Grundlage zur Generierung menschenlesbarer Erklärungen, besitzt jedoch keinerlei Befugnis, verbindliche Invarianten zu erzeugen oder Releases zu blockieren.
 
 3. **Unverletzlichkeit der Beweiskette (Chain-of-Custody Invariant):**
-   Jede unautorisierte Änderung des Ausgangsdokuments um auch nur 1 Bit modifiziert dessen Wert $`\mathrm{SHA256}(\mathrm{RawDoc})`$. Beim Zugriff auf die Regel wird ein Bruch der Beweisverwahrung (*Custody Breach*) erkannt, was den Gültigkeitsstatus des kompilierten Wissenspakets unverzüglich annulliert und das System in einen sicheren Fehlerzustand (*Fail-Closed*) überführt.
+   Jede unautorisierte Änderung des Ausgangsdokuments um auch nur 1 Bit modifiziert dessen Wert $\mathrm{SHA256}(\mathrm{RawDoc})$. Beim Zugriff auf die Regel wird ein Bruch der Beweisverwahrung (*Custody Breach*) erkannt, was den Gültigkeitsstatus des kompilierten Wissenspakets unverzüglich annulliert und das System in einen sicheren Fehlerzustand (*Fail-Closed*) überführt.
 
 > [!NOTE]
 > **Architektur der kryptografischen Evidenzverwahrung und bytegenauen Wissenserde des Autors**  
@@ -379,11 +379,11 @@ wobei:
 #### 4.6.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der bytegenauen Beweisverwahrung
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
-   Beim Laden der Wissensbasis liest der Faktenprüfkern die Primärquelle über direkte Speicherabbildung `mmap` ein. Das Prozessorregister `%ebx` oder ein Speicherdeskriptor fixiert den Prüf-Hash. Falls $`\mathrm{SHA256}(\mathrm{RawDoc}[\mathrm{StartByte}:\mathrm{EndByte}]) \neq \mathrm{ExpectedHash}`$, erzeugt die Inferenzmaschine einen Hardware-Interrupt `ERR_CUSTODY_VIOLATION`, setzt das Gültigkeitsflag der Regel zurück und blockiert die Empfehlung mit dem Status `REFUSAL`.
+   Beim Laden der Wissensbasis liest der Faktenprüfkern die Primärquelle über direkte Speicherabbildung `mmap` ein. Das Prozessorregister `%ebx` oder ein Speicherdeskriptor fixiert den Prüf-Hash. Falls $\mathrm{SHA256}(\mathrm{RawDoc}[\mathrm{StartByte}:\mathrm{EndByte}]) \neq \mathrm{ExpectedHash}$, erzeugt die Inferenzmaschine einen Hardware-Interrupt `ERR_CUSTODY_VIOLATION`, setzt das Gültigkeitsflag der Regel zurück und blockiert die Empfehlung mit dem Status `REFUSAL`.
 2. **Hardware-Dimensionierung (Hardware Dimensioning):**
-   Die Speicherung des Deskriptors $`\mathcal{G}`$ erfordert fixe $`64\,\text{Byte}`$ für jede normative Anforderung (16 Byte DocID, 32 Byte SHA-256, je 8 Byte für die Offsets). Für eine industrielle Wissensbasis mit $`N = 10\,000`$ normativen Klauseln beträgt der Gesamtspeicherbedarf der Deskriptoren lediglich $`640\,\text{KB}`$. Dies erlaubt es, die gesamte Verwahrungstabelle im L3-Cache der CPU oder im BRAM des Controllers zu halten, wodurch Latenzen beim Zugriff auf externe Speicher eliminiert werden ($`t_{\mathrm{lookup}} < 12\,\text{ns}`$).
+   Die Speicherung des Deskriptors $\mathcal{G}$ erfordert fixe $64\,\text{Byte}$ für jede normative Anforderung (16 Byte DocID, 32 Byte SHA-256, je 8 Byte für die Offsets). Für eine industrielle Wissensbasis mit $N = 10\,000$ normativen Klauseln beträgt der Gesamtspeicherbedarf der Deskriptoren lediglich $640\,\text{KB}$. Dies erlaubt es, die gesamte Verwahrungstabelle im L3-Cache der CPU oder im BRAM des Controllers zu halten, wodurch Latenzen beim Zugriff auf externe Speicher eliminiert werden ($t_{\mathrm{lookup}} < 12\,\text{ns}$).
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   Der Analyzer überprüft die Anforderung ISO 26262-5 Clause 8.4.2 bezüglich Einzelfehlern (Single-Point Faults). Der Deskriptor $`\mathcal{G}`$ verweist auf den Byte-Bereich $`[1\,048\,576 \dots 1\,049\,120]`$ in der $`12{,}4\,\text{MB}`$ großen Standard-Datei. Die Engine berechnet den lokalen Hash des Slices in $`18\,\mu\text{s}`$ und bestätigt die Übereinstimmung mit dem Referenzwert `0x9f83...a12c`. Der Versuch, den normativen Schwellenwert von $`99\%`$ im Dokument manipulativ auf $`90\%`$ abzuändern, verändert den Hash-Wert des Slices zu `0x3b11...77fa`. Das System gibt daraufhin unverzüglich das Urteil `REFUSAL: Custody breach on ISO 26262-5 [1048576..1049120]` aus, was eine Sabotage auf Wissensebene zuverlässig ausschließt.
+   Der Analyzer überprüft die Anforderung ISO 26262-5 Clause 8.4.2 bezüglich Einzelfehlern (Single-Point Faults). Der Deskriptor $\mathcal{G}$ verweist auf den Byte-Bereich $[1\,048\,576 \dots 1\,049\,120]$ in der $12{,}4\,\text{MB}$ großen Standard-Datei. Die Engine berechnet den lokalen Hash des Slices in $18\,\mu\text{s}$ und bestätigt die Übereinstimmung mit dem Referenzwert `0x9f83...a12c`. Der Versuch, den normativen Schwellenwert von $99\%$ im Dokument manipulativ auf $90\%$ abzuändern, verändert den Hash-Wert des Slices zu `0x3b11...77fa`. Das System gibt daraufhin unverzüglich das Urteil `REFUSAL: Custody breach on ISO 26262-5 [1048576..1049120]` aus, was eine Sabotage auf Wissensebene zuverlässig ausschließt.
 
 ## 5. Die dritte Komponente der Triade: F&E-Unternehmensgedächtnis als relationaler Graph
 
@@ -573,9 +573,9 @@ S = \sum_{i=1}^{k} s_i \cdot \ell_i(0) \pmod{q}, \quad \ell_i(0) = \prod_{j \neq
 ```
 
 wobei:
-- $`s_i`$ — Teilsignatur, erzeugt vom $`i`$-ten Teilnehmer mittels seines lokalen Geheimnisses $`x_i`$;
-- $`\ell_i(0)`$ — Lagrange-Basiskoeffizient an der Stelle Null;
-- $`q`$ — Primordnung der Untergruppe der elliptischen Kurve (für Ed25519: $`q = 2^{252} + 27742317777372353535851937790883648493`$).
+- $s_i$ — Teilsignatur, erzeugt vom $i$-ten Teilnehmer mittels seines lokalen Geheimnisses $x_i$;
+- $\ell_i(0)$ — Lagrange-Basiskoeffizient an der Stelle Null;
+- $q$ — Primordnung der Untergruppe der elliptischen Kurve (für Ed25519: $q = 2^{252} + 27742317777372353535851937790883648493$).
 
 Der vollständige private Schlüssel wird zu keinem Zeitpunkt im Speicher eines einzelnen Geräts rekonstruiert.
 
@@ -593,11 +593,11 @@ Der vollständige private Schlüssel wird zu keinem Zeitpunkt im Speicher eines 
 #### 5.9.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der Konsortiums-Wissensautorisierung
 
 1. **Laufzeitsteuerung und Rechenfluss (Control Flow & Runtime Decisions):**
-   Bei der Vorbereitung eines neuen Wissensbasis-Releases verteilt das System den kryptografischen Paket-Hash $`H_{\mathrm{bundle}}`$ an die autorisierten Parteien. Jeder Teilnehmer verifiziert die Artefakte und signiert den Hash auf seinem Hardware-Token. Der Collector aggregiert die Teilsignaturen $`s_i`$. Ist die Anzahl der Anteile $`m < k`$, blockiert die Pipeline die Aktivierung der Wissensbasis und wechselt in den Zustand `AWAITING_CONSENSUS`. Sobald $`m \ge k`$, synthetisiert die Engine die Gesamtsignatur $`S`$, fügt den RFC 3161-Zeitstempel an und überführt den Status der Wissensbasis in `ACTIVATED_PRODUCTION`.
+   Bei der Vorbereitung eines neuen Wissensbasis-Releases verteilt das System den kryptografischen Paket-Hash $H_{\mathrm{bundle}}$ an die autorisierten Parteien. Jeder Teilnehmer verifiziert die Artefakte und signiert den Hash auf seinem Hardware-Token. Der Collector aggregiert die Teilsignaturen $s_i$. Ist die Anzahl der Anteile $m < k$, blockiert die Pipeline die Aktivierung der Wissensbasis und wechselt in den Zustand `AWAITING_CONSENSUS`. Sobald $m \ge k$, synthetisiert die Engine die Gesamtsignatur $S$, fügt den RFC 3161-Zeitstempel an und überführt den Status der Wissensbasis in `ACTIVATED_PRODUCTION`.
 2. **Hardware-Dimensionierung (Hardware Dimensioning):**
-   Die Operation der Lagrange-Interpolation und Aggregation von $`k=3`$ Signaturanteilen auf der Ed25519-Kurve beansprucht weniger als $`1{,}2\,\text{ms}`$ CPU-Rechenzeit und weniger als $`16\,\text{KB}`$ RAM. Dies ermöglicht eine Schwellenwert-Verifikation selbst auf ressourcenbeschränkten Embedded-Controllern während eines Over-the-Air-Updates (OTA).
+   Die Operation der Lagrange-Interpolation und Aggregation von $k=3$ Signaturanteilen auf der Ed25519-Kurve beansprucht weniger als $1{,}2\,\text{ms}$ CPU-Rechenzeit und weniger als $16\,\text{KB}$ RAM. Dies ermöglicht eine Schwellenwert-Verifikation selbst auf ressourcenbeschränkten Embedded-Controllern während eines Over-the-Air-Updates (OTA).
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   Es wird ein kritischer Wissensbasis-Patch vorbereitet, der das zulässige Fehlertoleranz-Zeitintervall (Fault Tolerant Time Interval, FTTI) für ein Bremssubsystem modifiziert. Am Schema sind $`n=5`$ Parteien mit einem Schwellenwert von $`k=3`$ beteiligt. Der Sicherheitsingenieur und der Chefarchitekt haben ihre Signaturen bereitgestellt ($`m=2 < 3`$). Der Versuch, den Patch zu aktivieren, löst die Blockade `ERR_THRESHOLD_NOT_MET (2/3 signatures)` aus. Erst nachdem der leitende Auditor den Testbericht validiert und den dritten Signaturanteil auf seinem HSM freigegeben hat, synthetisiert das System die gültige Konsortiumssignatur $`S`$ und aktiviert die Regel im Arbeitsspeicher.
+   Es wird ein kritischer Wissensbasis-Patch vorbereitet, der das zulässige Fehlertoleranz-Zeitintervall (Fault Tolerant Time Interval, FTTI) für ein Bremssubsystem modifiziert. Am Schema sind $n=5$ Parteien mit einem Schwellenwert von $k=3$ beteiligt. Der Sicherheitsingenieur und der Chefarchitekt haben ihre Signaturen bereitgestellt ($m=2 < 3$). Der Versuch, den Patch zu aktivieren, löst die Blockade `ERR_THRESHOLD_NOT_MET (2/3 signatures)` aus. Erst nachdem der leitende Auditor den Testbericht validiert und den dritten Signaturanteil auf seinem HSM freigegeben hat, synthetisiert das System die gültige Konsortiumssignatur $S$ und aktiviert die Regel im Arbeitsspeicher.
 
 ## 6. Domänenspezifik der Vertrauenstriade in kritischen Branchen
 
@@ -703,7 +703,7 @@ Im weiteren Verlauf wendet sich das Buch von den konzeptionellen Grundlagen den 
 3. Wie häufig existierte die Lösung für eine technische Problemstellung bereits in einem früheren Projekt, konnte jedoch im entscheidenden Moment nicht rechtzeitig aufgefunden werden?
 4. Welche Schwachstelle wiegt in Ihrem Team am schwersten: der Bruch zwischen Chat-Schnittstelle und Realdaten, das Fehlen von Relationen zwischen Dokumenten oder die fatale Abhängigkeit von einzelnen Wissensträgern?
 5. Wie viele Tage benötigt ein neu eingestellter Ingenieur, um die zentralen Architekturentscheidungen Ihres Systems zu verstehen, und von welchen Faktoren hängt diese Zeitspanne primär ab?
-6. Wie verhindert das Erdungstupel $`\mathcal{G}`$ einen Bruch der Datenrückverfolgbarkeitskette (Broken Traceability Chain) und warum werden nicht-normative Kommentare von verbindlichen Invarianten isoliert?
+6. Wie verhindert das Erdungstupel $\mathcal{G}$ einen Bruch der Datenrückverfolgbarkeitskette (Broken Traceability Chain) und warum werden nicht-normative Kommentare von verbindlichen Invarianten isoliert?
 7. Warum ist eine $k$-of-$n$-Konsortiumssignatur auf Basis hardwarebasierter HSM-Tokens und des Shamir-Verfahrens zwingend erforderlich, um eine Wissensbasis vor Insider-Bedrohungen (Insider Threat) zu schützen?
 
 ## Glossar
@@ -755,7 +755,7 @@ Im weiteren Verlauf wendet sich das Buch von den konzeptionellen Grundlagen den 
 | Komplexer Gerätetreiber | *complex device driver* | Hardwarenahes Softwaremodul für nicht standardisierte Peripheriekomponenten |
 | Softwareanforderung | *software requirement* | Spezifizierte funktionale oder qualitative Eigenschaft eines Softwaresystems |
 | Kryptografische Beweisverwahrung | *evidence custody* | Garantie für die Integrität und Authentizität der Beweiskette von den Bytes der Primärquelle bis zur Schlussfolgerung des Systems |
-| Erdungstupel | *span grounding tuple* | Tupel $`\mathcal{G}`$, das die Bindung einer normativen Regel an den binären Byte-Slice der Primärquelle bytegenau fixiert |
+| Erdungstupel | *span grounding tuple* | Tupel $\mathcal{G}$, das die Bindung einer normativen Regel an den binären Byte-Slice der Primärquelle bytegenau fixiert |
 | Nicht-normative Isolation | *non-normative isolation* | Trennung informativ-deskriptiver Dokumentenfragmente von deontischen verbindlichen Normen |
 | Schwellenwert-Kryptografie | *threshold cryptography* | Kryptografisches Protokoll ($k$-of-$n$), bei dem zur Signaturerzeugung die Kooperation von $k$ unabhängigen Anteilseignern erforderlich ist |
 | Hardware-Sicherheitsmodul | *hardware security module, HSM* | Physisches Gerät zur sicheren Erzeugung, Speicherung und Ausführung kryptografischer Operationen ohne Schlüsselexport |
