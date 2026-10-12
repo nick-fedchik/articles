@@ -177,6 +177,14 @@ flowchart LR
 > - **Für speicherbegrenzte Operationen (HNSW, Rete-Netzwerke, Graphtraversierung):** Investitionen in teurere Rechenprozessoren (GPGPUs mit Hunderten TFLOPS) sind wirkungslos, da die Recheneinheiten auf Speicherdaten warten (*memory stall*). Wirkungsvoll sind: mehr Speicherkanäle (Quad-Channel statt Dual-Channel), Vektor-Caching im L3/SRAM oder Vektorquantisierung (Product Quantization, Skalar-INT8), welche das Transfervolumen minimiert.
 > - **Für rechenbegrenzte Operationen (schwere LLM-Transformer, gebatchte GEMM-Kerne):** Der limitierende Faktor ist die arithmetische Rechenleistung. Hier sind dedizierte Tensorkerne, Matrixbeschleuniger und optimierte Mikroformate (FP8 / BF16) ausschlaggebend.
 
+> [!NOTE]
+> **Vier Invarianten des heterogenen Rechenprofils nach dem Autorenmodell**
+> 1. Asymmetrie der Speicheranforderungen: Symbolische Inferenz ist speicherlatenzgebunden (Pointer Chasing), während Tensor-Workloads bandbreitenbegrenzt sind.
+> 2. Zeitlicher Ausführungsdeterminismus: Harte Schranken für Rete/Datalog-Ableitungszyklen im Gegensatz zu stochastischen Token-Dekodierungszeiten neuronaler Netze.
+> 3. Ausschluss gegenseitiger Ressourcenblockade: Hardware- und Speicherisolation verhindert, dass speicherintensive KV-Caches die kanonische Wissensbasis verdrängen.
+> 4. Symbolische Präemptionspriorität: Das deterministische Kernsystem kann langwierige neuronale Textgenerierungen bei Invariantenbrüchen sofort abbrechen.
+> *Laufzeitsteuerung:* Jeder Versuch eines neuronalen Adapters, Speicherquoten zu überschreiten oder den Bus zu blockieren, führt zum Reset mit E_RESOURCE_CONTENTION_FAULT.
+
 ## 2. Das Expertensystem als Koordinator heterogener Ausführung
 
 In einer heterogenen Architektur fungiert das Ausführungskoordinations-Subsystem als Kontroll-Gateway, das den deterministischen symbolischen Kern (kanonische Wissensbasis, Inferenzmaschine und kryptografisches Audit-Protokoll) strikt von nicht-deterministischen neuronalen Runtimes isoliert. Fehlt diese Trennung und verkommt das Expertensystem zu einem unstrukturierten Wrapper um externe LLM-APIs, entstehen kritische Schwachstellen: Nicht-deterministische Abstürze externer Bibliotheken oder Speichererschöpfung (OOM) zerstören unmittelbar die Transaktionsintegrität der Faktenbasis; ungeprüfte Kontexte führen zum Abfluss vertraulichen Wissens über den Sicherheitsperimeter hinaus (Verletzung von ISO/SAE 21434 und ABAC-Vorgaben). Direkte Aufrufe von Logikkomponenten an neuronale Backends ohne zentralen Dispatcher versagen beim ersten Lastanstieg oder Buskonflikt. Der Koordinator gewährleistet eine saubere Funktionstrennung anhand fünf zentraler Aufgaben:
@@ -374,6 +382,15 @@ wobei:
    - Der Systemarchitekt konfiguriert die CAT-Maske: Dem Expertensystemkern werden 4 isolierte Cache-Wege exklusiv zugewiesen ($`M_{\mathrm{ways}} = 4`$), während für Drittdienste ein MBA-Drosselungskoeffizient von $`\delta_{\mathrm{mba\_penalty}} = 0{,}70`$ festgelegt wird. Die berechnete garantierte Speicherbandbreite beläuft sich auf $`\mathrm{BW}_{\mathrm{guaranteed}} = 102{,}4 \times (4 / 16) \times (1 - 0) = 25{,}6\,\text{GB/s}`$.
    - Da $`25{,}6\,\text{GB/s} \ge 20\,\text{GB/s}`$, ist die Invariante mit einer Sicherheitsreserve von $`28\%`$ erfüllt. Der Versuch eines Drittprozesses, einen *Prime+Probe*-Angriff durchzuführen oder ein Bandbreiten-Starvation auf dem Speicherbus hervorzurufen, wird bereits auf Ebene der Silizium-Topologie des Chips unterbunden.
 
+> [!NOTE]
+> **Fünf Regeln zur sicheren Laufzeit-Isolation und Speicherverwaltung nach der Architektur des Autors**
+> 1. Adressraumtrennung: Ausführung neuronaler Inferenz-Runtimes in unprivilegierten, isolierten Prozessen oder Sandkästen ohne direkten Zugriff auf den Kernspeicher.
+> 2. Zero-Copy-Nutzung via mmap: Zugriff auf statische Wissensgraphen und Vokabulare über MAP_SHARED / PROT_READ zur Vermeidung redundanter Speicherkopien.
+> 3. Deterministische KV-Cache-Vorallokation: Statische Dimensionierung von Kontextpuffern zur Verhinderung von Speicherfragmentierung im Dauerbetrieb.
+> 4. Kapselung externer Bibliotheksabstürze: Abfangen kritischer Laufzeitfehler (SIGSEGV, CUDA-Exceptions) ohne Gefährdung des zentralen Entscheidungskoordinators.
+> 5. Kryptografische Sitzungsbereinigung: Deterministisches Überschreiben von Arbeitsregistern und Zwischeneinbettungen nach Abschluss einer Begründungssitzung.
+> *Laufzeitsteuerung:* Jeder unbehandelte Fehler oder unautorisierte Speicherzugriff eines Adapterprozesses wird mit E_ADAPTER_ISOLATION_BARRIER abgefangen.
+
 ## 4. Deployment-Topologien: Vom Rechenzentrum bis zum Bordsensor
 
 Die Deployment-Topologie bildet die logische Struktur des Expertensystems auf die physische Infrastruktur aus Netzwerken, Rechenknoten und Sensorschnittstellen ab. Fehlentscheidungen bei der Topologiewahl gefährden die funktionale Sicherheit: Werden lebenskritische Invariantenprüfungen in die Cloud verlagert, führt ein Verbindungsabbruch oder Jamming zur Manövrierunfähigkeit autonomer Systeme (vollständiger Bruch der ASIL-D-Autonomieanforderungen nach ISO 26262). Umgekehrt überhitzt der Versuch, generative Modelle auf ressourcenbeschränkten Edge-Controllern auszuführen, das Silizium und leert Batterien in kürzester Zeit. Die Annahme, drahtlose Verbindungen (5G, Satellit) böten stets stabile Latenzen, wird in realen Einsatzszenarien durch Funklöcher widerlegt. Die Platzierung von Komponenten orientiert sich an Datensensibilität, Latenzanforderungen und Verbindungszuverlässigkeit.
@@ -496,6 +513,14 @@ Ein Korpus von 20 Millionen Chunks wird somit in $`T_{\text{reindex}} \approx 20
 3. **Scheduling- und Quarantänekriterien:**
    - Liegt $`a_i < 0{,}03`$ (die Station schaltet häufig ab oder läuft primär auf Akku), wird der Knoten aus dem Pool entfernt, um Warteschlangen nicht durch Timeouts zu belasten;
    - Übersteigt $`T_{\text{reindex}}`$ das reguläre nächtliche Wartungsfenster ($`T_{\text{reindex}} > T_{\text{maintenance\_window}} = 6\text{ h}`$), löst das System eine Warnung aus, um temporär zentrale Server zuzuschalten oder die Leerlaufschwelle anzupassen.
+
+> [!NOTE]
+> **Vier Invarianten der NPU-Hintergrundindizierung nach dem Autorenmodell**
+> 1. Nicht-invasive Nutzung von Leerlaufressourcen: Aktivierung neuronaler Prozessoren ausschließlich bei ungenutzten thermischen und energetischen Reserven.
+> 2. Atomare Batch-Publikation: Vektorisierte Dokumentensegmente werden ausschließlich in verifizierten transaktionalen Paketen mit Prüfsummenabgleich übernommen.
+> 3. Priorität interaktiver Präemption: Sofortige Unterbrechung der Hintergrundindizierung beim Eintreffen prioritärer Anfragen eines menschlichen Fachexperten.
+> 4. Kryptografische Versionsbindung: Jede auf Client-NPUs berechnete Indexpartition wird untrennbar mit dem Hash der Primärquelle und der Quantisierungspipeline signiert.
+> *Laufzeitsteuerung:* Übersteigt ein Hintergrundprozess definierte Latenzschwellen des interaktiven Betriebs, wird er mit E_NPU_PREEMPTION_TRIGGERED abgebrochen.
 
 ## 6. Lokale Modellplattformen: Stand Oktober 2026
 
@@ -963,6 +988,15 @@ wobei:
      $`K_{\mathrm{safety\_margin}} = 50\,\mu\text{s} / 4{,}5\,\mu\text{s} \approx 11{,}1`$.
    - Ergebnis: Das System besitzt eine mehr als 11-fache Zeitreserve, was eine mathematische und hardwaretechnische Garantie gegen Fristüberschreitungen unter allen denkbaren Sensordatenkombinationen darstellt.
 
+> [!NOTE]
+> **Fünf Mechanismen zum Audit von Latenzbudgets und numerischer Drift nach der Autorenmethodik**
+> 1. Perzentilbasierte Latenzbudget-Aufteilung: Verbindliche Begrenzung der Maximalausführungszeit für jede Phase (Autorisierung, Suche, Inferenz, Textgenerierung).
+> 2. Detektion von Quantisierungsdrift: Messung der Kosinusähnlichkeits-Degradation beim Wechsel zwischen FP16, INT8 und INT4 anhand eines Kalibrierungskorpus.
+> 3. Durchsetzung deterministischer Temperaturführung: Zwingende Fixierung auf Greedy-Dekodierung (Temperatur = 0) zur Eliminierung stochastischen Jitters.
+> 4. Kompensation mikroarchitektonischer Heterogenität: Verifikation der Ausführungsäquivalenz über divergierenden Architekturen (x86_64 AVX-512 vs. ARM NEON/SVE).
+> 5. Quarantäne numerischer Anomalien: Automatisches Verwerfen von Vektoreinbettungen bei Auftreten von NaN, Unendlichkeiten oder Null-Vektornormen.
+> *Laufzeitsteuerung:* Überschreitet die numerische Drift definierte Fehlerschranken oder Latenzlimits, stoppt die Pipeline mit E_NUMERICAL_DRIFT_EXCEEDED.
+
 ## 9. Zukunftsweisende Hardwaredomänen für wissensbasierte Systeme
 
 Moderne KI-Infrastruktur wird häufig auf die Beschaffung hochgezüchteter GPUs reduziert. Die Roofline-Analyse hat jedoch gezeigt, dass das Profil von Expertensystemen fundamental anders gelagert ist: Graph-Traversierung, Regelabgleich und Zustandssuche werden durch Speicherlatenzen und unregelmäßige Speicherzugriffe (*pointer chasing*) begrenzt, nicht durch Gleitkommadurchsatz. Für wissensbasierte Systeme sind daher Hardwareansätze von zentralem Interesse, die gezielt den Speicherengpass adressieren.
@@ -1080,6 +1114,14 @@ flowchart LR
 ```
 
 Diese Minimalkonfiguration nutzt eine einzelne SQLite-Datei, deren FTS5-Erweiterung eine integrierte BM25-Relevanzfunktion bereitstellt [[41]](#src-41). Ein generatives Modell ist nicht erforderlich: Die Begründung setzt sich deterministisch aus der gefeuerten Regel und der Fundstelle im Standard zusammen. Dies genügt vollauf, um das Domänenmodell an Echtdaten zu verifizieren, bevor Investitionen in Beschleunigerhardware getätigt werden.
+
+> [!NOTE]
+> **Vier Kriterien für den autonomen fehlertoleranten Core-Einsatz nach den Standards des Autors**
+> 1. Vollständige Netzwerkisolation: Fähigkeit zur Synthese rechtlich und technisch belastbarer Beweispakete im strikten Air-Gapped-Modus ohne Funkverbindung.
+> 2. Unabhängigkeit von diskreten Beschleunigern: Vollständige Funktionsfähigkeit des symbolischen Kerns und des Vektor-Retrievals auf Standard-x86/ARM-CPUs.
+> 3. Unveränderlichkeit des lokalen Speichers: Betrieb auf kompakten Wissenspaketen über schreibgeschützte mmap-Bereiche ohne schwere externe DBMS-Dienste.
+> 4. Deterministischer Kaltstart: Vollständige Wiederanlauffähigkeit und Auditbereitschaft innerhalb von Subsekunden mit kryptografischer Integritätsprüfung.
+> *Laufzeitsteuerung:* Jeder Versuch eines autonomen Knotens, im Air-Gap-Modus eine externe Netzwerkverbindung zu initiieren, scheitert mit E_AIRGAP_SECURITY_FAULT.
 
 ## 11. Dialog Pro et Contra
 

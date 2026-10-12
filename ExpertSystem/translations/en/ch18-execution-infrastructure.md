@@ -177,6 +177,14 @@ flowchart LR
 > - **For memory-bound operations (HNSW, Rete networks, graph traversal):** Investing in costlier compute processors (GPGPUs boasting hundreds of TFLOPs) is futile — execution cores will simply sit idle during memory stalls. Measurable gains stem from expanding memory channels (quad-channel instead of dual-channel), caching hot graph vectors in L3 cache or SRAM, or applying vector quantization (Product Quantization, Scalar INT8) to drastically curtail bus traffic.
 > - **For compute-bound operations (large generative LLMs, batched GEMM):** Arithmetic silicon becomes the strict bottleneck. Here, dedicated tensor cores, systolic matrix engines, and micro-precision numeric formats (FP8 / BF16) play the decisive role.
 
+> [!NOTE]
+> **Four Invariants of the Heterogeneous Computational Profile Formulated by the Author**
+> 1. Memory requirement asymmetry: symbolic inference is bounded by random memory access latency (pointer chasing), whereas tensor workloads are bandwidth-bound.
+> 2. Temporal execution determinism: hard bounding of Rete/Datalog deduction cycles in contrast to the stochastic token decoding time of neural networks.
+> 3. Zero cross-resource starvation: hardware and spatial memory isolation prevents high-parameter KV caches from evicting canonical knowledge bases.
+> 4. Symbolic preemption priority: the deterministic core possesses the authority to immediately abort lengthy neural generation upon detecting invariant violations.
+> *Runtime Governance:* Any attempt by a neural adapter to exceed memory quotas or saturate the memory bus triggers an isolation reset with E_RESOURCE_CONTENTION_FAULT.
+
 ## 2. The Expert System as a Heterogeneous Execution Coordinator
 
 In the heterogeneous architecture of an evidence-governed system, the execution coordination subsystem acts as an authoritative control gateway separating the deterministic symbolic core (canonical knowledge base, inference engine, and cryptographic audit log) from nondeterministic neural runtime environments. If an architect fails to maintain this boundary and reduces the expert system to an unstructured wrapper around external language model APIs, critical system failures inevitably ensue: nondeterministic crashes in third-party runtimes or video memory exhaustion directly corrupt the transactional integrity of the fact store, while uninspected prompts leak confidential proprietary knowledge beyond the security perimeter (violating ISO/SAE 21434 and ABAC policies). The naive approach of permitting symbolic logic components to directly invoke neural network backends without a centralized dispatcher breaks down upon the very first request queue backlog or bus saturation incident. The coordinator's mandate centers on enforcing strict separation of concerns across five engineering functions:
@@ -375,6 +383,15 @@ where:
      $`\mathrm{BW}_{\mathrm{guaranteed}} = 102.4 \times (4 / 16) \times (1 - 0) = 25.6\,\text{GB/s}`$.
    - Because $`25.6\,\text{GB/s} \ge 20\,\text{GB/s}`$, the invariant holds with a $`28\%`$ safety margin. Hostile co-located attempts to mount *Prime+Probe* attacks or induce memory starvation are physically barred by silicon-level resource arbiters.
 
+> [!NOTE]
+> **Five Rules for Safe Runtime Isolation and Memory Management Formulated in the Author's Architecture**
+> 1. Address space separation: executing neural inference runtimes within unprivileged, isolated processes or sandboxes lacking direct access to kernel memory.
+> 2. Zero-copy sharing via mmap: accessing static knowledge graphs and vocabularies via MAP_SHARED / PROT_READ to eliminate physical memory duplication.
+> 3. Deterministic KV-cache pre-allocation: statically sizing context window buffers to prevent memory fragmentation and allocation stalls during continuous operation.
+> 4. Fault domain containment for external libraries: trapping critical runtime crashes (SIGSEGV, CUDA exceptions) without compromising the central decision coordinator.
+> 5. Cryptographic session context sanitization: deterministic zeroization of working buffers and intermediate embeddings upon concluding an expert deliberation.
+> *Runtime Governance:* Any unhandled fault or out-of-bounds memory access originating from an adapter process is trapped with E_ADAPTER_ISOLATION_BARRIER.
+
 ## 4. Deployment Topologies: From Data Center to Onboard Sensor
 
 Deployment topology maps the logical components of an expert system onto physical network connections, compute nodes, and sensor interfaces. A design miscalculation in topology selection introduces immediate functional safety risks: offloading mission-critical invariant validation to the cloud leaves an autonomous cyber-physical system defenseless against radio link drops or deliberate RF jamming (constituting a complete breach of ASIL-D autonomy mandates under ISO 26262). Conversely, attempting to run high-parameter generative models directly on a low-power edge microcontroller causes rapid battery depletion and severe silicon overheating. The naive expectation that contemporary wireless infrastructure (5G or satellite constellations) provides deterministic latency for safety-critical queries is refuted by the very first signal shadow or field outage. Component placement is strictly governed by data sensitivity, acceptable latency bounds, and connectivity guarantees, formalized across a multi-tier architectural model.
@@ -499,6 +516,14 @@ A repository containing 20 million chunks is reindexed in $`T_{\text{reindex}} \
    - If projected $`T_{\text{reindex}}`$ exceeds the standard maintenance window ($`T_{\text{reindex}} > T_{\text{maintenance\_window}} = 6\text{ hours}`$), the coordinator issues an engineering alert and dynamically throttles user-inactivity thresholds or temporarily engages central on-premise compute servers.
 
 An idle NPU mesh delivers substantial batch compute capacity without capital expenditure on dedicated server racks. However, interactive reasoning and explanation generation demand dedicated low-latency hardware, motivating a detailed comparative analysis of local hardware platforms.
+
+> [!NOTE]
+> **Four Invariants of Background NPU Harvesting and Indexing Formulated by the Author**
+> 1. Non-invasive opportunistic utilization: activating neural processing units exclusively when spare thermal, memory, and energy headroom exists.
+> 2. Atomic batch publication: vectorized document chunks are committed to the canonical index strictly in verified transactional batches with checksum validation.
+> 3. Interactive preemption priority: instantaneous pausing of background vectorization pipelines upon arrival of a priority query from a human specialist.
+> 4. Cryptographic pipeline version binding: every index partition generated on client NPUs is permanently tagged with the source revision and quantizer hash.
+> *Runtime Governance:* Any background harvesting task exceeding interactive latency thresholds is immediately preempted with E_NPU_PREEMPTION_TRIGGERED.
 
 ## 6. Local Model Platforms: State of the Art as of October 2026
 
@@ -979,6 +1004,15 @@ where:
      $`K_{\mathrm{safety\_margin}} = 50\,\mu\text{s} / 4.5\,\mu\text{s} \approx 11.1`$.
    - Verdict: The system operates with an 11-fold temporal margin, providing mathematical and hardware-enforced guarantees that actuation deadlines will never be missed under any combination of sensor inputs.
 
+> [!NOTE]
+> **Five Mechanisms for Auditing Latency Budgets and Numerical Drift Formulated by the Author**
+> 1. Percentile-based latency budget slicing: strictly allocating worst-case latency ceilings across query phases (authorization, retrieval, deduction, generation).
+> 2. Quantization drift detection: quantifying cosine similarity degradation across FP16, INT8, and INT4 representations against a verified calibration corpus.
+> 3. Temperature determinism enforcement: mandating greedy decoding (temperature = 0) and verifying identical token sequences to eliminate stochastic jitter.
+> 4. Microarchitectural heterogeneity compensation: verifying output equivalence across divergent hardware instruction sets (x86_64 AVX-512 vs. ARM NEON/SVE).
+> 5. Numerical anomaly quarantine: automatically rejecting vector embeddings upon encountering NaN, infinite floating-point values, or zero-magnitude norms.
+> *Runtime Governance:* Any detected numerical drift exceeding threshold epsilon or violating latency budgets halts processing with E_NUMERICAL_DRIFT_EXCEEDED.
+
 ## 9. Promising Hardware Directions for Knowledge Systems
 
 Mainstream machine learning infrastructure predominantly targets raw GPU compute throughput. However, the Roofline analysis in Section 1 demonstrated that expert systems possess an entirely different profile: knowledge graph traversal, production rule matching, and state-space exploration are fundamentally bounded by random memory access latency (*pointer chasing*) rather than floating-point throughput. Consequently, specialized hardware architectures that directly tackle memory bottlenecks are of immense value for knowledge systems. The table below surveys emerging paradigms backed by open research and industry standards.
@@ -1096,6 +1130,14 @@ flowchart LR
 ```
 
 This minimal stack relies on a single SQLite database file, utilizing the built-in FTS5 extension with the native `bm25()` ranking function for lexical fact retrieval [[41]](#src-41). Generative language models are entirely optional: explanations are deterministically generated by concatenating the fired rule logic and the normative standard clause it references. This compact baseline allows engineers to validate the formal domain model on real-world engineering specifications prior to investing in dedicated hardware acceleration.
+
+> [!NOTE]
+> **Four Criteria for Autonomous Fault-Tolerant Core Deployment Formulated by the Author**
+> 1. Complete network isolation: the capability to synthesize legally and technically certified evidence packs in a strict air-gapped radio-silent environment.
+> 2. Accelerator independence: guaranteeing full operational functionality of the symbolic core and dense retrieval on commodity x86/ARM CPUs without discrete GPUs.
+> 3. Immutable local storage: operating over compact knowledge packs mapped read-only via mmap, circumventing complex external DBMS runtime dependencies.
+> 4. Deterministic cold restart: full system re-initialization and audit readiness within sub-second intervals accompanied by cryptographic integrity verification.
+> *Runtime Governance:* Any attempted outbound network connection by an autonomous node operating in air-gapped mode triggers E_AIRGAP_SECURITY_FAULT.
 
 ## 11. Pro et Contra Dialogue
 
