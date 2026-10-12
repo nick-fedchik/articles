@@ -162,6 +162,14 @@ Aufschlüsselung der Größen:
 
 Diese Gleichheit stellt eine Anforderung an den verlustfreien Betriebsmodus dar, keine universelle Eigenschaft sämtlicher Tokenizer. Fall-Konvertierungen (Case Folding), Unicode-Normalisierung, das Ersetzen unbekannter Fragmente (`[UNK]`) und Whitespace-Trimming können den Text selbst ohne Spezial-Token verfälschen. Nach einer NFKC-Normalisierung wird beispielsweise die Ligatur `ﬁ` zu `fi`: Das Dekodieren normalisierter Token stellt die ursprünglichen Bytes nicht wieder her. Für einen solchen Tokenizer wird die Konformität mit der deklarierten normalisierten Repräsentation geprüft, während das beweiskräftige Zitat über die gespeicherte Primärquellen-Map bezogen wird. Die Version des Tokenizers allein stellt verloren gegangene Informationen nicht wieder her.
 
+> [!NOTE]
+> **Vier Invarianten der Byte-Custody und des Herkunftsnachweises von Evidenzen**
+> 1. Komposition der Herkunftsrelationen: formal nachvollziehbarer Pfad von Beweistoken zu Quellbytes $R_{B\leftarrow T_E} = R_{B\leftarrow C} \circ R_{C\leftarrow N} \circ R_{N\leftarrow T_E}$.
+> 2. Oberflächenwiederherstellungs-Invariante: exakte Rekonstruktion des referenzierten Textes nach Dekodierung und Normalisierung $\mathrm{Normalize}_v(\mathrm{Decode}_e(\mathrm{Bytes}_B)) = \mathrm{Surface}_N(s)$.
+> 3. Kryptografischer Custody-Frame: bytegenaue Verifikation der Textunveränderlichkeit via Hash-Abgleich $\mathrm{SHA}256(\mathrm{Frame}_B(M_B(s))) = \text{evidence-sha256}(s)$.
+> 4. Verlustfreie Tokenisierungs-Invariante: zwingende Umkehrbarkeit $\mathrm{Detok}_v(\mathrm{Tok}_v(x)) = x$ zur Verhinderung stillschweigender Zeichenverluste.
+> *Runtime Governance:* Jede Byte-Diskrepanz oder Hash-Abweichung blockiert das Zitat und weist das Urteil mangels Custody-Nachweis ab.
+
 ## 3. Sicherheit der Text-Pipeline: Erkennung von Injektionen und Zeichensubstitutionen
 
 Text kann für das menschliche Auge gewöhnlich erscheinen, von Softwarekomponenten jedoch unterschiedlich interpretiert werden oder verdeckte Instruktionen für das Sprachmodell enthalten. Vor der Antwortfindung prüft das Expertensystem daher nicht nur den sachlichen Inhalt des Dokuments, sondern auch die Integrität seiner Kodierung.
@@ -260,6 +268,18 @@ Der syntaktische Parser lässt sich vorteilhaft auf dem Schema der Universal Dep
 | Small oder Large Language Model | Intentionsvorschlag, normalisierte Formulierung, Textanker | Bytes, Hashes oder Sicherheitsrichtlinien substituieren |
 | Host-Verifizierer | Zulassungsentscheidung oder Ablehnungsgrund | Text in die Sprache des Benutzers paraphrasieren |
 | Antwortgenerierungsmodul | Lesbare Antwort mit exakten Zitatverweisen | Behauptungen außerhalb der verifizierten Repräsentation erzeugen |
+
+> [!NOTE]
+> **Acht Facetten der Verantwortungsaufteilung in der hybriden linguistischen Architektur**
+> 1. Decoder und Quell-Map: strikte Zuordnung von Bytes und Codepoints ohne Berechtigung zur Interpretation von Absichten oder Fakten.
+> 2. Deterministischer Lexer und Validator: Isolation typisierter Literale und SI-Einheiten ohne Berechtigung zur Zuweisung semantischer Rollen.
+> 3. Syntaktischer Dependenzparser: Erstellung von Universal-Dependencies-Bäumen ohne Befugnis zur Festlegung normativer Verbindlichkeit.
+> 4. Dichter Such-Encoder und Reranker: embedding-basiertes Candidate-Retrieval ohne Befugnis zur Feststellung logischer Folgerungen.
+> 5. Modell logischer Folgerung (NLI): statistische Klassifikation von Textpaaren ohne Berechtigung zur Extrapolation über das Kontextfenster hinaus.
+> 6. Kleines Sprachmodell (SLM): Hypothesengenerierung und Begriffsklärung ohne Berechtigung zur Modifikation von Byte-Spans oder Hash-Werten.
+> 7. Deterministischer Host-Verifier: Fail-Closed-Zulassungsprüfung ohne Befugnis zur freien Paraphrasierung oder ungeerdeten Textsynthese.
+> 8. Antwortgenerierungs-Engine: Synthese lesbarer Erläuterungen ausschließlich aus zugelassenen Fakten ohne spekulative Textanreicherung.
+> *Runtime Governance:* ML-Modelle agieren rein konsultativ; finale Zulassungsentscheidungen verbleiben ausnahmslos beim symbolischen Host-Kern.
 
 ## 5. Ressourcenbeschränkungen: Kontextbudget, Tokenisierung und Modellspeicher
 
@@ -440,6 +460,18 @@ Das Prädikat evaluiert genau dann zu wahr, wenn sämtliche Prüfbedingungen erf
 
 Dieses Prädikat formuliert eine Zulassungsrichtlinie, kein mathematisches Theorem über die Richtigkeit von Textinterpretationen. Wurde die Folgerungsklasse von einem NLI-Modell geliefert, macht der deterministische Schwellenwertvergleich diesen statistischen Score nicht zu einem formalen Beweis. Die Indikatoren für Anwendbarkeit und epistemischen Typ erfordern explizite Prüfroutinen und Genehmigungsaufzeichnungen. Ohne diese Grundlagen verbleibt der Vorschlag im Status eines unbestätigten Kandidaten.
 
+> [!NOTE]
+> **Acht deterministische Prädikate der mathematischen Zulassungsschleuse $\mathrm{Admit}(c,e,q,u,t)$**
+> 1. Zugriffsberechtigung ($I_{\mathrm{authz}}$): Verifikation der Benutzerrechte auf den Evidenzabschnitt zum exakten Ausführungszeitpunkt.
+> 2. Kryptografische Integrität ($I_{\mathrm{integrity}}$): Übereinstimmung des SHA-256-Hashes des zitierten Segments mit dem Knowledge-Pack-Register.
+> 3. Vollständigkeit materieller Spans ($I_{\mathrm{material\ spans}}$): Sicherstellung aller zwingenden Kontextanker ohne sinnentstellende Auslassungen.
+> 4. Kontextuelle Anwendbarkeit ($I_{\mathrm{applicable}}$): Prüfung zeitlicher, hardwareseitiger und domänenspezifischer Gültigkeitsgrenzen.
+> 5. Logische Folgerung ($[y_{\mathrm{ver}} = \mathrm{entailment}]$): Bestätigung der Entailment-Klasse und Ausschluss aktiver semantischer Defeater.
+> 6. Kalibrierte Konfidenz ($[p_{\mathrm{cal}} \ge \tau]$): Erreichen des statistischen Mindestschwellenwerts ($\tau = 0{,}85$) auf kalibrierten Scores.
+> 7. Ausschluss deontischer Konflikte ($\neg I_{\mathrm{conflict}}$): Widerspruchsfreiheit gegenüber übergeordneten Sicherheitsnormen.
+> 8. Epistemische Typenprüfung ($I_{\mathrm{epistemic\ type}}$): formale Validierung des Erkenntnisstatus (Axiom, Fakt oder heuristische Hypothese).
+> *Runtime Governance:* Das Scheitern eines einzelnen Prädikats erzwingt eine Fail-Closed-Verweigerung mit typisiertem Abstention-Status.
+
 ## 7. Dokumenten-Parser und Informationsverluste in Trainingsdaten
 
 Ein Sprachmodell kann Maßeinheiten nicht zuverlässig rekonstruieren, wenn der Dokumenten-Parser Tabellenköpfe verworfen hat. Vor der Auswahl eines Encoders muss der Informationsverlust an der Schnittstelle „Datei → strukturierte Repräsentation“ quantifiziert werden. Bei Formaten mit vorgegebenem Schema greift man primär auf strukturelles Parsing zurück; bei PDF-Dokumenten werden Lesereihenfolge, Tabellenstrukturen, Kopf-/Fußzeilen und OCR-Genauigkeit separat bewertet.
@@ -599,6 +631,13 @@ Ingenieurmäßige Akzeptanzgrenzen für das linguistische Subsystem (Acceptance 
 
 Ein Erfolg $\mathrm{Success}_i=1$ wird ausschließlich protokolliert, wenn das System den Anfragevertrag korrekt erfasst, die exakten Quell-Bytes des Beweises lokalisiert, typisierte numerische Werte intakt bewahrt, die Zugriffskontrollen passiert und die Antwort syntaktisch wie semantisch fehlerfrei generiert hat. Zur Bewertung der faktischen Textgenauigkeit empfiehlt sich die FActScore-Metrik, welche eine Antwort in atomare Fakten zerlegt und jeden Fakt einzeln gegen die Quelle abgleicht [[31]](#src-31). Für die Zitationsanalyse eignet sich der Benchmark ALCE, der Antwortqualität und Zitationsunterstützung separat erfasst [[32]](#src-32). Konfidenzintervalle für Versionsvergleiche werden mittels Efron-Bootstrap ermittelt, wobei das Resampling auf Ebene vollständiger Paraphrasengruppen erfolgen muss, um eine künstliche Inflation unabhängiger Beobachtungen zu verhindern [[33]](#src-33).
 
+> [!NOTE]
+> **Drei normative Abnahmekriterien für die linguistische Pipeline missionskritischer Expertensysteme**
+> 1. Retrieval-Trefferabdeckung ($\mathrm{Hit}@5 \ge 0{,}95$): garantiertes Auffinden mindestens einer validen Primärquelle in den Top-5-Ergebnissen.
+> 2. Normative Evidenzvollständigkeit ($\mathrm{Recall}@5 \ge 0{,}85$): Erfassung von mindestens 85 % aller für den Beweis zwingenden Quellsegmente.
+> 3. Paraphrasen-Invarianz ($\mathrm{GroupPass} \ge 0{,}98$): Nulltoleranz gegenüber semantischer Drift bei Formulierungsvarianten von Sicherheitsabfragen.
+> *Runtime Governance:* Jede Schwellenwertunterschreitung blockiert das Deployment und erzwingt eine Neukalibrierung der Gewichte.
+
 ```mermaid
 flowchart LR
     accTitle: Vergleichende Evaluierung von Kandidaten des linguistischen Subsystems
@@ -757,6 +796,15 @@ Evidenzbasierte Expertensysteme der nächsten Generation führen daher eine **f�
    - *Schutz, Drosselung und Kompensation:* `throttles`, `compensates`, `quarantines`, `isolates`, `recovers`, `mitigates`, `arbitrates`, `audits`.
 5. **Allgemeiningenieurmäßige und funktionale Aktionen (Engineering Actions – `ACTION`):**  
    Beschreiben konkrete physikalische oder protokollarische Operationen: `transmits`, `routes`, `forwards`, `connects`, `disconnects`, `triggers`, `dispatches`, `emits`.
+
+> [!NOTE]
+> **Fünf Dimensionen der ontologischen Prädikatstaxonomie ingenieurtechnischen Wissens**
+> 1. Deontische Normen (`MUST`, `FORB`, `SHLD`, `MAY`): Regulierung rechtlicher und sicherheitsrelevanter Pflichten gemäß von Wrights Logik.
+> 2. Epistemologische Prädikate (`SCIENTIFIC`): Abbildung von Popper'scher Demarkation, Falsifikation und logischer Implikation.
+> 3. Berechnungsprädikate (`COMPUTATIONAL`): Modellierung von FSM-Zustandsübergängen, Serialisierung, Hashing und Speicherlayouts.
+> 4. Kybernetische Prädikate (`CYBERNETIC`): Formalisierung von Regelschleifen, Homöostase, Stabilisierung und Drosselung nach Wiener und Ashby.
+> 5. Physische Aktionsprädikate (`ACTION`): Ausführung physischer Steuerungen, Paket-Routing, Signal-Schaltung und Bus-Übertragungen.
+> *Runtime Governance:* Die Vorkompilierung in einen $O(1)$-Hash-Atlas garantiert sub-millisekundengenaue Klassifikation ohne neuronale Netze.
 
 #### 11.2.1. Hochleistungsindexierung über den Top-1000-Lexikatlas ($O(1)$)
 

@@ -162,6 +162,14 @@ Variable breakdown:
 
 This equality represents a strict requirement for a lossless execution mode, not an inherent property of all tokenizers. Case folding, Unicode normalization, out-of-vocabulary substitutions, and whitespace trimming can alter the text even when special tokens are suppressed. For instance, following NFKC normalization, the ligature `ﬁ` becomes `fi`: decoding normalized tokens cannot recover the original source bytes. For such tokenizers, adherence to the declared normalized representation is validated, while evidentiary citations are resolved through the preserved source map. A tokenizer version bump cannot retroactively recover discarded byte details.
 
+> [!NOTE]
+> **Four Invariants of Byte Custody and Evidence Lineage Preservation**
+> 1. Lineage Relation Composition: formal traceable path from proof tokens to source bytes $R_{B\leftarrow T_E} = R_{B\leftarrow C} \circ R_{C\leftarrow N} \circ R_{N\leftarrow T_E}$.
+> 2. Surface Recovery Invariant: exact reconstruction of referenced text following decoding and normalization $\mathrm{Normalize}_v(\mathrm{Decode}_e(\mathrm{Bytes}_B)) = \mathrm{Surface}_N(s)$.
+> 3. Cryptographic Custody Frame: byte-exact verification of text integrity via hash matching $\mathrm{SHA}256(\mathrm{Frame}_B(M_B(s))) = \text{evidence-sha256}(s)$.
+> 4. Lossless Tokenization Round-Trip: mandatory invertibility $\mathrm{Detok}_v(\mathrm{Tok}_v(x)) = x$ preventing silent loss of structural punctuation and case.
+> *Runtime Governance:* Any byte discrepancy or hash mismatch halts citation, rejecting the claim under missing custody gate codes.
+
 ## 3. Text Pipeline Security: Detecting Injections and Character Spoofing
 
 Text may appear benign to a human reviewer while executing unpredictably in software or harboring hidden instructions directed at an underlying language model. Before executing search or inference, the expert system inspects not only the informational content of a document, but also its encoding integrity.
@@ -260,6 +268,18 @@ Syntactic parsers are effectively constructed upon the Universal Dependencies fr
 | Small / Large Language Model | Intent proposals, normalized restatements, textual candidate anchors | Mutating bytes, hashes, or security policies |
 | Host Verifier | Binary admission decision or diagnostic rejection reason code | Paraphrasing text into conversational natural language |
 | Response Formatter | Readable natural language presentation with explicit citation anchors | Introducing assertions absent from the verified intermediate representation |
+
+> [!NOTE]
+> **Eight Facets of Responsibility Allocation in Hybrid Linguistic Architecture**
+> 1. Decoder and Source Map: strict mapping between bytes and codepoints without authority to infer user intent or factual validity.
+> 2. Deterministic Lexer and Validator: isolating typed literals and SI units without authority to assign semantic predicate roles.
+> 3. Syntactic Dependency Parser: constructing Universal Dependencies trees without authority to declare normative policy force.
+> 4. Dense Search Encoder and Re-ranker: embedding-based candidate retrieval without authority to establish deductive entailment.
+> 5. Natural Language Inference Model: statistical classification of claim-evidence pairs without authority to reason outside the context window.
+> 6. Small Language Model: hypothesizing query intents and disambiguating terms without authority to alter byte spans or custody hashes.
+> 7. Host Deterministic Verifier: fail-closed gate evaluation without authority to invent rephrasings or synthesize ungrounded explanations.
+> 8. Response Synthesis Engine: formatting user-facing text strictly from admitted structured claims without generating speculative content.
+> *Runtime Governance:* Machine learning models remain strictly advisory, reserving deterministic admission decisions to the symbolic host.
 
 ## 5. Resource Constraints: Context Budget, Tokenization, and Model Memory
 
@@ -440,6 +460,18 @@ The predicate evaluates to true if and only if every condition is satisfied, ens
 
 This predicate defines an admission policy rather than a formal mathematical proof of linguistic interpretation. When an NLI model outputs an entailment label, comparing its score against a threshold does not transmute a statistical classification into a mathematical proof. Applicability and epistemic indicators require deterministic verification against system governance logs. Absent these grounds, a candidate remains unverified regardless of raw model confidence.
 
+> [!NOTE]
+> **Eight Deterministic Predicates of the Mathematical Admission Gate $\mathrm{Admit}(c,e,q,u,t)$**
+> 1. Access Authorization ($I_{\mathrm{authz}}$): validating user clearance to inspect the evidence span at the exact query execution timestamp.
+> 2. Cryptographic Integrity ($I_{\mathrm{integrity}}$): verifying the SHA-256 hash of the quoted span against the immutable knowledge registry.
+> 3. Material Span Completeness ($I_{\mathrm{material\ spans}}$): confirming the presence of all required context anchors without selective truncation.
+> 4. Contextual Applicability ($I_{\mathrm{applicable}}$): verifying temporal, hardware, and domain boundaries governing rule validity for the query.
+> 5. Deductive Entailment ($[y_{\mathrm{ver}} = \mathrm{entailment}]$): verifying formal entailment classification and absence of candidate defeaters.
+> 6. Calibrated Confidence ($[p_{\mathrm{cal}} \ge \tau]$): meeting the strict statistical reliability threshold ($\tau = 0.85$) on calibrated posterior scores.
+> 7. Absence of Deontic Conflict ($\neg I_{\mathrm{conflict}}$): guaranteeing non-contradiction against overriding superior safety axioms.
+> 8. Epistemic Type Match ($I_{\mathrm{epistemic\ type}}$): validating epistemic justification tier (axiom, observed fact, or speculative hypothesis).
+> *Runtime Governance:* Failure of any single predicate activates fail-closed refusal, returning a typed structured abstention verdict.
+
 ## 7. Document Parsers and Information Loss in Training Data
 
 A language model cannot reconstruct a missing measurement unit if the upstream document parser discarded the table header. Consequently, before choosing an encoder, information loss at the "binary file → structured intermediate representation" boundary must be measured. For structured formats, deterministic parsers are preferred; for PDF documents, reading order, table hierarchies, headers, footers, and OCR layers must be audited separately.
@@ -599,6 +631,13 @@ Acceptance Gates for the Linguistic Subsystem:
 
 An execution is marked $\mathrm{Success}_i=1$ if and only if the system correctly validated the query contract, retrieved the exact source bytes, preserved typed numerical values, passed authorization audits, and generated a verified response. For atomic factual evaluation, FActScore breaks outputs into atomic propositions and verifies each against source evidence [[31]](#src-31), while ALCE benchmarks evaluate citation precision alongside answer correctness [[32]](#src-32). Confidence intervals for model comparison are estimated via Efron bootstrap resampling, sampling entire paraphrase groups to prevent artificial inflation of effective degrees of freedom [[33]](#src-33).
 
+> [!NOTE]
+> **Three Normative Acceptance Criteria for the Linguistic Pipeline of Mission-Critical Expert Systems**
+> 1. Retrieval Hit Coverage ($\mathrm{Hit}@5 \ge 0.95$): guaranteeing at least one valid regulatory source document enters the top-5 window.
+> 2. Normative Span Recall ($\mathrm{Recall}@5 \ge 0.85$): capturing at least 85% of all ground-truth evidence spans required for complete synthesis.
+> 3. Paraphrase Invariance ($\mathrm{GroupPass} \ge 0.98$): zero tolerance for semantic drift across equivalent phrasing variations in safety queries.
+> *Runtime Governance:* Any metric regression below threshold halts deployment, routing model checkpoints back to recalibration.
+
 ```mermaid
 flowchart LR
     accTitle: Comparative evaluation of linguistic subsystem candidates
@@ -756,6 +795,15 @@ Modern evidence-governed systems implement a **five-dimensional ontological pred
    - *Protection, rate-limiting, and fault isolation:* `throttles`, `compensates`, `quarantines`, `isolates`, `recovers`, `mitigates`, `arbitrates`, `audits`.
 5. **Engineering Actions (`ACTION`):**
    Describe direct physical, network, and bus manipulations: `transmits`, `routes`, `forwards`, `connects`, `disconnects`, `triggers`, `dispatches`, `emits`.
+
+> [!NOTE]
+> **Five Dimensions of the Ontological Predicate Taxonomy of Engineering Knowledge**
+> 1. Deontic Norms (`MUST`, `FORB`, `SHLD`, `MAY`): regulating legal, functional, and safety obligations under von Wright's deontic logic.
+> 2. Epistemological Predicates (`SCIENTIFIC`): encoding Popperian demarcation, empirical falsification, and deductive implication.
+> 3. Computational Predicates (`COMPUTATIONAL`): formalizing finite state automata transitions, serialization, hashing, and memory layouts.
+> 4. Cybernetic Predicates (`CYBERNETIC`): expressing feedback loops, homeostasis, adaptive stabilization, and rate-limiting per Wiener and Ashby.
+> 5. Engineering Action Predicates (`ACTION`): executing physical interventions, frame routing, signal switching, and bus dispatches.
+> *Runtime Governance:* Compiling lexemes into an $O(1)$ hash atlas guarantees sub-millisecond deterministic classification without neural calls.
 
 #### 11.2.1. High-Performance Indexing via the Top-1000 Lexical Atlas ($O(1)$)
 
