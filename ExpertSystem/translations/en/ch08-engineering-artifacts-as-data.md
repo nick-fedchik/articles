@@ -92,6 +92,13 @@ The purple node designates the requirement entity, blue nodes represent intrinsi
 
 This structural integrity depends strictly on stable entity identifiers and semantic versioning. While a persistent identifier enables historical tracking as wording evolves across revisions, relational links to tests and verification evidence must explicitly reference the specific evaluated version. Failing to pin the evaluated revision allows an obsolete test execution to falsely attest to a newly mutated requirement. Versioning captures immutable baseline snapshots, while content modifications automatically flag dependent verification artifacts for re-validation without obliterating audit history. The subsequent engineering challenge is automating quality verification across these structured artifacts.
 
+> [!NOTE]
+> **Author's "Engineering Artifact as a Typed Data Object" Paradigm (Machine-First Data Model)**
+> 1. Document as projective view: an engineering document is merely a secondary projection over the fact base, whereas the sole source of truth is the versioned typed object.
+> 2. Five mandatory requirement attributes: stable identifier with version, accountable owner, normative source of origin, quantified acceptance criteria, and lifecycle status.
+> 3. Four-dimensional relationship tuple: mandatory typed traceability to verification tests ($T$), system components ($C$), risk registry ($K$), and architectural decisions ($D$).
+> 4. Versioned evidence isolation: test verification attaches to a specific cryptographic hash of the requirement version; any text modification automatically revokes verification status.
+
 ## 5. Automated Quality Control and Formal Validation of Requirements (ISO/IEC/IEEE 29148)
 
 Transforming a requirement into a structured data object enables automated quality gates within CI/CD pipelines. An automated validator does not replace the systems architect or safety engineer, but eliminates mechanical non-compliance before human review. The ISO/IEC/IEEE 29148 standard defines the fundamental quality characteristics of well-formed requirements [[1]](#src-1), four of which lend themselves directly to automated algorithmic verification:
@@ -140,6 +147,14 @@ Q_{\text{gate}}(\text{REQ-104}) = \mathbf{1}[1 = 1] \cdot \mathbf{1}[1 = 1] \cdo
 ```
 
 Because $`Q_{\text{gate}} = 0`$, the pipeline blocks artifact registration, emitting diagnostic code `ERR_AMBIGUOUS_SPECIFICATION: missing latency bound`. The verification sequence is illustrated below:
+
+> [!NOTE]
+> **Author's Deterministic Quality Gate for Engineering Requirements ($Q_{\text{gate}}$)**
+> 1. Structural completeness ($C_{\text{req}} = 1$): mandatory presence of all $m$ schema fields without placeholder values (TBD/NA).
+> 2. Formal testability ($T = 1$): the requirement contains an unambiguous verification predicate suitable for automated hardware or software tests.
+> 3. Specification clarity ($A = 1$): absence of subjective qualifiers ("quickly", "reliably") without explicit numeric bounds and tolerances.
+> 4. Consistency with current baseline ($S = 1$): absence of contradictions with approved baseline requirements and environmental physical constraints.
+> *Runtime Governance:* Any zero factor in the $Q_{\text{gate}}$ product formula triggers an immediate Fail-Closed block of the commit in CI/CD.
 
 ```mermaid
 flowchart LR
@@ -419,6 +434,15 @@ def verify_claim_provenance(claim) -> bool:
 
 This byte-level traceability transforms an informational retrieval chunk into an auditable legal and engineering proof: no neural model or generative layer can alter "100 ms" to "10 ms", as the verification gate will immediately abort compilation due to byte mismatch.
 
+> [!NOTE]
+> **Author's 5-Dimensional Cryptographic Grounding Model for Artifacts (Byte-Level Source Map)**
+> 1. Cryptographic source hash (`file_sha256`): immutable binary snapshot of the origin artifact stored in CAS/Git.
+> 2. Binary byte interval (`byte_span`): half-open byte range $[b_{\text{start}}, b_{\text{end}})$ guaranteeing byte-exact quote authenticity.
+> 3. Canonical text character offset (`char_span`): decoded Unicode character span required by text analysis libraries.
+> 4. Text coordinate grid (`line_col`): tuple $[l_{\text{start}}, c_{\text{start}}, l_{\text{end}}, c_{\text{end}}]$ for navigation and syntax highlighting in IDEs.
+> 5. Spatial 2D geometry (`bbox`): page index and normalized bounding box $[x_0, y_0, x_1, y_1]$ for PDF documents and technical drawings.
+> *Engineering Invariant:* No extracted fact, parameter, or assertion is admitted into the release proof package without passing deterministic byte-exact matching against the origin artifact.
+
 ## 10. Document Decomposition into Structural Chunks (Chunking)
 
 A canonical document is not indexed as an undivided monolith. Information retrieval systems operate on *chunks* (*chunks*), compact, self-contained textual segments optimized for indexing and dense vectorization. This section provides an architectural overview; the complete knowledge acquisition infrastructure—addressing discovery, classification, deduplication, stream indexing, and deprecation—is detailed in [Chapter 10](ch10-knowledge-acquisition-systems.md).
@@ -627,6 +651,13 @@ S_{\text{triage}}(x) = (0.6 \cdot 0.95 + 0.4 \cdot 1.0) - (0.5 \cdot 0.05) = (0.
 ```
 
 Because $`S_{\text{triage}}(x) = 0.945 \ge \tau_{\text{accept}} = 0.75`$, the chunk clears the quality gate and proceeds directly to indexing.
+
+> [!NOTE]
+> **Author's Three-Tier Sanitation Triage Model for Engineering Chunks ($S_{\text{triage}}$)**
+> 1. Five quality evaluation signals: valid UTF-8 encoding, lexical readability ratio, OCR noise detection (mixed alphabets), token length bounds, and non-empty origin provenance link.
+> 2. Direct admission zone ($S_{\text{triage}} \ge \tau_{\text{accept}} = 0.75$): unhindered passage of the pristine chunk to vectorization and hybrid indexing.
+> 3. Human quarantine zone ($\tau_{\text{reject}} \le S_{\text{triage}} < \tau_{\text{accept}}$): tagging with `SUSPICIOUS_ARTIFACT` and escalation to the human-in-the-loop review queue.
+> 4. Unconditional rejection zone ($S_{\text{triage}} < \tau_{\text{reject}} = 0.20$): dropping corrupt chunks with diagnostic logging without polluting vector storage.
 
 <details>
 <summary>Example in Go: Triage filtering of clean and degraded OCR chunks</summary>
@@ -916,6 +947,13 @@ graph TB
 The green branch represents high-throughput operations via compact models; the orange branch represents targeted LLM invocations. The architectural guideline: if a task operates over fixed classes, repeats millions of times, and possesses labeled validation sets, deploy deterministic rules or compact models; if a task demands synthesizing disparate relationships and generating explanatory rationales, evaluate an LLM grounded in retrieval evidence with explicit abstention capabilities (*abstention*).
 
 In empirical text classification benchmarks [[20]](#src-20), a binary task distinguishing normative requirements from descriptive specifications compared two models: a compact fine-tuned classifier achieved 93.1% accuracy versus 88.1% for a 7-billion parameter generative model, running approximately 130× faster. Because ground truth labels were generated via deterministic rule heuristics, the reported percentages reflect agreement with the teacher rule rather than human-verified semantic ground truth ([Chapter 10](ch10-knowledge-acquisition-systems.md)). Academic comparisons require independent annotations, leak-free temporal splitting, uniform pre-processing, and confidence intervals. These findings support deploying compact classifiers for bounded tasks, without implying generative models lack utility in complex synthesis.
+
+> [!NOTE]
+> **Author's Principle of Neuro-Symbolic Task Allocation in Artifact Processing**
+> 1. Deterministic parsers and linters: AST extraction, JSON/XSD/SHACL schema validation, and rule-based prose checking.
+> 2. Compact specialized models (SLM / Encoders): streaming hygiene triage, named entity recognition (NER), and dense vector embeddings generation.
+> 3. Generative large language models (LLM): strictly advisory role (System 1) for drafting requirements, uncovering subtle conflicts, and synthesizing explanations.
+> 4. Symbolic core and logical rules: authoritative deterministic adjudication (Eligibility / System 2) and release gate enforcement.
 
 ### 16.2. Deterministic Queries and Logical Inference over the Object Graph
 

@@ -92,6 +92,13 @@ Der violette Knoten repräsentiert die Anforderung, die blauen Knoten stellen At
 
 Die strukturelle Integrität stützt sich dabei auf einen stabilen Identifikator und eine explizite Versionsnummer. Der Identifikator erlaubt es, die Historie einer Anforderung über semantische Umformulierungen hinweg zu verfolgen, während die Verknüpfung zwischen Test und Nachweis zwingend die exakte verifizierte Version referenzieren muss. Andernfalls würde ein historisch erfolgreicher Testlauf fälschlicherweise eine neu überarbeitete Anforderung validieren. Die Versionierung verwaltet unveränderliche Baseline-Snapshots; inhaltliche Änderungen markieren assoziierte Verifikationsnachweise automatisch als erneute Prüfkandidaten, ohne den historischen Prüfpfad zu löschen. Der nächste Schritt besteht in der automatisierten Qualitätskontrolle solcher Objekte.
 
+> [!NOTE]
+> **Autorenparadigma „Technisches Artefakt als typisiertes Datenobjekt“ (Machine-First Data Model)**
+> 1. Dokument als projektive Sicht: Ein technisches Dokument ist lediglich eine sekundäre Projektion über der Faktenbasis, während die einzige verlässliche Quelle das versionierte typisierte Objekt ist.
+> 2. Fünf Pflichtattribute einer Anforderung: stabiler Bezeichner mit Version, verantwortlicher Eigentümer, normative Ursprungsquelle, quantifizierte Abnahmekriterien und Lebenszyklusstatus.
+> 3. Vierdimensionales Beziehungstupel: obligatorische typisierte Rückverfolgbarkeit zu Verifikationstests ($T$), Systemkomponenten ($C$), Risikomatrix ($K$) und Architekturentscheidungen ($D$).
+> 4. Versionierte Evidenz-Isolation: Der Testnachweis wird an den kryptografischen Hash einer spezifischen Anforderungsversion gebunden; jede Textänderung annulliert den Verifikationsstatus automatisch.
+
 ## 5. Automatisierte Qualitätskontrolle und formale Validierung von Anforderungen (ISO/IEC/IEEE 29148)
 
 Sobald eine Anforderung als typisiertes Objekt vorliegt, lässt sich ein wesentlicher Teil der Qualitätskontrolle deterministisch automatisieren. Das Prüfwerkzeug ersetzt keineswegs den leitenden Systemanalytiker, eliminiert jedoch fehleranfällige manuelle Routineprüfungen. Die internationale Norm ISO/IEC/IEEE 29148 definiert Qualitätsmerkmale professioneller Anforderungen [[1]](#src-1), von denen sich vier Merkmale hervorragend für die automatisierte Überprüfung eignen:
@@ -139,7 +146,15 @@ Analysiert wird der Entwurf der Sicherheitsanforderung REQ-104 („Der Controlle
 Q_{	ext{gate}}(	ext{REQ-104}) = \mathbf{1}[1 = 1] \cdot \mathbf{1}[1 = 1] \cdot \mathbf{1}[0 = 1] \cdot \mathbf{1}[1 = 1] = 1 \cdot 1 \cdot 0 \cdot 1 = 0
 ```
 
-Da $Q_{	ext{gate}} = 0$, blockiert die Pipeline die Aufnahme der Anforderung mit dem Diagnosecode `ERR_AMBIGUOUS_SPECIFICATION: missing latency bound`. Das nachfolgende Ablaufdiagramm verdeutlicht die Kaskade dieser Qualitätsprüfungen.
+Da $Q_{\text{gate}} = 0$, blockiert die Pipeline die Aufnahme der Anforderung mit dem Diagnosecode `ERR_AMBIGUOUS_SPECIFICATION: missing latency bound`. Das nachfolgende Ablaufdiagramm verdeutlicht die Kaskade dieser Qualitätsprüfungen.
+
+> [!NOTE]
+> **Deterministisches Autoren-Qualitätsprüftor für technische Anforderungen ($Q_{\text{gate}}$)**
+> 1. Strukturelle Vollständigkeit ($C_{\text{req}} = 1$): obligatorisches Vorhandensein aller $m$ Schemafelder ohne Platzhalterwerte (TBD/NA).
+> 2. Formale Testbarkeit ($T = 1$): Die Anforderung enthält ein eindeutiges Verifikationsprädikat für automatisierte Hardware- oder Softwaretests.
+> 3. Eindeutigkeit der Spezifikation ($A = 1$): Ausschluss unpräziser Adverbien („schnell“, „zuverlässig“) ohne quantifizierte Toleranzgrenzen und Schwellenwerte.
+> 4. Widerspruchsfreiheit zur Baseline ($S = 1$): keine logischen Konflikte mit bereits freigegebenen Anforderungen oder Systemgrenzen.
+> *Laufzeitsteuerung:* Jeder Null-Faktor im $Q_{\text{gate}}$-Produkt löst eine sofortige Fail-Closed-Blockierung des Commits in CI/CD aus.
 
 ```mermaid
 flowchart LR
@@ -428,6 +443,15 @@ def verify_claim_provenance(claim) -> bool:
 
 Diese strikte Byte-Traceability transformiert ein flüchtiges Suchsegment in ein juristisch und ingenieurtechnisch belastbares Beweisstück: Kein generatives Modell vermag „100 ms“ unbemerkt durch „10 ms“ zu ersetzen, da das Audit-Skript den Bericht wegen Nichtübereinstimmung des Byte-Ausschnitts sofort verwirft.
 
+> [!NOTE]
+> **5-dimensionales Autorenmodell der kryptografischen Artefakt-Erdung (Byte-Level Source Map)**
+> 1. Kryptografischer Quell-Hash (`file_sha256`): unveränderlicher binärer Schnappschuss des Quellartefakts in CAS/Git.
+> 2. Binäres Byte-Intervall (`byte_span`): halboffener Bereich $[b_{\text{start}}, b_{\text{end}})$, der die bytegenaue Authentizität des Zitats garantiert.
+> 3. Zeichenversatz des kanonischen Texts (`char_span`): decodierter Unicode-Zeichenbereich für Textverarbeitungswerkzeuge.
+> 4. Textuelle Koordinaten (`line_col`): Tupel $[l_{\text{start}}, c_{\text{start}}, l_{\text{end}}, c_{\text{end}}]$ zur Navigation und Quellcode-Hervorhebung in IDEs.
+> 5. Räumliche 2D-Geometrie (`bbox`): Seitenzahl und Begrenzungsrahmen $[x_0, y_0, x_1, y_1]$ für PDF-Dokumente und CAD-Zeichnungen.
+> *Ingenieurtechnische Invariante:* Keine extrahierte Behauptung oder Kenngröße wird für das Prüfpaket zugelassen, ohne den deterministischen bytegenauen Abgleich mit der Originalquelle bestanden zu haben.
+
 ## 10. Dekomposition des Dokuments in strukturelle Segmente (Chunking)
 
 Ein kanonisches Dokument wird für das Retrieval nicht als unteilbarer Monolith indiziert. Die Retrieval-Schicht operiert auf Segmenten (*chunks*) — prägnanten, in sich geschlossenen Texteinheiten, über die gesucht wird und für die dichte Vektoreinbettungen berechnet werden. Dieser Abschnitt skizziert die grundlegende Segmentierungspipeline; den Aufbau umfassender Wissensakquisitionssysteme, die Dateiströme filtern, deduplizieren, versionieren und indizieren, behandelt [Kapitel 10](ch10-knowledge-acquisition-systems.md).
@@ -644,7 +668,14 @@ Evaluiert wird ein Textsegment aus einer PDF-Spezifikation: Der Anteil druckbare
 S_{	ext{triage}}(x) = (0{,}6 \cdot 0{,}95 + 0{,}4 \cdot 1{,}0) - (0{,}5 \cdot 0{,}05) = (0{,}57 + 0{,}40) - 0{,}025 = 0{,}945
 ```
 
-Da $S_{	ext{triage}}(x) = 0{,}945 \ge 	au_{	ext{accept}} = 0{,}75$, passiert das Segment das Qualitätsprüftor vollautomatisch und wird zur Indizierung weitergeleitet.
+Da $S_{\text{triage}}(x) = 0{,}945 \ge \tau_{\text{accept}} = 0{,}75$, passiert das Segment das Qualitätsprüftor vollautomatisch und wird zur Indizierung weitergeleitet.
+
+> [!NOTE]
+> **Dreistufiges Autorenmodell des sanitären Triage-Filters für Segmente ($S_{\text{triage}}$)**
+> 1. Fünf Qualitätsbewertungssignale: gültige UTF-8-Codierung, lexikalischer Lesbarkeitsgrad, Erkennung von OCR-Rauschen (gemischte Alphabete), Wortlängengrenzen und strikte Quellbindung.
+> 2. Zone des direkten Durchlasses ($S_{\text{triage}} \ge \tau_{\text{accept}} = 0{,}75$): unverzügliche Weiterleitung bereinigter Segmente an Vektorisierung und Indexierung.
+> 3. Manuelle Quarantänezone ($\tau_{\text{reject}} \le S_{\text{triage}} < \tau_{\text{accept}}$): Kennzeichnung mit `SUSPICIOUS_ARTIFACT` und Weiterleitung an menschliche Kuratoren (Human-in-the-Loop).
+> 4. Bedingungslose Verwerfungszone ($S_{\text{triage}} < \tau_{\text{reject}} = 0{,}20$): Verwerfen fehlerhafter Parse-Artefakte mit Protokollierung, um das Vektorarchiv sauber zu halten.
 
 <details>
 <summary>Beispiel in Go: Primäre Triage-Filterung eines sauberen Segments versus OCR-Rauschen</summary>
@@ -934,6 +965,13 @@ graph TB
 Der grüne Zweig bildet die Massenverarbeitung über kompakte Modelle ab, während der orangefarbene Zweig punktuelle Aufrufe des Großmodells darstellt. Die Leitlinie ist eindeutig: Besitzt eine Aufgabe feste Zielklassen, wiederholt sie sich millionenfach und liegt ein annotierter Datensatz vor, sind deterministische Regeln oder kompakte Klassifikatoren die Methode der Wahl. Müssen hingegen vielschichtige Abhängigkeiten abgewogen und Schlussfolgerungen sprachlich vermittelt werden, empfiehlt sich ein LLM — stets gestützt auf abgerufene Evidenzen und mit dem expliziten Recht zur Antwortverweigerung (*abstention*), wenn Nachweise unzureichend sind.
 
 In vergleichenden Experimenten des Autors zur Klassifikation technischer Fachtexte [[20]](#src-20) wurde die binäre Klassifikationsaufgabe „Normative Anforderung versus deskriptive Definition“ auf zwei Modellklassen evaluiert: Ein kompaktes Modell erzielte eine Genauigkeit von 93,1 % gegenüber 88,1 % eines generativen Sprachmodells mit sieben Milliarden Parametern bei einer rund 130-fach höheren Verarbeitungsgeschwindigkeit. Die Referenzdaten wurden über ein deterministisches Regelwerk generiert, sodass die Prozentwerte primär die Übereinstimmung mit dem Lehrer-Regelwerk abbilden und keine absolute semantische Wahrheit darstellen. Detaillierte Randbedingungen hierzu werden in [Kapitel 10](ch10-knowledge-acquisition-systems.md) analysiert. Für wissenschaftlich belastbare Vergleiche sind unabhängige Experten-Annotationen, leckagefreie Datensätze, identische Vorverarbeitungsschritte und Konfidenzintervalle unverzichtbar. Die Ergebnisse stützen jedoch die ingenieurtechnische Empfehlung, für spezialisierte Teilaufgaben gezielt kompakte Modelle einzusetzen, ohne generativen Modellen ihre Berechtigung bei komplexen Syntheseaufgaben abzusprechen.
+
+> [!NOTE]
+> **Autorenprinzip der neuro-symbolischen Aufgabenteilung bei der Artefaktverarbeitung**
+> 1. Deterministische Parser und Linter: AST-Syntaxanalyse, Validierung von JSON/XSD/SHACL-Schemata und regelbasierte Textprüfung.
+> 2. Kompakte Spezialmodelle (SLM / Encoder): laufende Triage-Vorprüfung, Named Entity Recognition (NER) und Erzeugung dichter Vektoreinbettungen.
+> 3. Generative große Sprachmodelle (LLM): strikt beratende Funktion (System 1) beim Entwurf von Anforderungen, Aufdecken verdeckter Konflikte und Formulieren von Begründungen.
+> 4. Symbolischer Kern und logische Inferenz: autoritative deterministische Entscheidungsgewalt (Eligibility / System 2) und Überwachung von Freigabeschleusen.
 
 ### 16.2. Deterministische Abfragen und logische Inferenz über dem Objektgraphen
 
