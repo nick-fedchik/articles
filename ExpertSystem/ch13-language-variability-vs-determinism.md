@@ -669,13 +669,15 @@ flowchart TB
 
 Робоча пам'ять зберігає лише контекст діалогу і не є джерелом тверджень. Аргумент, підставлений з пам'яті, проходить ту саму перевірку, що й аргумент із запитання, а відповідь посилається на фрагмент нормативу, а не на попередню репліку.
 
-Цей розподіл обов'язків реалізує загальний нейро-символьний принцип демаркації, який у рамках SIF v1.0 [[30]](#src-30) сформульовано як:
+Цей розподіл обов'язків реалізує загальний нейро-символьний принцип демаркації, який у рамках SIF 1.0 [[30]](#src-30) сформульовано як:
 
 ```math
 \text{«Proposal vs. Qualification: Heuristic/LLM proposes, Symbolic Engine qualifies»}.
 ```
 
 Ймовірнісна модель чи евристичний генератор пропозицій відповідає виключно за релевантність (*Relevance*) та синтез кандидатних структур, тоді як детерміноване символьне ядро хоста одноосібно ухвалює рішення про допуск (*Eligibility*). Це унеможливлює підміну числових меж і зберігає повну трасованість висновків.
+
+Водночас доказова інженерія враховує важливу епістемічну межу: правильне виконання детермінованих правил кваліфікації саме по собі ще не гарантує правильності чи повноти специфікації, на якій вони ґрунтуються. Символічне ядро доводить несуперечливість відносно заданих правил, але не створює нових аксіом; саме тому процес потребує безперервного супроводу джерел знань, аудиту актуальності першоджерел та контролю залежностей.
 
 ## 8. Діалог Pro et Contra
 
@@ -835,7 +837,7 @@ flowchart TB
 27. <a id="src-27"></a>Учасники GLiNER. [*Architectures and Usage*](https://github.com/urchade/GLiNER). Офіційний репозиторій; можливості залежать від архітектури й ваг моделі.
 28. <a id="src-28"></a>Urchade Zaratiana, Gil Pasternak, Oliver Boyd, George Hurn-Maloney, Ash Lewis. [*GLiNER2: An Efficient Multi-Task Information Extraction System with Schema-Driven Interface*](https://arxiv.org/abs/2507.18546). Препринт, 2025.
 29. <a id="src-29"></a>Учасники Pydantic. [*Strict Mode*](https://pydantic.dev/docs/validation/latest/concepts/strict_mode/). Офіційна документація перевірки типів та обмежень перетворення.
-30. <a id="src-30"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
+30. <a id="src-30"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework (SIF 1.0): A Registry-Based Framework for Empirically Verified Terminology Preservation in Neural EN→UA Translation of Metrological Standards*](https://doi.org/10.5281/zenodo.20509698). Zenodo, 2026.
 
 ---
 

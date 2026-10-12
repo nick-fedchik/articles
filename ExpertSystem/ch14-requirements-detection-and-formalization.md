@@ -447,7 +447,7 @@ flowchart LR
 
 ### 4.1. Шлюз операційної кваліфікації інваріантів (SIF Operational Gate)
 
-При трансляції нормативних вимог мовний конвеєр не має права обмежуватися м'якою ймовірнісною оцінкою впевненості («впевненість класифікатора 87%»). У критичних системах (ISO 26262 ASIL D, DO-178C) результат верифікації зобов'язаний бути детермінованим та типізованим. За аналогією з архітектурою кваліфікаційного шару фреймворку SIF (Module 4.0 [[20]](#src-20)), конвеєр аудиту вимог виносить один із чотирьох дискретних операційних вердиктів:
+При трансляції нормативних вимог мовний конвеєр не має права обмежуватися м'якою ймовірнісною оцінкою впевненості («впевненість класифікатора 87%»). У критичних системах (ISO 26262 ASIL D, DO-178C) результат верифікації зобов'язаний бути детермінованим та типізованим. За аналогією з архітектурою розв'язання суперечностей фреймворку SIF (SIF Contradiction-Resolution Architecture [[20]](#src-20)), конвеєр аудиту вимог виносить один із чотирьох дискретних операційних вердиктів:
 
 ```mermaid
 flowchart TD
@@ -1002,7 +1002,7 @@ Z3 перевіряє формальну модель, а не текст. Дл�
 17. <a id="src-17"></a>Учасники cvc5. [*cvc5 Documentation*](https://cvc5.github.io/docs/latest/). Документація розв'язувача та підтримуваних логік.
 18. <a id="src-18"></a>G. Gerganov et al. [*GBNF (GGML BNF) Grammar Specification and Constrained Sampling*](https://github.com/ggerganov/llama.cpp/blob/master/grammars/README.md). llama.cpp repository, 2023.
 19. <a id="src-19"></a>B. T. Willard, R. Louf. [*Efficient Guided Generation for Large Language Models*](https://arxiv.org/abs/2307.09702). arXiv:2307.09702, 2023.
-20. <a id="src-20"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
+20. <a id="src-20"></a>Yurii Kuzmenko, Olena Trofimova. [*SIF as a Contradiction-Resolution Architecture*](https://doi.org/10.5281/zenodo.21976262). Zenodo, 2026.
 
 ---
 
