@@ -219,9 +219,9 @@ Die erkenntnistheoretische Kernregel für Ingenieure lautet: Aussage, Evidenz, P
 
 ### 5.1. Relationale Natur des Maschinenwissens: Friedrich Hayeks „Sensorische Ordnung“ gegen naiven Positivismus
 
-Die relationale Natur des Maschinenwissens fungiert als fundamentale Barriere gegen einen naiven Positivismus, der Wissen fälschlicherweise mit isolierten atomaren Fakten oder statischen Datensätzen in flachen relationalen Tabellen gleichsetzt. Im sicherheitskritischen System-Engineering trägt ein identisches physikalisches Signal oder eine normative Aussage (beispielsweise eine gemessene Spannung von $`3{,}3\,\text{V}`$ oder eine Temperatur von $`95\,^\circ\text{C}`$) isoliert betrachtet keinerlei normative Handlungsbedeutung; ihr Status als „zulässige Toleranz“, „Überlastgefahr“ oder „Notabschaltbedingung“ entsteht ausschließlich durch ihre topologische Einbettung in ein relationales Klassifikationsnetzwerk. Wird diese relationale Topologie missachtet, verliert das System jede Kontextsensitivität, was zu katastrophalen Fehlentscheidungen führt, wenn routinemäßige Prüfstandsmodi mit anlagenweiten Notabschaltungen verwechselt oder temporäre Ausnahmegenehmigungen stillschweigend ignoriert werden.
+Die relationale Natur des Maschinenwissens fungiert als fundamentale Barriere gegen einen naiven Positivismus, der Wissen fälschlicherweise mit isolierten atomaren Fakten oder statischen Datensätzen in flachen relationalen Tabellen gleichsetzt. Im sicherheitskritischen System-Engineering trägt ein identisches physikalisches Signal oder eine normative Aussage (beispielsweise eine gemessene Spannung von $3{,}3\,\text{V}$ oder eine Temperatur von $95\,^\circ\text{C}$) isoliert betrachtet keinerlei normative Handlungsbedeutung; ihr Status als „zulässige Toleranz“, „Überlastgefahr“ oder „Notabschaltbedingung“ entsteht ausschließlich durch ihre topologische Einbettung in ein relationales Klassifikationsnetzwerk. Wird diese relationale Topologie missachtet, verliert das System jede Kontextsensitivität, was zu katastrophalen Fehlentscheidungen führt, wenn routinemäßige Prüfstandsmodi mit anlagenweiten Notabschaltungen verwechselt oder temporäre Ausnahmegenehmigungen stillschweigend ignoriert werden.
 
-Dieses ingenieurwissenschaftliche Prinzip stützt sich direkt auf die erkenntnistheoretische Konzeption der „Sensorischen Ordnung“ (*The Sensory Order*, 1952) des Nobelpreisträgers Friedrich A. Hayek [[32]](#src-32). Hayek wies nach, dass Wahrnehmung und Kognition niemals passive, mechanische Abbilder einer externen physikalischen Realität sind, sondern einen dynamischen Prozess mehrstufiger Klassifikation darstellen: Jeder neue Impuls erlangt operative Bedeutung erst dadurch, dass er relativ zu einem vorbestehenden Beziehungsnetzwerk und systemischen Erwartungen klassifiziert wird. In einem evidenzbasierten Expertensystem wird die Zulassung eines Kandidatenfakts $`f`$ zur Inferenzmaschine nicht durch eine isolierte Behauptung seiner „Wahrheit“ legitimiert, sondern durch seine formale Einbettung in einen deontischen Verband von Axiomen und das nachgewiesene Fehlen blockierender Entkräftungen (Defeater).
+Dieses ingenieurwissenschaftliche Prinzip stützt sich direkt auf die erkenntnistheoretische Konzeption der „Sensorischen Ordnung“ (*The Sensory Order*, 1952) des Nobelpreisträgers Friedrich A. Hayek [[32]](#src-32). Hayek wies nach, dass Wahrnehmung und Kognition niemals passive, mechanische Abbilder einer externen physikalischen Realität sind, sondern einen dynamischen Prozess mehrstufiger Klassifikation darstellen: Jeder neue Impuls erlangt operative Bedeutung erst dadurch, dass er relativ zu einem vorbestehenden Beziehungsnetzwerk und systemischen Erwartungen klassifiziert wird. In einem evidenzbasierten Expertensystem wird die Zulassung eines Kandidatenfakts $f$ zur Inferenzmaschine nicht durch eine isolierte Behauptung seiner „Wahrheit“ legitimiert, sondern durch seine formale Einbettung in einen deontischen Verband von Axiomen und das nachgewiesene Fehlen blockierender Entkräftungen (Defeater).
 
 ```mermaid
 flowchart TD
@@ -251,35 +251,35 @@ flowchart TD
     class RES act;
 ```
 
-Zur mathematischen Formalisierung von Hayeks Klassifikationsprozess definieren wir den Operator des relationalen Rangs eines Fakts $`f`$ innerhalb einer Wissensbasis $`\mathcal{K} = \langle \mathcal{F}, \mathcal{R}, \mathcal{D} \rangle`$:
+Zur mathematischen Formalisierung von Hayeks Klassifikationsprozess definieren wir den Operator des relationalen Rangs eines Fakts $f$ innerhalb einer Wissensbasis $\mathcal{K} = \langle \mathcal{F}, \mathcal{R}, \mathcal{D} \rangle$:
 
 $$
 \mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = \frac{\sum_{r \in \mathcal{R}} \mathbb{I}(f \in \mathrm{Prem}(r)) \cdot w(r)}{1 + \sum_{d \in \mathcal{D}} \mathbb{I}(d \text{ defeats } f) \cdot w(d)}
 $$
 
 wobei:
-- $`f \in \mathcal{F}`$ die atomare Proposition darstellt;
-- $`\mathcal{R}`$ die Menge gültiger normativer Regeln mit ganzzahligen Gewichten $`w(r) \in [1, 10]`$ bezeichnet;
-- $`\mathcal{D}`$ die Menge aktiver Defeater (Entkräftungsgründe) mit Gewichten $`w(d) \in [1, 10]`$ ist;
-- $`\mathbb{I}(\cdot) \in \{0, 1\}`$ eine Indikatorfunktion für Prämisseneinschluss oder Defeater-Wirkung darstellt;
-- $`\mathrm{Rank}_{\mathrm{rel}} \in [0, +\infty)`$ der dimensionslose relationale Stärkekoeffizient des Fakts im Klassifikationsverband ist.
+- $f \in \mathcal{F}$ die atomare Proposition darstellt;
+- $\mathcal{R}$ die Menge gültiger normativer Regeln mit ganzzahligen Gewichten $w(r) \in [1, 10]$ bezeichnet;
+- $\mathcal{D}$ die Menge aktiver Defeater (Entkräftungsgründe) mit Gewichten $w(d) \in [1, 10]$ ist;
+- $\mathbb{I}(\cdot) \in \{0, 1\}$ eine Indikatorfunktion für Prämisseneinschluss oder Defeater-Wirkung darstellt;
+- $\mathrm{Rank}_{\mathrm{rel}} \in [0, +\infty)$ der dimensionslose relationale Stärkekoeffizient des Fakts im Klassifikationsverband ist.
 
 Das Paradigma des geschlossenen Regelkreises (Actionable Closed Loop) erzwingt verbindliche Systemübergänge:
 
 1. **Laufzeitsteuerung und Inferenzentscheidungen (Control Flow & Runtime Decisions):**
-   Gilt $`\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = 0`$ (das Faktum ist vollkommen isoliert und unbegründet), markiert der symbolische Kern die Proposition umgehend mit dem Status `UNGROUNDED_ATOM` und schließt sie unter Ausgabe eines `REFUSAL` von der Zertifizierung ab. Gilt $`\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) \ge \tau_{\mathrm{rel}} = 1{,}00`$ ohne unüberwindbare Defeater, wird das Faktum automatisch zur Unifikation im Beweisbaum zugelassen. Bei $`0 < \mathrm{Rank}_{\mathrm{rel}} < 1{,}00`$ wird eine Eskalation an einen Experten erzwungen (`QUALIFIED`).
+   Gilt $\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = 0$ (das Faktum ist vollkommen isoliert und unbegründet), markiert der symbolische Kern die Proposition umgehend mit dem Status `UNGROUNDED_ATOM` und schließt sie unter Ausgabe eines `REFUSAL` von der Zertifizierung ab. Gilt $\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) \ge \tau_{\mathrm{rel}} = 1{,}00$ ohne unüberwindbare Defeater, wird das Faktum automatisch zur Unifikation im Beweisbaum zugelassen. Bei $0 < \mathrm{Rank}_{\mathrm{rel}} < 1{,}00$ wird eine Eskalation an einen Experten erzwungen (`QUALIFIED`).
 
 2. **Hardwaredimensionierung und Speicherbeschränkungen (Hardware Dimensioning):**
-   Die Auswertung des relationalen Rangs erfordert einen schnellen Graphdurchlauf. Für eine Wissensbasis mit $`\lvert \mathcal{F} \rvert = 50\,000`$ Fakten und $`\lvert \mathcal{R} \rvert = 12\,000`$ Regeln benötigt eine komprimierte Adjazenzmatrix CSR (*Compressed Sparse Row*) $`M_{\mathrm{CSR}} = (2 \cdot \lvert \mathcal{E} \rvert + \lvert \mathcal{F} \rvert) \cdot 8\,\text{Byte} \approx 3{,}2\,\text{MB}`$. Dieser Speicherbereich passt vollständig in den L3-Cache des Prozessors oder den BRAM-Block eines dedizierten Inferenzbeschleunigers und garantiert eine Evaluierungszeit von $`T_{\mathrm{rank}} \le 180\,\text{ns}`$ ohne externe DRAM-Latenzen.
+   Die Auswertung des relationalen Rangs erfordert einen schnellen Graphdurchlauf. Für eine Wissensbasis mit $\lvert \mathcal{F} \rvert = 50\,000$ Fakten und $\lvert \mathcal{R} \rvert = 12\,000$ Regeln benötigt eine komprimierte Adjazenzmatrix CSR (*Compressed Sparse Row*) $M_{\mathrm{CSR}} = (2 \cdot \lvert \mathcal{E} \rvert + \lvert \mathcal{F} \rvert) \cdot 8\,\text{Byte} \approx 3{,}2\,\text{MB}$. Dieser Speicherbereich passt vollständig in den L3-Cache des Prozessors oder den BRAM-Block eines dedizierten Inferenzbeschleunigers und garantiert eine Evaluierungszeit von $T_{\mathrm{rank}} \le 180\,\text{ns}$ ohne externe DRAM-Latenzen.
 
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
-   Betrachten wir die Gehäusetemperaturmessung $`T_{\mathrm{case}} = 95\,^\circ\text{C}`$ für den Prototyp Revision B auf Prüfstand R-4. Das Faktum wird gestützt durch die Ausnahmeregel W-17 ($`w(r_1) = 8`$) und die Standardprozedur $`P\text{-}22`$ ($`w(r_2) = 6`$). Gleichzeitig fungiert die allgemeine Prüfnorm v4 als intervenierender Defeater ($`w(d_1) = 7`$), der Temperaturen über 90 °C untersagt:
+   Betrachten wir die Gehäusetemperaturmessung $T_{\mathrm{case}} = 95\,^\circ\text{C}$ für den Prototyp Revision B auf Prüfstand R-4. Das Faktum wird gestützt durch die Ausnahmeregel W-17 ($w(r_1) = 8$) und die Standardprozedur $P\text{-}22$ ($w(r_2) = 6$). Gleichzeitig fungiert die allgemeine Prüfnorm v4 als intervenierender Defeater ($w(d_1) = 7$), der Temperaturen über 90 °C untersagt:
 
 $$
 \mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = \frac{8 \cdot 1 + 6 \cdot 1}{1 + 7 \cdot 1} = \frac{14}{8} = 1{,}75 \ge 1{,}00
 $$
 
-   Da $`1{,}75 \ge 1{,}00`$, übersteigt die relationale Bindungskraft der Ausnahme W-17 im definierten Kontext (Revision B, Prüfstand R-4) das allgemeine Verbot. Das System erteilt die bedingte Zulassung `ACCEPT_CONDITIONAL`. Bei einem Wechsel auf den unzertifizierten Prüfstand R-2 entfällt die Gültigkeit von W-17 ($`w(r_1) = 0`$), was zu $`\mathrm{Rank}_{\mathrm{rel}} = \frac{6}{8} = 0{,}75 < 1{,}00`$ und einer sofortigen Schutzverweigerung `REFUSAL` führt.
+   Da $1{,}75 \ge 1{,}00$, übersteigt die relationale Bindungskraft der Ausnahme W-17 im definierten Kontext (Revision B, Prüfstand R-4) das allgemeine Verbot. Das System erteilt die bedingte Zulassung `ACCEPT_CONDITIONAL`. Bei einem Wechsel auf den unzertifizierten Prüfstand R-2 entfällt die Gültigkeit von W-17 ($w(r_1) = 0$), was zu $\mathrm{Rank}_{\mathrm{rel}} = \frac{6}{8} = 0{,}75 < 1{,}00$ und einer sofortigen Schutzverweigerung `REFUSAL` führt.
 
 > [!NOTE]
 > **Relationales mathematisches Modell des Autors: Hayekscher Rang und Schwellenübergänge im Klassifikationsverband**  
@@ -813,7 +813,7 @@ Zudem definiert der Kontext die normative Verbindlichkeit: ISO- und IEC-Regelwer
 
 In einer realen technischen Wissensbasis existieren physikalische Messwerte, Simulationsergebnisse, Vorhersagen neuronaler Netze, Kausalhypothesen und normative Standards nebeneinander. Werden all diese Einträge nivellierend als „Fakten“ deklariert, verliert das System die Fähigkeit zur epistemischen Differenzierung. Die Wissenschaftstheorie untersucht präzise, wie sich diese Wissenskategorien in ihrer Begründung und Falsifizierbarkeit unterscheiden.
 
-Ein valider Messeintrag muss Messgröße, Zahlenwert, Einheit, Messmethode, Sensor-ID, Kalibrierstatus, Umgebungsbedingungen, Proben-ID, Zeitstempel und die **Messunsicherheit** erfassen. Die Unsicherheit ist entscheidend, wenn Messwerte nahe an Toleranzgrenzen liegen: Die Angabe „$`T_{\mathrm{case}}=94{,}6`$ °C, $U=1{,}2$ °C, $k=2$“ deklariert eine erweiterte Messunsicherheit $U$ mit Erweiterungsfaktor $k=2$. Bei Normalverteilung bedeutet dies, dass der wahre Wert mit ca. 95 % Wahrscheinlichkeit im Intervall $[93{,}4; 95{,}8]$ °C liegt [[21]](#src-21). Da die Ausnahmegrenze von 95 °C innerhalb dieses Intervalls liegt, lässt sich anhand der Messung allein keine eindeutige Konformitätsaussage treffen.
+Ein valider Messeintrag muss Messgröße, Zahlenwert, Einheit, Messmethode, Sensor-ID, Kalibrierstatus, Umgebungsbedingungen, Proben-ID, Zeitstempel und die **Messunsicherheit** erfassen. Die Unsicherheit ist entscheidend, wenn Messwerte nahe an Toleranzgrenzen liegen: Die Angabe „$T_{\mathrm{case}}=94{,}6$ °C, $U=1{,}2$ °C, $k=2$“ deklariert eine erweiterte Messunsicherheit $U$ mit Erweiterungsfaktor $k=2$. Bei Normalverteilung bedeutet dies, dass der wahre Wert mit ca. 95 % Wahrscheinlichkeit im Intervall $[93{,}4; 95{,}8]$ °C liegt [[21]](#src-21). Da die Ausnahmegrenze von 95 °C innerhalb dieses Intervalls liegt, lässt sich anhand der Messung allein keine eindeutige Konformitätsaussage treffen.
 
 Entscheidungsregeln müssen daher a priori festgelegt werden. Der Leitfaden JCGM 106 definiert hierfür standardisierte Verfahren [[22]](#src-22) – beispielsweise die strikte Akzeptanzregel, nach der ein Grenzwert erst dann als eingehalten gilt, wenn das gesamte Unsicherheitsintervall unterhalb der Schwelle liegt. Unter dieser Regel bestätigt der Wert 94,6 ± 1,2 °C die Einhaltung der 95-°C-Grenze nicht.
 

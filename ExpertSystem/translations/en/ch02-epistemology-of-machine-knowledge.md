@@ -220,9 +220,9 @@ The engineering takeaway from epistemology is unmistakable: maintain claims, evi
 
 ### 5.1. Relational Nature of Machine Knowledge: Friedrich Hayek's "The Sensory Order" vs. Naive Positivism
 
-The relational nature of machine knowledge serves as a foundational barrier against naive positivism, which erroneously conflates knowledge with isolated facts or static records stored in flat relational database tables. In mission-critical expert systems engineering, an identical physical signal or normative statement (for instance, a measured voltage of $`3.3\,\text{V}`$ or a temperature of $`95\,^\circ\text{C}`$) carries zero normative meaning in isolation; its status as an "admissible tolerance", an "overload hazard", or an "emergency trip condition" arises exclusively through its topological position within a classification network of relations. Neglecting this relational topology strips the system of contextual discernment, precipitating catastrophic failures where routine bench testing states are conflated with plant-wide emergency shutoffs or temporary engineering waivers are silently ignored.
+The relational nature of machine knowledge serves as a foundational barrier against naive positivism, which erroneously conflates knowledge with isolated facts or static records stored in flat relational database tables. In mission-critical expert systems engineering, an identical physical signal or normative statement (for instance, a measured voltage of $3.3\,\text{V}$ or a temperature of $95\,^\circ\text{C}$) carries zero normative meaning in isolation; its status as an "admissible tolerance", an "overload hazard", or an "emergency trip condition" arises exclusively through its topological position within a classification network of relations. Neglecting this relational topology strips the system of contextual discernment, precipitating catastrophic failures where routine bench testing states are conflated with plant-wide emergency shutoffs or temporary engineering waivers are silently ignored.
 
-This architectural principle directly builds upon the epistemological foundation of *The Sensory Order* (1952) by Nobel laureate Friedrich A. Hayek [[32]](#src-32). Hayek demonstrated that sensory perception and cognitive knowledge are never passive, mechanical impressions of an external physical reality, but rather a dynamic process of multi-layered classification: every novel impulse acquires operational meaning only insofar as it is classified relative to a pre-existing topological nexus of relations and systemic expectations. In an evidence-governed expert system, the admission of any candidate fact $`f`$ into the reasoning engine is determined not by an isolated declaration of "truth", but by its formal embedding within a deontic lattice of foundational axioms and the verified absence of blocking counter-arguments (defeaters).
+This architectural principle directly builds upon the epistemological foundation of *The Sensory Order* (1952) by Nobel laureate Friedrich A. Hayek [[32]](#src-32). Hayek demonstrated that sensory perception and cognitive knowledge are never passive, mechanical impressions of an external physical reality, but rather a dynamic process of multi-layered classification: every novel impulse acquires operational meaning only insofar as it is classified relative to a pre-existing topological nexus of relations and systemic expectations. In an evidence-governed expert system, the admission of any candidate fact $f$ into the reasoning engine is determined not by an isolated declaration of "truth", but by its formal embedding within a deontic lattice of foundational axioms and the verified absence of blocking counter-arguments (defeaters).
 
 ```mermaid
 flowchart TD
@@ -252,35 +252,35 @@ flowchart TD
     class RES act;
 ```
 
-To mathematically formalize Hayek's classification process, we define the relational rank operator for a candidate fact $`f`$ within a knowledge base $`\mathcal{K} = \langle \mathcal{F}, \mathcal{R}, \mathcal{D} \rangle`$:
+To mathematically formalize Hayek's classification process, we define the relational rank operator for a candidate fact $f$ within a knowledge base $\mathcal{K} = \langle \mathcal{F}, \mathcal{R}, \mathcal{D} \rangle$:
 
 $$
 \mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = \frac{\sum_{r \in \mathcal{R}} \mathbb{I}(f \in \mathrm{Prem}(r)) \cdot w(r)}{1 + \sum_{d \in \mathcal{D}} \mathbb{I}(d \text{ defeats } f) \cdot w(d)}
 $$
 
 where:
-- $`f \in \mathcal{F}`$ is the candidate atomic proposition;
-- $`\mathcal{R}`$ is the set of active normative rules with integer normative weights $`w(r) \in [1, 10]`$;
-- $`\mathcal{D}`$ is the set of active defeaters (rebutting/undercutting conditions) with weights $`w(d) \in [1, 10]`$;
-- $`\mathbb{I}(\cdot) \in \{0, 1\}`$ is an indicator function denoting premise inclusion or defeater scope;
-- $`\mathrm{Rank}_{\mathrm{rel}} \in [0, +\infty)`$ is the dimensionless relational strength score of the fact within the classification lattice.
+- $f \in \mathcal{F}$ is the candidate atomic proposition;
+- $\mathcal{R}$ is the set of active normative rules with integer normative weights $w(r) \in [1, 10]$;
+- $\mathcal{D}$ is the set of active defeaters (rebutting/undercutting conditions) with weights $w(d) \in [1, 10]$;
+- $\mathbb{I}(\cdot) \in \{0, 1\}$ is an indicator function denoting premise inclusion or defeater scope;
+- $\mathrm{Rank}_{\mathrm{rel}} \in [0, +\infty)$ is the dimensionless relational strength score of the fact within the classification lattice.
 
 The actionable closed-loop calculation mandate governs runtime system state transitions:
 
 1. **Control Flow & Runtime Decisions:**
-   If $`\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = 0`$ (the fact is completely ungrounded and disconnected from normative rules), the symbolic core immediately tags the proposition as `UNGROUNDED_ATOM` and excludes it from downstream deduction with a formal `REFUSAL`. If $`\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) \ge \tau_{\mathrm{rel}} = 1.00`$ in the absence of undefeated defeaters, the fact is automatically admitted to unification in the proof tree. When $`0 < \mathrm{Rank}_{\mathrm{rel}} < 1.00`$, an escalation gate routes the inquiry to a human certifier (`QUALIFIED`).
+   If $\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = 0$ (the fact is completely ungrounded and disconnected from normative rules), the symbolic core immediately tags the proposition as `UNGROUNDED_ATOM` and excludes it from downstream deduction with a formal `REFUSAL`. If $\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) \ge \tau_{\mathrm{rel}} = 1.00$ in the absence of undefeated defeaters, the fact is automatically admitted to unification in the proof tree. When $0 < \mathrm{Rank}_{\mathrm{rel}} < 1.00$, an escalation gate routes the inquiry to a human certifier (`QUALIFIED`).
 
 2. **Hardware Dimensioning & Infrastructure Limits:**
-   Evaluating the relational rank requires fast traversal of incident edges across the knowledge graph. For an active working set of $`\lvert \mathcal{F} \rvert = 50\,000`$ facts and $`\lvert \mathcal{R} \rvert = 12\,000`$ rules, a Compressed Sparse Row (CSR) adjacency matrix consumes $`M_{\mathrm{CSR}} = (2 \cdot \lvert \mathcal{E} \rvert + \lvert \mathcal{F} \rvert) \cdot 8\,\text{bytes} \approx 3.2\,\text{MB}`$. This index fits entirely within L3 processor cache or UltraRAM on dedicated FPGA inference co-processors, guaranteeing an evaluation latency of $`T_{\mathrm{rank}} \le 180\,\text{ns}`$ without DRAM bus contention.
+   Evaluating the relational rank requires fast traversal of incident edges across the knowledge graph. For an active working set of $\lvert \mathcal{F} \rvert = 50\,000$ facts and $\lvert \mathcal{R} \rvert = 12\,000$ rules, a Compressed Sparse Row (CSR) adjacency matrix consumes $M_{\mathrm{CSR}} = (2 \cdot \lvert \mathcal{E} \rvert + \lvert \mathcal{F} \rvert) \cdot 8\,\text{bytes} \approx 3.2\,\text{MB}$. This index fits entirely within L3 processor cache or UltraRAM on dedicated FPGA inference co-processors, guaranteeing an evaluation latency of $T_{\mathrm{rank}} \le 180\,\text{ns}$ without DRAM bus contention.
 
 3. **Worked Numerical Example:**
-   Consider an observed case temperature $`T_{\mathrm{case}} = 95\,^\circ\text{C}`$ for prototype Revision B on test bench R-4. The observation is corroborated by waiver rule W-17 ($`w(r_1) = 8`$) and standard procedure $`P\text{-}22`$ ($`w(r_2) = 6`$). Concurrently, general test standard v4 acts as a defeating rule ($`w(d_1) = 7`$), prohibiting temperatures exceeding 90 °C:
+   Consider an observed case temperature $T_{\mathrm{case}} = 95\,^\circ\text{C}$ for prototype Revision B on test bench R-4. The observation is corroborated by waiver rule W-17 ($w(r_1) = 8$) and standard procedure $P\text{-}22$ ($w(r_2) = 6$). Concurrently, general test standard v4 acts as a defeating rule ($w(d_1) = 7$), prohibiting temperatures exceeding 90 °C:
 
 $$
 \mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = \frac{8 \cdot 1 + 6 \cdot 1}{1 + 7 \cdot 1} = \frac{14}{8} = 1.75 \ge 1.00
 $$
 
-   Since $`1.75 \ge 1.00`$, waiver W-17 overrides the general prohibition within its valid operational scope (Revision B, bench R-4). The system issues an admissible verdict `ACCEPT_CONDITIONAL`. If the test bench is switched to uncertified bench R-2, waiver W-17 drops to zero ($`w(r_1) = 0`$), yielding $`\mathrm{Rank}_{\mathrm{rel}} = \frac{6}{8} = 0.75 < 1.00`$, which triggers an immediate fail-closed interlock `REFUSAL`.
+   Since $1.75 \ge 1.00$, waiver W-17 overrides the general prohibition within its valid operational scope (Revision B, bench R-4). The system issues an admissible verdict `ACCEPT_CONDITIONAL`. If the test bench is switched to uncertified bench R-2, waiver W-17 drops to zero ($w(r_1) = 0$), yielding $\mathrm{Rank}_{\mathrm{rel}} = \frac{6}{8} = 0.75 < 1.00$, which triggers an immediate fail-closed interlock `REFUSAL`.
 
 > [!NOTE]
 > **Authorial Mathematical Model: Hayekian Relational Rank and Hardware Admission Arbitration**  
