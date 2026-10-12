@@ -110,6 +110,14 @@ Anstelle fragiler regulärer Ausdrücke fungiert das Sprachmodell als strikt ein
 
 Das Feld `answer_shape` mit dem Wert `quantity` signalisiert den nachfolgenden Stufen vorab, dass die Antwort zwingend eine Zahl mit Maßeinheit enthalten muss; der `speech_act` mit dem Wert `request_evidence` verlangt die Bereitstellung eines wörtlichen Quellenzitats. Der Anfragevertrag legt fest, was gesucht werden soll; die nächste Frage lautet, zu welchem Zeitpunkt das Expertensystem Wissen aus Dokumenten extrahiert.
 
+> [!NOTE]
+> **Vier Invarianten der semantischen Anfrage-Dekonstruktion nach dem Autorenmodell**
+> 1. Formulierung eines streng typisierten Anfragevertrags (`QueryContract`) mit expliziter Spezifikation der erwarteten Antwortform (`answer_shape`) und des Sprechakttyps (`speech_act`).
+> 2. Lexikalisch-syntaktische Verifikation über GBNF-Grammatiken zur Eliminierung linguistischer Verzerrungen und Mehrdeutigkeiten vor dem Zugriff auf den Suchindex.
+> 3. Dekomposition zusammengesetzter technischer Fragestellungen in minimale atomare Unteranfragen unter Erhalt logischer Abhängigkeitsgraphen der Prämissen.
+> 4. Zwingende Zuweisung rollenbasierter Beschränkungen und kontextueller Sicherheitsattribute (ABAC) direkt auf Ebene der Vertragsspezifikation.
+> *Laufzeitsteuerung:* Eine Anfrage mit widersprüchlichen oder unklaren Prämissen wechselt in den Zustand CLARIFICATION_REQUIRED mit Code E_AMBIGUOUS_QUERY_INTENT.
+
 ## 3. Zwei zeitliche Pfade der Wissensgewinnung
 
 In der Systemarchitektur operiert die Wissensgewinnung in zwei komplementären Zeitregimen, die nach Kriterien von Rechenkomplexität und Antwortlatenz getrennt sind. Der Versuch, eine vollständige Extraktion allen denkbaren Wissens asynchron im Hintergrund vorab durchzuführen, führt zu einer kombinatorischen Explosion und zur Anhäufung veralteter Relationen; umgekehrt verletzt der Versuch, mehrseitige Scans und Spezifikationen „on the fly“ während der Benutzeranfrage zu parsen, garantierte Latenzbudgets. Das Diagramm illustriert das Zusammenspiel zwischen Hintergrund- und operativem Ausführungspfad.
@@ -143,6 +151,15 @@ flowchart LR
 ```
 
 Die Hintergrundakquisition (*ingest-time acquisition*) wird ausgeführt, sobald neue Dokumente in das Repository aufgenommen werden: Sie bewahrt Struktur und Versionen, erkennt Tabellen und berechnet kryptografische Prüfsummen der Chunks. Dieser Prozess wird in [Kapitel 15](ch15-knowledge-extraction-and-kb-construction.md) detailliert beschrieben. Die Akquisition zur Anfragezeit (*query-time acquisition*) wird reaktiv auf eine spezifische Fragestellung hin aktiviert. Der Grund für diese Zweiteilung ist pragmatischer Natur: Derselbe Spezifikationsabsatz kann Dutzende unterschiedlicher Fragen beantworten (Feldlänge, Spannungsbereich, zulässige Toleranz), und es ist unmöglich, vorab jede denkbare Behauptung vollständig zu extrahieren. Zur Anfragezeit extrahiert und verifiziert das Expertensystem ausschließlich diejenige Behauptung, die der Anfragevertrag einfordert.
+
+> [!NOTE]
+> **Fünf Regeln zur temporalen Entkopplung der Wissenserfassung nach der Architektur des Autors**
+> 1. Asynchrone Ausführung rechenintensiver Normalisierung, Markup-Verarbeitung und Spezifikationsindexierung strikt im Ingest Path des Hintergrunds.
+> 2. Beschränkung des interaktiven Query Path zur Anfragezeit ausschließlich auf Extraktion, zeichengenaue Bindung und symbolische Verifikation des gesuchten Fakts.
+> 3. Caching unveränderlicher intermediärer Chunks mit kryptografischem Inhalts-Hashing zur Vermeidung einer Erschöpfung von Rechenzeitbudgets.
+> 4. Vollständige Speicherisolation, sodass Hintergrundaktualisierungen der Wissensbasis schreibgeschützte Transaktionen aktiver Sitzungen niemals blockieren.
+> 5. Fixierung eines einheitlichen deterministischen Korpus-Snapshots (Corpus Snapshot) für den gesamten Lebenszyklus der Anfrageverarbeitung.
+> *Laufzeitsteuerung:* Der Versuch, einen unvalidierten Wissenskandidaten im Read-Path-Inferenzkreis zu verwenden, wird mit Code E_UNCOMMITTED_EVIDENCE_ACCESS blockiert.
 
 ## 4. Pipeline zur Überführung einer Anfrage in einen Beweis
 
@@ -481,6 +498,14 @@ Behauptung A ist vollständig gebunden: Der Wert *eight* wurde zur Zahl 8 normal
 
 Die Grenzen des Beispiels sind wie folgt abgesteckt: Das Wörterbuch für Zahlwörter und Maßeinheiten ist hier bewusst minimal gehalten; ein industrieller Binder greift auf vollständige Zahlworttabellen und normierte Einheitenverzeichnisse zurück. Das Demonstrationsprogramm sucht Anker im gesamten Dokument; ein produktiver Binder beschränkt die Suche auf die Grenzen des aufgefundenen Chunks, was Mehrdeutigkeiten drastisch reduziert. Schließlich beweist die Bytestellen-Bindung lediglich, dass alle Atome wörtlich im Text existieren — sie beweist jedoch noch nicht, dass der Text tatsächlich diejenige Behauptung stützt, nach der gefragt wurde. Dies ist die Aufgabe der nachfolgend beschriebenen Verifikationsstufe.
 
+> [!NOTE]
+> **Vier Invarianten der zeichengenauen kryptografischen Zitatbindung nach dem Autorenstandard**
+> 1. Speicherung halboffener physikalischer Koordinatenintervalle $[s, e)$ des normalisierten Binärdatenstroms für jedes Atom der extrahierten Behauptung.
+> 2. Generierung des kryptografischen Chunk-Identifikators `passage-id` über einen Einweg-Hash nach FIPS 180-4 SHA-256 über das vollständige Kontext-Tupel.
+> 3. Deterministische Normalisierung numerischer Skalare und Maßeinheiten nach internationalen SI- und UCUM-Standards ohne Dimensionsverlust.
+> 4. Sofortige Zurückweisung von Behauptungskandidaten bei jeglicher Prüfsummendiskrepanz ohne Rückgriff auf heuristische Näherungsverfahren.
+> *Laufzeitsteuerung:* Eine Diskrepanz der Zitatprüfsumme oder der Byte-Offset-Koordinaten löst eine sofortige Abweisung mit Code E_CITATION_INTEGRITY_MISMATCH aus.
+
 ## 6. Typisierte Wissensatome
 
 In der Struktur einer evidenzbasierten Behauptung bildet die Typisierung elementarer Komponenten das Fundament für die anschließende automatisierte logische und mathematische Analyse im symbolischen Kern des Expertensystems. Behandelt das System extrahierte Fragmente als ungetypte Zeichenketten, entsteht das unlösbare Problem semantischer Inkompatibilität: Numerische Werte büßen ihren physikalischen Sinn ein, was Invariantenprüfungen unmöglich macht, und unterschiedliche Schreibweisen derselben Größe („8 Oktette“ und „64 Bit“) werden fälschlich als widersprüchliche Fakten interpretiert. Naive String-Suchen oder reguläre Ausdrücke scheitern an Einheitenumrechnungen und Modalitätswechseln. Der Binder prüft daher nicht nur das Vorhandensein des Ankers, sondern verifiziert den Typ des Atoms anhand von vier Grundkategorien:
@@ -614,6 +639,15 @@ flowchart TD
     class REF1,REF2,REF3 no;
 ```
 
+> [!NOTE]
+> **Fünf Kriterien zur formalen Verifikation von Evidenzbehauptungen nach dem Autorenprotokoll**
+> 1. Vollständiges vierwertiges logisches Implikations-Gateway (`ENTAILED`, `PARTIAL`, `CONTRADICTED`, `NOT_ENOUGH_EVIDENCE`).
+> 2. Kategorisches Verbot einer affirmativen Antwortgenerierung bei partieller Prämissenbestätigung oder bei Auffinden von Defeatern.
+> 3. Semantische Verifikation von Kontextbeschränkungen, Ausnahmen und normativer Modalität durch den symbolischen Kern statt durch das Sprachmodell.
+> 4. Generierung eines begründeten Verweigerungsurteils mit Protokollierung aller unerfüllten Prüfungen und durchsuchten Geltungsbereiche.
+> 5. Vollständige Unabhängigkeit der Zulassungsentscheidung von probabilistischen Konfidenzwerten des generativen Modells.
+> *Laufzeitsteuerung:* Jede Behauptung mit unvollständiger Stützung oder Modalitätsverzerrung erhält den Status UNVERIFIED mit Code E_ASSERTION_VERIFICATION_FAILED.
+
 ## 10. Vollständigkeit der Suche, sichere Verweigerung und Expertenbegutachtung
 
 Das Prinzip der sicheren Verweigerung (*Fail-Closed*) bei unvollständiger Evidenz ist eine fundamentale Zuverlässigkeitsregel eines evidenzbasierten Expertensystems. Reichen die extrahierten Kandidatenchunks nicht aus, um eine Hypothese zweifelsfrei zu belegen, ist das System verpflichtet, eine motivierte Verweigerung zu generieren, statt die Wissenslücke durch probabilistische Extrapolationen eines generativen Modells zu überbrücken. In missionskritischen Einsatzfeldern ist die Erteilung eines ungeprüften Ratschlags ungleich gefährlicher als der rechtzeitige Hinweis auf ein Informationsdefizit: Er kann Ingenieure desorientieren oder Havarien provozieren. Ein naives Erhöhen der Sampling-Temperatur oder das Ausdehnen des Kontextfensters ohne formale Prüfung potenziert das Risiko unbemerkter Halluzinationen.
@@ -688,6 +722,14 @@ stateDiagram-v2
 Eine Behauptung aus einer Antwort (`AnswerClaim`) avanciert erst dann zum Kandidaten (`CandidateKO`), wenn ein expliziter Bedarf für deren Wiederverwendung besteht, und wird erst nach Begutachtung durch Fachexperten sowie vollständiger Konsistenzprüfung in die Wissensbasis aufgenommen (`AdmittedKO`). Ein zugelassenes Wissensobjekt wird bei Modifikationen nicht gelöscht, sondern unter lückenloser Historisierung in den Status `Superseded` (ersetzt) oder `Revoked` (widerrufen) überführt.
 
 Dieses Verfahren schützt die Wissensbasis vor einer destruktiven Fehlerrückkopplung: Ein zufälliger Fehler des generativen Modells, der ungeprüft persistiert würde, kehrte andernfalls später als vermeintlich „autoritative Quelle“ für künftige Inferenzschritte zurück. Ein strukturell analoger Effekt ist für das Training von Modellen dokumentiert: Shumailov und Koautoren wiesen nach, dass Modelle, die rekursiv auf von Vorgängermodellen generierten Daten trainiert werden, sukzessive degenerieren und seltene Bereiche der Verteilung einbüßen [[11]](#src-11). Einer Wissensbasis ohne rigorose Promotion-Prozedur droht eine identische Degeneration — auf der Ebene von Fakten statt auf jener von Modellgewichten. Um generative Fehler systematisch zu unterbinden, stützt sich die Architektur auf das Prinzip eines expliziten semantischen Retrievers, vergleichbar dem REALM-Ansatz von Guu und Mitarbeitern [[12]](#src-12): Das generative Modul fabuliert kein Faktenwissen aus dem parametrischen Gedächtnis seiner Gewichte, sondern lernt ausschließlich, Evidenzen aus dem bereitgestellten Primärquellenkorpus zu extrahieren und zu interpretieren, wodurch die vollständige Traceability jeder Schlussfolgerung bis zur konkreten Textpassage gewahrt bleibt.
+
+> [!NOTE]
+> **Vier Invarianten des Wissensartefakt-Lebenszyklus nach der Autorenmethodik**
+> 1. Implementierung des Wissensobjekt-Lebenszyklus als deterministischer endlicher Automat mit formal geregelten Zustandsübergängen.
+> 2. Zwingende Isolation operativer Antworten (`AnswerClaim`) von der kanonischen Wissensbasis vor dem Passieren des Promotion-Gateways.
+> 3. Unmittelbarer Übergang in den Status `Superseded` oder `Revoked` bei Ratifizierung neuer Quellrevisionen unter lückenloser Historisierung.
+> 4. Verhinderung eines rekursiven Modellkollapses auf Faktenebene durch strikte Beschränkung persistenter Speicher auf verifiziertes Wissen.
+> *Laufzeitsteuerung:* Der Versuch, ein Artefakt ohne digitale Signatur eines zertifizierten Experten in die kanonische Basis zu überführen, wird mit Code E_UNSIGNED_LIFECYCLE_TRANSITION blockiert.
 
 ## 13. Dialog Pro et Contra
 

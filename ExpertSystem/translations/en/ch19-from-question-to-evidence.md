@@ -110,6 +110,14 @@ Rather than relying on brittle regex patterns, the language model functions as a
 
 The `answer_shape` field set to `quantity` explicitly informs downstream stages that the response must include a scalar number accompanied by a physical unit of measure, while `speech_act` set to `request_evidence` mandates providing verbatim citations. The query contract defines what to search for; the subsequent question is when the expert system extracts knowledge from source documents.
 
+> [!NOTE]
+> **Four Invariants of Semantic Query Decomposition Formulated by the Author**
+> 1. Formulating a strongly typed query contract (`QueryContract`) with explicit definitions of expected response shape (`answer_shape`) and speech act type (`speech_act`).
+> 2. Lexical and syntactic verification via GBNF grammars to eliminate linguistic distortions and natural language ambiguities prior to query index evaluation.
+> 3. Decomposing composite engineering inquiries into minimal atomic subqueries while preserving logical dependency graphs between premises.
+> 4. Mandatory enforcement of role-based constraints and contextual security attributes (ABAC) directly at the query contract specification layer.
+> *Runtime Governance:* Inquiries containing contradictory or unrecognized premises transition to CLARIFICATION_REQUIRED with code E_AMBIGUOUS_QUERY_INTENT.
+
 ## 3. Two Temporal Paths of Knowledge Acquisition
 
 Within the system architecture, knowledge acquisition operates across two complementary temporal modes, separated by computational complexity and response latency budgets. Attempting to exhaustively extract all conceivable knowledge upfront in the background causes a combinatorial explosion and accumulates stale relational dependencies; conversely, attempting to parse multi-page technical scans and dense specifications on the fly during an interactive query violates strict real-time latency guarantees. The following diagram illustrates the interaction between the background and online execution paths.
@@ -143,6 +151,15 @@ flowchart LR
 ```
 
 Ingest-time acquisition executes whenever new documents are ingested into the repository: it preserves hierarchical structure and version lineage, parses tabular data, and precomputes cryptographic chunk checksums. This ingestion workflow is detailed in [Chapter 15](ch15-knowledge-extraction-and-kb-construction.md). In contrast, query-time acquisition activates on demand in response to a specific engineering inquiry. The architectural rationale for separating these two modes is straightforward: a single specification paragraph may answer dozens of distinct questions (field length, voltage tolerance, error margins), making exhaustive upfront extraction of all latent propositions intractable. At query time, the expert system extracts and verifies only the targeted claim required by the active query contract.
+
+> [!NOTE]
+> **Five Rules for Temporal Decoupling of Knowledge Ingestion Formulated in the Author's Architecture**
+> 1. Asynchronous execution of heavy normalization, markup parsing, and specification indexing strictly within the background Ingest Path.
+> 2. Restricting the interactive online Query Path exclusively to claim extraction, byte-level grounding, and symbolic verification of the requested fact.
+> 3. Caching immutable intermediate passages accompanied by cryptographic content hashing to prevent computational budget exhaustion.
+> 4. Complete memory isolation ensuring that background knowledge base update routines never block read-only transactions of active client sessions.
+> 5. Pinning a single deterministic corpus snapshot (Corpus Snapshot) across the entire processing lifecycle of a query session.
+> *Runtime Governance:* Any attempt to utilize an uncommitted knowledge candidate within the Read Path inference loop is blocked with code E_UNCOMMITTED_EVIDENCE_ACCESS.
 
 ## 4. The Query-to-Evidence Transformation Pipeline
 
@@ -482,6 +499,14 @@ Claim A is fully grounded: the textual word *eight* is normalized to the integer
 
 The limitations of this benchmark harness should be noted. The numerical word and unit dictionaries shown here are minimal; a production-grade binder integrates comprehensive lexicons and standard unit registries. Furthermore, while this demo scans the entire document, a production implementation restricts anchor search to the bounds of the retrieved candidate passage, substantially mitigating ambiguity. Finally, physical span binding proves only that all constituent atoms literally appear in the text; it does not prove that the passage semantically entails the specific proposition inquired about. That task is delegated to the verification stage detailed below.
 
+> [!NOTE]
+> **Four Invariants of Byte-Exact Cryptographic Citation Grounding Formulated by the Author**
+> 1. Persisting half-open physical coordinate intervals $[s, e)$ of the normalized binary stream for every individual atom of the extracted claim.
+> 2. Generating the cryptographic passage identifier `passage-id` via a one-way FIPS 180-4 SHA-256 hash over the exhaustive tuple of context parameters.
+> 3. Deterministic normalization of scalar numbers and units of measure according to international SI and UCUM standards without dimensional loss.
+> 4. Immediate rejection of candidate claims upon any checksum discrepancy without resorting to heuristic approximate text alignment.
+> *Runtime Governance:* Any mismatch between the citation checksum or byte offset coordinates triggers immediate rejection with code E_CITATION_INTEGRITY_MISMATCH.
+
 ## 6. Typed Knowledge Atoms
 
 Within the structure of an evidenced claim, strong typing of elementary components forms the foundation for automated logical and mathematical reasoning within the expert system's symbolic core. If the system treats extracted fragments as untyped text strings, semantic incompatibility arises: numerical values lose their physical semantics—precluding invariant verification—and alternative surface representations of the same quantity ("8 octets" and "64 bits") are misidentified as conflicting facts. Naive substring matching or regular expressions fail when confronted with dimensional conversions or modal shifts. The span binder validates not merely the presence of an anchor, but its semantic atom type across four primary categories:
@@ -615,6 +640,15 @@ flowchart TD
     class REF1,REF2,REF3 no;
 ```
 
+> [!NOTE]
+> **Five Criteria for Formal Verification of Assertions Formulated by the Author**
+> 1. Exhaustive four-valued logical entailment gate (`ENTAILED`, `PARTIAL`, `CONTRADICTED`, `NOT_ENOUGH_EVIDENCE`).
+> 2. Absolute prohibition against generating an affirmative response under partial premise confirmation or upon detecting defeaters.
+> 3. Semantic verification of contextual constraints, exceptions, and normative modality enforced by the symbolic core rather than the language model.
+> 4. Synthesizing a reasoned refusal verdict explicitly recording the list of unfulfilled validation checks and evaluated search scopes.
+> 5. Total independence of conclusion admission from heuristic probabilistic confidence scores reported by the generative model.
+> *Runtime Governance:* Any assertion with incomplete support or modal shifts is tagged with status UNVERIFIED and rejected under code E_ASSERTION_VERIFICATION_FAILED.
+
 ## 10. Retrieval Completeness, Fail-Closed Behavior, and Expert Review
 
 The principle of fail-closed behavior under evidence incompleteness is a fundamental dependability rule for evidence-governed expert systems. When retrieved candidate passages lack the facts required to substantiate a hypothesis, the system must emit a reasoned refusal rather than attempting to bridge the gap with generative conjecture. In safety-critical contexts, supplying unverified guidance is vastly more hazardous than acknowledging a data void: it risks misleading engineers or provoking catastrophic physical failures. Naively increasing temperature or expanding the context window without formal verification merely amplifies hallucination risks.
@@ -689,6 +723,14 @@ stateDiagram-v2
 An answer claim (`AnswerClaim`) transitions to a candidate knowledge object (`CandidateKO`) only when tagged for reuse, and is admitted to the canonical knowledge base (`AdmittedKO`) strictly following human expert review and formal consistency verification. Admitted knowledge objects are never silently dropped; they transition into `Superseded` or `Revoked` states, preserving complete audit lineage.
 
 This governance model shields the knowledge base from compounding error loops: a transient model error committed to persistent storage would otherwise re-emerge as "authoritative ground truth" for future inferences. An analogous failure mode is well documented in machine learning training: Shumailov et al. demonstrated that models trained on recursively generated synthetic data progressively degrade, losing rare tail distributions [[11]](#src-11). A knowledge base devoid of a formal promotion gate risks identical degeneration, operating over discrete facts rather than network weights. To eliminate generative drift, the architecture adheres to the principle of an explicit semantic retriever, closely related to the REALM framework formulated by Guu et al. [[12]](#src-12): the generative component is constrained from inventing facts out of its parametric weight memory, operating solely to extract and interpret evidence grounded in the supplied source corpus while maintaining full traceability back to concrete textual passages.
+
+> [!NOTE]
+> **Four Invariants of the Knowledge Artifact Lifecycle Formulated by the Author**
+> 1. Implementation of the knowledge object lifecycle as a deterministic finite-state automaton with strictly governed state transitions.
+> 2. Mandatory isolation of query-time responses (`AnswerClaim`) from the canonical knowledge base prior to clearing the promotion gate.
+> 3. Immediate transition to `Superseded` or `Revoked` upon ratification of updated source editions while maintaining an unbroken audit lineage.
+> 4. Prevention of recursive factual model collapse by restricting canonical storage persistence exclusively to formally verified knowledge.
+> *Runtime Governance:* Attempting to promote an artifact into the canonical knowledge base without a digital signature from a certified expert is blocked with code E_UNSIGNED_LIFECYCLE_TRANSITION.
 
 ## 13. Pro et Contra Dialogue
 
