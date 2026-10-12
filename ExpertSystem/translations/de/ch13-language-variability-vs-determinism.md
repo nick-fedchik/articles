@@ -102,6 +102,15 @@ Im Diagramm wird deutlich, dass zwischen Retrieval und Antwort keinerlei Verifik
 * **Relevanzillusion.** Eine hohe Vektorähnlichkeit belegt lediglich gemeinsames Vokabular, nicht jedoch die normative Verbindlichkeit einer Aussage: Eine verbindliche Anforderung mit dem Schlüsselwort SHALL und ein unverbindlicher Kommentar dazu erzielen oft vergleichbare Ähnlichkeitswerte.
 * **Fehlende Beweiskette.** Die generierte Antwort besitzt keine überprüfbare Bindung an unveränderliche Quell-Bytes, wodurch sie bei einem Sicherheitsaudit nicht reproduzierbar ist.
 
+> [!NOTE]
+> **Fünf kritische ingenieurtechnische Risiken der naiven RAG-Pipeline**
+> 1. Wissensfragmentierung über Chunks: mechanisches Zerlegen zerstört Zusammenhänge zwischen Normen und quantitativen Grenzen.
+> 2. Unvollständigkeit und Rauschen: Auffinden oberflächlich ähnlicher Textpassagen bei gleichzeitigem Übergehen kritischer Vorschriften.
+> 3. Lost-in-the-Middle-Effekt: massiver Einbruch der Modellaufmerksamkeit für Fakten im Zentrum überlanger Kontextprompts.
+> 4. Relevanz-Illusion: hohe Kosinusähnlichkeit aufgrund gemeinsamen Vokabulars ungeachtet deontischer Modalitäten (`SHALL` vs. Kommentar).
+> 5. Fehlender kryptografischer Herkunftsnachweis: generierte Antworten entbehren bytegenauer Zitate und sind nicht auditierbar.
+> *Runtime Governance:* Verbot naiver Retrieve-Read-Schleifen in funktionalen Sicherheitsumgebungen gemäß ASIL B/D.
+
 ### 1.2. Fortgeschrittenes RAG: Vor- und Nachsuch-Optimierung
 
 Fortgeschrittenes RAG (*Advanced RAG*) behält den sequenziellen Fluss von Abruf gefolgt von Generierung bei, führt jedoch Optimierungen an zwei Schnittstellen ein: vor der Suche (*pre-retrieval*) und nach der Suche (*post-retrieval*) [[2]](#src-2).
@@ -238,6 +247,13 @@ Daraus leitet sich ein fundamentales Prinzip beweisgestützter Sprachverarbeitun
 
 > **Invariante der strukturellen Qualifikation (Structural Qualification Invariant):**  
 > Ein beweisgestütztes Expertensystem darf eine generierte Antwort oder Übersetzung keinesfalls auf Basis von Plausibilität, Modellkonfidenz oder sprachlicher Flüssigkeit akzeptieren. Die Zulässigkeit eines Ergebnisses bemisst sich ausschließlich an der nachweisbaren Erhaltung der strukturellen Invarianten gegenüber der verifizierten Primärquelle.
+
+> [!NOTE]
+> **Drei Invarianten der strukturellen Qualifikation gegen den Maskierungsfaktor sprachlicher Glätte**
+> 1. Zurückweisung oberflächlicher Plausibilität: grammatische Sprachglätte (Fluency) ist kein Maßstab für technische Gültigkeit.
+> 2. Isolation kontrollierter Terminologie: zwingende Bewahrung physikalischer Einheiten, Toleranzen und normativer Konstanten.
+> 3. Prinzip struktureller Demarkation: Validität bemisst sich ausschließlich an der Invariantentreue gegenüber der Primärquelle.
+> *Runtime Governance:* Jede Verzerrung eines typisierten Invarianten löst eine sofortige Abweisung durch das Host-Gateway aus.
 
 ## 3. Architektur der Pipeline zur semantischen Fragekompilierung
 
@@ -458,6 +474,14 @@ Ein fehlender Serverstatus erzwingt eine Nachfrage (*CLARIFY*); eine explizite H
 
 **Ergebnis des Abschnitts.** Die Pipeline überführt freie Formulierungen in vier Schritten in ein Prädikat. Das Modell verantwortet ausschließlich die Intent-Klassifikation, während Identifikatoren und Validierung von deterministischem Code gesteuert werden. Es verbleibt die Herausforderung, wie sichergestellt wird, dass das Modell in Schritt 3 ausnahmslos syntaktisch valides JSON liefert. Diese Aufgabe löst das beschränkte Decodieren.
 
+> [!NOTE]
+> **Vier Phasen der Pipeline semantischer Anfragekompilierung**
+> 1. Syntaktisches Dependenz-Parsing: Freilegen des grammatischen Gerüsts und Lemmatisierung über Universal Dependencies.
+> 2. Domänenspezifisches Tagging und Literal-Isolation: Abbildung von Bezeichnern auf atomare Ontologie-Symbole via Präfixtriebe (Trie).
+> 3. Schemagestütztes semantisches Parsing: Ableiten von Intent- und Argumenthypothesen mittels kleiner Sprachmodelle unter JSON Schema.
+> 4. Ontologische Host-Verifikation: statische Typisierung und Kompilation in Horn-Klauseln (Datalog) für deterministisches Schließen.
+> *Runtime Governance:* Nicht auflösbare Entitäten oder fehlerhafte Prädikatssignaturen erzwingen den Fehlercode `E_UNRESOLVED_PREDICATE`.
+
 ## 4. Deterministisches beschränktes Decodieren mittels kontextfreier Grammatiken
 
 In sicherheitskritischen Ausführungsumgebungen (DO-178C Level A, ISO 26262 ASIL D) ist die Weiterleitung unstrukturierter oder stochastisch generierter Texte an den Host-Interpreter unzulässig: Jede syntaktische Anomalie (eine nicht geschlossene geschweifte Klammer, ein fehlendes Anführungszeichen oder ein unerwarteter Schlüssel im JSON-Objekt) führt unweigerlich zum Absturz des Deserialisierungsdienstes (*crash panic*). Selbst wenn ein Sprachmodell die ingenieurtechnische Absicht inhaltlich erfasst hat, bleibt die freie autoregressive Generierung ein statistisches Glücksspiel über das gesamte Token-Vokabular. Um eine hundertprozentige syntaktische Konformität zu garantieren, wird die Ausgabe des Sprachmodells direkt auf Ebene der Token-Erzeugung durch einen deterministischen Syntaxautomaten beschränkt.
@@ -505,8 +529,12 @@ p'_1 = \frac{e^{3{,}2}}{e^{3{,}2} + e^{2{,}8} + 0} = \frac{24{,}53}{24{,}53 + 16
 
 Token $t_3$ wird vollständig eliminiert, was eine deterministische Fortsetzung der syntaktischen Konstruktion erzwingt.
 
-> [!NOTE] Ingenieurtechnische Anatomie der Logit-Maskierung
-> Man stelle sich die Generierung des Feldes `"intent"` in einer JSON-Struktur vor. Das Vokabular eines modernen Modells umfasst 32.000 oder 128.000 Token. Erwartet der aktuelle Zustand des Automaten einen Wert aus der Aufzählung `["GetDefinition", "CheckCompliance"]`, enthält die Maske $M$ ausschließlich Token, die diese beiden Strings beginnen oder fortsetzen können (beispielsweise das einleitende Anführungszeichen `"` oder das Präfix `Get`). Für die verbleibenden 127.990 Token des Vokabulars werden die Logits durch Ersetzen mit $-\infty$ genullt. Infolgedessen liefert die Softmax-Operation für diese exakt null: $e^{-\infty} = 0$. Das Modell ist physisch außerstande, freie Erläuterungen oder fehlerhafte Klammern einzufügen – es wählt deterministisch ausschließlich zwischen legitimen Grammatikpfaden.
+> [!NOTE]
+> **Drei ingenieurtechnische Phasen dynamischer Logit-Maskierung beim beschränkten Dekodieren**
+> 1. Synchronisation mit dem Automatenzustand: Selektion von Vokabular-Token $M \subseteq V$, die den aktiven JSON-Schema-Pfad fortsetzen.
+> 2. Nullung unzulässiger Logits: Setzen von $z'_i = -\infty$ für sämtliche Vokabular-Token außerhalb der aktuellen Maske ($i \notin M$).
+> 3. Deterministische Wahrscheinlichkeitsumverteilung: Softmax-Berechnung, bei der unzulässige Token exakt $p'_i = 0$ erhalten.
+> *Runtime Governance:* Das Modell ist strukturell unfähig, Schemadefekte zu erzeugen, und wählt ausschließlich legitime Token.
 
 Für unzulässige Token gilt $p'_i = 0$, sodass das Modell die Grenzen der Grammatik nicht verlassen kann. Das nachfolgende Diagramm veranschaulicht die Platzierung der Maske im Rechenablauf.
 
@@ -608,6 +636,13 @@ Praktische Anwendung und ingenieurtechnische Schlussfolgerungen:
 - **Kriterium für das Release-Gate:** Für die Freigabe des linguistischen Subsystems in den Produktivbetrieb kritischer Domänen wird ein strikter Schwellenwert definiert: $\mathrm{GroupPass} \ge 0{,}98$ (maximal 1 fehlerhafte Gruppe pro 50 getesteten Konzepten; für sicherheitskritische Normen nach ASIL D oder DO-178C Level A gilt die Schwelle $1{,}0$).
 - **Fail-safe-Blockierung der Pipeline:** Ergibt $\prod_{i\in V_g} \mathrm{Success}_i = 0$ für eine kritische Gruppe $g$, löst die CI/CD-Pipeline das Ereignis `GATE_INVARIANCE_FAIL` aus, blockiert Aktualisierungen von Modell oder Grammatik und versetzt den betroffenen Ontologieknoten in Quarantäne.
 - **Diagnostische Trennschärfe:** Versagt in einer Stichprobe von 3 Gruppen mit je 3 Formulierungen eine einzige Formulierung, beträgt die Durchschnittsgenauigkeit über Einzelsätze $8/9 \approx 0{,}89$, wohingegen $\mathrm{GroupPass} = 2/3 \approx 0{,}67$ beträgt. Diese Diskrepanz signalisiert dem Architekten verborgene Instabilitäten, die von konventionellen Durchschnittswerten verschleiert werden.
+
+> [!NOTE]
+> **Drei Invarianten semantischer Stabilitätstests des linguistischen Subsystems von Expertensystemen**
+> 1. Normativer Begriff als unteilbare Testeinheit: Evaluierung geschlossener Cluster syntaktischer Variationen statt Einzelabfragen ($|G| \ge 50$).
+> 2. Konjunktives Invarianz-Kriterium ($\mathrm{GroupPass} \ge 0{,}98$): Forderung vollständiger Konsistenz über alle Varianten der Gruppe ($\prod \mathrm{Success}_i = 1$).
+> 3. Sensitivität für Kontrastpaare: deterministische Prädikatsänderung bei Rolleninversionen oder veränderten Toleranzen.
+> *Runtime Governance:* Das Scheitern einer einzelnen Variante löst das CI/CD-Ereignis `GATE_INVARIANCE_FAIL` aus und blockiert das Release.
 
 Neben Paraphrasierungen sind **kontrastive Paare** unverzichtbar: „Client sendet an Server“ versus „Server sendet an Client“, „weniger als 100 ms“ versus „höchstens 100 ms“, aktuelle Fassung versus historische Revision. In diesen Fällen muss sich die erzeugte logische Form zwingend ändern. Dagegen darf die Ersetzung von „2 Minuten“ durch „120 Sekunden“ den resultierenden Wert nicht modifizieren. Eine scheinbar perfekte Invarianz ohne Sensitivität für Bedeutungsänderungen kann ein degeneriertes Modell verdecken, das für alle Eingaben starr dasselbe Prädikat ausgibt.
 

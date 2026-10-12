@@ -102,6 +102,15 @@ This structural topology reveals that no verification gate exists between retrie
 * **The Illusion of Relevance.** Elevated cosine similarity reflects shared lexical distributions rather than normative force: a mandatory clause containing `SHALL` and an informal background remark may achieve identical similarity scores against a user prompt.
 * **Absence of Evidentiary Custody.** Generated narrative responses cannot be traced back to immutable source byte coordinates, precluding deterministic auditability.
 
+> [!NOTE]
+> **Five Critical Engineering Risks of the Naive RAG Pipeline**
+> 1. Knowledge Fragmentation: mechanical text chunking severs dependencies between normative rules and quantitative boundaries.
+> 2. Selection Incompleteness and Noise: retrieving superficially similar passages while omitting critical regulatory stipulations.
+> 3. Lost-in-the-Middle Degradation: severe degradation of model recall for evidence placed in the middle of long context prompts.
+> 4. Semantic Relevance Illusion: high cosine similarity driven by shared vocabulary rather than deontic force (`SHALL` vs. commentary).
+> 5. Absence of Cryptographic Provenance: generated responses lack immutable byte-exact source links and cannot be audited.
+> *Runtime Governance:* Prohibition of naive Retrieve-Read loops within functional safety domains under ASIL B/D regimes.
+
 ### 1.2. Advanced RAG: Pre- and Post-Retrieval Optimization
 
 Advanced RAG retains the sequential "retrieve, then generate" paradigm while introducing targeted optimizations at two critical interfaces: prior to retrieval (*pre-retrieval*) and following candidate extraction (*post-retrieval*) [[2]](#src-2).
@@ -238,6 +247,13 @@ From this insight arises a foundational axiom of evidence-governed natural langu
 
 > **Structural Qualification Invariant:**  
 > An evidence-governed expert system is prohibited from accepting a generated output or translation on the basis of perceived plausibility, model confidence scores, or surface fluency. Output validity is qualified exclusively through the demonstrable preservation of structural invariants anchored to verified primary sources.
+
+> [!NOTE]
+> **Three Invariants of Structural Qualification Countering the Masking Factor of Fluency**
+> 1. Rejection of Plausibility: grammatical fluency cannot serve as a reliable proxy for technical or semantic validity.
+> 2. Controlled Terminology Isolation: strict preservation of physical units, engineering tolerances, and normative constants.
+> 3. Structural Demarcation Principle: output validity is strictly determined by preserving structural invariants against the source.
+> *Runtime Governance:* Any mutation of a typed invariant triggers immediate gate refusal, regardless of model fluency scores.
 
 ## 3. Architecture of the Question Semantic Compilation Pipeline
 
@@ -458,6 +474,14 @@ An unstated server status triggers a clarification request, whereas an explicit 
 
 **Section Takeaway.** The compilation pipeline translates arbitrary surface phrasing into an inference predicate through four disciplined stages. The language model is confined solely to intent parsing, while constant identification and validity checks are handled deterministically. Ensuring that the language model emits structurally valid representations at Stage 3 requires constrained decoding.
 
+> [!NOTE]
+> **Four Phases of the Semantic Query Compilation Pipeline**
+> 1. Syntactic Dependency Parsing: isolating the grammatical backbone and lemmatizing tokens via Universal Dependencies.
+> 2. Domain Tagging and Literal Isolation: mapping identifiers to atomic ontology symbols via prefix trees prior to neural processing.
+> 3. Schema-Governed Semantic Parsing: hypothesizing query intents and arguments via small language models bound to JSON Schema.
+> 4. Host Ontological Verification: static typing and compilation into Horn Datalog clauses for deterministic symbolic inference.
+> *Runtime Governance:* Unresolved entities or predicate signature mismatches abort inference with an `E_UNRESOLVED_PREDICATE` refusal code.
+
 ## 4. Deterministic Constrained Decoding with Context-Free Grammars
 
 In mission-critical execution environments (DO-178C Level A, ISO 26262 ASIL D), passing unvalidated or stochastically generated text into a host interpreter is intolerable: any syntactic defect (an unclosed bracket, an unescaped quotation mark, or an unexpected JSON property) triggers a fatal deserialization panic. Even when a language model correctly discerns engineering intent, unconstrained autoregressive decoding remains a statistical lottery over the entire vocabulary. To guarantee 100% syntactic compliance, the generative process is restricted directly at the token generation layer via a deterministic syntactic automaton.
@@ -505,8 +529,12 @@ p'_1 = \frac{e^{3{,}2}}{e^{3{,}2} + e^{2{,}8} + 0} = \frac{24{,}53}{24{,}53 + 16
 
 Token $t_3$ is eliminated, guaranteeing deterministic adherence to the schema.
 
-> [!NOTE] Engineering Mechanics of Logit Masking
-> Consider generating the `"intent"` field within a JSON payload. A modern tokenizer vocabulary contains 32,000 to 128,000 tokens. If the active state of the grammar automaton permits only values from the set `["GetDefinition", "CheckCompliance"]`, the mask $M$ includes only tokens that can legally initiate or extend those string literals (e.g., an opening quote `"` or the subword prefix `Get`). For the remaining 127,990 tokens, logits are clamped to $-\infty$. Consequently, Softmax evaluates to zero ($e^{-\infty} = 0$) for those entries. The model is structurally barred from outputting conversational filler or trailing syntax; it samples deterministically from valid grammatical paths.
+> [!NOTE]
+> **Three Engineering Phases of Dynamic Logit Masking in Constrained Decoding**
+> 1. Automaton State Synchronization: filtering vocabulary tokens $M \subseteq V$ that legally extend the active JSON Schema branch.
+> 2. Prohibited Logit Clamping: assigning $z'_i = -\infty$ to all vocabulary tokens outside the active grammatical mask ($i \notin M$).
+> 3. Deterministic Probability Redistribution: executing Softmax such that illegal continuation tokens strictly evaluate to $p'_i = 0$.
+> *Runtime Governance:* The model is structurally barred from violating output schemas, sampling strictly from valid grammatical tokens.
 
 Because prohibited tokens are assigned $p'_i = 0$, the model cannot breach the grammatical grammar. The diagram below illustrates the integration of the mask within the inference loop.
 
@@ -608,6 +636,13 @@ Practical implementation and engineering conclusions:
 - **Release Gate Criterion:** Production deployment in safety-critical domains enforces a strict quality gate: $\mathrm{GroupPass} \ge 0.98$ (allowing no more than 1 failed group per 50 tested concepts; for ASIL D or DO-178C Level A systems, the requirement is $1.0$).
 - **Fail-Safe Pipeline Halting:** If $\prod_{i\in V_g} \mathrm{Success}_i = 0$ for any critical group $g$, the CI/CD pipeline triggers the event `GATE_INVARIANCE_FAIL`, blocking model deployment and quarantining the affected ontology concept.
 - **Diagnostic Sensitivity:** Consider a sample of 3 groups with 3 formulations each, where a single variation fails. Average sentence accuracy is $8/9 \approx 0.89$, yet $\mathrm{GroupPass} = 2/3 \approx 0.67$. This sharp discrepancy immediately exposes latent brittleness that aggregate metrics conceal.
+
+> [!NOTE]
+> **Three Invariants of Semantic Stability Testing for Expert System Linguistic Subsystems**
+> 1. Normative Concepts as Atomic Test Units: evaluating closed clusters of syntactic variations rather than isolated single prompts ($|G| \ge 50$).
+> 2. Conjunctive Invariance Gate ($\mathrm{GroupPass} \ge 0.98$): requiring complete compilation consensus across all group variants ($\prod \mathrm{Success}_i = 1$).
+> 3. Contrast Pair Sensitivity: deterministically modifying the target predicate upon entity inversions or negated tolerances.
+> *Runtime Governance:* Failure of any single phrasing within a group raises a `GATE_INVARIANCE_FAIL` event, blocking deployment in CI/CD.
 
 Alongside equivalence testing, **contrastive pairs** are essential: "client sends to server" versus "server sends to client", "less than 100 ms" versus "at most 100 ms", or current normative revisions versus historical editions. Here, the compiled predicate must change. Conversely, substituting "2 minutes" with "120 seconds" must preserve quantitative equivalence. Robustness without sensitivity to semantic shifts risks masking a trivial model that emits an identical predicate for all inputs.
 
