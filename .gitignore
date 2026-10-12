@@ -3,4 +3,5 @@ __pycache__/
 *.pyc
 ExpertSystem/translations/glossaries/
 translations/glossaries/
+AGENTS.md
 
