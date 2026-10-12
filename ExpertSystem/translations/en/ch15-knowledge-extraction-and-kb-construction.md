@@ -104,6 +104,15 @@ Practical implementation and engineering conclusions:
 - **Automated authenticity verification:** Prior to evaluating a fact within resolution refutation or theorem proving, the inference engine reads the raw byte interval $`\text{FileBytes}[\mathrm{ByteStart}:\mathrm{ByteEnd}]`$ from disk, recomputes its SHA-256 digest, and asserts equivalence with $`H_{\mathrm{quote}}`$.
 - **Fail-safe quarantine:** If the source document is modified by even a single bit or displaced, the cryptographic hash verification fails ($`\mathrm{SHA256} \ne H_{\mathrm{quote}}`$). The engine immediately rejects the fact with error code `E_GROUNDING_INTEGRITY_VIOLATION`, quarantines all dependent rules, and emits an audit alert, completely preventing ungrounded knowledge from entering the decision loop.
 
+> [!NOTE]
+> **Five Components of the Authorial Evidence Grounding Tuple $\mathcal{E}$**
+> 1. Cryptographic document identifier ($\mathrm{DocID}$): immutable 256-bit SHA-256 hash of the complete canonical source file in the artifact repository.
+> 2. Half-open byte offset interval ($[\mathrm{ByteStart}, \mathrm{ByteEnd})$): exact integer coordinates of the substring within the raw binary stream.
+> 3. Canonical hierarchical path ($\mathrm{SectionPath}$): unambiguous location within the specification header tree ensuring contextual rule isolation.
+> 4. Verbatim quote authenticity hash ($H_{\mathrm{quote}}$): control SHA-256 digest of the exact text excerpt preventing mutation and paraphrasing defects.
+> 5. Deterministic verification protocol: direct byte custody validation by the host (`%ebx` custody) without third-party services or network roundtrips.
+> *Runtime Governance:* Any candidate fact lacking a valid byte-level match for $H_{\mathrm{quote}}$ is rejected by the gate with verdict `E_GROUNDING_INTEGRITY_VIOLATION`.
+
 ## 3. Extraction Pipeline: From Byte Stream to Fact Candidates
 
 Knowledge extraction from technical literature cannot be reduced to keyword search or neural text summarization. It is a multi-stage, deterministic pipeline that transforms an unstructured byte stream into typed facts, formal rules, and behavioral transition graphs. The diagram below illustrates the five phases of this pipeline.
@@ -511,6 +520,14 @@ Embedding model selection must be validated against proprietary domain data. As 
 
 Retrieval serves solely to propose candidate text blocks. It possesses no authority to determine whether a standard is legally active or applicable to an operational context: those determinations are reserved for the version lineage graph and the deductive inference engine. Having examined static relational facts, we now address the extraction of temporal operational behavior.
 
+> [!NOTE]
+> **Four Lifecycle Phases of the Floating-Size Annotation Unit (FAU)**
+> 1. Window initialization (Window Open): detecting a new structural heading, normative subject, or newly introduced specification section.
+> 2. Semantic retention (Window Hold): dynamically absorbing conditional clauses (`IF... THEN`, `WHEN`), exceptions (`UNLESS`), and SI tolerances.
+> 3. Anaphora resolution (Anaphora Binding): holding the span until all unresolved contextual pronouns are completely bound ($B_{\mathrm{anaphora}} = 0$).
+> 4. Deterministic sealing (Window Close): materializing a closed semantic assertion and emitting a canonical structural breadcrumb path.
+> *Runtime Governance:* Reaching the hardware threshold $L_{\mathrm{max}} = 2048$ tokens activates the fallback `DEGRADED_SPLIT` protocol with context duplication.
+
 ## 4. Extracting Dynamics: Translating Specifications into Finite-State Machines
 
 In embedded systems and cyber-physical engineering (ISO 26262, DO-178C), static relational facts describing constants or physical units are insufficient: actuator controls, communication protocols, and emergency failover routines are inherently temporal. If an expert system possesses only disjointed facts without causal and temporal ordering, it remains oblivious to sequence anomalies: protocol commands arriving out of order, data transmission preceding authentication, or illicit transitions out of safe state. To capture operational dynamics, technical specifications are compiled into formal finite-state machines.
@@ -648,6 +665,14 @@ In industrial practice, technical specifications articulate state transitions us
    </details>
 
 Automata minimization can occur only after formal semantics are established. For a complete DFA, Hopcroft's algorithm preserves language equivalence [[14]](#src-14); however, for protocol machines with outputs and timing invariants, minimization must preserve output equivalence and guard conditions. States must never be merged merely on the basis of lexical similarity in their names. An unmodeled transition in a partial specification does not constitute a proven prohibition; formal negative testing mandates explicit verification of normative clauses.
+
+> [!NOTE]
+> **Four Heuristic Strategies for Automated Protocol Automata Extraction**
+> 1. Causal predicate parsing: extracting clauses containing explicit state-transition verbs ("Upon receiving... transitions to...").
+> 2. ASCII state-diagram parsing: extracting arrow-based transition topologies (`--->`, `==>`) from plain-text specifications and datasheets.
+> 3. Direct transition matrix compilation: parsing markdown pipe-tables with columns for current state, trigger, next state, and output code.
+> 4. Deontic trigger selection: extracting imperative MUST clauses to formally define mandatory target state transitions.
+> *Runtime Governance:* Forbidden transitions ($\bot$) automatically compile into negative fault-injection test suites verifying hardware controllers.
 
 ---
 
@@ -982,6 +1007,14 @@ Architectural advantages over external DBMSs:
 
 All three storage models must be synthesized from a single source of truth: the set of admitted facts paired with their grounding tuples. If the relational store and graph diverge, the expert system will return conflicting conclusions for the same query depending on the traversal route. The inference engine operating over these models is examined in [Chapter 16](ch16-expert-systems-architecture.md), and the implementation stack in [Chapter 17](ch17-implementation-stack.md). We now examine the gatekeeper that governs knowledge admission.
 
+> [!NOTE]
+> **Four Invariants of the Zero-Copy Knowledge Graph Architecture (CSR)**
+> 1. Section-mapped memory layout: mounting the binary knowledge pack directly via `mmap(MAP_SHARED)` with constant initialization time $O(1)$.
+> 2. Hardware cacheline alignment: packing entity and relation records into 64-byte blocks matching processor L1/L2 cacheline boundaries.
+> 3. Relative offsets over dynamic pointers: eliminating serialization overhead and heap fragmentation through 32-bit relative file offsets.
+> 4. Linear memory traversal: sustaining over $10^7$ graph traversals per second per core by maximizing hardware cache prefetch efficiency.
+> *Runtime Governance:* Any violation of 64-byte alignment or corrupt relative offset halts pack mounting with error `E_MMAP_ALIGNMENT_FAULT`.
+
 ## 10. Fact Admission Gate: Verification and Popperian Filter
 
 The extraction pipeline emits candidates, a subset of which are invalid: an extractor misclassified modality, a language model produced a paraphrase, or a new fact contradicts an established invariant. The **admission gate** audits candidates against versioned verification policies. Automated checks are fully reproducible, whereas domain sign-offs are committed as cryptographically signed review records. Passing gate checks does not immediately publish the fact: access permissions are updated via the formal package release workflow.
@@ -1177,6 +1210,13 @@ No rule governing emergency actuators or modifying functional safety integrity l
    - The admission gate assigns verdict `POISON_DETECTED`, blocks rule ingestion—protecting $`45,000\,\text{EUR}`$ of physical power electronics from catastrophic destruction—and generates a cryptographically signed poisoning incident report for the cybersecurity operations center.
 
 Candidates have satisfied admission rules and traversed the epistemic poisoning defense barriers; however, knowledge bases evolve beyond mere facts: knowledge engineers also alter the concepts and axioms through which facts are interpreted. Prior to deploying an ontology, the candidate model must be validated as an independent artifact.
+
+> [!NOTE]
+> **Three Tiers of the Authorial Defense System Against Knowledge Poisoning (MITRE ATLAS)**
+> 1. Cryptographic source gateway: validating digital signatures (X.509, Ed25519) and quarantining unsigned artifacts in `UNTRUSTED_INGEST`.
+> 2. Symbolic SMT perturbation analysis (Z3): detecting parameter shifts ($\Delta\theta > \epsilon_{\mathrm{safety}}$) and axiomatic core inversions ($\mathcal{A}_{\mathrm{core}} \cup \{R\} \vdash \bot$).
+> 3. Human-in-the-Loop qualification gate: enforcing a mandatory `QUALIFIED_HOLD` state on ASIL C/D rules pending cryptographic sign-off by a safety engineer.
+> *Runtime Governance:* Detecting a poisoning attempt triggers a `POISON_DETECTED` verdict, isolates the source artifact, and escalates to enterprise SIEM.
 
 ## 11. Practical Ontology Engineering Lifecycle: Protégé and ROBOT
 

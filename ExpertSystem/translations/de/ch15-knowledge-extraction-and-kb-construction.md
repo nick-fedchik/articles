@@ -104,6 +104,15 @@ Praktische Anwendung und ingenieurtechnische Schlussfolgerungen:
 - **Automatisierte Authentizitätsprüfung:** Vor der Verwendung eines Fakts in der Resolutionsinferenz liest die Engine den Byte-Bereich der Quelldatei $\text{FileBytes}[\mathrm{ByteStart}:\mathrm{ByteEnd}]$ von der Festplatte, berechnet den SHA-256-Hash erneut und vergleicht ihn mit $H_{\mathrm{quote}}$.
 - **Fail-Safe-Blockierung (Quarantäne):** Wurde die Primärquellendatei auch nur um ein einziges Bit verändert oder verschoben, schlägt die Hash-Prüfung fehl ($\mathrm{SHA256} \ne H_{\mathrm{quote}}$). Die Engine blockiert den Fakt unverzüglich mit dem Fehlercode `E_GROUNDING_INTEGRITY_VIOLATION`, versetzt die zugehörige Regel in Quarantäne und generiert eine Audit-Warnung, wodurch die Nutzung unbestätigten Wissens bei der Entscheidungsfindung ausgeschlossen wird.
 
+> [!NOTE]
+> **Fünf Komponenten des Autoren-Beweisverankerungstupels $\mathcal{E}$ (Evidence Grounding Tuple)**
+> 1. Kryptografischer Dokumentbezeichner ($\mathrm{DocID}$): unveränderlicher 256-Bit SHA-256-Hash des vollständigen Inhalts der kanonischen Quelldatei im Artefakt-Repository.
+> 2. Halboffenes Byte-Offset-Intervall ($[\mathrm{ByteStart}, \mathrm{ByteEnd})$): exakte ganzzahlige Koordinaten der Teilzeichenkette im rohen binären Bytestrom.
+> 3. Kanonischer hierarchischer Pfad ($\mathrm{SectionPath}$): eindeutige Verortung im Überschriftenbaum der Spezifikation zur kontextuellen Isolation der Norm.
+> 4. Authentizitätshash des wörtlichen Zitats ($H_{\mathrm{quote}}$): Kontrollprüfsumme SHA-256 des exakten Textfragments zum Schutz vor Mutationen und Paraphrasen.
+> 5. Deterministisches Verifikationsprotokoll: direkte Byte-Prüfung durch den Host (`%ebx`-Custody) ohne externe Datenbanken oder Drittanbieterdienste.
+> *Laufzeitsteuerung:* Jeder Faktenkandidat ohne valide Byte-Übereinstimmung mit $H_{\mathrm{quote}}$ wird vom Gateway mit dem Status `E_GROUNDING_INTEGRITY_VIOLATION` abgewiesen.
+
 ## 3. Extraktionspipeline: Vom Bytestrom zu Faktenkandidaten
 
 Die Extraktion von Wissen aus technischen Dokumenten erschöpft sich weder in einer Stichwortsuche noch in einer summarischen Textzusammenfassung durch neuronale Netze (*Summarization*). Es handelt sich um einen mehrstufigen, deterministischen Prozess, der einen kontinuierlichen Bytestrom in typisierte Fakten, formale Regeln und Verhaltensgraphen transformiert. Das nachfolgende Diagramm veranschaulicht die fünf Phasen dieses Prozesses.
@@ -511,6 +520,14 @@ Auch die Wahl des Einbettungsmodells (*Embedding Model*) bedarf zwingend einer e
 
 Retrieval schlägt lediglich Kandidaten vor. Es entscheidet nicht darüber, ob eine Norm rechtsgültig und auf den Fall anwendbar ist: Diese Entscheidungen treffen der Versionsgraph und die Inferenzmaschine. Die in diesem Abschnitt beschriebene Pipeline liefert Faktenkandidaten mit Adressen in der Primärquelle. Statische Fakten beschreiben jedoch keine Handlungsabläufe, während ein Großteil ingenieurtechnischer Normen exakt solche Abfolgen betrifft. Der nächste Abschnitt zeigt, wie dynamisches Verhalten extrahiert wird.
 
+> [!NOTE]
+> **Vier Lebenszyklusphasen der gleitenden semantischen Annotationseinheit (FAU)**
+> 1. Fensterinitialisierung (Window Open): Erkennung einer neuen strukturellen Überschrift, eines normativen Subjekts oder eines neuen Spezifikationsabschnitts.
+> 2. Semantische Haltung (Window Hold): dynamische Integration von Bedingungsklauseln (`IF... THEN`, `WHEN`), Ausnahmen (`UNLESS`) und SI-Toleranzen.
+> 3. Anaphern-Auflösung (Anaphora Binding): Aufrechterhaltung des Fensters bis zur vollständigen Bindung offener Kontextpronomina ($B_{\mathrm{anaphora}} = 0$).
+> 4. Deterministische Schließung (Window Close): Fixierung der geschlossenen Aussage und Generierung des hierarchischen Navigationspfades (*breadcrumbs*).
+> *Laufzeitsteuerung:* Das Erreichen des Hardware-Limits $L_{\mathrm{max}} = 2048$ Token aktiviert den Schutzmodus `DEGRADED_SPLIT` mit Kontextübertrag.
+
 ## 4. Extraktion der Dynamik: Übersetzung von Spezifikationen in endliche Automaten
 
 In der Entwicklung eingebetteter und cyber-physischer Systeme (ISO 26262, DO-178C) reichen statische relationale Fakten über Konstanten oder Grenzwerte nicht aus: Aktoransteuerungen, Datenübertragungsprotokolle und Notfallabschaltungen besitzen eine fundamentale temporale Natur. Verfügt ein Expertensystem lediglich über isolierte Fakten ohne Erfassung der kausalen und zeitlichen Abfolge von Operationen, bleibt es blind gegenüber sequenziellen Anomalien: der Verletzung von Befehlsreihenfolgen, der Übertragung von Nutzdaten vor erfolgter Authentifizierung oder dem unberechtigten Verlassen eines sicheren Betriebszustands. Zur Modellierung dieser Verhaltensdynamik wird der Spezifikationstext in den mathematischen Formalismus deterministischer endlicher Automaten übersetzt.
@@ -647,6 +664,14 @@ In realen Spezifikationen wird dynamisches Verhalten selten uniform beschrieben.
    </details>
 
 Eine Automatenminimierung ist erst nach formaler Festlegung der Semantik zulässig. Für klassische deterministische Akzeptoren bewahrt der Hopcroft-Algorithmus die erkannte Sprache [[14]](#src-14), ignoriert jedoch Ausgabetransduktionen, Timing-Schranken und normative Annotationen. Bei Protokollmodellen muss die Äquivalenz zwingend auch Antwortcodes und Vorbedingungen einschließen; Zustände dürfen keinesfalls allein aufgrund oberflächlicher Namensähnlichkeiten verschmolzen werden.
+
+> [!NOTE]
+> **Vier heuristische Strategien zur automatisierten Extraktion von Protokollautomaten**
+> 1. Parsing kausaler Prädikate: Erkennung von Sätzen mit expliziten Übergangsverben („Upon receiving... transitions to...“).
+> 2. Erkennung von ASCII-Zustandsdiagrammen: Identifikation pfeilbasierter Graphen (`--->`, `==>`) aus Textspezifikationen und Datenblättern.
+> 3. Direkte Übersetzung von Übergangsmatrizen: Syntaxanalyse von Tabellen mit Spalten für Ausgangszustand, Trigger, Folgezustand und Antwortcode.
+> 4. Selektion deontischer Trigger: Erkennung imperativer MUST-Anforderungen zur formalen Definition verpflichtender Zielübergänge.
+> *Laufzeitsteuerung:* Verbotene Übergänge ($\bot$) werden automatisiert in negative Testsuiten zur Validierung von Steuergeräten auf Prüfständen übersetzt.
 
 ---
 
@@ -977,6 +1002,14 @@ Vorteile gegenüber externen Datenbanksystemen:
 - **Deterministische Datenlokalität:** Keine Heap-Fragmentierung, keine dynamischen Pointer – alle Adressen sind relative Offsets innerhalb des gemappten Segments;
 - **Lückenlose Nachweiskette:** Jeder Kanteneintrag referenziert unveränderliche Quellkoordinaten für die sofortige Byte-Verifikation ohne externe Netzwerkaufrufe.
 
+> [!NOTE]
+> **Vier Invarianten der Zero-Copy-Wissensgraph-Architektur (CSR)**
+> 1. Sektionsweises Speicher-Mapping: Einbinden des binären Wissenspakets direkt über `mmap(MAP_SHARED)` mit konstanter Ladezeit $O(1)$.
+> 2. Hardware-Cacheline-Ausrichtung: Packen von Entitäts- und Relationseinträgen in 64-Byte-Blöcke passend zu L1/L2-Cachelines des Prozessors.
+> 3. Relative Offsets statt dynamischer Zeiger: Vermeidung von Serialisierungskosten und Heap-Fragmentierung durch 32-Bit-Dateioffsets.
+> 4. Lineare Traversierungsreihenfolge: Erzielung von über $10^7$ Kantenübergängen pro Sekunde pro Kern durch Hardware-Cache-Prefetching.
+> *Laufzeitsteuerung:* Die Verletzung des 64-Byte-Alignments oder ungültige relative Offsets stoppen das Laden mit dem Fehler `E_MMAP_ALIGNMENT_FAULT`.
+
 ## 10. Zulassungsschleuse für Fakten: Verifikation und Popperscher Filter
 
 Eine Extraktionspipeline generiert fortlaufend Kandidaten, von denen ein substanzieller Anteil fehlerhaft ist: Der Extraktor hat eine Modalität falsch zugeordnet, das Sprachmodell hat eine unzulässige Paraphrase erzeugt oder eine neue Bestimmung kollidiert mit bestehenden Systemregeln. Die Zulassungsschleuse (*Admission Gate*) validiert jeden Kandidaten anhand versionierter Prüfregeln. Automatisierte Tests sind deterministisch reproduzierbar; fachliche Freigaben werden als kryptografisch signierte Prüfprotokolle hinterlegt. Erst die formale Paketfreigabe publiziert die geprüften Fakten für die Inferenz.
@@ -1172,6 +1205,13 @@ Keine Regel, die die Ansteuerung von Notfall-Aktoren oder Änderungen von funkti
    - Das Zulassungstor weist der Regel den Status `POISON_DETECTED` zu, blockiert deren Aufnahme in die Wissensbasis, schützt damit Hardware im Wert von $45\,000\,\text{EUR}$ vor physischer Zerstörung und generiert einen kryptografisch signierten Bericht über den Vergiftungsversuch für das Cybersicherheitsteam.
 
 Kandidaten haben die Zulassungsregeln erhalten und die Schutzbarrieren gegen Wissensvergiftung passiert, doch es verändern sich nicht nur Fakten: Der Wissensingenieur modifiziert auch Konzepte und Axiome, anhand derer Fakten interpretiert werden. Vor der Beantwortung von Anfragen muss der Ontologiekandidat als eigenständiges Artefakt validiert werden.
+
+> [!NOTE]
+> **Drei Stufen des Autoren-Schutzsystems gegen epistemische Wissensvergiftung (MITRE ATLAS)**
+> 1. Kryptografisches Quellengateway: Prüfung digitaler Signaturen (X.509, Ed25519) und Isolierung unbestätigter Artefakte in der Quarantäne `UNTRUSTED_INGEST`.
+> 2. Symbolische SMT-Störungsanalyse (Z3): Erkennung von Parameterverschiebungen ($\Delta\theta > \epsilon_{\mathrm{safety}}$) und axiomatischen Inversionen ($\mathcal{A}_{\mathrm{core}} \cup \{R\} \vdash \bot$).
+> 3. Human-in-the-Loop-Freigabegateway: Erzwingung des Status `QUALIFIED_HOLD` für ASIL C/D-Regeln bis zur digitalen Signatur eines Sicherheitsingenieurs.
+> *Laufzeitsteuerung:* Das Erkennen eines Vergiftungsversuchs erzeugt das Urteil `POISON_DETECTED`, isoliert die Quelle und eskaliert an das SIEM.
 
 ## 11. Praktischer Zyklus der ontologischen Modellierung: Protégé und ROBOT
 
