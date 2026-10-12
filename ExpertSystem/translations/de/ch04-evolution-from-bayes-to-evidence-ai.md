@@ -79,6 +79,17 @@ Im einleitenden Beispiel mit dem intermittierend fehlschlagenden Test verteilen 
 
 Die Wahl der Methode beginnt stets mit der Frage „Was genau soll ermittelt werden?“ und nicht mit dem Namen einer Technologie. Die Methoden entstanden historisch in einer logischen Abfolge, wobei jede neue Welle die Schwachstellen der vorangegangenen adressierte. Der folgende Abschnitt zeichnet diesen Werdegang nach.
 
+> [!NOTE]
+> **Typologische Taxonomie des Autors zu Unsicherheitsarten und Methoden-Routing**  
+> Der Autor formuliert eine paradigmatische Taxonomie, bei der die Wahl des mathematischen Apparats durch die Natur der Ingenieursfrage bestimmt wird:
+> 1. **Logische Inferenz (Regeln und Produktionen):** Gewährleistet die deterministische Deduktion binärer Folgerungen ($B \in \{\mathbf{True}, \mathbf{False}\}$) aus geprüften Prämissen für normative Invarianten.
+> 2. **Bayessches Modell:** Kalibriert die aposteriorische stochastische Risikoverteilung $\Pr(H \mid E)$ nach Beobachtung empirischer Evidenz.
+> 3. **Zadeh-Fuzzy-Logik:** Bildet kontinuierliche physikalische Größen auf Zugehörigkeitsgrade $\mu \in [0, 1]$ unscharfer Begriffe ab und verhindert Schwellenwertprellen.
+> 4. **Wissensgraph und Information Retrieval:** Stellt Nachverfolgbarkeit (Traceability), semantische Kontexte und bytegenaue Primärquellen sicher.
+> 5. **Deterministische Rechenkerne:** Berechnen normative Kennzahlen nach festen Standardformeln (z. B. SPFM nach ISO 26262-5).
+> 
+> *Sicherheitsinvariante des Autors:* Die Vermischung dieser inkompatiblen Skalen zu einem heuristischen Pseudowert zerstört die Beweiskraft; alle Ströme müssen in einem typisierten Begründungspaket (*Proof Packet*) zusammenlaufen.
+
 ## 2. Vier Wellen der Evolution von Expertensystemen: Von frühen Prototypen zur neuro-symbolischen KI
 
 Die Geschichte der künstlichen Intelligenz (KI) ist kein linearer Fortschritt. Phasen überzogener Erwartungen und industrieller Booms wechselten sich mit ernüchternden Rückschlägen ab, die als „KI-Winter“ in die Geschichte eingegangen sind [[2]](#src-2). Die Ursachen dieser Winter waren ingenieurtechnischer Natur; moderne Projekte laufen daher Gefahr, historische Fehler in neuem Gewand zu wiederholen. Die folgende Vierteilung der Historie dient als ingenieurtechnische Orientierung, die zeitlichen Grenzen sind Richtwerte.
@@ -183,6 +194,14 @@ Die dritte Welle machte Regeln und Wissensgraphen zu verlässlichen Standardkomp
 Große Sprachmodelle (*Large Language Models*, LLMs) ließen das Pendel zunächst in Richtung rein statistischer Textverarbeitung ausschlagen. In sicherheitskritischen und regulierten Domänen stießen Entwickler jedoch rasch an fundamentale Grenzen: Halluzinationen, stochastische Antwortvarianz, fehlende Quellenverankerung und Unverifizierbarkeit ([Kapitel 3](ch03-beyond-reference-information-systems.md)). Moderne evidenzbasierte Expertensysteme vereinen zwei Schichten: Eine linguistische Schicht (inklusive lokaler SLMs) beschleunigt den Wissenserwerb durch das Extrahieren von Entitäten, Anforderungen und Relationen aus Texten ([Kapitel 12](ch12-linguistic-analysis-and-local-models.md)). Die symbolische Schicht – bestehend aus Regeln, Wissensgraphen und deterministischer Inferenzmaschine – garantiert verifizierbare Ableitungen, kontrollierte Verweigerung bei mangelnder Evidenz und formale Sicherheitsnachweise ([Kapitel 27](ch27-safety-case-gsn-synthesis.md), [Kapitel 29](ch29-neuro-symbolic-architecture.md)).
 
 Die Geschichte lehrt ein zentrales Prinzip: Ein Expertensystem ist exakt so verlässlich wie seine Wissensbasis vollständig, verifiziert und wartbar ist. Sprachmodelle erleichtern die Wissensextraktion, machen explizite Regeln aber keineswegs überflüssig. Daher beginnt die methodische Betrachtung mit den formalen Regeln.
+
+> [!NOTE]
+> **Vier-Wellen-Evolutionsmodell des Autors und ingenieurtechnische Lehren der KI-Winter**  
+> Der Autor gliedert die Entwicklung des maschinellen Schließens in vier paradigmatische Wellen und benennt deren Kernengpässe:
+> 1. **Erste Welle (1965–1975, Entstehung des Knowledge Engineering):** Primat domänenspezifischen Wissens vor allgemeinen Heuristiken (DENDRAL, MYCIN, PROSPECTOR); Engpass: manuelle Wissenserfassung (*Knowledge Acquisition Bottleneck*).
+> 2. **Zweite Welle (1980–1987, Industrieller Boom & LISP-Maschinen):** Kommerzialisierung von Regelsystemen (XCON/R1); Engpass: exponentielle Wartungskosten tausender Regeln und Sprödigkeit (*Brittleness*).
+> 3. **Dritte Welle (1995–2015, BRMS & Semantic Web):** Abkehr von AGI hin zu deterministischen Inferenzmaschinen (CLIPS, Drools) und W3C-Graphstandards (RDF/OWL/SPARQL); Engpass: weiterhin hoher manueller Modellierungsaufwand.
+> 4. **Vierte Welle (ab 2020, Evidenzbasierte neuro-symbolische KI NeSy):** Synergie aus schneller statistischer Intuition von Sprachmodellen und verifiziertem symbolischem Kern (deterministisches Schließen, bytegenaue Erdung, GSN-Argumentation und Fail-Closed-Verweigerung).
 
 ## 3. Mathematische Logik und Produktionsregeln (Modus Ponens, Rete)
 
@@ -815,6 +834,14 @@ Akkumulierte Erfahrung wird in vier Betriebsmodi wirksam:
 
 Auf diese ingenieurtechnischen Herausforderungen antworteten historisch vier Entwicklungslinien: semantische Netze und Wissensgraphen, Bayessche Netze, Information Retrieval und fallbasiertes Schließen.
 
+> [!NOTE]
+> **Evidenztriade des Autors und Modell des geschlossenen Prüfkreislaufs**  
+> Der Autor postuliert, dass ein evidenzbasiertes Expertensystem auf einer funktionalen Triade mit kontinuierlichem Prüfkreislauf basiert:
+> 1. **Quelle (Evidence Source):** Unveränderliches Artefakt mit SHA-256-Hash, Byte-Grenzen `[byte_start, byte_end]` und PROV-O-Herkunftsnachweis.
+> 2. **Beziehung (Typed Relation):** Gerichtete typisierte Relationen vier fundamentaler Klassen: ontologisch (`is_a`), regulatorisch (`verifies`), kausal-diagnostisch (`causes`) und temporal-versionierend (`supersedes`).
+> 3. **Erfahrung (System Experience):** Strukturiertes Präzedenztupel $E = \langle \mathcal{C}, \mathcal{P}, \mathcal{A}, \mathcal{R}, \Delta \rangle$ (Kontext, Problem, Aktion, physisches Ergebnis, korrigierte Invariante/Lektion).
+> 4. **Geschlossener kontinuierlicher Audit-Kreislauf:** Vierkanaliger Erfahrungserwerb (HITL-Feedback, stigmergische CWA-Lückenerkennung, Telemetrieabgleich, Post-Mortem) zur automatischen Synthese von Schutzschilden (Safety Shields) und Regressionstests.
+
 ### 6.2. Evolution relationaler Repräsentation: Von Quillians semantischen Netzen zu industriellen Wissensgraphen
 
 In den 1960er- und 1970er-Jahren etablierten sich semantische Netze und Frames – die Darstellung von Wissen über Begriffe, Attribute und Relationen:
@@ -1179,6 +1206,14 @@ Die Arbeitsteilung zwischen Sprachmodellen und symbolischer Inferenz wird in [Ka
 
 Fallen die Antworten vage aus, handelt es sich um einen nützlichen Textassistenten, nicht um ein evidenzbasiertes Expertensystem. Den umfassenden Zwölf-Punkte-Auditkatalog führt [Kapitel 2](ch02-epistemology-of-machine-knowledge.md) aus.
 
+> [!NOTE]
+> **Modell des Begründungspakets des Autors und Vollständigkeitskriterium normativer Evidenz**  
+> Der Autor konzipiert den Übergang von plausiblen Texten zum rechts- und sicherheitsverbindlichen Begründungspaket (*Proof Packet*):
+> 1. **Metrik normativer Evidenzvollständigkeit ($C_{\mathrm{evidence}}$):** Verhältnis verifizierter Artefakte zur Sicherheits-Checkliste: $C_{\mathrm{evidence}} = \frac{|V|}{|R|} \in [0, 1]$.
+> 2. **Fail-Closed-Invariante:** $C_{\mathrm{evidence}}$ ist keine Wahrscheinlichkeit; das Fehlen auch nur eines Pflichtnachweises bei $C_{\mathrm{evidence}} = 0{,}99$ sperrt die Freigabe zwingend mit `INCOMPLETE_SAFETY_CASE`.
+> 3. **Neuro-symbolische Architekturkomposition:** Verbindung von Sprachschnittstellen (Extraktion, Suche) mit symbolischen Prädikaten (deterministische Regeln, Graphen, Rechenkerne, Beweisspuren, menschliche Freigabe).
+> 4. **Sieben-Faktoren-Verifikationsaudit:** Pflichtprüfung von KI-Assistenten anhand von sieben Kriterien (Quellen, Modalitäten, explizite Regeln, Verweigerungsrecht, Versionierung, Reproduzierbarkeit, menschliche Verantwortung).
+
 ## 10. Ingenieurtechnische Lehren aus der Geschichte der Expertensysteme für moderne NeSy-Architekturen
 
 Historische Methoden sind in Lehrbüchern detailliert dokumentiert; in der ingenieurtechnischen Praxis scheitern moderne KI-Systeme jedoch regelmäßig an vier praktischen Schwachstellen, die in der akademischen Literatur selten thematisiert werden. Hierfür sind einige Grundbegriffe erforderlich: Ein **Fragment** (*Chunk*) ist ein abgegrenzter Textabschnitt eines Dokuments, etwa ein Absatz. Ein **Index** dient als Verzeichnis zum schnellen Auffinden relevanter Fragmente. Die **Suchkomponente** (*Retriever*) extrahiert die passendsten Fragmente aus dem Index. Der **Prompt** (*Eingabeinstruktion*) ist der strukturierte Textkontext, den das Sprachmodell erhält: Benutzeranfrage, gefundene Fragmente und Verhaltensregeln. Der **Relevanzwert** (*Score*) ist eine interne Maßzahl der Such-Engine, deren Skala vom jeweiligen Algorithmus abhängt und weder eine Wahrscheinlichkeit noch ein normierter Wert zwischen 0 und 1 ist.
@@ -1342,6 +1377,14 @@ Praxistauglicher ist die Aufschlüsselung in typisierte Teilmetriken:
 Die Regel „Menschliche Überprüfung anfordern“ greift dann nicht bei einer magischen Pseudozahl, sondern transparent bei einer abgegrenzten Teilmetrik. Die Beweisspur liefert die exakte Diagnose: „Kohärenz 0,55; Quelle A widerspricht Quelle B bezüglich Feld X“. Wird eine Komponente als Wahrscheinlichkeit deklariert, muss sie an empirischen Daten kalibriert werden: Chuan Guo et al. wiesen nach, dass moderne neuronale Netze trotz hoher Treffergenauigkeit häufig gravierend fehlkalibriert sind [[29]](#src-29). Kalibrierungsverfahren behandelt [Kapitel 25](ch25-how-expert-systems-learn.md).
 
 Die Prinzipien von Datenqualität, Reproduzierbarkeit und Auditierbarkeit existierten bereits im klassischen Knowledge Engineering; Sprachmodelle, dynamische APIs und Vektorindizes über zehntausenden heterogenen Dokumenten haben ihre Brisanz jedoch drastisch verschärft. Ohne explizite Eingangsdatenprüfung, Snapshot-Versionierung und mehrdimensionale Ungewissheitszerlegung mutiert ein Expertensystem zu einem rhetorisch gewandten, aber unberechenbaren Orakel.
+
+> [!NOTE]
+> **Vierstufige ingenieurtechnische Zuverlässigkeitsbarriere des Autors für NeSy-Architekturen**  
+> Zur Überwindung systemischer Schwachstellen formuliert der Autor vier technische Zuverlässigkeitsbarrieren:
+> 1. **Eingangsbereinigung des Normenkorpus (ETL Ingestion Gate):** Automatische Filterung fehlerhafter PDFs mit defekten Glyphen über den Anteil druckbarer Zeichen ($r(c) \ge \tau_{\mathrm{print}}$) mit Quarantänewarteschlange `quarantine_doc_queue`.
+> 2. **Verifikations-Gateway des Retrievals:** Deterministischer Filter vor dem Sprachmodell, der irrelevante Fragmente abweist und explizite Nicht-Wissen-Meldungen erzeugt statt Halluzinationen zuzulassen.
+> 3. **Deterministischer Reproduzierbarkeitspass:** Feste Protokollierung des Systemzustands (Snapshot, Modellversion, Prompt, Regel-Hash, Rechenkernversionen, Suchparameter) zur 100%igen Nachvollziehbarkeit bei Audits.
+> 4. **Mehrdimensionaler Unsicherheitsvektor:** Ersatz singulärer Pseudokonfidenzwerte durch einen Vektor $\langle\text{Abdeckung}, \text{Aktualität}, \text{Konsistenz}, \text{Vollständigkeit}, \text{Qualität}\rangle$ mit gezielten Korrekturmaßnahmen.
 
 ## 11. Dialog Pro et Contra
 

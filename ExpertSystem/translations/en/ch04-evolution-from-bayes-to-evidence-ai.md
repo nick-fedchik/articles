@@ -80,6 +80,17 @@ Returning to the intermittently failing test scenario: the release rule determin
 
 Methodological selection begins with the question: *"What mathematical structure must the final verdict possess?"* rather than arbitrary technology adoption. Machine reasoning formalisms evolved historically to overcome the operational limitations of preceding paradigms, as traced in the following section.
 
+> [!NOTE]
+> **Authorial Taxonomy of Uncertainty Types and Reasoning Method Routing**  
+> The author formulates a formal paradigmatic taxonomy where mathematical formalism selection is dictated by the intrinsic nature of the engineering inquiry rather than technological trend:
+> 1. **Logical Inference (Rules and Productions):** Guarantees deterministic deduction of binary propositions ($B \in \{\mathbf{True}, \mathbf{False}\}$) from verified premises; enforced for categorical interlocks and normative invariants.
+> 2. **Bayesian Belief Updating:** Calibrates posterior stochastic risk distributions $\Pr(H \mid E)$ upon observing empirical evidence under an explicit probabilistic model.
+> 3. **Zadeh's Fuzzy Logic:** Maps continuous physical telemetry into degrees of membership $\mu \in [0, 1]$ for linguistic engineering concepts, eliminating boundary threshold chatter.
+> 4. **Knowledge Graphs and Information Retrieval:** Establishes formal end-to-end traceability (Traceability Graphs), contextual associations, and byte-level primary source provenance.
+> 5. **Deterministic Calculation Cores:** Computes standardized normative safety metrics via versioned algorithmic formulas (e.g., SPFM in ISO 26262-5).
+> 
+> *Authorial Safety Invariant:* Merging these incompatible scales into a singular heuristic pseudo-number of "confidence" destroys evidentiary value; all verification streams must converge strictly within a typed justification package (*Proof Packet*).
+
 ## 2. Four Waves of Expert Systems Evolution: From Early Prototypes to Neuro-Symbolic AI
 
 The history of artificial intelligence (AI) is not a monotonic progression. Eras of exuberant expectations and commercial investment alternated with severe retractions designated as "AI winters" [[2]](#src-2). The root causes of these downturns were fundamentally engineering deficiencies; consequently, contemporary projects risk replicating historical failure modes under modern terminology. The four-wave taxonomy structured below provides a practical engineering framework.
@@ -184,6 +195,14 @@ The third wave firmly established production rules and knowledge graphs as relia
 The rise of Large Language Models (LLMs) initially drove industry attention toward purely statistical, generative paradigms. In regulated engineering domains, however, teams rapidly encountered severe architectural boundaries: stochastic hallucinations, non-reproducible answers for identical prompts, absent fact provenance, and the structural impossibility of regulatory certification ([Chapter 3](ch03-beyond-reference-information-systems.md)). Modern evidence-governed expert systems resolve this tension through a two-tier hybrid architecture. The linguistic tier—incorporating local Small Language Models (SLMs)—accelerates knowledge ingestion: parsing unstructured specifications, extracting entity graphs, and mining candidate constraints ([Chapter 12](ch12-linguistic-analysis-and-local-models.md)). The symbolic tier—comprising deterministic production rules, typed knowledge graphs, and formal verifiers—guarantees sound logical deduction, enforces fail-closed behavior under epistemic deficit, and synthesizes inspectable safety cases ([Chapter 27](ch27-safety-case-gsn-synthesis.md), [Chapter 29](ch29-neuro-symbolic-architecture.md)).
 
 History delivers an unequivocal engineering lesson: an expert system is only as dependable as its knowledge base is complete, verified, and maintainable. Generative models mitigate the ingestion bottleneck, but cannot replace explicit, auditable production rules. It is to these deterministic production rules that we now turn.
+
+> [!NOTE]
+> **Authorial Evolutionary Wave Periodization and Engineering Lessons of AI Winters**  
+> The author systematizes sixty years of machine reasoning evolution into four distinct paradigmatic waves, identifying foundational engineering bottlenecks:
+> 1. **First Wave (1965–1975, Genesis of Knowledge Engineering):** Primacy of specialized domain knowledge over universal search heuristics (DENDRAL, MYCIN, PROSPECTOR); bottleneck: manual knowledge elicitation (*Knowledge Acquisition Bottleneck*).
+> 2. **Second Wave (1980–1987, Commercial Boom & LISP Workstations):** Industrialization of production rule engines (XCON/R1) and dedicated hardware; bottleneck: exponential escalation of maintenance costs across interacting rules and architectural brittleness (*brittleness*).
+> 3. **Third Wave (1995–2015, Pragmatic BRMS & Semantic Web):** Departure from AGI in favor of deterministic embedded engines (CLIPS, Drools) and standardized open graph specifications (W3C RDF/OWL/SPARQL); bottleneck: continued dependence on manual ontology modeling.
+> 4. **Fourth Wave (From 2020, Evidence-Governed Neuro-Symbolic AI NeSy):** Synergy between rapid statistical heuristics of language models (extraction and retrieval) and verified symbolic cores (deterministic deduction, byte-level grounding, GSN safety argumentation, and Fail-Closed refusal).
 
 ## 3. Mathematical Logic and Production Rules (Modus Ponens, Rete)
 
@@ -832,6 +851,14 @@ Accumulated experience operates across four distinct inference modes:
 
 These requirements were systematically addressed by four historical paradigms: semantic networks and knowledge graphs, Bayesian belief networks, information retrieval, and case-based reasoning.
 
+> [!NOTE]
+> **Authorial Evidence Knowledge Triad and Closed-Loop Audit Model**  
+> The author posits that an evidence-governed expert system is sustained by an invariant functional triad, reinforced by an ongoing closed-loop verification cycle:
+> 1. **Evidence Source:** Immutable, uniquely identified artifact (URI/commit) featuring a SHA-256 cryptographic digest, byte-level boundary coordinates `[byte_start, byte_end]`, and a verified PROV-O provenance record.
+> 2. **Typed Relation:** Directed semantic relationships across four fundamental classes: ontological (`is_a`, `part_of`), regulatory (`verifies`, `mitigates`), causal-diagnostic (`causes`, `manifests_as`), and temporal-versioning (`supersedes`, `invalidates`).
+> 3. **System Experience:** Structured empirical precedent tuple $E = \langle \mathcal{C}, \mathcal{P}, \mathcal{A}, \mathcal{R}, \Delta \rangle$ (operational context, anomaly problem, executed action, observed physical outcome, corrected safety invariant/lesson).
+> 4. **Closed-Loop Continuous Audit:** Four-channel experience acquisition protocol (Human-in-the-Loop feedback, stigmergic CWA gap mining, telemetry anomaly tracking, and post-mortem failure analysis) driving automated safety shield synthesis and continual regression testing.
+
 ### 6.2. Evolution of Relational Representation: From Quillian's Semantic Networks to Industrial Knowledge Graphs
 
 During the 1960s and 1970s, semantic networks and frame systems gained prominence, representing knowledge through concepts, attributes, and relationships:
@@ -1208,6 +1235,14 @@ If answers to these inquiries are ambiguous, the tool is a conversational assist
 
 Evidentiary rigor cannot be retrofitted post-hoc: proof packets must synthesize concurrently with inference. In industrial deployments, evidentiary pipelines fail primarily at four structural integration points, examined below.
 
+> [!NOTE]
+> **Authorial Proof Packet Architecture and Normative Evidence Completeness Metric**  
+> The author conceptualizes the paradigm shift from generative fluency to a legally and technically binding justification package (*Proof Packet*):
+> 1. **Normative Evidence Completeness Metric ($C_{\mathrm{evidence}}$):** Computed as the ratio of verified artifacts against a standardized safety checklist: $C_{\mathrm{evidence}} = \frac{|V|}{|R|} \in [0, 1]$.
+> 2. **Fail-Closed Gate Invariant:** $C_{\mathrm{evidence}}$ is an epistemic metric rather than a probability and permits no averaging; the absence of even a single mandatory artifact (e.g., safety officer sign-off) at $C_{\mathrm{evidence}} = 0.99$ strictly blocks release with a typed `INCOMPLETE_SAFETY_CASE` refusal.
+> 3. **Neuro-Symbolic Structural Composition:** Coupling of heuristic linguistic frontends (parsing, retrieval, verbalization) with symbolic predicates (deterministic rules, relationship graphs, numerical calculation kernels, proof traces, and mandatory human authorization).
+> 4. **Seven-Factor Evidentiary Audit:** Mandatory validation of AI advisory systems against seven epistemic criteria (source attribution, modal qualification, explicit rules, refusal capability, versioning, reproducibility, and human authority preservation).
+
 ## 10. Engineering Lessons from Expert System History for Modern NeSy Architectures
 
 Classical reasoning methods are well-documented in academic literature, yet operational AI systems fail routinely at four mundane integration junctures that textbooks rarely analyze. To examine these lessons, four engineering primitives are defined. A **chunk** (*chunk*) is a bounded document segment, such as a paragraph or subsection. An **index** is an inverted or vector data structure mapping terms and embeddings to chunk references. A **retriever** (*retriever*) extracts candidate chunks from the index based on query similarity. An **input prompt** (*prompt*) is the aggregated context supplied to a language model: containing the user query, retrieved passages, and system instructions. A **relevance score** (*relevance score*) is an internal metric computed by the retriever, whose numerical scale is algorithm-specific and cannot be treated as a physical probability.
@@ -1374,6 +1409,14 @@ An actionable uncertainty representation decomposes into an explicit, multi-dime
 Under this multi-dimensional paradigm, a policy routing a case to human review activates not on an opaque aggregate score, but on the specific degraded dimension, immediately detailing the diagnosis: *"Consistency degraded to 0.55: Source A directly contradicts Source B regarding timeout register X."* When an uncertainty dimension claims probabilistic validity, it must be empirically validated across calibrated test sets: Chuan Guo and colleagues demonstrated that modern deep neural networks are notoriously poorly calibrated [[29]](#src-29). Calibration verification methodologies are detailed in [Chapter 25](ch25-how-expert-systems-learn.md).
 
 Data quality controls, reproducibility records, and audit logs existed within classical knowledge engineering, but language models, unversioned external APIs, vector indices, and corpora spanning tens of thousands of unstructured PDFs have drastically magnified the operational risks. Devoid of explicit input filtering, dependency versioning, and multidimensional uncertainty modeling, an expert system degrades into an ungrounded, non-deterministic oracle.
+
+> [!NOTE]
+> **Authorial Four-Tier Reliability Engineering Guardrails for NeSy Architectures**  
+> To mitigate systematic failure modes within neuro-symbolic pipelines, the author establishes four non-negotiable engineering guardrails:
+> 1. **Ingestion Corpus Sanitization (ETL Ingestion Gate):** Automated filtering of corrupted PDF artifacts with degraded glyph mapping using the printable character ratio ($r(c) = \frac{N_{\mathrm{print}}(c)}{N_{\mathrm{all}}(c)} \ge \tau_{\mathrm{print}}$), isolating corrupt extracts into `quarantine_doc_queue`.
+> 2. **Retrieval Verification Gate:** Deterministic gate between retriever and language model that rejects sub-threshold fragments, filters out out-of-domain chunks, and emits typed data absence indicators instead of seeding generative hallucinations.
+> 3. **Deterministic Reproducibility Passport:** Mandatory serialization of full system provenance (corpus snapshot, model version, system prompt, rule base hash, formula versions, retrieval hyperparameters) guaranteeing 100% decision replayability during audits.
+> 4. **Multidimensional Uncertainty Vector:** Complete rejection of single-scalar "confidence" scores in favor of a typed vector $\langle\text{Coverage}, \text{Freshness}, \text{Consistency}, \text{Completeness}, \text{Quality}\rangle$, directly mapping each deficit to targeted corrective engineering workflows.
 
 ## 11. Pro et Contra Dialogue
 
