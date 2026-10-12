@@ -276,9 +276,11 @@ In ingenieurtechnischen Projekten evolviert Wissen kontinuierlich: Spezifikation
 
 Die klassische Informatikliteratur unterscheidet zwei grundlegende TMS-Paradigmen. Das von Jon Doyle begründete rechtfertigungsbasierte System zur Wahrheitserhaltung (*Justification-based TMS*, JTMS) versieht jede Aussage mit dem Label `IN` (akzeptiert) oder `OUT` (nicht gestützt), je nachdem, ob die Aussage mindestens eine aktuell gültige Begründung besitzt [[12]](#src-12). Das von Johan de Kleer entwickelte annahmebasierte System (*Assumption-based TMS*, ATMS) speichert für jede Aussage die Mengen von Annahmen, unter denen sie wahr ist, und gestattet so die parallele Exploration mehrerer hypothetischer Szenarien, wie etwa: „Was geschieht mit der Zulassung der Baugruppe, wenn die Strukturmasse um 5 % ansteigt?“ [[13]](#src-13).
 
-> [!NOTE] Architektonische Abgrenzung von JTMS und ATMS in der Ingenieurpraxis
-> - **JTMS (Ein-Welt-Modell):** Operiert nach dem Prinzip des binären Zustandswechsels `IN / OUT`. Wird ein Eingangsfakt widerrufen, führt das JTMS einen nicht-monotonen Widerruf abhängiger Schlussfolgerungen entlang des Begründungsgraphen aus. Dies ist optimal für die reaktive Konfigurationsprüfung (z. B. Validierung der Release-Gültigkeit in CI/CD).
-> - **ATMS (Mehr-Welten-Modell):** Jedem Fakt wird ein Umgebungskennzeichen (*environment label*) zugeordnet – die Menge von Basisannahmen, unter denen der Fakt wahr ist. Das ATMS verwaltet die Koexistenz mehrerer unvereinbarer hypothetischer Zustände simultan ohne teures Backtracking. Dies ist fundamental für ingenieurtechnische Trade-off-Analysen: Das System berechnet parallel Variante A („Titangehäuse: Masse -15 %, Kosten +40 %“) und Variante B („Verbundwerkstoff: Masse -20 %, Delaminationsrisiko bei T > 120 °C“).
+> [!NOTE]
+> **Zwei Paradigmen der Wahrheitserhaltung in Ingenieursystemen nach der Autorklassifikation**
+> 1. Ein-Welt-Modell JTMS: operiert nach dem Prinzip des binären Zustandswechsels zwischen `IN` und `OUT`; beim Widerruf eines Eingangsfakts führt es einen nicht-monotonen Rückzug abhängiger Schlussfolgerungen entlang des Begründungsgraphen für die reaktive Release-Konfigurationskontrolle aus.
+> 2. Mehr-Welten-Modell ATMS: weist jedem Fakt ein Umgebungskennzeichen (*environment label*) als Menge von Basisannahmen zu und ermöglicht die parallele Koexistenz unvereinbarer hypothetischer Szenarien ohne aufwendiges Backtracking für multikriterielle Trade-off-Analysen.
+> *Runtime-Steuerung:* Die Wahl zwischen JTMS und ATMS wird durch das Aufgabenprofil bestimmt: JTMS garantiert deterministische Rollbacks in CI/CD, während ATMS die parallele Berechnung alternativer Entwurfsentscheidungen ermöglicht.
 
 Das folgende Diagramm veranschaulicht den Basisfall: Eine Schlussfolgerung stützt sich auf einen Fakt; der Widerruf des Fakts erzwingt den Widerruf der Schlussfolgerung.
 

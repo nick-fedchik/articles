@@ -276,9 +276,11 @@ In engineering domains, knowledge is inherently non-monotonic: specifications un
 
 Classical artificial intelligence provides two foundational truth maintenance paradigms. A Justification-based Truth Maintenance System (JTMS), pioneered by Jon Doyle, tags every proposition with either an `IN` (accepted) or `OUT` (unaccepted) label depending on whether the proposition is supported by at least one currently valid justification [[12]](#src-12). An Assumption-based Truth Maintenance System (ATMS), developed by Johan de Kleer, tags each proposition with the set of assumptions under which it holds true, thereby enabling simultaneous exploration of multiple hypothetical worlds—such as evaluating structural trade-offs when airframe weight increases by 5% [[13]](#src-13).
 
-> [!NOTE] Architectural Distinction Between JTMS and ATMS in Production Engineering
-> - **JTMS (Single-Context Model):** Operates on state toggling between `IN` and `OUT`. When an antecedent fact is retracted, the JTMS propagates non-monotonic retractions along the justification dependency graph. This model is exceptionally well-suited for reactive configuration control (e.g., verifying release integrity within CI/CD pipelines).
-> - **ATMS (Multiple-Context Model):** Tags each proposition with an environment label—a set of foundational assumptions under which the proposition is logically valid. The ATMS maintains multiple, mutually contradictory hypothetical branches simultaneously without requiring expensive backtracking. This capability is indispensable for engineering trade-off studies: the system evaluates Option A ("titanium alloy chassis: weight -15%, manufacturing cost +40%") and Option B ("carbon composite chassis: weight -20%, delamination hazard at temperatures exceeding 120°C") concurrently.
+> [!NOTE]
+> **Two Truth Maintenance Paradigms in Engineering Systems Classified by the Author**
+> 1. Single-Context JTMS Model: operates on binary state toggling between `IN` and `OUT`; upon refutation of an antecedent fact, it executes non-monotonic retraction of dependent conclusions along the justification graph for reactive release configuration control.
+> 2. Multiple-Context ATMS Model: tags each proposition with an environment label representing foundational assumptions, maintaining parallel coexistence of mutually exclusive hypothetical scenarios without expensive backtracking for multi-criteria trade-off analysis.
+> *Runtime Management:* The architectural choice between JTMS and ATMS is governed by the task profile: JTMS enforces deterministic rollbacks in CI/CD, whereas ATMS enables parallel exploration of alternative engineering trade-offs.
 
 The diagram below illustrates the canonical JTMS retraction behavior: a conclusion depends on an antecedent fact, and retracting the fact immediately revokes the conclusion.
 
