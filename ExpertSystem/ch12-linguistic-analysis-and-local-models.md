@@ -356,6 +356,35 @@ M_{KV}\approx 2\,n_l\,L\,n_{kv}\,d_h\,b.
 
 Множник 2 враховує окремо ключі й значення. Квон та співавтори показали, що саме кеш ключів і значень визначає ефективність обслуговування великих мовних моделей, і запропонували сторінкове керування цією пам'яттю в системі vLLM [[18]](#src-18).
 
+### 5.4. Структурно-орієнтована токенізація та збереження метрологічних інваріантів (SIF)
+
+При обробці вузькоспеціалізованих інженерних та метрологічних текстів класичні субсловникові токенізатори (Byte-Pair Encoding, WordPiece) створюють специфічний ризик відмов: дроблення фізичних формул, констант і розмірностей на ізольовані випадкові субтокени. Наслідком стає втрата структурної цілісності символьних виразів та зміщення числових меж.
+
+У концепції Structural Invariant Framework (SIF v1.0), розробленій Ю. Кузьменком та О. Трофімовою [[34]](#src-34), захист інваріантів забезпечується поєднанням попереднього структурного маскування (*placeholder engineering*) та анкерного реєстру (*Anchor Registry*). Нехай текст документа $T$ містить множину виявлених структурних анкерів $\mathcal{A} = \{a_1, a_2, \dots, a_k\}$, де кожен елемент $a_i$ є неподільною сутністю (формулою, константою чи допуском). Структурно-орієнтований токенізатор застосовує детерміноване бієктивне перетворення:
+
+```math
+\mathcal{P}(T) = \bigl(T \setminus \mathcal{A}\bigr) \cup \Pi(\mathcal{A}), \quad \text{де } \Pi(a_i) = \langle\mathtt{ANCHOR\_}i\rangle.
+```
+
+Складники та параметри формули:
+
+- $T$ є вхідним текстом технічної специфікації, стандарту або метрологічної інструкції;
+- $\mathcal{A}$ є множиною виявлених детермінованих інваріантів (формули на кшталт $E = mc^2$, числові інтервали $`\pm 0{,}05\,\mathrm{mm}`$, складені одиниці $\mathrm{kg\cdot m^2/s^2}$);
+- $\Pi(a_i)$ є оператором ізоляції, який заміщує складену інженерну конструкцію неподільним токеном-плейсхолдером $\langle\mathtt{ANCHOR\_}i\rangle$;
+- $\mathcal{P}(T)$ є нормалізованим текстом, у якому фертильність заміщених сутностей строго нормалізована:
+
+```math
+\mathrm{Fertility}(\Pi(a_i)) = 1{,}00 \quad \text{проти} \quad \mathrm{Fertility}(a_i) \ge 3{,}50.
+```
+
+Після обробки тексту локальною мовною моделлю зворотне відображення $\mathcal{P}^{-1}$ відновлює оригінальні сутності з анкерного реєстру та здійснює криптографічну перевірку збереження байтових меж:
+
+```math
+\mathcal{P}^{-1}(\hat{T}) \implies \forall i \in \{1, \dots, k\}: \mathrm{SHA256}(\hat{a}_i) = \mathrm{SHA256}(a_i).
+```
+
+Якщо хеш відновленого анкера $\mathrm{SHA256}(\hat{a}_i)$ не збігається з канонічним хешем першоджерела, шлюз кваліфікації негайно відхиляє вихід моделі, унеможливлюючи проникнення деформованих констант у карти джерела $R_{N\leftarrow T_E}$.
+
 ## 6. Семантична схожість проти логічного слідування: межі векторного пошуку
 
 У наївних архітектурах RAG та пошукових системах метрика семантичної схожості неперервних векторних ембеддінгів помилково ототожнюється з логічною істинністю чи логічним слідуванням. Проте для експертних систем місійно-критичного класу (ISO 26262 ASIL D, IEC 61508 SIL 3/4) косинусна близькість векторів несе пряму загрозу системної аварії: дві діаметрально протилежні за інженерним змістом норми — наприклад, *«контролер зобов'язаний замкнути контактор аварійного скидання при втраті синхросигналу»* та *«контролеру категорично заборонено замикати контактор аварійного скидання при втраті синхросигналу»* — у типових просторах векторних представлень (наприклад, cosine embedding) мають подібність $\approx 0{,}94$–$0{,}97$ через ідентичний предметний лексичний контекст. Якщо машина виведення сприйме векторну подібність як доказ застосовності норми, система виконає небезпечну аварійну дію.
@@ -620,6 +649,54 @@ flowchart LR
     class DEP pass;
     class DIAG err;
 ```
+
+### 10.1. Пошаровий діагностичний конвеєр верифікації інваріантів (SIF v1.0)
+
+Традиційні метрики оцінювання мовних моделей (BLEU, ROUGE, BERTScore) вимірюють лексичну подібність або статистичну гладкість, але нездатні детектувати викривлення вузькодоменних фізичних і логічних залежностей. У концепції Structural Invariant Framework (SIF v1.0), запропонованій Ю. Кузьменком та О. Трофімовою [[34]](#src-34), перевірку мовного конвеєра структуровано як послідовність взаємопов'язаних діагностичних шарів, де кожен наступний рівень мотивований тим, чого не спроможний пояснити попередній:
+
+```mermaid
+flowchart TD
+    accTitle: П'ятирівневий діагностичний конвеєр SIF v1.0
+    accDescr: Архітектура перевірки інваріантів від структурного впорядкування до граничного ремонту та операційного рішення.
+
+    L1["<b>Layer 1: Structural Ordering</b><br/>Впорядкування даних та індукція поведінки"] --> L2["<b>Layer 2: Behavioral Regimes</b><br/>Операційні режими під напругою суперечностей"]
+    L2 --> L3["<b>Layer 3: Representation Diagnostics</b><br/>Зондування внутрішніх шарів моделі"]
+    L3 --> L4["<b>Layer 4: Output Failure Taxonomy</b><br/>Класифікація деформацій інваріантів на виході"]
+    L4 --> L5["<b>Layer 5: Bounded Structural Repair</b><br/>Реконструкція та перевірка анкерів"]
+    L5 --> DEC{"<b>Операційне рішення</b><br/>(Qualification Decision)"}
+
+    DEC -->|"Інваріанти збережено"| SC["STRUCTURALLY CLEAR"]
+    DEC -->|"Анкер відновлено"| VR["VERIFY_REPAIRED"]
+    DEC -->|"Нерозв'язна колізія"| RD["REDESIGN"]
+    DEC -->|"Критичний дефект"| RJ["REJECT"]
+
+    L3 -.->|"контроль валідності"| M5["Module 5.0<br/>(зовнішній контролер)"]
+
+    classDef lay fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef gate fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef ok fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
+    classDef warn fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
+    classDef err fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#b71c1c;
+    classDef ext fill:#ede7f6,stroke:#512da8,stroke-width:1px,color:#311b92;
+
+    class L1,L2,L3,L4,L5 lay;
+    class DEC gate;
+    class SC ok;
+    class VR gate;
+    class RD warn;
+    class RJ err;
+    class M5 ext;
+```
+
+Функціональне призначення шарів конвеєра:
+
+1. **Layer 1 (Structural ordering):** встановлює, як саме впорядкування та взаємне розташування навчальних пар контролює поведінку моделі в режимі жорсткого дефіциту даних (*low-data regime*);
+2. **Layer 2 (Behavioral regimes):** визначає налаштовувані операційні режими моделі в умовах стресу від технічних та логічних суперечностей;
+3. **Layer 3 (Representation diagnostics):** здійснює діагностичне зондування латентного простору репрезентацій. Зовнішній контролер валідності (*Module 5.0*) явно моделює структурне вузьке місце (*structural bottleneck*) між представленням і доменом виводу;
+4. **Layer 4 (Output failure taxonomy):** формалізує класифікацію структурних деформацій на рівні виходу (втрата знака, спотворення числових коефіцієнтів, термінологічний зсув);
+5. **Layer 5 (Bounded structural repair):** забезпечує класоорієнтовану детекцію та детерміноване відновлення пошкоджених анкерів із винесенням остаточного кваліфікаційного вердикту.
+
+Система не покладається на суб'єктивну оцінку якості («чи гарно звучить формулювання»). Її кінцевий результат — не перефразований текст, а типізоване операційне рішення: допуск (`STRUCTURALLY CLEAR`), контрольний допуск після ремонту (`VERIFY_REPAIRED`), вимога зміни формулювання (`REDESIGN`) або відхилення (`REJECT`).
 
 ## 11. Прозорий інджест сирих знань: подолання бар'єра недовіри та інтерактивна візуалізація
 
@@ -893,6 +970,8 @@ flowchart TD
 31. <a id="src-31"></a>Sewon Min, Kalpesh Krishna, Xinxi Lyu, Mike Lewis та ін. [*FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation*](https://aclanthology.org/2023.emnlp-main.741/). *Proceedings of EMNLP 2023*.
 32. <a id="src-32"></a>Tianyu Gao, Howard Yen, Jiatong Yu, Danqi Chen. [*Enabling Large Language Models to Generate Text with Citations*](https://aclanthology.org/2023.emnlp-main.398/). *Proceedings of EMNLP 2023*.
 33. <a id="src-33"></a>B. Efron. [*Bootstrap Methods: Another Look at the Jackknife*](https://doi.org/10.1214/aos/1176344552). *The Annals of Statistics*, 7(1), 1–26, 1979.
+34. <a id="src-34"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
+35. <a id="src-35"></a>Yurii Kuzmenko, Olena Trofimova. [*TRIZ-Aware Regularization for Invariant-Preserving Neural Machine Translation in Metrological and Scientific Domains (v1.0)*](https://doi.org/10.5281/zenodo.17430949). Zenodo, 2025.
 
 ---
 
