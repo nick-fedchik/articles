@@ -42,6 +42,15 @@ Keines dieser Werkzeuge entbindet den Ingenieur von der formalen Verantwortung. 
 2. **Verschärfung regulatorischer Vorgaben:** Der EU Artificial Intelligence Act (Verordnung (EU) 2024/1689 [[4]](#src-4)), FDA-Richtlinien für klinische Entscheidungssysteme [[5]](#src-5)) und Sicherheitsstandards (ISO 26262 [[6]](#src-6), DO-178C) fordern gesetzlich lückenlose Rückverfolgbarkeit, Determinismus und menschliche Überprüfbarkeit.
 3. **Krise des institutionellen Gedächtnisses:** Industrieanlagen und Fahrzeugplattformen werden über Jahrzehnte betrieben, während Entwicklungsteams alle paar Jahre wechseln. Expertensysteme stellen das einzige Verfahren dar, um ingenieurtechnische Erfahrung als prüfbare, ausführbare Wissensartefakte dauerhaft zu bewahren.
 
+> [!NOTE]
+> **Analytische Schlussfolgerung des Autors: Drei Faktoren der Wissenskrise und der epistemische Vorteil evidenzbasierter Systeme**  
+> Nach Analyse des Autors wird die Notwendigkeit des Übergangs zu evidenzbasierten Expertensystemen durch drei kritische Faktoren bestimmt:
+> 1. **Entwertung plausiblen Textes und Verifikationsasymmetrie:** Generative neuronale Netze erzeugen überzeugende Texte in Millisekunden, doch deren Expertenprüfung durch den Menschen erfordert mehr Zeit als das eigenständige Ableiten aus Primärquellen.
+> 2. **Gesetzlicher Determinismus-Imperativ:** Internationale Standards und Regularien (EU AI Act 2024/1689, ISO 26262 ASIL-D, FDA CDS, DO-178C) verpflichten rechtlich zu lückenloser Rückverfolgbarkeit und schrittweiser Auditierbarkeit jedes Urteils.
+> 3. **Krise des institutionellen Gedächtnisses:** Die Lebensdauer komplexer technischer Systeme (Jahrzehnte) übersteigt die Verweildauer von Fachkräften, wodurch das Expertensystem zum einzigen Mittel wird, ingenieurtechnische Erfahrung als ausführbare Regeln dauerhaft zu bewahren.
+> 
+> *Epistemischer Vorteil:* Im Gegensatz zur Websuche (die das Schließen dem Menschen überlässt) und Sprachmodellen (die zu Halluzinationen neigen) gestaltet ein evidenzbasiertes System die Deduktion deterministisch, transparent und anhand von Primärquellen nachprüfbar.
+
 ---
 
 ## 2. Definition und epistemisches Wesen: Was ist ein Expertensystem <a id="definition-expertensysteme"></a><a id="документ-не-дорівнює-знанню"></a>
@@ -72,6 +81,20 @@ Dabei müssen drei Begrifflichkeiten scharf getrennt werden:
 * **Expertise:** Die Gesamtheit des verifizierten Fachwissens und die Fähigkeit, begründete Empfehlungen abzuleiten.
 * **Autorität (Entscheidungsgewalt):** Das formale Recht, eine bindende Entscheidung zu treffen (etwa eine Systemfreigabe zu erteilen), was stets einem Menschen vorbehalten bleibt.
 * **Evidenz (Beleg):** Ein unveränderliches Primärdokument mit kryptografisch gesicherter Byte-Grenze, das im Zuge des Schließens nicht verfälscht werden kann.
+
+> [!NOTE]
+> **Theoretische Definition des Autors: Drei Demarkationssäulen und die Verantwortungstriade**  
+> Die vom Autor formulierte Definition eines evidenzbasierten Expertensystems zieht eine strenge Grenze zu prozeduralem Code und generativen Modellen anhand von:
+> 
+> *Drei unverletzliche Demarkationssäulen:*
+> 1. **Vollständige Wissensexplizitheit:** Deklarative Entkopplung der Wissensbasis vom Inferenzcode (Regeln, Ontologien, Beschränkungen).
+> 2. **Schrittweise Erklärbarkeit (Explainability):** Obligatorische Konstruktion von Beweisgraphen und Bereitstellung eines Prüfpfads der Prämissen für jede Antwort.
+> 3. **Schleuse der garantierten Verweigerung (Fail-Closed Gate):** Strikte Einhaltung der Kompetenzgrenzen; bei Unvollständigkeit oder Widersprüchen — deterministische typisierte Verweigerung (`REFUSAL`/`CLARIFICATION`, $ZHR = 1,00$).
+> 
+> *Die Verantwortungstriade:*
+> * **Expertise:** Algorithmische Berechnung und Synthese verifizierter Empfehlungen durch das Rechensystem.
+> * **Autorität (Entscheidungsgewalt):** Das ausschließliche rechtliche Mandat und die Verantwortung des Menschen für die verbindliche Entscheidung.
+> * **Evidenz (Belegbarkeit):** Unveränderliche bytegenaue Sicherung der Primärquellen (`byte_start`, `byte_end`, `quote_sha256`).
 
 ---
 
@@ -138,6 +161,14 @@ Zu den unverletzlichen Architekturinvarianten gehören:
   - *Deterministische symbolische Inferenzmaschinen (System 2):* Sind ausschließlich für die **normative Zulässigkeit (Eligibility)** zuständig (strikte Regelprüfung, Verifikation von Sicherheitsinvarianten, unbedingtes Vetorecht). Kein statistisches Modell besitzt die Vollmacht, eine sicherheitskritische Aktion eigenständig zu autorisieren.
 * **Bytegenaue Evidenzsicherung (Evidence Custody):** Jedes atomare Teilergebnis in der Wissensbasis des Expertensystems muss auf eine wörtliche Primärquellenstelle mit exakten Byte-Grenzen `[byte_start, byte_end]` und SHA-256-Prüfsumme zurückgeführt werden. Ein Urteil ohne Byte-Verankerung kann vom Expertensystem mathematisch nicht erzeugt werden.
 * **Fail-Closed-Prinzip:** Bei unvollständigen, widersprüchlichen oder fehlenden Fakten verweigert das Expertensystem deterministisch die Freigabe (`REFUSAL`), wodurch eine kompromisslose Null-Halluzinationsrate ($ZHR = 1,00$) gesichert wird.
+
+> [!NOTE]
+> **Ingenieurmodell des Autors: Vier evidenzbasierte Architekturinvarianten (Evidence-Grounded Invariants)**  
+> Nach Ansicht des Autors wird die Zuverlässigkeit kritischer Expertensysteme durch die strikte Einhaltung von vier Architekturinvarianten garantiert:
+> 1. **Orthogonalität von Wissen und Inferenzmaschine:** Die universelle deterministische Inferenzmaschine ist vollständig von der deklarativen Wissensbasis isoliert; Regeländerungen erfolgen ohne Neukompilierung des Softwarekerns.
+> 2. **Neuro-symbolische Aufgabenteilung (Relevance versus Eligibility):** Modelle des maschinellen Lernens sind ausschließlich für Heuristik und Relevanz zuständig (Kandidatensuche, Intent-Erkennung), während der symbolische Kern die normative Zulässigkeit autonom sichert und ein unbedingtes Vetorecht besitzt.
+> 3. **Bytegenaue Evidenzsicherung (Evidence Custody):** Jedes atomare Teilergebnis ist über exakte Byte-Grenzen `[byte_start, byte_end]` und einen kryptografischen Prüfwert `sha256` fest an Primärquellen verankert.
+> 4. **Fail-Closed-Sicherheitsprinzip:** Bei jeglicher Unvollständigkeit, Widersprüchlichkeit oder fehlendem Wissen verweigert das System deterministisch die Freigabe (`REFUSAL`) und sichert eine Null-Toleranz für Halluzinationen ($ZHR = 1,00$).
 
 ---
 
@@ -254,6 +285,12 @@ Die Zukunft evidenzbasierter Expertensysteme entsteht an der Schnittstelle von d
    Ähnlich wie GPUs und NPUs für Matrixoperationen optimiert sind, wandert die Inferenzlogik moderner Expertensysteme direkt in Silizium (FPGA und ASICs). Befehle für Faktenabgleich, Ontologieprüfung und SHA-Berechnung laufen in festen Taktzyklen (Pipeline-Latenz $\le 80$ ns) direkt in harten Echtzeitschleifen.
 2. **Mathematische Beweiszeugen (Automated Proof Witnesses):**  
    Kopplung von Inferenzsystemen mit interaktiven Theorembeweisern (**Lean 4**, **Coq**) und SMT-Solvern (**Z3**). Das Expertensystem liefert nicht bloß Fließtext, sondern ein kryptografisch signiertes Nachweispaket, das von unabhängigen Minimal-Checkern verifiziert werden kann.
+
+> [!NOTE]
+> **Ingenieurkonzept des Autors: Epistemische Prozessoren (EPU) und formale Beweiszeugen**  
+> Das vom Autor vorgeschlagene zukunftsweisende Ingenieurkonzept basiert auf zwei sich ergänzenden Komponenten:
+> 1. **Silizium-basierte Wissensprozessoren (Epistemic Processing Units, EPU):** Direkte Hardware-Implementierung der Inferenzpipeline in FPGA/ASIC mit deterministischer fester Latenz ($\le 80$ ns), was symbolische Sicherheitszensoren in harten Echtzeitschleifen ermöglicht.
+> 2. **Automatisierte Beweiszeugen (Automated Proof Witnesses):** Nahtlose Integration der Inferenzmaschine mit interaktiven Theorembeweisern (Lean 4) und SMT-Solvern (Z3) zur Erzeugung kryptografisch signierter, maschinenprüfbarer Beweiszerifikate für jedes gefällte Urteil.
 
 ---
 

@@ -109,6 +109,26 @@ Diese Begriffsbestimmung ergänzt Kapitel 1. Im Abschnitt [„Dokument ist nicht
 
 Die Gesamtheit dieser Kriterien bezeichnen wir als **epistemischen Kontrakt** (abgeleitet vom griechischen *epistēmē*, Wissen). Der Begriff des Kontrakts ist an Bertrand Meyers Paradigma des „Design by Contract“ angelehnt, bei dem Softwarekomponenten verbindliche Vor- und Nachbedingungen für Funktionsaufrufe deklarieren [[3]](#src-3). Der epistemische Kontrakt fungiert analog – jedoch nicht für Funktionen, sondern für Wissensaussagen.
 
+> [!NOTE]
+> **Epistemologisches Modell des Autors: Prozedurale Definition von Maschinenwissen und epistemischer Vertrag**  
+> Im Gegensatz zu abstrakten philosophischen Erkenntniskonzepten (JTB) entwickelt der Autor eine prozedurale Definition von Maschinenwissen und das Konzept des epistemischen Vertrags:
+> 
+> *Fünf obligatorische Attribute von Expertensystemwissen:*
+> 1. **Version:** Eindeutige Revisionskennung des Objekts und der autoritativen Quelle.
+> 2. **Prüfbare Begründung:** Bytegenaue Verankerung in Primärquellen oder metrologisch zertifizierten Messungen.
+> 3. **Gültigkeitszeitraum:** Explizite zeitliche Gültigkeitsintervalle (Valid Time und Transaction Time).
+> 4. **Anwendungsbereich:** Strikte Randbedingungen und funktionale Grenzen.
+> 5. **Herkunfts-Audit (Provenance):** Vollständige, maschinell rückverfolgbare Entstehungs- und Verifikationshistorie.
+> 
+> *Sieben Ingenieurprüfungen des epistemischen Vertrags:*
+> 1. *Epistemologie:* Prüfung von Beweisführung, Herkunft und Abwesenheit von Defeatern.
+> 2. *Ontologie:* Validierung stabiler Objekt-URIs und dimensionskonsistenter SI-Einheiten.
+> 3. *Logik:* Verifikation von wiederholbaren Beweispfaden und Widerspruchsfreiheit.
+> 4. *Sprachphilosophie:* Erkennung von Nutzerabsicht, Objektbindung und deontischer Modalität.
+> 5. *Hermeneutik:* Kontextuelle Rekonstruktion normativer Fenster (Überschriften, Definitionen, Fußnoten).
+> 6. *Wissenschaftstheorie:* Einhaltung empirischer Messprotokolle, Messunsicherheiten und Annahmekriterien.
+> 7. *Soziale Epistemologie:* Prüfung von Freigabelabeln im Sicherheitsverband, Gutachtermandaten und Audit-Trails.
+
 Die Bedingungen des Kontrakts lassen sich zweckmäßig entlang von sieben philosophischen Kerndisziplinen strukturieren. Jede Disziplin richtet eine fundamentale Frage an die Aussage, und jede Frage korrespondiert mit einer handfesten ingenieurtechnischen Implementierung:
 
 | Disziplin | Prüffrage an die Wissensaussage | Was das Expertensystem speichert | Typischer Fehler im 95-°C-Beispiel |
@@ -260,6 +280,17 @@ $$
 $$
 
    Da $`1{,}75 \ge 1{,}00`$, übersteigt die relationale Bindungskraft der Ausnahme W-17 im definierten Kontext (Revision B, Prüfstand R-4) das allgemeine Verbot. Das System erteilt die bedingte Zulassung `ACCEPT_CONDITIONAL`. Bei einem Wechsel auf den unzertifizierten Prüfstand R-2 entfällt die Gültigkeit von W-17 ($`w(r_1) = 0`$), was zu $`\mathrm{Rank}_{\mathrm{rel}} = \frac{6}{8} = 0{,}75 < 1{,}00`$ und einer sofortigen Schutzverweigerung `REFUSAL` führt.
+
+> [!NOTE]
+> **Relationales mathematisches Modell des Autors: Hayekscher Rang und Schwellenübergänge im Klassifikationsverband**  
+> Basierend auf Friedrich Hayeks Theorie der sensorischen Ordnung formalisiert der Autor den relationalen Rang eines Fakts $\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = \frac{\sum w(r)}{1 + \sum w(d)}$:
+> 
+> *Drei deterministische Schwellenzustände des Zulassungsgateways:*
+> 1. $\mathrm{Rank}_{\mathrm{rel}} = 0$: Das Faktum ist unbegründet (`UNGROUNDED_ATOM`); sofortige Schutzverweigerung (`REFUSAL`).
+> 2. $0 < \mathrm{Rank}_{\mathrm{rel}} < 1{,}00$: Vorliegen unvollständiger Belege oder aktiver Defeater; Eskalation an Experten (`QUALIFIED`).
+> 3. $\mathrm{Rank}_{\mathrm{rel}} \ge 1{,}00$: Ausreichende relationale Bindungskraft ohne blockierende Defeater; automatische Zulassung zur Unifikation im Beweisbaum (`ACCEPT`).
+> 
+> Die Berechnung erfolgt über CSR-Adjazenzmatrizen ($M_{\mathrm{CSR}} \approx 3{,}2\,\text{MB}$ für 50.000 Fakten), die vollständig im L3-Cache des Prozessors Platz finden und Latenzen von $T_{\mathrm{rank}} \le 180\,\text{ns}$ garantieren.
 
 ## 6. Ontologische Identifikation: Überwindung semantischer Homonymie und Kontextbeschränkungen
 
@@ -417,6 +448,17 @@ Angenommen, für W-17 existieren zwei Versionen. Version 1: $I_v=[\text{01.07.},
 
 Die Diskrepanz zwischen beiden Abfragen dokumentiert transparent: Das System handelte auf Basis von Daten, die nachträglich korrigiert wurden, und legt sekundengenau offen, wann diese Korrektur erfolgte. Zur formalen Modellierung bietet W3C OWL-Time ein standardisiertes Vokabular für Zeitintervalle [[8]](#src-8). Wie Ingestion-Pipelines beide Zeitachsen automatisiert extrahieren, behandelt [Kapitel 10](ch10-knowledge-acquisition-systems.md).
 
+> [!NOTE]
+> **Bitemporales mathematisches Modell des Autors: Bitemporaler Abtastoperator und Arbitrierung von Kardinalitätsstufen**  
+> Zur formalen Modellierung des epistemischen Status von Fakten in der Zeitachse führt der Autor den bitemporalen Abtastoperator ein:
+> 
+> $$K(t_v, t_s) = \{\, c \in \mathcal{KB} \mid t_v \in I_v(c) \wedge t_s \in I_s(c) \,\}$$
+> 
+> *Drei deterministische Kardinalitätsstufen des Operators:*
+> 1. $|K(t_v, t_s)| = 0$: Keine normative Abdeckung zum Systemzeitpunkt $t_s$ für $t_v$; Übergang in sichere Enthaltung (*Fail-Closed Abstention*).
+> 2. $|K(t_v, t_s)| = 1$: Genau eine unbestreitbare Festlegung aktiv; Übergang zur Geltungsbereichsprüfung ($\mathrm{Applicable}$).
+> 3. $|K(t_v, t_s)| > 1$: Normenkollision; Weiterleitung an die parakonsistente Schlichtung.
+
 ### 6.2. Verifikation der Anwendbarkeit: Bewertung des Geltungsbereichs einer Aussage <a id="чи-застосовне-твердження-до-запиту"></a>
 
 Die Ausnahmegenehmigung W-17 existiert, ist bitemporal gültig und inhaltlich wahr – ihr Geltungsbereich ist jedoch eng limitiert: Revision B, Prüfstand R-4 und ein festes Zeitfenster. Die Anfrage „Zulässig bei 95 °C?“ nennt weder Revision noch Prüfstand oder Datum. Das System muss evaluieren, ob W-17 anwendbar ist, und darf fehlende Parameter keinesfalls heuristisch erraten.
@@ -447,6 +489,21 @@ Das Prädikat wird vor dem Aufbau des Beweisbaums evaluiert. Abhängig vom Resul
 - **$\mathrm{Applicable} = \mathbf{T}$:** Die Aussage ist uneingeschränkt anwendbar und wird als aktive Prämisse in den Resolutionsprozess eingespeist.
 - **$\mathrm{Applicable} = \mathbf{F}$:** Die Aussage wird verworfen. Das System erzeugt einen Audit-Eintrag mit Angabe des verletzten Konjunkts (z. B.: *„Abgewiesen wegen Scope-Fehlschlag: Modulrevision C ist inkompatibel mit Revision B gemäß Genehmigung W-17“*).
 - **$\mathrm{Applicable} = \mathbf{U}$:** Das System stoppt die automatische Inferenz und generiert eine strukturierte Präzisierungsanfrage (`ClarificationRequest`). Diese spezifiziert exakt die fehlenden Parameter (*„Bitte geben Sie die Modulrevision und die Prüfstandsnummer an“*). Jede unzulässige probabilistische Extrapolation wird blockiert.
+
+> [!NOTE]
+> **Formale Methodik des Autors: Anwendbarkeitsprädikat in starker Kleene-Logik $\mathbb{K}_3$**  
+> Der Autor formalisiert die Zulassung eines Kandidatenfakts zur Inferenz durch ein fünfgliedriges Prädikat in dreiwertiger Kleene-Logik:
+> 
+> $$\mathrm{Applicable}(c,q,t_v,t_s) = \mathrm{Scope} \wedge \mathrm{Valid} \wedge \mathrm{Known} \wedge \mathrm{Units} \wedge \mathrm{Identity}$$
+> 
+> *Fünf Konjunkte des Prädikats:*
+> 1. $\mathrm{Scope}(c,q) \in \{\mathbf{T}, \mathbf{F}, \mathbf{U}\}$: Verträglichkeit der Umgebungs- und Prüfparameter.
+> 2. $\mathrm{Valid}(c,t_v) \in \{\mathbf{T}, \mathbf{F}\}$: Gültigkeit zur materiellen Zielzeit $t_v$.
+> 3. $\mathrm{Known}(c,t_s) \in \{\mathbf{T}, \mathbf{F}\}$: Erfassung im System zur Transaktionszeit $t_s$.
+> 4. $\mathrm{Units}(c,q) \in \{\mathbf{T}, \mathbf{F}\}$: Physikalische Dimension und SI-Konvertierbarkeit.
+> 5. $\mathrm{Identity}(c,q) \in \{\mathbf{T}, \mathbf{F}, \mathbf{U}\}$: Eindeutigkeit des Referenzobjekts (URI/UUID).
+> 
+> Ergibt die starke Kleene-Konjunktion $\mathbf{U}$, wird die Inferenz unterbrochen und eine typisierte Klärungsanfrage (`ClarificationRequest`) generiert.
 
 <details>
 <summary>Go-Implementierung: Dreiwertige Auswertung der Anwendbarkeit von W-17</summary>
@@ -595,6 +652,16 @@ Der Vektor $V(c)$ wird vor der Urteilssynthese berechnet. Das System steuert den
 3. **$V(c) = (1, 1)$ [Zustand $\mathbf{B}$ - Both / Widerspruch]:** Lokalisierter Normenkonflikt. Das System kollabiert nicht, sondern aktiviert ein Dung-Argumentationsframework [[14]](#src-14). Greift eine definierte Prioritätsregel (z. B. *Lex Specialis Derogat Legi Generali* – die spezifischere Ausnahmegenehmigung bricht die allgemeine Norm), wird der Konflikt deterministisch aufgelöst. Fehlt eine solche Regel, eskaliert das System an den Menschen (*Human-in-the-Loop*) und legt die kollidierenden Argumentationsstränge offen.
 4. **$V(c) = (0, 0)$ [Zustand $\mathbf{N}$ - None / Unbekannt]:** Epistemisches Vakuum. Das System geht in die sichere Enthaltung über (*Abstention*).
 
+> [!NOTE]
+> **Parakonsistentes Modell des Autors: Belnap-Vektor-Routing und Schutz vor Informationskollaps**  
+> Der Autor formalisiert den Konfliktzustand der Wissensbasis durch den zweidimensionalen Belnap-Evidenzvektor $V(c) = (P(c), N(c)) \in \{0, 1\}^2$ im Raum $\mathcal{B}_4$:
+> 
+> *Vier Quadranten des Systemroutings:*
+> 1. $V(c) = (1, 0)$ [Zustand $\mathbf{T}$]: Unstrittige normative Bestätigung; Übernahme in den Beweisbaum.
+> 2. $V(c) = (0, 1)$ [Zustand $\mathbf{F}$]: Eindeutige Widerlegung; begründete Verweigerung.
+> 3. $V(c) = (1, 1)$ [Zustand $\mathbf{B}$]: Lokalisierter Widerspruch; Schutz vor *Ex Falso Quodlibet*, Aktivierung von Dung-Argumentationsgraphen und Prioritätsregeln (*Lex Specialis*); bei Unauflösbarkeit Eskalation an den Menschen.
+> 4. $V(c) = (0, 0)$ [Zustand $\mathbf{N}$]: Informationsdefizit; deterministischer Übergang in sichere Enthaltung (*Fail-Closed Abstention*).
+
 Das folgende Diagramm illustriert das Zusammenspiel der Argumente.
 
 ```mermaid
@@ -693,6 +760,21 @@ Parameter und Wertebereiche:
 
 Praktische Anwendung und ingenieurtechnische Konsequenzen:
 Die Konstruktion von $W(e)$ erfolgt beim Ingestion-Parsing. Fehlt eine Begriffsdefinition oder ist ein Querverweis tot ($\mathrm{Refs}_k(e) = \emptyset$ trotz Verweis), stuft das System das Vertrauensniveau herab und markiert die Regel als „bedingt definiert“, was eine automatische Nutzung für ASIL-D-Entscheidungen blockiert. Der kryptografische Hashwert $\mathrm{SHA\text{-}256}(W(e))$ wird im Zertifikat der Entscheidung registriert.
+
+> [!NOTE]
+> **Hermeneutisches Modell des Autors: Erweitertes Beweisfenster und kryptografischer Abschluss normativer Fragmente**  
+> Der Autor formalisiert die kontextuelle Integrität eines normativen Zitats durch den deterministischen Abschlussoperator des Evidenzfensters:
+> 
+> $$W(e) = e \cup \mathrm{Headings}_d(e) \cup \mathrm{Definitions}(e) \cup \mathrm{TableContext}(e) \cup \mathrm{Refs}_k(e)$$
+> 
+> *Fünf hermeneutische Dimensionen des Operators:*
+> 1. $e$: Primäres Textsegment mit unveränderlichen Byte-Grenzen $[b_{\text{start}}, b_{\text{end}}]$.
+> 2. $\mathrm{Headings}_d(e)$: Hierarchischer Pfad übergeordneter Abschnitte bis zur Tiefe $d \le 5$.
+> 3. $\mathrm{Definitions}(e)$: Normative Begriffsdefinitionen der im Zitat enthaltenen Fachtermini.
+> 4. $\mathrm{TableContext}(e)$: Tabellentitel, Spaltenköpfe und Anmerkungen.
+> 5. $\mathrm{Refs}_k(e)$: Graph normativ verknüpfter Dokumentstellen bis zur Tiefe $k \le 2$.
+> 
+> Das erweiterte Fenster $W(e)$ wird durch einen kryptografischen Hashwert $\mathrm{SHA\text{-}256}(W(e))$ versiegelt, was isoliertes Zitieren ohne normativen Kontext systematisch ausschließt.
 
 Das folgende Diagramm zeigt den Weg von der Anfrage zum Evidenzfenster.
 
@@ -946,6 +1028,15 @@ Praktische Anwendung und ingenieurtechnische Konsequenzen:
 3. Bei Diskrepanzen löst das System einen Integritätsalarm aus und geht in den Fail-Safe-Zustand.
 4. Grenze des Modells: Die Kette detektiert Modifikationen, schützt jedoch nicht vor der Kompromittierung des schreibenden Prozesses selbst. Daher empfiehlt der Autor den Einsatz von Hardware-Sicherheitsmodulen (HSM/TPM) und das periodische externe Timestamping (RFC 3161) [[29]](#src-29).
 
+> [!NOTE]
+> **Sicherheitsmodell des Autors: Revisionssicheres kryptografisches Audit per Hash-Kette und Hardware-Notarisierung**  
+> Gestützt auf die Prinzipien des kryptografischen Audits von Bruce Schneier und John Kelsey entwickelt der Autor ein dreistufiges Protokoll zur Protokollintegrität:
+> 
+> *Drei Stufen der Revisionssicherheit:*
+> 1. **Rekurrentes Zustandshashing:** Berechnung der Kette $h_i = H(h_{i-1} \parallel \mathrm{canon}(e_i))$, wobei $H \in \{\text{SHA-256}, \text{SHA3-256}\}$ und $\mathrm{canon}(e_i)$ die deterministische Serialisierung nach RFC 8785 darstellt, was jede unbemerkte Manipulation historischer Ereignisse ausschließt.
+> 2. **Transaktionale WORM-Speicherung:** Synchrones Schreiben des Tupels $(i, \mathrm{canon}(e_i), h_i)$ auf WORM-Speichermedien (*Write Once, Read Many*); die Transaktion gilt erst nach physischer Schreibbestätigung als committet.
+> 3. **Hardware-Notarisierung:** Digitale Signierung durch Hardware-Sicherheitsmodule (HSM/TPM) und periodische externe Verankerung von Hash-Meilensteinen nach RFC 3161 zur lückenlosen Beweisbarkeit im Streitfall.
+
 ## 12. Formales Kriterium des Rechts auf Behauptung (Entitlement to Assert)
 
 Die vorangegangenen Abschnitte haben sieben Prüffelder etabliert. Der Anwender benötigt jedoch eine eindeutige Antwort anstelle von sieben Einzelberichten. Das System erfordert eine geschlossene Entscheidungslogik, die festlegt, wann geantwortet, präzisiert, eskaliert oder verweigert wird.
@@ -1025,6 +1116,22 @@ Praktische Anwendung und ingenieurtechnische Konsequenzen:
 3. Bei $\mathrm{Authorized} = \mathbf{False}$ erfolgt sofort eine neutrale Verweigerung (`DENY_ACCESS`) ohne Metadatenleckage.
 4. Bei $\mathrm{Applicable} = \mathbf{Unknown}$ oder $\mathrm{Resolved} = \mathbf{False}$ generiert das System eine strukturierte Präzisierungsanfrage (`CLARIFICATION_REQUIRED`) oder eskaliert an einen menschlichen Fachexperten.
 5. Bei Verletzung von $\mathrm{Schema}$, $\mathrm{Replay}$ oder $\mathrm{Risk}$ wird die Aussage verworfen, eine fundierte Fehlermeldung protokolliert und ein Security-Audit-Ereignis ausgelöst. Heuristische Zuversicht eines neuronalen Netzes kann diese Kriterien niemals kompensieren.
+
+> [!NOTE]
+> **Erkenntnistheoretisches Entscheidungsmodell des Autors: Kriterium des Rechts auf Behauptung (Entitlement to Assert)**  
+> Der Autor formalisiert das finale Sicherheitsgateway der Urteilsveröffentlichung durch ein sechsgliedriges boolesches Prädikat:
+> 
+> $$\mathrm{Answerable}(g,u,q,t_v,t_s) = \mathrm{Schema} \wedge \mathrm{Applicable} \wedge \mathrm{Replay} \wedge \mathrm{Resolved} \wedge \mathrm{Authorized} \wedge \mathrm{Risk}$$
+> 
+> *Sechs konstitutive Konjunkte des Urteilsrechts:*
+> 1. $\mathrm{Schema}(g)$: Vollständige syntaktische und typologische Validität der Aussage.
+> 2. $\mathrm{Applicable}(g,q,t_v,t_s)$: Dreiwertige Passung bezüglich Kontext, Zeit, Einheiten und Objektidentität.
+> 3. $\mathrm{Replay}(g)$: Deterministische Reproduzierbarkeit des Beweispfades auf unveränderlichen Datenständen.
+> 4. $\mathrm{Resolved}(g)$: Widerspruchsfreiheit bzw. formale Auflösung normativer Kollisionen im Dung-Graphen.
+> 5. $\mathrm{Authorized}(u,g)$: Autorisierung des Benutzers nach dem Sicherheitsverbandsmodell von Dorothy Denning.
+> 6. $\mathrm{Risk}(g,q)$: Konformität mit der Sicherheits- und Risikopolitik (ASIL/SIL).
+> 
+> Erst bei simultanem Vorliegen aller sechs Bedingungen ($\mathrm{Answerable} = \mathbf{True}$) wird ein Urteil freigegeben; andernfalls schaltet das System in eine typisierte Verweigerung oder Präzisierung (*Fail-Closed Gate*).
 
 Die folgende Tabelle illustriert die Auswertung für vier typische Varianten der 95-°C-Anfrage:
 
@@ -1150,6 +1257,13 @@ Theoretische Vorgaben der Erkenntnistheorie entfalten in der Ingenieurpraxis ers
 
 3. **Regelbasierte Inferenzinvariante (Rule-Based Reasoning Invariant):**  
    Die Beschlussfassung erfolgt ausschließlich über transparente Regeln der Prädikatenlogik und formale Syllogismen im symbolischen Kern. Sprachmodelle agieren rein assistiv – zur Absichtsklassifikation, Textnormalisierung oder Entitätsextraktion –, besitzen jedoch keinerlei Autonomie, Hypothesen eigenmächtig zu Fakten zu erheben oder Entscheidungen am logischen Resolver vorbei zu treffen.
+
+> [!NOTE]
+> **Ingenieurtriade des Autors: Systemische Evidenzinvarianten ($ZHR = 1{,}00$, $FCP = 100\%$, Rule-Based Reasoning)**  
+> Der Autor formuliert und formalisiert eine Triade unverletzlicher architektonischer Evidenzinvarianten:
+> 1. **Bytegenaue Evidenzinvariante (Evidence-Grounded Invariant):** Jede affirmative Aussage muss über unveränderliche Byte-Offsets (`[byte_start, byte_end]`, `quote_sha256`) bitgenau in der Primärquelle verankert und vor der Ausgabe durch ein isoliertes Gateway verifiziert werden ($ZHR = 1{,}00$).
+> 2. **Fail-Closed-Schleuse (Fail-Closed Gate Invariant):** Bei unvollständiger Faktenlage, Geltungsbereichsüberschreitung oder ungelösten Normenkollisionen schaltet das System in eine determinierte typisierte Verweigerung (`refusal`, `clarification`, `abstention`) mit vollständiger Blockierungspräzision ($FCP = 100\%$).
+> 3. **Regelbasierte Inferenzinvariante (Rule-Based Reasoning Invariant):** Urteile werden ausschließlich durch den symbolischen Kern mittels Prädikatenlogik gefällt; Sprachmodelle sind von normativen Entscheidungen strikt ausgeschlossen.
 
 Diese Invarianten sind empirisch falsifizierbar. Zu ihrer Validierung nutzt man normative Ingenieurkorpora – etwa W3C-Spezifikationen (HTML5, DOM) oder IETF-RFCs. Diese Dokumente eignen sich ideal: Sie nutzen eine strikte modale Semantik (RFC 2119), verfügen über transparente Versionierung (*Obsoletes*, *Updates*) und verzeihen keine erfundenen Parameter. Im Gegensatz zu reinen RAG-Pipelines verankert ein evidenzbasiertes System jede Behauptung unlösbar in den Primärdaten.
 

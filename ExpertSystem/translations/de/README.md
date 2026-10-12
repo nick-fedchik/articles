@@ -50,45 +50,60 @@ Die Monographie bündelt die Forschungs- und Entwicklungsleistungen des Autors i
 
 ### 1. Grundlegende theoretische Entwicklungen und mathematische Formalismen
 
-1. **Invariante byteweiser Beweisbarkeit (EGI) und Faktenverankerungs-Gateway ([Kapitel 2](ch02-epistemology-of-machine-knowledge.md), [19](ch19-from-question-to-evidence.md), [28](ch28-dual-mode-expert-systems.md), [29](ch29-neuro-symbolic-architecture.md)):**
-   * *Theoretisches Konzept:* Der Autor formalisiert die Verankerungsvollständigkeits-Invariante $\mathrm{Comp}(C) = 1{,}00$: Keine Aussage erlangt Faktenstatus ohne deterministische Projektion auf Primärquellen. Jedes Faktum ist durch ein kryptographisches Tupel geschützt: unveränderliche Byte-Koordinaten `[byte_start, byte_end]`, Fragment-Hash `quote_sha256` und PROV-O-Herkunftszertifikat.
-   * *Ingenieurtechnische Wirkung:* Das byteweise Zulassungsgateway verhindert das Eindringen neuronaler Halluzinationen in die versionierte Wissensbasis ($ZHR = 1{,}00$).
-2. **Vierstufige Wissenstestpyramide (KTP) und Lipschitz-Stetigkeit des Logikraums ([Kapitel 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md)):**
+1. **Systemische Invarianten evidenzbasierter Systeme, Relevanz vs. Zulässigkeit und Fail-Closed-Architektur ([Kapitel 1](ch01-introduction-to-expert-systems.md), [2](ch02-epistemology-of-machine-knowledge.md), [19](ch19-from-question-to-evidence.md), [28](ch28-dual-mode-expert-systems.md), [29](ch29-neuro-symbolic-architecture.md)):**
+   * *Theoretisches Konzept:* Der Autor formuliert und formalisiert architektonische Evidenzinvarianten: Orthogonalität von Wissensbasis und Inferenzmaschine, neuro-symbolische Aufgabenteilung (Relevance vs. Eligibility: ML-Modelle ermitteln ausschließlich Relevanz, der deterministische Kern entscheidet über normative Zulässigkeit), lückenlose bytegenaue Primärquellen-Verwahrung (Evidence Custody) und Verankerungsvollständigkeit $\mathrm{Comp}(C) = 1{,}00$. Jedes Faktum ist durch ein kryptographisches Tupel gesichert: unveränderliche Koordinaten `[byte_start, byte_end]`, kanonischer Fragment-Hash `quote_sha256` und PROV-O-Herkunftszertifikat.
+   * *Ingenieurtechnische Wirkung:* Das hardware-/softwareseitige bytegenaue Einlassgateway schließt neuronale Halluzinationen in der versionierten Wissensbasis kategorisch aus ($ZHR = 1{,}00$) und sichert absolute Blockierungspräzision bei Verweigerungen ($\mathrm{FCP} = 100\%$).
+2. **Prozedurale Definition von Maschinenwissen, epistemischer Vertrag und Demarkationsprinzipien ([Kapitel 1](ch01-introduction-to-expert-systems.md), [2](ch02-epistemology-of-machine-knowledge.md)):**
+   * *Theoretisches Konzept:* Der Autor entwickelt eine prozedurale Definition von Maschinenwissen als atomare, versionierte Aussage mit verifizierbarem Beleg, Gültigkeitsintervall und Geltungsbereich. Es wird eine strikte Demarkation zwischen Kompetenz (algorithmische Fähigkeit), Befugnis (juristisches Entscheidungsrecht des Menschen) und Beweisbarkeit (bytegenaue Verwahrung) etabliert.
+   * *Ingenieurtechnische Wirkung:* Das Konzept des epistemischen Vertrags projiziert sieben klassische philosophische Disziplinen (Epistemologie, Ontologie, Logik, Sprachphilosophie, Hermeneutik, Wissenschaftstheorie, soziale Epistemologie) auf sieben deterministische technische Prüfschritte zur Faktenzulassung in der Inferenz.
+3. **Relationaler Faktenrang nach Hayek und bitemporaler Gültigkeitsoperator ([Kapitel 2](ch02-epistemology-of-machine-knowledge.md)):**
+   * *Theoretisches Konzept:* Ausgehend von Friedrich Hayeks *The Sensory Order* entwickelt der Autor einen mathematischen Operator des relationalen Faktenrangs $\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = \frac{\sum w(r)}{1 + \sum w(d)}$ mit Schwellenarbitrierung ($\tau_{\mathrm{rel}} = 1{,}00$), optimiert für CSR/BRAM-Speicherstrukturen mit Graphdurchlaufzeiten unter 180 ns.
+   * *Mathematischer Apparat:* Formalisierung des bitemporalen Abtastoperators $K(t_v, t_s) = \{\, c \in \mathcal{KB} \mid t_v \in I_v(c) \wedge t_s \in I_s(c) \,\}$ im Raum $\mathbb{T} \times \mathbb{T}$, der fachliche Gültigkeitszeit (Valid Time) von Systemerfassungszeit (Transaction Time) trennt und anhand der Kardinalität $|K|$ deterministisch schaltet.
+4. **Mehrwertige Anwendbarkeitsprüfung, parakonsistentes Routing und Kriterium des Rechts auf Behauptung ([Kapitel 2](ch02-epistemology-of-machine-knowledge.md)):**
+   * *Theoretisches Konzept:* Der Autor formalisiert ein fünfgliedriges Vektorprädikat $\mathrm{Applicable}(c,q,t_v,t_s)$ in dreiwertiger Kleene-Logik $\mathbb{K}_3$ zur Überführung von Informationslücken in typisierte Klärungsanfragen sowie ein Vier-Quadranten-Routing über den Belnap-Vektor $V(c) = (P(c), N(c)) \in \{0, 1\}^2$ zur Neutralisierung des Explosionsprinzips ($\text{Ex Falso Quodlibet}$) bei Normenkollisionen.
+   * *Mathematischer Apparat:* Sechsdimensionales algebraisches Kriterium des Rechts auf Urteilsabgabe $\mathrm{Answerable}(g,u,q,t_v,t_s) = \mathrm{Schema} \wedge \mathrm{Applicable} \wedge \mathrm{Replay} \wedge \mathrm{Resolved} \wedge \mathrm{Authorized} \wedge \mathrm{Risk}$, das als Fail-Closed-Gateway ungesicherte Ausgaben konservativ blockiert.
+5. **Deterministisches erweitertes Evidenzfenster und revisionssicheres kryptographisches Audit ([Kapitel 2](ch02-epistemology-of-machine-knowledge.md)):**
+   * *Theoretisches Konzept:* Konstruktive Lösung des hermeneutischen Zirkels durch ein deterministisches erweitertes Evidenzfenster $W(e) = e \cup \mathrm{Headings}_d(e) \cup \mathrm{Definitions}(e) \cup \mathrm{TableContext}(e) \cup \mathrm{Refs}_k(e)$ mit Parametertiefe $d \le 5, k \le 2$ und Integritätsversiegelung via Hash $\mathrm{SHA\text{-}256}(W(e))$.
+   * *Ingenieurtechnische Wirkung:* Formalisierung eines revisionssicheren Audit-Logs über Hash-Ketten $h_i = H(h_{i-1} \parallel \mathrm{canon}(e_i))$ mit kanonischer Serialisierung (RFC 8785), WORM-Speichern und Hardware-Kryptomodulen (HSM/TPM) zur Erfüllung von ISO 26262-8 und DO-178C.
+6. **Vierstufige Wissenstestpyramide (KTP) und Lipschitz-Stetigkeit des Logikraums ([Kapitel 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md)):**
    * *Theoretisches Konzept:* Übertragung der Software-Testpyramide auf Wissenssysteme: isolierte Regel-Modultests (KUT) mit Antezedenz-Mocks (`PremiseMock`), Integrationstests von Regelinteraktionen (KIT) und variationsanalytische Kalibrierung (KVT).
    * *Mathematischer Apparat:* Invariante gegen triviale Wahrheit ($P \to Q$ bei $P \equiv \text{False}$), semantischer Invarianzwert ($\mathrm{SIS} \ge 0{,}98$) und Lipschitz-Schranke ($L_{\mathcal{K}} \le L_{\max}$) zur Eliminierung von Relaisflattern bei Eingangsfluktuationen.
-3. **Poppersche Falsifikation deontischer Normen und aktiver Compliance-Auditor ([Kapitel 39](ch39-active-compliance-auditor-and-popperian-testing.md)):**
+7. **Poppersche Falsifikation deontischer Normen und aktiver Compliance-Auditor ([Kapitel 39](ch39-active-compliance-auditor-and-popperian-testing.md)):**
    * *Theoretisches Konzept:* Übergang vom passiven Orakel zum aktiven Compliance-Auditor nach Karl Poppers Falsifikationsprinzip. Das System sondiert Normenräume (ASPICE 4.0, ISO 26262, ISO/SAE 21434), synthetisiert Gegenbeispiele und entwirft Testkampagnen.
    * *Praktischer Nutzen:* Verbindung neuronaler Grenzwertgenerierung (System 1) mit deterministischer deontischer Verifikation (System 2) unter Schutz des Menschen vor Genehmigungsermüdung.
-4. **Synergetische Dimensionsreduktion der Wissensbasis und CSD-Vor-Bifurkationsdiagnose ([Kapitel 6](ch06-applied-mathematics-for-expert-systems.md), [22](ch22-cybernetics-edge-to-backend.md), [35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)):**
+8. **Synergetische Dimensionsreduktion der Wissensbasis und CSD-Vor-Bifurkationsdiagnose ([Kapitel 6](ch06-applied-mathematics-for-expert-systems.md), [22](ch22-cybernetics-edge-to-backend.md), [35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)):**
    * *Theoretisches Konzept:* Anwendung von Hakens Synergetik (Ordnungsparameter und Versklavungsprinzip) und Prigogines dissipativen Strukturen auf Wissenskorpora.
    * *Ergebnis:* Reduktion hochdimensionaler Telemetrieräume auf Ordnungsparameter und Erkennung kritischer Verlangsamung (*Critical Slowing Down*, CSD) weit vor dem Ansprechen von Notfallschwellen.
-5. **Aktionsautonomie-Stufenmodell (A0–A4), Zulassungsgateway und idempotente Sagas ([Kapitel 21](ch21-from-recommendation-to-action.md)):**
+9. **Aktionsautonomie-Stufenmodell (A0–A4), Zulassungsgateway und idempotente Sagas ([Kapitel 21](ch21-from-recommendation-to-action.md)):**
    * *Theoretisches Konzept:* Granulare Autorisierungsskala (A0: passive Analyse bis A4: Notabschaltung), gebunden an das Tupel $\langle\text{Aktion}, \text{Umgebung}, \text{Risiko}\rangle$.
    * *Mathematischer Apparat:* Idempotenz-Invariante $f(f(x, k), k) \equiv f(x, k)$ mit Token $k$ und kompensierende Sagas mit Out-of-Band-Nachbedingungsprüfung.
-6. **Formale Co-Entwicklung von funktionaler Sicherheit und Cybersecurity in GSN ([Kapitel 27](ch27-safety-case-gsn-synthesis.md), [30](ch30-safety-cybersecurity-co-engineering.md)):**
-   * *Theoretisches Konzept:* Integrierte Goal Structuring Notation (GSN) zur gleichzeitigen Erfüllung von ISO 26262 (Safety) und ISO/SAE 21434 (Security).
-   * *Durchbruch:* Mathematischer Ausgleich widerstreitender Ziele (Reaktionszeit vs. kryptographische Tiefe) und selektive Beweisoffenlegung über gesalzene Merkle-Bäume.
-7. **Verifikationsprotokoll für Erklärungstreue und semantische Konsistenz ([Kapitel 20](ch20-explanation-engine.md)):**
-   * *Theoretisches Konzept:* Erklärungen als eigenständige deterministische Artefakte aus Beweisgraph, Regelstand und Faktenstand.
-   * *Mathematischer Apparat:* Metrisches Gateway ($C_{\text{facts}} = 1{,}00, H_{\text{free}} = 1{,}00$) mit automatischem Fallback auf Schablonen bei geringster Diskrepanz.
+10. **Formale Co-Entwicklung von funktionaler Sicherheit und Cybersecurity in GSN ([Kapitel 27](ch27-safety-case-gsn-synthesis.md), [30](ch30-safety-cybersecurity-co-engineering.md)):**
+    * *Theoretisches Konzept:* Integrierte Goal Structuring Notation (GSN) zur gleichzeitigen Erfüllung von ISO 26262 (Safety) und ISO/SAE 21434 (Security).
+    * *Durchbruch:* Mathematischer Ausgleich widerstreitender Ziele (Reaktionszeit vs. kryptographische Tiefe) und selektive Beweisoffenlegung über gesalzene Merkle-Bäume.
+11. **Verifikationsprotokoll für Erklärungstreue und semantische Konsistenz ([Kapitel 20](ch20-explanation-engine.md)):**
+    * *Theoretisches Konzept:* Erklärungen als eigenständige deterministische Artefakte aus Beweisgraph, Regelstand und Faktenstand.
+    * *Mathematischer Apparat:* Metrisches Gateway ($C_{\text{facts}} = 1{,}00, H_{\text{free}} = 1{,}00$) mit automatischem Fallback auf Schablonen bei geringster Diskrepanz.
 
 ---
 
 ### 2. Empirische Forschung, eigene Versuchsstände und Systems Engineering
 
-1. **Unveränderliche binäre Wissenspakete mit `mmap` und Zero-Allocation ([Kapitel 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)):**
+1. **Silizium-Wissensprozessoren (EPU) und formale Beweiszeugen ([Kapitel 1](ch01-introduction-to-expert-systems.md)):**
+   * *Konzept:* Hardwarenahe Implementierung symbolischer Inferenzkerne direkt in Silizium (FPGA/ASIC) mit garantierter Latenz von unter 80 ns für harte Echtzeitsysteme.
+   * *Formale Methoden:* Anbindung an SMT-Solver und interaktive Theorembeweiser (Lean 4, Z3) zur Ausgabe kryptographisch signierter Beweiszeugen (Proof Witnesses), die von unabhängigen Prüfern verifiziert werden können.
+2. **Unveränderliche binäre Wissenspakete mit `mmap` und Zero-Allocation ([Kapitel 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)):**
    * *Architektur:* Trennung von kanonischen Primärquellen und materialisierten Indexschichten.
    * *Empirisches Ergebnis:* Direktes Speicher-Mapping (`mmap`), Zero-Allocation und sublinearer Start unabhängig von Gigabyte-Ontologien.
-2. **Empirischer Kalibrierungsprüfstand auf IETF RFC-1000 und W3C-150 ([Kapitel 2](ch02-epistemology-of-machine-knowledge.md), [4](ch04-evolution-from-bayes-to-evidence-ai.md), [14](ch14-requirements-detection-and-formalization.md), [25](ch25-how-expert-systems-learn.md)):**
+3. **Empirischer Kalibrierungsprüfstand auf IETF RFC-1000 und W3C-150 ([Kapitel 2](ch02-epistemology-of-machine-knowledge.md), [4](ch04-evolution-from-bayes-to-evidence-ai.md), [14](ch14-requirements-detection-and-formalization.md), [25](ch25-how-expert-systems-learn.md)):**
    * *Versuchsstand:* Evaluierung an 1.000 IETF-RFC-Spezifikationen und 150 W3C-Diagnosefällen (inklusive induzierter Widersprüche).
    * *Praktisches Ergebnis:* Objektive Prüfungsmatrizen, Normenwiderspruchserkennung und Schutz vor Wissensregressionen.
-3. **Multi-Hop-Relationsanalyse, symbolische Abduktion und sokratischer Dialog ([Kapitel 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)):**
+4. **Multi-Hop-Relationsanalyse, symbolische Abduktion und sokratischer Dialog ([Kapitel 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)):**
    * *Entwicklung:* Bidirektionale beschränkte Breitensuche (BFS, $k \le 6$) mit Zyklenschutz und Synthese von Beweisketten.
    * *Vorteil:* Peirce'sche symbolische Abduktion unter deduktiver Kontrolle und sokratische Klärungsrahmen (*Clarification Frames*).
-4. **Formale Sicherheitsschilde für Edge-Steuerungssysteme ([Kapitel 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md), [Anhänge B](appendix-b-robotics-and-cyber-physical-systems.md), [C](appendix-c-autonomous-navigation-and-geosearch.md), [E](appendix-e-mixed-signal-neuromorphic-expert-systems.md)):**
+5. **Formale Sicherheitsschilde für Edge-Steuerungssysteme ([Kapitel 33](ch33-inter-system-knowledge-exchange-and-model-teaching.md), [Anhänge B](appendix-b-robotics-and-cyber-physical-systems.md), [C](appendix-c-autonomous-navigation-and-geosearch.md), [E](appendix-e-mixed-signal-neuromorphic-expert-systems.md)):**
    * *Innovation:* Übersetzung diskreter Invarianten in kontinuierliche Sicherheitskorridore für Signalprozessoren (DSPs) und GNSS-freie Navigation.
    * *Zuverlässigkeit:* Ed25519-signierter Regelaustausch und hardwarenahes Abfangen unzulässiger Steuerbefehle.
-5. **Schutz vor Informationsabfluss über Erklärungen und differentielles Audit ([Kapitel 20](ch20-explanation-engine.md)):**
+6. **Schutz vor Informationsabfluss über Erklärungen und differentielles Audit ([Kapitel 20](ch20-explanation-engine.md)):**
    * *Entwicklung:* Protokoll zur Reduktion der Erklärungsrepräsentation ($\mathrm{EIR}_{\text{redacted}}$) mit ACL-Prüfung an Knoten und Kanten des Beweisgraphen.
 
 ---

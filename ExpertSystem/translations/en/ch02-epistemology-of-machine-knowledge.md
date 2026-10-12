@@ -109,6 +109,26 @@ This definition directly refines Chapter 1. In the section ["A Document Does Not
 
 This book designates this battery of validation gates as the **epistemic contract** (from the Greek *epistēmē*, knowledge). The term "contract" is drawn directly from software engineering: in Bertrand Meyer's Design by Contract methodology, a routine formally declares preconditions, postconditions, and invariants that must hold before and after invocation [[3]](#src-3). An epistemic contract applies the identical invariant discipline to propositions entering the reasoning engine.
 
+> [!NOTE]
+> **Authorial Epistemological Model: Procedural Definition of Machine Knowledge and Epistemic Contract**  
+> In contrast to abstract philosophical theories of cognition (JTB), the author formulates an operational engineering definition of machine knowledge and introduces the epistemic contract paradigm:
+> 
+> *Five Mandatory Attributes of Expert System Knowledge:*
+> 1. **Version:** Unambiguous revision identifier of the referenced entity and authoritative source.
+> 2. **Verifiable Ground:** Byte-level grounding in immutable primary evidence or metrologically certified measurements.
+> 3. **Validity Timeframe:** Explicit temporal validity intervals (Valid Time and Transaction Time).
+> 4. **Scope of Applicability:** Strict boundary conditions and operational constraints.
+> 5. **Provenance Audit:** Complete, machine-traceable acquisition and verification lifecycle history.
+> 
+> *Seven Engineering Gates of the Epistemic Contract:*
+> 1. *Epistemology:* Verification of proof integrity, provenance, and absence of defeaters.
+> 2. *Ontology:* Validation of stable entity URIs and dimensionally consistent SI units.
+> 3. *Logic:* Verification of replayable proof traces and contradiction states.
+> 4. *Philosophy of Language:* Formal recognition of query intent, entity bindings, and deontic modality.
+> 5. *Hermeneutics:* Reconstruction of contextual normative windows (headings, definitions, qualifying footnotes).
+> 6. *Philosophy of Science:* Enforcement of empirical protocols, measurement uncertainty budgets, and acceptance criteria.
+> 7. *Social Epistemology:* Verification of clearance labels across the security lattice, reviewer mandates, and audit trails.
+
 The contract's verification gates map cleanly to seven foundational philosophical disciplines. Each discipline poses a specific inquiry to the candidate proposition, and each inquiry receives a concrete engineering implementation:
 
 | Discipline | Question Posed to Proposition | Preserved System State | Typical Error in 95 °C Case Study |
@@ -261,6 +281,21 @@ $$
 $$
 
    Since $`1.75 \ge 1.00`$, waiver W-17 overrides the general prohibition within its valid operational scope (Revision B, bench R-4). The system issues an admissible verdict `ACCEPT_CONDITIONAL`. If the test bench is switched to uncertified bench R-2, waiver W-17 drops to zero ($`w(r_1) = 0`$), yielding $`\mathrm{Rank}_{\mathrm{rel}} = \frac{6}{8} = 0.75 < 1.00`$, which triggers an immediate fail-closed interlock `REFUSAL`.
+
+> [!NOTE]
+> **Authorial Mathematical Model: Hayekian Relational Rank and Hardware Admission Arbitration**  
+> Drawing upon Friedrich Hayek's neuropsychological framework in *The Sensory Order*, the author formalizes a mathematical model of relational fact ranking and hardware-accelerated arbitration:
+> 
+> *Mathematical Formula for Relational Rank:*
+> $$\mathrm{Rank}_{\mathrm{rel}}(f, \mathcal{K}) = \frac{\sum_{r \in \mathcal{R}} \mathbb{I}(f \in \mathrm{Prem}(r)) \cdot w(r)}{1 + \sum_{d \in \mathcal{D}} \mathbb{I}(d \text{ defeats } f) \cdot w(d)}$$
+> where $w(r), w(d) \in [1, 10]$ denote normative weights of supporting rules and defeaters.
+> 
+> *Three Runtime Threshold States:*
+> 1. $\mathrm{Rank}_{\mathrm{rel}} = 0$ — completely ungrounded proposition (`UNGROUNDED_ATOM`), deterministic rejection `REFUSAL`.
+> 2. $0 < \mathrm{Rank}_{\mathrm{rel}} < 1.00$ — weak relational support, mandatory human escalation (`QUALIFIED`).
+> 3. $\mathrm{Rank}_{\mathrm{rel}} \ge 1.00$ — normative admissibility for proof tree unification (`ACCEPT`).
+> 
+> *Hardware Dimensioning:* A Compressed Sparse Row (CSR) index occupies $\approx 3.2\text{ MB}$ for $50\,000$ facts, residing entirely within L3 cache or FPGA BRAM to deliver deterministic traversal latencies $T_{\mathrm{rank}} \le 180\text{ ns}$.
 
 ## 6. Ontological Identification: Overcoming Semantic Homonymy and Contextual Constraints
 
@@ -422,6 +457,19 @@ The W3C OWL-Time ontology defines vocabulary for modeling temporal entities [[8]
 
 For rigorous auditability, an expert system stores every claim with two temporal intervals and strictly maintains append-only storage. Under this discipline, the question "What did the system know at that moment?" always yields a deterministic answer.
 
+> [!NOTE]
+> **Authorial Temporal Audit Model: Bitemporal Sampling Operator and Three-Stage Cardinality Arbitration**  
+> The author formalizes a mathematical bitemporal sampling operator and a three-stage decision model:
+> 
+> *Bitemporal Sampling Operator Formula:*
+> $$K(t_v, t_s) = \{\, c \in \mathcal{KB} \mid t_v \in I_v(c) \wedge t_s \in I_s(c) \,\} \subset \mathbb{T} \times \mathbb{T}$$
+> where $t_v \in I_v(c)$ denotes the claim's physical/normative validity interval (Valid Time), and $t_s \in I_s(c)$ denotes its immutable commit interval in the audit ledger (Transaction Time).
+> 
+> *Three-Stage Cardinality Arbitration over $|K(t_v, t_s)|$:*
+> 1. $|K(t_v, t_s)| = 0$ (empty set) — absence of active normative coverage, deterministic transition to Fail-Closed Abstention.
+> 2. $|K(t_v, t_s)| = 1$ — single unambiguous claim, routed directly to the $\mathrm{Applicable}$ predicate pipeline.
+> 3. $|K(t_v, t_s)| > 1$ — overlapping normative standards detected, automated routing to paraconsistent conflict arbitration or precedence rules.
+
 ### 6.2. Applicability Verification: Evaluating the Scope of Validity of a Claim <a id="чи-застосовне-твердження-до-запиту"></a>
 
 Waiver W-17 is verified, unrevoked, and active, yet its operational applicability is strictly circumscribed: Revision B, Rig R-4, and a specific date window. The query "Can 95 °C testing be conducted?" mentions neither hardware revision, test bench, nor target date. An expert system must determine whether W-17 applies to the query, and is strictly prohibited from guessing missing parameters via semantic proximity.
@@ -452,6 +500,22 @@ The predicate is computed by the filtering gate prior to assembling the proof tr
 - **$\mathrm{Applicable} = \mathbf{T}$:** The claim is admitted as an active axiom in the resolution refutation engine.
 - **$\mathrm{Applicable} = \mathbf{F}$:** The claim is rejected. The engine generates an auditable diagnostic log entry citing the exact violated conjunct (e.g., *"Rejected by Scope: unit under test Revision C does not match Revision B specified in Waiver W-17"*).
 - **$\mathrm{Applicable} = \mathbf{U}$:** The engine halts inference and synthesizes a structured `ClarificationRequest`. The request enumerates the exact missing parameters (e.g., *"Specify power module hardware revision and test rig identifier"*). Stochastic extrapolation in the presence of unknown values is strictly blocked.
+
+> [!NOTE]
+> **Authorial Logical Model: Five-Component Applicability Predicate in Kleene Strong Three-Valued Logic**  
+> The author formalizes an operational applicability model grounded in Kleene's strong three-valued logic $\mathbb{K}_3$:
+> 
+> *Vector Applicability Predicate Formula:*
+> $$\mathrm{Applicable}(c,q,t_v,t_s) = \mathrm{Scope}(c,q) \wedge \mathrm{Valid}(c,t_v) \wedge \mathrm{Known}(c,t_s) \wedge \mathrm{Units}(c,q) \wedge \mathrm{Identity}(c,q)$$
+> 
+> *Five Mandatory Conjunctive Components:*
+> 1. $\mathrm{Scope}(c,q) \in \{\mathbf{T}, \mathbf{F}, \mathbf{U}\}$ — boundary condition alignment (hardware revision, test rig, procedure).
+> 2. $\mathrm{Valid}(c,t_v) \in \{\mathbf{T}, \mathbf{F}\}$ — physical and normative validity in domain time ($t_v \in I_v(c)$).
+> 3. $\mathrm{Known}(c,t_s) \in \{\mathbf{T}, \mathbf{F}\}$ — transaction presence in the repository at audit time ($t_s \in I_s(c)$).
+> 4. $\mathrm{Units}(c,q) \in \{\mathbf{T}, \mathbf{F}\}$ — measurand compatibility and valid SI dimensional conversions.
+> 5. $\mathrm{Identity}(c,q) \in \{\mathbf{T}, \mathbf{F}, \mathbf{U}\}$ — unambiguous entity identification via stable UUID/URI.
+> 
+> *Reasoning Engine Decisions in $\mathbb{K}_3$:* Under $\mathbf{T}$ — admitted to axioms; under $\mathbf{F}$ — unconditional rejection with diagnostic trace; under $\mathbf{U}$ — deduction halts with a structured `ClarificationRequest`, strictly preventing stochastic guessing.
 
 <details>
 <summary>Go Implementation: Waiver W-17 Applicability in Three-Valued Logic</summary>
@@ -606,6 +670,20 @@ The vector $V(c)$ is evaluated by the conflict detection gate during evidentiary
 3. **$V(c) = (1, 1)$ [Contradiction $\mathbf{B}$ (Both)]:** Localized requirement collision. The system avoids logical explosion, invokes Phan Minh Dung's argumentation framework, and executes precedence rules (lexicographical specificity or narrow operational scope). If no automatic priority rule applies, the engine escalates the decision to a human engineer alongside a complete argument map.
 4. **$V(c) = (0, 0)$ [Unknown $\mathbf{N}$ (Neither)]:** Epistemic void. Under OWA, the system records an evidentiary gap and enters fail-closed abstention.
 
+> [!NOTE]
+> **Authorial Engineering Methodology: Four-Quadrant Argumentation Routing via the Belnap Vector**  
+> Drawing upon Nuel Belnap's four-valued logic $\mathcal{B}_4$, the author develops a deterministic argumentation routing methodology:
+> 
+> *Binary Evidentiary Status Vector:*
+> $$V(c) = (P(c), N(c)) \in \{0, 1\}^2$$
+> where $P(c) \in \{0, 1\}$ denotes verified evidence FOR, and $N(c) \in \{0, 1\}$ denotes verified evidence AGAINST.
+> 
+> *Four-Quadrant State Routing:*
+> 1. $V(c) = (1, 0)$ [State $\mathbf{T}$ — True]: Unanimous support; claim admitted as an active axiom into the execution pipeline.
+> 2. $V(c) = (0, 1)$ [State $\mathbf{F}$ — False]: Unambiguous refutation; generation of an auditable refusal citing the prohibitive rule.
+> 3. $V(c) = (1, 1)$ [State $\mathbf{B}$ — Both, Contradiction]: Conflict localization; suppression of logical explosion ($\text{Ex Falso Quodlibet}$) and invocation of Dung's abstract argumentation framework to determine the prevailing argument by precedence.
+> 4. $V(c) = (0, 0)$ [State $\mathbf{N}$ — Neither, Unknown]: Epistemic void; deterministic transition to safe fail-closed abstention.
+
 State $(1, 1)$ does not dictate which argument prevails. To adjudicate conflicts, expert systems deploy formal argumentation frameworks. In 1995, Phan Minh Dung formulated abstract **argumentation frameworks**: a set of arguments and a binary attack relation defined between them [[14]](#src-14). Which arguments are deemed admissible depends on the selected argumentation semantics (e.g., grounded, preferred, or stable semantics), which must be version-controlled alongside the rule base. The diagram below illustrates the argument topology for the 95 °C case study.
 
 ```mermaid
@@ -714,6 +792,22 @@ Parameters and Value Ranges:
 
 Practical Application and Engineering Decisions:  
 The construction of $W(e)$ is executed during the ingestion pipeline. If window assembly reveals that a core definition is absent or a normative reference is broken ($\mathrm{Refs}_k(e) = \emptyset$ despite an active reference), the system reduces the evidence confidence score and flags the rule as "conditionally defined", blocking its autonomous use in ASIL D decisions. The cryptographic digest $\mathrm{SHA\text{-}256}(W(e))$ is committed to the decision's audit certificate. Model boundaries: parameters $d$ and $k$ restrict window boundaries and must be versioned; excessively large parameters dilute retrieval precision, while overly restrictive parameters sever essential constraints.
+
+> [!NOTE]
+> **Authorial Engineering Methodology: Deterministic Extended Evidence Window and Cryptographic Closure**  
+> The author proposes an extended evidence window model resolving the "hermeneutic circle" dilemma and preventing context truncation:
+> 
+> *Extended Evidence Window Formula:*
+> $$W(e) = e \cup \mathrm{Headings}_d(e) \cup \mathrm{Definitions}(e) \cup \mathrm{TableContext}(e) \cup \mathrm{Refs}_k(e)$$
+> 
+> *Five Structural Context Components:*
+> 1. $e$ — extracted atomic text excerpt bounded by immutable byte offsets $[b_{\text{start}}, b_{\text{end}}]$ in the canonical source.
+> 2. $\mathrm{Headings}_d(e)$ — set of parent section headings in the document hierarchy up to ascent depth $d \le 5$.
+> 3. $\mathrm{Definitions}(e)$ — normative terminology definitions for domain tokens present in $e$.
+> 4. $\mathrm{TableContext}(e)$ — tabular context (table caption, column headers, cell footnotes).
+> 5. $\mathrm{Refs}_k(e)$ — transitively linked clauses from external standards across the citation graph up to depth $k \le 2$.
+> 
+> *Cryptographic Closure:* The assembled evidentiary context is immutably committed via a unified cryptographic hash $\mathrm{SHA\text{-}256}(W(e))$ into the decision's audit trail.
 
 The diagram below maps the transformation from user query to verified evidence window.
 
@@ -980,6 +1074,15 @@ h_i=H\bigl(h_{i-1}\ \Vert\ \mathrm{canon}(e_i)\bigr),\qquad i=1,2,3,\dots
 3. If any discrepancy is detected at index $k$ ($h_k \ne H(h_{k-1} \parallel \mathrm{canon}(e_k))$), the system raises a critical Tamper Alert, halts new transactions in Fail-Safe mode, and isolates the node.
 4. Model boundary: a hash chain detects tampering retrospectively, but cannot prevent runtime compromise of the active logging service. Therefore, the author insists on signing entries using hardware cryptographic modules (HSM / TPM) and periodically (e.g., hourly) committing $h_i$ to an independent trusted notary (RFC 3161 Timestamping) [[29]](#src-29).
 
+> [!NOTE]
+> **Authorial Security Model: Immutable Cryptographic Audit via Hash Chains and Hardware Notarization**  
+> Grounded in the cryptographic audit principles of Bruce Schneier and John Kelsey, the author designs a three-tier log non-repudiation protocol:
+> 
+> *Three Levels of Audit Non-Repudiation:*
+> 1. **Recurrent State Hashing:** Continuous computation of state hash $h_i = H(h_{i-1} \parallel \mathrm{canon}(e_i))$, where $H \in \{\text{SHA-256}, \text{SHA3-256}\}$ and $\mathrm{canon}(e_i)$ enforces deterministic RFC 8785 Canonical JSON serialization, preventing undetected tampering.
+> 2. **Transactional WORM Persistence:** Synchronous recording of tuples $(i, \mathrm{canon}(e_i), h_i)$ into Write Once, Read Many storage media; transactions commit only upon confirmed physical write.
+> 3. **Hardware Notarization (Non-repudiation):** Digital signing via HSM/TPM modules and periodic external timestamping (RFC 3161) to satisfy ISO 26262 ASIL D and DO-178C certification mandates.
+
 An audit log lacking rigorous verification routines is merely an expensive graveyard of bytes. The placement of the audit subsystem within overall system architecture is detailed in [Chapter 16](ch16-expert-systems-architecture.md).
 
 Section takeaway: institutional authority, review roles, and security clearance are orthogonal properties, none of which guarantees physical truth. Responses inherit the most restrictive label among inputs, refusals never leak metadata, and hash-chained audit trails guarantee retrospective inspectability. We are now equipped to synthesize all seven verification gates into a unified operational decision condition.
@@ -1063,6 +1166,23 @@ The calculation evaluates:
 3. If $\mathrm{Authorized}(u,g) = \mathbf{False}$, the system immediately emits a neutral refusal (`DENY_ACCESS`) disclosing zero metadata regarding restricted source materials.
 4. If $\mathrm{Applicable} = \mathbf{Unknown}$ or $\mathrm{Resolved} = \mathbf{False}$, the system generates a structured `CLARIFICATION_REQUIRED` request or initiates Human-in-the-Loop (HITL) escalation enumerating unresolved conflicts.
 5. If $\mathrm{Schema} = \mathbf{False}$, $\mathrm{Replay} = \mathbf{False}$, or $\mathrm{Risk} = \mathbf{False}$ (e.g., residual risk exceeds ceiling $r(g \mid q) > r_{\max}$), the assertion is blocked as ungrounded, an auditable denial citing the violated constraint is generated, and an incident is registered in the audit trail. High neural network confidence under no circumstances overrides a failed conjunct in this formula.
+
+> [!NOTE]
+> **Authorial Validation Model: Algebraic Entitlement to Assert Criterion**  
+> The author formalizes the final safety admission gate as a six-dimensional conjunctive Boolean predicate:
+> 
+> *Entitlement to Assert Criterion Formula:*
+> $$\mathrm{Answerable}(g,u,q,t_v,t_s) = \mathrm{Schema}(g) \wedge \mathrm{Applicable}(g,q,t_v,t_s) \wedge \mathrm{Replay}(g) \wedge \mathrm{Resolved}(g) \wedge \mathrm{Authorized}(u,g) \wedge \mathrm{Risk}(g,q)$$
+> 
+> *Six Mandatory Verification Conjuncts:*
+> 1. $\mathrm{Schema}(g) \in \{\mathbf{True}, \mathbf{False}\}$ — structural schema validity under canonical JSON/ASN.1 schemas.
+> 2. $\mathrm{Applicable}(g,q,t_v,t_s) \in \{\mathbf{True}, \mathbf{False}\}$ — operational applicability across scope, time, SI units, and entity identifiers.
+> 3. $\mathrm{Replay}(g) \in \{\mathbf{True}, \mathbf{False}\}$ — determinism verification: successful re-execution of the proof trace on a frozen knowledge snapshot.
+> 4. $\mathrm{Resolved}(g) \in \{\mathbf{True}, \mathbf{False}\}$ — absence of open unresolved contradictions in Dung's argumentation framework.
+> 5. $\mathrm{Authorized}(u,g) \in \{\mathbf{True}, \mathbf{False}\}$ — user clearance $u$ satisfies classification label $\ell(g)$ across Denning's lattice.
+> 6. $\mathrm{Risk}(g,q) \in \{\mathbf{True}, \mathbf{False}\}$ — conformance with the target criticality risk policy (ASIL D / SIL 4).
+> 
+> *Fail-Closed Gate Imperative:* If any single conjunct does not evaluate to $\mathbf{True}$, emission is categorically blocked; heuristic neural confidence can never compensate for a failed conjunct.
 
 Let us evaluate this decision condition across four variations of the 95 °C query:
 
@@ -1189,6 +1309,13 @@ The theoretical demands of epistemology acquire engineering validity only when t
 
 3. **Rule-Based Reasoning Invariant:**  
    Final operational decisions are derived exclusively through inspectable rules of predicate logic and formal syllogisms executed within the symbolic core. Language models may perform auxiliary advisory roles—classifying query intent, normalizing natural language text, or proposing candidate entity extractions—but are strictly stripped of authority to declare a hypothesis verified knowledge or generate regulatory conclusions that bypass the symbolic engine.
+
+> [!NOTE]
+> **Authorial Engineering Triad: Systemic Evidence Invariants ($ZHR = 1.00$, $FCP = 100\%$, Rule-Based Reasoning)**  
+> The author formulates and formalizes a triad of non-negotiable architectural evidence invariants:
+> 1. **Evidence-Grounded Invariant:** Every assertive output must possess an immutable link to primary sources (`[byte_start, byte_end]`, `quote_sha256`) verified by an isolated admission gate prior to emission ($ZHR = 1.00$).
+> 2. **Fail-Closed Gate Invariant:** Under incomplete, out-of-scope, or contradictory knowledge, the system yields a deterministic typed refusal (`refusal`, `clarification`, `abstention`) with complete blocking precision ($FCP = 100\%$).
+> 3. **Rule-Based Reasoning Invariant:** Operational verdicts are derived exclusively by the symbolic core via predicate logic; language models are stripped of authority to enact normative decisions.
 
 These invariants are strictly falsifiable. Experimental validation is conducted using authoritative engineering corpora—such as W3C specifications (HTML5, DOM) and IETF RFC standards. These documents serve as ideal benchmarks for testing the epistemic contract: they utilize rigorous modal language (RFC 2119 conventions), maintain explicit version histories (*Obsoletes* and *Updates* headers), and provide zero tolerance for invented parameters. Unlike purely generative architectures (RAG) prone to hallucinating non-existent protocol flags, an evidence-governed system enforces byte-level grounding into verified primary sources.
 

@@ -42,6 +42,15 @@ None of these tools replaces the ultimate engineering responsibility. However, t
 2. **Regulatory stringency:** The EU Artificial Intelligence Act (EU AI Act 2024/1689 [[4]](#src-4)), FDA clinical decision support guidance [[5]](#src-5), and transport safety standards (ISO 26262 [[6]](#src-6), DO-178C) legally mandate end-to-end traceability, determinism, and human auditability for high-risk automated decisions.
 3. **The corporate memory crisis:** Industrial systems remain in service for decades, whereas engineering teams rotate every few years. Expert systems provide the only durable mechanism for preserving institutional knowledge as actionable, verifiable software assets.
 
+> [!NOTE]
+> **Authorial Analytical Conclusion: Three Factors of the Knowledge Crisis and the Epistemic Advantage of Evidence-Governed Systems**  
+> According to the author's analysis, the necessity of transitioning to evidence-governed expert systems is driven by three critical factors:
+> 1. **Devaluation of Plausible Text and Verification Asymmetry:** Generative neural networks synthesize persuasive prose in milliseconds, yet rigorous expert verification by a human requires more time than deriving the answer directly from primary sources.
+> 2. **Legislative Imperative of Determinism:** International standards and regulatory frameworks (EU AI Act 2024/1689, ISO 26262 ASIL-D, FDA CDS, DO-178C) legally mandate end-to-end traceability and step-by-step auditing for every automated verdict.
+> 3. **The Corporate Memory Alienation Crisis:** The lifecycle duration of complex engineering systems (decades) far exceeds personnel retention horizons, rendering the expert system the only viable mechanism for preserving engineering memory as executable, verifiable rules.
+> 
+> *Epistemic Advantage:* Unlike search engines (which offload logic to humans) and generative language models (prone to confabulation), an evidence-governed system renders deduction deterministic, transparent, and provably grounded in immutable primary sources.
+
 ---
 
 ## 2. Definition and Epistemic Essence: What Is an Expert System <a id="definition-expert-systems"></a><a id="документ-не-дорівнює-знанню"></a>
@@ -72,6 +81,20 @@ Three related concepts must be clearly differentiated:
 * **Expertise:** The synthesized corpus of verified knowledge and the capacity to reason rigorously within a domain.
 * **Authority:** The formal mandate to enact a binding decision (e.g., approving an avionics release or prescribing treatment), which always remains with a designated human operator.
 * **Evidence:** The immutable primary record (standard, telemetry log, datasheet) maintaining cryptographic byte-level custody that cannot be altered during deduction.
+
+> [!NOTE]
+> **Authorial Theoretical Definition: Three Demarcation Pillars and the Responsibility Triad**  
+> The author's operational definition of an evidence-governed expert system establishes a strict demarcation from procedural code and generative models based on:
+> 
+> *Three Immutable Demarcation Pillars:*
+> 1. **Complete Knowledge Explicitness:** Declarative decoupling of domain knowledge from the execution engine (rules, ontologies, constraints).
+> 2. **Step-by-Step Explainability:** Mandatory synthesis of proof graphs and transparent rationale audit trails for every conclusion.
+> 3. **Qualified Refusal Gate (Fail-Closed Gate):** Rigorous enforcement of competence boundaries; under knowledge incompleteness or contradiction, the system deterministically yields a typed refusal (`REFUSAL`/`CLARIFICATION`, $ZHR = 1.00$).
+> 
+> *The Responsibility Triad:*
+> * **Expertise:** Algorithmic computation and synthesis of verified recommendations by the computing system.
+> * **Authority:** The exclusive legal right and institutional responsibility of the human operator to enact a binding decision.
+> * **Evidence:** Immutable byte-level custody of primary sources (`byte_start`, `byte_end`, `quote_sha256`).
 
 ---
 
@@ -138,6 +161,14 @@ Key architectural invariants include:
   - *Deterministic Symbolic Engines (System 2):* Handle **Eligibility** exclusively (normative admissibility, safety invariant enforcement, veto authority). No statistical model holds the mandate to independently authorize an action.
 * **Byte-Level Evidence Custody:** Every atomic claim asserted in the expert system's knowledge base must trace directly to an immutable primary source segment bounded by exact byte offsets `[byte_start, byte_end]` and a verifiable `sha256` hash. Assertions failing byte-level custody verification cannot be emitted by the system.
 * **Fail-Closed Gate Principle:** Under incomplete, contradictory, or absent rules, the expert system deterministically yields a typed refusal (`REFUSAL`), guaranteeing an uncompromised Zero-Hallucination Rate ($ZHR = 1.00$).
+
+> [!NOTE]
+> **Authorial Engineering Model: Four Evidence-Grounded Architectural Invariants**  
+> In the author's framework, mission-critical dependability is strictly guaranteed through four architectural invariants:
+> 1. **Orthogonality of Knowledge and Inference Engine:** A universal deterministic inference engine is completely decoupled from the declarative knowledge base; rules are updated without altering or recompiling the core software kernel.
+> 2. **Neuro-Symbolic Partitioning (Relevance versus Eligibility):** Machine learning models handle heuristic discovery and relevance exclusively (candidate retrieval, intent parsing), while the symbolic kernel unilaterally governs normative admissibility and holds absolute veto authority.
+> 3. **Byte-Level Evidence Custody:** Every atomic assertion is anchored to primary sources via exact byte boundaries `[byte_start, byte_end]` and a cryptographic `sha256` digest.
+> 4. **Fail-Closed Gate Principle:** Under incomplete, contradictory, or absent rules, the system deterministically emits a typed refusal (`REFUSAL`), enforcing zero tolerance for hallucinations ($ZHR = 1.00$).
 
 ---
 
@@ -254,6 +285,12 @@ The frontier of evidence-governed expert systems expands at the intersection of 
    Paralleling GPU and NPU hardware specialization, symbolic inference engines are being synthesized directly onto silicon (FPGA and custom ASICs). Hardware-accelerated pattern matchers and cryptographic hash verifiers operate within fixed clock cycles (pipeline latencies $\le 80$ ns), enabling hard real-time safety interlocks.
 2. **Automated Proof Witnesses:**  
    Coupling expert system deduction with interactive theorem provers (**Lean 4**, **Coq**) and SMT solvers (**Z3**). Rather than emitting informal text, the expert system generates a cryptographically signed proof bundle independently verifiable by a minimalist external proof checker.
+
+> [!NOTE]
+> **Authorial Engineering Concept: Epistemic Processing Units (EPU) and Automated Proof Witnesses**  
+> The author's forward-looking architectural concept is founded upon two complementary pillars:
+> 1. **Silicon Epistemic Processing Units (EPU):** Direct hardware execution of the inference pipeline within FPGA/ASIC fabrics with deterministic fixed latency ($\le 80$ ns), enabling symbolic safety interlocks in hard real-time control loops.
+> 2. **Automated Proof Witnesses:** Seamless coupling of the inference engine with formal interactive theorem provers (Lean 4) and SMT solvers (Z3) to generate cryptographically signed, machine-checkable proof certificates for every emitted decision.
 
 ---
 
