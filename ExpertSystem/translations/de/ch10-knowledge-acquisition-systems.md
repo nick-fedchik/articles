@@ -80,6 +80,14 @@ Anstelle eines passiven Wartens auf Suchanfragen der Anwender führen die PKR-Al
 - ausführbare Abschnitte der Controller-Firmware, für die keine entsprechenden Anforderungen in der Architekturschicht existieren (undokumentierte Funktionen oder Angriffsvektoren);
 - implizite Fachbegriffe und Abkürzungen, die in der Zuliefererdokumentation intensiv zitiert werden, ohne im kanonischen Glossar des Projekts definiert zu sein.
 
+> [!NOTE]
+> **Vier Schichten der Artefakt-Stratigraphie im Paradigma der Projektwissensaufklärung (PKR)**
+> 1. Normative Schicht (Normative Layer): internationale und Branchenstandards (ISO 26262, IEC 61508, DO-178C) als axiomatischer Basissatz mit höchster Wahrheitspriorität.
+> 2. Entwurfsschicht (Design Layer): Architekturentscheidungen, konzeptionelle Systemmodelle und Schnittstellenspezifikationen (ICD), die Entwurfsbeschränkungen vorgeben.
+> 3. Ausführungsschicht (Execution Layer): Treiberquellcode, Registerraum-Deskriptoren (SVD, IP-XACT), Linker-Konfigurationen und Binär-Firmware.
+> 4. Evidenzschicht (Evidence Layer): HIL-Prüfprotokolle, Berichte statischer Codeanalysen, Zweigabdeckungsmatrizen und Verifikationstraces.
+> *Runtime Governance:* Automatisierte topologische Prüfungen der Schichtverbindungen decken Rückverfolgbarkeitslücken („blinde Flecken“) auf und blockieren Defekte nach dem Fail-Closed-Prinzip.
+
 ## 2. Risiken undifferenzierten Dokumenten-Ingests und Reifegrade von Wissenssystemen
 
 Die ungefilterte Anbindung von Wikis, Issue-Trackern, Versionsverwaltungs-Repositories, Requirements-Management-Werkzeugen und Netzlaufwerken an einen KI-Assistenten erscheint vordergründig als der schnellste Weg zu kontextbewussten Antworten im Projektumfeld. Die Erwartungshaltung ist verständlich: Das System soll wissen, welche Anforderungen ein Subsystem betreffen, welche Defekte historisch gehäuft auftraten, warum eine bestimmte Architekturentscheidung getroffen wurde und welche Prüfungen vor dem Release zwingend erforderlich sind. In traditionellen Arbeitsabläufen wurde dieser Datenbestand manuell durch Ingenieure gesichtet, die Dokumente öffneten und anhand ihrer Erfahrung bewerteten, was aktuell, was überholt und was vertraulich war. Da das Datenvolumen moderner Entwicklungsprojekte die menschliche Lesekapazität bei weitem übersteigt, verlagert sich die Aufgabe der Differenzierung und Berechtigungsprüfung zwingend auf das KAS.
@@ -201,6 +209,18 @@ classDiagram
     KnowledgePackContainer *-- DeonticNormRule
     KnowledgePackContainer *-- CSRIndexMatrix
 ```
+
+> [!NOTE]
+> **Acht Autoren-Antipattern des Knowledge Engineering in missionskritischen Systemen**
+> 1. Illusion der Brute-Force-Skalierung: Der Versuch, fehlende formale Verifikation durch Modellgröße zu kompensieren, führt zu plausiblen Halluzinationen.
+> 2. Flaches Vektor-RAG (Flat Cosine RAG): Genauigkeitsverlust durch Zerschneiden von Tabellen, Aufbrechen von Relationen und Verlust deontischer Normkraft.
+> 3. Selbstevaluierungs-Sykophantie (LLM-as-a-Judge): Rekursiver Qualitätskollaps bei der Validierung generierter Ausgaben durch ein weiteres statistisches Modell.
+> 4. Cloud-basierte Theorembeweiser (Heavy Cloud Provers): Latenz und Nichtdeterminismus machen Cloud-Engines für deterministische RTOS- und Edge-Zyklen unbrauchbar.
+> 5. Semantic-Web-Overhead (RDF/OWL Bloat): Kombinatorischer Speicher- und Latenzkollaps bei vielgliedrigen SPARQL-Joins auf Mikrocontrollern.
+> 6. Reine Software-Leitplanken (Soft Guardrails): Anfälligkeit textueller Prompts und Heuristiken für Prompt-Injections und Regelumgehungen.
+> 7. Unbeschränkter DSL-Syntheseraum: Gefahr von Endlosschleifen und Nichtdeterminismus bei ungezügelter algorithmischer Programmsynthese.
+> 8. Statischer Wissensmonolith: Unmöglichkeit, ungültige Fakten isoliert zu aktualisieren oder zu widerrufen, ohne die gesamte Wissensbasis neu zu bauen.
+> *Runtime Governance:* Vollständiges Verbot unvalidierter statistischer Komponenten in missionskritischen ASIL-D-Regelkreisen nach Fail-Closed.
 
 ## 4. Anforderungen und Zielfunktionen eines Wissensakquisitions-Systems
 
@@ -496,6 +516,15 @@ Ein Test zur Kontextkonstruktion für Sprachmodelle an 20 RFCs ergab vielverspre
 
 Geltungsbereich der Messwerte: Untersucht wurde ein englischsprachiger Standardkorpus mit stabiler Struktur und expliziten Normativitätsmarkern (`MUST`, `SHALL`, `SHOULD`, `MAY`). Eine Übertragung auf Ticketsysteme, freie Chatverläufe oder anderssprachige Dokumente erfordert gesonderte Validierungen.
 
+> [!NOTE]
+> **Fünf Autoren-Schlussfolgerungen aus dem empirischen Experiment zur Wissenserkennung (RFC-Korpus)**
+> 1. Exakte byteweise Provenienz ist eine notwendige, aber nicht hinreichende Bedingung für Evidenzwert: Auch Layout-Boilerplate besitzt lückenlose Herkunftsnachweise.
+> 2. Wissenskandidat und verifiziertes Wissensobjekt müssen als strikt getrennte Zustände der KAS-Pipeline modelliert werden.
+> 3. Deterministische strukturelle Triage von Oberflächenrauschen muss dem Einsatz rechenintensiver statistischer Modelle zwingend vorausgehen.
+> 4. Der Nutzen strukturierter Wissensrepräsentationen muss für Suche, Lektüre, Klassifikation und Generierung separat empirisch nachgewiesen werden.
+> 5. Ein negatives oder gemischtes Testergebnis ist wertvoller als unbestätigte Annahmen über die universelle Eignung von Rohtexten.
+> *Runtime Governance:* Kaskadierte deterministische Regelfilterung scheidet 22,1 % Oberflächenrauschen in konstanter Zeit ohne GPU-Ressourcenverbrauch aus.
+
 ## 12. Mathematischer Apparat der Wissensselektion: Informationsmetriken und Filter
 
 Ohne formale mathematische Kriterien verbleiben Qualitätsurteile über Textfragmente rein subjektiv: Ein Ingenieur stuft eine Passage als essenziell ein, ein anderer als bedeutungslos, und die Pipeline kann ihre Entscheidungen nicht nachvollziehbar begründen. Nachfolgend werden die mathematischen Modelle behandelt, die den Datenbestand vor der eigentlichen Inferenz strukturieren.
@@ -609,6 +638,13 @@ wobei $`P(b_i)`$ die empirische Auftrittswahrscheinlichkeit des Bytes mit dem We
 3. **Praktisches Zahlenbeispiel:** Ein $4\,\text{KB}$ großer Block einer Peripherie-Adresskarte weist eine Entropie von $H(X) = 7{,}34\,\text{Bit/Byte}$ auf. Der Scanner identifiziert 32 Vorkommen hexadezimaler Adressen `0xF020...`, verhindert das fehlerhafte Verwerfen und garantiert die lückenlose Erhaltung der Registertabelle.
 
 Alle zugelassenen Fragmente wahren die strikte Unveränderlichkeit des primären Bytebestands (*Bit-for-Bit Provenance*): Die Normalisierung von Zeilenumbrüchen (`CRLF` $\to$ `LF`) ist in den Quelldateien des Repositorys untersagt; Zitate referenzieren ausnahmslos Byte-Offset-Intervalle $`[\mathrm{byte\_start}, \mathrm{byte\_end}]`$ relativ zum kanonischen Datei-Container.
+
+> [!NOTE]
+> **Zweistufige Autoren-Entropieselektionsschleuse (KDI und Schutz von Hardware-Registerkarten)**
+> 1. Wissensdichteindex (KDI): Quantitative Bewertung des Fragmentwerts anhand gewichteter Deontik ($w_d=0{,}35$), Entitäten ($w_e=0{,}25$), Tabellen ($w_t=0{,}25$) und SI-Größen ($w_q=0{,}15$).
+> 2. Dreistufige Erz-Stratifikation: Sofortige Weiterleitung von Reicherz ($\mathrm{KDI} \ge 0{,}15$), vertiefte Syntaxanalyse für Magererz ($0{,}05 \le \mathrm{KDI} < 0{,}15$) und Schlackeverwerfung ($\mathrm{KDI} < 0{,}05$).
+> 3. Entropie-Schutz für Hex-Karten: Shannon-Entropieanalyse ($H(X) > 7{,}20\,\text{Bit/Byte}$) mit `0x...`-Signaturdetektor zur Bewahrung peripherer Adresskarten (`HARDWARE_HEX_MAP`).
+> *Runtime Governance:* Durchsetzung von Bit-for-Bit Provenance unter Verbot von `CRLF` $\to$ `LF`-Normalisierung mit Verankerung an Offsets $[\mathrm{byte\_start}, \mathrm{byte\_end}]$.
 
 ## 13. Operative Leistungs- und Qualitätsmetriken für den KAS-Betrieb
 
@@ -956,6 +992,13 @@ Um fehlerhafte Vergleichsoperationen zwischen inkompatiblen physikalischen Grö�
 1. **Laufzeitsteuerung und Berechnungsfluss:** Jede relationale Vergleichsoperation ($A < B$, $A \ge B$) oder arithmetische Subtraktion ($A - B$) ist genau dann zulässig, wenn die Dimensionsvektoren der Operanden strikt identisch sind: $\mathbf{D}_A = \mathbf{D}_B$. Versucht das System, eine Schwellenspannung ($\text{V}: [2, 1, -3, -1, 0, 0, 0]$) mit einem Leckstrom ($\text{A}: [0, 0, 0, 1, 0, 0, 0]$) zu vergleichen, bricht der KAS-Compiler die Regelkompilierung unverzüglich mit dem Fehler `TYPE_DIMENSION_MISMATCH` ab und verhindert die Veröffentlichung im Arbeitsspeicher.
 2. **Hardware-Dimensionierung und Ressourcen:** Der 7-dimensionale Dimensionsvektor wird in ein 8-Byte-Maschinenwort gepackt (7 vorzeichenbehaftete Bytes `int8` plus 1 Padding-Byte). Dadurch erfolgt die Verifikation der Dimensionskompatibilität über eine einzige 64-Bit-Registervergleichsinstruktion (`CMP`) in genau 1 Taktzyklus ohne externen Speicherzugriff.
 3. **Praktisches Zahlenbeispiel:** Für die Versorgungsbedingung eines Mikrocontrollers ist eine Nominalspannung von $5{,}0\,\text{V} \pm 10\,\%$ vorgegeben, was das Intervall $I_V = [4{,}50, 5{,}50]\,\text{V}$ aufspannt. Die Sicherheitsbedingung verlangt den Vergleich mit der unteren Ansprechschwelle des Spannungsüberwachers von $4{,}80\,\text{V}$. Beide Größen besitzen den identischen Vektor $\mathbf{D} = [2, 1, -3, -1, 0, 0, 0]$, was die physikalische Validität bestätigt und dem formalen Verifizierer erlaubt, die partielle Toleranzüberlappung zu berechnen und eine Warnregel zu generieren.
+
+> [!NOTE]
+> **Drei Autoren-Invarianten deterministischer technischer Wissenskompilierung**
+> 1. Syntaktische Passiv-Inversion: Universal-Dependencies-Analyse weist bei Erkennung des Markers `aux:pass` automatisch den wahren Pflichtträger (`Actor/Agent`) zu.
+> 2. Toleranzintervall-Semantik: Extraktion technischer Parameter als geschlossene Konfidenzintervalle $I_V = [V_{\min}, V_{\max}] = [V_{\mathrm{nominal}}(1-\delta), V_{\mathrm{nominal}}(1+\delta)]$.
+> 3. Hardwarenahe 7D-SI-Dimensionstypisierung: Packen von Vektoren $\mathbf{D} \in \mathbb{Z}^7$ in ein 64-Bit-Wort zur Prüfung physikalischer Kompatibilität via Ein-Takt-CPU-Befehl `CMP`.
+> *Runtime Governance:* Jeder Vergleich inkompatibler Dimensionen bricht die Regelkompilierung sofort mit dem Hardware-Fehler `TYPE_DIMENSION_MISMATCH` ab.
 
 ---
 

@@ -82,6 +82,14 @@ Rather than passively awaiting user search queries, PKR algorithms execute a pro
 - executable sections of controller firmware lacking corresponding requirements in the design layer (undocumented features or attack vectors);
 - implicit technical terms and acronyms actively cited across vendor documentation without entry into the project's canonical glossary.
 
+> [!NOTE]
+> **Four Layers of Artifact Stratigraphy in Project Knowledge Reconnaissance (PKR)**
+> 1. Normative Layer: international and industry standards (ISO 26262, IEC 61508, DO-178C) serving as the axiomatic baseline with the highest truth priority.
+> 2. Design Layer: architectural decisions, conceptual system models, and interface control documents (ICD) defining project constraints.
+> 3. Execution Layer: driver source code, register space descriptors (SVD, IP-XACT), linker configurations, and binary firmware images.
+> 4. Evidence Layer: HIL test protocols, static analysis reports, branch coverage matrices, and verification traces.
+> *Runtime Governance:* Automated topological auditing of inter-layer links identifies traceability gaps ("blind spots") and blocks defect propagation under the Fail-Closed rule.
+
 ## 2. Risks of Undifferentiated Document Ingestion and Knowledge System Maturity Levels
 
 Connecting an engineering wiki, issue tracker, Git repository, requirements management suite, and file storage cluster directly to an artificial intelligence (AI) assistant appears to be the shortest path toward context-aware engineering support. The expectation is straightforward: the assistant will instantly know which requirements apply to a subsystem, which historical defects recurred, why an architectural trade-off was made, and what criteria must be validated prior to release. Historically, this material was curated by a human engineer who opened individual files, discerning what was active, what was obsolete, and what was restricted. As documentation volumes outpace human cognitive bandwidth, the responsibility for parsing, validating, and enforcing access boundaries on every fragment shifts squarely to KAS.
@@ -202,6 +210,18 @@ classDiagram
     KnowledgePackContainer *-- DeonticNormRule
     KnowledgePackContainer *-- CSRIndexMatrix
 ```
+
+> [!NOTE]
+> **Eight Authorial Knowledge Engineering Anti-Patterns in Mission-Critical Systems**
+> 1. Brute-Force Scaling Illusion: attempting to offset the lack of formal verification by scaling LLM size, yielding sophisticated hallucinations.
+> 2. Flat Cosine Vector RAG: accuracy degradation caused by chunking tables, breaking graph relations, and erasing deontic normative force.
+> 3. Self-Evaluation Sycophancy (LLM-as-a-Judge): recursive quality collapse when validating generated outputs with another statistical model.
+> 4. Heavy Cloud Provers: latency and non-determinism rendering cloud-based reasoning engines unusable for RTOS and Edge loops.
+> 5. Semantic Web Overhead (RDF/OWL Bloat): combinatorial memory bloat and query latency during multi-way SPARQL joins on microcontrollers.
+> 6. Software Guardrails (Soft Guardrails): vulnerability of prompt templates and soft heuristics to prompt injection and safety bypasses.
+> 7. Unconstrained DSL Synthesis: risk of non-termination and non-determinism during open-ended algorithmic program synthesis.
+> 8. Static Knowledge Monolith: inability to selectively update or revoke invalidated facts without rebuilding the entire knowledge base.
+> *Runtime Governance:* Absolute prohibition of unvalidated statistical components in mission-critical ASIL D control loops under Fail-Closed.
 
 ## 4. Requirements and Objective Functions of a Knowledge Acquisition System
 
@@ -499,6 +519,15 @@ A pilot study evaluating context construction for a large language model (*large
 
 Domain boundaries: These empirical metrics reflect an English-language technical corpus characterized by formal RFC structures and standardized deontic keywords (MUST, SHALL, SHOULD, MAY). Generalizing these findings to raw requirements specifications, issue trackers, developer chats, Ukrainian-language corpora, or heterogeneous enterprise archives demands independent empirical verification.
 
+> [!NOTE]
+> **Five Authorial Conclusions from the Empirical Knowledge Discovery Experiment (RFC Corpus)**
+> 1. Exact byte-level provenance is a necessary but insufficient condition for evidence value: superficial formatting also possesses flawless origin traces.
+> 2. A knowledge candidate and a verified knowledge object must exist as strictly separated pipeline lifecycle states in KAS.
+> 3. Deterministic structural triage of superficial noise must unconditionally precede the invocation of heavy statistical models.
+> 4. The advantages of structured knowledge representations must be evaluated empirically and independently across retrieval, reading, classification, and generation.
+> 5. A negative or mixed empirical result is far more valuable than unverified generalized assumptions about raw text sufficiency.
+> *Runtime Governance:* Cascaded deterministic rule filtering prunes 22.1% of superficial boilerplate in constant time without consuming GPU resources.
+
 ## 12. Mathematical Apparatus of Knowledge Selection: Information Metrics and Filters
 
 How does a formal mathematical apparatus govern the selection of authoritative knowledge? Without quantitative thresholds, decisions regarding chunk quality degenerate into subjective bias: one engineer perceives an essential assertion where another sees noise, and the pipeline cannot mathematically justify why an asset was admitted or quarantined. While search retrieval metrics (Recall@k, nDCG, Mean Reciprocal Rank) are detailed in [Chapter 8](ch08-engineering-artifacts-as-data.md) and hybrid search calibration in [Chapter 6](ch06-applied-mathematics-for-expert-systems.md), the mathematical apparatus below governs corpus preparation prior to indexing.
@@ -616,6 +645,13 @@ where $P(b_i)$ denotes the empirical probability of occurrence of a byte with va
 3. **Worked Numerical Example:** A $4\,\text{KB}$ peripheral address map block yields entropy $H(X) = 7.34\,\text{bits/byte}$. The signature scanner detects 32 occurrences of `0xF020...` hexadecimal addresses, preventing spurious rejection and ensuring preservation of the register map.
 
 All admitted fragments enforce absolute bit-for-bit provenance (*Bit-for-Bit Provenance*): newline normalization (`CRLF` $\to$ `LF`) is strictly forbidden on raw storage files, and citation offsets rely exclusively on $[\mathrm{byte\_start}, \mathrm{byte\_end}]$ intervals relative to the canonical container.
+
+> [!NOTE]
+> **Authorial Two-Stage Entropy Selection Gate (KDI and Hardware Register Map Protection)**
+> 1. Knowledge Density Index (KDI): quantitative valuation of fragment utility via weighted balance of deontics ($w_d=0.35$), entities ($w_e=0.25$), tables ($w_t=0.25$), and SI units ($w_q=0.15$).
+> 2. Three-tier ore stratification: immediate promotion of rich ore ($\mathrm{KDI} \ge 0.15$), deep dependency parsing for poor ore ($0.05 \le \mathrm{KDI} < 0.15$), and discarding slag ($\mathrm{KDI} < 0.05$).
+> 3. Shannon entropy hex-map protection: byte entropy scanning ($H(X) > 7.20\,\text{bits/byte}$) paired with `0x...` signature detection to preserve peripheral register layouts (`HARDWARE_HEX_MAP`).
+> *Runtime Governance:* Enforcement of Bit-for-Bit Provenance prohibiting `CRLF` $\to$ `LF` normalization and anchoring all quotes to $[\mathrm{byte\_start}, \mathrm{byte\_end}]$ file offsets.
 
 ## 13. Operational Performance and Quality Metrics of KAS
 
@@ -962,6 +998,13 @@ To prevent invalid comparison operations across heterogeneous physical dimension
 1. **Runtime and Control Flow Decisions:** Any relational operation ($A < B$, $A \ge B$) or subtraction operation ($A - B$) is permitted if and only if operand dimension vectors are strictly identical: $\mathbf{D}_A = \mathbf{D}_B$. If the system attempts to compare threshold voltage ($\text{V}: [2, 1, -3, -1, 0, 0, 0]$) with leakage current ($\text{A}: [0, 0, 0, 1, 0, 0, 0]$), the KAS compiler immediately aborts rule synthesis with fatal error `TYPE_DIMENSION_MISMATCH` and blocks publication into working memory.
 2. **Hardware Dimensioning and Resources:** The 7-dimensional dimension vector is packed into an 8-byte machine word (7 signed `int8` bytes plus 1 alignment byte). Consequently, dimensional compatibility verification executes via a single 64-bit register comparison instruction (`CMP`) in 1 machine cycle without accessing main memory.
 3. **Worked Numerical Example:** For a microcontroller supply constraint, nominal voltage is specified as $5.0\,\text{V} \pm 10\%$, defining interval $I_V = [4.50, 5.50]\,\text{V}$. A safety requirement dictates comparison with supervisor undervoltage trip threshold $4.80\,\text{V}$. Both quantities share identical vector $\mathbf{D} = [2, 1, -3, -1, 0, 0, 0]$, verifying dimensional compatibility and permitting the formal verifier to evaluate partial tolerance overlap and generate a warning rule.
+
+> [!NOTE]
+> **Three Authorial Invariants of Deterministic Technical Knowledge Compilation**
+> 1. Passive Voice syntactic inversion: Universal Dependencies parsing automatically resolves true obligation holders (`Actor/Agent`) upon detecting the `aux:pass` relation.
+> 2. Tolerance interval semantics: extracting engineering parameters as closed confidence intervals $I_V = [V_{\min}, V_{\max}] = [V_{\mathrm{nominal}}(1-\delta), V_{\mathrm{nominal}}(1+\delta)]$.
+> 3. Hardware-native 7D SI dimensional typing: encoding vectors $\mathbf{D} \in \mathbb{Z}^7$ into a 64-bit word to verify physical compatibility with a single single-cycle CPU `CMP` instruction.
+> *Runtime Governance:* Any attempted comparison of dimensionally incompatible quantities halts compilation immediately with `TYPE_DIMENSION_MISMATCH`.
 
 ---
 
