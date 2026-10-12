@@ -77,8 +77,12 @@ Attempting to assign an expert system a single monolithic autonomy privilege ("f
 
 A0–A4 constitutes an educational taxonomy formulated within this chapter, rather than formal certification levels under IEC 61508. Elevating autonomy requires rigorous analysis of the specific action class and operational environment. IEC 61508 [[2]](#src-2) stipulates lifecycle requirements for safety functions; the mere presence of a certified component does not in itself establish independence or protective sufficiency. For A4 autonomy, the protective mechanism must operate completely independently of the availability or health of any language model or centralized expert inference engine. Shared sensors, power supplies, communication buses, and shared execution resources must be thoroughly audited to preclude common-cause failures.
 
-> [!NOTE] Architectural Invariant for Level A4: Total Isolation from LLMs and Heavy Inference
-> Emergency interlocks and emergency stops in avionics, power generation, and hardware-in-the-loop test facilities belong to the highest criticality tier. If test rig temperature spikes beyond 140°C, power cut-off must execute at the level of a deterministic hard PLC (*programmable logic controller*) or hardware safety relay with a response latency < 5 ms. An A4 protective action must **never** await an evaluation from a cloud-hosted language model, a vector index, or even an elaborate symbolic planner. The expert system may investigate the incident post-mortem (level A0), but it must never reside within the critical path of emergency protective cut-off.
+> [!NOTE]
+> **Three Invariants for Level A4 Emergency Autonomy Defined by the Author**
+> 1. Hardware Determinism of Protective Cut-Off: emergency interlocks and protective cut-offs execute strictly at the deterministic hard PLC or safety relay tier with guaranteed response latency < 5 ms.
+> 2. Total Isolation from Heavy and Stochastic Models: level A4 protective actions must never await evaluations from cloud language models, vector stores, or multi-step symbolic planners.
+> 3. Retrospective Analysis over Operational Path: the expert system investigates incidents post-mortem at level A0, but must never reside within the time-critical protective interruption circuit.
+> *Runtime Management:* The Level A4 safety barrier operates autonomously, overriding control unconditionally regardless of neuro-symbolic subsystem availability.
 
 ## 3. Typed Action Contracts and Execution Invariants
 

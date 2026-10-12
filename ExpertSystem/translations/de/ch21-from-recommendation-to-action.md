@@ -77,8 +77,12 @@ Der Versuch, einem Expertensystem eine einzige globale Privilegienebene zuzuweis
 
 A0–A4 fungieren als didaktische Klassifikation dieses Kapitels und stellen keine normativen Zertifizierungsstufen nach IEC 61508 dar. Eine Steigerung der Autonomie bedarf stets einer Einzelfallanalyse von Aktion und Zielumgebung. Die Norm IEC 61508 [[2]](#src-2) definiert umfassende Anforderungen an den Sicherheitslebenszyklus; der bloße Einsatz einer zertifizierten Komponente belegt für sich genommen weder die Unabhängigkeit noch die Hinlänglichkeit des Schutzes. Für Stufe A4 muss der Schutzmechanismus vollständig unabhängig von der Verfügbarkeit des Sprachmodells oder der zentralen Inferenzmaschine operieren. Kritisch zu prüfen sind dabei auch gemeinsame Sensoren, Versorgungsspannungen, Kommunikationskanäle und Hardwareressourcen, über die Fehler mit gemeinsamer Ursache (*Common-Cause-Fehler*) auftreten können.
 
-> [!NOTE] Architektonisches Axiom für Stufe A4: Vollständige Isolation von LLMs und komplexer Inferenz
-> Notabschaltungen (*emergency stops / interlocks*) in der Avionik, Energietechnik oder auf Prüffeldern zählen zur höchsten Kritikalitätsklasse. Schnellt die Prüfstandstemperatur über 140 °C, muss die Spannungsabschaltung auf Ebene einer fest verdrahteten SPS (*Programmable Logic Controller*) oder eines elektromechanischen Schutzrelais mit einer Ansprechzeit von < 5 ms erfolgen. Eine A4-Schutzfunktion darf **unter keinen Umständen** auf die Antwort eines Cloud-Sprachmodells, eines Vektorindex oder selbst eines komplexen symbolischen Planers warten. Das Expertensystem kann den Vorfall post-factum analysieren (Stufe A0), darf sich jedoch niemals im zeitkritischen Pfad der Notfallunterbrechung befinden.
+> [!NOTE]
+> **Drei Invarianten der Notfall-Autonomieebene A4 nach dem Autorkonzept**
+> 1. Hardware-Determinismus der Schutzabschaltung: Notabschaltungen und Schutzverriegelungen (*interlocks*) erfolgen strikt über festverdrahtete SPS oder Sicherheitsrelais mit Ansprechzeiten < 5 ms.
+> 2. Vollständige Isolation von stochastischen und schweren Modellen: Schutzaktionen der Stufe A4 dürfen niemals auf Antworten von Cloud-Sprachmodellen, Vektordatenbanken oder komplexen symbolischen Planern warten.
+> 3. Retrospektive Analyse statt operativem Eingriff: Das Expertensystem untersucht Störfälle post-factum auf Stufe A0, verbleibt jedoch außerhalb des zeitkritischen Pfades der Notfallunterbrechung.
+> *Runtime-Steuerung:* Die Schutzbarriere der Ebene A4 operiert autonom und erzwingt das Veto bedingungslos unabhängig vom Zustand neuro-symbolischer Module.
 
 ## 3. Typisierte Aktionsverträge und Ausführungsinvarianten
 
