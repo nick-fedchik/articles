@@ -462,7 +462,7 @@ For rigorous auditability, an expert system stores every claim with two temporal
 > The author formalizes a mathematical bitemporal sampling operator and a three-stage decision model:
 > 
 > *Bitemporal Sampling Operator Formula:*
-> $$K(t_v, t_s) = \{\, c \in \mathcal{KB} \mid t_v \in I_v(c) \wedge t_s \in I_s(c) \,\} \subset \mathbb{T} \times \mathbb{T}$$
+> $$K(t_v, t_s) = \{\, c \in \mathcal{KB} \mid t_v \in I_v(c) \wedge t_s \in I_s(c) \,\} \subseteq \mathcal{KB}$$
 > where $t_v \in I_v(c)$ denotes the claim's physical/normative validity interval (Valid Time), and $t_s \in I_s(c)$ denotes its immutable commit interval in the audit ledger (Transaction Time).
 > 
 > *Three-Stage Cardinality Arbitration over $|K(t_v, t_s)|$:*
@@ -1176,7 +1176,7 @@ The calculation evaluates:
 > 
 > *Six Mandatory Verification Conjuncts:*
 > 1. $\mathrm{Schema}(g) \in \{\mathbf{True}, \mathbf{False}\}$ — structural schema validity under canonical JSON/ASN.1 schemas.
-> 2. $\mathrm{Applicable}(g,q,t_v,t_s) \in \{\mathbf{True}, \mathbf{False}\}$ — operational applicability across scope, time, SI units, and entity identifiers.
+> 2. $\mathrm{Applicable}(g,q,t_v,t_s) \in \{\mathbf{True}, \mathbf{False}, \mathbf{Unknown}\}$ — operational applicability across scope, time, SI units, and entity identifiers.
 > 3. $\mathrm{Replay}(g) \in \{\mathbf{True}, \mathbf{False}\}$ — determinism verification: successful re-execution of the proof trace on a frozen knowledge snapshot.
 > 4. $\mathrm{Resolved}(g) \in \{\mathbf{True}, \mathbf{False}\}$ — absence of open unresolved contradictions in Dung's argumentation framework.
 > 5. $\mathrm{Authorized}(u,g) \in \{\mathbf{True}, \mathbf{False}\}$ — user clearance $u$ satisfies classification label $\ell(g)$ across Denning's lattice.

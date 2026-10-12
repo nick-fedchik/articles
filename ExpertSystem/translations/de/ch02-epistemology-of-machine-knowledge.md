@@ -452,7 +452,7 @@ Die Diskrepanz zwischen beiden Abfragen dokumentiert transparent: Das System han
 > **Bitemporales mathematisches Modell des Autors: Bitemporaler Abtastoperator und Arbitrierung von Kardinalitätsstufen**  
 > Zur formalen Modellierung des epistemischen Status von Fakten in der Zeitachse führt der Autor den bitemporalen Abtastoperator ein:
 > 
-> $$K(t_v, t_s) = \{\, c \in \mathcal{KB} \mid t_v \in I_v(c) \wedge t_s \in I_s(c) \,\}$$
+> $$K(t_v, t_s) = \{\, c \in \mathcal{KB} \mid t_v \in I_v(c) \wedge t_s \in I_s(c) \,\} \subseteq \mathcal{KB}$$
 > 
 > *Drei deterministische Kardinalitätsstufen des Operators:*
 > 1. $|K(t_v, t_s)| = 0$: Keine normative Abdeckung zum Systemzeitpunkt $t_s$ für $t_v$; Übergang in sichere Enthaltung (*Fail-Closed Abstention*).
@@ -1125,7 +1125,7 @@ Praktische Anwendung und ingenieurtechnische Konsequenzen:
 > 
 > *Sechs konstitutive Konjunkte des Urteilsrechts:*
 > 1. $\mathrm{Schema}(g)$: Vollständige syntaktische und typologische Validität der Aussage.
-> 2. $\mathrm{Applicable}(g,q,t_v,t_s)$: Dreiwertige Passung bezüglich Kontext, Zeit, Einheiten und Objektidentität.
+> 2. $\mathrm{Applicable}(g,q,t_v,t_s) \in \{\mathbf{True}, \mathbf{False}, \mathbf{Unknown}\}$: Dreiwertige Passung bezüglich Kontext, Zeit, Einheiten und Objektidentität.
 > 3. $\mathrm{Replay}(g)$: Deterministische Reproduzierbarkeit des Beweispfades auf unveränderlichen Datenständen.
 > 4. $\mathrm{Resolved}(g)$: Widerspruchsfreiheit bzw. formale Auflösung normativer Kollisionen im Dung-Graphen.
 > 5. $\mathrm{Authorized}(u,g)$: Autorisierung des Benutzers nach dem Sicherheitsverbandsmodell von Dorothy Denning.

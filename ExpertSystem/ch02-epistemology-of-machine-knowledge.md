@@ -455,7 +455,7 @@ K(t_v,t_s)=\{\,c \in \mathcal{KB} \mid t_v\in I_v(c)\ \wedge\ t_s\in I_s(c)\,\}
 > Автором монографії формалізовано математичний оператор бітемпоральної вибірки та тристадійну схему ухвалення рішень:
 > 
 > *Формула бітемпорального оператора вибірки:*
-> $$K(t_v, t_s) = \{\, c \in \mathcal{KB} \mid t_v \in I_v(c) \wedge t_s \in I_s(c) \,\} \subset \mathbb{T} \times \mathbb{T}$$
+> $$K(t_v, t_s) = \{\, c \in \mathcal{KB} \mid t_v \in I_v(c) \wedge t_s \in I_s(c) \,\} \subseteq \mathcal{KB}$$
 > де $t_v \in I_v(c)$ — інтервал чинності твердження у предметному світі (Valid Time), а $t_s \in I_s(c)$ — інтервал системної присутності в незмінному сховищі аудиту (Transaction Time).
 > 
 > *Тристадійний арбітраж за потужністю множини $|K(t_v, t_s)|$:*
@@ -1173,7 +1173,7 @@ flowchart TD
 > 
 > *Шість обов'язкових перевірок допуску:*
 > 1. $\mathrm{Schema}(g) \in \{\mathbf{True}, \mathbf{False}\}$ — структурна валідність запису за канонічною JSON/ASN.1 схемою.
-> 2. $\mathrm{Applicable}(g,q,t_v,t_s) \in \{\mathbf{True}, \mathbf{False}\}$ — повна застосовність (збіг меж, часу, одиниць SI та ідентифікаторів).
+> 2. $\mathrm{Applicable}(g,q,t_v,t_s) \in \{\mathbf{True}, \mathbf{False}, \mathbf{Unknown}\}$ — повна застосовність (збіг меж, часу, одиниць SI та ідентифікаторів).
 > 3. $\mathrm{Replay}(g) \in \{\mathbf{True}, \mathbf{False}\}$ — верифікація детермінізму: успішне повторення траси виведення на знімку бази знань.
 > 4. $\mathrm{Resolved}(g) \in \{\mathbf{True}, \mathbf{False}\}$ — відсутність відкритих нерозв'язаних суперечностей в аргументаційному графі Зунга.
 > 5. $\mathrm{Authorized}(u,g) \in \{\mathbf{True}, \mathbf{False}\}$ — відповідність рівня допуску користувача $u$ мітці секретності $\ell(g)$ за ґраткою Деннінг.
