@@ -35,6 +35,14 @@ Consider an engineering scenario: two separate teams deploy identical chat inter
 
 The taxonomic classification of an information system is governed neither by its frontend shell nor by the presence of neural networks, but strictly by what artifact it emits and how that artifact is formally justified. The following sections examine this demarcation across three architectural tiers, beginning with the semantic nature of the query itself.
 
+> [!NOTE]
+> **Authorial Typological Taxonomy: Four Functional Classes of Information Systems**  
+> The author proposes a functional taxonomy of information systems where the class boundary is defined not by user interface or neural components, but by the emitted artifact and its method of formal justification:
+> 1. **Information Retrieval (Reference) System:** Locates and passively retells previously recorded information from a corpus without deductive synthesis for a specific case.
+> 2. **Consultation (Dialogue) System:** Conducts human-machine dialogue, gathers primary parameters, and presents explanatory workflows without legal or auditable evidential force.
+> 3. **Decision Support System (DSS):** Performs statistical ranking of alternatives, predictive forecasting, or optimization without a deterministic logical proof trace.
+> 4. **Evidence-Governed Expert System:** Deterministically applies normative rules to the facts of a specific case, synthesizing a verifiable conclusion accompanied by an inspectable proof trace and a cryptographically signed justification bundle.
+
 ## 2. Semantic Query Level: Differentiating Document Corpus Analysis from Case-Specific Facts
 
 User queries submitted to engineering platforms frequently share superficial syntactic patterns, yet belong to two fundamentally distinct epistemic categories. When this distinction is neglected, an information retrieval system attempts to resolve a query that exceeds its capabilities, producing an answer that appears superficially authoritative while lacking factual validity.
@@ -48,6 +56,14 @@ A **case query** addresses a unique, concrete physical or operational situation:
 An expert system is fully capable of answering corpus queries, because an information retrieval component is routinely embedded within its architecture. The inverse proposition is false: an information retrieval system lacks the formal mechanisms required to evaluate rules against case-specific facts; consequently, when confronted with a case query, it can offer nothing beyond disconnected citations or probabilistic conjecture.
 
 An engineering document corpus is shared across hundreds of projects and evolves slowly under rigorous revision controls, whereas every engineering case introduces unique empirical facts. Retrieval mechanisms extract general constraints from the corpus, but cannot project those general constraints onto a concrete instance: that projection is strictly the domain of the inference engine. The next section explores the architectural role of Large Language Models, which are most frequently conflated with expert systems.
+
+> [!NOTE]
+> **Authorial Semantic Demarcation: Corpus Queries Versus Case Queries**  
+> The author formalizes a foundational semantic boundary between two categories of engineering inquiries:
+> 1. **Corpus Queries ($Q_{\text{corpus}}$):** Informational lookups regarding what is recorded in documentation (*"What does the standard require for insulation?"*); the answer already exists verbatim in the primary text as an excerpt or summary.
+> 2. **Case Queries ($Q_{\text{case}}$):** Analytical inquiries regarding a concrete empirical situation $C = \langle \text{object}, \text{measurements}, \text{context} \rangle$; an answer does not exist verbatim in any source document, but must be derived through deductive resolution across verified facts and rules.
+> 
+> Information retrieval systems (including RAG) are architecturally incapable of bridging from $Q_{\text{corpus}}$ to $Q_{\text{case}}$ without stochastic guessing or hallucination risks.
 
 ## 3. Functional Role of Large Language Models in the Architecture of Analytical Systems
 
@@ -137,8 +153,9 @@ An **expert conclusion** represents a novel evaluative judgment regarding a conc
 | Scope and Validity Envelopes | Defined implicitly by the underlying source | Explicitly declared: applicability domain, assumptions, lifecycle status |
 | Operational Use | Informational reference and research | Legally and technically binding evidence for audits or safety certification |
 
-> [!NOTE] Engineering Contrast: Why Reference Documentation Cannot Guarantee Hardware Integrity
-> When querying a conventional RAG system: *"Can 24 V be applied to the digital input of module DI-4?"*, the retriever uncovers the hardware specification statement "nominal digital input voltage: 24 V DC" and synthesizes an affirmative response.
+> [!TIP]
+> **Engineering Contrast: Why Reference Documentation Cannot Guarantee Hardware Integrity**  
+> When querying a conventional RAG system: *"Can 24 V be applied to the digital input of module DI-4?"*, the retriever uncovers the hardware specification statement "nominal digital input voltage: 24 V DC" and synthesizes an affirmative response.  
 > An expert system, however, verifies the **facts of the active hardware configuration**: if the physical circuit board jumper is set to TTL mode (5 V) or the module case temperature exceeds 70 °C, applying 24 V will catastrophically destroy the input optocoupler. The expert system firmly blocks the operation, identifying an irreconcilable hardware configuration conflict. Reference systems quote specification prose; expert systems compute deterministic consequences for a concrete device.
 
 Between a verbatim quotation and a certified expert conclusion lie four hierarchical tiers of evidentiary weight:
@@ -169,6 +186,14 @@ flowchart LR
 ```
 
 Grey nodes synthesize no novel knowledge; the orange node generates an ungrounded claim; the green node produces a novel, formally proven conclusion. The double arrow denotes the evidentiary threshold: crossing this boundary cannot be achieved through superior prose styling, but strictly requires verified empirical facts, declarative rules, and a reproducible deduction trace.
+
+> [!NOTE]
+> **Authorial Evidentiary Tier Model: Four Output Artifact Levels and the Threshold of Expertise**  
+> The author conceptualizes a four-tier scale of evidentiary weight for output artifacts emitted by information systems:
+> 1. **Extract:** Verbatim excerpt from a primary source without semantic synthesis or novel content.
+> 2. **Reference Summary:** Structured compilation of multiple citations; novel domain knowledge remains absent.
+> 3. **Non-Expert Conclusion:** An assertion regarding a specific case synthesized heuristically or by a stochastic language model without an auditable chain of facts and rules (unverifiable).
+> 4. **Expert Conclusion:** A deterministic judgment regarding a concrete case that crosses the *evidentiary threshold* via a complete proof trace, verified provenance for every premise, and an encapsulated cryptographically signed justification package (*proof packet*).
 
 The transition across this threshold is governed by formal proof structures rather than linguistic quality. The following section examines this distinction through a concrete mission-critical release gate decision.
 
@@ -404,6 +429,16 @@ The kernel of an evidence-governed expert system consists of components entirely
 - The **knowledge base verifier** statically analyzes the rule base for mutual contradictions, circular dependencies, and unreachable dead-end conditions prior to deploying a ruleset into production ([Chapter 23](ch23-knowledge-base-verification.md)).
 - The **controlled knowledge update workflow** translates operational field experience into a validated, versioned knowledge base release (see Section [«7.1. Knowledge Evolution via Versioning and Regression Testing on Golden Sets»](#навчання-лише-через-перевірену-нову-версію-бази-знань) below).
 
+> [!NOTE]
+> **Authorial Architectural Model of the Evidence-Governed Core: Six Invariant Subsystems**  
+> In contrast to the three-tier linear RAG pipeline (index, retriever, generator), the author substantiates the mandatory presence of six dedicated subsystems within an evidence-governed core:
+> 1. **Knowledge Base (KB):** Structured repository of ontologies, physical constraints, and declarative rules, strictly decoupled from unstructured prose.
+> 2. **Working Memory (WM):** Isolated context space storing facts of an active engineering case, safeguarded against cross-session contamination.
+> 3. **Inference Engine:** Deterministic algorithmic engine (Rete/SMT) executing forward and backward chaining without stochastic variance.
+> 4. **Explanation Engine:** Bidirectional proof trace synthesizer addressing *"Why?"* and *"How?"* audit queries.
+> 5. **Knowledge Base Verifier:** Offline static audit module detecting normative contradictions, cyclic dependencies, and dead premises prior to operational release.
+> 6. **Controlled Knowledge Evolution Loop:** Rigorous verification and regression testing gate over immutable reference benchmarks (*Golden Sets*) preceding any versioned deployment.
+
 If one strips the inference engine, working memory, and explanation engine from an expert system, the architecture collapses into an information retrieval system: search indexes and language models remain, but the capability to synthesize an auditable decision for a concrete case is lost. This architectural divergence explains why certain system classes satisfy the epistemic contract while others fail. The following section consolidates this comparison.
 
 ## 6. Comparative Analysis of System Classes Under Epistemic Contract Criteria
@@ -466,6 +501,13 @@ The governing architectural principle of this monograph is clear: an organizatio
 Consider an example: the emergency shutdown of a high-voltage test bench is primarily governed by dedicated hardware interlocks that operate entirely independently of software layers. An expert system may initiate an earlier, preventive shutdown upon identifying a complex combination of telemetry anomalies, but it never replaces the fail-safe hardware interlock. Following an automated intervention, the expert system writes the triggering facts, active rule identifiers, and knowledge base version to an immutable audit log, enabling the lead engineer to retrospectively examine the event and, if necessary, amend the rule via the controlled change management process.
 
 Autonomy is an operational property of an individual action rather than of the expert system as a whole, and the autonomy tier for every system action must be formally declared. The five tiers of operational autonomy, ranging from pure recommendation to fully autonomous actuation, and architectural patterns for mitigating human approval fatigue are detailed in [Chapter 21](ch21-from-recommendation-to-action.md).
+
+> [!NOTE]
+> **Authorial Operational Validation Triad: Reliability Mandates Across the System Lifecycle**  
+> The author formulates and formalizes a triad of non-negotiable engineering rules governing the long-term exploitation of evidence-governed expert systems:
+> 1. **Governed Knowledge Evolution via Versioning:** Prohibition of unmonitored online self-learning; knowledge modifications occur strictly through isolated proposals, provenance auditing, offline validation against immutable reference benchmarks (*Golden Sets*), and versioned deployments with rollback capabilities.
+> 2. **Metrological Calibration of Numerical Confidence ($ECE \to 0$):** Strict separation of deterministic deductive inferences (which possess no probability) from statistical classifiers; mandatory audit of Expected Calibration Error (ECE) prior to exposing percentage confidence values to human operators.
+> 3. **Granular Action Autonomy & Fail-Closed Kill-Switch:** Assignment of execution autonomy strictly to the concrete tuple $\langle\text{action}, \text{environment}, \text{risk level}\rangle$; non-negotiable enforcement of an independent hardware interlock; the inviolable invariant that delegating execution never waives the requirement for an end-to-end auditable proof trace.
 
 These three operational principles share a common foundation: no knowledge evolution, no confidence metric, and no autonomous actuation may be introduced without an auditable verification trace. This is the exact requirement that separates an expert conclusion from a reference summary, projected across the operational lifecycle of the system.
 

@@ -34,6 +34,14 @@ Zur Veranschaulichung betrachte man zwei Ingenieurteams mit identischer Chat-Obe
 
 Die Klasse eines Informationssystems wird folglich weder durch das Frontend noch durch die Präsenz eines neuronalen Netzes bestimmt, sondern ausschließlich dadurch, was das System ausgibt und wie es seine Ausgaben begründet. Im Folgenden wird die Grenze zwischen Auskunft und Expertise auf drei Ebenen analysiert – beginnend mit der Natur der Fragestellung.
 
+> [!NOTE]
+> **Typologische Taxonomie des Autors: Vier funktionale Klassen von Informationssystemen**  
+> Der Autor schlägt eine funktionale Taxonomie von Informationssystemen vor, bei der die Klassengrenze nicht durch Benutzeroberflächen oder neuronale Netze definiert wird, sondern durch das emittierte Artefakt und dessen formale Begründungsmethode:
+> 1. **Informations- und Auskunftssystem (Referenzsystem):** Findet und gibt bereits im Korpus aufgezeichnete Informationen passiv wieder, ohne Schlussfolgerungen für den Einzelfall zu ziehen.
+> 2. **Konsultations- und Dialogsystem:** Führt Mensch-Maschine-Dialoge, erfasst Primärdaten und bietet erklärende Handlungsabläufe ohne rechts- oder nachweisverbindliche Evidenz.
+> 3. **Entscheidungsunterstützungssystem (DSS):** Führt statistische Bewertungen von Alternativen, Vorhersagen und Optimierungen ohne deterministische logische Beweisspuren durch.
+> 4. **Evidenzbasiertes Expertensystem:** Wendet normative Regeln deterministisch auf Fakten eines konkreten Einzelfalls an und erzeugt eine formal nachprüfbare Beweisspur samt signiertem Begründungspaket (*Proof Packet*).
+
 ## 2. Semantische Ebene der Anfrage: Differenzierung zwischen Dokumentkorpus-Analyse und Einzelfallfakten
 
 Benutzeranfragen ähneln sich oberflächlich in ihrer syntaktischen Formulierung, gehören jedoch zwei fundamental verschiedenen Kategorien an. Wird diese Differenzierung ignoriert, versucht ein reines Auskunftssystem unweigerlich eine Frage zu beantworten, für die es konstruktiv ungeeignet ist – und liefert dabei eine trügerisch überzeugende Antwort.
@@ -47,6 +55,14 @@ Eine **Einzelfallanfrage** bezieht sich hingegen auf eine konkrete, individuelle
 Ein Expertensystem beherrscht auch Korpusanfragen, da ein Suchmodul als Subkomponente in seine Architektur integriert ist. Die Umkehrung gilt nicht: Einem Auskunftssystem fehlt prinzipbedingt der Mechanismus zur Regelanwendung auf Fallfakten. Daher kann ein Auskunftssystem auf eine Einzelfallanfrage bestenfalls mit einem Quellenzitat oder einer stochastischen Mutmaßung reagieren.
 
 Ein Dokumentkorpus gilt übergeordnet für viele Anwendungsfälle und ändert sich selten, wohingegen jeder Fall seine eigenen, variablen Fakten besitzt. Eine Suchmaschine ruft allgemeine Regeln aus dem Korpus ab, kann diese Regeln jedoch nicht auf den Einzelfall abbilden: Diese Synthese obliegt der Inferenzmaschine. Der folgende Abschnitt beleuchtet, welche Rolle in dieser Teilung großen Sprachmodellen zukommt, die in der Praxis am häufigsten mit Expertensystemen verwechselt werden.
+
+> [!NOTE]
+> **Semantische Demarkation des Autors: Korpusanfragen versus Einzelfallanfragen**  
+> Der Autor formalisiert die fundamentale semantische Grenze zwischen zwei Kategorien von Ingenieuranfragen:
+> 1. **Korpusanfrage ($Q_{\text{corpus}}$):** Suchanfrage zum aufgezeichneten Inhalt von Dokumenten („Was fordert die Norm für Isolation?“); die Antwort existiert bereits wörtlich im Primärtext als Zitat oder Zusammenfassung.
+> 2. **Einzelfallanfrage ($Q_{\text{case}}$):** Analytische Anfrage bezüglich einer konkreten empirischen Situation $C = \langle \text{Objekt}, \text{Messwerte}, \text{Kontext} \rangle$; eine wörtliche Antwort existiert in keinem Quelldokument, sondern muss durch die Inferenzmaschine deduktiv über Fakten und Regeln hergeleitet werden.
+> 
+> Informations- und Auskunftssysteme (einschließlich RAG) sind architektonisch unfähig, ohne stochastische Spekulation oder Halluzinationsrisiken von $Q_{\text{corpus}}$ zu $Q_{\text{case}}$ überzugehen.
 
 ## 3. Funktionale Rolle großer Sprachmodelle in der Architektur analytischer Systeme
 
@@ -136,8 +152,9 @@ Ein **Expertengutachten** (*Expertenurteil*) ist hingegen eine eigenständige Sc
 | Geltungsbereich | Durch Primärquelle vorgegeben | Explizit deklariert: Domäne, Annahmen, Status |
 | Verwendung | Informationsbereitstellung | Verbindlicher Beweis in Audit und Zertifizierung |
 
-> [!NOTE] Ingenieurtechnischer Kontrast: Warum reine Auskunft in Hardware-Systemen versagt
-> Fragt man ein typisches RAG-System: *„Darf eine Spannung von 24 V an den Digitaleingang des Moduls DI-4 angelegt werden?“*, findet es im Datenblatt die Angabe „Nenneingangsspannung: 24 V DC“ und antwortet affirmativ.
+> [!TIP]
+> **Ingenieurtechnischer Kontrast: Warum reine Auskunft in Hardware-Systemen versagt**  
+> Fragt man ein typisches RAG-System: *„Darf eine Spannung von 24 V an den Digitaleingang des Moduls DI-4 angelegt werden?“*, findet es im Datenblatt die Angabe „Nenneingangsspannung: 24 V DC“ und antwortet affirmativ.  
 > Ein Expertensystem prüft demgegenüber die **Fakten der aktuellen Verschaltung**: Wurde das Board über Jumper auf TTL-Pegel (5 V) konfiguriert oder überschreitet die Gehäusetemperatur 70 °C, führt das Anlegen von 24 V zur thermischen Zerstörung des Eingangsoptokopplers. Das Expertensystem blockiert die Aktion und weist präzise auf den Hardware-Konfigurationskonflikt hin. Das Auskunftssystem zitiert Spezifikationen; das Expertensystem berechnet die physikalische Konsequenz für das konkrete Gerät.
 
 Zwischen einem wörtlichen Textzitat und einem vollwertigen Expertengutachten liegen vier diskrete Evidenzstufen:
@@ -168,6 +185,14 @@ flowchart LR
 ```
 
 Die grauen Knoten generieren kein neues Wissen; der orangefarbene Knoten liefert eine isolierte Behauptung ohne Fundierung; der grüne Knoten repräsentiert ein fundiertes Urteil mit formalem Beweis. Der Doppelpfeil markiert die Evidenzschwelle: Um sie zu überschreiten, genügt keine ausgefeiltere Rhetorik, sondern es bedarf diskreter Fakten, expliziter Regeln und einer verifizierbaren Beweisspur.
+
+> [!NOTE]
+> **Evidenzstufenmodell des Autors: Vier Stufen des Ausgangsdokuments und die Expertise-Schwelle**  
+> Der Autor konzipiert eine vierstufige Skala der Beweiskraft für Ausgangsartefakte von Informationssystemen:
+> 1. **Auszug:** Wörtliches Textfragment der Primärquelle ohne Synthese neuen Inhalts.
+> 2. **Auskunft (Referenzdokument):** Strukturierte Zusammenstellung mehrerer Zitate; neues Wissen entsteht nicht.
+> 3. **Nicht-expertengestützte Aussage:** Heuristisch oder durch stochastische Sprachmodelle erzeugte Einzelfallaussage ohne maschinelle Spur von Fakten und Regeln (nicht verifizierbar).
+> 4. **Expertengutachten (Expertenurteil):** Deterministisches Urteil über den Einzelfall, das die *Expertise-Schwelle* dank vollständiger Beweisspur, Herkunftsnachweis jeder Prämisse und signiertem Begründungspaket (*Proof Packet*) überschreitet.
 
 Die Grenze zwischen Stufe 3 und 4 wird nicht durch die Textqualität markiert, sondern durch die Existenz prüfbarer Inferenzketten. Der folgende Abschnitt veranschaulicht diesen Unterschied anhand einer Freigabeentscheidung, von der die physische Sicherheit von Testfahrten abhängt.
 
@@ -403,6 +428,16 @@ Den Kern eines Expertensystems bilden Subsysteme, die in einer RAG-Pipeline nich
 - **Die Wissensbasis-Verifikation:** analysiert Regelsätze automatisiert auf zirkuläre Abhängigkeiten, interne Kontradiktionen und unerreichbare Bedingungen, bevor ein Regelsatz produktiv geschaltet wird ([Kapitel 23](ch23-knowledge-base-verification.md)).
 - **Die kontrollierte Wissensevolution:** überführt Betriebserfahrungen und Normänderungen in eine geprüfte neue Release der Wissensbasis (siehe Abschnitt [„7.1. Wissensevolution durch Versionierung und Regressionstests auf Referenzdatensätzen“](#навчання-лише-через-перевірену-нову-версію-бази-знань)).
 
+> [!NOTE]
+> **Architekturmodell des Autors für das evidenzbasierte Kernsystem: Sechs invariante Subsysteme**  
+> Im Gegensatz zur linearen dreistufigen RAG-Pipeline (Index, Retriever, Generator) begründet der Autor die zwingende Notwendigkeit von sechs Subsystemen im evidenzbasierten Kern:
+> 1. **Wissensbasis (KB):** Strukturierter Speicher für Ontologien, Anforderungen und Regeln, entkoppelt von Rohprosa.
+> 2. **Arbeitsspeicher des Falles (WM):** Isolierter Kontextraum für Fakten des aktuellen Falls, geschützt vor sitzungsübergreifender Kontamination.
+> 3. **Inferenzmaschine (Inference Engine):** Deterministischer algorithmischer Resolver (Rete/SMT) für Vorwärts- und Rückwärtsverkettung ohne stochastische Schwankungen.
+> 4. **Erklärungs-Engine (Explanation Engine):** Bidirektionaler Generator von Beweisspuren für „Warum?“- und „Wie?“-Anfragen.
+> 5. **Prüfmodul der Wissensbasis:** Statische Auditeinheit zur Erkennung von Widersprüchen, Zyklen und toten Regeln vor der Produktivsetzung.
+> 6. **Kontrollierter Wissensevolutions-Kreislauf:** Verifikations- und Regressionstest-Gateway auf Referenz-Datensätzen (*Golden Sets*) vor jedem Release.
+
 Entfernt man aus einem Expertensystem die Inferenzmaschine, den Arbeitsspeicher und die Erklärungskomponente, degeneriert es zu einem Auskunftssystem: Such- und Sprachfunktionen bleiben erhalten, die Urteilsfähigkeit über Einzelfälle geht verloren. Diese architektonische Divergenz erklärt unmittelbar, weshalb manche Systemklassen den epistemischen Kontrakt erfüllen, während andere daran scheitern. Die nachfolgende Matrix führt diesen Vergleich detailliert aus.
 
 ## 6. Vergleichende Analyse der Systemklassen anhand der Kriterien des epistemischen Kontrakts
@@ -465,6 +500,13 @@ Der Leitsatz dieses Buches lautet: Einem Programm kann die Ausführung einer Akt
 Ein industrielles Beispiel: Die Notabschaltung eines Hochvolt-Prüfstands wird primär durch galvanisch getrennte, hardwarebasierte Schutzschaltungen gewährleistet, die völlig unabhängig von Software arbeiten. Ein Expertensystem kann eine proaktive Vorabschaltung initiieren, wenn es eine signifikante Häufung von thermischen Drift-Mustern erkennt – es darf die physische Sicherheitsabschaltung jedoch zu keinem Zeitpunkt ersetzen. Nach einer automatisierten Abschaltung schreibt das Expertensystem die Faktenlage, die ausgelöste Regel und die Revisionsnummer der Wissensbasis unveränderlich in das Audit-Log. Ein Sicherheitsingenieur prüft den Vorfall im Nachgang und modifiziert bei Bedarf die Schwellenwerte über das kontrollierte Änderungsmanagement.
 
 Autonomie ist somit keine pauschale Eigenschaft des Gesamtsystems, sondern ein spezifisches Attribut jeder einzelnen Aktion. Der jeweilige Autonomiegrad muss für jede Systemreaktion explizit deklariert werden. Die fünf Stufen der operationalen Autonomie – vom passiven Ratschlag bis zum vollautomatischen Eingriff – sowie Schutzmechanismen gegen menschliche Bestätigungsmüdigkeit (*Approval Fatigue*) werden in [Kapitel 21](ch21-from-recommendation-to-action.md) eingehend behandelt.
+
+> [!NOTE]
+> **Betriebliche Validierungstriade des Autors: Zuverlässigkeitsregeln im Systemlebenszyklus**  
+> Der Autor formuliert und formalisiert eine Triade unverhandelbarer technischer Regeln für den dauerhaften Betrieb von Expertensystemen:
+> 1. **Gesteuerte Wissensevolution durch Versionierung:** Verbot unkontrollierten Online-Selbstlernens; Änderungen erfolgen ausschließlich über isolierte Vorschläge, Herkunftsaudits, Validierung auf festen Referenz-Datensätzen (*Golden Sets*) und versionierte Releases mit Rollback-Garantie.
+> 2. **Metrologische Kalibrierung numerischer Konfidenz ($ECE \to 0$):** Strikte Trennung deterministischer logischer Schlüsse (ohne Wahrscheinlichkeit) von Schätzwerten statistischer Klassifikatoren; zwingender Audit des erwarteten Kalibrierungsfehlers (ECE) vor Ausgabe prozentualer Werte an Operateure.
+> 3. **Granulare Handlungsautonomie und Notabschaltung (Kill-Switch):** Zuweisung von Ausführungsautonomie strikt an das konkrete Tupel $\langle\text{Aktion}, \text{Umgebung}, \text{Risiko}\rangle$; unverzichtbarer unabhängiger Hardware-Unterbrecher; Unveräußerlichkeit der Beweispflicht (Automatisierung entbindet niemals von 100 % Auditierbarkeit).
 
 Alle drei Betriebsregeln teilen ein gemeinsames Fundament: Weder eine Wissensaktualisierung noch eine Konfidenzangabe noch eine automatisierte Aktion darf ohne verifizierbare Beweisspur existieren. Es ist exakt dieselbe Forderung nach Nachvollziehbarkeit, die das Expertengutachten vom unverbindlichen Auskunftsdokument unterscheidet – konsequent angewendet auf den gesamten Betriebslebenszyklus.
 
