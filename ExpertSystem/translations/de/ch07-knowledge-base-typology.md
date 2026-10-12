@@ -340,6 +340,14 @@ Bedeutung der Notation:
 
 Identische Tripel $(S,R,V)$ werden unter Akkumulation ihrer Zitate zusammengefasst; divergierende Werte $`V_1, V_2, \dots`$ bleiben nebeneinander persistent erhalten. Erst zur Abfragezeit evaluiert die Inferenzmaschine den gültigen Wert unter Berücksichtigung von Dokumentenhierarchie, Zeitstempel, Gültigkeitslinie und Zieljurisdiktion. Liegt ein unauflösbarer Widerspruch vor, erzeugt das System eine explizite Konfliktwarnung anstelle einer stillschweigenden Mehrheitsglättung.
 
+> [!NOTE]
+> **Autorenprinzip der verlustfreien evidenzbasierten Zitataggregation für widersprüchliche Fakten**
+> 1. Erhalt der temporalen Validität: schützt geltende Normen vor Überstimmung durch veraltete Normausgaben, die durch spätere Akte aufgehoben wurden (*Lex-Posterior*-Prinzip).
+> 2. Erhalt von Dokumentengrenzen: sichert die Revisionssicherheit und präzise historische Rekonstruktion für frühere Normstände.
+> 3. Erhalt von Ausnahmen und Modalitäten: bewahrt kontextuelle Abschwächungen (MUST $\to$ SHOULD) für spezifische Ingenieurprofile ohne unzulässige Verallgemeinerung.
+> 4. Erhalt von Jurisdiktionen und explizite Zitatbindung: aggregiert Aussagen $\mathrm{Assertion}(S,R,V) \leftarrow [\mathrm{Citation}(D_i, \mathrm{span}_i, h_i)]$ mit exakten Byte-Koordinaten und kryptografischen Hashes $h_i$.
+> *Sicherheitsingenieurtechnische Invariante:* Bei Feststellung unauflösbarer Widersprüche generiert das System eine typisierte Konfliktwarnung (`CONTRADICTION`) anstelle einer stillschweigenden Mehrheitsglättung.
+
 ### 6.2. Semantische Abgrenzung zwischen aktueller Faktenbasis und Präzedenzfallbasis
 
 Eine Faktenbasis speichert atomare Aussagen über den aktuellen Zustand eines Systems. Eine Fallbasis dagegen konserviert in sich geschlossene historische Episoden bestehend aus Problemstellung, Kontext, angewandter Lösung, Resultat und Übertragbarkeitsgrenzen.
@@ -571,8 +579,16 @@ Die nachfolgende Prüfmatrix fasst die OntoClean-Auditkriterien für ingenieurte
 | Einheit | $+U$ vs $-U$ | Was verbindet die Bestandteile zu einem unteilbaren Ganzen? | Ein physisches Steuergerät ($+U$) wird mit einer Sammlung von PDF-Dateien ($-U$) vermengt |
 | Abhängigkeit | $+D$ vs $-D$ | Erfordert die Existenz des Begriffs die Existenz einer externen Entität? | Die Rolle „Modullieferant“ wird ohne Bezug zu einem realen Vertrag modelliert |
 
-> [!TIP] Faustregel für Ontologie-Ingenieure
+> [!TIP]
+> **Faustregel für Ontologie-Ingenieure**
 > Wenn ein Artefakt umkonfiguriert, neu geflasht, repariert, temporär deaktiviert oder rezertifiziert werden kann, ohne physisch zerstört oder verschrottet zu werden, handelt es sich um einen **Zustand oder eine Rolle ($\sim R$)** und niemals um eine **Klasse im Vererbungsbaum ($+R$)**. Modellieren Sie derartige Merkmale stets über Relationen (`hasState`, `hasRole`, `certifiedBy`) und niemals über `rdfs:subClassOf`.
+
+> [!NOTE]
+> **Autorenkriterium der ontologischen Reinheit zur Demarkation von Entitäten und Zuständen in Taxonomien**
+> 1. Rigidität ($+R$): essenzielle, unveränderliche Entitätstypen ($\forall x (P(x) \to \Box P(x))$), die ohne physische Zerstörung nicht aufhören können zu existieren (z. B. Mikrocontroller, physische Platine).
+> 2. Anti-Rigidität ($\sim R$): Phasen-Zustände und operative Rollen ($\forall x (P(x) \to \Diamond \neg P(x))$), die variieren können, ohne die Identität des Objekts aufzulösen (Zertifizierungsstatus, Fehlerzustand, ActiveMaster-Rolle).
+> 3. Unverletzliches Verbot anti-rigider Superklassen: $\sim R \not\sqsupseteq +R$; verbietet strikt die Modellierung von Zuständen oder Rollen als Oberklassen physischer Artefakte.
+> 4. Relationale Zustandsmodellierung: Entkopplung identitätstragender Typen ($+I$) von dynamischen Attributen über explizite Relationen (`hasState`, `hasRole`, `certifiedBy`) anstelle von Subsumptionshierarchien `rdfs:subClassOf`.
 
 Für das Steuergerät BrakeController 3.2 ist die Freigabe ein Zustand innerhalb des Releases R2026.3. Bei einem Widerruf bleibt die Hardware mit der Seriennummer SN-8823 identisch; lediglich das Prädikat `hasReleaseState` wechselt von `Approved` zu `Revoked`. OntoClean garantiert die semantische Stabilität der Begriffswelt. Müssen im System jedoch nicht universelle Klassen, sondern konkrete historische Fehlerfälle bewahrt werden, wechselt das Paradigma zum fallbasierten Schließen.
 
@@ -628,6 +644,13 @@ Das System vergleicht eine neue Sicherheitsanforderung $q$ (Spannungsüberwachun
 \mathrm{sim}(q, c) = 1 \cdot \frac{0{,}4 \cdot 1{,}0 + 0{,}3 \cdot 0{,}8 + 0{,}3 \cdot 0{,}5}{0{,}4 + 0{,}3 + 0{,}3} = \frac{0{,}40 + 0{,}24 + 0{,}15}{1{,}0} = 0{,}79
 ```
 Da $\mathrm{sim}(q, c) = 0{,}79 \in [0{,}60; 0{,}85)$ liegt, ergeht das Urteil `QUALIFIED_ANALOGY`: Der Fall wird dem Fachexperten zur Überprüfung der Schnittstellenparameter eskaliert.
+
+> [!NOTE]
+> **Dreistufiges Autorenmodell der Präzedenzfall-Zulassung und strikten CBR-Filterung**
+> 1. Strikte Anwendbarkeitsfilterung: obligatorische Maskierung durch das binäre Gateway $g(q,c) \in \{0, 1\}$, das die Ähnlichkeit bei Verletzung grundlegender Sicherheitsanforderungen sofort annulliert.
+> 2. Stufe 1 — Automatisierte Wiederverwendung ($\mathrm{sim}(q,c) \ge 0{,}85$ und $g=1$): autorisiert die autonome Synthese eines adaptierten Verifikationsplans aus einem bewährten Fall.
+> 3. Stufe 2 — Qualifizierte Eskalation (`QUALIFIED_ANALOGY`, $0{,}60 \le \mathrm{sim}(q,c) < 0{,}85$): übergibt den Fall an den Leitenden Ingenieur mit expliziter Ausweisung manuell anzupassender Parameter.
+> 4. Stufe 3 — Ablehnung der Analogie (`REJECT`, $\mathrm{sim}(q,c) < 0{,}60$ oder $g=0$): blockiert die Lösungsübernahme bedingungslos und erzwingt eine Neuentwicklung aus First Principles.
 
 Ein ähnlicher Fall ist ein empirisches Plausibilitätsargument, kein mathematischer Beweis für die Korrektheit einer Lösung. Eine Fallbasis speichert daher neben Erfolgen stets auch Fehlversuche und Randbedingungen.
 
@@ -915,6 +938,13 @@ Die **Closed World Assumption (CWA)** nach Raymond Reiter [[25]](#src-25) basier
 
 Die **Partial Closed World Assumption (PCWA)**, in der Fachliteratur auch als Local Closed World Assumption (LCWA) bezeichnet, harmonisiert beide Ansätze durch bereichsbezogene Typisierung. Das Gesamtsystem operiert standardmäßig unter OWA, aktiviert jedoch für definierte Prädikate oder eingefrorene Baselines lokal die geschlossene Weltannahme (CWA). Beispielsweise wird bei einem Code-Freeze das Register kritischer Sicherheitsdefekte als abgeschlossen deklariert: Das Nichtvorhandensein eines Blockers im Register bedeutet nun verbindlich dessen Nichtexistenz im Code (CWA), sodass der Release-Build autorisiert werden kann. Für dynamische Telemetriedaten von Drittanbieter-Treibern verbleibt das System gleichzeitig im OWA-Modus.
 
+> [!NOTE]
+> **Autorenmodell der partiell geschlossenen Welt (PCWA) für Release-Sicherheits-Gateways**
+> 1. Offene Welt (OWA): Standardmodus für verteilte Telemetrie und Ontologien; fehlende Belege werden strikt als Berechnungsunsicherheit ($\text{Unknown}$) ausgewiesen.
+> 2. Geschlossene Welt (CWA): lokaler Modus für vollständige Zertifizierungsregister; das Fehlen eines Eintrags auf einer Freigabeliste ist eine strikte Negation und blockiert den Prozess.
+> 3. Partiell geschlossene Welt (PCWA): dynamische Bereichsisolierung — Schließen des Registers kritischer Anforderungen und Blocker-Defekte beim Code-Freeze, während für externe Treiber-Telemetrie OWA gilt.
+> *Sicherheitsingenieurtechnische Invariante:* Das Expertensystem muss den semantischen Weltannahme-Modus für jedes geprüfte Prädikat im Prüfzertifikat explizit deklarieren.
+
 ```mermaid
 flowchart TB
     accTitle: Semantik eines fehlenden Fakts
@@ -1113,6 +1143,15 @@ Für hochgradig spezialisierte Edge-Knoten ([Kapitel 22](ch22-cybernetics-edge-t
 4. **Sicherheitsstufen bilden strikte Isolationsgrenzen.** Ein Fakt, der aus Prämissen zweier Shards unterschiedlicher Einstufung abgeleitet wurde, darf niemals in den Shard der niedrigeren Einstufung geschrieben werden.
 5. **Das Schweigen eines Shards ist niemals die Antwort „Nein“.** Sei $R(q)$ die Menge aller für Anfrage $q$ zuständigen Shards. Die Auskunft „Aussage existiert nicht“ ist nur dann zulässig, wenn *alle* Shards aus $R(q)$ erfolgreich geantwortet haben. Antwortet ein Shard nicht, lautet das Resultat zwingend „Unbekannt“ – auch unter CWA!
 6. **Alle Shards müssen derselben Generation angehören.** Shard-Topologie und Hashwerte werden im Release-Manifest fixiert. Antwortet ein Knoten mit einer abweichenden Generations-ID, wird seine Antwort verworfen und wie ein Ausfall behandelt.
+
+> [!NOTE]
+> **Sechs Autoreninvarianten der transitiven verteilten Wissensspeicherung und des Shardings**
+> 1. Sharding-Schlüssel ist die Dokumentenfamilie: alle zusammengehörigen Revisionen einer Normquelle verbleiben auf einem Knoten, um Revisions- und Ausnahmeketten zu wahren.
+> 2. Replikation normativer Referenzdaten: Prädikatenwörterbücher, Relationsgitter und Sicherheitsstufen werden auf jedem Knoten repliziert, wodurch Netzlatenzen entfallen.
+> 3. Abgeleitete Fragmentierung von Belegen: Beweiszitate folgen den abgeleiteten Aussagen auf denselben Shard, um Begründungen lokal generieren zu können.
+> 4. Sicherheitsstufen als Isolationsgrenzen: abgeleitete Schlüsse erben die strengste Einstufung ihrer Prämissen $L(h\theta) = \bigsqcup_i L(b_i\theta)$, was Informationsabflüsse verhindert.
+> 5. Shard-Schweigen ist niemals ein „Nein“: die Feststellung „Fakt fehlt“ ist nur zulässig, wenn 100 % aller relevanten Shards $R(q)$ geantwortet haben; ein Timeout erzwingt den Status `UNKNOWN`.
+> 6. Generationskonsistenz: Abfragen werden ausschließlich über Shards einer einheitlichen, kryptografisch verifizierten Release-Generation bedient.
 
 ```mermaid
 flowchart TB

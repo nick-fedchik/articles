@@ -329,6 +329,14 @@ Where:
 
 Identical triples $(S,R,V)$ are grouped into a consolidated assertion containing all supporting citations, while divergent values $V_1,V_2,\dots$ are preserved without loss. At query time, the inference engine resolves the binding value based on explicitly supplied scope parameters: target baseline, document revision tree, and jurisdiction. When irreconcilable values conflict within the identical scope, the engine must return a formal conflict warning rather than silently executing majority voting.
 
+> [!NOTE]
+> **Author's Principle of Lossless Evidentiary Citation Aggregation for Conflicting Facts**
+> 1. Preservation of temporal validity: prevents current normative rules from being overwritten by obsolete standard editions abrogated by subsequent amendments (the *Lex Posterior* principle).
+> 2. Preservation of document boundaries: guarantees audit traceability and reproducible retrospective answers for historical standard revisions.
+> 3. Preservation of exceptions and modalities: captures contextual relaxations (MUST $\to$ SHOULD) defined in application-specific profiles without unwarranted generalization.
+> 4. Preservation of jurisdictions and explicit citations: consolidates assertions $\mathrm{Assertion}(S,R,V) \leftarrow [\mathrm{Citation}(D_i, \mathrm{span}_i, h_i)]$ with exact byte/token offsets and cryptographic hashes $h_i$.
+> *Safety Engineering Invariant:* When encountering mutually contradictory assertions, the system emits a typed conflict warning (`CONTRADICTION`) rather than silently enforcing majority voting.
+
 ### 6.2. Semantic Demarcation Between Current Fact Base and Case Base
 
 A fact base records atomized assertions regarding current state, whereas a case base stores holistic experiential episodes: problem, operational context, applied intervention, resulting outcome, and transferability boundaries.
@@ -560,8 +568,16 @@ The table below synthesizes OntoClean verification criteria for engineering doma
 | Unity | $+U$ vs $-U$ | What binds constituent parts into an indivisible whole? | Architecture model conflates a soldered ECU ($+U$) with an arbitrary directory of PDF test logs ($-U$). |
 | Dependence | $+D$ vs $-D$ | Does entity existence presuppose another external individual? | Role "Component Supplier" modeled without a mandatory relationship to a supplier contract or component. |
 
-> [!TIP] Practical Rule for Ontology Engineers
+> [!TIP]
+> **Practical Rule for Ontology Engineers**
 > If an entity can be reflashed, repaired, deactivated, or stripped of its certification without physical destruction or smelting, it represents a **state or role ($\sim R$)**, not a **subclass ($+R$)**. Model these attributes via typed object properties (`hasState`, `hasRole`, `certifiedBy`), never through subsumption inheritance `rdfs:subClassOf`.
+
+> [!NOTE]
+> **Author's Ontological Cleanliness Criterion for Demarcating Entities and States in Engineering Taxonomies**
+> 1. Rigidity ($+R$): essential, immutable entity types ($\forall x (P(x) \to \Box P(x))$) that cannot cease to exist without physical destruction (e.g., microcontroller, physical PCB).
+> 2. Anti-rigidity ($\sim R$): phase states and operational roles ($\forall x (P(x) \to \Diamond \neg P(x))$) that mutate without terminating object identity (e.g., certification status, fault state, ActiveMaster role).
+> 3. Inviolable anti-rigid superclass prohibition: $\sim R \not\sqsupseteq +R$; strictly forbids modeling transient states or administrative roles as superclasses of physical artifacts.
+> 4. Relational state modeling: uncoupling identity-carrying types ($+I$) from dynamic attributes via explicit relations (`hasState`, `hasRole`, `certifiedBy`) rather than subsumption inheritance `rdfs:subClassOf`.
 
 For our benchmark BrakeController 3.2, release approval represents a transient state within release R2026.3, not an immutable hardware type. Upon certificate revocation, the hardware remains the identical physical controller with serial number SN-8823, while relation `hasReleaseState` transitions from `Approved` to `Revoked`. OntoClean audits must be documented as formal architectural decision records: concept definitions, rigidity and identity tags, positive and negative usage examples, and knowledge architect sign-off. When an expert system must remember concrete historical incident failures rather than generic concept taxonomies, case-based reasoning replaces formal ontologies.
 
@@ -617,6 +633,13 @@ The system matches a new requirement $q$ (power management safety) against case 
 \mathrm{sim}(q, c) = 1 \cdot \frac{0{,}4 \cdot 1{,}0 + 0{,}3 \cdot 0{,}8 + 0{,}3 \cdot 0{,}5}{0{,}4 + 0{,}3 + 0{,}3} = \frac{0{,}40 + 0{,}24 + 0{,}15}{1{,}0} = 0{,}79
 ```
 Because $\mathrm{sim}(q, c) = 0.79 \in [0.60, 0.85)$, the system emits verdict `QUALIFIED_ANALOGY`: the precedent is escalated to the lead safety engineer for interface parameter confirmation.
+
+> [!NOTE]
+> **Author's Three-Tier Precedent Analogy Gate and Strict CBR Filtering Model**
+> 1. Strict applicability gating: mandatory multiplication by binary eligibility gate $g(q,c) \in \{0, 1\}$, immediately zeroing similarity whenever foundational safety constraints are violated.
+> 2. Tier 1 — Automated Reuse ($\mathrm{sim}(q,c) \ge 0.85$ and $g=1$): authorizes autonomous synthesis of an adapted verification plan from a proven precedent.
+> 3. Tier 2 — Supervised Adaptation (`QUALIFIED_ANALOGY`, $0.60 \le \mathrm{sim}(q,c) < 0.85$): escalates the precedent to a lead engineer with explicit identification of divergent attributes requiring manual revision.
+> 4. Tier 3 — Analogy Rejection (`REJECT`, $\mathrm{sim}(q,c) < 0.60$ or $g=0$): categorically blocks analogical transfer and enforces first-principles verification engineering.
 
 An analogous case represents an empirical argument from experience, not mathematical proof of solution validity. Consequently, the case base must preserve not only successful solutions, but failure boundaries, recorded adaptations, and validation outcomes.
 
@@ -909,6 +932,13 @@ The **Closed World Assumption (CWA)**, formalized by Raymond Reiter [[25]](#src-
 
 The **Partial Closed World Assumption (PCWA)**, known in computer science as the Local Closed World Assumption (LCWA), reconciles these paradigms by explicitly scoping predicates. Under PCWA, the system functions by default under OWA, tolerating missing dynamic data, while enforcing CWA over an explicitly designated set of controlled predicates or closed engineering scopes. For example, during a baseline code freeze, the set of known critical safety defects for that baseline is declared complete and closed: the absence of a blocking defect in that registry is treated as its absence from the codebase (CWA), authorizing release progression. Concurrently, diagnostic telemetry from third-party vendor libraries remains governed by OWA: missing compatibility records evaluate to "unknown", mandating live diagnostic execution. PCWA eliminates the unbounded waiting states of pure OWA while preventing dangerous false negatives caused by applying CWA indiscriminately to incomplete information.
 
+> [!NOTE]
+> **Author's Model of Partial Closed World Assumption (PCWA) for Release Safety Gateways**
+> 1. Open World Assumption (OWA): default operating mode for distributed telemetry and ontologies; missing evidence is strictly evaluated as computational uncertainty ($\text{Unknown}$).
+> 2. Closed World Assumption (CWA): local mode for exhaustive certification registries; absence from an approved whitelist constitutes categorical negation and halts progression.
+> 3. Partial Closed World Assumption (PCWA): dynamic scope isolation — declaring the registry of critical safety requirements and blocker defects closed during Code Freeze, while maintaining OWA for volatile third-party component telemetry.
+> *Safety Engineering Invariant:* The expert system must explicitly tag the semantic world mode for every evaluated predicate in its verification certificate.
+
 ```mermaid
 flowchart TB
     accTitle: Semantics of an Absent Fact
@@ -1119,6 +1149,15 @@ Conventional databases prioritize uniform row distribution. A distributed knowle
 4. **Security classifications enforce isolation boundaries.** List partitioning by security labels guarantees physical separation, but derived assertions cannot possess security labels lower than their premises. An inference spanning shards of different security levels is an explicit, audited operation.
 5. **Shard silence does not equal negation.** Let $R(q)$ denote the set of shards required to answer query $q$. The conclusion "assertion absent" is permitted if and only if all shards in $R(q)$ respond successfully. If any required shard times out, the result must evaluate to "unknown", regardless of whether CWA is configured.
 6. **All shards must belong to the identical generation.** Shard topology manifests and file hashes are pinned to a synchronized release generation. Responses from mismatched shard generations are treated as silence.
+
+> [!NOTE]
+> **Author's Six Invariants of Transitive Distributed Knowledge Storage and Partitioning**
+> 1. Sharding key is the document family: all interrelated revisions of a normative source are co-located on a single node to maintain amendment and exception chains.
+> 2. Replication of normative reference data: predicate dictionaries, relation lattices, and security labels are duplicated across all nodes, eliminating cross-node RPC latencies.
+> 3. Derived citation fragmentation: evidentiary citations accompany derived assertions on the identical shard, enabling local generation of explanation traces.
+> 4. Security labels as isolation boundaries: derived conclusions inherit the least upper bound classification $L(h\theta) = \bigsqcup_i L(b_i\theta)$, preventing side-channel leakage through deduction.
+> 5. Shard silence does not equal negation: an assertion may be declared absent if and only if 100% of candidate shards $R(q)$ respond; any node timeout mandates an `UNKNOWN` verdict.
+> 6. Release generation consistency: queries execute strictly against shards belonging to a single, cryptographically synchronized release generation manifest.
 
 ```mermaid
 flowchart TB
