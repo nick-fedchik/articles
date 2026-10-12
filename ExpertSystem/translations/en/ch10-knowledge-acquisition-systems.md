@@ -1184,14 +1184,7 @@ As of June 3, KAS was unaware of the erratum and answers with Revision A. As of 
 
 Every source repository and knowledge class demands an accountable human owner. IT infrastructure teams maintain pipeline availability, but domain stewards determine what is valid, what is safety-critical, what is obsolete, and what may be exposed to automated reasoning engines. Knowledge bases decay silently: without designated owners, a repository does not fail catastrophically in a single day, but gradually hemorrhages evidential integrity. In the author's architecture, lifecycles operate via specialized states: candidate triage, snapshot delivery health, and partial artifact lifecycles (candidate, evidence-backed, reviewed, delivered, rejected), with source and artifact approvals tracked in an append-only audit log. Formal knowledge stewards (*knowledge steward*) equipped with cryptographic sign-off authority and structured validity boundaries are currently under active implementation; currently, a downstream consumer could execute against an out-of-scope fragment without KAS detecting the violation—representing an active engineering focus area.
 
-### 20.1. Source Governance and Decision Validity Preservation (SIF Governance)
-
-Across the continuous lifecycle of engineering knowledge bases, the core challenge transcends merely logging timestamps of modifications; it addresses a fundamental question: **does a technical decision remain admissible after changes in the sources, requirements, evidence, dependencies, or states upon which it is grounded? And are these requirements themselves accurately represented within the system?**
-
-This problem formulation is formalized by the research architecture **SIF Governance (A Source-Governed Architecture for Bounded Technical Assurance)**, developed by Y. Kuzmenko and O. Trofimova [[33]](#src-33). Under the SIF Governance paradigm, the technical admissibility (*eligibility*) of solutions is treated as a dynamic property bound to the tree of source dependencies:
-1. **Source Mutation:** Any update or revocation of a standard, modification of a normative edition, or errata in formulas invalidates not only direct verbatim citations, but the entire deductive subtree of inferences derived from the altered premise;
-2. **Requirement Representation Verification:** Deterministic audits verify that rules formalized in the system do not distort the original intent of the standard during translation, quantification, and extraction;
-3. **Bounded Technical Assurance:** The system enforces evidential closure, precluding the issuance of affirmative verdicts in the presence of unconfirmed, stale, or internally contradictory source states.
+During the ongoing maintenance of engineering knowledge bases, it is vital to account not merely for document versions, but for the dependency of technical decisions on sources, requirements, and evidence. A modification in a primary source may necessitate re-examination of associated objects, but does not automatically imply the invalidity of all derived conclusions. The correct execution of a formalized rule and the alignment of that rule itself with the primary source require distinct, independent evaluation.
 
 ## 21. Knowledge Base Release, Versioning, and Revocation Procedures
 
@@ -1496,7 +1489,6 @@ These works and industry guidelines establish the methodological foundation of t
 30. <a id="src-30"></a>Arm. [*CMSIS-SVD: System View Description Format, Version 1.3.9*](https://arm-software.github.io/CMSIS_5/SVD/html/index.html).
 31. <a id="src-31"></a>Gunther Schadow, Clement J. McDonald. [*The Unified Code for Units of Measure (UCUM)*](https://ucum.org/ucum.html). Regenstrief Institute.
 32. <a id="src-32"></a>Marie-Catherine de Marneffe, Christopher D. Manning, Joakim Nivre, Daniel Zeman. [*Universal Dependencies*](https://doi.org/10.1162/coli_a_00402). *Computational Linguistics*, 47(2), 255–308, 2021.
-33. <a id="src-33"></a>Yurii Kuzmenko, Olena Trofimova. [*SIF Governance: A Source-Governed Architecture for Bounded Technical Assurance*](https://doi.org/10.5281/zenodo.22806936). Zenodo, 2026.
 
 ---
 

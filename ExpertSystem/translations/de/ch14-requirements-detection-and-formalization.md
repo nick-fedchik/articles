@@ -445,7 +445,7 @@ Das Qualitätsaudit generiert entweder einen bereinigten Kandidaten für die For
 
 ### 4.1. Qualifikationsgateway für normative Anforderungen auf Basis externer Zulässigkeitskriterien
 
-Bei der Übersetzung und Formalisierung normativer Anforderungen darf sich die linguistische Pipeline nicht auf weiche probabilistische Konfidenzwerte („Klassifikatorkonfidenz 87 %“) verlassen. In sicherheitskritischen Systemen (ISO 26262 ASIL D, DO-178C) muss das Verifikationsergebnis deterministisch und typisiert sein. Im Forschungsprogramm des Structural Invariant Framework (SIF Contradiction-Resolution Architecture [[20]](#src-20)) wurde das fundamentale Prinzip der Trennung von Kandidatengenerierung und struktureller Qualifikation anhand externer Zulassungsregeln empirisch nachgewiesen. In Analogie zu diesem Prinzip führt die vorgeschlagene Architektur des Expertensystems ein eigenes Qualifikationsgateway für normative Anforderungen ein, angepasst an die Prüfung von Ingenieurschablonen (EARS), numerischen Toleranzen, LTL-Zeitgrenzen und die beweisbare Kompilierung in SMT-LIB. Die Audit-Pipeline für Anforderungen fällt eines von vier diskreten operativen Verdikten:
+Bei der Übersetzung und Formalisierung normativer Anforderungen darf sich die linguistische Pipeline nicht auf weiche probabilistische Konfidenzwerte („Klassifikatorkonfidenz 87 %“) verlassen. In sicherheitskritischen Systemen (ISO 26262 ASIL D, DO-178C) muss das Verifikationsergebnis deterministisch und typisiert sein. In Untersuchungen zu SIF 1.0 [[20]](#src-20) wurde ein begrenzter Mechanismus der externen Registry-Kontrolle über kanonische metrologische Termini im Ausgabetext der neuronalen Übersetzung empirisch verifiziert. In Analogie zur architektonischen Trennung von Generierung und unabhängiger Qualifikation schlägt der Autor der Monografie ein eigenes Qualifikationsgateway für normative Anforderungen vor, dessen Regeln und operative Ergebnisse einer gesonderten Begründung bedürfen. Die Audit-Pipeline für Anforderungen fällt eines von vier diskreten operativen Verdikten:
 
 ```mermaid
 flowchart TD
@@ -471,7 +471,7 @@ flowchart TD
 
 Bedeutung der operativen Qualifikationszustände:
 
-1. **`REQUIREMENT_ADMITTED`:** Die syntaktische Struktur entspricht vollständig den EARS-Schablonen, die deontische Modalität stimmt mit der Konvention des Quelldokuments überein, und alle numerischen Toleranzen sowie physikalischen Einheiten sind an registrierte Konstanten und Konfigurationsbereiche gebunden. Die Anforderung wird ohne weitere Vorbehalte zur Kompilierung in SMT-LIB oder LTL zugelassen.
+1. **`REQUIREMENT_ADMITTED`:** Die syntaktische Struktur entspricht vollständig den EARS-Schablonen, die deontische Modalität stimmt mit der Konvention des Quelldokuments überein, und alle numerischen Toleranzen sowie physikalischen Einheiten sind an registrierte Konstanten und Konfigurationsbereiche gebunden. Die Anforderung kann unter dem Vorbehalt der Erfüllung der definierten Prüfungen an die nachfolgende Formalisierungsstufe übergeben werden. Ein solcher Status bestätigt nicht automatisch die semantische Übereinstimmung des formalen Modells mit der Primärquelle und ersetzt keineswegs die verfahrensmäßig vorgesehene fachliche Freigabe.
 2. **`VERIFY_REPAIRED`:** Unkritische Mängel (z. B. geringfügige Wortstellungsanomalien, Passivkonstruktionen bei eindeutigem Kontextsubjekt oder Quasimodalität) wurden während der Normalisierung deterministisch korrigiert. Der Status erfordert die Freigabe durch den zuständigen Prüfingenieur.
 3. **`REVISION_REQUESTED`:** Es wurden logische Widersprüche, nicht-atomare Mehrfachaktionen oder fehlende Alternativzweige festgestellt. Der Autor erhält eine strukturierte Diagnosekarte mit der Empfehlung zur Aufteilung der Anforderung oder zur Definition einer Hysterese.
 4. **`FAIL_CLOSED_REJECT`:** Vage subjektive Deskriptoren, undefinierte Toleranzen im Sicherheitskreis oder das Risiko einer Inversion von Verboten (`MUST NOT`) wurden detektiert. Es greift die Fail-Closed-Invariante: Das System blockiert die Aufnahme der Regel in die Wissensbasis bedingungslos.
@@ -998,7 +998,7 @@ Die deterministische Erkennung und Formalisierung normativer Anforderungen schaf
 17. <a id="src-17"></a>Mitwirkende an cvc5. [*cvc5 Documentation*](https://cvc5.github.io/docs/latest/). Dokumentation des Solvers und der unterstützten Logiken.
 18. <a id="src-18"></a>G. Gerganov et al. [*GBNF (GGML BNF) Grammar Specification and Constrained Sampling*](https://github.com/ggerganov/llama.cpp/blob/master/grammars/README.md). llama.cpp repository, 2023.
 19. <a id="src-19"></a>B. T. Willard, R. Louf. [*Efficient Guided Generation for Large Language Models*](https://arxiv.org/abs/2307.09702). arXiv:2307.09702, 2023.
-20. <a id="src-20"></a>Yurii Kuzmenko, Olena Trofimova. [*SIF as a Contradiction-Resolution Architecture*](https://doi.org/10.5281/zenodo.21976262). Zenodo, 2026.
+20. <a id="src-20"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework (SIF 1.0): A Registry-Based Framework for Empirically Verified Terminology Preservation in Neural EN→UA Translation of Metrological Standards*](https://doi.org/10.5281/zenodo.20509698). Zenodo, 2026.
 
 ---
 

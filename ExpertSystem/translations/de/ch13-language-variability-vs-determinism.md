@@ -671,15 +671,7 @@ Betrachten wir eine verkürzte, unvollständige Frage: „Was ist die minimale H
 
 Der Arbeitsspeicher puffert ausschließlich den situativen Kontext des Dialogs und dient niemals als eigenständige Tatsachenquelle. Ein aus dem Speicher ergänztes Argument durchläuft dieselben Prüfungen wie ein direkt aus der Frage extrahiertes Attribut; die Antwort referenziert stets das normative Primärdokument und niemals die vorherige Benutzereingabe.
 
-Diese Aufgabenteilung realisiert das übergeordnete neuro-symbolische Demarkationsprinzip, das im Rahmen von SIF 1.0 [[30]](#src-30) formuliert ist als:
-
-```math
-\text{«Proposal vs. Qualification: Heuristic/LLM proposes, Symbolic Engine qualifies»}.
-```
-
-Das probabilistische Modell bzw. der heuristische Vorschlagsgenerator ist strikt auf Relevanz (*Relevance*) und Hypothesengenerierung beschränkt, während der deterministische symbolische Kern autonom und exklusiv die Zulassungskompetenz (*Eligibility*) ausübt. Dies verhindert numerische Drift und garantiert vollständige epistemische Nachvollziehbarkeit.
-
-Gleichzeitig berücksichtigt das Evidenz-Engineering eine zentrale epistemische Grenze: Die korrekte Ausführung deterministischer Qualifikationsregeln garantiert für sich genommen noch nicht die inhaltliche Richtigkeit oder Vollständigkeit der zugrundeliegenden Spezifikation. Das symbolische System beweist die Widerspruchsfreiheit relativ zu vorgegebenen Regeln, erzeugt jedoch keine neuen Axiome; daher erfordert dieser Prozess eine kontinuierliche Quellengovernance, Aktualitätsaudits der Primärdokumente und eine lückenlose Abhängigkeitskontrolle.
+Diese Aufgabenteilung entspricht einem architektonischen Ansatz, bei dem die Generierung eines Kandidatenergebnisses von dessen Qualifikation anhand unabhängiger Regeln entkoppelt wird. Ein konkretes Beispiel für eine solche Trennung stellt SIF 1.0 (Kuzmenko, Trofimova, 2026 [[30]](#src-30)) dar, worin das Ergebnis der neuronalen Übersetzung gegen ein externes Register kanonischer metrologischer Terminologie geprüft wird. Im vom Autor der Monografie vorgeschlagenen Expertensystem wird dieser Ansatz an die Prüfung von Kandidatenaussagen und Anforderungen anhand einer entsprechenden formalen Spezifikation angepasst. Eine solche Analogie begründet für sich genommen weder die Richtigkeit noch die Vollständigkeit der Spezifikation: Das symbolische System beweist die Widerspruchsfreiheit relativ zu vorgegebenen Regeln, erzeugt jedoch keine neuen Axiome, was eine kontinuierliche Quellengovernance, Aktualitätsaudits der Primärdokumente und Abhängigkeitskontrolle erfordert.
 
 ## 8. Dialog Pro et Contra
 

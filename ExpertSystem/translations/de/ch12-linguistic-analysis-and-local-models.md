@@ -356,34 +356,13 @@ Für typische Parameter $n_l=32$, $L=4096$, $n_{kv}=8$, $d_h=128$ und $b=2$ betr
 
 Der Faktor 2 erfasst Keys und Values getrennt. Kwon et al. zeigten, dass der Key-Value-Cache den limitierenden Faktor beim Durchsatz von Large Language Models darstellt, und führten mit vLLM eine seitenbasierte Speicherverwaltung (*PagedAttention*) ein [[18]](#src-18).
 
-### 5.4. Registerbasierte Terminkontrolle (SIF 1.0) und bijektive Isolation von Konstanten
+### 5.4. Bewahrung terminologischer Invarianten in der technischen Übersetzung: SIF 1.0 und vorgelagerte Ausdrucksisolation
 
-Frühe Forschungen zu UMT–NMT und TRIZ-Aware Loss (Kuzmenko, Trofimova, 2025) untersuchten Methoden zur Bewahrung strukturell relevanter Elemente technischer Texte während der neuronalen maschinellen Übersetzung, insbesondere durch die spezialisierte Behandlung von Tokens, Formeln und Konstanten. Die nachfolgende Entwicklung dieses Forschungsprogramms führte zum **Structural Invariant Framework (SIF 1.0)** — einem externen Registry-Kontrollmechanismus für kanonische metrologische Termini [[34]](#src-34). Anstatt zu versuchen, die Trainingsdynamik des generativen Modells zu optimieren, verifiziert dieser Ansatz die Ausgaben des Sprachmodells anhand unabhängig definierter Regeln innerhalb des Umfangs eines externen Registers (Anchor Registry).
+Bei der Verarbeitung hochspezialisierter ingenieurtechnischer und metrologischer Texte erzeugen klassische Subwort-Tokenisierer (Byte-Pair Encoding, WordPiece) ein spezifisches Fehlermuster: die willkürliche Fragmentierung physikalischer Formeln, Konstanten und Einheiten in isolierte Subwort-Tokens. Dies führt zum Verlust der strukturellen Integrität mathematischer Ausdrücke und zu Verschiebungen numerischer Grenzwerte.
 
-In Analogie zu diesem externen Kontrollprinzip wird zum Schutz numerischer Parameter, physikalischer Einheiten und mathematischer Formeln im vorgeschlagenen Expertensystem ein autoreigenes Schema der bijektiven Texttransformation implementiert, bevor der Kontext an das Sprachmodell übergeben wird:
+Frühe Forschungen zu UMT–NMT und TRIZ-Aware Loss (Kuzmenko, Trofimova, 2025) untersuchten Methoden zur Bewahrung strukturell relevanter Elemente technischer Texte während der neuronalen maschinellen Übersetzung, insbesondere durch die spezialisierte Behandlung von Tokens, Formeln und Konstanten. Eine vertiefte empirische Analyse zeigte jedoch eine wesentliche Grenze auf: Interne strukturelle Gesetzmäßigkeiten im latenten Repräsentationsraum des Modells garantieren für sich genommen keine entsprechende Korrektheit im Ausgabetext. Die nachfolgende Entwicklung dieses Forschungsprogramms führte zu **SIF 1.0 — einem externen Registry-Kontrollmechanismus für kanonische metrologische Termini** [[34]](#src-34). Anstatt zu versuchen, die Trainingsdynamik des generativen Modells zu optimieren, verifiziert dieser Ansatz die Ausgaben des Sprachmodells anhand unabhängig definierter Regeln innerhalb des Umfangs eines externen Registers (Anchor Registry): Das neuronale Netz generiert Übersetzungskandidaten, begründet jedoch nicht die normative Zulässigkeit der verwendeten Formen.
 
-```math
-\mathcal{P}(T) = \big( T \setminus \bigcup_{i=1}^{k} a_i \big) \cup \bigcup_{i=1}^{k} \Pi(a_i)
-```
-
-Parameter und Operatoren des Schemas:
-
-- $T$ ist der rohe Eingabetext einer technischen Spezifikation, eines Standards oder einer Kalibriervorschrift;
-- $\mathcal{A}$ ist die Menge der identifizierten deterministischen Invarianten;
-- $\Pi(a_i)$ ist ein Isolationsoperator, der das zusammengesetzte Konstrukt durch ein unteilbares Platzhalter-Token $`\langle\mathtt{ANCHOR}_{i}\rangle`$ substituiert;
-- $\mathcal{P}(T)$ ist der normalisierte Text, in dem die Fertilität der substituierten Entitäten nahezu eins beträgt:
-
-```math
-\mathrm{Fertility}(\Pi(a_i)) \approx 1{,}00 \quad \text{gegenüber} \quad \mathrm{Fertility}(a_i) \ge 3{,}50.
-```
-
-Nach der Textgenerierung durch das Sprachmodell stellt die inverse Abbildung $\mathcal{P}^{-1}$ die ursprünglichen Werte aus dem Konstantenregister wieder her und verifiziert die Byte-Integrität anhand des Prüf-Hashes:
-
-```math
-\mathcal{P}^{-1}(\hat{T}) \implies \forall i \in \{1, \dots, k\}: \mathrm{SHA256}(\hat{a}_i) = \mathrm{SHA256}(a_i).
-```
-
-Stimmt der Hash des wiederhergestellten Ankers $`\mathrm{SHA256}(\hat{a}_i)`$ nicht mit dem kanonischen Primärquellen-Hash überein, weist das Qualifikationsgateway des Expertensystems die Modellausgabe unverzüglich zurück und verhindert so das Eindringen deformierter Konstanten in die Quellenzuordnungskarten $`R_{N\leftarrow T_E}`$. Während SIF 1.0 somit eine unabhängige normgerechte Terminkontrolle über ein externes Register bietet, schützt das autoreigene Schema der bijektiven Maskierung und Hash-Prüfung Hardware-Zahlengrenzen vor subtokenbedingter Entropie.
+Aufbauend auf dem allgemeinen Prinzip der unabhängigen Kontrolle strukturell signifikanter Elemente untersucht der Autor der vorliegenden Monografie die Möglichkeit einer vorgelagerten Isolation zusammengesetzter ingenieurtechnischer Ausdrücke vor der Übergabe des Textes an das Sprachmodell. Die Rekonstruktion solcher Ausdrücke nach der Textgenerierung kann von einer Prüfung der Byte-Integrität begleitet werden. Dies stellt einen eigenständigen Autorenbeitrag dar und ist keine Implementierung von SIF 1.0. Die Umkehrbarkeit der Transformation, das Tokenizer-Verhalten und die Wirksamkeit der Kontrolle bedürfen einer eigenständigen Formalisierung und empirischen Evaluierung.
 
 ## 6. Semantische Ähnlichkeit versus logische Folgerung: Grenzen der Vektorsuche
 

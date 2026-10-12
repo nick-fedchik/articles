@@ -356,34 +356,13 @@ For representative parameters $n_l=32$, $L=4096$, $n_{kv}=8$, $d_h=128$, and $b=
 
 The factor of 2 isolates key and value projections. Kwon et al. demonstrated that KV cache memory management represents the primary throughput bottleneck in large language model serving, resolving it via paged virtual memory management in the vLLM architecture [[18]](#src-18).
 
-### 5.4. Registry-Based Terminology Control (SIF 1.0) and Bijective Isolation of Constants
+### 5.4. Preserving Terminological Invariants in Technical Translation: SIF 1.0 and Upstream Expression Isolation
 
-Early research on UMT–NMT and TRIZ-Aware Loss (Kuzmenko, Trofimova, 2025) investigated methods for preserving structurally significant elements of technical text during neural machine translation, particularly through specialized handling of tokens, formulas, and constants. The subsequent evolution of this research program led to the **Structural Invariant Framework (SIF 1.0)** — an external Registry-based control mechanism for canonical metrological terms [[34]](#src-34). Rather than attempting to optimize the generative model's training dynamics, this approach conducts verification of language model outputs against independently defined rules within the scope of an external Anchor Registry.
+When processing specialized engineering and metrological texts, conventional subword tokenizers (Byte-Pair Encoding, WordPiece) introduce a severe failure mode: the arbitrary fragmentation of physical formulas, numerical constants, and units into isolated subword tokens. This fragmentation destroys the structural integrity of mathematical expressions and shifts numerical bounds.
 
-By analogy with this external control principle, to safeguard numerical parameters, physical units, and mathematical formulas in the proposed expert system, an authorial bijective text transformation scheme is executed prior to passing context to the language model:
+Early research on UMT–NMT and TRIZ-Aware Loss (Kuzmenko, Trofimova, 2025) investigated methods for preserving structurally significant elements of technical text during neural machine translation, particularly through specialized handling of tokens, formulas, and constants. However, subsequent empirical analysis revealed an important limitation: internal structural patterns within the model's latent representation space do not guarantee corresponding correctness in output text. The subsequent evolution of this research program led to **SIF 1.0 — an external Registry-based control mechanism for canonical metrological terms** [[34]](#src-34). Rather than attempting to optimize the generative model's training dynamics, this approach conducts verification of language model outputs against independently defined rules within the scope of an external Anchor Registry: the neural network generates candidate translations, but does not establish the normative admissibility of the utilized forms.
 
-```math
-\mathcal{P}(T) = \big( T \setminus \bigcup_{i=1}^{k} a_i \big) \cup \bigcup_{i=1}^{k} \Pi(a_i)
-```
-
-Scheme parameters and operators:
-
-- $T$ is the raw input text of a technical specification, engineering standard, or metrological manual;
-- $\mathcal{A}$ is the set of identified deterministic invariants;
-- $\Pi(a_i)$ is an isolation operator substituting the compound engineering construct with an atomic placeholder token $`\langle\mathtt{ANCHOR}_{i}\rangle`$;
-- $\mathcal{P}(T)$ is the normalized text, in which the tokenizer fertility over substituted entities is strictly near-unity:
-
-```math
-\mathrm{Fertility}(\Pi(a_i)) \approx 1.00 \quad \text{versus} \quad \mathrm{Fertility}(a_i) \ge 3.50.
-```
-
-Following text generation by the language model, the inverse mapping $\mathcal{P}^{-1}$ reconstructs the original values from the constant registry and verifies byte-level integrity against the custodial hash:
-
-```math
-\mathcal{P}^{-1}(\hat{T}) \implies \forall i \in \{1, \dots, k\}: \mathrm{SHA256}(\hat{a}_i) = \mathrm{SHA256}(a_i).
-```
-
-If the hash of the reconstructed anchor $`\mathrm{SHA256}(\hat{a}_i)`$ does not match the canonical primary-source hash, the expert system's qualification gate immediately rejects the model output, preventing distorted constants from penetrating the source provenance map $`R_{N\leftarrow T_E}`$. Thus, while SIF 1.0 provides independent control over the normative compliance of metrological terminology via an external registry, the author's bijective masking and hash-custody scheme shields hardware numerical bounds from subtoken entropy.
+Drawing upon this general principle of independent control over structurally significant elements, the author of this monograph explores the feasibility of upstream isolation of composite engineering expressions prior to transmitting text to the language model. Reconstructing such expressions following generation may be coupled with byte-level integrity verification. This represents a distinct authorial proposal, not an implementation of SIF 1.0. Transformation invertibility, tokenizer dynamics, and control efficacy require independent formalization and empirical evaluation.
 
 ## 6. Semantic Similarity vs. Logical Entailment: Limits of Vector Search
 

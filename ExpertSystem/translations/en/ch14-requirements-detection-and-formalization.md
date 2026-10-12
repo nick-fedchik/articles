@@ -446,7 +446,7 @@ Automated auditing produces candidate requirements for formalization alongside a
 
 ### 4.1. Requirements Qualification Gate Based on External Admissibility Criteria
 
-When translating normative requirements, the linguistic pipeline cannot rely on soft probabilistic confidence scores ("model confidence 87%"). In safety-critical systems (ISO 26262 ASIL D, DO-178C), verification outcomes must be deterministic and typed. In the research program of the Structural Invariant Framework (SIF Contradiction-Resolution Architecture [[20]](#src-20)), the fundamental principle of decoupling candidate generation from structural qualification against external admission rules was empirically demonstrated. By analogy with this principle, the proposed expert system architecture introduces its own normative requirements qualification gate, tailored for verifying engineering templates (EARS), numerical tolerances, LTL temporal bounds, and evidentiary compilation into SMT-LIB. The requirements audit pipeline emits one of four discrete operational verdicts:
+When translating normative requirements, the linguistic pipeline cannot rely on soft probabilistic confidence scores ("model confidence 87%"). In safety-critical systems (ISO 26262 ASIL D, DO-178C), verification outcomes must be deterministic and typed. In SIF 1.0 research [[20]](#src-20), a bounded mechanism of external Registry control over canonical metrological terms in neural translation output was experimentally verified. By analogy with the architectural separation of generation and independent qualification, the author of this monograph proposes a dedicated normative requirements verification gate, whose rules and operational outcomes require separate justification. The requirements audit pipeline emits one of four discrete operational verdicts:
 
 ```mermaid
 flowchart TD
@@ -472,7 +472,7 @@ flowchart TD
 
 Operational meaning of the qualification states:
 
-1. **`REQUIREMENT_ADMITTED`:** The syntactic structure fully satisfies EARS templates, the deontic modality matches primary source conventions, and all numerical tolerances and physical units are bound to registered constants and configuration ranges. The requirement is admitted to SMT-LIB or LTL compilation without additional caveats.
+1. **`REQUIREMENT_ADMITTED`:** The syntactic structure fully satisfies EARS templates, the deontic modality matches primary source conventions, and all numerical tolerances and physical units are bound to registered constants and configuration ranges. The requirement may be advanced to the subsequent formalization stage provided the specified checks are satisfied. Such a status does not automatically confirm semantic equivalence of the formal model to the primary source and does not substitute for the procedurally mandated expert sign-off.
 2. **`VERIFY_REPAIRED`:** Non-critical defects (e.g., minor word-order anomalies, passive voice with an unambiguous contextual subject, or quasi-modality) have been deterministically reconstructed during normalization. This status requires sign-off by an authorized reviewing engineer.
 3. **`REVISION_REQUESTED`:** Logical contradictions, composite multi-action clauses, or omitted alternative branches have been detected. The author receives a structured diagnostic card recommending clause decomposition or hysteresis specification.
 4. **`FAIL_CLOSED_REJECT`:** Vague subjective descriptors, unconstrained safety parameters, or risk of modal inversion (`MUST NOT`) are present. The Fail-Closed invariant triggers: the system unconditionally blocks rule admission into the knowledge base.
@@ -999,7 +999,7 @@ Deterministic detection and formalization of normative requirements establishes 
 17. <a id="src-17"></a>cvc5 Contributors. [*cvc5 Documentation*](https://cvc5.github.io/docs/latest/). Solver documentation and supported logics.
 18. <a id="src-18"></a>G. Gerganov et al. [*GBNF (GGML BNF) Grammar Specification and Constrained Sampling*](https://github.com/ggerganov/llama.cpp/blob/master/grammars/README.md). llama.cpp repository, 2023.
 19. <a id="src-19"></a>B. T. Willard, R. Louf. [*Efficient Guided Generation for Large Language Models*](https://arxiv.org/abs/2307.09702). arXiv:2307.09702, 2023.
-20. <a id="src-20"></a>Yurii Kuzmenko, Olena Trofimova. [*SIF as a Contradiction-Resolution Architecture*](https://doi.org/10.5281/zenodo.21976262). Zenodo, 2026.
+20. <a id="src-20"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework (SIF 1.0): A Registry-Based Framework for Empirically Verified Terminology Preservation in Neural EN→UA Translation of Metrological Standards*](https://doi.org/10.5281/zenodo.20509698). Zenodo, 2026.
 
 ---
 
