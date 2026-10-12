@@ -184,6 +184,14 @@ Die Kanten des Graphen repräsentieren keine beliebigen Assoziationen, sondern f
 
 Die Kantentypen bilden das Vokabular, auf dem automatisierte Analyseabfragen aufbauen. Fazit des Abschnitts: Der Graph integriert typisierte Knoten aus sechs Domänenklassen und typisierte Kanten mit präziser Semantik, während die Regelschnittstelle $\mathcal{P}$ die strukturelle Konsistenz überwacht. Praktische Wirksamkeit entfaltet dieses Modell jedoch erst dann, wenn der Graph kontinuierlich und vollautomatisch konstruiert wird.
 
+> [!NOTE]
+> **Formales Autorenmodell des technischen Wissensgraphen ($\mathcal{G}_{\mathrm{EKG}}$)**
+> 1. Sechsdimensionale Knotentypologie: normative Anforderungen ($V_R$), Architekturelemente ($V_A$), Codesymbole ($V_C$), Hardwareregister ($V_H$), Verifikationstests ($V_T$) und Ausführungsnachweise ($V_E$).
+> 2. Semantisch typisierte gerichtete Kanten: formale technische Relationen für Zuweisung (`allocates_to`), Erfüllung (`satisfies`), Hardwarekonfiguration (`configures`), Verifikation (`verifies`) und Ausführung (`exercises`).
+> 3. Evidenzbasierte Attributdeskriptoren ($\mathcal{A}_v, \mathcal{A}_e$): Bindung an Git-Commit-Hashes, Byte-Offsets der Zitate, physische MMIO-Speicheradressen und Prüfstandssignaturen.
+> 4. Formale Integritätsregeln und Verifikationsinvarianten ($\mathcal{P}$): deterministische Inferenzprädikate zur Überwachung von Geschlossene-Welt-Annahmen und Graphvollständigkeit.
+> *Ingenieurtechnische Invariante:* Keine Kante im Graphen ist eine vage Assoziation; jede Verbindung ist ein überprüfbarer Fakt mit kryptografischer Provenienzkette.
+
 ## 3. Automatisierte Extraktion von Artefakten und Graphenkonstruktion
 
 Die entscheidende Anforderung an einen industriellen Graphen besteht in dessen automatisierter Generierung und Synchronisation. Erfordert das Erzeugen eines Knotens oder einer Kante manuelle Eingriffe in eine Datenbank oder separate Konfigurationsdateien, erodiert der Graph nach den ersten größeren Code-Refactorings ebenso wie eine manuelle Tabelle. Das Expertensystem konstruiert den Graphen über eine Pipeline spezialisierter Extraktoren.
@@ -329,6 +337,13 @@ Wird ein Teil des Graphen aus unstrukturierter Entwicklungsdokumentation gespeis
 
 Fazit des Abschnitts: Der Großteil der Kanten wird durch deterministische Parser für formale Formate generiert. Kanten aus unstrukturiertem Text erfordern hingegen strikte Entitätskanonisierung, semantische Typisierung und temporale Validitätsgrenzen. Ein solcher Graph ermöglicht Analysen, die mit isolierten Tabellen prinzipiell undurchführbar sind.
 
+> [!NOTE]
+> **Vier Autoreninvarianten dünnbesetzter technischer Wissensgraphen**
+> 1. Mehrstufige semantische Entitätstypisierung: strikte Trennung der Abstraktionsebenen vom Gesamtsystem bis hin zu Mikrochips, Bussen und Bitregistern.
+> 2. Deterministische Kanonisierung und Koreferenzauflösung: bijektive Überführung textueller Erwähnungen und Synonyme auf einen einheitlichen stabilen Entitätsbezeichner.
+> 3. Topologische Dünnbesetztheit statt assoziativer Dichte: Ausschluss unkontrollierter heuristischer Kanten zur Vermeidung kombinatorischen Rauschens bei Pfadtraversierungen.
+> 4. Temporale Gültigkeit und Isolation von Revisionsdrift: strikte versionierte Abgrenzung physikalischer Zustände und Betriebskonstanten über Hardware- und Firmware-Revisionen hinweg.
+
 ## 4. Deterministische Analysealgorithmen auf dem ingenieurtechnischen Graphen
 
 Der konstruierte Graph gestattet die automatisierte Ausführung formaler Analysen, die auf isolierten Tabellen oder mittels statistischer Sprachmodelle keine reproduzierbaren Ergebnisse liefern. Das nachfolgende Diagramm veranschaulicht die vier Kernklassen von Graphanalysen.
@@ -384,6 +399,13 @@ Ein Ziel-Release umfasst $`\lvert V_R \rvert = 150`$ Sicherheitsanforderungen. D
 ```
 
 Da $`\lvert\mathcal{U}_R\rvert = 2 \ne 0`$, wird die Freigabe des Release-Builds unverzüglich gestoppt, bis sämtliche Abweichungen behoben sind.
+
+> [!NOTE]
+> **Deterministisches Autoren-Qualitätsprüftor für Anforderungsabdeckung ($\mathcal{U}_R$)**
+> 1. Invariante der Implementierungsvollständigkeit: Jede freigegebene normative Anforderung $r \in V_R$ muss eine direkte Kante $c \xrightarrow{\mathrm{satisfies}} r$ von einem gültigen Quellcodesymbol besitzen.
+> 2. Invariante schlüssiger Verifikation: Jede Anforderung muss durch einen Test $t \xrightarrow{\mathrm{verifies}} r$ mit erfolgreichem Ausführungsnachweis $e \xrightarrow{\mathrm{produced\_by}} t$ und dem Status $\mathrm{PASS}$ abgesichert sein.
+> 3. Revisionsisolation von Nachweisen: Verifikationsnachweise sind ausschließlich für das definierte Zielrelease $\mathrm{release}(e) = \rho$ gültig.
+> *Laufzeitsteuerung:* Bei Vorliegen mindestens einer Lücke ($\lvert\mathcal{U}_R\rvert > 0$) blockiert die Pipeline den Release-Bau über `ERR_SAFETY_GAPS_DETECTED` nach dem Fail-Closed-Prinzip.
 
 ### 4.2. Heuristische Vorhersage fehlender Kanten mittels Adamic-Adar-Index
 
@@ -449,6 +471,13 @@ Das Resultat ist die Menge jener Funktionen, zu denen von keiner anforderungsbas
 
 **Praktisches Rechenbeispiel:**
 Die statische Analyse einer Bremssteuerungs-Codebasis ($`\lvert V_C \rvert = 84`$ Funktionen) deckt auf, dass die Funktion `dbg_force_override()` über keinerlei Aufrufpfad von einer Sicherheitsanforderung erreichbar ist ($`\lvert\mathcal{C}_{\mathrm{untraced}}\rvert = 1`$). Das Kompilieren des Produktions-Binaries wird blockiert, bis die Debug-Funktion vollständig aus dem Release-Zweig entfernt wurde.
+
+> [!NOTE]
+> **Autorenalgorithmus zur Erkennung unrückverfolgbaren Codes über transitive Hüllen ($\mathcal{C}_{\mathrm{untraced}}$)**
+> 1. Graphenbasierte Erreichbarkeitsanalyse: Berechnung des reflexiv-transitiven Aufrufpfads $c' \xrightarrow{\mathrm{calls}^*} c$ ausgehend von Basisfunktionen, die normative Anforderungen erfüllen ($c' \xrightarrow{\mathrm{satisfies}} r$).
+> 2. Schutz von Hilfsfunktionen: Vermeidung von Fehlalarmen für interne Hilfsroutinen und Bibliotheken, die aus verifizierten Implementierungen heraus aufgerufen werden.
+> 3. Erkennung von totem und undokumentiertem Code: Isolation aller Funktionen ohne Anforderungsrückverfolgbarkeit ($\lvert\mathcal{C}_{\mathrm{untraced}}\rvert > 0$).
+> *Laufzeitsteuerung:* Blockierung des Produktiv-Builds mit `-Werror=untraced-symbol` bis zur physischen Entfernung des Codes oder formalen Begründung über abgeleitete Sicherheitsanforderungen.
 
 ### 4.4. Algorithmen zur Auswirkungsanalyse von Änderungen (Change Impact Analysis)
 
@@ -589,6 +618,12 @@ Das Expertensystem klinkt sich als Prüfgate in die Bearbeitung von Pull Request
 1. **Integritätserhaltung:** Eine neue Funktion darf nicht ohne eine `satisfies`-Kante zu einer genehmigten Anforderung oder ohne einen Aufrufpfad von einer solchen Funktion eingecheckt werden;
 2. **Verifizierbarkeit:** Eine Änderung der Funktionslogik invalidiert historische Testergebnisse für den neuen Commit; die Testdefinition und die deklarierte `verifies`-Relation können gültig bleiben, doch der neue Testlauf muss einen eigenständigen Evidenzknoten erzeugen;
 3. **Regressionsfreiheit:** Der Änderungsauswirkungs-Subgraph $\mathrm{Impact}(\Delta)$ darf keine ungetesteten Knoten höchster Sicherheitsintegrität enthalten (ASIL D nach ISO 26262 oder Level A nach DO-178C).
+
+> [!NOTE]
+> **Drei Autorenregeln des CI/CD-Graph-Qualitätsprüftors (Graph Quality Gate)**
+> 1. Erhalt der topologischen Integrität: Blockieren von Merge-Requests mit neuen Funktionen ohne explizite `satisfies`-Kante oder nachgewiesenen Aufrufpfad von einem validierten Symbol.
+> 2. Versionierte Evidenzaktualität: automatische Annullierung historischer Testergebnisse bei Modifikation des abstrakten Syntaxbaums (AST-Hash-Drift) der Funktion.
+> 3. Ausschluss unüberprüfter Regressionen: obligatorische 100%-ige Testabdeckung aller betroffenen sicherheitskritischen Knoten (ASIL D / DO-178C DAL A) im Auswirkungs-Teilgraphen $\mathrm{Impact}(\Delta)$.
 
 Fazit des Abschnitts: Ein unveränderliches Quad-Log garantiert forensische Reproduzierbarkeit, während automatisierte Quality Gates in der Pipeline das Veralten des Wissensgraphen unterbinden. Es verbleibt die zentrale Frage: Wie gelingt der initiale Aufbau des Graphen in bestehenden Projekten?
 

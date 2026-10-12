@@ -184,6 +184,14 @@ Edges in the graph do not represent arbitrary associative links, but rigorous en
 
 These edge types constitute the formal vocabulary underlying all topological graph queries. Summary of this section: the graph comprises typed nodes across six primary classes and typed edges with rigorous semantics, while rules $\mathcal{P}$ enforce domain invariants. The model provides engineering utility only when populated and synchronized through automated pipelines.
 
+> [!NOTE]
+> **Author's Formal Model of the Engineering Knowledge Graph ($\mathcal{G}_{\mathrm{EKG}}$)**
+> 1. Six-dimensional node typology: normative requirements ($V_R$), architectural blocks ($V_A$), code symbols ($V_C$), hardware registers ($V_H$), verification tests ($V_T$), and execution evidence ($V_E$).
+> 2. Semantically typed directed edges: formal engineering relations for allocation (`allocates_to`), implementation (`satisfies`), hardware configuration (`configures`), verification (`verifies`), and execution (`exercises`).
+> 3. Evidential attribute descriptors ($\mathcal{A}_v, \mathcal{A}_e$): binding to Git commit hashes, byte-level citation offsets, MMIO physical memory addresses, and test-harness cryptographic signatures.
+> 4. Formal integrity constraints and verification invariants ($\mathcal{P}$): deterministic inference predicates governing closed-world validation and graph completeness.
+> *Engineering Invariant:* No edge in the graph is an untyped association; every relationship is a verifiable fact with a cryptographic chain of provenance.
+
 ## 3. Automated Artifact Extraction and Graph Construction
 
 A foundational operational requirement of an industrial knowledge graph is autonomous construction and synchronization. If creating a node or edge necessitates manual database curation or detached configuration maintenance, the graph degrades upon the first major refactoring cycle, replicating the failure modes of the spreadsheet. The expert system populates the graph via a continuous pipeline of specialized deterministic extractors.
@@ -329,6 +337,13 @@ When constructing knowledge subgraphs from unstructured engineering documents, n
 
 Summary of this section: the vast majority of graph edges are derived deterministically through structured file parsers, while edges inferred from natural language require canonical entity linking, strict typing, and temporal validity bounding. The resulting graph enables analytical queries impossible across fragmented spreadsheets.
 
+> [!NOTE]
+> **Four Author's Invariants of Sparse Engineering Knowledge Graphs**
+> 1. Multi-level semantic entity typing: rigorous stratification of abstraction layers from system installations down to ICs, buses, and bit-level registers.
+> 2. Deterministic canonicalization and coreference resolution: bijective mapping of textual references and aliases to a single stable entity identifier.
+> 3. Topological sparsity over associative density: prohibition of unconstrained heuristic edges to eliminate combinatorial noise during multi-hop graph traversals.
+> 4. Temporal validity and revision drift isolation: strict versioned segregation of physical states and operational constants across hardware and firmware revisions.
+
 ## 4. Deterministic Analysis Algorithms on the Engineering Knowledge Graph
 
 Once populated, the EKG enables automated, deterministic verification queries that cannot be reproducibly performed across disconnected spreadsheets or via statistical language models. The diagram below illustrates four foundational classes of graph analysis.
@@ -382,6 +397,13 @@ In the active release baseline, a safety-critical subsystem contains $\lvert V_R
 \lvert\mathcal{U}_R\rvert = 2, \qquad \mathrm{Coverage} = 1 - \frac{2}{150} \approx 0.9867
 ```
 Because $\lvert\mathcal{U}_R\rvert = 2 \ne 0$, the release gate fails closed immediately, blocking artifact publication until all verification deficits are resolved.
+
+> [!NOTE]
+> **Author's Deterministic Quality Gate for Requirement Verification Completeness ($\mathcal{U}_R$)**
+> 1. Implementation completeness invariant: every approved normative requirement $r \in V_R$ must possess a direct edge $c \xrightarrow{\mathrm{satisfies}} r$ from a valid source code symbol.
+> 2. Conclusive verification invariant: every requirement must be covered by a test $t \xrightarrow{\mathrm{verifies}} r$ backed by conclusive execution evidence $e \xrightarrow{\mathrm{produced\_by}} t$ with status $\mathrm{PASS}$.
+> 3. Release evidence isolation: verification evidence is strictly scoped to the designated target release $\mathrm{release}(e) = \rho$.
+> *Runtime Governance:* If any gap exists ($\lvert\mathcal{U}_R\rvert > 0$), the CI/CD pipeline triggers an immediate Fail-Closed block with `ERR_SAFETY_GAPS_DETECTED`.
 
 ### 4.2. Heuristic Link Prediction via the Adamic–Adar Index
 
@@ -443,6 +465,13 @@ The resulting set isolates all code symbols unreachable from any requirement-sat
 
 **Worked Numerical Example:**
 Static analysis of an electronic braking microcontroller codebase ($\lvert V_C \rvert = 84$ functions) discovers that routine `dbg_force_override()` has no call path originating from any functional requirement ($\lvert\mathcal{C}_{\mathrm{untraced}}\rvert = 1$). Firmware binary generation is blocked until this diagnostic routine is completely removed from the production release image.
+
+> [!NOTE]
+> **Author's Untraced Code Detection Algorithm via Transitive Closure ($\mathcal{C}_{\mathrm{untraced}}$)**
+> 1. Graph reachability analysis: computing the reflexive-transitive call path $c' \xrightarrow{\mathrm{calls}^*} c$ from root functions satisfying normative requirements $c' \xrightarrow{\mathrm{satisfies}} r$.
+> 2. Utility function protection: eliminating false positives for internal helper routines and libraries transitively reachable from certified implementations.
+> 3. Dead and undocumented code detection: isolating unanchored functions lacking requirement provenance ($\lvert\mathcal{C}_{\mathrm{untraced}}\rvert > 0$).
+> *Runtime Governance:* Halting production binary builds with `-Werror=untraced-symbol` until untraced functions are removed or justified via derived safety requirements.
 
 ### 4.4. Change Impact Analysis Algorithms
 
@@ -581,6 +610,12 @@ The expert system integrates directly into pull request evaluation gates (*pull 
 1. **Integrity Preservation:** a newly introduced function cannot be merged without a valid `satisfies` edge targeting an approved requirement or without an established call path from a requirement-satisfying routine;
 2. **Verifiability:** modifying routine logic invalidates historical test run evidence for the new commit; while test definitions and asserted `verifies` relations remain, new execution evidence must be appended, preserving old runs in the audit log;
 3. **Absence of Regression:** the change impact subgraph $\mathrm{Impact}(\Delta)$ must contain zero unverified nodes classified under highest safety integrity levels: ASIL D under ISO 26262 or Level A under DO-178C.
+
+> [!NOTE]
+> **Three Author's Invariants of the CI/CD Graph Quality Gate**
+> 1. Topological integrity preservation: blocking merge requests introducing code functions without an explicit `satisfies` edge or proven call path from a validated symbol.
+> 2. Verification evidence recency: automated invalidation of historical test evidence upon abstract syntax tree (AST) hash changes in the satisfying implementation.
+> 3. Zero unverified regression: mandatory 100% test verification across all impacted safety-critical nodes (ASIL D / DO-178C DAL A) within the transitive impact subgraph $\mathrm{Impact}(\Delta)$.
 
 Summary of this section: an append-only quad store guarantees complete historical auditability, while automated CI quality gates prevent the knowledge graph from decaying. The remaining challenge is bootstrapping the graph from an existing unannotated codebase.
 
