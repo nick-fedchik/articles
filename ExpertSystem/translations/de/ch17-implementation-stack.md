@@ -70,6 +70,14 @@ flowchart TD
 
 Das Diagramm liest sich von links nach rechts: Zuerst wird das Problem mathematisch formuliert, danach wird die passende Werkzeugklasse gewählt. Die Überprüfung der Invariante „eine Anforderung der Sicherheitsstufe SIL 3 gilt ohne zwei Prüfberichte nicht als geschlossen“ ist eine Aufgabe der deterministischen Logik; hierfür wird eine Regel-Engine benötigt, keine Vektorsuche. Die Fragestellung „welche Module sind von der Änderung einer Anforderung betroffen“ stellt ein Erreichbarkeitsproblem im Graphen dar. Die Abfrage „existieren vergleichbare historische Vorfälle“ gehört in die Klasse der semantischen Ähnlichkeitssuche. Die nachfolgenden Abschnitte analysieren jede Schicht des Stacks im Detail, beginnend mit den Programmiersprachen.
 
+> [!NOTE]
+> **Vier Kriterien zur Zerlegung mathematischer Modelle in den Technologie-Stack nach dem Autorenmodell**
+> 1. Logischer Determinismus: Strikte Isolation prädikativer Invarianten von approximativen Heuristiken und stochastischen Berechnungen.
+> 2. Semantik transitiver Erreichbarkeit: Einsatz von stratifiziertem Datalog für Abhängigkeitsgraphen ohne Risiko unendlicher Auswertungsschleifen.
+> 3. Rechnerische Verifikationskomplexität: Entkopplung schneller Entscheidungstabellen von NP-vollständigen SMT-Solvern über explizite Zeitbudgets.
+> 4. Fehlermodell des Rechenknotens: Zwingende typisierte Differenzierung zwischen unsat, Solver-Timeout und epistemischem Nichtwissen.
+> *Laufzeitsteuerung:* Jeder Versuch, eine deterministische Invariantenprüfung durch Vektorähnlichkeit oder probabilistische Inferenz zu ersetzen, scheitert mit E_INVALID_MODEL_SEMANTICS.
+
 ## 2. Programmiersprachen nach Verantwortungsschichten
 
 Frühe Expertensysteme wurden häufig vollständig in Lisp oder Prolog implementiert. Moderne industrielle Expertensysteme stützen sich überwiegend auf Allzweck-Programmiersprachen, da sich die Anforderungen an die Betriebsumgebung fundamental gewandelt haben: Erforderlich sind ausgereifte Systembibliotheken, deterministisches oder vorhersagbares Speichermanagement, robuste Nebenläufigkeit, Schnittstellen zu C-Bibliotheken (*Foreign Function Interface*, FFI) sowie eine nahtlose Integration in moderne Bereitstellungsinfrastrukturen. Logische Sprachen sind dabei keineswegs verschwunden: Sie existieren als eingebettete deklarative Sprachen für Regeln und Abfragen fort, auf die nachfolgend eingegangen wird. Jede Allzwecksprache besetzt eine klar definierte Schicht.
@@ -103,6 +111,15 @@ Python dominiert die Domänen Forschung, Modelltraining und Evaluation; Biblioth
 TypeScript bildet das Rückgrat moderner Expertenarbeitsplätze: für die interaktive Visualisierung von Traceability-Graphen, die explorative Analyse von Beweisbäumen und die kollaborative Bearbeitung von Entscheidungstabellen. Die Benutzeroberfläche für Ingenieure und Auditoren ist eine vollwertige Kernkomponente des evidenzbasierten Expertensystems, da Fachexperten über diese Schnittstelle die Argumentationskette nachvollziehen und letztinstanzliche Entscheidungen fällen.
 
 Aus der Praxis des Autors: In einem der Industrieprojekte hat sich folgende funktionale Aufteilung bewährt: Die Dienste des Architekturkerns, Nachrichtenwarteschlangen und die Systemkoordination wurden in Go realisiert; rechenintensive Vektoroperationen wurden an C++-Bibliotheken (OpenVINO, ONNX Runtime) über cgo delegiert; Python verblieb im Offline-Wissenslabor für das Training und die Generierung kuratierter Referenzdatensätze; die interaktive Benutzeroberfläche wurde in TypeScript implementiert. Diese Aufteilung erhebt keinen Anspruch auf universelle Allgemeingültigkeit: Sie hängt primär von den Kernkompetenzen des Entwicklungsteams und den strikten Latenzanforderungen ab. Da die Schnittstellen zwischen den Schichten durch formale Datenverträge gemäß [Kapitel 16](ch16-expert-systems-architecture.md) gekapselt sind, kann die Technologie einer einzelnen Schicht ausgetauscht werden, ohne Nachbarsysteme zu destabilisieren.
+
+> [!NOTE]
+> **Fünf Invarianten der Sprachschicht-Isolation in der missionskritischen Architektur des Autors**
+> 1. Autonomie des Orchestrierungskerns: Einsatz von Go/Rust zur Durchsetzung deterministischer Nebenläufigkeit und vorhersagbaren Speichermanagements.
+> 2. Isolation numerischer Beschleuniger via FFI: Ausführung von C++/CUDA-Routinen in Sandkästen ohne Berechtigung zur Mutation des Host-Speichers.
+> 3. Verbannung interpretierter Sprachen in den Offline-Bereich: Beschränkung von Python rein auf Forschung und Datensatzkuration ohne Zulassung zur Laufzeit.
+> 4. Strikte Typisierung von Auditschnittstellen: TypeScript-Schemaverifikation zur Verhinderung von Diskrepanzen zwischen Benutzeroberfläche und Beweispaket.
+> 5. Durchsetzung binärer Vertragsschranken: Schichtenübergreifender Datenaustausch ausschließlich über typisierte Binärstrukturen mit strikter Schemaversionierung.
+> *Laufzeitsteuerung:* Jede Verletzung der FFI-Speichergrenzen oder der Versuch, untypisierten Code in den Kern zu laden, führt zum Notstopp mit E_FFI_MEMORY_VIOLATION.
 
 ## 3. Deklarative Abfragesprachen für Wissensbasen
 
@@ -227,6 +244,14 @@ Die Regeln sind disjunkt: Die erste Regel fängt jede Anzahl kritischer Defekte 
 > 1. **Problem der Unvollständigkeit von Domänenwerten:** Nimmt eine Variable `null`, `NaN` oder eine unerwartete Zeichenkette wie `"timeout"` an, liefert die Tabelle unter der Richtlinie **U** den Wert `null` zurück. Prüft der aufrufende Dienst lediglich `if (result == "BLOCK") reject();`, passiert der Wert `null` die Freigabeprüfung unbemerkt.
 > 2. **Default-Deny-Prinzip:** Die Architektur des Expertensystems muss explizit fordern: Das Ausbleiben eines Regeltreffers in einer Zulassungstabelle ist automatisch äquivalent zur schärfsten Blockierung (`"BLOCK"`).
 
+> [!NOTE]
+> **Vier Regeln für den sicheren Entwurf von DMN-Entscheidungstabellen nach der Autorenmethodik**
+> 1. Absolutes Default-Deny-Prinzip: Jeder nicht explizit durch Regeln abgedeckte Eingabevektor führt zu einer kategorischen BLOCK-Entscheidung, niemals zur Freigabe.
+> 2. Eliminierung impliziter Auswahlrichtlinien: Vollständiges Verbot von First- oder Rule-Order-Richtlinien in kritischen Pfaden zugunsten deterministischer Unique-Policies.
+> 3. Abgeschlossenheit von Domänentypen: Zwingende explizite Klauseln zur Behandlung von Fehlerzuständen (error), Timeouts sowie ungültigen Eingaben wie null oder NaN.
+> 4. Automatisierte formale Verifikation: Kompilierung von Entscheidungstabellen in SMT-Formeln zum mathematischen Beweis von Lückenlosigkeit und Widerspruchsfreiheit.
+> *Laufzeitsteuerung:* Jede DMN-Tabelle, die den statischen Lückenlosigkeitstest ihres Eingaberaums nicht besteht, wird bei der Registrierung mit E_DMN_INCOMPLETE_TABLE abgewiesen.
+
 ## 5. Spezialisierte Speicher nach physischer Datenform
 
 Die Wahl des Persistenzmechanismus wird primär durch die Natur des darin abgelegten Wissens determiniert. Die theoretischen Grundlagen dieser Differenzierung wurden in [Kapitel 16](ch16-expert-systems-architecture.md) dargelegt; die nachfolgende Tabelle ordnet Speichertypen konkreten Produktbeispielen, Wissensklassen und typischen Abfragemustern zu.
@@ -277,6 +302,15 @@ Im symbolischen Inferenz-Subsystem definiert die Wahl der Engine die Grenzen der
 | Erklärungskomponente | Die Engine liefert die verwendeten Substitutionen und Abhängigkeiten zurück, nicht bloß das Endurteil |
 
 Ein valider Leistungsvergleich führt denselben Regelsatz unter identischer Fehlerbehandlungsrichtlinie aus. OPA eignet sich hervorragend für granulare Zugriffsentscheidungen, CEL für Guard-Ausdrücke, eine Produktions-Engine für die Aktivierungssteuerung und Datalog für rekursive Relationen. Jede Auswahl aus dieser Matrix bleibt eine Hypothese, bis sie empirisch und semantisch validiert wurde.
+
+> [!NOTE]
+> **Fünf semantische Tests zur Verifikation von Inferenzmaschinen nach dem Autorenprotokoll**
+> 1. Test auf explizite Negation: Verifikation, dass das Fehlen eines Fakts strikt als Status UNKNOWN ausgewertet wird, nicht als Falschheit oder Erfolg.
+> 2. Test auf Reihenfolge-Invarianz: Garantie, dass die Permutation von Regeln oder Prämissen den berechneten kleinsten Fixpunkt nicht verändert.
+> 3. Test auf selektiven Widerruf: Der Widerruf einer Prämisse invalidiert die Konklusion nicht, solange eine unabhängige alternative Stütze existiert.
+> 4. Test auf unbegründete Zyklen: Detektion zirkulärer Abhängigkeiten ohne Primärbasis unter kontrollierter Rückgabe eines Budget-Erschöpfungsstatus.
+> 5. Test auf Erklärungsdeterminismus: Zwingende Ausgabe des exakten Substitutionsgraphen und der Prämissenmenge zusammen mit dem Ergebnisurteil.
+> *Laufzeitsteuerung:* Jede Inferenzmaschine, die einen der fünf semantischen Benchmark-Tests nicht besteht, wird mit E_ENGINE_SEMANTIC_FAILURE disqualifiziert.
 
 ## 8. Modellausführung und Hardwarebeschleuniger
 
@@ -427,6 +461,14 @@ Das vergleichende Benchmarking konkretisiert die dritte Lehre des folgenden Absc
 1. **Werkzeuge werden nach Operation und Semantik gewählt.** SHACL validiert definierte Graph-Constraints, nicht beliebige logische Konsistenzen in OWL. Datalog berechnet logische Konsequenzen seiner strikten Regelsprache; SMT prüft Formeln unterstützter mathematischer Theorien. Traceability erfordert typisierte Kanten, semantische Ähnlichkeit ein statistisches Kandidaten-Ranking. Ein wohlklingender Werkzeugname ersetzt niemals den formalen semantischen Vertrag über das Ergebnis.
 2. **Frameworks kompensieren kein fehlendes kanonisches Wissensmodell.** Kein Orchestrierungs-Framework wie LangChain oder LlamaIndex kann ein Expertensystem evidenzbasiert machen, wenn Quelldokumente keine Revisionsstände, Freigabestatus und typisierten Graphverknüpfungen aufweisen. Das blinde Koppeln neuronaler Netze an unstrukturierte Datenberge beschleunigt lediglich die Generierung plausibel klingender Fehler.
 3. **Technologien werden nach ihrem Verhalten im Fehlerfall bewertet.** Die entscheidende Frage an eine Bibliothek lautet nicht: „Wie beeindruckend ist die Demo?“, sondern: „Was geschieht bei Verbindungsabbruch, unangekündigter Schemaänderung oder dem Update von Modellgewichten?“ Zerstört die Aktualisierung eines Einbettungsmodells unbemerkt die Reproduzierbarkeit eines gestern erteilten Sicherheitszertifikats, ist das Werkzeug für den industriellen Produktiveinsatz ungeeignet.
+
+> [!NOTE]
+> **Vier Invarianten des vergleichenden Technologie-Audits nach den Kriterien des Autors**
+> 1. Zwingender Baseline-Vergleich: Jeder Kandidat wird gegen die einfachste native Baseline-Implementierung auf eigenen Projektdaten evaluiert.
+> 2. Überprüfung kritischer Fehlermodi: Zwingender empirischer Stresstest bei Netzwerkabbrüchen, Speichermangel und unangekündigten Schemaänderungen.
+> 3. Unveränderlichkeit historischer Traces: Die Aktualisierung von Inferenz-Engines oder Embedding-Modellen darf frühere Zertifikate nicht invalidieren.
+> 4. Architektonische Protokollierung: Persistierung von Benchmark-Metriken und Komponentenversionen in einem unveränderlichen ADR-Register.
+> *Laufzeitsteuerung:* Die Einbindung externer Abhängigkeiten ohne genehmigtes ADR und vergleichenden Benchmark-Bericht wird in CI/CD mit E_UNVERIFIED_DEPENDENCY abgewiesen.
 
 ## 12. Dialog Pro et Contra
 

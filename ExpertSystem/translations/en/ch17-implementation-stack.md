@@ -70,6 +70,14 @@ flowchart TD
 
 The diagram reads from left to right: one first formulates the problem mathematically, and only then selects the appropriate tool class. Verifying the invariant "a safety requirement of level SIL 3 cannot be closed without two independent test reports" is a problem of deterministic logic; it demands a formal rule engine, not vector similarity search. The query "which modules are impacted by a change in requirement REQ-7" is a graph reachability problem. The inquiry "have analogous failure incidents occurred historically" is a semantic similarity problem. Subsequent sections systematically analyze each layer of the technology stack, beginning with programming languages.
 
+> [!NOTE]
+> **Four Criteria for Decomposing Mathematical Models into the Technology Stack Formulated by the Author**
+> 1. Logical determinism: strict isolation of predicate invariants from approximate heuristics and stochastic computations.
+> 2. Transitive reachability semantics: employing stratified Datalog for dependency graphs without risking infinite evaluation loops.
+> 3. Computational verification complexity: segregating rapid decision tables from NP-complete SMT solvers via explicit execution budgets.
+> 4. Execution node failure modeling: mandatory typed distinction between unsat, solver timeout, and epistemic absence of knowledge.
+> *Runtime Governance:* Any attempt to substitute deterministic invariant checks with vector similarity or probabilistic inference is rejected with E_INVALID_MODEL_SEMANTICS.
+
 ## 2. Programming Languages Across Responsibility Layers
 
 Early expert systems were frequently implemented entirely in Lisp or Prolog. Contemporary industrial expert systems are predominantly engineered in general-purpose programming languages, driven by transformed operating requirements: mature systems libraries, predictable memory management, native concurrency primitives, robust C Foreign Function Interfaces (FFI), and seamless integration with modern deployment infrastructure. Declarative logic languages have not vanished; rather, they endure as embedded rule and query domain-specific languages (DSLs), as detailed below. Each general-purpose language occupies a distinct architectural layer.
@@ -103,6 +111,15 @@ Python is uniquely adapted for offline exploration, model training, and benchmar
 TypeScript is essential for expert workstations: rendering interactive traceability graphs, navigating formal proof trees, and editing decision tables. The human-in-the-loop expert interface is a first-class component of an evidence-governed expert system, as it provides the cognitive medium through which human specialists inspect formal reasoning trails and render final determinations.
 
 From the author's practical engineering experience: an architectural partition that proved exceptionally robust across multiple mission-critical deployments allocates responsibilities as follows: Core coordination services, messaging queues, and state orchestration are implemented in Go; dense vector operations and local model executions are executed via C++ runtimes (OpenVINO, ONNX Runtime) invoked through cgo; Python is isolated within the offline knowledge-acquisition environment for dataset curation, model fine-tuning, and metric evaluation; and the interactive audit interface is delivered in TypeScript. This configuration is not uniquely prescriptive: architectural choices must reflect team competencies and latency constraints. Clear inter-subsystem data contracts, as specified in [Chapter 16](ch16-expert-systems-architecture.md), ensure that any layer's implementation language can be replaced without perturbing neighboring components.
+
+> [!NOTE]
+> **Five Invariants of Language Layer Isolation in the Author's Mission-Critical Architecture**
+> 1. Core orchestration autonomy: utilizing Go/Rust to enforce deterministic concurrency management and predictable memory behavior.
+> 2. Numerical accelerator isolation via FFI: running C++/CUDA routines within sandboxed boundaries without permission to mutate host service memory.
+> 3. Offline containment of interpreted languages: restricting Python strictly to research pipelines and dataset preparation, barring it from the decision runtime.
+> 4. Rigorous typing for audit interfaces: enforcing TypeScript schema verification to eliminate representation mismatches between UI and proof packages.
+> 5. Binary contract boundary enforcement: inter-layer communication exclusively through strongly typed binary structures with strict schema versioning.
+> *Runtime Governance:* Any FFI memory boundary violation or attempted dynamic loading of untyped code into the core halts execution immediately with E_FFI_MEMORY_VIOLATION.
 
 ## 3. Declarative Query Languages for Knowledge Bases
 
@@ -227,6 +244,14 @@ The rules are mutually exclusive: Rule 1 covers any positive defect count, while
 > 1. **Domain-Value Incompleteness:** If an input variable assumes `null`, `NaN`, or an unexpected string such as `"timeout"`, under policy **U** the decision table evaluates to `null`. If the consuming service merely tests `if (result == "BLOCK") reject();`, the unhandled `null` silently bypasses validation, permitting an unsafe release.
 > 2. **Default-Deny Principle:** The architecture of an evidence-governed expert system must strictly mandate that an unmatched condition in an admission decision table automatically defaults to the most restrictive rejection verdict (`"BLOCK"`).
 
+> [!NOTE]
+> **Four Rules for Safe DMN Decision Table Design Formulated by the Author**
+> 1. Absolute Default-Deny principle: any input vector not explicitly covered by defined rules evaluates to a categorical BLOCK verdict, never approval.
+> 2. Elimination of implicit selection policies: strict prohibition of First or Rule Order policies in critical paths in favor of deterministic Unique hit policies.
+> 3. Closed-world domain typing: mandatory explicit clauses handling error states, network timeouts, and null or NaN invalid inputs.
+> 4. Automated formal verification: compiling decision tables into SMT formulas to mathematically prove the absence of coverage gaps and rule conflicts.
+> *Runtime Governance:* Any DMN table failing static completeness verification across its input domain is rejected at registration with E_DMN_INCOMPLETE_TABLE.
+
 ## 5. Specialized Storage Engines by Physical Data Form
 
 The selection of a persistence engine is fundamentally governed by the physical structure and epistemological nature of the knowledge it houses. The rationale underpinning this partitioning was detailed in [Chapter 16](ch16-expert-systems-architecture.md); the table below maps storage modalities to representative product implementations and canonical access patterns.
@@ -277,6 +302,15 @@ Within the symbolic inference subsystem, the choice of inference engine defines 
 | Explainability traces | The engine returns concrete variable substitutions and dependency trees, not merely a binary verdict |
 
 Comparative evaluation must execute identical rule sets under uniform failure policies. OPA is tailored for fine-grained authorization, CEL for lightweight guard evaluation, production rule engines for conflict resolution across activation agendas, and Datalog for recursive dependency analysis. Selecting any component from this taxonomy represents a hypothesis that demands empirical verification.
+
+> [!NOTE]
+> **Five Semantic Tests for Inference Engine Verification Formulated by the Author**
+> 1. Explicit negation test: verifying that the absence of a fact evaluates strictly as UNKNOWN rather than proven falsity or default success.
+> 2. Order invariance test: guaranteeing that permuting rules or premise facts does not alter the computed least fixed point.
+> 3. Selective retraction test: retracting a single premise does not invalidate a conclusion if an independent alternative justification holds.
+> 4. Ungrounded cycle test: detecting cyclic dependencies lacking external ground facts and returning an explicit iteration budget exhaustion code.
+> 5. Explanation determinism test: mandatory output of an exact variable substitution trace and dependency graph alongside the boolean verdict.
+> *Runtime Governance:* Any candidate inference engine failing any of the five semantic benchmark tests is disqualified with E_ENGINE_SEMANTIC_FAILURE.
 
 ## 8. Model Execution and Hardware Accelerators
 
@@ -427,6 +461,14 @@ Comparative benchmarking operationalizes the third core principle detailed in th
 1. **Select tools strictly aligned with operational semantics.** SHACL validates specific topological graph constraints, not general OWL open-world consistency. Datalog computes the deductive closure of a well-defined rule subset; SMT solvers verify satisfiability under supported theories. Traceability requires typed directed edges, whereas semantic search demands candidate re-ranking. A library's brand name never supersedes its mathematical contract.
 2. **Frameworks cannot compensate for the absence of a canonical domain model.** No orchestration framework, such as LangChain or LlamaIndex, can transform an ad-hoc system into an evidence-governed expert system if source documents lack revision statuses, admission labels, and verified knowledge graph edges. Connecting generative neural networks to unstructured document repositories merely accelerates the production of plausible errors.
 3. **Evaluate technologies primarily by their behavior under failure modes.** The defining inquiry when evaluating a candidate library is not "how elegant is the demo?", but rather: "what happens upon network partition, silent schema drift, or model weight quantization shifts?". If a model update silently invalidates the auditability of an issued regulatory certificate, the toolchain is unfit for mission-critical deployment.
+
+> [!NOTE]
+> **Four Invariants of Technology Stack Comparative Auditing Formulated by the Author**
+> 1. Mandatory baseline comparison: every candidate library is evaluated against the simplest native baseline implementation on proprietary project data.
+> 2. Edge-case failure mode verification: mandatory empirical stress-testing under network drops, memory exhaustion, and unannounced schema mutations.
+> 3. Historical trace immutability: updating an inference engine or embedding model must never break reproducibility of previously issued certificates.
+> 4. Architectural benchmark logging: formal persistence of comparative benchmark telemetry and dependency versions in an immutable ADR registry.
+> *Runtime Governance:* Integrating any external dependency without an approved ADR and comparative benchmark audit is blocked by CI/CD with E_UNVERIFIED_DEPENDENCY.
 
 ## 12. Pro et Contra Dialogue
 
