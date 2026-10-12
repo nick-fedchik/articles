@@ -14,7 +14,7 @@ Skalierung des Expertensystems von einem lokalen deterministischen Prozess zu ei
 
 Kapitel 35 untersucht die ereignisgesteuerte Regelausführung, Mechanismen zur Aufrechterhaltung der Wahrheit (TMS), synergetische Phasenübergänge von Wissen und NPU-Runtimes. Kapitel 33 definiert den Vertrag für den systemübergreifenden Wissensaustausch: sichere Regelbereitstellung für externe Agenten, Training von Schülermodellen und Feedback-Erdung über eine Quarantäneschleuse. Kapitel 40 bildet den architektonischen Höhepunkt der Monografie und synthetisiert einen industriellen Referenzprototyp für eine epistemische SOA: schlanke mobile Clients, semantisches Routing, doppelte Pufferung von Arbeitsmengen (Active Working Sets / Ping-Pong Pipeline) zur vollständigen Latenzverbergung auf dem Bus und mehrquellenbasiertes defeasibles Schiedsverfahren auf Basis formaler Argumentation (ASPIC+).
 
-Das Ergebnis dieses Teils: eine vollumfängliche verteilte Architektur evidenzbasierter KI, die in der Lage ist, tausende Knoten zu koordinieren, ohne die Herkunft von Fakten zu verlieren, Lizenzrechte zu verletzen oder Sicherheitsgarantien zu schwächen. Praktische Ingenieurmethoden und autonome Anwendungssysteme sind in den [Anhängen A–E](README.md#додатки) gebündelt.
+Das Ergebnis dieses Teils: eine vollumfängliche verteilte Architektur evidenzbasierter KI, die in der Lage ist, tausende Knoten zu koordinieren, ohne die Herkunft von Fakten zu verlieren, Lizenzrechte zu verletzen oder Sicherheitsgarantien zu schwächen. Praktische Ingenieurmethoden und autonome Anwendungssysteme sind in den [Anhängen A–E](README.md#anhänge) gebündelt.
 
 ```mermaid
 flowchart LR

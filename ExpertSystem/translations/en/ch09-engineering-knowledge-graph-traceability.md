@@ -922,7 +922,7 @@ The comparative matrix below contrasts traditional tabular traceability against 
 
 This comparison does not imply that the EKG is cost-free: an EKG requires strict annotation hygiene, extractor maintenance, and dedicated schema governance. However, the engineering cost shifts permanently from manual, error-prone clerical copying to automated, reusable validation gates that guard every commit.
 
-## 8. Pro et Contra — Virtual Dialogue
+## 8. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously stress-test the author's architecture of engineering knowledge graphs and end-to-end artifact traceability. For this inquiry, we invite seminal architects of modern computing infrastructure whose foundational paradigms challenge notions of closed-world determinism and regulatory formalization: Sir **Tim Berners-Lee**—inventor of the World Wide Web (WWW), founder of the W3C, and pioneer of the Semantic Web / Linked Data paradigm, alongside **Linus Torvalds**—creator of the Linux operating system kernel and the distributed version control system Git.  
@@ -931,7 +931,7 @@ This comparison does not imply that the EKG is cost-free: an EKG requires strict
 **Chapter Thesis (Mykola Fedchyk):**  
 End-to-end traceability in functional safety engineering (ASPICE v4.0 / ISO 26262) mandates a mathematically closed, cryptographically verifiable knowledge graph (100% Traceability DAG), where every safety requirement (SHR/SWR), architectural decision (ADR), hardware register, and test suite is interconnected via typed edges subject to strict uncovered-element detection and complete coverage invariants.
 
-**Round 1.1: The open linked world (Semantic Web) versus closed engineering DAGs**
+**Dialogue with Tim Berners-Lee: Semantic Web Concepts and the Closed Engineering DAG**
 
 - **Tim Berners-Lee:**  
   *“Mykola Fedchyk, in our architectural vision for the Semantic Web, we established Linked Open Data upon RDF triples, OWL ontologies, and global URIs. You, conversely, engineer a rigid, proprietary, strictly enclosed directed acyclic graph (DAG) operating under the Closed World Assumption (CWA). Doesn't this abandon the paramount virtue of web-scale knowledge graphs—namely, decentralization, global cross-vendor interoperability, and continuous open-ended evolutionary schema extension?”*
@@ -941,7 +941,7 @@ End-to-end traceability in functional safety engineering (ASPICE v4.0 / ISO 2626
   Under OWA, the absence of an edge between a safety requirement and an executable test case is interpreted as 'we do not yet know if a test exists somewhere in the universe.' In safety-critical engineering, the absence of a test represents an immediate catastrophe: a catastrophic breach of the coverage invariant $\mathrm{Coverage}_{R \rightarrow T} = 1.0$, which must deterministically halt the CI/CD release build.  
   Furthermore, full-blown RDF/SPARQL engines relying on runtime dynamic inferencing fail to provide deterministic $O(1)$ query latencies in hard real-time execution. We utilize immutable binary quad-stores anchored in Merkle DAGs and memory-mapped indexes, enforcing rigid schema typing and complete hermetic isolation from external environmental stochasticity.”*
 
-**Round 1.2: Federated SPARQL queries and RDF-star versus deterministic embedded Merkle DAGs**
+**Continued Dialogue with Tim Berners-Lee: Federated SPARQL Queries and Embedded Merkle DAGs**
 
 - **Tim Berners-Lee:**  
   *“Mykola Fedchyk, modern RDF 1.2 and RDF-star standards allow statement-level annotations on individual triples (Reification / Edge Properties), while federated SPARQL queries (via the `SERVICE` keyword) enable querying heterogeneous distributed repositories across different tier-1 and tier-2 suppliers without constructing a monolithic centralized graph. Wouldn't it be far more scalable to federate traceability across sensor, microcontroller, and software vendors via open web endpoints rather than demanding total entity ingestion into a single rigid local Merkle DAG?”*
@@ -951,7 +951,7 @@ End-to-end traceability in functional safety engineering (ASPICE v4.0 / ISO 2626
   The ISO 26262 audit trail mandate is categorical: system configuration requires hermetic reproducibility. While we preserve the formal semantics of RDF-Quads, we compile them offline into immutable binary knowledge packs authenticated with Ed25519 cryptographic signatures and RFC 3161 timestamps.  
   All transitive reachability closures are computed locally in milliseconds via optimized memory-mapped (mmap) indices. Multi-vendor supply-chain integration is achieved not through live web endpoints, but via cryptographically signed vendor artifact imports merged into a single hermetic Merkle tree with complete integrity verification.”*
 
-**Round 2.1: Git commit simplicity versus safety-critical requirements traceability**
+**Dialogue with Linus Torvalds: Simplicity of Git Commits and Engineering Traceability of Requirements**
 
 - **Linus Torvalds:**  
   *“Mykola Fedchyk, all this end-to-end traceability under ASPICE v4.0, complex graph databases, and architectural decision records (ADRs) are textbook corporate bureaucracy. They produce endless man-hours of clerical status reports while hindering talented developers from writing functional, high-performance code. The Linux kernel powers billions of servers, smartphones, and supercomputers without a single traceability graph, without ASPICE audit matrices, and without formal requirements prose. We have Git commit logs, mailing list review threads, and clean modular code. Quality code speaks for itself; why choke developer productivity with graph overhead?”*
@@ -961,7 +961,7 @@ End-to-end traceability in functional safety engineering (ASPICE v4.0 / ISO 2626
   Linux is not certified to SIL-4 or ASIL-D for deployed automotive steer-by-wire or emergency braking systems operating at $130\,\text{km/h}$. When an autonomous vehicle crashes due to a sensor buffer overrun, regulatory tribunals (NHTSA, TÜV) and forensic investigators do not evaluate git commit message aesthetics: they subpoena an immutable, cryptographically verifiable evidentiary audit trail proving which specific safety goal mandated that buffer size, which ADR justified the data type, and which hardware-in-the-loop (HIL) test verified it on physical silicon under extreme temperature regimes.  
   Without an automated knowledge graph, engineering teams waste thousands of frantic man-hours manually compiling retrospective compliance spreadsheets before every audit. Our knowledge graph does not burden the developer: an automated Go analyzer extracts graph edges directly from source code annotations and CMSIS-SVD register maps in milliseconds, eliminating manual clerical overhead while guaranteeing mathematical audit completeness.”*
 
-**Round 2.2: Git submodules and `git bisect` versus predictive Change Impact Analysis**
+**Continued Dialogue with Linus Torvalds: Git Mechanisms and Predictive Change Impact Analysis**
 
 - **Linus Torvalds:**  
   *“If an engineer breaks a driver or a bus protocol, `git bisect` finds the exact offending commit across a million-revision tree in a dozen iterations $O(\log N)$. Git submodules and tags link firmware commits directly to specific hardware revisions. Why erect an elaborate semantic graph Change Impact Analysis engine when standard Unix utilities and Git already pinpoint exactly where and when the code broke?”*

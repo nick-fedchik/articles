@@ -501,13 +501,13 @@ Demarcating these architectural responsibilities is far more critical than accum
 
 From operational data analysis, mining action audit logs yields critical insights: identifying which action classes frequently trigger reconciliation, where transport retries generate duplicates, and which approvals are routinely revoked by human operators. Process mining (*process mining*) compares empirical execution traces against the authorized state machine, while anomaly detection highlights candidates for policy review. High historical approval frequency does not justify autonomous privilege expansion; a trained risk scoring model cannot supersede the designated policy owner.
 
-## 9. Pro et Contra — Virtual Dialogue
+## 9. Pro et Contra Dialogue
 
 Distinguished luminary of dependable modular software engineering David Parnas (pioneer of information hiding and modular decomposition, Professor Emeritus at McMaster University) and leading system safety researcher Nancy Leveson (Professor of Aeronautics and Astronautics at MIT, creator of the STAMP/STPA system safety methodology) are invited to this virtual intellectual discussion. Their foundational contributions regarding the boundaries of automated control reliability and system-level accident causality in human-machine complexes provide an uncompromising basis for critically verifying the author's action execution pipeline.
 
 *Disclaimer:* This discussion is a heuristic virtual simulation within the scholarly and pedagogical context of the monograph. The views and arguments of the interlocutors are synthesized based on their published papers, academic monographs, and lectures; they do not represent verbatim quotes and serve to critically rationalize (in the Popperian falsification sense) the author's engineering decisions.
 
-**Round 1: David Parnas Warns Against Autonomous Action Execution by Software Agents Without Formal Environmental Guarantees**
+**Dialogue with David Parnas: Boundaries of Autonomous Agent Actions and Formal Environmental Guarantees**
 
 - **David Parnas:** Mykola Fedchyk, during my critique of the Strategic Defense Initiative (SDI), I demonstrated that software acting autonomously in the real physical world without human intervention cannot be completely validated for reliability by testing alone, because the continuous physical state space is fundamentally unpredictable. In your framework, you introduce autonomy levels A2–A4 and compensating sagas. However, the real physical world does not support database-style `ROLLBACK` semantics: you cannot "un-open" an overpressure relief valve, undo a high-voltage electrical surge, or retract a pharmaceutical drug injected into a patient's bloodstream. Compensating actions are themselves prone to failure. How can you entrust system actuation to software agents, even with typed contracts, when physical rollback is impossible?
 
@@ -519,7 +519,7 @@ Distinguished luminary of dependable modular software engineering David Parnas (
   Sub-millisecond emergency tripping actions (Hard Real-Time Emergency Interlocks) are never delegated to software agents, inference engines, or rule interpreters. They are implemented in certified silicon: hardware comparators, FPGA gates, or certified ASIL D / SIL 4 microcode (autonomy levels A0/A1) possessing a single deterministic mission: instantaneous de-energization to a safe de-excited state.  
   The expert system operates exclusively across macroscopic time horizons: planning multi-step configuration shifts, diagnostic routines, and compensation schedules. The human operator in the loop authorizes strategic action contracts spanning seconds or minutes, while hardware safety circuits guarantee that during human deliberation, no destructive physical threshold can be breached.
 
-**Round 2: Nancy Leveson Challenges Component-Centric Safety Models Versus Systemic Control Loops in STAMP**
+**Dialogue with Nancy Leveson: Component-Centric Safety Models and Systems-Theoretic Process Analysis (STAMP)**
 
 - **Nancy Leveson:** Mykola Fedchyk, forensic analysis of accidents such as Therac-25 or modern avionics failures proves that catastrophic mishaps do not stem from individual component breakages; rather, they arise from unsafe interactions among correctly operating components and dysfunctional feedback loops. Your approach, centered on typed action contracts and idempotency keys, focuses on the reliability of single operations. Yet an idempotency key only prevents network duplicate requests. It cannot protect against non-linear error compounding, where every individual step is formally valid, but their sequence violates a global system safety invariant due to operator mode confusion or cognitive approval fatigue under an alert blizzard.
 

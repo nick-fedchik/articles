@@ -1,9 +1,9 @@
 # Appendix B. Evidence-Governed Expert Systems in Autonomous Robotics and Cyber-Physical Systems
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · Appendices
-> **Table of Contents:** [README.md](README.md)
-> **Author:** [Mykola Fedchyk](about-the-author.md)
-> **Target Audience:** Autonomous platform architects, embedded systems engineers, robotics specialists (ROS 2, Zephyr RTOS), safety-critical real-time system developers
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · Appendices  
+> **Table of Contents:** [README.md](README.md)  
+> **Author:** [Mykola Fedchyk](about-the-author.md)  
+> **Target Audience:** Autonomous platform architects, embedded systems engineers, robotics specialists (ROS 2, Zephyr RTOS), safety-critical real-time system developers  
 > **Expected Learning Outcomes:** Decouple probabilistic perception from deterministic action admission; construct an onboard knowledge base without dynamic memory allocation; structure physical actions as formal contracts with precondition and postcondition verification; audit subsystem interfaces and physical models prior to field trials.
 
 ---

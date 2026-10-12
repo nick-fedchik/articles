@@ -707,7 +707,7 @@ The architectural principles established throughout this chapter are distilled i
 6. **Historical audit records must never be overwritten with current state.** Every modification or retraction appends a new immutable entry recording the author, timestamp, and justification. Records are retained strictly within authorized retention policies; auditability does not override legal mandates for data redaction.
 7. **Inference rules must not share mutable state.** A rule must be a deterministic function over input facts and explicit context; implicit global variables destroy reproducibility and invalidate formal proofs.
 
-## 14. Pro et Contra — Virtual Dialogue
+## 14. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously examine the author's architecture regarding core system patterns, Truth Maintenance Systems (JTMS), and the strict decoupling of knowledge ingestion from read inference. For this inquiry, we invite internationally renowned pioneers in software architecture and artificial intelligence: eminent non-monotonic reasoning researcher and inventor of the Assumption-based Truth Maintenance System (ATMS) **Johan de Kleer** (Xerox PARC / AAAI Fellow), alongside legendary distributed systems architect, Chief Scientist at Thoughtworks, and pioneer of the CQRS pattern **Martin Fowler**.  
@@ -716,7 +716,7 @@ The architectural principles established throughout this chapter are distilled i
 **Chapter Thesis (Mykola Fedchyk):**  
 The architecture of an evidence-governed expert system rests upon absolute segregation of ingestion and query paths (epistemic CQRS), linear dependency-directed truth maintenance (JTMS) immune to combinatorial explosion, and immutable knowledge snapshots enforcing reproducible, cryptographically audited proof contexts (PROV-O).
 
-**Round 1: Truth Maintenance System (TMS/ATMS) tractability versus hard real-time latency budgets**
+**Dialogue with Johan de Kleer: Truth Maintenance Networks (TMS/ATMS) and Deterministic Real-Time Response Bounds**
 
 - **Johan de Kleer:**  
   *“Mykola Fedchyk, in our foundational work on Truth Maintenance Systems, we conducted comprehensive analyses of both Doyle's original JTMS and my Assumption-based ATMS. Any reasoning system maintaining explicit justification networks to track dependencies and execute dependency-directed backtracking inevitably confronts worst-case exponential combinatorial explosion ($O(2^n)$) during context switching or contradiction resolution. Demanding that an industrial expert system construct full JTMS networks for every engineering verdict in real time plants an unpredictable latency bomb and risks catastrophic memory exhaustion.”*
@@ -735,7 +735,7 @@ The architecture of an evidence-governed expert system rests upon absolute segre
   Our architecture enforces strict two-plane separation: high-frequency raw telemetry streams are captured in lock-free ring buffers within the operational advisory ingress gateway, where Kalman filters, Schmidt triggers, and hysteresis deadbands suppress physical noise and microscopic oscillations.  
   The JTMS dependency network is activated exclusively upon quantized symbolic events and normative facts (for instance, a subsystem state transition to `CRITICAL_OVERHEAT` or the formal revocation of a component certification). The justification DAG does not model the microscopic physics of silicon; it models deontic commitments and discrete logical lemmas, entirely eliminating truth thrashing and guaranteeing bounded worst-case response times.”*
 
-**Round 2: Epistemic CQRS and subsystem contracts versus eventual consistency hazards**
+**Dialogue with Martin Fowler: Epistemic CQRS, Subsystem Contracts, and Eventual Consistency Models**
 
 - **Martin Fowler:**  
   *“Mykola Fedchyk, Command Query Responsibility Segregation (CQRS) and contract-driven distributed architectures (Pact) are battle-tested patterns in enterprise application engineering. However, in distributed topologies, classical CQRS relies on asynchronous messaging and eventual consistency. If your ingestion pipeline asynchronously updates property graphs, vector embeddings, and SMT constraints across independent datastores, concurrent read sessions will inevitably execute inference over desynchronized state snapshots. While a few seconds of replication lag is tolerable in an e-commerce catalog, in safety-critical industrial decision systems it leads to contradictory, legally indefensible verdicts.”*

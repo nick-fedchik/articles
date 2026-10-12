@@ -190,22 +190,26 @@ History delivers an unequivocal engineering lesson: an expert system is only as 
 The most transparent and readily verifiable knowledge representation within an expert system architecture is the explicit formal rule. A logical production rule answers whether a conclusion deductively entails from verified premises (*Logical Entailment*). Unlike stochastic neural networks, the output of formal deduction is not a probability distribution: assuming syntactic validity of the rule set and the ground truth of premises, a proposition is either proven or refuted.
 
 **Formally: Deductive Inference via Modus Ponens.**  
-The engineering problem of non-determinism and stochastic hallucinations within release admission gateways: in mission-critical environments (ISO 26262, IEC 61508), engineering verdicts cannot rely on statistical token correlations. A formal deductive mechanism is mandated to guarantee that proposition $B$ holds with mathematical certainty if verified facts $A$ and normative rule $A ightarrow B$ are true. The computation yields an inspectable deduction step within a formal proof tree, returning a binary truth value $B \in \{\mathbf{True}, \mathbf{False}\}$.
+The engineering problem of non-determinism and stochastic hallucinations within release admission gateways: in mission-critical environments (ISO 26262, IEC 61508), engineering verdicts cannot rely on statistical token correlations. A formal deductive mechanism is mandated to guarantee that proposition $B$ holds with mathematical certainty if verified facts $A$ and normative rule $A 
+ightarrow B$ are true. The computation yields an inspectable deduction step within a formal proof tree, returning a binary truth value $B \in \{\mathbf{True}, \mathbf{False}\}$.
 
 The rule is structured as:
 
 ```math
-rac{Aightarrow B,\qquad A}{B}
+rac{A
+ightarrow B,\qquad A}{B}
 ```
 
 - $A \in \{\mathbf{True}, \mathbf{False}\}$ — an atomic fact or conjunction of facts verified in the knowledge base (the antecedent);
-- $Aightarrow B$ — a production rule or normative requirement: material implication wherein the truth of $A$ guarantees the truth of $B$;
+- $A
+ightarrow B$ — a production rule or normative requirement: material implication wherein the truth of $A$ guarantees the truth of $B$;
 - $B \in \{\mathbf{True}, \mathbf{False}\}$ — the target logical consequence (the consequent or safety action);
 - The horizontal bar denotes deductive entailment within the propositional calculus.
 
 **Practical Application and Engineering Conclusions:**
 1. The deduction is triggered by pattern matching algorithms (such as Rete or Treat) upon any state transition within Working Memory.
-2. If premise $A = \mathbf{True}$ and rule $A ightarrow B$ is activated, the inference engine deterministically asserts fact $B$ into working memory, appending the deduction step to the cryptographic proof witness.
+2. If premise $A = \mathbf{True}$ and rule $A 
+ightarrow B$ is activated, the inference engine deterministically asserts fact $B$ into working memory, appending the deduction step to the cryptographic proof witness.
 3. If $A = \mathbf{False}$ or $A$ is unknown under an open-world assumption, the rule does not fire; the system cannot presume the truth of $B$ and records an evidentiary deficit.
 4. Industrial functional safety exemplar:
 ```text
@@ -231,13 +235,16 @@ The inference engine evaluates production rules via two foundational execution s
 ```math
 F_0=\{A,B,C\},
 \qquad
-R=\{A\land Bightarrow D,\;D\land Cightarrow E\}.
+R=\{A\land B
+ightarrow D,\;D\land C
+ightarrow E\}.
 ```
 
 - $F_0$ — initial set of verified facts in working memory;
 - $R$ — set of compiled production rules;
 - $A, B, C, D, E$ — atomic predicates;
-- $\land$ — logical conjunction, $ightarrow$ — production action.
+- $\land$ — logical conjunction, $
+ightarrow$ — production action.
 
 During the initial match-resolve-act cycle, the first rule fires, asserting fact $D$; on the subsequent cycle, the second rule evaluates successfully:
 
@@ -340,7 +347,10 @@ release_requires_safety_review(Release) :-
     missing_safety_evidence(Req, _).
 ```
 
-Querying `?- missing_safety_evidence(tsr_report_diagnostic_fault, Reason).` resolves `Reason = verification`: the requirement traces to a parent functional requirement, but lacks an associated test. The query `?- release_requires_safety_review(release_2026_05).` evaluates to `true` because the candidate release contains an unverified requirement. The negation-as-failure operator `\+` presumes unprovable facts to be false—a closed-world assumption valid strictly within complete fact enumerations ([Chapter 2](ch02-epistemology-of-machine-knowledge.md)). This formal traceability maps directly to the "threat $ightarrow$ mitigation $ightarrow$ requirement $ightarrow$ verification" chains mandated by automotive cybersecurity standards such as ISO/SAE 21434 [[12]](#src-12).
+Querying `?- missing_safety_evidence(tsr_report_diagnostic_fault, Reason).` resolves `Reason = verification`: the requirement traces to a parent functional requirement, but lacks an associated test. The query `?- release_requires_safety_review(release_2026_05).` evaluates to `true` because the candidate release contains an unverified requirement. The negation-as-failure operator `\+` presumes unprovable facts to be false—a closed-world assumption valid strictly within complete fact enumerations ([Chapter 2](ch02-epistemology-of-machine-knowledge.md)). This formal traceability maps directly to the "threat $
+ightarrow$ mitigation $
+ightarrow$ requirement $
+ightarrow$ verification" chains mandated by automotive cybersecurity standards such as ISO/SAE 21434 [[12]](#src-12).
 
 </details>
 
@@ -769,7 +779,8 @@ The engineering problem of recurring critical failures: if an expert system reli
 The experience tuple is structured as:
 
 ```math
-E = \langle \mathcal{C},\ \mathcal{P},\ \mathcal{A},\ \mathcal{R},\ \Delta angle
+E = \langle \mathcal{C},\ \mathcal{P},\ \mathcal{A},\ \mathcal{R},\ \Delta 
+angle
 ```
 
 - $\mathcal{C} \in \mathbb{C}$ — operational context of the engineering environment (hardware silicon stepping, ambient operating temperature range, duty cycle);
@@ -870,15 +881,22 @@ The engineering problem of extracting critical technical tokens (error codes, re
 The parameters are formulated as:
 
 ```math
-w(t, d, D) = \mathrm{TF}(t, d) \cdot \mathrm{IDF}(t, D) = rac{f_{t,d}}{\lvert d vert} \cdot \ln\left(1 + rac{\lvert D vert}{\lvert\{d' \in D : t \in d'\}vert}ight)
+w(t, d, D) = \mathrm{TF}(t, d) \cdot \mathrm{IDF}(t, D) = rac{f_{t,d}}{\lvert d 
+vert} \cdot \ln\left(1 + rac{\lvert D 
+vert}{\lvert\{d' \in D : t \in d'\}
+vert}
+ight)
 ```
 
 - $t$ — search term (token or identifier);
 - $d \in D$ — engineering specification chunk;
-- $\lvert d vert \in \mathbb{N}^+$ — total word count in chunk $d$;
+- $\lvert d 
+vert \in \mathbb{N}^+$ — total word count in chunk $d$;
 - $f_{t,d} \in \mathbb{N}$ — raw frequency of term $t$ in chunk $d$;
-- $D$ — corpus of specifications, where $\lvert D vert \in \mathbb{N}^+$ is total document count;
-- $\lvert\{d' \in D : t \in d'\}vert$ — count of corpus documents containing term $t$;
+- $D$ — corpus of specifications, where $\lvert D 
+vert \in \mathbb{N}^+$ is total document count;
+- $\lvert\{d' \in D : t \in d'\}
+vert$ — count of corpus documents containing term $t$;
 - $w(t, d, D) \in [0, \infty)$ — discriminative weight of term $t$.
 
 **Practical Application and Engineering Conclusions:**
@@ -927,12 +945,15 @@ The engineering problem of overcoming technical synonymy (The Lexical Chasm): di
 The formulation is defined as:
 
 ```math
-\cos(\mathbf a,\mathbf b)=rac{\mathbf a^{\mathsf T}\mathbf b}{\lVert\mathbf aVert_2\,\lVert\mathbf bVert_2} = rac{\sum_{i=1}^d a_i\,b_i}{\sqrt{\sum_{i=1}^d a_i^2}\cdot\sqrt{\sum_{i=1}^d b_i^2}}
+\cos(\mathbf a,\mathbf b)=rac{\mathbf a^{\mathsf T}\mathbf b}{\lVert\mathbf a
+Vert_2\,\lVert\mathbf b
+Vert_2} = rac{\sum_{i=1}^d a_i\,b_i}{\sqrt{\sum_{i=1}^d a_i^2}\cdot\sqrt{\sum_{i=1}^d b_i^2}}
 ```
 
 - $\mathbf a, \mathbf b \in \mathbb{R}^d$ — normalized embedding vectors for query and candidate chunk, where $d$ is latent dimensionality (e.g., $d = 768$);
 - $\mathbf a^{\mathsf T}\mathbf b = \sum_{i=1}^d a_i b_i$ — dot product accumulating projection overlaps across all latent axes;
-- $\lVert\mathbf aVert_2 = \sqrt{\sum a_i^2}$ — Euclidean norm (magnitude) of the vector;
+- $\lVert\mathbf a
+Vert_2 = \sqrt{\sum a_i^2}$ — Euclidean norm (magnitude) of the vector;
 - $\cos(\mathbf a, \mathbf b) \in [-1, 1]$ — cosine similarity metric.
 
 **Practical Application and Engineering Conclusions:**
@@ -1354,7 +1375,7 @@ Under this multi-dimensional paradigm, a policy routing a case to human review a
 
 Data quality controls, reproducibility records, and audit logs existed within classical knowledge engineering, but language models, unversioned external APIs, vector indices, and corpora spanning tens of thousands of unstructured PDFs have drastically magnified the operational risks. Devoid of explicit input filtering, dependency versioning, and multidimensional uncertainty modeling, an expert system degrades into an ungrounded, non-deterministic oracle.
 
-## 11. Pro et Contra — Virtual Dialogue
+## 11. Pro et Contra Dialogue
 
 > **Epistemic Preamble and Academic Disclaimer:**  
 > This section models a virtual intellectual discourse to rigorously stress-test the author's evolutionary framework of uncertainty management—from Bayesian probability to evidence-governed AI. The dialogue convenes historical pioneers of probabilistic inference and fuzzy logic: Presbyterian minister and mathematician **Thomas Bayes**—author of the foundational treatise *“An Essay towards solving a Problem in the Doctrine of Chances”* (1763) and discoverer of inverse probability, alongside UC Berkeley Professor **Lotfi Zadeh**—creator of fuzzy set theory, linguistic variables, and possibility theory (1965).  
@@ -1363,7 +1384,7 @@ Data quality controls, reproducibility records, and audit logs existed within cl
 **Chapter Thesis (Mykola Fedchyk):**  
 Uncertainty in safety-critical systems is fundamentally non-uniform: stochastic sensor noise and hardware failure rates demand Bayesian probabilistic calibration, subjective linguistic tolerances are formalized through Zadeh's fuzzy set theory, yet the ultimate admission of a system to operational deployment must rest upon the deterministic enforcement of deontic safety contracts via Fail-Closed semantics. Collapsing probability and normative requirements into a singular heuristic pseudo-scalar destroys auditability and evidence custody.
 
-**Round 1: Reverend Thomas Bayes versus the Categorical Determinism of Safety Gates**
+**Dialogue with Thomas Bayes: Probabilistic Estimations and Categorical Determinism of Safety Gates**
 
 - **Thomas Bayes:**  
   *“Mr. Fedchyk, in my essay on solving a problem in the doctrine of chances, I established that when we observe an event whose underlying nature is unknown to us, but which has occurred on one occasion and failed on another—as in your motivating case of an onboard controller's regression test that initially failed and subsequently passed upon rerun—the human intellect possesses no legitimate warrant to declare an absolute, unconditional truth. We are inescapably confronted with inverse probability: each subsequent trial merely shifts our posterior distribution regarding the true probability of an underlying flaw.  
@@ -1379,7 +1400,7 @@ Uncertainty in safety-critical systems is fundamentally non-uniform: stochastic 
 - **Mykola Fedchyk:**  
   *“That is a profound critique, Reverend Bayes. It is precisely to avert specification dogmatism that our architecture segregates reasoning into two rigorously isolated planes. A Bayesian analyzer continuously monitors the empirical stream of hardware telemetry and flags anomalies whenever observed statistics deviate from the prior reliability model. Crucially, however, knowledge base mutations are never enacted surreptitiously through autonomous weight adjustments. When an epistemic divergence between empirical fact and normative prescription is detected, the system does not passively habituate itself to operational anomalies; instead, it triggers a controlled epistemic escalation to a qualified engineering committee, accompanied by mandatory Popperian mutation testing. We do not discard your posterior analysis—we protect it from its most seductive danger: the hazard that averaging over repeated observations might normalize a catastrophic defect as statistically benign.”*
 
-**Round 2: Professor Lotfi Zadeh versus the Boolean Absolutism of Engineering Boundaries**
+**Dialogue with Lotfi Zadeh: Fuzzy Logic and Boolean Absolutism of Engineering Boundaries**
 
 - **Lotfi Zadeh:**  
   *“Mykola Fedchyk, the real world of physical instrumentation is inherently non-Boolean. Physical states of industrial equipment—‘excessive power switch temperature,’ ‘hazardous bearing vibration,’ or ‘dielectric breakdown’—do not possess abrupt, step-like boundaries. Your rigid invariants $`T > 90.0\,^\circ\text{C}`$ artificially mutilate physical reality: at $`89.99\,^\circ\text{C}`$ your engine emits a clean `PASS`, whereas at $`90.01\,^\circ\text{C}`$ it abruptly trips a generation turbine. Is not fuzzy set theory an incomparably more natural and faithful language for capturing engineering expertise than artificial Boolean absolutism?”*
@@ -1417,7 +1438,8 @@ The future of expert systems is neuro-symbolic: language models unlock unstructu
 | Term | English Equivalent | Concise Engineering Definition |
 |---|---|---|
 | Evidence | *evidence* | An empirical observation, measurement, or signed document that corroborates or refutes a candidate hypothesis |
-| Modus Ponens | *modus ponens* | Classical rule of inference: from $A ightarrow B$ and $A$, deductively infer $B$ |
+| Modus Ponens | *modus ponens* | Classical rule of inference: from $A 
+ightarrow B$ and $A$, deductively infer $B$ |
 | Resolution Principle | *resolution principle* | Algorithmic method for automated theorem proving over first-order predicate logic |
 | Production Rule | *production rule* | Declarative rule structuring: "IF conditions are satisfied, THEN execute conclusion or action" |
 | Forward Chaining | *forward chaining* | Data-driven inference progressing from known premises toward derived conclusions |

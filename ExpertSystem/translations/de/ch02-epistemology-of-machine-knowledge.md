@@ -1155,7 +1155,7 @@ Diese Invarianten sind empirisch falsifizierbar. Zu ihrer Validierung nutzt man 
 
 Die detaillierte Methodik von Wissensprüfungsmatrizen, Stresstests an realen Spezifikationen und die Mathematik der ZHR- und FCP-Metriken werden in [Kapitel 23](ch23-knowledge-base-verification.md) und [Kapitel 25](ch25-how-expert-systems-learn.md) vertieft. Hardwarebeschleunigung, speichereffizientes Mapping via `mmap` und Mikrosekundenlatenzen ohne Deserialisierung behandelt [Kapitel 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md); Strategien zur Beseitigung von Maschinenhalluzinationen analysiert [Kapitel 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md).
 
-## 14. Pro et Contra — Virtueller Dialog
+## 14. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Haftungsausschluss:**  
 > Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur methodischen Belastungsprüfung der in diesem Kapitel entwickelten erkenntnistheoretischen und ingenieurtechnischen Prämissen. Zu diesem Diskurs laden wir herausragende Philosophen der Information und Wissenschaftstheorie ein: die Professoren der Universitäten Yale und Oxford **Luciano Floridi** – Begründer der modernen Informationsphilosophie und Kritiker des syntaktischen Reduktionismus – sowie Sir **Karl Popper** – Urheber des Fallibilismus und des kritischen Rationalismus.  
@@ -1164,7 +1164,7 @@ Die detaillierte Methodik von Wissensprüfungsmatrizen, Stresstests an realen Sp
 **These des Kapitels (Mykola Fedchyk):**  
 Maschinelles Wissen in sicherheitskritischen Systemen gründet nicht auf statistischer Plausibilität, sondern auf vertraglicher Authentizität, bytegenauer Verwahrung von Primärquellen und der prozeduralen Falsifizierbarkeit jeder einzelnen Schlussfolgerung.
 
-**Runde 1: Semantische Wahrheit versus syntaktische Datenverwahrung**
+**Dialog mit Luciano Floridi: Semantische Wahrheit versus syntaktische Datenverwahrung**
 
 - **Luciano Floridi:**  
   *„Mykola Fedchyk, in Ihrer Architektur begehen Sie das klassische Versäumnis des syntaktischen Reduktionismus: Syntaktische Daten sind nicht identisch mit semantischer Information! Ihre bytegenaue SHA-256-Verwahrung und die Span-Grounding-Deskriptoren beweisen lediglich, dass eine Bytefolge im Speicher oder auf Datenträgern keine Bitfäule erlitten hat. Dies garantiert jedoch in keiner Weise ihren Wahrheitsgehalt bezüglich der physikalischen Wirklichkeit. Der kryptografische Hash-Wert eines fehlerhaften oder veralteten Industriestandards bleibt schlichtweg der fehlerfreie Hash-Wert eines Irrtums. Zu postulieren, dass kryptografische Hashes Wissen erzeugen, bedeutet, sich in einer semantischen Tautologie einzumauern.“*
@@ -1180,7 +1180,7 @@ Maschinelles Wissen in sicherheitskritischen Systemen gründet nicht auf statist
   Erstens bindet der Span-Grounding-Deskriptor das symbolische Prädikat über ein untrennbares kryptografisches Tupel an exakte Byte-Offsets der Primärquelle.  
   Zweitens erheben wir keinen metaphysischen Anspruch darauf, Silizium mit subjektiver Intentionalität oder Bewusstsein auszustatten. In der sicherheitskritischen Technik wird Verständnis als Verhaltensäquivalenz und Vertragserfüllung operationalisiert: Prädikate kompilieren in ausführbare Invarianten, die auf formalen SMT-Modellen und Hardware-in-the-Loop-Prüfständen (HIL) verifiziert werden. Wenn das Systemverhalten unter sämtlichen Randbedingungen strikt der formalisierten Invariante genügt und diese Invariante von einem haftenden Wissensingenieur kryptografisch signiert ist, wird die semantische Kluft durch persönliche juristische Verantwortung und mathematischen Beweis geschlossen.“*
 
-**Runde 2: Poppers Fallibilismus versus digitale Unfehlbarkeit**
+**Dialog mit Karl Popper: Poppers Fallibilismus versus digitale Unfehlbarkeit**
 
 - **Karl Popper:**  
   *„Mykola Fedchyk, Sie beanspruchen, dass Ihr evidenzbasiertes System auf meiner Methodologie des kritischen Rationalismus fußt, postulieren jedoch gleichzeitig Zero-Hallucination-Garantien (ZHR) und fehlerfreie Wissensverwahrung. Lassen Sie damit nicht unter modernem Deckmantel den Verifikationismus des Wiener Kreises wiederaufleben, den ich bereits 1934 widerlegt habe? Echtes wissenschaftliches Wissen bleibt stets vorläufig und widerlegbar; kein Rechensystem darf unumstößliche Wahrheiten für sich reklamieren.“*

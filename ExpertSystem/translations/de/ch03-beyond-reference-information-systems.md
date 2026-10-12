@@ -468,7 +468,7 @@ Autonomie ist somit keine pauschale Eigenschaft des Gesamtsystems, sondern ein s
 
 Alle drei Betriebsregeln teilen ein gemeinsames Fundament: Weder eine Wissensaktualisierung noch eine Konfidenzangabe noch eine automatisierte Aktion darf ohne verifizierbare Beweisspur existieren. Es ist exakt dieselbe Forderung nach Nachvollziehbarkeit, die das Expertengutachten vom unverbindlichen Auskunftsdokument unterscheidet – konsequent angewendet auf den gesamten Betriebslebenszyklus.
 
-## 8. Pro et Contra — Virtueller Dialog
+## 8. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Haftungsausschluss:**  
 > Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur methodischen Belastungsprüfung der in diesem Kapitel gezogenen Demarkationslinien zwischen reinen Auskunftssystemen und evidenzbasierten Expertensystemen. Zu diesem Diskurs laden wir führende Vertreter der Wissenschaftstheorie und der Software-Methodologie ein: University of Oxford Professor **David Deutsch** – Pionier des Quantencomputings und Verfechter des kritischen Rationalismus – sowie ETH-Zürich-Professor **Bertrand Meyer** – Schöpfer des Paradigmas des vertragsbasierten Entwurfs (Design by Contract).  
@@ -477,7 +477,7 @@ Alle drei Betriebsregeln teilen ein gemeinsames Fundament: Weder eine Wissensakt
 **These des Kapitels (Mykola Fedchyk):**  
 Ein Expertensystem unterscheidet sich grundlegend von Suchmaschinen und Sprachmodellen dadurch, dass es weder plausiblen Freitext generiert noch Schlussfolgerungen dem Anwender überlässt; stattdessen synthetisiert es ein formal prüfbares Begründungspaket auf Basis softwaretechnischer Verträge mit garantierter Fail-Closed-Verweigerung bei mangelnder Evidenz.
 
-**Runde 1: Heuristische Vermutungen versus Hardware-Falsifikatoren**
+**Dialog mit David Deutsch: Heuristische Vermutungen versus Hardware-Falsifikatoren**
 
 - **David Deutsch:**  
   *„Mykola Fedchyk, Sie behaupten, dass Ihr evidenzbasiertes System Suchmaschinen und LLMs übertrifft, indem es Halluzinationen eliminiert und Regeln in Hardware gießt. Doch in *The Beginning of Infinity* habe ich dargelegt: Wissen wächst ausschließlich durch kühne Vermutungen (Conjectures) und deren anschließende Kritik. Ihr Bestreben, ein System in starre, vorkompilierte Regeln und kryptografische Verwahrung einzusperren, macht daraus ein dogmatisches Orakel des Wiener Kreises. Eine geschlossene Regelbasis vermag keine guten Erklärungen (Good Explanations) hervorzubringen, wenn neue Grenzfälle die programmierte Hülle überschreiten.“*
@@ -495,7 +495,7 @@ Ein Expertensystem unterscheidet sich grundlegend von Suchmaschinen und Sprachmo
   Ein Begründungspaket (Justification Bundle) zitiert nicht einfach Normentexte: Es synthetisiert einen formalen Beweis über die Erfüllung physikalischer Verträge. Jedes Prädikat bindet an reale physikalische Messgrößen des Prüfstands ($`T_{\mathrm{case}}`$, Strom, Spannung, Einschwingzeiten) und berechnet explizit die Sicherheitsmarge bis zur kritischen Ausfallgrenze.  
   Werden Einsatzgrenzen verletzt, generiert das System weder Spekulationen noch plausible Hypothesen, sondern liefert einen minimalen unerfüllbaren Kern (Minimal Unsatisfiable Core, MUC) mit exakter Angabe der verletzten physikalischen Vorbedingung. Dies wandelt bürokratische Zitate in eine funktionale technische Erklärung um, die den Grund der Verweigerung physikalisch exakt lokalisiert.“*
 
-**Runde 2: Vertragliche Strenge und relationale Autonomiebegrenzung**
+**Dialog mit Bertrand Meyer: Vertragliche Strenge und relationale Autonomiebegrenzung**
 
 - **Bertrand Meyer:**  
   *„Mykola Fedchyk, als Schöpfer von Design by Contract begrüße ich Ihre Abkehr von stochastischen Black-Boxes zugunsten expliziter Vorbedingungen, Nachbedingungen und Klasseninvarianten. Sie übertragen die Vertragslogik jedoch auf das dynamische Hot-Swapping von Wissenspaketen zur Laufzeit. Wenn Regeln im laufenden Betrieb aktualisiert werden, wie garantieren Sie mathematisch die Widerspruchsfreiheit der Verträge und verhindern Regel-Deadlocks, ohne die Anlage lahmzulegen?“*

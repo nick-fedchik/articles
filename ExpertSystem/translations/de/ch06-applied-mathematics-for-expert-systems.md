@@ -872,7 +872,7 @@ V^{\pi}(s)=\mathbb{E}_{\pi}\Big[\sum_{t=0}^{\infty}\gamma^{t}r_t\ \Big|\ s_0=s\B
 
 Bei $\gamma=0{,}9$ besitzt eine Belohnung nach 10 Schritten nur noch das Gewicht $0{,}9^{10}\approx0{,}35$. Bei partieller Beobachtbarkeit wird das Modell zum POMDP erweitert; in der industriellen Praxis genügen oft vereinfachte MDP-Richtlinien mit verifizierten Sicherheitsgrenzen.
 
-### 7.4. Zadeh-Fuzzy-Logik: Zugehörigkeitsfunktionen und Wahrheitsgrade
+### 7.4. Zadeh-Fuzzy-Logik: Zugehörigkeitsfunktionen und Wahrheitsgrade <a id="нечітка-логіка-ступінь-замість-різкої-межі"></a>
 
 Ingenieurbegriffe besitzen oft weiche Grenzen: „aktuelle Dokumentation“, „moderates Risiko“, „hohe Reife“. Die unscharfe Menge (*Fuzzy Set*) nach Lotfi Zadeh quantifiziert die Zugehörigkeit über ein kontinuierliches Intervall $[0, 1]$ [[21]](#src-21):
 
@@ -1299,7 +1299,7 @@ Die mathematische Optimierung ermittelt die beste Lösung unter formalisierten R
 
 Constraint-Programming-Systeme eignen sich für diskrete Zuteilungs- und Scheduling-Probleme (z. B. Prüfstandsbelegungen ohne Ressourcenkonflikte). Die automatisierte Handlungsplanung (*Automated Planning*) erweitert dies um Zustandsübergangsmodelle: PDDL (*Planning Domain Definition Language*) beschreibt Aktionen mit Vorbedingungen und Effekten; hierarchische Aufgabennetzwerke (*Hierarchical Task Networks*, HTN) zerlegen strategische Ziele in validierte Aktionsketten [[33]](#src-33). Ein Planer befähigt das System nicht nur, Defizite zu erkennen, sondern einen konkreten Sanierungsplan vorzuschlagen: Welche Nachweise sind einzuholen, welche Regressionstests auszuführen und welche Rollen zur Freigabe hinzuzuziehen?
 
-## 10. Information Retrieval und semantische Suche: Von lexikalischer Gewichtung zu dichten Vektoren
+## 10. Information Retrieval und semantische Suche: Von lexikalischer Gewichtung zu dichten Vektoren <a id="пошук-інформації-зважування-слів-та-вектори"></a>
 
 Um Regeln oder Präzedenzfälle anzuwenden, muss das Expertensystem zunächst relevante Wissensfragmente aus Dokumentenkorpora lokalisieren; die natürlichsprachliche Interaktion mit dem Ingenieur wird dabei häufig durch Sprachmodelle unterstützt. [Kapitel 4](ch04-evolution-from-bayes-to-evidence-ai.md) stellte die Evolution der Suche und die Kosinus-Ähnlichkeit vor. Dieser Abschnitt formalisiert die Mathematik moderner hybrider Suchverfahren sowie die internen Operationen von Sprachmodellen.
 
@@ -1677,7 +1677,7 @@ Zahlenwerte wie „Risiko 0,72“ oder „Ähnlichkeit 0,85“ besitzen für sic
 
 Das gefährlichste KI-System ist jenes, das niemals „Ich weiß es nicht“ sagt und Datenlücken durch statistische Halluzinationen überbrückt. Ein belastbares Expertensystem muss Nichtwissen mathematisch präzise formalisieren: Die Kleene-Logik erzwingt den Status „unbekannt“, die Konfliktmasse $K \ge 0{,}50$ signalisiert unauflösbare Quellenwidersprüche, und Schwellen der Mahalanobis-Distanz markieren unzuverlässige Sensormessungen. Das System muss trennscharf zwischen fehlenden Nachweisen, kontradiktorischen Quellen und Berechtigungskonflikten differenzieren und im Zweifelsfall stets den Fail-Closed-Zustand wählen ([Kapitel 20](ch20-explanation-engine.md)).
 
-## 16. Pro et Contra — Virtueller Dialog
+## 16. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Haftungsausschluss:**  
 > Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur methodischen Belastungsprüfung des in diesem Kapitel entwickelten mathematischen Apparats für evidenzbasierte Systeme. Zu diesem Diskurs laden wir führende Denker zweier fundamentaler Rechenparadigmen ein: Turing-Preisträger und Nobelpreisträger **Geoffrey Hinton** – Wegbereiter des modernen Deep Learning und Vordenker verteilter neuronaler Repräsentationen – sowie Gödel-Preisträger **Moshe Vardi** – Klassiker der formalen Verifikation, des automaten-theoretischen Model-Checkings und der linearen temporalen Logik (LTL).  
@@ -1686,7 +1686,7 @@ Das gefährlichste KI-System ist jenes, das niemals „Ich weiß es nicht“ sag
 **These des Kapitels (Mykola Fedchyk):**  
 Der mathematische Apparat kritischer Expertensysteme erfordert strikte Modularität: Wissen muss in Form lokaler binärer Reparatur-Patches isoliert werden, die mittels deduktiver Logik formalisiert sind, um gezielte Fehlerkorrekturen ohne Modellnachtraining und mit mathematischem Beweis der Regressionsfreiheit zu ermöglichen.
 
-**Runde 1: Verteilte neuronale Repräsentationen versus modulare Wissens-Patches**
+**Dialog mit Geoffrey Hinton: Verteilte neuronale Repräsentationen versus lokale Reparatur-Patches**
 
 - **Geoffrey Hinton:**  
   *„Mykola Fedchyk, Ihre Bestrebung, Wissen in isolierte binäre 'Patches' zu zerlegen, ist ein naiver Rückfall in den symbolischen Reduktionismus. Im menschlichen Gehirn wie auch in modernen neuronalen Netzen besitzt Wissen keine isolierten Speicherzellen: Es ist holistisch über Milliarden synaptischer Gewichte verteilt. Verteilte Repräsentationen sind extrem widerstandsfähig gegen lokale Hardwareschäden und Rauschen. Ein System auf starre diskrete Regeln zu bauen, beraubt es jeglicher Generalisierungsfähigkeit und führt bei der kleinsten Abweichung von vordefinierten Mustern zum Totalausfall.“*
@@ -1704,7 +1704,7 @@ Der mathematische Apparat kritischer Expertensysteme erfordert strikte Modularit
   In einem sicherheitskritischen cyber-physischen System führt die weiche Interpolation zwischen zwei unvereinbaren physikalischen Zuständen – etwa ‚Bremsdruck beträgt 0 bar‘ und ‚Bremsdruck beträgt 150 bar‘ – zu einer lebensgefährlichen Halluzination: der Annahme, der Druck liege bei 75 bar.  
   Unsere mathematische Architektur erzwingt eine deterministische Sicherheitsverzweigung: Bei hohem Konflikt aktiviert sie entweder den kausalen $do(\cdot)$-Operator von Judea Pearl zur aktiven Sondierung der Sensorik oder vollzieht eine typisierte Verweigerung `DISP_REFUSE` in den fehlersicheren Zustand (Fail-Closed). Wir übertünchen Sensorkonflikte nicht mit glatten Gewichten – wir machen epistemische Konflikte sichtbar, messbar und beherrschbar.“*
 
-**Runde 2: Zustandsexplosion und Skalierbarkeit formaler Verifikation**
+**Dialog mit Moshe Vardi: Kombinatorische Explosion und Skalierbarkeit formaler Verifikation**
 
 - **Moshe Vardi:**  
   *„Mykola Fedchyk, als Forscher der mathematischen Logik und des Model-Checkings unterstütze ich Ihre Forderung nach deterministischen Beweisen anstelle stochastischer Halluzinationen uneingeschränkt. Doch ich mahne zur technischen Vorsicht: Klassische Verifikation (wie LTL Model Checking) leidet unter der Zustandsexplosion (State Explosion Problem). Wenn Ihr Expertensystem auf zehntausende Regeln und hunderte dynamische Patches anwächst, wie garantieren Sie mathematisch Deadlock-Freiheit und temporale Invarianten innerhalb von Mikrosekunden-Latenzen, ohne den physischen Prozessor lahmzulegen?“*

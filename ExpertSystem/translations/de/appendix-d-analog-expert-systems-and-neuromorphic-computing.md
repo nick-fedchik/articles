@@ -211,6 +211,8 @@ Hierbei bedeuten:
 
 In einer analogen Kreuzschiene transformiert sich eine solche Regel in ein differenzielles Leitwertpaar: Die Prämissen $X_1$ und $X_2$ werden als Eingangsspannungen an korrespondierende Zeilen angelegt, die Konklusion $Y$ entspricht einer Spaltenleitung, und das Gewicht $w$ wird durch die Leitwertdifferenz zweier Speicherzellen kodiert. Das Einspielen einer Regelaktualisierung mutiert damit von einem trivialen Text-Update in ein physikalisches Neuprogrammieren mit obligatorischer Read-Verify-Schleife. Da eine solche Gewichtsänderung nicht mehr als Quelltext-Commit in einem Versionskontrollsystem nachvollziehbar ist, müssen der formale Regelstand der Wissensbasis und die physischen Leitwerte der Hardware kontinuierlich abgeglichen werden.
 
+<a id="апаратна-нечітка-логіка-й-вибір-переможця"></a>
+<a id="L204-L260"></a>
 ## 5. Hardware-Fuzzy-Logik und Winner-Take-All-Schaltungen (WTA)
 
 Zahlreiche Echtzeit-Expertensysteme stützen sich auf die von Lotfi Zadeh begründete Fuzzy-Logik: Die Zugehörigkeit eines Werts zu einer linguistischen Menge wird nicht binär (0 oder 1), sondern durch einen kontinuierlichen Zugehörigkeitsgrad im Intervall von 0 bis 1 beschrieben [[12]](#src-12). Fuzzy-Inferenzoperationen lassen sich auf verblüffend elegante Weise direkt auf analoge Transistorschaltungen abbilden. Takeshi Yamakawa konstruierte analoge Fuzzy-Inferenzmaschinen im nichtlinearen Schaltungsbetrieb und demonstrierte deren dynamische Regelgüte unter anderem durch das Balancieren eines gefüllten Weinglases auf einem invertierten Pendel [[13]](#src-13).

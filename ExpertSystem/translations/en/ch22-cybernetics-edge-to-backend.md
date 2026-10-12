@@ -1,11 +1,11 @@
 # Chapter 22. Cybernetic Control Cycle: Sensors, Peripherals, and Edge-to-Backend Feedback
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)
-> **Previous Chapter:** [Chapter 21. From Recommendation to Action: Authority Control and Safe Execution in Production Environments](ch21-from-recommendation-to-action.md)
-> **Next Chapter:** [Chapter 23. Knowledge Base Verification: Ensuring Consistency, Completeness, and Rule Reliability](ch23-knowledge-base-verification.md)
-> **Table of Contents:** [README.md](README.md)
-> **Author:** [Mykola Fedchyk](about-the-author.md)
-> [!NOTE]
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)  
+> **Previous Chapter:** [Chapter 21. From Recommendation to Action: Authority Control and Safe Execution in Production Environments](ch21-from-recommendation-to-action.md)  
+> **Next Chapter:** [Chapter 23. Knowledge Base Verification: Ensuring Consistency, Completeness, and Rule Reliability](ch23-knowledge-base-verification.md)  
+> **Table of Contents:** [README.md](README.md)  
+> **Author:** [Mykola Fedchyk](about-the-author.md)  
+> **Level:** Advanced Engineering: cyber-physical systems developers, embedded engineers, systems architects  
 > **Expected Outcomes:** Apply Ashby's law of requisite variety and the good regulator theorem to expert system architecture; estimate plant state using a filter instead of raw signals; distribute functions across levels L0–L4 according to time horizons; transmit signed features rather than verdicts from sensors; design degraded modes for network disconnection and state reconciliation upon link restoration; update peripheral knowledge via cryptographically signed bundles.
 
 ## Abstract
@@ -906,7 +906,7 @@ The following scenarios serve as pedagogical illustrations of responsibility par
 
 Both examples substantiate the identical design principle: each tier maintains its own plant model and autonomous response to peer failures, and neither tier relies on network connectivity to guarantee immediate physical safety.
 
-## 13. Pro et Contra — Virtual Dialogue
+## 13. Pro et Contra Dialogue
 
 The father of cybernetics Norbert Wiener (Professor at MIT, pioneer of feedback control theory and cybernetics in animals and machines) and leading cyber-physical systems researcher Edward A. Lee (Professor Emeritus at UC Berkeley, pioneer of precision-timed architectures PRET and Ptolemy) are invited to this virtual intellectual discussion. Their foundational paradigms regarding dynamic stability and temporal determinism in distributed environments establish an uncompromising baseline for critically examining the author's proposed L0–L4 hierarchy.
 
@@ -914,25 +914,25 @@ The father of cybernetics Norbert Wiener (Professor at MIT, pioneer of feedback 
 
 **Chapter Thesis:** The cybernetic control cycle of an expert system cannot be deterministically closed over a distributed network as a unified monolithic regulator. It must be hierarchically stratified across time horizons L0–L4: hard reflexive Operating Envelope constraints and safety interlocks execute locally at sub-microsecond and millisecond tiers (L0–L1) on FPGAs and RTOSs with fixed-point arithmetic; physical plant state is estimated at the edge (L2) by filtering observation innovations; symbolic rules are evaluated by the edge node (L3) in isomorphic EISA bytecode; and the central expert system (L4) updates ontologies and rule packs exclusively via asynchronous, cryptographically signed bundles, guaranteeing stability despite latency, jitter, noise, and network partitions.
 
-**Round 1.1: Norbert Wiener Warns Regarding Feedback Stability in Distributed Jitter-Prone Networks**
+**Dialogue with Norbert Wiener: Feedback Stability in Distributed Control Systems with Latency**
 
 - **Norbert Wiener:** Mykola Fedchyk, the essence of cybernetics is negative feedback. However, any control cycle where corrective actuation signals traverse a distributed network between edge devices and a central expert system inevitably encounters latency jitter and packet delays. In dynamic physical systems, phase lag in a feedback loop turns stabilizing negative feedback into destructive positive feedback, provoking violent self-oscillations and systemic hunting. If symbolic inference across tiers L3 or L4 incurs variable execution time, your distributed governor will trigger physical catastrophe long before the central backend reconciles its world state.
 
 - **Mykola Fedchyk:** Norbert Wiener, your mathematical foundations regarding phase shift and dynamic instability are inviolable. For that exact reason, in the proposed architecture, hard physical stabilization loops are strictly forbidden from closing over a distributed network. The hierarchy of time horizons functionally isolates responsibilities: tier L0 (sub-microsecond hardware interlocks on FPGA/ASIC) and tier L1 (millisecond PID loops on real-time OSs) run strictly local to the physical plant, completely decoupled from backend connectivity. The central L4 expert system never issues hard real-time actuation directives; it asynchronously disseminates cryptographically signed rule packs and policy bundles, which the L3 edge node caches and evaluates strictly within a precomputed stability corridor. In the event of network partition or latency exceeding deadline budgets, the edge node autonomously drops into a deterministic safe degraded state, mathematically guaranteeing asymptotic plant stability.
 
-**Round 1.2: Norbert Wiener on the Conant-Ashby Theorem, Sensory Quantization Entropy Loss, and Non-Linear Bifurcation Tracking**
+**Continued Dialogue with Norbert Wiener: Entropy, Noise, and Nonlinear Information Degradation in Cybernetic Loops**
 
 - **Norbert Wiener:** Consider the internal plant model. According to the Conant-Ashby theorem, every good regulator of a system must be a model of that system. In your Section 7, continuous sensor telemetry is quantized into discrete semantic event contracts. Yet any coarse quantization of a continuous phase space inevitably destroys Shannon-Wiener mutual information. When a physical plant approaches critical slowing down or a bifurcation point (Section 5), variance fluctuations and lag-1 autocorrelation diverge exponentially. If the L2/L3 edge node operates on impoverished discrete categories, will its internal model not lose fidelity at the exact moment of phase transition, inducing catastrophic regulatory blindness?
 
 - **Mykola Fedchyk:** Norbert Wiener, the Conant-Ashby theorem in our architecture is realized via multi-tier state observation, where quantization is never a naive scalar threshold trip. At tier L2, the state estimator (Kalman filter or alpha-beta observer) continuously tracks the latent dynamic state vector $`\mathbf{x}_k`$ and the error covariance matrix $`\mathbf{P}_k`$. Quantization into event contracts is driven not by raw sensor readings, but by Kalman innovation residuals and Chi-squared ($`\chi^2`$) hypothesis testing. Furthermore, synergetic indicators of critical slowing down—surging moving variance $`\sigma^2`$ and lag-1 autocorrelation $`\mathrm{AC}(1)`$—are computed as continuous temporal metrics directly in hardware registers. The discrete semantic fact "phase transition imminent" is asserted only when an informational entropy barrier is crossed with mathematical certainty. Consequently, the edge node's internal model preserves continuous topological fidelity with physical reality through critical bifurcation points.
 
-**Round 2.1: Edward A. Lee Challenges the Determinism of Concurrent Software Pipelines Without Precision-Timed Hardware**
+**Dialogue with Edward Lee: Determinism of Multithreaded Software Pipelines and Hardware Timing Support**
 
 - **Edward A. Lee:** Mykola Fedchyk, standard software abstractions in contemporary operating systems—threads, mutexes, task queues, and Go channels—are fundamentally non-deterministic with respect to physical time. In your chapter, sensory data ingestion, digital filtering, and state estimation are modeled using software goroutines. Yet general-purpose OS schedulers and language garbage collectors provide no Worst-Case Execution Time (WCET) guarantees. Without precision-timed architectures (PRET) and synchronous-reactive semantics, your temporal event contracts and logical clocks are mere polite fictions of punctuality that cannot withstand certification under rigorous cyber-physical standards.
 
 - **Mykola Fedchyk:** Edward A. Lee, your critique of standard concurrency models and the absence of temporal semantics in mainstream programming languages is entirely justified. That is why in our monograph, the high-level Go pipeline is restricted exclusively to the analytical and cognitive tiers L2–L3 (state estimation, audit logging, and rule caching), where the system operates on logical timestamps and sliding event horizons rather than hard microsecond deadlines. Mission-critical actuation at L0–L1 is assigned to dedicated microcontrollers (such as ARM Cortex-R or Infineon AURIX lockstep cores) running formally verified microkernels (such as seL4) with hardware-anchored clock synchronization. At the boundary between physical sensors and software ingestion, an admission gate is enforced: if an incoming telemetry frame exhibits jitter exceeding the certified threshold $`\Delta t_{\mathrm{max}}`$, it is excluded from active state updates and routed to an anomaly log, preventing stale observations from corrupting the plant model.
 
-**Round 2.2: Edward A. Lee on Physical Time Semantics in State Reconciliation: Why Vector Clocks Cannot Undo Thermodynamic Irreversibility**
+**Continued Dialogue with Edward Lee: Physical Time Semantics in State Reconciliation and Thermodynamic Irreversibility**
 
 - **Edward A. Lee:** Turning to Section 9—state reconciliation following link restoration after a network partition. You advocate vector clocks and Conflict-Free Replicated Data Types (CRDTs). However, Lamport logical clocks track causal order *within software messages*, not physical simultaneity in relativistic space-time. If, during a network partition, the local L3 node and central L4 backend independently authorized physical actuation within their respective domains, those physical actions cannot be "merged" via a three-way merge or rolled back with a compensating transaction. Mechanical wear, reactor heating, or structural plastic deformation are thermodynamically irreversible. How does your architecture preserve systemic safety when logical eventual consistency collides with physical irreversibility?
 

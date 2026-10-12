@@ -755,7 +755,7 @@ flowchart TD
 | **Disambiguierung (Homonymie)** | Positionsanalyse innerhalb des aktiven Gültigkeitsbereichs (`Scope`). | Kontextuelle Bedeutungsunterscheidung mehrdeutiger Lemmata (`CAN` als Feldbus vs. Modalverb; `state` als Zustand vs. Aussage). |
 | **Implizite Präsuppositionen** | Nicht unterstützt (Closed-World-Assumption). | Inferenz logischer Vorbedingungen (*„resuming a session“* $\implies$ eine vorherige Sitzung war persistiert). |
 
-## 12. Pro et Contra — Virtueller Dialog
+## 12. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Haftungsausschluss:**  
 > Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur methodischen Belastungsprüfung der vom Autor entwickelten Architektur des linguistischen Verarbeitungstrakts und des Einsatzes lokaler Sprachmodelle. Zu diesem Diskurs laden wir herausragende Theoretiker der Computerlinguistik und der generativen Sprachtheorie ein, deren wissenschaftliche Paradigmen die entgegengesetzten Pole moderner Sprachwissenschaft markieren: Stanford-Professor **Christopher Manning** – Pionier der neuronalen Sprachverarbeitung, Schöpfer von Stanford CoreNLP und Verfechter kontinuierlicher End-to-End-Repräsentationen, sowie MIT-Institutsprofessor **Noam Chomsky** – Begründer der modernen generativen Linguistik, Schöpfer der formalen Grammatikhierarchie und kompromissloser Kritiker statistischer Sprachmodelle als Erkenntnisinstrumente.  
@@ -764,7 +764,7 @@ flowchart TD
 **These des Kapitels (Mykola Fedchyk):**  
 Der linguistische Trakt eines evidenzbasierten Expertensystems muss kompakte lokale Sprachmodelle (SLMs) zwingend mit grammatikgesteuerter Generierung (GBNF) und unteilbarer deontischer Tokenisierung verknüpfen: Dies eliminiert strukturelle Halluzinationen unmittelbar auf der Logit-Ebene des Dekodierungsautomaten und garantiert die deterministische Transformation natürlicher Sprache in valide AST-Prädikate innerhalb harter Echtzeitschranken.
 
-**Runde 1.1: Werden formale Grammatiken (GBNF) im Zeitalter des End-to-End Deep Learning noch benötigt?**
+**Dialog mit Christopher Manning: Die Rolle formaler GBNF-Grammatiken im Zeitalter des End-to-End Deep Learning**
 
 - **Christopher Manning:**  
   *„Herr Mykola Fedchyk, Ihr Bestreben, lokale Sprachmodelle in starre GBNF-Grammatiken und rigide EARS-Schablonen zu zwingen, wirkt wie der Versuch, die Computerlinguistik um vierzig Jahre zurückzuwerfen – in die Ära handgefertigter, fragiler regelbasierter Parser. Moderne tiefe Transformer erfassen dank Multi-Head-Attention-Mechanismen subtile Kontextbezüge, Anaphern, komplexe Konditionalsätze und diskursive Pragmatik nahtlos End-to-End. Das Aufprägen eines externen Kellerautomaten auf den autoregressiven Decoder beschädigt die kontinuierliche latente Repräsentation des Modells und verwirft wertvolle semantische Nuancen industrieller Fachtexte. Hochwertiges Instruction-Tuning und wenige In-Context-Beispiele (Few-Shot-Prompting) reichen völlig aus, um strukturierte JSON-Ausgaben ohne starres Grammatikkorsett zu erzielen.“*
@@ -774,7 +774,7 @@ Der linguistische Trakt eines evidenzbasierten Expertensystems muss kompakte lok
   Zudem kann ein unkontrollierter Transformer bei Zeilenumbrüchen in unsauber formatierten PDFs den Ausdruck `MUST NOT` trennen und eine verheerende Polaritätsinversion erzeugen, die ein striktes Verbot in eine Erlaubnis verkehrt!  
   Unsere grammatikgesteuerte Generierung (GBNF) trainiert das Modell nicht neu: Sie agiert als externer endlicher Automat, der bei jedem autoregressiven Schritt eine dynamische Maske über den Logit-Vektor $`\mathbf{z}_t`$ legt. Jedes Token, das gegen die Grammatik oder das Ziel-AST-Schema verstößt, wird vor der Softmax-Berechnung auf die Wahrscheinlichkeit Null gesetzt. Das Modell kann physikalisch keine strukturelle Halluzination generieren und behält den vollen Durchsatz auf lokalen ARM-Kernen bei.“*
 
-**Runde 1.2: Chain-of-Thought-Argumentation und riesige Kontextfenster versus Hardware-Logit-Masken über GBNF**
+**Fortsetzung des Dialogs mit Christopher Manning: Gedankengänge und Hardware-GBNF-Logit-Masken**
 
 - **Christopher Manning:**  
   *„Herr Mykola Fedchyk, moderne autoregressive Architekturen mit Chain-of-Thought-Prompting (CoT) und Millionen-Token-Kontextfenstern führen mehrstufige Selbstreflexionen, Fehlerkorrekturen und interne Konsistenzprüfungen eigenständig in ihren latenten Aktivierungen durch. Bildet das Einspannen des Decoders in einen externen Kellerautomaten nicht einen unnötigen Engpass, der das Modell daran hindert, semantische Unstimmigkeiten in Anforderungstexten flexibel zu durchdenken, bevor ein final typisiertes Prädikat emittiert wird?“*
@@ -784,7 +784,7 @@ Der linguistische Trakt eines evidenzbasierten Expertensystems muss kompakte lok
   In einer eingebetteten harten Echtzeitumgebung verfügen wir weder über die Millisekunden noch über die Megawatt, um stochastische, hundertstufige interne Monologe auf flüssigkeitsgekühlten 32-Kern-Beschleunigern laufen zu lassen. Unser Einsatzfeld sind automobile ARM-Cortex- oder Edge-Mikrocontroller mit extrem begrenztem Speicherbudget (KV-Cache $\le 128\,\text{MB}$) und Reaktionsfristen unter $50\,\text{ms}$.  
   Die GBNF-Logit-Maskierung fungiert als aufwandsneutraler prädiktiver Filter unmittelbar im Sampling-Zyklus: Sie schneidet stochastische Irrwege ab und gewährleistet mathematische Strenge bei minimaler thermodynamischer Leistungsaufnahme.“*
 
-**Runde 2.1: Statistische Approximation versus universelle Grammatik und logische Kompetenz**
+**Dialog mit Noam Chomsky: Statistische Approximation, Universalgrammatik und logische Kompetenz**
 
 - **Noam Chomsky:**  
   *„Herr Mykola Fedchyk, meine fundamentale Kritik statistischer neuronaler Sprachmodelle bleibt unverändert: Sie sind nichts anderes als gigantische stochastische Spiegel, die oberflächliche Zeichenkorrelationen approximieren, ohne jegliches Verständnis für Semantik, Kausalität oder die invarianten Prinzipien der Universalgrammatik zu besitzen. Sie generieren ein physikalisches Gesetz mit derselben statistischen Leichtigkeit wie eine vollkommene Absurdität, sofern beide hinreichend plausibel klingen. Wenn Sie einem statistischen neuronalen Modell gestatten, an der Wissensextraktion für ingenieurtechnische Systeme mitzuwirken, schleusen Sie einen Generator für Pseudowissen in das Fundament kritischer Infrastrukturen ein. Echte Ingenieurwissenschaft erfordert deduktive Kompetenz (Competence), keine stochastische Verhaltensimitation (Performance).“*
@@ -794,7 +794,7 @@ Der linguistische Trakt eines evidenzbasierten Expertensystems muss kompakte lok
   Das Sprachmodell fungiert ausschließlich als perzeptiver Wandler: Es überführt die hochgradig variable, mehrdeutige Oberflächenstruktur menschlicher Sprache in eine formalisierte Tiefenstruktur aus Prädikatskandidaten.  
   Die Befugnis, diesen Kandidaten als valides Wissen zuzulassen, liegt jedoch ausschließlich bei einem deterministischen symbolischen Verifizierer (einem Automaten vom Chomsky-Typ 0 bzw. Typ 2). Dieser verankert das Prädikat über das Erdungstupel $`\mathcal{G}`$ in den physikalischen Originalbytes, validiert physikalische Einheiten gegen den UCUM-Standard und führt den logischen Beweis im isolierten EVM-Kern. Wir nutzen die Statistik allein, um die Varianz menschlicher Sprache abzufangen – vertrauen ihr jedoch niemals operative Entscheidungen an.“*
 
-**Runde 2.2: Armut des Stimulus (Poverty of the Stimulus) und Grenzen der physikalischen Symbolverankerung**
+**Fortsetzung des Dialogs mit Noam Chomsky: Armut des Stimulus und Grenzen der semantischen Erdung von Symbolen**
 
 - **Noam Chomsky:**  
   *„Herr Mykola Fedchyk, selbst wenn Sie die Modellausgabe über eine kontextfreie GBNF-Grammatik vom Typ 2 meiner Hierarchie beschränken, lösen Sie lediglich das Problem syntaktischer Wohlgeformtheit (Syntax), lassen jedoch die fundamentalen Fragen semantischer Bedeutung (Semantik) und ontologischer Wahrheit unberührt. Nach meiner These von der 'Armut des Stimulus' (Poverty of the Stimulus) kann kein System, das ausschließlich auf Oberflächenkorpora trainiert wurde, die reale kausale Struktur der physischen Welt erfassen. Ihr SLM projiziert lediglich ein System unbegriffener Symbole auf ein anderes AST-Symbolsystem. Erzeugt ein solcher 'linguistischer Trakt' nicht eine trügerische Scheinsicherheit, die das Unvermögen der Maschine verschleiert, das reale Wesen eines technischen Artefakts zu begreifen?“*

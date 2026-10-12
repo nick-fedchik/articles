@@ -469,7 +469,7 @@ Autonomy is an operational property of an individual action rather than of the e
 
 These three operational principles share a common foundation: no knowledge evolution, no confidence metric, and no autonomous actuation may be introduced without an auditable verification trace. This is the exact requirement that separates an expert conclusion from a reference summary, projected across the operational lifecycle of the system.
 
-## 8. Pro et Contra — Virtual Dialogue
+## 8. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously stress-test the demarcation criteria established in this chapter between reference retrieval systems and evidence-governed expert engines. For this inquiry, we invite leading scholars in the philosophy of science and software engineering methodology: University of Oxford Professor **David Deutsch**—pioneer of quantum computing and advocate of critical rationalism, alongside ETH Zurich Professor **Bertrand Meyer**—creator of the Design by Contract paradigm.  
@@ -478,7 +478,7 @@ These three operational principles share a common foundation: no knowledge evolu
 **Chapter Thesis (Mykola Fedchyk):**  
 An expert system differs fundamentally from search and language models in that it neither generates plausible text nor leaves reasoning to the user; instead, it synthesizes a formally verifiable justification bundle grounded in software contracts, with guaranteed Fail-Closed refusal under evidentiary deficits.
 
-**Round 1: Heuristic Conjectures versus Hardware Falsifiers**
+**Dialogue with David Deutsch: Heuristic Conjectures versus Hardware Falsifiers**
 
 - **David Deutsch:**  
   *“Mykola Fedchyk, you claim that your evidence-governed system surpasses search and LLMs by eliminating hallucinations and anchoring rules into hardware. Yet in *The Beginning of Infinity*, I demonstrated that knowledge grows exclusively through bold conjectures and their subsequent criticism. Your ambition to lock a system within pre-compiled rules and cryptographic custody turns it into a dogmatic oracle of the Vienna Circle. A closed rule base is incapable of creating a Good Explanation when novel edge cases transcend its programmed envelope.”*
@@ -496,7 +496,7 @@ An expert system differs fundamentally from search and language models in that i
   A Justification Bundle does not merely cite standard paragraphs: it synthesizes a formal proof of physical contract satisfaction. Each predicate binds directly to measured testbench physical metrics ($`T_{\mathrm{case}}`$, current, voltage, transient settling times) and explicitly computes the margin to physical failure limits.  
   Furthermore, when operational boundaries are violated, the engine produces neither fabulation nor speculative hypotheses, but emits a Minimal Unsatisfiable Core (MUC) isolating the exact physical precondition that failed. This transforms an administrative citation chain into a functional engineering explanation that pinpoints the root cause behind actuation refusal.”*
 
-**Round 2: Contractual Rigor and Operational Autonomy Boundaries**
+**Dialogue with Bertrand Meyer: Contractual Rigor and Operational Autonomy Boundaries**
 
 - **Bertrand Meyer:**  
   *“Mykola Fedchyk, as the creator of Design by Contract, I commend your rejection of stochastic black boxes in favor of explicit preconditions, postconditions, and class invariants. However, you extend contract logic to dynamic, real-time knowledge pack hot-swapping. If rules evolve dynamically, how do you mathematically guarantee contract consistency and prevent deadlocks between conflicting rules without halting the operational plant?”*

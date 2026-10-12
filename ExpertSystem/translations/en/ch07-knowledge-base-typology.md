@@ -1195,7 +1195,7 @@ A single global accuracy metric will obscure localized subsystem degradation. Ac
 
 Failure metrics must be isolated causally across the processing cascade: an ungrounded response must be decomposed into ingestion omissions, retrieval misses, reranking errors, symbolic constraint violations, and LLM generation hallucinations. Otherwise, engineering teams squander resources "prompt engineering the LLM" when the root cause is a missing test report in the underlying graph snapshot.
 
-## 19. Pro et Contra — Virtual Dialogue
+## 19. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously stress-test the author's knowledge base typology and expert shell architecture. For this inquiry, we invite leading pioneers of artificial intelligence and ontological engineering whose foundational paradigms allow us to falsify and probe the operational limits of this monograph's framework: Turing Award laureate **Edward Feigenbaum**—father of expert systems (DENDRAL, MYCIN) and architect of early industrial knowledge shells (EMYCIN, KEE), alongside Dr. **Douglas Lenat**—director of the four-decade Cyc ontological project and foremost advocate for formalizing universal common sense.  
@@ -1204,7 +1204,7 @@ Failure metrics must be isolated causally across the processing cascade: an ungr
 **Chapter Thesis (Mykola Fedchyk):**  
 A modern knowledge base architecture for mission-critical systems must be founded upon strict neuro-symbolic dualism: a statistical neural processing pipeline of local SLMs extracts and ranks relevance (Relevance), while a deterministic symbolic EVM core based on typed micro-ontologies and immutable binary knowledge packs unyieldingly decides normative eligibility (Eligibility) within bounded $`O(1)`$ latency.
 
-**Round 1: Is the separation of extraction and evaluation doomed to rule maintenance collapse?**
+**Dialogue with Edward Feigenbaum: Decoupling Acquisition and Inference in the Rule Lifecycle**
 
 - **Edward Feigenbaum:**  
   *“Mykola Fedchyk, back in the 1980s at Stanford, we sought to build universal expert system shells—EMYCIN, KEE, Centaur. We did not falter due to insufficient raw compute, but because of the fundamental 'Knowledge Acquisition Bottleneck' and the astronomical maintenance costs of production rules. Human experts do not reason in first-order predicate logic, and hand-coded rule bases rapidly degenerated into tangled 'spaghetti knowledge bases,' where injecting a single rule corrupted derivations across ten distinct modules. You propose resurrecting this exact bifurcation between rules and an inference engine, merely placing a small language model (SLM) at the ingestion front. Isn't this repeating our exact historical failure, thinly veiled in modern neural jargon? If an SLM extracts rules from natural language text, who guarantees the mutual consistency of thousands of generated predicates without armies of knowledge engineers slaving over daily manual reviews?”*
@@ -1224,7 +1224,7 @@ A modern knowledge base architecture for mission-critical systems must be founde
   The knowledge compiler then applies formal Lex Posterior ordering and contextual scoping: a later edition of a regulatory standard or a localized engineering waiver automatically preempts obsolete general rules within its declared temporal window $[t_{\mathrm{start}}, t_{\mathrm{end}}]$ and operational envelope.  
   Where contradictions arise at foundational ASIL D safety boundaries, the system prohibits unprincipled heuristic compromises: it emits a structured escalation ticket directly to the Chief Systems Architect, citing the exact contradictory provisions. We reduce expert intervention from searching for a needle in a haystack to authorizing a mathematically isolated counter-example.”*
 
-**Round 2: Local micro-ontologies versus Cyc's universal common-sense foundation**
+**Dialogue with Douglas Lenat: Local Micro-Ontologies versus the Universal Common Sense of Cyc**
 
 - **Douglas Lenat:**  
   *“Mykola Fedchyk, you contend that knowledge bases in mission-critical environments must be confined to bounded, closed-world micro-ontologies specific to an engineering scope. Having dedicated forty years to Cyc, amassing over 25 million assertions of universal human common sense, my empirical findings demonstrate the exact opposite: any isolated, narrow knowledge system is catastrophically brittle at its perimeter. The instant an anomalous environmental condition, sensor failure, or unmodeled edge case emerges, a localized micro-ontology either stalls or emits an absurd verdict because it lacks foundational physical grounding: that rigid bodies cannot penetrate solid barriers, that water causes electrical shorts, and that electric current requires a closed circuit. Without an overarching common-sense substrate, your isolated 'micro-packages' will crumble upon the first unscripted operational anomaly.”*

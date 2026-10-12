@@ -511,7 +511,7 @@ Konventionelle Externalisierungsmethoden zwingen Chefarchitekten dazu, umfangrei
 > [!IMPORTANT]
 > **Ethische und sicherheitstechnische Schranke:** Die Erfassung des digitalen Arbeitsschattens muss strikt von der individuellen Leistungs- und Verhaltenskontrolle getrennt sein. Ein Expertensystem aggregiert ingenieurtechnische Fakten, Schaltungsmuster und Diagnoseprädikate – es darf niemals zu einem Überwachungsinstrument degradiert werden. Andernfalls verzerren Entwickler ihre digitalen Arbeitsspuren, was die Verlässlichkeit und Integrität der Wissensbasis nachhaltig zerstört.
 
-## 14. Pro et Contra — Virtueller Dialog
+## 14. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Haftungsausschluss:**  
 > Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur methodischen Belastungsprüfung der vom Autor entwickelten Methodik zur Erhebung und formalen Verifikation von Expertenwissen. Zu diesem Diskurs laden wir international herausragende Kognitionswissenschaftler und Entscheidungsforscher ein, deren Arbeiten die Verlässlichkeit menschlicher Selbsteinschätzung und die Formalisierbarkeit von Erfahrungswissen grundlegend hinterfragen: Nobelpreisträger **Daniel Kahneman** – Pionier der Verhaltensökonomie, Erforscher von Urteilsheuristiken (*Thinking, Fast and Slow*) und des Phänomens systemischen Rauschens (*Noise: A Flaw in Human Judgment*), sowie Dr. **Gary Klein** – Begründer der Theorie naturalistischer Entscheidungsfindung (Naturalistic Decision Making, NDM), Entwickler der Critical Decision Method (CDM) und der Recognition-Primed Decision (RPD)-Modellierung.  
@@ -520,7 +520,7 @@ Konventionelle Externalisierungsmethoden zwingen Chefarchitekten dazu, umfangrei
 **These des Kapitels (Mykola Fedchyk):**  
 Die Wissenserhebung in evidenzbasierten Expertensystemen erfordert die Abkehr von unstrukturierten Interviews hin zu formalisierten Debiasing-Protokollen, Brier-Score-Kalibrierung subjektiver Wahrscheinlichkeiten und CommonKADS-Kanonisierung, wodurch deklarative Inferenzregeln von der prozeduralen Aufgabensteuerung entkoppelt und kognitives Rauschen eliminiert werden.
 
-**Runde 1: Vermögen Interviewprotokolle kognitive Verzerrungen und Rauschen von Experten zu überwinden?**
+**Dialog mit Daniel Kahneman: Interviewprotokolle, kognitive Verzerrungen und Rauschen im Expertenurteil**
 
 - **Daniel Kahneman:**  
   *„Herr Mykola Fedchyk, jahrzehntelange Forschungen über kognitive Heuristiken und Urteilsfehler belegen unmissverständlich: Das menschliche Gehirn ist ein hochgradig fehleranfälliges, verrauschtes Fundament für formale Regelsysteme. Selbst ausgewiesene Fachexperten unterliegen regelmäßig der Verfügbarkeitsheuristik, Ankereffekten und massiver Selbstüberschätzung (Overconfidence). Zudem zeigte unsere Untersuchung über systemisches Rauschen (Noise), dass derselbe qualifizierte Diagnostiker oder Prüfer morgens und nachmittags abhängig von Ermüdung oder Stimmung divergierende Urteile fällt. Ein Experte besitzt schlicht keinen introspektiven Zugriff auf die assoziativen Mechanismen seines 'Systems 1'; seine nachträglichen verbalen Erklärungen sind reine retrospektive Rationalisierungen. Jeder Versuch, 'Wissen zu erheben', indem man Menschen befragt, schleust psychologische Artefakte und statistisches Rauschen unmittelbar in den Kern des Systems ein.“*
@@ -539,7 +539,7 @@ Die Wissenserhebung in evidenzbasierten Expertensystemen erfordert die Abkehr vo
   Jede aus Experteninterviews extrahierte und im Wissensmodell formalisierte Regel wird zwingend einem falsifikatorischen Mutationstesten unterzogen und mittels SMT-Solvern gegen historische Telemetrieprotokolle und physikalische Messdatenreihen geprüft.  
   Behauptet ein Gremium von Chefingenieuren einstimmig eine Invariante, die den empirisch aufgezeichneten Sensorsignalen oder thermodynamischen Belastungsgrenzen des Systems mathematisch widerspricht, generiert der SMT-Solver ein formales Gegenbeispiel, und die Regel wird unverzüglich abgewiesen. Für unser System besitzen objektive physikalische Naturgesetze und empirische Sensorprotokolle stets höheren normativen Rang als der kollegiale Expertenkonsens.“*
 
-**Runde 2: Implizites Erfahrungswissen (Tacit Knowledge) versus CommonKADS-Formalisierung**
+**Dialog mit Gary Klein: Implizites Wissen von Praktikern und CommonKADS-Formalisierung**
 
 - **Gary Klein:**  
   *„Herr Mykola Fedchyk, in unseren Feldstudien zur naturalistischen Entscheidungsfindung (NDM) mit Einsatzleitern der Feuerwehr, Verkehrspiloten und Notfallchirurgen haben wir nachgewiesen: Wahre Meisterschaft ist implizit (tacit) und gründet auf holistischer Mustererkennung (RPD-Modell). Wenn ein erfahrener Praktiker unter extremem Zeitdruck eine lebensrettende Entscheidung trifft, berechnet er keine formalen Entscheidungsbäume und formuliert keine deontischen EARS-Quantoren. Er erfasst intuitiv die physische Gesamtdynamik der Lage. Wenn Sie versuchen, dieses lebendige Erfahrungswissen in sterile CommonKADS-Frames und Wahrheitstabellen zu zerlegen, vernichten Sie das eigentliche Wesen der Expertise und behalten lediglich ein starres, lebensfremdes syntaktisches Skelett zurück.“*

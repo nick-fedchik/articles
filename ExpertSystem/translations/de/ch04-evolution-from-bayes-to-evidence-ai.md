@@ -189,7 +189,8 @@ Die Geschichte lehrt ein zentrales Prinzip: Ein Expertensystem ist exakt so verl
 Die einfachste und am zuverlässigsten verifizierbare Form von Wissen in der Architektur eines Expertensystems ist die explizite formale Regel. Eine logische Regel beantwortet die Frage, ob eine Schlussfolgerung formal aus geprüften Fakten folgt (*Logical Entailment*). Im Gegensatz zu stochastischen neuronalen Netzen ist das Ergebnis einer logischen Inferenz keine Wahrscheinlichkeit: Bei syntaktischer Korrektheit und wahren Prämissen ist die Schlussfolgerung entweder strikt bewiesen oder widerlegt.
 
 **Formal: Deduktive Inferenz nach dem Modus Ponens.**  
-Ingenieurtechnisches Problem des Nichtdeterminismus und der Halluzinationen in Freigabe-Gates: In sicherheitskritischen Domänen (ISO 26262, IEC 61508) ist es unzulässig, ingenieurtechnische Entscheidungen auf statistische Wortkorrelationen zu stützen. Erforderlich ist ein formaler Deduktionsmechanismus, der garantiert, dass die Konsequenz $B$ strikt wahr ist, sofern die verifizierten Fakten $A$ und die normative Regel $A ightarrow B$ wahr sind. Ziel der Berechnung ist die Erzeugung eines verifizierten Inferenzschritts im Beweisbaum mit binärem Resultat $B \in \{\mathbf{True}, \mathbf{False}\}$.
+Ingenieurtechnisches Problem des Nichtdeterminismus und der Halluzinationen in Freigabe-Gates: In sicherheitskritischen Domänen (ISO 26262, IEC 61508) ist es unzulässig, ingenieurtechnische Entscheidungen auf statistische Wortkorrelationen zu stützen. Erforderlich ist ein formaler Deduktionsmechanismus, der garantiert, dass die Konsequenz $B$ strikt wahr ist, sofern die verifizierten Fakten $A$ und die normative Regel $A 
+ightarrow B$ wahr sind. Ziel der Berechnung ist die Erzeugung eines verifizierten Inferenzschritts im Beweisbaum mit binärem Resultat $B \in \{\mathbf{True}, \mathbf{False}\}$.
 
 Die Regel verwendet folgende Notation:
 
@@ -198,13 +199,15 @@ Die Regel verwendet folgende Notation:
 ```
 
 - $A \in \{\mathbf{True}, \mathbf{False}\}$ — atomares Faktum oder Konjunktion von Fakten in der Wissensbasis (Prämisse);
-- $Aightarrow B$ — Produktionsregel oder normative Anforderung: materiale Implikation, bei der die Wahrheit von $A$ die Wahrheit von $B$ garantiert;
+- $A
+ightarrow B$ — Produktionsregel oder normative Anforderung: materiale Implikation, bei der die Wahrheit von $A$ die Wahrheit von $B$ garantiert;
 - $B \in \{\mathbf{True}, \mathbf{False}\}$ — logische Konsequenz (Schlussfolgerung oder Sicherheitsaktion);
 - horizontaler Strich — Symbol des deduktiven Schließens im Aussagenkalkül.
 
 **Praktische Anwendung und ingenieurtechnische Konsequenzen:**
 1. Die Berechnung wird durch den Musterabgleich-Algorithmus (*Pattern Matching* in Rete- oder Treat-Engines) bei jeder Modifikation des Arbeitsspeichers (*Working Memory*) ausgelöst.
-2. Wenn $A = \mathbf{True}$ gilt und die Regel $A ightarrow B$ aktiviert ist, fügt die Engine das Faktum $B$ deterministisch zum Arbeitsspeicher hinzu und dokumentiert den Inferenzschritt im Beweis-Zertifikat (*Proof Witness*).
+2. Wenn $A = \mathbf{True}$ gilt und die Regel $A 
+ightarrow B$ aktiviert ist, fügt die Engine das Faktum $B$ deterministisch zum Arbeitsspeicher hinzu und dokumentiert den Inferenzschritt im Beweis-Zertifikat (*Proof Witness*).
 3. Wenn $A = \mathbf{False}$ gilt oder $A$ unbekannt ist (Open-World-Annahme), feuert die Regel nicht; das System darf die Wahrheit von $B$ keinesfalls mutmaßen und registriert das Fehlen eines Beweises.
 4. Beispiel aus der funktionalen Sicherheit:
 ```text
@@ -1340,7 +1343,7 @@ Die Regel „Menschliche Überprüfung anfordern“ greift dann nicht bei einer 
 
 Die Prinzipien von Datenqualität, Reproduzierbarkeit und Auditierbarkeit existierten bereits im klassischen Knowledge Engineering; Sprachmodelle, dynamische APIs und Vektorindizes über zehntausenden heterogenen Dokumenten haben ihre Brisanz jedoch drastisch verschärft. Ohne explizite Eingangsdatenprüfung, Snapshot-Versionierung und mehrdimensionale Ungewissheitszerlegung mutiert ein Expertensystem zu einem rhetorisch gewandten, aber unberechenbaren Orakel.
 
-## 11. Pro et Contra — Virtueller Dialog
+## 11. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Haftungsausschluss:**  
 > Dieser Abschnitt modelliert einen virtuellen intellektuellen Diskurs zur methodischen Belastungsprüfung des vom Autor vorgeschlagenen evolutionären Modells der Ungewissheitsbeherrschung – von der Bayesschen Wahrscheinlichkeit bis zur evidenzbasierten KI. Zu diesem Dialog laden wir historische Wegbereiter des probabilistischen Schließens und der Fuzzy-Logik ein: den presbyterianischen Geistlichen und Mathematiker **Thomas Bayes** – Autor der bahnbrechenden Abhandlung *„An Essay towards solving a Problem in the Doctrine of Chances“* (1763) und Entdecker der inversen Wahrscheinlichkeit – sowie UC Berkeley Professor **Lotfi Zadeh** – Begründer der Theorie der unscharfen Mengen (Fuzzy Sets), linguistischen Variablen und Possibilitätstheorie (1965).  
@@ -1349,7 +1352,7 @@ Die Prinzipien von Datenqualität, Reproduzierbarkeit und Auditierbarkeit existi
 **These des Kapitels (Mykola Fedchyk):**  
 Ungewissheit in sicherheitskritischen Systemen ist keine homogene Wahrscheinlichkeit: stochastisches Sensorrauschen und Ausfallraten von Hardwarekomponenten erfordern eine Bayessche probabilistische Kalibrierung, subjektive linguistische Toleranzen werden durch Zadehs Fuzzy-Set-Theorie formalisiert, doch die endgültige Zulassung eines Systems zum operativen Einsatz muss auf der deterministischen Durchsetzung deontischer Sicherheitsverträge nach dem Fail-Closed-Prinzip beruhen. Das Verschmelzen von Wahrscheinlichkeiten und normativen Vorgaben zu einer einzigen heuristischen Pseudozahl zerstört Nachvollziehbarkeit und Beweisverwahrung.
 
-**Runde 1: Reverend Thomas Bayes versus kategorischer Determinismus von Sicherheitstoren**
+**Dialog mit Thomas Bayes: Wahrscheinlichkeitsabschätzungen und kategorischer Determinismus von Sicherheitstoren**
 
 - **Thomas Bayes:**  
   *„Herr Fedchyk, in meinem Aufsatz über die Lösung eines Problems in der Doktrin der Chancen habe ich bewiesen: Wenn wir ein Ereignis beobachten, dessen zugrundeliegende Natur uns unbekannt ist, das sich jedoch bei einer Gelegenheit ereignet und bei einer anderen ausbleibt – wie in Ihrem Beispielfall eines Regressionstests eines Bordsteuergeräts, der zunächst fehlschlug und nach einem erneuten Start erfolgreich durchlief –, besitzt der menschliche Verstand keine legitime Berechtigung, eine absolute, bedingungslose Wahrheit zu verkünden. Wir haben es unvermeidlich mit inverser Wahrscheinlichkeit (inverse probability) zu tun: Jeder weitere Versuch verschiebt lediglich unsere aposteriorische Verteilung bezüglich der wahren Wahrscheinlichkeit eines Defekts.  
@@ -1365,7 +1368,7 @@ Ungewissheit in sicherheitskritischen Systemen ist keine homogene Wahrscheinlich
 - **Mykola Fedchyk:**  
   *„Das ist ein tiefgreifender Einwand, Reverend Bayes. Um dem Dogmatismus von Spezifikationen zu begegnen, trennt unsere Architektur das Schließen in zwei strikt isolierte Ebenen. Ein Bayesscher Analysator überwacht kontinuierlich den empirischen Strom der Hardware-Telemetrie und meldet Anomalien, sobald die beobachtete Statistik vom A-priori-Zuverlässigkeitsmodell abweicht. Entscheidend ist jedoch: Mutationen der Wissensbasis erfolgen niemals heimlich durch automatische Gewichtsanpassungen. Wird eine epistemische Diskrepanz zwischen empirischem Faktum und normativer Vorgabe entdeckt, gewöhnt sich das System nicht passiv an Betriebsfehler; stattdessen löst es eine kontrollierte epistemische Eskalation an ein Fachingenieur-Komitee aus, begleitet von obligatorischen Popperianischen Mutationstests. Wir verwerfen Ihre Aposteriori-Analyse keineswegs – wir schützen sie vor ihrer verführerischsten Gefahr: dass das Mitteln über wiederholte Beobachtungen einen katastrophalen Defekt als statistisch normal verharmlost.“*
 
-**Runde 2: Professor Lotfi Zadeh versus boolescher Absolutismus technischer Grenzwerte**
+**Dialog mit Lotfi Zadeh: Fuzzylogik und boolescher Absolutismus technischer Grenzwerte**
 
 - **Lotfi Zadeh:**  
   *„Mykola Fedchyk, die reale Welt physikalischer Messungen ist grundlegend nicht-boolesch. Physikalische Zustände industrieller Anlagen – ‚überhöhte Leistungsschalter-Temperatur‘, ‚kritische Lagervibration‘ oder ‚dielektrischer Durchschlag‘ – besitzen keine sprunghaften Kanten. Ihre starren Invarianten $`T > 90{,}0\,^\circ\text{C}`$ verstümmeln die physikalische Realität künstlich: Bei $`89{,}99\,^\circ\text{C}`$ liefert Ihr System ein sauberes `PASS`, während es bei $`90{,}01\,^\circ\text{C}`$ eine Stromerzeugungsturbine abrupt abschaltet. Ist die Fuzzy-Set-Theorie nicht eine ungleich natürlichere und getreuere Sprache für ingenieurtechnische Erfahrung als künstlicher boolescher Absolutismus?“*

@@ -718,7 +718,7 @@ Because $`H_{\text{free}} \approx 0.833 < 1.00`$, the system flags a hallucinati
 
 This multi-stage gate guarantees complete audit trail reproducibility: an auditor can always trace natural language explanations directly back to the originating fact snapshot, verifying that every word adheres to the mathematical logic of the underlying conclusion.
 
-## 10. Pro et Contra — Virtual Dialogue
+## 10. Pro et Contra Dialogue
 
 Distinguished constraint reasoning and conflict computation pioneer Ulrich Junker (researcher at ILOG/IBM, author of the seminal QuickXPlain algorithm) and explainable AI pioneer Marco Tulio Ribeiro (researcher at Microsoft Research / University of Washington, co-creator of LIME and SHAP) are invited to this virtual intellectual discussion. Their foundational contributions to conflict set minimization and local surrogate explanations are vital for critically verifying the author's explanation engine.
 
@@ -727,7 +727,7 @@ Distinguished constraint reasoning and conflict computation pioneer Ulrich Junke
 **Chapter Thesis (Mykola Fedchyk):**  
 An explanation in an evidence-governed expert system is never a post-hoc rationalization, but an independent engineering artifact computed deterministically from the identical inference trace that generated the decision: conflict minimization algorithms (QuickXPlain) and SMT synthesis of counterfactual alternatives guarantee mathematical explanation faithfulness ($`C_{\mathrm{facts}} = 1.00`$) and the practical actionability of remediation plans.
 
-**Round 1.1: Monotonicity Preconditions in Constraint Spaces versus Stratified Production Rules**
+**Dialogue with Ulrich Junker: Monotonicity of Constraint Spaces and Stratified Production Rules**
 
 - **Ulrich Junker:**  
   *“Mykola Fedchyk, the QuickXPlain algorithm I developed for identifying conflict sets in constraint satisfaction problems (CSP) guarantees finding a minimal conflict set only under the strict assumption of monotonicity: if a subset of constraints is inconsistent, any superset is also inconsistent. However, in your expert system architecture, rules incorporate stratified negation in Datalog style, temporal predicates, and stateful working memory assertions. If your knowledge base admits non-monotonic dynamics or non-deterministic firing sequences, QuickXPlain's divide-and-conquer binary search will prune valid branches or collapse into exponential backtracking. Why do you claim that your explanation engine computes `WHY NOT` refusals within deterministic logarithmic time?”*
@@ -735,7 +735,7 @@ An explanation in an evidence-governed expert system is never a post-hoc rationa
 - **Mykola Fedchyk:**  
   *“Dr. Ulrich Junker, your concern is completely valid for dynamic search spaces during live forward or backward chaining. However, my explanation engine does not operate on the dynamic rule search space during execution; instead, it runs strictly on the frozen, acyclic Proof DAG and immutable fact snapshot produced by the Epistemic Virtual Machine. Prior to invoking QuickXPlain, all stratified negations and temporal states have already been resolved and projected onto a monotonic rule slice formatted as Horn clauses. For this frozen trace, the monotonicity invariant holds unconditionally: if an activated set of premises in the trace caused an inconsistency or goal blockage, no expansion of that set can resolve the conflict. Consequently, divide-and-conquer pruning cuts consistency-checking evaluations from 200 linear steps down to 33 checks in the avionics scenario presented in this chapter, strictly satisfying hard real-time deadlines.”*
 
-**Round 1.2: Multiple Minimal Unsatisfiable Subsets (MUS) and Remediation Plan Completeness**
+**Continued Dialogue with Ulrich Junker: Multiple Minimal Unsatisfiable Subsets (MUS) and Repair Plan Completeness**
 
 - **Ulrich Junker:**  
   *“Even on a monotonic proof graph, a complex engineering system rarely harbors an isolated conflict; it typically contains dozens of interlocking Minimal Unsatisfiable Subsets (MUSes). Baseline QuickXPlain isolates only one arbitrary minimal conflict—whichever happens to be traversed first during binary partitioning. If your explanation engine returns only a single local symptom to an engineer (such as an obsolete certificate timestamp), the engineer rectifies it, re-executes verification, only to hit an unflagged secondary blockage (such as a thermal budget violation). How do you guarantee that a 'WHAT MUST CHANGE' explanation does not devolve into an exhausting step-by-step deadlock lacking holistic visibility of the conflict landscape?”*
@@ -746,7 +746,7 @@ An explanation in an evidence-governed expert system is never a post-hoc rationa
   Upon isolating the initial conflict $`C_1`$, the system does not terminate: it posts a blocking clause disallowing that conflict set and iterates binary search to extract the complete conflict basis.  
   It then synthesizes a Minimal Hitting Set (Actionable Recourse Plan) ranked by the Cost of Action: the engineer receives not an isolated symptom, but a complete, consistent tree of alternative remediation pathways where each action is annotated with its engineering cost. We protect the practitioner from iterative whack-a-mole by delivering an exhaustive remediation roadmap.”*
 
-**Round 2.1: Symbolic Intermediate Representations (EIR) versus Surrogate Approximations (LIME/SHAP)**
+**Dialogue with Marco Tulio Ribeiro: Symbolic Intermediate Representations (EIR) and Surrogate Approximations (LIME/SHAP)**
 
 - **Marco Tulio Ribeiro:**  
   *“Mykola Fedchyk, in real-world deployments, field operators, clinicians, and flight dispatchers do not inspect formal Horn clauses or directed acyclic proof graphs. Post-hoc surrogate models like LIME and SHAP provide swift local linear approximations and feature attributions that human operators grasp intuitively without parsing internal deduction trees. Your Explanation Intermediate Representation (EIR) with its rigid verbalization templates appears overly brittle, sensitive to non-linear dependencies, and imposes enormous engineering overhead compared to the flexible natural language generation of modern multimodal models.”*
@@ -754,7 +754,7 @@ An explanation in an evidence-governed expert system is never a post-hoc rationa
 - **Mykola Fedchyk:**  
   *“Dr. Marco Tulio Ribeiro, surrogate methods such as LIME and SHAP construct correlation-based approximations around a black box, but correlation is not causality and certainly not a formal proof. They suffer from sampling variance and sensitivity to perturbation noise, which is unacceptable under DO-178C Level A or ISO 26262 ASIL D standards. In safety-critical domains, an explanation is a legal certification artifact, not an aesthetic visualization designed to soothe human operators. If an explanation deviates from the actual deductive execution trace by even a single quantum, it creates a perilous epistemic illusion of safety. The EIR architecture decouples the symbolic proof tree from natural language verbalization: fact coverage is guaranteed at $`C_{\mathrm{facts}} = 1.00`$, and the hallucination rate is eliminated at $`H_{\mathrm{free}} = 1.00`$. We employ language models strictly as stylistic verbalizers over rigorously validated abstract syntax trees, where each phrase maintains a cryptographic pointer to the primary rule or fact byte. No surrogate approximation can offer such mathematical guarantees.”*
 
-**Round 2.2: Counterfactual Synthesis in Continuous Engineering Domains versus Combinatorial Explosion**
+**Continued Dialogue with Marco Tulio Ribeiro: Counterfactual Search in Continuous Engineering Domains and Combinatorial Complexity**
 
 - **Marco Tulio Ribeiro:**  
   *“You criticize LIME and SHAP for correlation-based approximation, yet in our subsequent research on behavioral testing (CheckList) and contrastive explanations, we showed that users demand actionable counterfactual scenarios: 'What is the minimal change required for the system to emit an ALLOW verdict?' If you claim your EIR intermediate representation is purely deterministic, how do you synthesize counterfactual explanations without generative heuristic search? Won't symbolic optimization across thousands of continuous physical parameters (pressures, currents, bus latencies) inevitably trigger a combinatorial explosion?”*

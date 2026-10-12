@@ -211,6 +211,8 @@ Where:
 
 In an analog crossbar, this rule is mapped to a conductance cell pair: antecedents $`X_1`$ and $`X_2`$ are applied as input row voltages, consequent $Y$ corresponds to an output column line, and confidence weight $w$ is physically encoded as the conductance difference. Modifying an expert rule requires an in-situ write-verify reprogramming routine. Because this physical state is no longer a simple text record in a software repository, the nominal rule version in the knowledge base and the actual physical conductances on chip must be rigorously cross-audited.
 
+<a id="апаратна-нечітка-логіка-й-вибір-переможця"></a>
+<a id="L204-L260"></a>
 ## 5. Hardware Fuzzy Logic and Winner-Take-All (WTA) Circuits
 
 Numerous real-time expert systems employ fuzzy logic, formulated by Lotfi Zadeh, wherein set membership is graded continuously between 0 and 1 rather than evaluated as binary true or false [[12]](#src-12). Fuzzy inference maps directly and elegantly onto analog circuits. Takeshi Yamakawa designed an analog fuzzy inference engine operating in nonlinear mode; an analog fuzzy controller constructed on this architecture demonstrated real-time stability by balancing a glass of wine atop an inverted pendulum [[13]](#src-13).

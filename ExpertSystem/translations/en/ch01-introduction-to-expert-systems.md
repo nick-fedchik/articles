@@ -16,7 +16,7 @@ The chapter chronicles the historical evolution of expert systems: from Emil Pos
 
 ---
 
-## 1. Problem Statement and Genesis: The Need for Expert Systems <a id="problem-statement-expert-systems"></a>
+## 1. Problem Statement and Genesis: The Need for Expert Systems <a id="problem-statement-expert-systems"></a><a id="одне-запитання-три-відповіді"></a>
 
 Modern high-technology engineering confronts an insurmountable cognitive boundary: **the volume of accumulated domain knowledge exponentially exceeds the biological bandwidth of the human brain**.
 
@@ -44,7 +44,7 @@ None of these tools replaces the ultimate engineering responsibility. However, t
 
 ---
 
-## 2. Definition and Epistemic Essence: What Is an Expert System <a id="definition-expert-systems"></a>
+## 2. Definition and Epistemic Essence: What Is an Expert System <a id="definition-expert-systems"></a><a id="документ-не-дорівнює-знанню"></a>
 
 While literature offers diverse definitions, evidence-governed expert systems engineering relies on the following operational standard:
 
@@ -234,7 +234,7 @@ Depending on domain characteristics, four primary knowledge modeling paradigms p
 
 ---
 
-## 7. Critical Application Domains with High Stakes <a id="application-domains"></a>
+## 7. Critical Application Domains with High Stakes <a id="application-domains"></a><a id="як-довести-що-експертна-система-корисна"></a>
 
 Evidence-governed expert systems are indispensable wherever stochastic hallucinations pose hazards to human safety, national security, or critical assets:
 
@@ -257,13 +257,13 @@ The frontier of evidence-governed expert systems expands at the intersection of 
 
 ---
 
-## 9. Architectural Monograph Roadmap: A Guide Through the Seven Parts <a id="monograph-roadmap"></a>
+## 9. Architectural Monograph Roadmap: A Guide Through the Seven Parts <a id="monograph-roadmap"></a><a id="з-чого-почати-в-команді"></a>
 
 The contents of this monograph progress systematically from foundational theory to silicon realization across seven cohesive parts: **Part I** establishes the conceptual and epistemic foundations of machine knowledge and evidence; **Part II** develops applied mathematical models, relation lattices, knowledge base typologies, and Engineering Knowledge Graphs (EKG); **Part III** provides methodologies for automated knowledge acquisition, linguistic analysis, and requirements formalization; **Part IV** details the system architecture, implementation stack, explanation engines, and edge-to-backend cybernetics; **Part V** focuses on rigorous rule verification, system diagnosis, and Goal Structuring Notation (GSN) safety cases; **Part VI** investigates cognitive frontiers through neuro-symbolic synergies (NeSy) and hardware Epistemic Processing Units (EPU); and **Part VII** deploys distributed epistemic architectures, the Knowledge Testing Pyramid, and active Popperian falsification auditing. A complete chapter catalog, detailed syllabus, and role-based reading routes are provided in the book overview ([README.md](README.md)).
 
 ---
 
-## 10. Pro et Contra — A Virtual Dialogue <a id="virtual-dialogue"></a>
+## 10. Pro et Contra Dialogue <a id="virtual-dialogue"></a>
 
 > **Epistemic Preamble and Academic Disclaimer:**  
 > This section stages a simulated intellectual debate examining the historical foundations, architectural boundaries, and engineering justifications for modernizing expert systems. The discussion convenes the pioneers of the field and authors of seminal treatises in knowledge engineering: Turing Award laureate **Edward Feigenbaum** — creator of DENDRAL and father of the knowledge engineering paradigm; **Edward H. Shortliffe** — creator of MYCIN, pioneer of explainable inference and certainty factorization; and **Frederick Hayes-Roth** — lead editor and co-author of the landmark volume *Building Expert Systems* (1983).  
@@ -272,7 +272,7 @@ The contents of this monograph progress systematically from foundational theory 
 **Chapter Thesis (Mykola Fedchyk):**  
 The classical expert systems paradigm is not an obsolete relic, but the indispensable foundation of trustworthy artificial intelligence: combining the symbolic determinism, knowledge explicitness, and complete explainability of the first generation with modern automated knowledge extraction, graph ontologies, and formal verification makes the modernization of expert systems mandatory for high-stakes domains requiring an uncompromising Zero-Hallucination Rate ($ZHR = 1.00$).
 
-**Round 1: Edward Feigenbaum — Does the Principle "Knowledge Is Power" Endure in the Era of Statistical Models?**
+**Dialogue with Edward Feigenbaum: Does the Principle "Knowledge Is Power" Endure in the Era of Statistical Models?**
 
 - **Edward Feigenbaum:**  
   *"Mykola Fedchyk, in the 1970s at Stanford, we formulated the core hypothesis of knowledge engineering: 'The power of an intelligent system derives from the knowledge it possesses, not from sophisticated inference methods or universal search algorithms (Knowledge is Power).' Today, however, intellectual fashion has swung entirely toward scale: multi-billion-parameter neural models attempt to solve problems purely through massive brute-force computation and associative latent weights. Do you believe our hypothesis has succumbed to computational scale, and is there still any viable purpose in building explicit, structured knowledge bases?"*
@@ -282,7 +282,7 @@ The classical expert systems paradigm is not an obsolete relic, but the indispen
   When statistical models are deployed in critical engineering domains without explicit, grounded knowledge, they fail catastrophically, emitting persuasive hallucinations instead of factual truths. Attempting to substitute explicit domain knowledge with stochastic association inevitably leads to an epistemological dead end.  
   Furthermore, modern language models serve as the ideal engine for resolving the very obstacle you famously termed the 'Knowledge Acquisition Bottleneck.' They rapidly ingest raw technical literature and extract candidate rules. Yet the ultimate strength of any dependable system still resides in a verified, explicit knowledge base where every fact possesses an identifiable custodian, an exact version, and bounded applicability."*
 
-**Round 2: Edward Shortliffe — Is Rigorous Rule Tracing Necessary When Neural Models Generate Fluent Text?**
+**Dialogue with Edward Shortliffe: Is Rigorous Rule Tracing Necessary When Neural Models Generate Fluent Text?**
 
 - **Edward H. Shortliffe:**  
   *"Mykola, when we designed MYCIN, our primary constraint was clinician acceptance: a physician will never prescribe a toxic antimicrobial regimen on computer advice unless the system explicitly demonstrates which patient symptoms and microbiological cultures triggered the recommendation. We pioneered explanation engines based on rule execution tracing. Yet contemporary generative models produce fluent, grammatically pristine natural language rationalizations for virtually any query. Why burden modern architectures with deterministic proof trees when users seem satisfied with smooth verbal narratives?"*
@@ -292,7 +292,7 @@ The classical expert systems paradigm is not an obsolete relic, but the indispen
   Natural language rationalizations produced by deep neural networks represent post-hoc rationalization: they do not reflect how the network actually computed its latent tensors, but merely what sounds persuasive to a human reader. This creates a lethal illusion of trust.  
   Your foundational insight in MYCIN remains unimpeachable: an explanation must be strictly isomorphic to the actual execution path. In our modernized architecture, the explanation engine synthesizes a mathematically inspectable Proof Bundle: every step of the deduction cites an activated rule and an exact primary source citation verified by byte-level coordinates. An engineer or physician receives not a literary improvisation, but a legally binding and auditable chain of evidence."*
 
-**Round 3: Frederick Hayes-Roth — How Do We Avoid the Scalability Collapse and Brittleness of the First Generation?**
+**Dialogue with Frederick Hayes-Roth: How Do We Avoid the Scalability Collapse and Brittleness of the First Generation?**
 
 - **Frederick Hayes-Roth:**  
   *"Mykola, in our 1983 work 'Building Expert Systems,' we systematically mapped the discipline, yet the late 1980s brought a sobering reckoning. When rule bases scaled beyond 10,000 rules, they collapsed under their own weight: latent contradictions multiplied, human experts could not harmonize conflict resolution strategies, and at domain boundaries, systems exhibited catastrophic brittleness. What guarantees that your proposed modernization will not replicate that historical cycle of disappointment and precipitate another AI winter for knowledge-based systems?"*

@@ -873,7 +873,7 @@ V^{\pi}(s)=\mathbb{E}_{\pi}\Big[\sum_{t=0}^{\infty}\gamma^{t}r_t\ \Big|\ s_0=s\B
 
 With $\gamma=0.9$, a reward realized 10 steps into the future carries weight $0.9^{10} \approx 0.35$ relative to an immediate reward. A higher value of $V^{\pi}(s)$ denotes greater expected cumulative utility under policy $\pi$, rather than a deterministic outcome. When states are partially observed through noisy sensors, the framework generalizes to a Partially Observable Markov Decision Process (POMDP); in foundational expert system deployments, a simplified discrete policy with explicit state, cost, and safety invariants is often architecturally optimal.
 
-### 7.4. Zadeh's Fuzzy Logic: Membership Functions and Degrees of Truth
+### 7.4. Zadeh's Fuzzy Logic: Membership Functions and Degrees of Truth <a id="нечітка-логіка-ступінь-замість-різкої-межі"></a>
 
 Many engineering concepts lack crisp binary thresholds: "fresh documentation", "moderate risk", "near-ready release". Lotfi Zadeh introduced fuzzy sets, assigning elements a continuous degree of membership ranging from 0 to 1 [[21]](#src-21); foundational definitions and historical context are detailed in [Chapter 4](ch04-evolution-from-bayes-to-evidence-ai.md). For example, an engineering team might establish a linear membership function defining documentation freshness based on age $a$ in elapsed days:
 
@@ -1335,7 +1335,7 @@ Linear and integer programming effectively optimize resource allocation, schedul
 
 Multi-criteria methods rank options, optimization identifies constrained optima, and planning synthesizes action sequences. All three depend on validated input data, which must first be retrieved from enterprise archives.
 
-## 10. Information and Semantic Retrieval: From Lexical Weighting to Dense Vectors
+## 10. Information and Semantic Retrieval: From Lexical Weighting to Dense Vectors <a id="пошук-інформації-зважування-слів-та-вектори"></a>
 
 To execute a rule or retrieve a precedent, an expert system must first locate relevant knowledge fragments from documentation archives, often assisted by language models when presenting findings to human engineers. [Chapter 4](ch04-evolution-from-bayes-to-evidence-ai.md) traced retrieval history and demonstrated cosine similarity with numerical examples. This section details the mathematical models underpinning modern hybrid retrieval and language model generation.
 
@@ -1772,7 +1772,7 @@ Engineering information systems frequently display uncalibrated metrics: risk 0.
 
 The most hazardous expert system is one that returns an unverified answer under all circumstances—mirroring an engineer who never admits "I do not know" and eventually offers fluent yet disastrous recommendations. Input documents may be incomplete, primary sources may contradict one another, an artifact baseline may be misaligned, or the user may lack security clearance. The mathematics of refusal is as vital as the mathematics of inference: Kleene logic evaluates to "unknown", Dempster–Shafer conflict mass $K$ detects "sources in conflict", and the Mahalanobis distance identifies "telemetry untrustworthy". An expert system must formally distinguish between distinct refusal states: "insufficient evidence", "conflicting sources", "access denied", "out-of-scope inquiry", and "mandatory human escalation". How the explanation engine synthesizes a justified refusal is formalized in [Chapter 20](ch20-explanation-engine.md).
 
-## 16. Pro et Contra — Virtual Dialogue
+## 16. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously stress-test the applied mathematical framework formulated in this chapter for evidence-governed systems. For this inquiry, we invite leading thinkers representing two foundational paradigms of computation: Turing Award and Nobel laureate **Geoffrey Hinton**—creator of modern deep learning and advocate of distributed neural representations, alongside Gödel Prize laureate **Moshe Vardi**—pioneer of formal verification, automata-theoretic model checking, and linear temporal logic (LTL).  
@@ -1781,7 +1781,7 @@ The most hazardous expert system is one that returns an unverified answer under 
 **Chapter Thesis (Mykola Fedchyk):**  
 The mathematical apparatus of critical expert systems demands strict modularity: knowledge must be isolated in the form of local binary remediation patches formalized through deductive logic, enabling targeted defect correction without model retraining and with formal proofs of non-regression.
 
-**Round 1: Distributed Neural Representations versus Modular Knowledge Patches**
+**Dialogue with Geoffrey Hinton: Distributed Neural Representations versus Local Repair Patches**
 
 - **Geoffrey Hinton:**  
   *“Mykola Fedchyk, your ambition to dissect knowledge into isolated binary 'patches' is a naive relapse into symbolic reductionism. In the human brain and in contemporary neural networks, knowledge does not reside in segregated memory addresses: it is holistically distributed across billions of synaptic weights. Distributed representations demonstrate extraordinary resilience to localized hardware faults and noise. Attempting to build an intelligent system on brittle discrete rules deprives it of generalization and causes systemic failure at the slightest deviation from predefined templates.”*
@@ -1799,7 +1799,7 @@ The mathematical apparatus of critical expert systems demands strict modularity:
   In a safety-critical cyber-physical system, smoothly interpolating between two mutually exclusive physical hypotheses—such as 'brake line pressure is 0 bar' versus 'brake line pressure is 150 bar'—produces a catastrophic hallucination: assuming pressure is 75 bar.  
   Our mathematical architecture triggers deterministic defensive bifurcation: under high conflict, it either invokes Judea Pearl's causal $do(\cdot)$ operator to actively probe physical sensors, or executes a typed `DISP_REFUSE` safety transition into a Fail-Closed state. We refuse to mask sensor contradictions behind continuous weights—we make epistemic conflict visible, measurable, and safe.”*
 
-**Round 2: State Explosion and the Scalability of Formal Verification**
+**Dialogue with Moshe Vardi: Combinatorial Explosion and Scalability of Formal Verification**
 
 - **Moshe Vardi:**  
   *“Mykola Fedchyk, as a researcher in mathematical logic and model checking, I fully endorse your demand to replace stochastic hallucinations with deterministic proof. However, I issue a technical caveat: classical verification (such as LTL Model Checking) suffers from the state-explosion problem. When your expert system scales to tens of thousands of rules and hundreds of dynamic patches, how do you mathematically guarantee freedom from deadlocks and preserve temporal properties within microsecond execution budgets without stalling the physical processor?”*

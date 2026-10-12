@@ -14,7 +14,7 @@ Scale the expert system from a local deterministic process into a distributed ec
 
 Chapter 35 investigates reactive event-driven rule execution, truth maintenance systems (TMS), synergetic phase transitions of knowledge, and NPU-based runtimes. Chapter 33 formalizes the contract for cross-system knowledge exchange: secure rule provisioning to external agents, student model distillation, and feedback grounding through a quarantine gate. Chapter 40 serves as the architectural culmination of the monograph, synthesizing a reference prototype for an industrial epistemic SOA: thin mobile clients, semantic routing, ping-pong pipelined working sets (Active Working Sets) for complete bus latency hiding, and multi-source defeasible arbitration based on ASPIC+ formal argumentation.
 
-The deliverable of this part is a full-scale distributed architecture of evidence-governed AI capable of coordinating thousands of nodes without losing provenance of facts, violating licensing terms, or compromising safety guarantees. Practical engineering methodologies and autonomy application suites are consolidated in [Appendices A–E](README.md#додатки).
+The deliverable of this part is a full-scale distributed architecture of evidence-governed AI capable of coordinating thousands of nodes without losing provenance of facts, violating licensing terms, or compromising safety guarantees. Practical engineering methodologies and autonomy application suites are consolidated in [Appendices A–E](README.md#appendices).
 
 ```mermaid
 flowchart LR

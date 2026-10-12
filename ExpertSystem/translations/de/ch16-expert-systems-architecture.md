@@ -708,7 +708,7 @@ Die analysierten Mechanismen verdichten sich zu sieben fundamentalen Architektur
 6. **Die Änderungshistorie darf nicht durch aktuellen Zustand überschrieben werden.** Jede Modifikation oder Ungültigkeitserklärung erzeugt einen neuen Eintrag mit Autor, Zeitstempel und Begründung. Inhalte werden strikt im Rahmen von Berechtigungen und Aufbewahrungsfristen gespeichert; das Audit-Log setzt gesetzliche Löschpflichten (z. B. für geschützte oder personenbezogene Daten) nicht außer Kraft.
 7. **Inferenzregeln besitzen keinen gemeinsamen veränderlichen Zustand.** Eine Regel ist eine deterministische Funktion über Eingangsfakten und dem eigenen Kontext; implizite globale Variablen zerstören die Reproduzierbarkeit und invalidieren den formalen Beweis.
 
-## 14. Pro et Contra — Virtueller Dialog
+## 14. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Disclaimer:**  
 > Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur systematischen wissenschaftlichen Überprüfung der vom Autor entworfenen Architekturmuster, der Mechanismen zur Wahrheitserhaltung (JTMS) sowie der strikten Trennung von Ingestions- und Inferenzpfaden. Zu diesem Fachdialog laden wir international herausragende Pioniere der Softwarearchitektur und künstlichen Intelligenz ein: den renommierten Forscher für nichtmonotones Schließen und Schöpfer der annahmebasierten Wahrheitserhaltung (ATMS) **Johan de Kleer** (Xerox PARC / AAAI Fellow), sowie den maßgeblichen Vordenker moderner Unternehmensarchitekturen, Chief Scientist bei Thoughtworks und Pionier des CQRS-Musters **Martin Fowler**.  
@@ -717,7 +717,7 @@ Die analysierten Mechanismen verdichten sich zu sieben fundamentalen Architektur
 **These des Kapitels (Mykola Fedchyk):**  
 Die Architektur beweisgestützter Expertensysteme basiert auf der kompromisslosen Trennung von Ingestions- und Lese-Inferenzpfaden (epistemisches CQRS), linearer abhängigkeitsgesteuerter Wahrheitserhaltung (JTMS) ohne kombinatorische Explosion und unveränderlichen Wissens-Snapshots zur kryptografischen Absicherung reproduzierbarer Beweiskontexte (PROV-O).
 
-**Runde 1: Komplexität von Truth Maintenance Systems (TMS/ATMS) versus harte Echtzeit-Latenzbudgets**
+**Dialog mit Johan de Kleer: Truth-Maintenance-Netzwerke (TMS/ATMS) und deterministische Echtzeit-Antwortgrenzen**
 
 - **Johan de Kleer:**  
   *„Mykola Fedchyk, in unseren grundlegenden Arbeiten über Truth Maintenance Systems haben wir sowohl Doyles klassisches JTMS als auch mein annahmebasiertes ATMS eingehend analysiert. Jedes System, das explizite Begründungsnetzwerke (Justifications) zur Verfolgung logischer Abhängigkeiten und für Backtracking pflegt, sieht sich beim Kontextwechsel oder bei der Widerspruchsauflösung unweigerlich mit einer exponentiellen kombinatorischen Explosion ($O(2^n)$ im Worst Case) konfrontiert. Von einem industriellen Expertensystem zu verlangen, im operativen Betrieb vollständige JTMS-Graphen für jedes Urteil mitzuführen, bedeutet, eine unberechenbare Latenzbombe zu zünden und Speichererschöpfung zu riskieren.“*
@@ -736,7 +736,7 @@ Die Architektur beweisgestützter Expertensysteme basiert auf der kompromisslose
   Unsere Architektur erzwingt eine strikte zweistufige Entkopplung: Hochfrequente rohe Telemetrieströme laufen in sperrfreien Ringpuffern des operativen Eingangstors auf, wo Kalman-Filter, Schmitt-Trigger und Hysteresebänder physikalisches Rauschen und Mikroschwankungen dämpfen.  
   Das JTMS-Netzwerk reagiert ausschließlich auf quantisierte symbolische Ereignisse und normative Fakten (beispielsweise den Zustandswechsel eines Subsystems zu `CRITICAL_OVERHEAT` oder den formalen Widerruf eines Komponentenzertifikats). Der Begründungsgraph modelliert nicht die Mikrophysik der Hardware, sondern deontische Verpflichtungen und diskrete logische Konsequenzen. Dies schließt Wahrheitsflattern vollständig aus und garantiert deterministische Antwortzeiten.“*
 
-**Runde 2: Epistemisches CQRS und Schnittstellenverträge versus Risiken asynchroner Konsistenz (Eventual Consistency)**
+**Dialog mit Martin Fowler: Epistemisches CQRS, Subsystem-Verträge und Modelle asynchroner Konsistenz**
 
 - **Martin Fowler:**  
   *„Mykola Fedchyk, Command Query Responsibility Segregation (CQRS) und vertragsbasiertes Testen verteilter Subsysteme (Pact) sind bewährte Architekturmuster im Enterprise-Bereich. In verteilten Systemen stützt sich klassisches CQRS jedoch auf asynchrone Ereignisverarbeitung und letztliche Konsistenz (Eventual Consistency). Wenn Ihre Ingestions-Pipeline Graphdatenbanken, Vektoreinbettungen und SMT-Invarianten asynchron aktualisiert, lesen parallele Nutzersitzungen unweigerlich inkonsistente Zwischenzustände. Was für einen Webshop mit wenigen Sekunden Replikationsverzögerung tolerierbar ist, führt in sicherheitskritischen industriellen Expertensystemen zu widersprüchlichen und rechtlich nicht haltbaren Fehlentscheidungen.“*

@@ -1194,7 +1194,7 @@ These invariants are strictly falsifiable. Experimental validation is conducted 
 
 The detailed methodology for constructing knowledge examination matrices, executing stress tests across thousands of specifications, and formulating the mathematical apparatus for ZHR and FCP metrics are developed in [Chapter 23](ch23-knowledge-base-verification.md) and [Chapter 25](ch25-how-expert-systems-learn.md). Hardware acceleration, deterministic memory management via `mmap`, and achieving microsecond query latencies without deserialization overhead are covered in [Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md), while systematic techniques for diagnosing and eliminating machine hallucinations compared to neural approaches are formalized in [Chapter 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md).
 
-## 14. Pro et Contra — Virtual Dialogue
+## 14. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously stress-test the epistemological and engineering premises advanced in this chapter. For this inquiry, we invite eminent philosophers of information and science whose paradigms provide a critical crucible for examining the boundaries of machine knowledge: Yale and Oxford Professor **Luciano Floridi**—founder of the philosophy of information and critic of syntactic reductionism, alongside Sir **Karl Popper**—architect of fallibilism and critical rationalism.  
@@ -1203,7 +1203,7 @@ The detailed methodology for constructing knowledge examination matrices, execut
 **Chapter Thesis (Mykola Fedchyk):**  
 Machine knowledge in safety-critical engineering is founded not on statistical plausibility, but on contractual authenticity, byte-level custody of primary sources, and the procedural falsifiability of every deduction.
 
-**Round 1: Semantic Truth versus Syntactic Data Custody**
+**Dialogue with Luciano Floridi: Semantic Truth versus Syntactic Data Custody**
 
 - **Luciano Floridi:**  
   *“Mykola Fedchyk, in your architecture you commit a textbook error of syntactic reductionism: syntactic data is not identical to semantic information! Your byte-level SHA-256 custody and span grounding descriptors prove merely that a sequence of bytes has not suffered memory degradation or disk corruption. However, that in no way guarantees its truthfulness relative to physical reality. The cryptographic hash of an erroneous or obsolete engineering standard remains nothing more than the flawless hash sum of an error. To claim that a cryptographic hash generates knowledge is to trap oneself in a semantic tautology.”*
@@ -1219,7 +1219,7 @@ Machine knowledge in safety-critical engineering is founded not on statistical p
   First, the span grounding descriptor binds the symbolic predicate to exact byte offsets within the primary source via an unbroken cryptographic tuple.  
   Second, we make no metaphysical claim of granting intrinsic intentionality or conscious understanding to the silicon substrate. In mission-critical engineering, semantic comprehension is operationalized as behavioral equivalence and contract satisfaction: predicates compile into executable state invariants subjected to rigorous verification across formal SMT models and Hardware-in-the-Loop (HIL) testbenches. When system execution under all edge conditions strictly conforms to the formalized invariant, and that invariant carries the cryptographic multi-signature of an accountable knowledge engineer, the semantic gap is formally bridged by human legal liability and mathematical proof.”*
 
-**Round 2: Popperian Fallibilism versus Digital Infallibility**
+**Dialogue with Karl Popper: Popperian Fallibilism versus Digital Infallibility**
 
 - **Karl Popper:**  
   *“Mykola Fedchyk, you claim that your evidence-governed framework is built upon my methodology of critical rationalism, yet you simultaneously declare zero-hallucination guarantees (ZHR) and infallible knowledge custody. Are you not reviving, under a modern guise, the neo-positivist verificationism of the Vienna Circle that I refuted in 1934? Genuine scientific knowledge remains forever provisional and open to refutation; no computational system may claim possession of definitive truth.”*

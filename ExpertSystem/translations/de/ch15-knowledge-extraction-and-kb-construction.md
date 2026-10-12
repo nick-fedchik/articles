@@ -1306,7 +1306,7 @@ Die nachfolgende Matrix fasst die fundamentalen architektonischen Unterschiede z
 
 Diese Gegenüberstellung kontrastiert eine mathematisch prüfbare Inferenzarchitektur mit dem elementaren generativen Retrieval. Selbstverständlich lässt sich auch ein RAG-System um Quellkoordinaten, Revisionsfilter und externe Validatoren erweitern – die Differenzierung wird durch den formalen Verifikationskontrakt bestimmt, nicht durch die verwendete Technologiebezeichnung.
 
-## 15. Pro et Contra — Virtueller Dialog
+## 15. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Disclaimer:**  
 > Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur kompromisslosen wissenschaftlichen Überprüfung der vom Autor entwickelten Pipeline zur Extraktion von Ingenieurwissen und zur Konstruktion beweisgestützter Wissensbasen. Zu diesem Fachdialog laden wir weltweit führende Koryphäen der automatisierten Informationsextraktion und probabilistischen Textmodellierung ein: den Pionier der Open Information Extraction (Open IE), ehemaligen CEO des Allen Institute for AI (AI2) und Professor der University of Washington **Oren Etzioni**, sowie den Professor der Columbia University und Schöpfer der Latent Dirichlet Allocation (LDA) **David Blei**.  
@@ -1315,7 +1315,7 @@ Diese Gegenüberstellung kontrastiert eine mathematisch prüfbare Inferenzarchit
 **These des Kapitels (Mykola Fedchyk):**  
 Der Aufbau einer beweisbaren technischen Wissensbasis erfordert die Abkehr von naivem statischem Chunking zugunsten gleitender semantischer Annotationseinheiten (FAU) nach dem Gesetz von Ashby, die bytegenaue Erdung von Fakten über das Tupel $`\mathcal{G}`$, einen multimodalen Speicher sowie ein mehrstufiges Popper’sches Zulassungstor mit SMT-Prüfung zum Schutz vor epistemischer Wissensvergiftung (MITRE ATLAS).
 
-**Runde 1.1: Planetare Open Information Extraction (Open IE) versus gleitende semantische Annotationseinheiten (FAU)**
+**Dialog mit Oren Etzioni: Planetare Open IE und schwebende Annotationseinheiten (FAU)**
 
 - **Oren Etzioni:**  
   *„Mykola Fedchyk, in unseren Arbeiten zur Open Information Extraction (Open IE und TextRunner) haben wir bewiesen, dass die Skalierung von Wissensbasen auf planetare Dimensionen nur möglich ist, wenn Extraktionsalgorithmen von starren vordefinierten Schemata und ontologischen Fesseln befreit sind. Sie schlagen vor, jeden extrahierten Fakt an physikalische Byte-Koordinaten der Quelle zu binden, fordern aufwendige gleitende Annotationseinheiten (FAU) und mit Ed25519 signierte Beweiszertifikate. Diese übermäßige Bürokratisierung und Rechenlast erstickt den Ingestion-Durchsatz: Sie werden niemals auch nur einen Bruchteil jener Industriestandards verarbeiten können, die moderne offene Extraktoren mühelos bewältigen.“*
@@ -1325,7 +1325,7 @@ Der Aufbau einer beweisbaren technischen Wissensbasis erfordert die Abkehr von n
   Nach W. Ross Ashbys kybernetischem Gesetz der erforderlichen Varietät muss das Steuerungssystem der Extraktion mindestens dieselbe strukturelle Varietät aufweisen wie das normative Quelldokument. Deshalb haben wir festes Chunking verworfen und gleitende Einheiten FAU geschaffen, die das visuelle Layout technischer Tabellen, Graphen und Absätze respektieren.  
   Jeder zugelassene Fakt ist untrennbar an das Tupel $`\mathcal{G} = \langle \mathrm{DocID}, \mathrm{SHA256}, \mathrm{StartByte}, \mathrm{EndByte}, \mathrm{Predicate} \rangle`$ gekoppelt. Fehlt einem Faktkandidaten der physikalische Byte-Nachweis im Primärdokument, wird er verworfen. Wir opfern spekulativen Durchsatz bewusst zugunsten unerschütterlicher Beweisintegrität.“*
 
-**Runde 1.2: Kompositionelle semantische Relationen und emergente Prädikate versus starre ontologische Schemata**
+**Fortsetzung des Dialogs mit Oren Etzioni: Ontologie-Evolution und zusammengesetzte Relationen in technischen Normen**
 
 - **Oren Etzioni:**  
   *„Aber wie steht es um kompositionelle und domänenübergreifende Relationen, die a priori in Ihrer vordefinierten Ontologie fehlen? Open IE extrahiert beliebige relationale Phrasen direkt aus unstrukturiertem Text ('X inhibiert vorübergehend Y unter Bedingung Z'), was die Entdeckung unvorhergesehener physikalischer Wechselwirkungen zwischen Subsystemen ermöglicht. Wenn Ihre Extraktionspipeline die vorherige formale Spezifikation jedes Prädikats in OWL/RDF vorschreibt, verwerfen Sie unweigerlich kritische empirische Befunde und seltene Fehlerzustände von Komponenten, die von Ingenieuren in nicht-standardisierter Sprache beschrieben werden.“*
@@ -1335,7 +1335,7 @@ Der Aufbau einer beweisbaren technischen Wissensbasis erfordert die Abkehr von n
   Dort isoliert ein linguistischer Parser das syntaktische Skelett und generiert einen Vorschlag zur Ontologieerweiterung via Pull Request an das Wissens-Repository.  
   Doch solange ein Kandidaten-Prädikat keinen streng typisierten Vertrag, keine geprüften SI-Einheiten und keine formale Freigabe durch einen Zertifizierungsingenieur erhalten hat, besitzt es keinerlei Befugnis, die Regelausführung in autonomen Fahrzeugen oder der Avionik zu beeinflussen. Wir unterstützen die Evolution des Wissens vollauf, jedoch ausschließlich über einen disziplinierten Release-Zyklus, niemals über das Chaos unkontrollierter Vektorcluster.“*
 
-**Runde 2.1: Probabilistische Themenmodelle (LDA) versus Popper’sches Zulassungstor und Schutz vor Wissensvergiftung (MITRE ATLAS)**
+**Dialog mit David Blei: Probabilistische Themenanalyse (LDA), das Popper-Tor und Abwehr von Wissensvergiftung**
 
 - **David Blei:**  
   *„Mykola Fedchyk, technische Korpora und Spezifikationen enthalten reichhaltige, latente semantische Zusammenhänge. Probabilistische Bayes’sche Modelle wie Latent Dirichlet Allocation (LDA) und tiefe variationelle Autoencoder erfassen textuelles Rauschen, Unsicherheiten und Themenmischungen auf natürliche Weise, ohne künstliche harte Grenzen zu ziehen. Ihr 'Popper’sches Zulassungstor' hingegen verwirft rigoros jeden Wissenskandidaten, der strenge SMT-Prüfungen verfehlt oder geringfügige Parameterabweichungen aufweist. Diese symbolische Rigidität ignoriert die statistische Evolution der Fachsprache und macht Ihre Wissensbasis extrem anfällig gegenüber legitimen redaktionellen Änderungen.“*
@@ -1345,7 +1345,7 @@ Der Aufbau einer beweisbaren technischen Wissensbasis erfordert die Abkehr von n
   Gemäß der Bedrohungsmatrix MITRE ATLAS (Techniken AML.T0020 und AML.T0043) kann ein Angreifer oder kompromittierter Zulieferer sicherheitskritische Schwellenwerte unauffällig verschieben (etwa die Notabschaltspannung einer Batterie von 400 V auf 435 V). Ein probabilistisches Modell assimiliert dieses Gift unbemerkt als plausible Varianz.  
   Unser Popper’sches Zulassungstor agiert nach dem Zero-Trust-Prinzip: Der SMT-Solver Z3 führt eine symbolische Empfindlichkeitsprüfung durch ($\Delta \theta \le \epsilon_{\mathrm{safety}}$) und prüft Polaritätsinversionen. Verletzt ein neuer Fakt etablierte Sicherheitsinvarianten, wird er nicht geglättet, sondern unverzüglich isoliert und dem Human-in-the-Loop-Gate zur Expertenprüfung vorgelegt. Eine autoritative Wissensbasis darf nicht probabilistisch sein — sie muss mathematisch falsifizierbar sein.“*
 
-**Runde 2.2: Dynamischer Konzeptdrift (Concept Drift) versus rigide bitemporale Diskretisierung**
+**Fortsetzung des Dialogs mit David Blei: Dynamischer Konzeptdrift und bitemporale Diskretheit von Wissen**
 
 - **David Blei:**  
   *„In dynamischen Themenmodellen (Dynamic Topic Models) verfolgen wir, wie die Bedeutung technischer Begriffe über Jahrzehnte hinweg kontinuierlich driftet: Das operative Konzept eines 'sicheren Zustands' in Automobilstandards der 1990er Jahre unterscheidet sich grundlegend von seiner Wortverteilung in der ISO 26262:2018. Ihre Popper’sche Dichotomie deutet jeden Parameter- oder Kontextdrift als feindliche Vergiftung oder semantische Anomalie. Blockiert diese diskrete Rigidität nicht die natürliche Evolution der normativen Sprache beim Übergang zwischen Standardgenerationen?“*

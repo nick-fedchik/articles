@@ -973,7 +973,7 @@ The resolution demands a strict data contract. The original artifact remains the
 
 Evaluation metrics split accordingly: KAS is evaluated on evidence bundle purity, metadata completeness, and revocation latency; generation components are evaluated on factual faithfulness to supplied evidence, percentage of supported claims, and ranking stability. Automating this dual-plane evaluation is addressed by frameworks such as Ragas [[22]](#src-22), while research on Self-RAG [[23]](#src-23) demonstrates that indiscriminate retrieval actively degrades reasoning quality. KAS is not a subservient data importer for RAG pipelines; it is an autonomous, foundational knowledge governance subsystem.
 
-## 18. Hardware Profiling: Workload Optimization Across CPU, GPU, and NPU
+## 18. Hardware Profiling: Workload Optimization Across CPU, GPU, and NPU <a id="load-distribution-between-cpu-gpu-and-npu"></a><a id="розподіл-навантаження-між-cpu-gpu-і-npu"></a>
 
 Graphics Processing Units (*Graphics Processing Unit*, GPU) and Neural Processing Units (*Neural Processing Unit*, NPU) should never be incorporated into KAS pipelines without empirically identified bottlenecks: accelerating vector embedding generation yields negligible system-level speedup if end-to-end throughput is bottlenecked by network connectors, document parsing, or security policy evaluation. Connectors, parsers, text normalizers, cryptographic hashing, relational database lookups, graph traversals, access filtering, and audit logging execute naturally on Central Processing Units (*Central Processing Unit*, CPU). GPUs are optimal for high-throughput batch OCR, vision-language layout parsing, transformer-based embeddings, and cross-encoder re-ranking; NPUs excel at executing compact, quantized models with fixed computation graphs. This workload distribution is not rigid: unsupported operators, excessive host-to-device memory copies, and fallback CPU execution can completely erase theoretical hardware speedups, necessitating holistic runtime profiling rather than naive device utilization monitoring. Hardware selection for vectorization is determined by measuring startup latency against steady-state throughput:
 
@@ -1297,7 +1297,7 @@ Instead of passive ingestion, the KAS subsystem deploys an active *Knowledge Det
 2. **Pre-Ingestion Contradiction Check:**
    Extracted predicates are cross-checked against the axiomatic core of the knowledge system prior to database persistence. If a candidate contains an assertion refuting an active certified standard (for example, contradicting diagnostic coverage mandates under ISO 26262), the system does not average conflicting norms in vector space. Instead, a formal argumentative defeater (*defeater*) is generated, the candidate is locked in quarantine, and an escalation report detailing the primary sources of both conflicting assertions is transmitted to the knowledge engineer.
 
-## 24. Pro et Contra — Virtual Dialogue
+## 24. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously stress-test the author's architecture of Knowledge Acquisition Systems (KAS) and documentation epistemic geology. For this inquiry, we invite leading global computer scientists whose paradigms define modern learning pipelines and large-scale data processing: Professor **Andrew Ng**—leader of the Data-Centric AI movement, co-founder of Google Brain and Coursera, alongside Professor **Tom M. Mitchell**—machine learning pioneer, author of the seminal textbook *Machine Learning*, and director of the Never-Ending Language Learning (NELL) project at Carnegie Mellon University.  
@@ -1306,7 +1306,7 @@ Instead of passive ingestion, the KAS subsystem deploys an active *Knowledge Det
 **Chapter Thesis (Mykola Fedchyk):**  
 Engineering knowledge acquisition (KAS) across multi-thousand-page technical specifications must not rely on unbounded context expansion in commercial cloud LLMs, but on deterministic epistemic geology: the Knowledge Deontic Index (KDI), local primary triage, and formal pre-ingestion contradiction verification before rules are admitted into the evidential base.
 
-**Round 1: Does boundless context replace engineering epistemic geology?**
+**Dialogue with Andrew Ng: Boundless Model Context Windows and Engineering Epistemic Geology**
 
 - **Andrew Ng:**  
   *“Mykola Fedchyk, your pipeline involving epistemic geology, complex Knowledge Deontic Index (KDI) metrics, and multi-tier syntactic triage appears to be textbook over-engineering. Frontier foundation models now comfortably support two-million-token context windows and rich multimodal reasoning. Rather than constructing elaborate, multi-stage Knowledge Acquisition Systems (KAS), an engineer can simply upload an entire monolithic datasheet or regulatory standard directly into the model's context and query it interactively via prompt engineering. Why maintain bespoke local extractors and discard text when model reasoning scales exponentially?”*
@@ -1324,7 +1324,7 @@ Engineering knowledge acquisition (KAS) across multi-thousand-page technical spe
   When KAS encounters a descriptive text block displaying a dense concentration of domain entities (microelectronics registers or bus protocols) lacking explicit deontic modals, it does not silently discard it: the fragment is tagged with `KAS_PARSE_ANOMALY` and isolated in an epistemic quarantine for targeted review by a knowledge engineer.  
   In functional safety (ISO 26262 ASIL D), 'implicit', unquantified requirements are classified not as desirable flexibility, but as primary defects in requirements engineering. A model that attempts to invent or hallucinate implicit architectural intent without formal constraints produces not verified knowledge, but statistical conjecture that fails certification audits.”*
 
-**Round 2: Autonomous lifelong learning (NELL) versus formal contradiction verification**
+**Dialogue with Tom M. Mitchell: Autonomous Learning in NELL and Formal Consistency Verification**
 
 - **Tom M. Mitchell:**  
   *“Mykola Fedchyk, in the Never-Ending Language Learning (NELL) project at Carnegie Mellon, we explored architectures that run continuously for years, autonomously extracting beliefs from unstructured web text, learning from their own cumulative experience, and growing a knowledge base without human intervention. You, in contrast, enforce a rigid Pre-Ingestion Contradiction Check and insist on mandatory Human-in-the-Loop qualification gates. Doesn't this reduce your architecture from a genuinely adaptive, self-evolving intelligence into a conservative, brittle rule database incapable of keeping pace with rapid industrial evolution?”*

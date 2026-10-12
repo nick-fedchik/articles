@@ -254,7 +254,7 @@ flowchart TD
 
 Dependency parsing relies on statistical models: frozen model weights ensure deterministic execution, yet do not guarantee grammatical correctness. The domain lexicon defines valid entity candidates, the language model proposes a structured candidate form, and the host verifier validates formal types and relational constraints. Crucially, none of these steps alone guarantees that the emitted predicate accurately captures the user's operational intent without rigorous invariant testing.
 
-### 3.1. Syntactic Dependency Parsing and Actant Extraction
+### 3.1. Syntactic Dependency Parsing and Actant Extraction <a id="31-syntactic-dependency-parsing-and-actant-extraction"></a><a id="31-синтаксичний-розбір-залежностей-та-виділення-актантів"></a>
 
 The syntactic parser constructs a grammatical dependency tree adhering to the Universal Dependencies (UD) framework [[16]](#src-16). It identifies parts of speech, extracts canonical lemmas, and labels structural relations between tokens, such as sentence root (`root`), nominal subject (`nsubj`), and direct object (`obj`). For Ukrainian text processing, open-source toolkits such as UDPipe [[17]](#src-17) and Stanza [[18]](#src-18) are well-suited. Syntactic analysis decouples semantic core arguments from morphological inflection: "опиши протокол", "описати протокол", and "опис протоколу" normalize to common base lemmas.
 
@@ -660,7 +660,7 @@ Consider an incomplete query: "What is the minimum header length?" lacking a pro
 
 Session working memory stores conversational context and never functions as an epistemic source of authoritative claims. Injected parameters undergo identical validation against the ontology, and emitted citations ground directly in primary normative text, never in conversational dialogue logs.
 
-## 8. Pro et Contra — Virtual Dialogue
+## 8. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously stress-test the author's architecture for overcoming natural language variability and semantic query compilation. For this inquiry, we invite globally recognized computer scientists at the intersection of computational linguistics and machine learning whose works investigate the boundaries of formalizing linguistic variability: University of Pennsylvania Professor **Dan Roth**—pioneer of Constrained Conditional Models (CCM) and declarative learning in NLP, alongside Stanford University Professor **Christopher Potts**—distinguished authority on formal semantics, pragmatics, and linguistic implicatures.  
@@ -669,7 +669,7 @@ Session working memory stores conversational context and never functions as an e
 **Chapter Thesis (Mykola Fedchyk):**  
 Overcoming linguistic variability in engineering queries mandates semantic compilation: synthesizing Constrained Conditional Models (CCM) and finite-state GBNF grammars with deterministic GroupPass metric governance, collapsing infinite colloquial surface phrasing into unambiguous AST predicates without sacrificing negation polarity or quantifier bounds.
 
-**Round 1.1: Can statistical classifiers reliably enforce logical constraints without polarity inversion?**
+**Dialogue with Dan Roth: Capturing Logical Constraints via Statistical Classifiers Without Polarity Inversion**
 
 - **Dan Roth:**  
   *“Mykola Fedchyk, in our foundational work on Constrained Conditional Models (CCM), we integrated statistical learning with Integer Linear Programming (ILP) to impose global declarative constraints onto machine learning outputs. However, you attempt to deploy this paradigm across unconstrained engineering user queries exhibiting extreme syntactic volatility. Statistical language classifiers intrinsically struggle with negation scope or confuse fine-grained quantifier distinctions (`at least one` versus `all`) when an engineer employs colloquial technical jargon or passive grammatical constructions. If the neural front-end errs during intent or slot extraction, no downstream semantic compiler can prevent the system from executing an invalid, hazardous logical query.”*
@@ -680,7 +680,7 @@ Overcoming linguistic variability in engineering queries mandates semantic compi
   Second, the model's token decoding is strictly confined within a finite-state GBNF grammar lattice, admitting only valid slots declared in the certified domain ontology.  
   Third, we enforce an uncompromising release invariant—the GroupPass metric: if an equivalence cluster of semantically identical rephrasings generates even a single diverging AST logical form, the release gate fails the model. Whenever ambiguity cannot be eliminated deterministically, the host verifier refuses to fabricate a slot and initiates a deterministic clarification protocol.”*
 
-**Round 1.2: Multi-layered non-linear constraints and real-time combinatorial explosion**
+**Continued Dialogue with Dan Roth: Multi-Layered Nonlinear Constraints and Real-Time Combinatorial Complexity**
 
 - **Dan Roth:**  
   *“Mykola Fedchyk, in practical applications, CCM confronts the reality that cross-entity constraints are rarely linear or purely local. If an engineering query spans relationships between three distinct standards, two operating voltage thresholds, and conflicting deontic modalities, the dimensionality of the Integer Linear Program explodes exponentially. How can your GBNF finite-state lattice process complex cross-slot interdependencies without triggering combinatorial explosion and violating hard real-time $O(1)$ response budgets on embedded silicon?”*
@@ -690,7 +690,7 @@ Overcoming linguistic variability in engineering queries mandates semantic compi
   Global inter-slot dependencies and cross-domain invariants are delegated to a subsequent discrete verification phase: a deterministic stratified Datalog engine and an SMT solver (Z3) hosted within the isolated verifier.  
   Because each knowledge service operates over a strictly typed, scope-bounded micro-ontology, SMT solving completes in milliseconds ($<15\,\text{ms}$). If global constraints prove unsatisfiable (UNSAT), the system wastes zero cycles on heuristic backtracking: it immediately emits an exact conflict core of predicates, guaranteeing bounded latencies.”*
 
-**Round 2.1: Contextual pragmatics and conversational implicatures versus rigid ontological canonization**
+**Dialogue with Christopher Potts: Contextual Pragmatics, Implicit Implicatures, and Ontological Canonization**
 
 - **Christopher Potts:**  
   *“Mykola Fedchyk, human language cannot be reduced to sterile slot-filling or abstract predicate calculus. It is fundamentally driven by Gricean pragmatic implicatures, presuppositions, and context-dependent speaker intentions. When an engineer asks, 'Can I restart this controller now?', they are not merely calling an API status check—they rely on an implicit shared conversational history and expect nuanced situational awareness. By forcing this rich pragmatic spectrum into a rigid canonical ontology and refusing to answer whenever an utterance deviates from your formal grammar, you build an infuriatingly brittle, uncooperative system that forces humans to communicate in pseudocode rather than natural language.”*
@@ -701,7 +701,7 @@ Overcoming linguistic variability in engineering queries mandates semantic compi
   If the query harbors polysemy or lacks an explicit `scope` parameter (such as a specific safety standard or controller hardware revision), attempting to guess the user's intent via statistical inference is criminal negligence.  
   Our architecture transforms implicit presuppositions into explicit engineering facts: working memory retains session context strictly as an unverified candidate, while the host verifier requires explicit confirmation before execution. We do not design an AI to be a pleasing conversational companion; we construct an uncompromising semantic interface where every word carries measurable liability.”*
 
-**Round 2.2: Conversational vagueness versus adaptive metalinguistic elicitation**
+**Continued Dialogue with Christopher Potts: Natural Vagueness of Dialogue and Calibrating System Refusal Boundaries**
 
 - **Christopher Potts:**  
   *“Mykola Fedchyk, in real-world engineering, practitioners rarely recall the exact RFC number, bitfield register index, or specific microsecond timing bound off the top of their heads. Conversational vagueness serves as an essential communicative heuristic: engineers formulate approximate queries to orient themselves. If your system responds to every minor lexical imprecision with a blunt 'Specify parameter or request rejected', user collaboration collapses. Shouldn't an evidence-based system engage in cooperative metalinguistic negotiation, gently pruning the hypothesis space without defensive stonewalling?”*

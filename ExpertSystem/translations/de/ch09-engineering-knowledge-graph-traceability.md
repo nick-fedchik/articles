@@ -930,7 +930,7 @@ Die nachfolgende Tabelle stellt traditionelle Tabellen und den Engineering Knowl
 
 Diese Gegenüberstellung impliziert keineswegs, dass ein Wissensgraph zum Nulltarif entsteht: Er erfordert Annotationsdisziplin, Parser-Wartung und einen verantwortlichen Schema-Owner. Der Aufwand verlagert sich jedoch von fehleranfälligem manuellem Abtippen auf automatisierte Prüfungen, die bei jeder Codeänderung greifen.
 
-## 8. Pro et Contra — Virtueller Dialog
+## 8. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Haftungsausschluss:**  
 > Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur methodischen Belastungsprüfung des vom Autor entwickelten Konzepts eines Engineering Knowledge Graphs und der durchgängigen Artefakt-Rückverfolgbarkeit. Zu diesem Diskurs laden wir wegweisende Architekten der modernen Computerinfrastruktur ein, deren fundamentale Paradigmen Grundsätze geschlossener Determinismen und regulatorischer Strenge herausfordern: Sir **Tim Berners-Lee** – Erfinder des World Wide Web (WWW), Gründer des W3C und Vordenker des Semantic Web / Linked Data, sowie **Linus Torvalds** – Schöpfer des Linux-Betriebssystemkerns und des verteilten Versionskontrollsystems Git.  
@@ -939,7 +939,7 @@ Diese Gegenüberstellung impliziert keineswegs, dass ein Wissensgraph zum Nullta
 **These des Kapitels (Mykola Fedchyk):**  
 Durchgängige Rückverfolgbarkeit in der funktionalen Sicherheit (ASPICE v4.0 / ISO 26262) erfordert einen mathematisch geschlossenen, kryptografisch verifizierten Wissensgraphen (100% Traceability DAG), in dem jede Sicherheitsanforderung (SHR/SWR), Architekturentscheidung (ADR), jedes Hardwareregister und jedes Testsuite-Artefakt über typisierte Kanten mit automatisierter Erkennung ungedeckter Elemente und Vollständigkeitsinvarianten verknüpft sind.
 
-**Runde 1.1: Die offene vernetzte Welt (Semantic Web) versus geschlossener Ingenieur-DAG**
+**Dialog mit Tim Berners-Lee: Semantic-Web-Konzepte und der geschlossene technische DAG**
 
 - **Tim Berners-Lee:**  
   *„Herr Mykola Fedchyk, in unserer Vision des Semantic Web haben wir Linked Open Data auf Basis von RDF-Tripeln, OWL-Ontologien und globalen URIs verankert. Sie hingegen konstruieren einen starren, proprietären, strikt geschlossenen gerichteten azyklischen Graphen (DAG) unter der Closed World Assumption (CWA). Geben Sie damit nicht den größten Vorzug web-skalierter Wissensgraphen auf – nämlich Dezentralisierung, globale Interoperabilität zwischen Zulieferern und die Fähigkeit zur kontinuierlichen evolutionären Schemaerweiterung ohne zentralisierte Kontrollinstanz?“*
@@ -949,7 +949,7 @@ Durchgängige Rückverfolgbarkeit in der funktionalen Sicherheit (ASPICE v4.0 / 
   Unter OWA bedeutet das Fehlen einer Kante zwischen einer Sicherheitsanforderung und einem ausführbaren Testfall: 'Wir wissen noch nicht, ob dieser Test irgendwo auf der Welt existiert.' Im sicherheitskritischen Ingenieurwesen bedeutet das Fehlen eines Tests eine unmittelbare Katastrophe: eine Verletzung der Abdeckungsinvariante $\mathrm{Coverage}_{R \rightarrow T} = 1.0$, die den CI/CD-Release-Build deterministisch stoppen muss.  
   Zudem bieten monolithische RDF/SPARQL-Engines mit dynamischer Inferenz zur Laufzeit keine deterministischen $O(1)$-Latenzen im harten Echtzeitbetrieb. Wir nutzen unveränderliche binäre Quad-Stores, verankert in Merkle-Bäumen mit Memory-Mapped-Indizes, was eine strikte Typisierung und hermetische Isolation gegenüber externem Nichtdeterminismus garantiert.“*
 
-**Runde 1.2: Föderierte SPARQL-Abfragen und RDF-star versus deterministischer eingebetteter Merkle-DAG**
+**Fortsetzung des Dialogs mit Tim Berners-Lee: Föderierte SPARQL-Abfragen und Merkle-DAGs eingebetteter Systeme**
 
 - **Tim Berners-Lee:**  
   *„Herr Mykola Fedchyk, moderne Standards wie RDF 1.2 und RDF-star erlauben Aussagen-Annotationen direkt auf Ebene einzelner Tripel (Reification / Edge Properties), während föderierte SPARQL-Abfragen (über das Schlüsselwort `SERVICE`) verteilte Datenbestände heterogener Zulieferer abfragen können, ohne einen monolithischen Graphen zu erzwingen. Wäre es nicht wesentlich skalierbarer, die Rückverfolgbarkeit zwischen Sensor-, Halbleiter- und Software-Lieferanten über offene Web-Endpunkte zu föderieren, anstatt eine totale Entitäts-Zusammenführung in einem starren lokalen Merkle-DAG zu fordern?“*
@@ -959,7 +959,7 @@ Durchgängige Rückverfolgbarkeit in der funktionalen Sicherheit (ASPICE v4.0 / 
   Die Vorgabe der ISO 26262 an den Audit-Trail ist kategorisch: Die Systemkonfiguration erfordert hermetische Reproduzierbarkeit. Wir behalten die Semantik von RDF-Quads bei, kompilieren sie jedoch offline in unveränderliche binäre Wissenspakete, versehen mit kryptografischen Ed25519-Signaturen und RFC-3161-Zeitstempeln.  
   Alle transitiven Erreichbarkeitspfade werden lokal in Millisekunden über speicherabgebildete Indizes (mmap) berechnet. Die Integration entlang der Zulieferkette erfolgt nicht über Web-Abfragen zur Laufzeit, sondern durch den kryptografischen Import versionsgebundener Lieferantenartefakte in einen gemeinsamen hermetischen Merkle-Baum mit vollständiger Integritätsprüfung.“*
 
-**Runde 2.1: Git-Commit-Einfachheit versus sicherheitskritische Anforderungs-Rückverfolgbarkeit**
+**Dialog mit Linus Torvalds: Einfachheit von Git-Commits und technische Nachverfolgbarkeit von Anforderungen**
 
 - **Linus Torvalds:**  
   *„Herr Mykola Fedchyk, diese gesamte durchgängige Rückverfolgbarkeit nach ASPICE v4.0, Graphdatenbanken und Architekturentscheidungs-Aufzeichnungen (ADRs) sind typischer bürokratischer Konzernballast. Sie erzeugen endlose Personenstunden für Statusberichte, anstatt talentierte Entwickler funktionierenden Code schreiben zu lassen. Der Linux-Kernel treibt Milliarden Server, Smartphones und Supercomputer auf dem Globus an – ohne einen einzigen Traceability-Graphen, ohne ASPICE-Matrizen und ohne formale Anforderungsdokumente. Wir haben Git-Commit-Logs, Review-Mails und sauberen modularen Code. Guter Code spricht für sich selbst; warum sollte man den Entwickleralltag mit Graphen-Overhead überfrachten?“*
@@ -969,7 +969,7 @@ Durchgängige Rückverfolgbarkeit in der funktionalen Sicherheit (ASPICE v4.0 / 
   Linux ist nicht nach ASIL-D für Steer-by-Wire oder Notbremssysteme bei $130\,\text{km/h}$ zertifiziert. Kommt es auf der Autobahn infolge eines Pufferüberlaufs zum Unfall, begutachten Gerichte und Prüfbehörden (NHTSA, TÜV) keine Commit-Ästhetik: Sie verlangen einen unanfechtbaren forensischen Prüfpfad, welche Sicherheitsanforderung diese Puffergröße festlegte, welches ADR den Datentyp begründete und welcher Hardware-in-the-Loop-Test (HIL) auf Silizium das fehlerfreie Verhalten unter Extremtemperaturen bewies.  
   Ohne einen automatisierten Wissensgraphen verbringen Teams vor jedem Audit Tausende Stunden mit dem manuellen Ausfüllen von Excel-Listen. Unser Graph belastet den Entwickler nicht: Ein schlanker Go-Analyzer extrahiert Kanten direkt aus Quellcode-Annotationen und CMSIS-SVD-Registerdateien in Millisekunden, eliminiert manuelle Bürokratie und garantiert die mathematische Vollständigkeit des Audit-Trails.“*
 
-**Runde 2.2: Git-Submodule und `git bisect` versus prädiktive Auswirkungsanalyse (Change Impact Analysis)**
+**Fortsetzung des Dialogs mit Linus Torvalds: Git-Mechanismen und prädiktive Auswirkungsanalyse von Änderungen**
 
 - **Linus Torvalds:**  
   *„Wenn ein Entwickler einen Treiber oder ein Busprotokoll beschädigt, findet `git bisect` in einem Dutzend Schritten $O(\log N)$ den exakten fehlerhaften Commit in einem Baum mit Millionen Revisionen. Git-Submodule und Tags verknüpfen Firmware-Commits präzise mit bestimmten Hardware-Revisionen. Warum sollte man eine aufwendige semantische Graphen-Auswirkungsanalyse (Change Impact Analysis) aufbauen, wenn Standard-Unix-Werkzeuge und Git bereits exakt beantworten, wo und wann der Code gebrochen ist?“*

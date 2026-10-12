@@ -254,7 +254,7 @@ flowchart TD
 
 Das Dependenzparsing nutzt üblicherweise trainierte Modelle: Feste Modellgewichte liefern zwar reproduzierbare Ausgaben, garantieren jedoch keine fehlerfreie grammatische Struktur. Das Fachlexikon liefert Kandidaten, das Sprachmodell schlägt eine logische Form vor, und der Verifizierer prüft deklarierte Typen und Restriktionen. Keiner dieser Schritte beweist für sich allein, dass die Form die Benutzerabsicht fehlerfrei abbildet.
 
-### 3.1. Syntaktisches Dependenzparsing und Aktantenextraktion
+### 3.1. Syntaktisches Dependenzparsing und Aktantenextraktion <a id="31-syntaktisches-dependenzparsing-und-aktantenextraktion"></a><a id="31-синтаксичний-розбір-залежностей-та-виділення-актантів"></a>
 
 Der syntaktische Parser konstruiert den Dependenzbaum des Satzes gemäß dem Schema der Universal Dependencies (*Universal Dependencies*, UD) [[16]](#src-16). Er bestimmt Wortarten, Lemmata und grammatische Relationen, etwa Prädikatskern (`root`), Subjekt (`nsubj`) und direktes Objekt (`obj`). Für viele Sprachen stehen bewährte Open-Source-Werkzeuge wie UDPipe [[17]](#src-17) und Stanza [[18]](#src-18) bereit. Das Parsing trennt das syntaktische Gerüst von morphologischen Oberflächenformen: Formulierungen wie „beschreibe das Protokoll“, „das Protokoll beschreiben“ und „Beschreibung des Protokolls“ werden auf identische Lemmata zurückgeführt.
 
@@ -660,7 +660,7 @@ Betrachten wir eine verkürzte, unvollständige Frage: „Was ist die minimale H
 
 Der Arbeitsspeicher puffert ausschließlich den situativen Kontext des Dialogs und dient niemals als eigenständige Tatsachenquelle. Ein aus dem Speicher ergänztes Argument durchläuft dieselben Prüfungen wie ein direkt aus der Frage extrahiertes Attribut; die Antwort referenziert stets das normative Primärdokument und niemals die vorherige Benutzereingabe.
 
-## 8. Pro et Contra — Virtueller Dialog
+## 8. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Disclaimer:**  
 > Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte, um die architektonischen Entscheidungen des Autors zur Überwindung natürlicher Sprachvariabilität und zur semantischen Abfragekompilierung einem kompromisslosen Härtetest zu unterziehen. Für diese wissenschaftliche Auseinandersetzung laden wir weltweit anerkannte Informatiker an der Schnittstelle von Computerlinguistik und maschinellem Lernen ein, deren Arbeiten die Grenzen der Formalisierung sprachlicher Variabilität erforschen: Professor **Dan Roth** (University of Pennsylvania) — Pionier der Constrained Conditional Models (CCM) und des deklarativen Lernens im NLP, sowie Professor **Christopher Potts** (Stanford University) — renommierte Autorität für formale Semantik, Pragmatik und linguistische Implikaturen.  
@@ -669,7 +669,7 @@ Der Arbeitsspeicher puffert ausschließlich den situativen Kontext des Dialogs u
 **These des Kapitels (Mykola Fedchyk):**  
 Die Überwindung sprachlicher Variabilität in technischen Abfragen erfordert eine semantische Kompilierung: die Synthese von Constrained Conditional Models (CCM) und zustandsbasierten GBNF-Grammatiken mit deterministischer GroupPass-Metrikkontrolle, wodurch eine unendliche Vielfalt umgangssprachlicher Formulierungen in eindeutige AST-Prädikate überführt wird, ohne Negationspolarität oder Quantoren einzubüßen.
 
-**Runde 1.1: Können statistische Klassifikatoren logische Constraints ohne Polaritätsinversion zuverlässig erzwingen?**
+**Dialog mit Dan Roth: Erfassung logischer Constraints durch statistische Klassifikatoren ohne Polaritätsinversion**
 
 - **Dan Roth:**  
   *„Mykola Fedchyk, in unserer grundlegenden Arbeit über Constrained Conditional Models (CCM) haben wir statistisches Lernen mit ganzzahliger linearer Programmierung (ILP) verknüpft, um Ausgaben des maschinellen Lernens globale deklarative Bedingungen aufzuerlegen. Sie versuchen jedoch, dieses Paradigma auf unbeschränkte Ingenieurabfragen mit extremer syntaktischer Volatilität anzuwenden. Statistische Sprachklassifikatoren scheitern naturgemäß am Negationsskopus oder verwechseln subtile Quantorenunterschiede (`mindestens eins` gegenüber `alle`), wenn ein Ingenieur technischen Jargon oder passive Konstruktionen verwendet. Wenn das neuronale Frontend bei der Extraktion von Absichten oder Slots irrt, kann kein nachgelagerter semantischer Compiler verhindern, dass das System eine fehlerhafte, sicherheitskritische logische Abfrage ausführt.“*
@@ -680,7 +680,7 @@ Die Überwindung sprachlicher Variabilität in technischen Abfragen erfordert ei
   Zweitens ist die Token-Dekodierung des Modells strikt auf ein zustandsbasiertes GBNF-Grammatikattern beschränkt, das ausschließlich gültige Slots der zertifizierten Domänenontologie zulässt.  
   Drittens erzwingen wir eine kompromisslose Freigabe-Invariante — die GroupPass-Metrik: Erzeugt ein Äquivalenzcluster semantisch identischer Paraphrasierungen auch nur eine einzige abweichende AST-Logikform, blockiert das Release-Tor das Modell. Und bei jeder nicht auflösbaren Mehrdeutigkeit erfindet der Host-Verifizierer keinen Slot, sondern initiiert ein deterministisches Klärungsprotokoll.“*
 
-**Runde 1.2: Mehrschichtige nichtlineare Bedingungen und kombinatorische Explosion in Echtzeit**
+**Fortsetzung des Dialogs mit Dan Roth: Mehrschichtige nichtlineare Constraints und Echtzeit-Kombinatorik**
 
 - **Dan Roth:**  
   *„Mykola Fedchyk, in realen CCM-Anwendungen sind wechselseitige Bedingungen zwischen Entitäten selten linear oder rein lokal. Wenn eine technische Abfrage Beziehungen über drei verschiedene Standards, zwei Betriebsspannungsgrenzen und kollidierende deontische Modalitäten spannt, wächst die Dimension des ganzzahligen linearen Programms exponentiell. Wie kann Ihr zustandsbasiertes GBNF-Gitter komplexe Slot-Interdependenzen bewältigen, ohne eine kombinatorische Explosion auszulösen und das harte Echtzeitbudget $O(1)$ auf eingebetteten Prozessoren zu sprengen?“*
@@ -690,7 +690,7 @@ Die Überwindung sprachlicher Variabilität in technischen Abfragen erfordert ei
   Globale Slot-Abhängigkeiten und domänenübergreifende Invarianten werden an eine nachgelagerte diskrete Verifikationsphase delegiert: eine deterministische stratifizierte Datalog-Engine und einen SMT-Solver (Z3) innerhalb des isolierten Host-Verifizierers.  
   Da jeder Wissensdienst über eine strikt typisierte, bereichsbeschränkte Mikro-Ontologie operiert, benötigt die SMT-Lösung nur wenige Millisekunden ($<15\,\text{ms}$). Erweisen sich globale Constraints als unlösbar (UNSAT), verschwendet das System keine Zyklen mit heuristischem Backtracking, sondern emittiert unmittelbar den exakten Prädikatskonflikt unter Einhaltung harter Fristen.“*
 
-**Runde 2.1: Kontextuelle Pragmatik und Gesprächsimplizaturen versus rigide ontologische Kanonisierung**
+**Dialog mit Christopher Potts: Kontextuelle Pragmatik, implizite Implikaturen und ontologische Kanonisierung**
 
 - **Christopher Potts:**  
   *„Mykola Fedchyk, die menschliche Sprache lässt sich nicht auf sterile Slot-Befüllung oder abstrakten Prädikatenkalkül reduzieren. Sie basiert fundamental auf Grice’schen pragmatischen Implikaturen, Präsuppositionen und kontextabhängigen Sprecherabsichten. Wenn ein Ingenieur fragt: 'Kann ich diesen Controller jetzt neu starten?', ruft er nicht bloß eine Statusabfrage auf — er stützt sich auf einen impliziten gemeinsamen Dialogverlauf und erwartet situatives Verständnis. Indem Sie dieses reiche pragmatische Spektrum in eine starre kanonische Ontologie pressen und bei der kleinsten Abweichung von Ihrer formalen Grammatik die Antwort verweigern, konstruieren Sie ein frustrierend sprödes System, das Menschen zwingt, in Pseudocode statt in natürlicher Sprache zu kommunizieren.“*
@@ -701,7 +701,7 @@ Die Überwindung sprachlicher Variabilität in technischen Abfragen erfordert ei
   Enthält die Abfrage Polysemie oder fehlt ein expliziter Parameter `scope` (wie ein spezifischer Sicherheitsstandard oder eine Hardware-Revision), ist jeder Versuch, die Absicht statistisch zu erraten, grobe Fahrlässigkeit.  
   Unsere Architektur wandelt implizite Präsuppositionen in explizite ingenieurtechnische Fakten um: Der Arbeitsspeicher puffert den Sitzungskontext strikt als ungeprüfte Hypothese, während der Host-Verifizierer vor der Ausführung eine explizite Bestätigung verlangt. Wir entwickeln keine KI als gefälligen Gesprächspartner; wir bauen eine kompromisslose semantische Schnittstelle, bei der jedes Wort eine justiziable Verantwortung trägt.“*
 
-**Runde 2.2: Konversationelle Unschärfe (Vagueness) versus kooperative metalinguistische Präzisierung**
+**Fortsetzung des Dialogs mit Christopher Potts: Natürliche Dialogunschärfe und Kalibrierung von Systemverweigerungsgrenzen**
 
 - **Christopher Potts:**  
   *„Mykola Fedchyk, in der industriellen Praxis erinnern sich Fachleute selten spontan an die exakte RFC-Nummer, das Registerbitfeld oder mikrosekundengenaue Timing-Schranken. Konversationelle Unschärfe (Conversational Vagueness) fungiert als unverzichtbare kommunikative Heuristik: Ingenieure formulieren approximative Anfragen zur Orientierung. Wenn Ihr System auf jede sprachliche Ungenauigkeit mit einem trockenen 'Parameter präzisieren oder Anfrage abgewiesen' reagiert, kollabiert der Dialogfluss. Sollte ein beweisgestütztes System nicht vielmehr kooperativ metalinguistische Verhandlungen führen und den Hypothesenraum schrittweise verengen, anstatt sich defensiv zu verbarrikadieren?“*

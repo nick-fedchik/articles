@@ -567,7 +567,7 @@ This book revisits the five foundational mission-critical domains introduced in 
 
 In every single row of the table, the final column culminates in the same immutable invariant: final decision authority rests exclusively with an accountable human professional. Critical domains differ in who holds authorization credentials and the societal cost of failure, but in no domain does an evidence-governed recommendation transfer legal or moral accountability to the expert system.
 
-## 7. Pro et Contra — Virtual Dialogue
+## 7. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously stress-test the architectural solutions advanced in this chapter regarding institutional memory preservation and cryptographic knowledge custody. For this inquiry, we invite legendary computer scientists and architects of semantic standards: Turing Award laureate **Edward Feigenbaum**—pioneer of knowledge engineering and creator of first-generation expert systems (Dendral, MYCIN), alongside Rensselaer Polytechnic Institute Professor **Deborah McGuinness**—key architect of the OWL ontology language and the W3C PROV-O provenance standard.  
@@ -576,7 +576,7 @@ In every single row of the table, the final column culminates in the same immuta
 **Chapter Thesis (Mykola Fedchyk):**  
 Corporate memory regarding critical engineering decisions cannot reside in unstructured databases or ungrounded prose: it demands knowledge alienation into immutable binary knowledge packs featuring byte-level span grounding, multi-party threshold consortium authorization ($k$-of-$n$), and RFC 3161 trusted timestamps.
 
-**Round 1: Overcoming the Knowledge Acquisition Bottleneck and Human Turnover**
+**Dialogue with Edward Feigenbaum: Overcoming the Knowledge Acquisition Bottleneck and Human Turnover**
 
 - **Edward Feigenbaum:**  
   *“Mykola Fedchyk, during the 1970s and 1980s we constructed groundbreaking systems like Dendral and MYCIN, yet we ultimately collided with the fundamental Knowledge Acquisition Bottleneck. Human domain experts departed corporations, production rules degraded, and maintaining rule bases became far more expensive than rebuilding software from scratch. You attempt to preserve corporate knowledge using Hardware Security Modules (HSM) and cryptography, but engineering knowledge is a living human cognitive process, not a dead hash on a disk! How do your immutable binary packages solve the problem of knowledge decay and evolution that doomed first-generation expert systems?”*
@@ -594,7 +594,7 @@ Corporate memory regarding critical engineering decisions cannot reside in unstr
   However, in mission-critical engineering, an unbending functional safety principle applies: no intuitive heuristic is ever granted autonomous authority to issue operational dispensations or actuate physical machinery until it has been formally validated by an impenetrable Safety Perimeter.  
   Moreover, corporate memory enables the formal alienation of even tacit heuristics: through structured Architecture Decision Records (ADRs) and post-mortem operational incident analysis, veteran intuition is crystallized into typed rules with explicitly bounded operational envelopes. We transform subjective intuition into a verified, durable corporate asset.”*
 
-**Round 2: Temporal Knowledge Decay and the Provenance Trace**
+**Dialogue with Deborah McGuinness: Temporal Knowledge Decay and the Provenance Trace**
 
 - **Deborah McGuinness:**  
   *“Mykola Fedchyk, locking a SHA-256 byte-level hash for every regulatory span prevents file tampering, but it does not protect against temporal obsolescence! If an engineering specification published three years ago contained an error or was subsequently superseded by a regulatory authority, your system will emit an outdated verdict with mathematical certainty simply because the citation hash matches the archived text. How do you guarantee freshness and dynamic explanation auditability?”*

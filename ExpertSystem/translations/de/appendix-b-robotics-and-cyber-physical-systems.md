@@ -1,9 +1,9 @@
 # Anhang B. Evidenzbasierte Expertensysteme in der autonomen Robotik und in cyber-physischen Komplexen
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · Anhänge
-> **Inhaltsverzeichnis:** [README.md](README.md)
-> **Autor:** [Mykola Fedchyk](about-the-author.md)
-> **Niveau:** Architekten autonomer Plattformen, Embedded-Systems-Ingenieure, Robotik-Spezialisten (ROS 2, Zephyr RTOS), Entwickler geschäftskritischer Echtzeitsysteme
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · Anhänge  
+> **Inhaltsverzeichnis:** [README.md](README.md)  
+> **Autor:** [Mykola Fedchyk](about-the-author.md)  
+> **Niveau:** Architekten autonomer Plattformen, Embedded-Systems-Ingenieure, Robotik-Spezialisten (ROS 2, Zephyr RTOS), Entwickler geschäftskritischer Echtzeitsysteme  
 > **Lernziele:** Strikte Trennung probabilistischer Wahrnehmung von deterministischer Aktionszulassung; Aufbau einer On-Board-Wissensbasis ohne dynamischen Speicher; Modellierung physischer Aktionen als formale Kontrakte mit Vor- und Nachbedingungsprüfung; Validierung von Subsystemschnittstellen und physikalischen Modellen vor Feldtests auf dem Testgelände.
 
 ---

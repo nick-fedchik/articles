@@ -511,7 +511,7 @@ Traditional externalization forces a lead architect to author static documentati
 > [!IMPORTANT]
 > **Ethical and Security Perimeter:** Harvesting the digital shadow of engineering activity must remain strictly decoupled from employee performance evaluation. The expert system aggregates technical facts, structural patterns, and domain predicates, but must never become a tool for workplace surveillance. Violating this boundary incentivizes engineers to manipulate their digital traces, destroying the epistemic integrity of the knowledge base.
 
-## 14. Pro et Contra — Virtual Dialogue
+## 14. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously stress-test the author's methodology for eliciting and formally verifying human expert knowledge. For this inquiry, we invite globally prominent researchers of human cognition and decision-making whose foundational works question the reliability of introspection and the tractability of formalizing human experience: Nobel laureate **Daniel Kahneman**—pioneer of behavioral economics, heuristics of intuitive judgment (*Thinking, Fast and Slow*), and the mechanics of judgmental variance (*Noise: A Flaw in Human Judgment*), alongside Dr. **Gary Klein**—founder of the Naturalistic Decision Making (NDM) movement, architect of the Critical Decision Method (CDM), and author of the Recognition-Primed Decision (RPD) model.  
@@ -520,7 +520,7 @@ Traditional externalization forces a lead architect to author static documentati
 **Chapter Thesis (Mykola Fedchyk):**  
 Knowledge elicitation in evidence-governed expert systems mandates transitioning away from unstructured conversational interviews toward formalized debiasing protocols, Brier-score calibration of subjective probability, and CommonKADS task-model canonicalization that decouples domain inferences from procedural control and eliminates cognitive noise.
 
-**Round 1: Can elicitation protocols overcome expert cognitive traps and systemic noise?**
+**Dialogue with Daniel Kahneman: Interview Protocols, Cognitive Biases, and Expert Judgment Noise**
 
 - **Daniel Kahneman:**  
   *“Mykola Fedchyk, decades of research into cognitive heuristics and biases demonstrate that human cognition is an intrinsically flawed, noisy foundation for formal rule bases. Even seasoned domain experts routinely fall victim to the availability heuristic, anchoring effects, and severe overconfidence. Furthermore, our empirical findings on systemic noise prove that the exact same expert diagnostician or compliance auditor renders conflicting verdicts between morning and afternoon depending on fatigue, mood, or context. An expert simply lacks conscious introspective access to the associative machinery of System 1; their post-hoc verbal justifications are retrospective rationalizations. Any attempt to 'elicit knowledge' through human interviews inevitably injects severe cognitive defects and statistical noise directly into the expert system's core.”*
@@ -539,7 +539,7 @@ Knowledge elicitation in evidence-governed expert systems mandates transitioning
   Every rule elicited from specialists and formalized within the knowledge model is systematically subjected to adversarial mutation testing and evaluated against physical telemetry logs using SMT solvers.  
   If an expert panel unanimously asserts a safety invariant that mathematically contradicts empirical sensor traces or thermodynamic limits of the physical system, the SMT solver synthesizes a counterexample, and the assertion is immediately rejected. In our architecture, objective physical laws and empirical sensor logs hold absolute normative precedence over corporate expert consensus.”*
 
-**Round 2: Tacit knowledge versus CommonKADS formalization**
+**Dialogue with Gary Klein: Tacit Knowledge of Practitioners and CommonKADS Formalization**
 
 - **Gary Klein:**  
   *“Mykola Fedchyk, in our field research on Naturalistic Decision Making (NDM) with incident commanders, commercial pilots, and trauma surgeons, we established that authentic mastery is tacit, perceptual, and driven by holistic pattern matching (the RPD model). When an expert makes a split-second, life-saving decision under extreme operational pressure, they do not traverse formal decision trees or parse deontic modal logic. They intuitively grasp the perceptual gestalt of the unfolding physical dynamic. Attempting to dissect this seamless tacit mastery into sterile CommonKADS knowledge models, inference schemas, and truth tables strips away the adaptive expertise that makes them masters, leaving behind an inert, brittle syntactic shell.”*

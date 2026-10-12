@@ -957,7 +957,7 @@ Evolutionary adoption must begin at a single high-friction engineering bottlenec
 
 The team selects a single artifact type, defines its minimal schema, and integrates two or three automated validation gates into the CI/CD pipeline. A foundational rule—such as "every requirement added in a pull request must specify an owner and a quantified acceptance threshold"—quickly flags abandoned or ambiguous specifications that went uninspected for years. Once engineers experience how structured artifacts shield them from surprise release emergencies, automate report generation, and eliminate administrative toil, adoption friction dissipates. Machine-readable data structures must earn authority by visibly accelerating daily engineering work, not by executive fiat.
 
-## 20. Pro et Contra — Virtual Dialogue
+## 20. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
 > This section models a virtual intellectual debate to rigorously stress-test the author's paradigm of transforming heterogeneous engineering artifacts into verifiable structured data. For this inquiry, we invite globally recognized luminaries of computer science and systems engineering: Professor **David L. Parnas**—pioneer of modular decomposition, information hiding, and rigorous tabular specifications (SCR / Four-Variable Model), alongside Turing Award laureate **Frederick Brooks**—author of the foundational classics *The Mythical Man-Month* and *No Silver Bullet*, and discoverer of the laws governing essential versus accidental complexity in engineering artifacts.  
@@ -966,7 +966,7 @@ The team selects a single artifact type, defines its minimal schema, and integra
 **Chapter Thesis (Mykola Fedchyk):**  
 Engineering artifacts (requirements, datasheets, CAD schematics, test suites) become verifiable data for an evidential knowledge base exclusively through three-dimensional grounding: cryptographic primary-source custody ($`\mathcal{G}`$), 2D spatial bounding of cells within document coordinates, and physical unit normalization under the UCUM standard with counterfactual constraint validation. The document is merely a transient projection over typed data.
 
-**Round 1: David Parnas versus Automated Ingestion of Informal Text**
+**Dialogue with David Parnas: Structured Engineering Documentation versus Automated Ingestion of Unformalized Text**
 
 - **David L. Parnas:**  
   *“Mr. Fedchyk, throughout my work on modular specification and tabular requirements (SCR), I have consistently demonstrated that engineering documents become useful to a machine only when they are expressed as mathematical relations over monitored and controlled environmental variables ($REQ(m, c)$), rather than arbitrary semantic graphs or ontologies. Attempting to transform unstructured Word and PDF files into 'typed data objects' using language models or heuristic parsers is self-deception. If a developer's primary requirement is drafted ambiguously in natural language, no automated indexing can magically transmute it into a single-valued mathematical function. Does your architecture not merely create a dangerous illusion of structured rigor, substituting genuine specification discipline with automated ingestion of syntactic noise?”*
@@ -981,7 +981,7 @@ Engineering artifacts (requirements, datasheets, CAD schematics, test suites) be
 - **Mykola Fedchyk:**  
   *“Adoption proceeds by progressively tightening tolerances. We begin with a single non-negotiable invariant: 'no physical constant enters the knowledge base without an exact page, cell coordinate, and verified UCUM unit dimension.' This imposes minimal overhead on engineers while immediately catching 80% of critical voltage, current, and timing threshold errors. Only once physical constants are stabilized do we activate tabular state-transition verification under your SCR methodology. The system does not demand instantaneous perfection from legacy repositories—it guarantees that unformalized artifacts remain quarantined in advisory status and can never autonomously authorize safety-critical actions.”*
 
-**Round 2: Accidental complexity of engineering formats versus machine determinism**
+**Dialogue with Frederick Brooks: Accidental Complexity of Engineering Formats and the Essence of Systems**
 
 - **Frederick Brooks:**  
   *“Mykola Fedchyk, in 'No Silver Bullet' I established that software and systems engineering complexity divides into essential complexity (modeling inherent, intractable domain physics) and accidental complexity (flaws, idiosyncrasies, and frictions of tools, representations, and formats). Real-world engineering artifacts are an unmitigated disaster of accidental complexity: millions of fragmented legacy PDFs with broken font encodings, malformed tables, conflicting CAD revisions, and ambiguous natural-language margin notes. Your claim to convert this 'artifact junkyard' into clean, deterministic data via automated parsers and extraction pipelines will inevitably shatter against the reality of human error: a single parsing misinterpretation of a hidden delimiter or a shifted table column will authorize a defective, safety-compromised build.”*

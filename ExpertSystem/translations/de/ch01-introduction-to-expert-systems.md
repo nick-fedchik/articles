@@ -16,7 +16,7 @@ Das Kapitel zeichnet die historische Evolution der Expertensysteme nach: von den
 
 ---
 
-## 1. Problemstellung und Voraussetzungen: Notwendigkeit von Expertensystemen <a id="problemstellung-expertensysteme"></a>
+## 1. Problemstellung und Voraussetzungen: Notwendigkeit von Expertensystemen <a id="problemstellung-expertensysteme"></a><a id="одне-запитання-три-відповіді"></a>
 
 Jede moderne Hochtechnologieindustrie stößt auf eine fundamentale kognitive Barriere: **Das Volumen des akkumulierten Fachwissens übersteigt exponentiell die physiologische Aufnahmekapazität des menschlichen Gehirns**.
 
@@ -44,7 +44,7 @@ Keines dieser Werkzeuge entbindet den Ingenieur von der formalen Verantwortung. 
 
 ---
 
-## 2. Definition und epistemisches Wesen: Was ist ein Expertensystem <a id="definition-expertensysteme"></a>
+## 2. Definition und epistemisches Wesen: Was ist ein Expertensystem <a id="definition-expertensysteme"></a><a id="документ-не-дорівнює-знанню"></a>
 
 In der Fachliteratur existieren unterschiedliche Begriffsbestimmungen; im evidenzbasierten Systems Engineering von Expertensystemen gilt folgende präzise Definition:
 
@@ -234,7 +234,7 @@ Je nach Aufgabenstellung dominieren im Wissens-Engineering vier klassische Parad
 
 ---
 
-## 7. Sicherheitskritische Anwendungsbereiche mit hohen Fehlerkosten <a id="anwendungsbereiche"></a>
+## 7. Sicherheitskritische Anwendungsbereiche mit hohen Fehlerkosten <a id="anwendungsbereiche"></a><a id="як-довести-що-експертна-система-корисна"></a>
 
 Evidenzbasierte Expertensysteme sind unverzichtbar, wo stochastische Halluzinationen Menschenleben gefährden oder immense Sachschäden verursachen:
 
@@ -257,13 +257,13 @@ Die Zukunft evidenzbasierter Expertensysteme entsteht an der Schnittstelle von d
 
 ---
 
-## 9. Architektur-Panorama der Monografie: Leitfaden durch die sieben Teile <a id="leitfaden-monografie"></a>
+## 9. Architektur-Panorama der Monografie: Leitfaden durch die sieben Teile <a id="leitfaden-monografie"></a><a id="з-чого-почати-в-команді"></a>
 
 Der Aufbau dieser Monografie entwickelt sich systematisch von den theoretischen Grundlagen bis zur Hardware-Realisierung in sieben Teilen: **Teil I** legt das konzeptionelle und epistemische Fundament von Maschinenwissen und Evidenz; **Teil II** entwickelt mathematische Verbandsmodelle, Wissensbasistypologien und Engineering Knowledge Graphs (EKG); **Teil III** vermittelt Methoden der automatisierten Wissensgewinnung, Sprachanalyse und Anforderungsformalisierung; **Teil IV** detailliert Systemarchitektur, Implementierungs-Stack, Erklärungskomponenten und Edge-to-Backend-Kybernetik; **Teil V** widmet sich der formalen Regelverifikation, Systemdiagnose und GSN-Sicherheitsnachweisen; **Teil VI** erforscht kognitive Fronten durch neuro-symbolische Synergien (NeSy) und Epistemische Prozessoren (EPU); und **Teil VII** entfaltet verteilte epistemische Architekturen, die Wissens-Testpyramide und aktive popperianische Falsifikationsaudits. Der vollständige Kapitelkatalog und rollenbasierte Lesepfade sind im Buchüberblick ([README.md](README.md)) zu finden.
 
 ---
 
-## 10. Pro et Contra — Virtueller Dialog <a id="virtueller-dialog"></a>
+## 10. Dialog Pro et Contra <a id="virtueller-dialog"></a>
 
 > **Epistemische Präambel und akademischer Disclaimer:**  
 > Dieser Abschnitt simuliert eine akademische Debatte über die historischen Fundamente, Systemgrenzen und ingenieurtechnischen Begründungen für eine Modernisierung der Expertensysteme. Zum Disput geladen sind die Pioniere der Disziplin und Verfasser maßgeblicher Monografien des Wissens-Engineerings: Turing-Preisträger **Edward Feigenbaum** — Schöpfer des DENDRAL-Systems und Begründer des Wissens-Engineering-Paradigmas; **Edward H. Shortliffe** — Schöpfer von MYCIN, Pionier erklärbarer Inferenz und Faktorisierung von Unsicherheit; sowie **Frederick Hayes-Roth** — leitender Herausgeber und Koautor des Standardwerks *Building Expert Systems* (1983).  
@@ -272,7 +272,7 @@ Der Aufbau dieser Monografie entwickelt sich systematisch von den theoretischen 
 **These des Kapitels (Mykola Fedchyk):**  
 Das klassische Paradigma der Expertensysteme ist kein überholtes Relikt, sondern das unverzichtbare Fundament vertrauenswürdiger künstlicher Intelligenz: Die Verbindung des symbolischen Determinismus, der Wissensexplizitheit und der lückenlosen Erklärbarkeit der ersten Generation mit modernen automatisierten Methoden der Wissensextraktion, Graphen-Ontologien und formaler Verifikation macht die Modernisierung von Expertensystemen zur zwingenden Voraussetzung für sicherheitskritische Bereiche mit einer Null-Halluzinationsrate ($ZHR = 1,00$).
 
-**Runde 1: Edward Feigenbaum — Gilt der Grundsatz „Wissen ist Macht“ im Zeitalter statistischer Modelle fort?**
+**Dialog mit Edward Feigenbaum: Gilt der Grundsatz „Wissen ist Macht“ im Zeitalter statistischer Modelle fort?**
 
 - **Edward Feigenbaum:**  
   *„Herr Fedchyk, in den 1970er Jahren formulierten wir in Stanford die Kernhypothese des Wissens-Engineerings: ‚Die Leistungsfähigkeit eines intelligenten Systems entspringt nicht ausgefeilten Suchverfahren oder universellen logischen Kalkülen, sondern dem Umfang und der Qualität spezifischen Fachwissens (Knowledge is Power).‘ Heute hat sich der Zeitgeist jedoch radikal gewandelt: Multimilliarden-Parameter-Modelle versuchen Probleme rein durch gigantische Rechenleistung und assoziative latente Gewichte zu lösen. Glauben Sie nicht, dass unsere Hypothese der rohen Rechenleistung unterlegen ist und es keinen praktischen Grund mehr gibt, explizite Wissensbasen aufzubauen?“*
@@ -282,7 +282,7 @@ Das klassische Paradigma der Expertensysteme ist kein überholtes Relikt, sonder
   Wenn statistische Modelle in kritischen Ingenieurdomänen ohne explizit verankertes Wissen agieren, scheitern sie regelmäßig und produzieren gefährliche Halluzinationen anstelle von Fakten. Der Versuch, echtes Wissen durch stochastische Assoziationen zu ersetzen, führt unweigerlich in eine Sackgasse.  
   Mehr noch: Moderne Sprachmodelle sind das ideale Werkzeug, um genau jene Hürde zu überwinden, die Sie treffend als ‚Flaschenhals der Wissensakquisition‘ (Knowledge Acquisition Bottleneck) bezeichnet haben. Sie lesen technische Fachkorpora in Sekundenschnelle und schlagen Regelkandidaten vor. Doch die letztendliche Verlässlichkeit eines Systems beruht auch heute auf einer verifizierten, expliziten Wissensbasis, in der jedes Faktum einen verantwortlichen Eigentümer, eine Revision und geprüfte Gültigkeitsgrenzen besitzt.“*
 
-**Runde 2: Edward Shortliffe — Ist strenge Regelverfolgung nötig, wenn neuronale Netze flüssigen Text generieren?**
+**Dialog mit Edward Shortliffe: Ist strenge Regelverfolgung nötig, wenn neuronale Netze flüssigen Text generieren?**
 
 - **Edward H. Shortliffe:**  
   *„Herr Fedchyk, als wir MYCIN entwickelten, war die Akzeptanz der Mediziner unsere größte Herausforderung: Ein Kliniker wird niemals toxische Antibiotika auf Anraten eines Computers verabreichen, wenn das Programm nicht präzise darlegen kann, welche Symptome und Erregerkulturen die Entscheidung begründen. Wir entwickelten dafür Erklärungskomponenten auf Basis von Regelausführungspfaden. Heutige generative Modelle erzeugen jedoch für nahezu jede Frage grammatikalisch geschliffene verbale Begründungen. Warum sollten wir Architekturen mit deterministischen Beweisbäumen belasten, wenn Anwender sich oft mit gefälligem Fließtext zufriedengeben?“*
@@ -292,7 +292,7 @@ Das klassische Paradigma der Expertensysteme ist kein überholtes Relikt, sonder
   Textuelle Begründungen tiefer neuronaler Netze sind reine Rationalisierungen post hoc: Sie beschreiben nicht, wie das Netz intern im latenten Tensorraum gerechnet hat, sondern lediglich, was für den Menschen plausibel klingt. Das erzeugt eine fatale Scheinsicherheit.  
   Ihr in MYCIN verwirklichter Grundsatz bleibt unumstößlich: Eine Erklärung muss strikt isomorph zum tatsächlichen Schlussprozess sein. In unserer modernisierten Architektur erzeugt die Erklärungskomponente ein mathematisch prüfbares Nachweispaket (Proof Bundle): Jeder Deduktionsschritt verweist auf eine aktivierte Regel und ein bytegenau verankertes Primärquellen-Zitat. Ein Ingenieur oder Arzt sieht keine literarische Improvisation, sondern eine rechtlich bindende Beweiskette.“*
 
-**Runde 3: Frederick Hayes-Roth — Wie verhindern wir Skalierungskollaps und Sprödigkeit der ersten Generation?**
+**Dialog mit Frederick Hayes-Roth: Wie verhindern wir Skalierungskollaps und Sprödigkeit der ersten Generation?**
 
 - **Frederick Hayes-Roth:**  
   *„Herr Fedchyk, in unserem Werk ‚Building Expert Systems‘ (1983) haben wir die Disziplin systematisiert, doch die späten 1980er Jahre brachten Ernüchterung. Als Regelbasen über 10.000 Regeln anwuchsen, brachen sie unter ihrer eigenen Komplexität zusammen: Verdeckte Widersprüche traten auf, Prioritäten ließen sich nicht mehr harmonisieren und an den Rändern des Fachgebiets reagierten die Systeme extrem spröde (Brittleness). Was gibt Ihnen die Gewissheit, dass Ihre Modernisierung diesen Zyklus der Enttäuschung nicht wiederholt und keinen weiteren KI-Winter für Expertensysteme einläutet?“*

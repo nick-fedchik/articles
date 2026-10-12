@@ -567,7 +567,7 @@ Die Monografie kehrt zu den fünf Referenzdomänen zurück, die in [Kapitel 1](c
 
 Die letzte Spalte dieser Übersicht schließt in allen Zeilen mit demselben Grundsatz: Die Entscheidung trifft ausnahmslos der autorisierte Mensch. Die Domänen unterscheiden sich in den Rollenprofilen der Prüfer und den Fehlerkosten – in keinem Fall jedoch delegiert die Empfehlung die rechtliche oder funktionale Verantwortung an das Expertensystem.
 
-## 7. Pro et Contra — Virtueller Dialog
+## 7. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Haftungsausschluss:**  
 > Dieser Abschnitt modelliert eine virtuelle intellektuelle Debatte zur methodischen Belastungsprüfung der in diesem Kapitel aufgestellten Architekturentscheidungen bezüglich der Bewahrung des Unternehmensgedächtnisses und der kryptografischen Wissensverwahrung. Zu diesem Diskurs laden wir legendäre Pioniere der Informatik und Gestalter semantischer Standards ein: Turing-Preisträger **Edward Feigenbaum** – Begründer des Knowledge Engineering und Schöpfer der ersten Expertensysteme (Dendral, MYCIN) – sowie Rensselaer Polytechnic Institute Professor **Deborah McGuinness** – maßgebliche Mitgestalterin der Web-Ontologiesprache OWL und des W3C PROV-O-Standards für Datenprovenienz.  
@@ -576,7 +576,7 @@ Die letzte Spalte dieser Übersicht schließt in allen Zeilen mit demselben Grun
 **These des Kapitels (Mykola Fedchyk):**  
 Das Unternehmensgedächtnis über kritische Ingenieurentscheidungen darf nicht in unstrukturierten Datenbanken oder unverankertem Freitext verbleiben: Es erfordert die Entäußerung von Wissen in Form unveränderlicher binärer Wissenspakete mit bytegenauer Evidenzverwahrung, Schwellenwert-Konsortiumsautorisierung ($k$-of-$n$) und vertrauenswürdigen RFC 3161-Zeitstempeln.
 
-**Runde 1: Überwindung des Wissensakquisitions-Flaschenhalses und Personalwechsel**
+**Dialog mit Edward Feigenbaum: Überwindung des Wissensakquisitions-Flaschenhalses und Personalwechsel**
 
 - **Edward Feigenbaum:**  
   *„Mykola Fedchyk, in den 1970er und 1980er Jahren bauten wir bahnbrechende Systeme wie Dendral und MYCIN, stießen jedoch unweigerlich auf den fundamentalen Wissensakquisitions-Flaschenhals (Knowledge Acquisition Bottleneck). Menschliche Fachexperten verließen die Unternehmen, Regeln erodierten und die Pflege der Regelsysteme überstieg die Kosten einer Neuentwicklung um ein Vielfaches. Sie versuchen nun, Wissen mittels Hardware-Sicherheitsmodulen (HSM) und Kryptografie zu konservieren – doch Ingenieurwissen ist ein lebendiger kognitiver Prozess, kein toter Hash-Wert auf Datenträgern! Wie lösen Ihre unveränderlichen Binärpakete das Problem von Wissensalterung und Evolution, an dem die erste Generation der Expertensysteme scheiterte?“*
@@ -594,7 +594,7 @@ Das Unternehmensgedächtnis über kritische Ingenieurentscheidungen darf nicht i
   In der funktionalen Sicherheit gilt jedoch ein eisernes Gesetz: Keine intuitive Heuristik darf eigenmächtig Freigaben erteilen oder Aktoren ansteuern, solange sie nicht von einem formalen Sicherheitsperimeter (Safety Perimeter) verifiziert wurde.  
   Überdies ermöglicht das Unternehmensgedächtnis die Entäußerung selbst impliziter Heuristiken: Über strukturierte Architektur-Entscheidungsdatensätze (ADRs) und Post-Mortem-Analysen von Feldausfällen kristallisiert sich Veteranen-Intuition in typisierte Regeln mit klar umrissenen Gültigkeitsgrenzen. Wir wandeln subjektive Intuition in ein verifiziertes, langlebiges Unternehmensvermögen um.“*
 
-**Runde 2: Zeitliche Wissensalterung und die Provenienzspur**
+**Dialog mit Deborah McGuinness: Zeitliche Wissensalterung und die Provenienzspur**
 
 - **Deborah McGuinness:**  
   *„Mykola Fedchyk, das Einfrieren eines SHA-256-Hashes für jeden Normentext schützt vor Datei-Manipulationen, schützt jedoch mitnichten vor inhaltlicher Veralterung! Enthielt ein Industriestandard vor drei Jahren einen Fehler oder wurde er von der Aufsichtsbehörde novelliert, liefert Ihr System mit mathematischer Präzision ein fatales, überholtes Urteil – schlicht weil der Hash-Wert perfekt mit dem Archivdokument übereinstimmt. Wie gewährleisten Sie Aktualität und dynamische Auditierbarkeit von Erklärungen?“*
