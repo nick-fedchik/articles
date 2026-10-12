@@ -216,9 +216,12 @@ Keine einzelne Komponente deckt alle drei Konflikte ab: `power` ist nicht in $C_
 
 Selbst etablierte Algorithmen bedürfen der formalen Prüfung. Reiters ursprüngliches Verfahren zur Hitting-Set-Baum-Generierung nutzte Schnittregeln zur Astbeschneidung. Russell Greiner, Barbara A. Smith und Ralph W. Wilkerson wiesen nach, dass diese Schnittregeln unter bestimmten Bedingungen – insbesondere wenn die Konsistenzprüfung nicht-minimale Konflikte zurückgibt – Äste mit minimalen Diagnosen fälschlich verwerfen. Sie entwickelten den korrigierten HS-DAG (*Hitting Set Directed Acyclic Graph*) und bewiesen dessen Korrektheit [[4]](#src-4). Für industrielle Implementierungen folgt daraus: Diagnosealgorithmen für große Modelle müssen an Referenzmodellen gegen vollständige Traversierungen abgeglichen werden; Diskrepanzen deuten auf Implementierungsfehler hin.
 
-> [!NOTE] Vermeidung von „Blindtausch auf Verdacht“ (Shotgun Maintenance) durch das Reiter-Modell
-> Im technischen Kundendienst führt Zeitdruck häufig zum unkoordinierten Komponententausch auf Basis von Oberflächensymptomen: „Das Oszilloskop zeigt Taktprobleme – wir tauschen den Quarz; Fehler bleibt – wir tauschen den Mikrocontroller; Fehler bleibt – wir tauschen das Netzteil“. Dies vervielfacht nicht nur die Reparaturkosten, sondern provoziert durch mechanische Eingriffe zusätzliche Sekundärdefekte.
-> Der mathematische Apparat von Reiter liefert eine strikte Invariante: Liegt die Konfliktmenge $\{C_1, C_2, C_3\}$ vor, **muss** jede reale Ursache $\Delta$ eine Überdeckungsmenge bilden (also jedes $C_i$ schneiden). Scheidet eine Komponente einen Konflikt nicht, scheidet sie als alleinige Ursache deterministisch aus – noch bevor ein Techniker Werkzeug ansetzt.
+> [!NOTE]
+> **Drei ingenieurtechnische Prinzipien zur Vermeidung von Blindtausch nach dem Autormodell**
+> 1. Mathematische Konfliktformalisierung: Übergang vom symptomgetriebenen Blindtausch zur deterministischen Isolation minimaler Konfliktmengen $\{C_1, C_2, \dots, C_k\}$.
+> 2. Mengentheoretische Hypothesenfilterung: Durchsetzung von Reiters Theorem, wonach jede reale Ursache $\Delta$ zwingend eine Überdeckungsmenge (*hitting set*) bilden und jeden Konflikt schneiden muss.
+> 3. A-priori-Ausschluss irrelevanter Eingriffe: Deterministischer Ausschluss von Komponenten, die nicht alle Konflikte abdecken, um sekundäre mechanische Hardwareschäden zu verhindern.
+> *Runtime-Steuerung:* Die Diagnose-Engine blockiert Freigaben zum Komponententausch bis zum formalen Nachweis minimaler Überdeckungsmengen im HS-DAG.
 
 ### 4.1. Konflikte zwischen verschiedenen Spezifikationsebenen
 

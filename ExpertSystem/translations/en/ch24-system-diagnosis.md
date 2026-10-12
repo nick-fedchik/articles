@@ -216,9 +216,12 @@ No single component covers all three conflict sets: power does not appear in $C_
 
 Even foundational algorithms require rigorous verification. Reiter initially computed hitting sets using a hitting set tree with pruning rules. Russell Greiner, Barbara A. Smith, and Ralph W. Wilkerson proved that under certain conditions — specifically when the underlying consistency checker returns non-minimal conflict sets — Reiter's pruning rules can prune branches containing minimal diagnoses. They introduced the corrected Hitting Set Directed Acyclic Graph (HS-DAG) and proved its formal correctness [[4]](#src-4). The engineering takeaway for implementation is clear: hitting set algorithms for complex models must be cross-verified against brute-force enumeration on reduced subgraphs; discrepancies indicate algorithmic defects in the solver rather than novel physical diagnoses.
 
-> [!NOTE] Overcoming "Shotgun Maintenance" via Reiter's Model
-> In field operations, a ubiquitous engineering pitfall among service technicians is sequential blind component replacement based purely on outward symptoms: "The oscilloscope indicates a clock error — replace the crystal oscillator; if that fails — replace the microcontroller; if that fails — replace the power supply unit." This practice not only drives maintenance costs up by orders of magnitude, but also introduces secondary hardware defects through unnecessary physical and thermal stress.
-> Reiter's mathematical framework provides an uncompromising formal guarantee: given a discovered set of conflicts $\{C_1, C_2, C_3\}$, any true root cause $\Delta$ **must** constitute a hitting set (intersecting every $C_i$). If a hypothesis fails to intersect even a single conflict set, it is deterministically eliminated — before a technician ever touches a screwdriver or soldering station.
+> [!NOTE]
+> **Three Engineering Principles for Eliminating Shotgun Maintenance in the Author's Model**
+> 1. Mathematical Conflict Formalization: transitioning from blind symptom-driven swapping to deterministic isolation of minimal conflict sets $\{C_1, C_2, \dots, C_k\}$.
+> 2. Set-Theoretic Hypothesis Pruning: enforcing Reiter's theorem whereby any true root cause $\Delta$ must constitute a hitting set intersecting every identified conflict.
+> 3. A Priori Exclusion of Irrelevant Repairs: deterministically rejecting candidate components that do not cover all conflicts to eliminate secondary hardware damage.
+> *Runtime Management:* The diagnostic engine blocks physical replacement recommendations until minimal hitting set properties are formally proven via HS-DAG.
 
 ### 4.1. Conflicts Across Specification Levels
 
