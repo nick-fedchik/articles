@@ -228,6 +228,17 @@ The structural insufficiency of purely vector-based retrieval in technical domai
 
 **Section Takeaway.** Vector similarity is a useful candidate retrieval filter, but it cannot serve as an epistemic warrant for a factual assertion. An architecture requires a compiler mechanism that normalizes syntactic variations into an invariant logical form and evaluates that form over a verified knowledge base.
 
+### 2.1. Linguistic Fluency as a Masking Factor for Invariant Deformation
+
+In safety-critical engineering and regulatory applications, the most hazardous class of system failure is not an overt, absurd hallucination—which trivial heuristic filters readily eliminate—but rather a semantic corruption concealed beneath a facade of fluent, natural language.
+
+As observed by researchers Olena Trofimova and Yurii Kuzmenko in the Structural Invariant Framework (SIF v1.0) [[30]](#src-30), linguistic fluency (*fluency*) is not inherently defective; rather, within statistical generative models, it functions as a deceptive **masking factor** (*masking factor*). An outwardly natural, grammatically pristine output can mask the catastrophic corruption of controlled domain terminology, numerical values, physical units, or deontic modalities. A classic example in metrology is the translation of the controlled technical term *"guard band"* (the measurement tolerance safety margin) into the superficially plausible but nonsensical phrasing *"group of guards"*. The sentence reads smoothly, standard n-gram metrics (BLEU, chrF) signal no anomaly, yet the core measurement invariant is completely broken, leaving the engineer without any signal of semantic failure.
+
+From this insight arises a foundational axiom of evidence-governed natural language architectures:
+
+> **Structural Qualification Invariant:**  
+> An evidence-governed expert system is prohibited from accepting a generated output or translation on the basis of perceived plausibility, model confidence scores, or surface fluency. Output validity is qualified exclusively through the demonstrable preservation of structural invariants anchored to verified primary sources.
+
 ## 3. Architecture of the Question Semantic Compilation Pipeline
 
 Question compilation in this chapter denotes the deterministic translation of arbitrary natural language phrasing into a canonical logical predicate evaluated over a formal knowledge base. Analogous to a programming language compiler, the pipeline executes sequential passes: syntactic parsing, constant isolation and rewriting, intermediate representation synthesis, and ontological type checking. The output of compilation—the semantic invariant—is completely independent of surface phrasing: disparate queries regarding UDP must yield the exact same underlying predicate. The four-stage pipeline is depicted below.
@@ -660,6 +671,14 @@ Consider an incomplete query: "What is the minimum header length?" lacking a pro
 
 Session working memory stores conversational context and never functions as an epistemic source of authoritative claims. Injected parameters undergo identical validation against the ontology, and emitted citations ground directly in primary normative text, never in conversational dialogue logs.
 
+This division of responsibilities formalizes the overarching neuro-symbolic demarcation principle, articulated within the SIF v1.0 framework [[30]](#src-30) as:
+
+```math
+\text{«Proposal vs. Qualification: Heuristic/LLM proposes, Symbolic Engine qualifies»}.
+```
+
+The probabilistic model or heuristic candidate generator is strictly confined to relevance (*Relevance*) and structural hypothesis synthesis, whereas the deterministic symbolic kernel autonomously exercises exclusive qualification authority (*Eligibility*). This architecture mathematically prevents numerical drift and guarantees full epistemic traceability.
+
 ## 8. Pro et Contra Dialogue
 
 > **Epistemic Preamble & Academic Disclaimer:**  
@@ -823,6 +842,7 @@ The subsequent chapter applies this foundational architecture to the reverse dir
 27. <a id="src-27"></a>GLiNER Contributors. [*Architectures and Usage*](https://github.com/urchade/GLiNER). Official repository.
 28. <a id="src-28"></a>Urchade Zaratiana, Gil Pasternak, Oliver Boyd, George Hurn-Maloney, Ash Lewis. [*GLiNER2: An Efficient Multi-Task Information Extraction System with Schema-Driven Interface*](https://arxiv.org/abs/2507.18546). Preprint, 2025.
 29. <a id="src-29"></a>Pydantic Contributors. [*Strict Mode*](https://pydantic.dev/docs/validation/latest/concepts/strict_mode/). Official documentation on type validation and coercion constraints.
+30. <a id="src-30"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
 
 ---
 

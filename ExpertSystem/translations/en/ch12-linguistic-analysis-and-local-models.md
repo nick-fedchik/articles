@@ -356,6 +356,35 @@ For representative parameters $n_l=32$, $L=4096$, $n_{kv}=8$, $d_h=128$, and $b=
 
 The factor of 2 isolates key and value projections. Kwon et al. demonstrated that KV cache memory management represents the primary throughput bottleneck in large language model serving, resolving it via paged virtual memory management in the vLLM architecture [[18]](#src-18).
 
+### 5.4. Structure-Aware Tokenization and Metrological Invariant Preservation (SIF)
+
+When processing specialized engineering and metrological texts, conventional subword tokenizers (Byte-Pair Encoding, WordPiece) introduce a severe failure mode: the arbitrary fragmentation of physical formulas, numerical constants, and units into isolated subword tokens. This fragmentation destroys the structural integrity of mathematical expressions and shifts numerical bounds.
+
+Within the Structural Invariant Framework (SIF v1.0) developed by Yu. Kuzmenko and O. Trofimova [[34]](#src-34), invariant protection is guaranteed via a combination of upstream structural masking (*placeholder engineering*) and a persistent Anchor Registry (*Anchor Registry*). Let document text $T$ contain a set of detected structural anchors $\mathcal{A} = \{a_1, a_2, \dots, a_k\}$, where each element $a_i$ is an indivisible physical entity (a formula, numerical constant, or tolerance bound). The structure-aware tokenizer applies a deterministic bijective transformation:
+
+```math
+\mathcal{P}(T) = \bigl(T \setminus \mathcal{A}\bigr) \cup \Pi(\mathcal{A}), \quad \text{where } \Pi(a_i) = \langle\mathtt{ANCHOR}_{i}\rangle.
+```
+
+Formula components and parameters:
+
+- $T$ is the raw input text of a technical specification, engineering standard, or metrological protocol;
+- $\mathcal{A}$ is the set of identified deterministic invariants (formulas such as $E = mc^2$, numerical tolerances $`\pm 0.05\,\mathrm{mm}`$, compound SI units $\mathrm{kg\cdot m^2/s^2}$);
+- $\Pi(a_i)$ is an isolation operator substituting the compound engineering construct with an atomic placeholder token $`\langle\mathtt{ANCHOR}_{i}\rangle`$;
+- $\mathcal{P}(T)$ is the normalized text, in which the tokenizer fertility over substituted entities is strictly normalized:
+
+```math
+\mathrm{Fertility}(\Pi(a_i)) = 1.00 \quad \text{versus} \quad \mathrm{Fertility}(a_i) \ge 3.50.
+```
+
+Following inference by the local language model, the inverse mapping $\mathcal{P}^{-1}$ reconstructs the original entities from the Anchor Registry and performs cryptographic byte-level integrity verification:
+
+```math
+\mathcal{P}^{-1}(\hat{T}) \implies \forall i \in \{1, \dots, k\}: \mathrm{SHA256}(\hat{a}_i) = \mathrm{SHA256}(a_i).
+```
+
+If the hash of the reconstructed anchor $`\mathrm{SHA256}(\hat{a}_i)`$ fails to match the canonical primary-source hash, the qualification gate immediately rejects the model output, preventing distorted constants from penetrating the source provenance map $`R_{N\leftarrow T_E}`$.
+
 ## 6. Semantic Similarity vs. Logical Entailment: Limits of Vector Search
 
 In naive RAG architectures and standard vector search engines, continuous vector embedding similarity is conflated with logical truth or deductive entailment. For mission-critical expert systems (ISO 26262 ASIL D, IEC 61508 SIL 3/4), relying on cosine similarity creates a direct hazard of catastrophic failure. Consider two diametrically opposed engineering requirements: *"The controller MUST close the emergency dump contactor upon loss of sync"* versus *"The controller MUST NOT close the emergency dump contactor upon loss of sync."* In standard semantic embedding spaces (e.g., cosine embeddings), these sentences exhibit a similarity score of $\approx 0.94\text{--}0.97$ due to identical lexical and domain context. If the inference engine treats vector similarity as proof of normative applicability, it risks executing an unauthorized emergency action.
@@ -620,6 +649,54 @@ flowchart LR
     class DEP pass;
     class DIAG err;
 ```
+
+### 10.1. Layered Diagnostic Pipeline for Invariant Verification (SIF v1.0)
+
+Conventional language model evaluation metrics (BLEU, ROUGE, BERTScore) measure surface lexical similarity or statistical fluency, failing to detect corruptions of domain-specific physical and logical dependencies. In the Structural Invariant Framework (SIF v1.0) established by Yu. Kuzmenko and O. Trofimova [[34]](#src-34), language pipeline verification is structured as a sequence of linked diagnostic layers, where each subsequent tier is motivated by what the preceding tier cannot explain:
+
+```mermaid
+flowchart TD
+    accTitle: Five-Layer Diagnostic Pipeline SIF v1.0
+    accDescr: Architecture for invariant verification from structural ordering to bounded repair and operational qualification.
+
+    L1["<b>Layer 1: Structural Ordering</b><br/>Training data organization and behavioral induction"] --> L2["<b>Layer 2: Behavioral Regimes</b><br/>Operational modes under contradiction stress"]
+    L2 --> L3["<b>Layer 3: Representation Diagnostics</b><br/>Diagnostic probing of internal representations"]
+    L3 --> L4["<b>Layer 4: Output Failure Taxonomy</b><br/>Classification of invariant deformations at output"]
+    L4 --> L5["<b>Layer 5: Bounded Structural Repair</b><br/>Class-aware detection and anchor reconstruction"]
+    L5 --> DEC{"<b>Qualification Decision</b><br/>(Deterministic Gate)"}
+
+    DEC -->|"Invariants intact"| SC["STRUCTURALLY CLEAR"]
+    DEC -->|"Anchor restored"| VR["VERIFY_REPAIRED"]
+    DEC -->|"Unresolvable collision"| RD["REDESIGN"]
+    DEC -->|"Critical invariant breach"| RJ["REJECT"]
+
+    L3 -.->|"validity control"| M5["Module 5.0<br/>(external validity controller)"]
+
+    classDef lay fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef gate fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef ok fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
+    classDef warn fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
+    classDef err fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#b71c1c;
+    classDef ext fill:#ede7f6,stroke:#512da8,stroke-width:1px,color:#311b92;
+
+    class L1,L2,L3,L4,L5 lay;
+    class DEC gate;
+    class SC ok;
+    class VR gate;
+    class RD warn;
+    class RJ err;
+    class M5 ext;
+```
+
+Functional role of the pipeline layers:
+
+1. **Layer 1 (Structural ordering):** establishes how training data organization and contradiction placement control model behavior in low-data regimes;
+2. **Layer 2 (Behavioral regimes):** defines tunable operational modes under contradiction stress;
+3. **Layer 3 (Representation diagnostics):** conducts diagnostic probing of internal representation layers. The external validity controller (*Module 5.0*) explicitly models the structural bottleneck between representation and output domains;
+4. **Layer 4 (Output failure taxonomy):** formalizes the classification of structural deformations at the generation boundary (sign inversion, numeric drift, unit omission);
+5. **Layer 5 (Bounded structural repair):** provides class-aware detection and deterministic reconstruction of corrupted anchors, issuing a typed qualification verdict.
+
+The system does not rely on subjective quality evaluations ("does the phrasing read well?"). Its ultimate output is not an unverified text revision, but an operational qualification decision: admission (`STRUCTURALLY CLEAR`), conditional admission following bounded repair (`VERIFY_REPAIRED`), reformulation requirement (`REDESIGN`), or outright rejection (`REJECT`).
 
 ## 11. Transparent Raw Knowledge Ingestion: Overcoming the Barrier of Distrust and Interactive Visualization
 
@@ -897,6 +974,8 @@ The boundaries of this paradigm are clearly delineated. Tokenizer behavior varie
 31. <a id="src-31"></a>Sewon Min, Kalpesh Krishna, Xinxi Lyu, Mike Lewis, et al. [*FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation*](https://aclanthology.org/2023.emnlp-main.741/). *Proceedings of EMNLP 2023*.
 32. <a id="src-32"></a>Tianyu Gao, Howard Yen, Jiatong Yu, Danqi Chen. [*Enabling Large Language Models to Generate Text with Citations*](https://aclanthology.org/2023.emnlp-main.398/). *Proceedings of EMNLP 2023*.
 33. <a id="src-33"></a>B. Efron. [*Bootstrap Methods: Another Look at the Jackknife*](https://doi.org/10.1214/aos/1176344552). *The Annals of Statistics*, 7(1), 1–26, 1979.
+34. <a id="src-34"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
+35. <a id="src-35"></a>Yurii Kuzmenko, Olena Trofimova. [*TRIZ-Aware Regularization for Invariant-Preserving Neural Machine Translation in Metrological and Scientific Domains (v1.0)*](https://doi.org/10.5281/zenodo.17430949). Zenodo, 2025.
 
 ---
 

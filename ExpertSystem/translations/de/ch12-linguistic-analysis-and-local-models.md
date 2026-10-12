@@ -356,6 +356,35 @@ Für typische Parameter $n_l=32$, $L=4096$, $n_{kv}=8$, $d_h=128$ und $b=2$ betr
 
 Der Faktor 2 erfasst Keys und Values getrennt. Kwon et al. zeigten, dass der Key-Value-Cache den limitierenden Faktor beim Durchsatz von Large Language Models darstellt, und führten mit vLLM eine seitenbasierte Speicherverwaltung (*PagedAttention*) ein [[18]](#src-18).
 
+### 5.4. Strukturorientierte Tokenisierung und Bewahrung metrologischer Invarianten (SIF)
+
+Bei der Verarbeitung hochspezialisierter ingenieurtechnischer und metrologischer Texte erzeugen klassische Subwort-Tokenisierer (Byte-Pair Encoding, WordPiece) ein spezifisches Fehlermuster: die willkürliche Fragmentierung physikalischer Formeln, Konstanten und Einheiten in isolierte Subwort-Tokens. Dies führt zum Verlust der strukturellen Integrität mathematischer Ausdrücke und zu Verschiebungen numerischer Grenzwerte.
+
+Im Rahmen des von Yu. Kuzmenko und O. Trofimova entwickelten Structural Invariant Framework (SIF v1.0) [[34]](#src-34) wird der Invariantenschutz durch die Kombination aus vorgelagerter struktureller Maskierung (*Placeholder Engineering*) und einem persistenten Anker-Register (*Anchor Registry*) gewährleistet. Sei $T$ der Dokumententext mit einer Menge identifizierter struktureller Anker $\mathcal{A} = \{a_1, a_2, \dots, a_k\}$, wobei jedes Element $a_i$ eine unteilbare physikalische Entität darstellt (eine Formel, numerische Konstante oder Toleranzgrenze). Der strukturorientierte Tokenisierer wendet eine deterministische bijektive Transformation an:
+
+```math
+\mathcal{P}(T) = \bigl(T \setminus \mathcal{A}\bigr) \cup \Pi(\mathcal{A}), \quad \text{wobei } \Pi(a_i) = \langle\mathtt{ANCHOR}_{i}\rangle.
+```
+
+Bestandteile und Parameter der Formel:
+
+- $T$ ist der rohe Eingabetext einer technischen Spezifikation, eines Standards oder einer Kalibriervorschrift;
+- $\mathcal{A}$ ist die Menge der identifizierten deterministischen Invarianten (Formeln wie $E = mc^2$, numerische Intervalle $`\pm 0{,}05\,\mathrm{mm}`$, zusammengesetzte SI-Einheiten $\mathrm{kg\cdot m^2/s^2}$);
+- $\Pi(a_i)$ ist ein Isolationsoperator, der das zusammengesetzte Konstrukt durch ein unteilbares Platzhalter-Token $`\langle\mathtt{ANCHOR}_{i}\rangle`$ substituiert;
+- $\mathcal{P}(T)$ ist der normalisierte Text, in dem die Fertilität der substituierten Entitäten strikt normalisiert ist:
+
+```math
+\mathrm{Fertility}(\Pi(a_i)) = 1{,}00 \quad \text{gegenüber} \quad \mathrm{Fertility}(a_i) \ge 3{,}50.
+```
+
+Nach der Verarbeitung durch das lokale Sprachmodell rekonstruiert die inverse Abbildung $\mathcal{P}^{-1}$ die ursprünglichen Entitäten aus dem Anker-Register und führt eine kryptographische Prüfung der Bytegattung durch:
+
+```math
+\mathcal{P}^{-1}(\hat{T}) \implies \forall i \in \{1, \dots, k\}: \mathrm{SHA256}(\hat{a}_i) = \mathrm{SHA256}(a_i).
+```
+
+Stimmt der Hash des rekonstruierten Ankers $`\mathrm{SHA256}(\hat{a}_i)`$ nicht mit dem kanonischen Hash der Primärquelle überein, weist das Qualifikationsgateway die Modellausgabe unmittelbar zurück und verhindert das Eindringen deformierter Konstanten in die Quellenzuordnungskarten $`R_{N\leftarrow T_E}`$.
+
 ## 6. Semantische Ähnlichkeit versus logische Folgerung: Grenzen der Vektorsuche
 
 In naiven RAG-Architekturen und Suchsystemen wird die semantische Ähnlichkeit kontinuierlicher Vektoreinbettungen fälschlicherweise mit logischer Wahrheit oder Folgerichtigkeit gleichgesetzt. Für sicherheitskritische Expertensysteme (ISO 26262 ASIL D, IEC 61508 SIL 3/4) birgt die Kosinus-Distanz von Vektoren jedoch die unmittelbare Gefahr eines katastrophalen Systemversagens: Zwei ingenieurtechnisch diametral entgegengesetzte Normen – beispielsweise *„Die Steuerung muss das Notfall-Schütz bei Verlust des Taktsignals sofort schließen“* und *„Der Steuerung ist es strengstens untersagt, das Notfall-Schütz bei Verlust des Taktsignals zu schließen“* – weisen in typischen Einbettungsräumen eine Kosinus-Ähnlichkeit von $\approx 0{,}94$ bis $0{,}97$ auf, bedingt durch den identischen lexikalischen Kontext. Interpretiert die Inferenzmaschine diese Vektorähnlichkeit als Nachweis der Anwendbarkeit, führt das System eine unzulässige und potenziell fatale Notfallaktion aus.
@@ -620,6 +649,54 @@ flowchart LR
     class DEP pass;
     class DIAG err;
 ```
+
+### 10.1. Schichtenbasierte Diagnose-Pipeline zur Invariantenverifikation (SIF v1.0)
+
+Klassische Evaluationsmetriken für Sprachmodelle (BLEU, ROUGE, BERTScore) erfassen primär lexikalische Oberflächenähnlichkeiten oder statistische Sprachglätte, versagen jedoch bei der Erkennung von Verfälschungen domänenspezifischer physikalischer und logischer Abhängigkeiten. Im von Yu. Kuzmenko und O. Trofimova begründeten Structural Invariant Framework (SIF v1.0) [[34]](#src-34) wird die Verifikation der Sprachpipeline als Kette aufeinander aufbauender Diagnoseschichten modelliert, wobei jede Ebene durch die Unzulänglichkeiten der vorherigen motiviert ist:
+
+```mermaid
+flowchart TD
+    accTitle: Fünfstufige Diagnose-Pipeline SIF v1.0
+    accDescr: Architektur zur Invariantenverifikation von der Datenordnung bis zur beschränkten Reparatur und Qualifikationsentscheidung.
+
+    L1["<b>Layer 1: Structural Ordering</b><br/>Datenordnung und Verhaltensinduktion"] --> L2["<b>Layer 2: Behavioral Regimes</b><br/>Betriebsmodi unter Widerspruchsstress"]
+    L2 --> L3["<b>Layer 3: Representation Diagnostics</b><br/>Diagnostische Sondierung interner Repräsentationen"]
+    L3 --> L4["<b>Layer 4: Output Failure Taxonomy</b><br/>Klassifikation von Invariantendeformationen am Ausgang"]
+    L4 --> L5["<b>Layer 5: Bounded Structural Repair</b><br/>Klassenbezogene Erkennung und Anker-Rekonstruktion"]
+    L5 --> DEC{"<b>Qualifikationsentscheidung</b><br/>(Deterministisches Gateway)"}
+
+    DEC -->|"Invarianten intakt"| SC["STRUCTURALLY CLEAR"]
+    DEC -->|"Anker wiederhergestellt"| VR["VERIFY_REPAIRED"]
+    DEC -->|"Unauflösbare Kollision"| RD["REDESIGN"]
+    DEC -->|"Kritische Verletzung"| RJ["REJECT"]
+
+    L3 -.->|"Validitätskontrolle"| M5["Module 5.0<br/>(externer Validitätscontroller)"]
+
+    classDef lay fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef gate fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef ok fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
+    classDef warn fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
+    classDef err fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#b71c1c;
+    classDef ext fill:#ede7f6,stroke:#512da8,stroke-width:1px,color:#311b92;
+
+    class L1,L2,L3,L4,L5 lay;
+    class DEC gate;
+    class SC ok;
+    class VR gate;
+    class RD warn;
+    class RJ err;
+    class M5 ext;
+```
+
+Funktionale Zuordnung der Diagnose-Schichten:
+
+1. **Layer 1 (Structural ordering):** analysiert, wie die strukturierte Anordnung von Trainingsdaten und die Platzierung von Widersprüchen das Modellverhalten unter extremer Datenknappheit (*Low-Data Regime*) steuern;
+2. **Layer 2 (Behavioral regimes):** definiert justierbare Betriebsmodi unter dem Stress technischer und logischer Widersprüche;
+3. **Layer 3 (Representation diagnostics):** führt diagnostische Sondierungen im latenten Repräsentationsraum durch. Der externe Validitätscontroller (*Module 5.0*) modelliert explizit den strukturellen Engpass (*Structural Bottleneck*) zwischen Repräsentations- und Ausgabedomäne;
+4. **Layer 4 (Output failure taxonomy):** formalisiert die Klassifikation struktureller Fehlermuster auf Ausgabenebene (Vorzeichenwechsel, numerische Drift, Einheitenverlust);
+5. **Layer 5 (Bounded structural repair):** gewährleistet die klassenbezogene Erkennung und deterministische Rekonstruktion beschädigter Anker mit Erteilung eines typisierten Qualifikationsurteils.
+
+Das Gesamtsystem verzichtet auf subjektive Qualitätsurteile („klingt die Übersetzung flüssig?“). Das Ergebnis ist keine unüberprüfte Textrevision, sondern eine operative Qualifikationsentscheidung: Zulassung (`STRUCTURALLY CLEAR`), Vorbehaltszulassung nach erfolgreicher Reparatur (`VERIFY_REPAIRED`), Umformulierungsaufforderung (`REDESIGN`) oder strikte Ablehnung (`REJECT`).
 
 ## 11. Transparenter Rohdaten-Ingest: Überwindung der Misstrauensbarriere und interaktive Visualisierung
 
@@ -898,6 +975,8 @@ Auch die Grenzen dieses Ansatzes wurden klar umrissen. Die Tokenisierung variier
 31. <a id="src-31"></a>Sewon Min, Kalpesh Krishna, Xinxi Lyu, Mike Lewis et al. [*FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation*](https://aclanthology.org/2023.emnlp-main.741/). *Proceedings of EMNLP 2023*.
 32. <a id="src-32"></a>Tianyu Gao, Howard Yen, Jiatong Yu, Danqi Chen. [*Enabling Large Language Models to Generate Text with Citations*](https://aclanthology.org/2023.emnlp-main.398/). *Proceedings of EMNLP 2023*.
 33. <a id="src-33"></a>B. Efron. [*Bootstrap Methods: Another Look at the Jackknife*](https://doi.org/10.1214/aos/1176344552). *The Annals of Statistics*, 7(1), 1–26, 1979.
+34. <a id="src-34"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
+35. <a id="src-35"></a>Yurii Kuzmenko, Olena Trofimova. [*TRIZ-Aware Regularization for Invariant-Preserving Neural Machine Translation in Metrological and Scientific Domains (v1.0)*](https://doi.org/10.5281/zenodo.17430949). Zenodo, 2025.
 
 ---
 

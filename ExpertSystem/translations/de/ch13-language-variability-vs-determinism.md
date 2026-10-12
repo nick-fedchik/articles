@@ -228,6 +228,17 @@ Die Schwächen eines rein vektoriellen Ansatzes in Ingenieurdomänen manifestier
 
 **Ergebnis des Abschnitts.** Vektorähnlichkeit eignet sich zur Kandidatenfilterung, taugt jedoch nicht als Begründung für Tatsachenbehauptungen. Erforderlich ist ein Mechanismus, der Formulierungen auf eine eindeutige logische Form zurückführt und Antworten deterministisch über der Wissensbasis berechnet. Der folgende Abschnitt stellt diese Architektur vor.
 
+### 2.1. Sprachliche Flüssigkeit als Maskierungsfaktor für Invariantendeformationen
+
+In sicherheitskritischen ingenieurtechnischen und normativen Anwendungen ist die gefährlichste Fehlerklasse nicht die offensichtlich absurde Halluzination – welche durch triviale Heuristiken abgefangen werden kann –, sondern eine semantische Verfälschung, die sich hinter einer makellosen sprachlichen Oberfläche verbirgt.
+
+Wie die Forscher des Structural Invariant Framework (SIF v1.0) Olena Trofimova und Yurii Kuzmenko darlegen [[30]](#src-30), stellt sprachliche Flüssigkeit (*Fluency*) für sich genommen keinen Defekt dar; in statistischen generativen Modellen fungiert sie jedoch als trügerischer **Maskierungsfaktor** (*Masking Factor*). Ein äußerlich natürlicher, grammatikalisch einwandfreier Text kann die schleichende Zerstörung kontrollierter Fachterminologie, physikalischer Maßeinheiten, Konstanten oder deontischer Modalitäten verdecken. Ein klassisches Beispiel aus der Metrologie ist die Übersetzung des Fachbegriffs *„guard band“* (Sicherheitsband / Toleranzgrenzband) in den oberflächlich plausiblen, jedoch technisch absurden Ausdruck *„Gruppe von Wachen“*. Der Satz liest sich flüssig, Standardmetriken (BLEU, chrF) melden keinerlei Anomalie, doch die metrologische Invariante ist zerstört, ohne dass dem Ingenieur ein Warnsignal über die semantische Verschiebung vorliegt.
+
+Daraus leitet sich ein fundamentales Prinzip beweisgestützter Sprachverarbeitung ab:
+
+> **Invariante der strukturellen Qualifikation (Structural Qualification Invariant):**  
+> Ein beweisgestütztes Expertensystem darf eine generierte Antwort oder Übersetzung keinesfalls auf Basis von Plausibilität, Modellkonfidenz oder sprachlicher Flüssigkeit akzeptieren. Die Zulässigkeit eines Ergebnisses bemisst sich ausschließlich an der nachweisbaren Erhaltung der strukturellen Invarianten gegenüber der verifizierten Primärquelle.
+
 ## 3. Architektur der Pipeline zur semantischen Fragekompilierung
 
 Die Fragekompilierung bezeichnet in diesem Kapitel die Transformation einer beliebigen natürlichsprachlichen Formulierung in ein kanonisches logisches Prädikat über der Wissensbasis. Analog zu einem Compiler für Programmiersprachen durchläuft die Pipeline mehrere Phasen: syntaktisches Parsing, Symbolauflösung, Konstruktion einer Zwischenrepräsentation sowie statische Typprüfung. Das Resultat der Kompilierung – die semantische Invariante – ist unabhängig von der syntaktischen Einkleidung: Drei unterschiedliche Formulierungen zu UDP müssen in dasselbe Prädikat münden. Das folgende Diagramm zeigt die vier Kernschritte.
@@ -660,6 +671,14 @@ Betrachten wir eine verkürzte, unvollständige Frage: „Was ist die minimale H
 
 Der Arbeitsspeicher puffert ausschließlich den situativen Kontext des Dialogs und dient niemals als eigenständige Tatsachenquelle. Ein aus dem Speicher ergänztes Argument durchläuft dieselben Prüfungen wie ein direkt aus der Frage extrahiertes Attribut; die Antwort referenziert stets das normative Primärdokument und niemals die vorherige Benutzereingabe.
 
+Diese Aufgabenteilung realisiert das übergeordnete neuro-symbolische Demarkationsprinzip, das im Rahmen von SIF v1.0 [[30]](#src-30) formuliert ist als:
+
+```math
+\text{«Proposal vs. Qualification: Heuristic/LLM proposes, Symbolic Engine qualifies»}.
+```
+
+Das probabilistische Modell bzw. der heuristische Vorschlagsgenerator ist strikt auf Relevanz (*Relevance*) und Hypothesengenerierung beschränkt, während der deterministische symbolische Kern autonom und exklusiv die Zulassungskompetenz (*Eligibility*) ausübt. Dies verhindert numerische Drift und garantiert vollständige epistemische Nachvollziehbarkeit.
+
 ## 8. Dialog Pro et Contra
 
 > **Epistemische Präambel und akademischer Disclaimer:**  
@@ -818,6 +837,7 @@ Das folgende Kapitel überträgt diesen Ansatz auf die Gegenseite des Systems: n
 27. <a id="src-27"></a>GLiNER-Mitwirkende. [*Architectures and Usage*](https://github.com/urchade/GLiNER). Offizielles Repository; Funktionsumfang abhängig von Architektur und Modellgewichten.
 28. <a id="src-28"></a>Urchade Zaratiana, Gil Pasternak, Oliver Boyd, George Hurn-Maloney, Ash Lewis. [*GLiNER2: An Efficient Multi-Task Information Extraction System with Schema-Driven Interface*](https://arxiv.org/abs/2507.18546). Preprint, 2025.
 29. <a id="src-29"></a>Pydantic-Mitwirkende. [*Strict Mode*](https://pydantic.dev/docs/validation/latest/concepts/strict_mode/). Offizielle Dokumentation zur Typvalidierung und Konvertierungsbeschränkungen.
+30. <a id="src-30"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
 
 ---
 
