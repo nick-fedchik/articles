@@ -444,38 +444,38 @@ This taxonomy classifies defects by their engineering consequences: an ambiguous
 
 Automated auditing produces candidate requirements for formalization alongside actionable defect reports. However, multi-action clauses, omitted branches, or open-ended timelines represent review signals rather than universal defects: a composite sentence may describe an indivisible atomic transaction, or a boundary condition may intentionally remain unconstrained. Baseline readiness requires domain expert approval, rather than mere absence of detected smells.
 
-### 4.1. Operational Qualification Gate for Invariants (SIF Operational Gate)
+### 4.1. Requirements Qualification Gate Based on External Admissibility Criteria
 
-When translating normative requirements, the linguistic pipeline cannot rely on soft probabilistic confidence scores ("model confidence 87%"). In safety-critical contexts (ISO 26262 ASIL D, DO-178C), verification outcomes must be deterministic and typed. Mirroring the qualification layer architecture of the SIF framework (Module 4.0 [[20]](#src-20)), the requirements audit pipeline returns one of four discrete operational verdicts:
+When translating normative requirements, the linguistic pipeline cannot rely on soft probabilistic confidence scores ("model confidence 87%"). In safety-critical systems (ISO 26262 ASIL D, DO-178C), verification outcomes must be deterministic and typed. In the research program of the Structural Invariant Framework (SIF Contradiction-Resolution Architecture [[20]](#src-20)), the fundamental principle of decoupling candidate generation from structural qualification against external admission rules was empirically demonstrated. By analogy with this principle, the proposed expert system architecture introduces its own normative requirements qualification gate, tailored for verifying engineering templates (EARS), numerical tolerances, LTL temporal bounds, and evidentiary compilation into SMT-LIB. The requirements audit pipeline emits one of four discrete operational verdicts:
 
 ```mermaid
 flowchart TD
     accTitle: Four-Stage Requirements Qualification Gate
-    accDescr: Gate decision protocol: STRUCTURALLY CLEAR, VERIFY_REPAIRED, REDESIGN, REJECT.
+    accDescr: Gate decision protocol: REQUIREMENT_ADMITTED, VERIFY_REPAIRED, REVISION_REQUESTED, FAIL_CLOSED_REJECT.
 
-    REQ["Candidate Requirement<br/>(from NLP pipeline)"] --> GATE{"Diagnostic Invariant<br/>Qualification Gate"}
-    GATE -->|"Invariants preserved,<br/>tolerances bound"| SC["STRUCTURALLY CLEAR<br/>(admitted to SMT / KB)"]
+    REQ["Candidate Requirement<br/>(from NLP pipeline)"] --> GATE{"Normative Requirements<br/>Qualification Gate"}
+    GATE -->|"Invariants preserved,<br/>tolerances bound"| RA["REQUIREMENT_ADMITTED<br/>(admitted to SMT / KB)"]
     GATE -->|"Admissible shift resolved,<br/>anchors reconstructed"| VR["VERIFY_REPAIRED<br/>(requires engineer confirmation)"]
-    GATE -->|"Semantic conflict,<br/>unresolvable ambiguity"| RD["REDESIGN<br/>(reformulation request)"]
-    GATE -->|"Toxic descriptors,<br/>prohibition inversion (MUST NOT)"| RJ["REJECT<br/>(blocked, Fail-Closed)"]
+    GATE -->|"Semantic conflict,<br/>unresolvable collision"| RR["REVISION_REQUESTED<br/>(reformulation request)"]
+    GATE -->|"Toxic descriptors,<br/>prohibition inversion (MUST NOT)"| FR["FAIL_CLOSED_REJECT<br/>(blocked, Fail-Closed)"]
 
     classDef ok fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
     classDef check fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
     classDef warn fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
     classDef err fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#b71c1c;
 
-    class SC ok;
+    class RA ok;
     class VR check;
-    class RD warn;
-    class RJ err;
+    class RR warn;
+    class FR err;
 ```
 
 Operational meaning of the qualification states:
 
-1. **`STRUCTURALLY CLEAR`:** The syntactic structure fully satisfies EARS templates, the deontic modality matches source conventions, and all numerical tolerances and physical units are bound to registered anchors. The requirement is admitted to SMT-LIB or LTL compilation without caveats.
-2. **`VERIFY_REPAIRED`:** Non-critical defects (e.g., minor word-order anomalies, passive voice with an unambiguous contextual subject, or quasi-modality) have been deterministically reconstructed during normalization. Requires sign-off by the lead reviewer.
-3. **`REDESIGN`:** Logical contradictions, composite multi-action clauses, or omitted alternative branches have been detected. The author receives a structured diagnostic card recommending clause decomposition or hysteresis specification.
-4. **`REJECT`:** Vague subjective descriptors, unconstrained safety parameters, or risk of modal inversion (`MUST NOT`) are present. The Fail-Closed invariant triggers: the system unconditionally blocks rule admission into the knowledge base.
+1. **`REQUIREMENT_ADMITTED`:** The syntactic structure fully satisfies EARS templates, the deontic modality matches primary source conventions, and all numerical tolerances and physical units are bound to registered constants and configuration ranges. The requirement is admitted to SMT-LIB or LTL compilation without additional caveats.
+2. **`VERIFY_REPAIRED`:** Non-critical defects (e.g., minor word-order anomalies, passive voice with an unambiguous contextual subject, or quasi-modality) have been deterministically reconstructed during normalization. This status requires sign-off by an authorized reviewing engineer.
+3. **`REVISION_REQUESTED`:** Logical contradictions, composite multi-action clauses, or omitted alternative branches have been detected. The author receives a structured diagnostic card recommending clause decomposition or hysteresis specification.
+4. **`FAIL_CLOSED_REJECT`:** Vague subjective descriptors, unconstrained safety parameters, or risk of modal inversion (`MUST NOT`) are present. The Fail-Closed invariant triggers: the system unconditionally blocks rule admission into the knowledge base.
 
 ## 5. Software Implementation: Deterministic Analysis Pipeline in Go
 
@@ -999,7 +999,7 @@ Deterministic detection and formalization of normative requirements establishes 
 17. <a id="src-17"></a>cvc5 Contributors. [*cvc5 Documentation*](https://cvc5.github.io/docs/latest/). Solver documentation and supported logics.
 18. <a id="src-18"></a>G. Gerganov et al. [*GBNF (GGML BNF) Grammar Specification and Constrained Sampling*](https://github.com/ggerganov/llama.cpp/blob/master/grammars/README.md). llama.cpp repository, 2023.
 19. <a id="src-19"></a>B. T. Willard, R. Louf. [*Efficient Guided Generation for Large Language Models*](https://arxiv.org/abs/2307.09702). arXiv:2307.09702, 2023.
-20. <a id="src-20"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
+20. <a id="src-20"></a>Yurii Kuzmenko, Olena Trofimova. [*SIF as a Contradiction-Resolution Architecture*](https://doi.org/10.5281/zenodo.21976262). Zenodo, 2026.
 
 ---
 

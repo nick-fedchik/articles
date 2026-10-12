@@ -671,13 +671,15 @@ Betrachten wir eine verkürzte, unvollständige Frage: „Was ist die minimale H
 
 Der Arbeitsspeicher puffert ausschließlich den situativen Kontext des Dialogs und dient niemals als eigenständige Tatsachenquelle. Ein aus dem Speicher ergänztes Argument durchläuft dieselben Prüfungen wie ein direkt aus der Frage extrahiertes Attribut; die Antwort referenziert stets das normative Primärdokument und niemals die vorherige Benutzereingabe.
 
-Diese Aufgabenteilung realisiert das übergeordnete neuro-symbolische Demarkationsprinzip, das im Rahmen von SIF v1.0 [[30]](#src-30) formuliert ist als:
+Diese Aufgabenteilung realisiert das übergeordnete neuro-symbolische Demarkationsprinzip, das im Rahmen von SIF 1.0 [[30]](#src-30) formuliert ist als:
 
 ```math
 \text{«Proposal vs. Qualification: Heuristic/LLM proposes, Symbolic Engine qualifies»}.
 ```
 
 Das probabilistische Modell bzw. der heuristische Vorschlagsgenerator ist strikt auf Relevanz (*Relevance*) und Hypothesengenerierung beschränkt, während der deterministische symbolische Kern autonom und exklusiv die Zulassungskompetenz (*Eligibility*) ausübt. Dies verhindert numerische Drift und garantiert vollständige epistemische Nachvollziehbarkeit.
+
+Gleichzeitig berücksichtigt das Evidenz-Engineering eine zentrale epistemische Grenze: Die korrekte Ausführung deterministischer Qualifikationsregeln garantiert für sich genommen noch nicht die inhaltliche Richtigkeit oder Vollständigkeit der zugrundeliegenden Spezifikation. Das symbolische System beweist die Widerspruchsfreiheit relativ zu vorgegebenen Regeln, erzeugt jedoch keine neuen Axiome; daher erfordert dieser Prozess eine kontinuierliche Quellengovernance, Aktualitätsaudits der Primärdokumente und eine lückenlose Abhängigkeitskontrolle.
 
 ## 8. Dialog Pro et Contra
 
@@ -837,7 +839,7 @@ Das folgende Kapitel überträgt diesen Ansatz auf die Gegenseite des Systems: n
 27. <a id="src-27"></a>GLiNER-Mitwirkende. [*Architectures and Usage*](https://github.com/urchade/GLiNER). Offizielles Repository; Funktionsumfang abhängig von Architektur und Modellgewichten.
 28. <a id="src-28"></a>Urchade Zaratiana, Gil Pasternak, Oliver Boyd, George Hurn-Maloney, Ash Lewis. [*GLiNER2: An Efficient Multi-Task Information Extraction System with Schema-Driven Interface*](https://arxiv.org/abs/2507.18546). Preprint, 2025.
 29. <a id="src-29"></a>Pydantic-Mitwirkende. [*Strict Mode*](https://pydantic.dev/docs/validation/latest/concepts/strict_mode/). Offizielle Dokumentation zur Typvalidierung und Konvertierungsbeschränkungen.
-30. <a id="src-30"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
+30. <a id="src-30"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework (SIF 1.0): A Registry-Based Framework for Empirically Verified Terminology Preservation in Neural EN→UA Translation of Metrological Standards*](https://doi.org/10.5281/zenodo.20509698). Zenodo, 2026.
 
 ---
 

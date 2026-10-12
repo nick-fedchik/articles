@@ -356,34 +356,34 @@ For representative parameters $n_l=32$, $L=4096$, $n_{kv}=8$, $d_h=128$, and $b=
 
 The factor of 2 isolates key and value projections. Kwon et al. demonstrated that KV cache memory management represents the primary throughput bottleneck in large language model serving, resolving it via paged virtual memory management in the vLLM architecture [[18]](#src-18).
 
-### 5.4. Structure-Aware Tokenization and Metrological Invariant Preservation (SIF)
+### 5.4. Registry-Based Terminology Control (SIF 1.0) and Bijective Isolation of Constants
 
-When processing specialized engineering and metrological texts, conventional subword tokenizers (Byte-Pair Encoding, WordPiece) introduce a severe failure mode: the arbitrary fragmentation of physical formulas, numerical constants, and units into isolated subword tokens. This fragmentation destroys the structural integrity of mathematical expressions and shifts numerical bounds.
+Early research on UMT–NMT and TRIZ-Aware Loss (Kuzmenko, Trofimova, 2025) investigated methods for preserving structurally significant elements of technical text during neural machine translation, particularly through specialized handling of tokens, formulas, and constants. The subsequent evolution of this research program led to the **Structural Invariant Framework (SIF 1.0)** — an external Registry-based control mechanism for canonical metrological terms [[34]](#src-34). Rather than attempting to optimize the generative model's training dynamics, this approach conducts verification of language model outputs against independently defined rules within the scope of an external Anchor Registry.
 
-Within the Structural Invariant Framework (SIF v1.0) developed by Yu. Kuzmenko and O. Trofimova [[34]](#src-34), invariant protection is guaranteed via a combination of upstream structural masking (*placeholder engineering*) and a persistent Anchor Registry (*Anchor Registry*). Let document text $T$ contain a set of detected structural anchors $\mathcal{A} = \{a_1, a_2, \dots, a_k\}$, where each element $a_i$ is an indivisible physical entity (a formula, numerical constant, or tolerance bound). The structure-aware tokenizer applies a deterministic bijective transformation:
+By analogy with this external control principle, to safeguard numerical parameters, physical units, and mathematical formulas in the proposed expert system, an authorial bijective text transformation scheme is executed prior to passing context to the language model:
 
 ```math
-\mathcal{P}(T) = \bigl(T \setminus \mathcal{A}\bigr) \cup \Pi(\mathcal{A}), \quad \text{where } \Pi(a_i) = \langle\mathtt{ANCHOR}_{i}\rangle.
+\mathcal{P}(T) = \big( T \setminus \bigcup_{i=1}^{k} a_i \big) \cup \bigcup_{i=1}^{k} \Pi(a_i)
 ```
 
-Formula components and parameters:
+Scheme parameters and operators:
 
-- $T$ is the raw input text of a technical specification, engineering standard, or metrological protocol;
-- $\mathcal{A}$ is the set of identified deterministic invariants (formulas such as $E = mc^2$, numerical tolerances $`\pm 0.05\,\mathrm{mm}`$, compound SI units $\mathrm{kg\cdot m^2/s^2}$);
+- $T$ is the raw input text of a technical specification, engineering standard, or metrological manual;
+- $\mathcal{A}$ is the set of identified deterministic invariants;
 - $\Pi(a_i)$ is an isolation operator substituting the compound engineering construct with an atomic placeholder token $`\langle\mathtt{ANCHOR}_{i}\rangle`$;
-- $\mathcal{P}(T)$ is the normalized text, in which the tokenizer fertility over substituted entities is strictly normalized:
+- $\mathcal{P}(T)$ is the normalized text, in which the tokenizer fertility over substituted entities is strictly near-unity:
 
 ```math
-\mathrm{Fertility}(\Pi(a_i)) = 1.00 \quad \text{versus} \quad \mathrm{Fertility}(a_i) \ge 3.50.
+\mathrm{Fertility}(\Pi(a_i)) \approx 1.00 \quad \text{versus} \quad \mathrm{Fertility}(a_i) \ge 3.50.
 ```
 
-Following inference by the local language model, the inverse mapping $\mathcal{P}^{-1}$ reconstructs the original entities from the Anchor Registry and performs cryptographic byte-level integrity verification:
+Following text generation by the language model, the inverse mapping $\mathcal{P}^{-1}$ reconstructs the original values from the constant registry and verifies byte-level integrity against the custodial hash:
 
 ```math
 \mathcal{P}^{-1}(\hat{T}) \implies \forall i \in \{1, \dots, k\}: \mathrm{SHA256}(\hat{a}_i) = \mathrm{SHA256}(a_i).
 ```
 
-If the hash of the reconstructed anchor $`\mathrm{SHA256}(\hat{a}_i)`$ fails to match the canonical primary-source hash, the qualification gate immediately rejects the model output, preventing distorted constants from penetrating the source provenance map $`R_{N\leftarrow T_E}`$.
+If the hash of the reconstructed anchor $`\mathrm{SHA256}(\hat{a}_i)`$ does not match the canonical primary-source hash, the expert system's qualification gate immediately rejects the model output, preventing distorted constants from penetrating the source provenance map $`R_{N\leftarrow T_E}`$. Thus, while SIF 1.0 provides independent control over the normative compliance of metrological terminology via an external registry, the author's bijective masking and hash-custody scheme shields hardware numerical bounds from subtoken entropy.
 
 ## 6. Semantic Similarity vs. Logical Entailment: Limits of Vector Search
 
@@ -650,9 +650,9 @@ flowchart LR
     class DIAG err;
 ```
 
-### 10.1. Layered Diagnostic Pipeline for Invariant Verification (SIF v1.0)
+### 10.1. Layered Diagnostic Pipeline as a SIF Research Progression
 
-Conventional language model evaluation metrics (BLEU, ROUGE, BERTScore) measure surface lexical similarity or statistical fluency, failing to detect corruptions of domain-specific physical and logical dependencies. In the Structural Invariant Framework (SIF v1.0) established by Yu. Kuzmenko and O. Trofimova [[34]](#src-34), language pipeline verification is structured as a sequence of linked diagnostic layers, where each subsequent tier is motivated by what the preceding tier cannot explain:
+Conventional language model evaluation metrics (BLEU, ROUGE, BERTScore) measure surface lexical similarity or statistical fluency, failing to detect corruptions of domain-specific physical and logical dependencies. In the historical research program of the Structural Invariant Framework (Kuzmenko, Trofimova, 2026 [[35]](#src-35)), analyzing model behavior under contradiction stress unfolded as a sequence of interconnected research stages (*Research Progression*), where each subsequent tier was motivated by what the preceding tier could not explain. This sequence reflects the conceptual trajectory of invariant research, rather than a mandatory algorithm executed synchronously on every inference invocation:
 
 ```mermaid
 flowchart TD
@@ -974,8 +974,8 @@ The boundaries of this paradigm are clearly delineated. Tokenizer behavior varie
 31. <a id="src-31"></a>Sewon Min, Kalpesh Krishna, Xinxi Lyu, Mike Lewis, et al. [*FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation*](https://aclanthology.org/2023.emnlp-main.741/). *Proceedings of EMNLP 2023*.
 32. <a id="src-32"></a>Tianyu Gao, Howard Yen, Jiatong Yu, Danqi Chen. [*Enabling Large Language Models to Generate Text with Citations*](https://aclanthology.org/2023.emnlp-main.398/). *Proceedings of EMNLP 2023*.
 33. <a id="src-33"></a>B. Efron. [*Bootstrap Methods: Another Look at the Jackknife*](https://doi.org/10.1214/aos/1176344552). *The Annals of Statistics*, 7(1), 1–26, 1979.
-34. <a id="src-34"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
-35. <a id="src-35"></a>Yurii Kuzmenko, Olena Trofimova. [*TRIZ-Aware Regularization for Invariant-Preserving Neural Machine Translation in Metrological and Scientific Domains (v1.0)*](https://doi.org/10.5281/zenodo.17430949). Zenodo, 2025.
+34. <a id="src-34"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework (SIF 1.0): A Registry-Based Framework for Empirically Verified Terminology Preservation in Neural EN→UA Translation of Metrological Standards*](https://doi.org/10.5281/zenodo.20509698). Zenodo, 2026.
+35. <a id="src-35"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0)*](https://doi.org/10.5281/zenodo.19332453). Zenodo, 2026.
 
 ---
 

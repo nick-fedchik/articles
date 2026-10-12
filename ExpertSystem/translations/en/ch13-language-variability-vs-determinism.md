@@ -671,13 +671,15 @@ Consider an incomplete query: "What is the minimum header length?" lacking a pro
 
 Session working memory stores conversational context and never functions as an epistemic source of authoritative claims. Injected parameters undergo identical validation against the ontology, and emitted citations ground directly in primary normative text, never in conversational dialogue logs.
 
-This division of responsibilities formalizes the overarching neuro-symbolic demarcation principle, articulated within the SIF v1.0 framework [[30]](#src-30) as:
+This division of responsibilities formalizes the overarching neuro-symbolic demarcation principle, articulated within SIF 1.0 [[30]](#src-30) as:
 
 ```math
 \text{«Proposal vs. Qualification: Heuristic/LLM proposes, Symbolic Engine qualifies»}.
 ```
 
 The probabilistic model or heuristic candidate generator is strictly confined to relevance (*Relevance*) and structural hypothesis synthesis, whereas the deterministic symbolic kernel autonomously exercises exclusive qualification authority (*Eligibility*). This architecture mathematically prevents numerical drift and guarantees full epistemic traceability.
+
+At the same time, evidence engineering recognizes a vital epistemic boundary: the correct execution of deterministic qualification rules does not in itself guarantee the correctness or completeness of the specification upon which they are grounded. The symbolic engine proves consistency relative to established rules, but cannot originate new axioms; consequently, the architecture demands continuous knowledge stewardship, source currency audits, and rigorous dependency control.
 
 ## 8. Pro et Contra Dialogue
 
@@ -842,7 +844,7 @@ The subsequent chapter applies this foundational architecture to the reverse dir
 27. <a id="src-27"></a>GLiNER Contributors. [*Architectures and Usage*](https://github.com/urchade/GLiNER). Official repository.
 28. <a id="src-28"></a>Urchade Zaratiana, Gil Pasternak, Oliver Boyd, George Hurn-Maloney, Ash Lewis. [*GLiNER2: An Efficient Multi-Task Information Extraction System with Schema-Driven Interface*](https://arxiv.org/abs/2507.18546). Preprint, 2025.
 29. <a id="src-29"></a>Pydantic Contributors. [*Strict Mode*](https://pydantic.dev/docs/validation/latest/concepts/strict_mode/). Official documentation on type validation and coercion constraints.
-30. <a id="src-30"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
+30. <a id="src-30"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework (SIF 1.0): A Registry-Based Framework for Empirically Verified Terminology Preservation in Neural EN→UA Translation of Metrological Standards*](https://doi.org/10.5281/zenodo.20509698). Zenodo, 2026.
 
 ---
 

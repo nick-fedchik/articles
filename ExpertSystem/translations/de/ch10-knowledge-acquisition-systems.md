@@ -1172,6 +1172,15 @@ Stand 3. Juni wusste das KAS noch nichts von der Korrektur und gibt Fassung A au
 
 Jede Wissensdomäne erfordert einen benannten Facheigentümer (*Knowledge Steward*). Die IT-Abteilung betreibt die Infrastruktur, doch Domänenexperten entscheiden über inhaltliche Gültigkeit, Veralterung und Freigaben. Eine Wissensbasis degradiert nicht über Nacht, sondern verliert schleichend ihre argumentative Kraft, wenn Eigentümerstrukturen fehlen.
 
+### 20.1. Quellengovernance und Erhaltung der Entscheidungsgültigkeit (SIF Governance)
+
+Im kontinuierlichen Lebenszyklus ingenieurtechnischer Wissensbasen besteht die zentrale Herausforderung nicht bloß im Protokollieren von Zeitstempeln; sie berührt eine grundlegende Fragestellung: **Bleibt eine technische Entscheidung zulässig nach Änderungen an den Quellen, Anforderungen, Belegen, Abhängigkeiten oder Zuständen, auf denen sie beruht? Und sind diese Anforderungen im System selbst adäquat repräsentiert?**
+
+Diese Problemstellung formalisiert die Forschungsarchitektur **SIF Governance (A Source-Governed Architecture for Bounded Technical Assurance)** von J. Kuzmenko und O. Trofimova [[33]](#src-33). Im Paradigma von SIF Governance wird die technische Zulässigkeit (*Eligibility*) von Entscheidungen als dynamische Eigenschaft verstanden, die an den Baum der Quellenabhängigkeiten gebunden ist:
+1. **Quellenmutation (Source Mutation):** Jede Aktualisierung oder jeder Widerruf eines Standards, jede Versionsänderung eines normativen Dokuments oder Formelkorrektur invalidiert nicht nur direkte Zitate, sondern den gesamten Baum logischer Schlüsse, die auf der modifizierten Prämisse aufbauen;
+2. **Verifikation der Anforderungsrepräsentation (Requirement Representation Verification):** Deterministische Audits überwachen, ob die im System formalisierten Regeln die ursprüngliche Absicht des Standards bei Übersetzung, Quantifizierung und Extraktion nicht verfälschen;
+3. **Beschränkte technische Absicherung (Bounded Technical Assurance):** Das System garantiert die Abgeschlossenheit von Beweisen und verhindert affirmative Urteile bei unbestätigten, veralteten oder intern widersprüchlichen Quellenstatus.
+
 ## 21. Release-, Versionierungs- und Widerrufsverfahren der Wissensbasis
 
 Wissensbestände erfordern ein strukturiertes Release-Management. Jede Änderung an einem Dokument kann Ausgaben des Expertensystems verändern. Ein Release-Paket besitzt daher ein detailliertes Changelog: hinzugefügte und widerrufene Quellen, geänderte Regeln, modifizierte Einbettungsmodelle, neu erstellte Indizes und ermittelte Qualitätsmetriken. Das Release-Manifest dokumentiert Quellensnapshots, Parser-Versionen, Redaktionsregeln, Tokenizer, Vektormodelle, Indexparameter, Zugriffspolicies und Testkorpora. Die eindeutige Release-ID wird als kryptographischer Hash der kanonischen Manifest-Serialisierung berechnet:
@@ -1477,6 +1486,7 @@ Die nachfolgenden Standards, Fachpublikationen und Richtlinien bilden den method
 30. <a id="src-30"></a>Arm. [*CMSIS-SVD: System View Description Format, Version 1.3.9*](https://arm-software.github.io/CMSIS_5/SVD/html/index.html).
 31. <a id="src-31"></a>Gunther Schadow, Clement J. McDonald. [*The Unified Code for Units of Measure (UCUM)*](https://ucum.org/ucum.html). Regenstrief Institute.
 32. <a id="src-32"></a>Marie-Catherine de Marneffe, Christopher D. Manning, Joakim Nivre, Daniel Zeman. [*Universal Dependencies*](https://doi.org/10.1162/coli_a_00402). *Computational Linguistics*, 47(2), 255–308, 2021.
+33. <a id="src-33"></a>Yurii Kuzmenko, Olena Trofimova. [*SIF Governance: A Source-Governed Architecture for Bounded Technical Assurance*](https://doi.org/10.5281/zenodo.22806936). Zenodo, 2026.
 
 ---
 

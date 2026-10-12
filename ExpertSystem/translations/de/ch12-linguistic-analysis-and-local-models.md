@@ -356,34 +356,34 @@ Für typische Parameter $n_l=32$, $L=4096$, $n_{kv}=8$, $d_h=128$ und $b=2$ betr
 
 Der Faktor 2 erfasst Keys und Values getrennt. Kwon et al. zeigten, dass der Key-Value-Cache den limitierenden Faktor beim Durchsatz von Large Language Models darstellt, und führten mit vLLM eine seitenbasierte Speicherverwaltung (*PagedAttention*) ein [[18]](#src-18).
 
-### 5.4. Strukturorientierte Tokenisierung und Bewahrung metrologischer Invarianten (SIF)
+### 5.4. Registerbasierte Terminkontrolle (SIF 1.0) und bijektive Isolation von Konstanten
 
-Bei der Verarbeitung hochspezialisierter ingenieurtechnischer und metrologischer Texte erzeugen klassische Subwort-Tokenisierer (Byte-Pair Encoding, WordPiece) ein spezifisches Fehlermuster: die willkürliche Fragmentierung physikalischer Formeln, Konstanten und Einheiten in isolierte Subwort-Tokens. Dies führt zum Verlust der strukturellen Integrität mathematischer Ausdrücke und zu Verschiebungen numerischer Grenzwerte.
+Frühe Forschungen zu UMT–NMT und TRIZ-Aware Loss (Kuzmenko, Trofimova, 2025) untersuchten Methoden zur Bewahrung strukturell relevanter Elemente technischer Texte während der neuronalen maschinellen Übersetzung, insbesondere durch die spezialisierte Behandlung von Tokens, Formeln und Konstanten. Die nachfolgende Entwicklung dieses Forschungsprogramms führte zum **Structural Invariant Framework (SIF 1.0)** — einem externen Registry-Kontrollmechanismus für kanonische metrologische Termini [[34]](#src-34). Anstatt zu versuchen, die Trainingsdynamik des generativen Modells zu optimieren, verifiziert dieser Ansatz die Ausgaben des Sprachmodells anhand unabhängig definierter Regeln innerhalb des Umfangs eines externen Registers (Anchor Registry).
 
-Im Rahmen des von Yu. Kuzmenko und O. Trofimova entwickelten Structural Invariant Framework (SIF v1.0) [[34]](#src-34) wird der Invariantenschutz durch die Kombination aus vorgelagerter struktureller Maskierung (*Placeholder Engineering*) und einem persistenten Anker-Register (*Anchor Registry*) gewährleistet. Sei $T$ der Dokumententext mit einer Menge identifizierter struktureller Anker $\mathcal{A} = \{a_1, a_2, \dots, a_k\}$, wobei jedes Element $a_i$ eine unteilbare physikalische Entität darstellt (eine Formel, numerische Konstante oder Toleranzgrenze). Der strukturorientierte Tokenisierer wendet eine deterministische bijektive Transformation an:
+In Analogie zu diesem externen Kontrollprinzip wird zum Schutz numerischer Parameter, physikalischer Einheiten und mathematischer Formeln im vorgeschlagenen Expertensystem ein autoreigenes Schema der bijektiven Texttransformation implementiert, bevor der Kontext an das Sprachmodell übergeben wird:
 
 ```math
-\mathcal{P}(T) = \bigl(T \setminus \mathcal{A}\bigr) \cup \Pi(\mathcal{A}), \quad \text{wobei } \Pi(a_i) = \langle\mathtt{ANCHOR}_{i}\rangle.
+\mathcal{P}(T) = \big( T \setminus \bigcup_{i=1}^{k} a_i \big) \cup \bigcup_{i=1}^{k} \Pi(a_i)
 ```
 
-Bestandteile und Parameter der Formel:
+Parameter und Operatoren des Schemas:
 
 - $T$ ist der rohe Eingabetext einer technischen Spezifikation, eines Standards oder einer Kalibriervorschrift;
-- $\mathcal{A}$ ist die Menge der identifizierten deterministischen Invarianten (Formeln wie $E = mc^2$, numerische Intervalle $`\pm 0{,}05\,\mathrm{mm}`$, zusammengesetzte SI-Einheiten $\mathrm{kg\cdot m^2/s^2}$);
+- $\mathcal{A}$ ist die Menge der identifizierten deterministischen Invarianten;
 - $\Pi(a_i)$ ist ein Isolationsoperator, der das zusammengesetzte Konstrukt durch ein unteilbares Platzhalter-Token $`\langle\mathtt{ANCHOR}_{i}\rangle`$ substituiert;
-- $\mathcal{P}(T)$ ist der normalisierte Text, in dem die Fertilität der substituierten Entitäten strikt normalisiert ist:
+- $\mathcal{P}(T)$ ist der normalisierte Text, in dem die Fertilität der substituierten Entitäten nahezu eins beträgt:
 
 ```math
-\mathrm{Fertility}(\Pi(a_i)) = 1{,}00 \quad \text{gegenüber} \quad \mathrm{Fertility}(a_i) \ge 3{,}50.
+\mathrm{Fertility}(\Pi(a_i)) \approx 1{,}00 \quad \text{gegenüber} \quad \mathrm{Fertility}(a_i) \ge 3{,}50.
 ```
 
-Nach der Verarbeitung durch das lokale Sprachmodell rekonstruiert die inverse Abbildung $\mathcal{P}^{-1}$ die ursprünglichen Entitäten aus dem Anker-Register und führt eine kryptographische Prüfung der Bytegattung durch:
+Nach der Textgenerierung durch das Sprachmodell stellt die inverse Abbildung $\mathcal{P}^{-1}$ die ursprünglichen Werte aus dem Konstantenregister wieder her und verifiziert die Byte-Integrität anhand des Prüf-Hashes:
 
 ```math
 \mathcal{P}^{-1}(\hat{T}) \implies \forall i \in \{1, \dots, k\}: \mathrm{SHA256}(\hat{a}_i) = \mathrm{SHA256}(a_i).
 ```
 
-Stimmt der Hash des rekonstruierten Ankers $`\mathrm{SHA256}(\hat{a}_i)`$ nicht mit dem kanonischen Hash der Primärquelle überein, weist das Qualifikationsgateway die Modellausgabe unmittelbar zurück und verhindert das Eindringen deformierter Konstanten in die Quellenzuordnungskarten $`R_{N\leftarrow T_E}`$.
+Stimmt der Hash des wiederhergestellten Ankers $`\mathrm{SHA256}(\hat{a}_i)`$ nicht mit dem kanonischen Primärquellen-Hash überein, weist das Qualifikationsgateway des Expertensystems die Modellausgabe unverzüglich zurück und verhindert so das Eindringen deformierter Konstanten in die Quellenzuordnungskarten $`R_{N\leftarrow T_E}`$. Während SIF 1.0 somit eine unabhängige normgerechte Terminkontrolle über ein externes Register bietet, schützt das autoreigene Schema der bijektiven Maskierung und Hash-Prüfung Hardware-Zahlengrenzen vor subtokenbedingter Entropie.
 
 ## 6. Semantische Ähnlichkeit versus logische Folgerung: Grenzen der Vektorsuche
 
@@ -650,9 +650,9 @@ flowchart LR
     class DIAG err;
 ```
 
-### 10.1. Schichtenbasierte Diagnose-Pipeline zur Invariantenverifikation (SIF v1.0)
+### 10.1. Schichtenbasierte Diagnose-Pipeline als SIF-Forschungstrajektorie
 
-Klassische Evaluationsmetriken für Sprachmodelle (BLEU, ROUGE, BERTScore) erfassen primär lexikalische Oberflächenähnlichkeiten oder statistische Sprachglätte, versagen jedoch bei der Erkennung von Verfälschungen domänenspezifischer physikalischer und logischer Abhängigkeiten. Im von Yu. Kuzmenko und O. Trofimova begründeten Structural Invariant Framework (SIF v1.0) [[34]](#src-34) wird die Verifikation der Sprachpipeline als Kette aufeinander aufbauender Diagnoseschichten modelliert, wobei jede Ebene durch die Unzulänglichkeiten der vorherigen motiviert ist:
+Klassische Evaluationsmetriken für Sprachmodelle (BLEU, ROUGE, BERTScore) erfassen primär lexikalische Oberflächenähnlichkeiten oder statistische Sprachglätte, versagen jedoch bei der Erkennung von Verfälschungen domänenspezifischer physikalischer und logischer Abhängigkeiten. Im historischen Forschungsprogramm des Structural Invariant Framework (Kuzmenko, Trofimova, 2026 [[35]](#src-35)) entfaltete sich die Analyse des Modellverhaltens unter Widerspruchsstress als Abfolge miteinander verknüpfter Forschungsphasen (*Research Progression*), wobei jede nachfolgende Ebene durch die Unzulänglichkeiten der vorherigen motiviert war. Diese Sequenz spiegelt die konzeptionelle Forschungstrajektorie von Invarianten wider und stellt keinen zwingenden Algorithmus dar, der bei jedem Inferenzaufruf synchron ausgeführt werden muss:
 
 ```mermaid
 flowchart TD
@@ -975,8 +975,8 @@ Auch die Grenzen dieses Ansatzes wurden klar umrissen. Die Tokenisierung variier
 31. <a id="src-31"></a>Sewon Min, Kalpesh Krishna, Xinxi Lyu, Mike Lewis et al. [*FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation*](https://aclanthology.org/2023.emnlp-main.741/). *Proceedings of EMNLP 2023*.
 32. <a id="src-32"></a>Tianyu Gao, Howard Yen, Jiatong Yu, Danqi Chen. [*Enabling Large Language Models to Generate Text with Citations*](https://aclanthology.org/2023.emnlp-main.398/). *Proceedings of EMNLP 2023*.
 33. <a id="src-33"></a>B. Efron. [*Bootstrap Methods: Another Look at the Jackknife*](https://doi.org/10.1214/aos/1176344552). *The Annals of Statistics*, 7(1), 1–26, 1979.
-34. <a id="src-34"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
-35. <a id="src-35"></a>Yurii Kuzmenko, Olena Trofimova. [*TRIZ-Aware Regularization for Invariant-Preserving Neural Machine Translation in Metrological and Scientific Domains (v1.0)*](https://doi.org/10.5281/zenodo.17430949). Zenodo, 2025.
+34. <a id="src-34"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework (SIF 1.0): A Registry-Based Framework for Empirically Verified Terminology Preservation in Neural EN→UA Translation of Metrological Standards*](https://doi.org/10.5281/zenodo.20509698). Zenodo, 2026.
+35. <a id="src-35"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0)*](https://doi.org/10.5281/zenodo.19332453). Zenodo, 2026.
 
 ---
 

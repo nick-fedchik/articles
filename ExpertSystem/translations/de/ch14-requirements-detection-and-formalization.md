@@ -443,38 +443,38 @@ Das Diagramm klassifiziert Mängel nach ihren technischen Konsequenzen: Eine amb
 
 Das Qualitätsaudit generiert entweder einen bereinigten Kandidaten für die Formalisierung oder einen Mängelbericht an den Autor. Anzeichen mehrerer Aktionen, eines fehlenden Zweigs oder unbestimmter Fristen stellen Prüfindikatoren dar, keine universellen Fehler: Mehrere Aktionen können eine unteilbare Transaktion bilden, und unerwähntes Verhalten kann bewusst undefiniert bleiben. Die Freigabe für eine Baseline setzt fachliche Begutachtung voraus und nicht allein das Fehlen detektierter Smells.
 
-### 4.1. Operatives Qualifikationsgateway für Invarianten (SIF Operational Gate)
+### 4.1. Qualifikationsgateway für normative Anforderungen auf Basis externer Zulässigkeitskriterien
 
-Bei der Übersetzung und Formalisierung normativer Anforderungen darf sich die linguistische Pipeline nicht auf weiche probabilistische Konfidenzwerte („Klassifikatorkonfidenz 87 %“) verlassen. In sicherheitskritischen Systemen (ISO 26262 ASIL D, DO-178C) muss das Verifikationsergebnis deterministisch und typisiert sein. In Analogie zur Architektur der Qualifikationsschicht des SIF-Frameworks (Modul 4.0 [[20]](#src-20)) fällt die Audit-Pipeline für Anforderungen eines von vier diskreten operativen Verdikten:
+Bei der Übersetzung und Formalisierung normativer Anforderungen darf sich die linguistische Pipeline nicht auf weiche probabilistische Konfidenzwerte („Klassifikatorkonfidenz 87 %“) verlassen. In sicherheitskritischen Systemen (ISO 26262 ASIL D, DO-178C) muss das Verifikationsergebnis deterministisch und typisiert sein. Im Forschungsprogramm des Structural Invariant Framework (SIF Contradiction-Resolution Architecture [[20]](#src-20)) wurde das fundamentale Prinzip der Trennung von Kandidatengenerierung und struktureller Qualifikation anhand externer Zulassungsregeln empirisch nachgewiesen. In Analogie zu diesem Prinzip führt die vorgeschlagene Architektur des Expertensystems ein eigenes Qualifikationsgateway für normative Anforderungen ein, angepasst an die Prüfung von Ingenieurschablonen (EARS), numerischen Toleranzen, LTL-Zeitgrenzen und die beweisbare Kompilierung in SMT-LIB. Die Audit-Pipeline für Anforderungen fällt eines von vier diskreten operativen Verdikten:
 
 ```mermaid
 flowchart TD
     accTitle: Vierstufiges Qualifikationsgateway für Anforderungen
-    accDescr: Entscheidungsprotokoll des Gateways: STRUCTURALLY CLEAR, VERIFY_REPAIRED, REDESIGN, REJECT.
+    accDescr: Entscheidungsprotokoll des Gateways: REQUIREMENT_ADMITTED, VERIFY_REPAIRED, REVISION_REQUESTED, FAIL_CLOSED_REJECT.
 
-    REQ["Anforderungskandidat<br/>(aus NLP-Pipeline)"] --> GATE{"Diagnostisches Gateway<br/>zur Invariantenqualifikation"}
-    GATE -->|"Invarianten gewahrt,<br/>Toleranzen gebunden"| SC["STRUCTURALLY CLEAR<br/>(Zulassung zu SMT / KB)"]
+    REQ["Anforderungskandidat<br/>(aus NLP-Pipeline)"] --> GATE{"Qualifikationsgateway<br/>für normative Anforderungen"}
+    GATE -->|"Invarianten gewahrt,<br/>Toleranzen gebunden"| RA["REQUIREMENT_ADMITTED<br/>(Zulassung zu SMT / KB)"]
     GATE -->|"Zulässige Verschiebung behoben,<br/>Anker rekonstruiert"| VR["VERIFY_REPAIRED<br/>(erfordert Bestätigung)"]
-    GATE -->|"Semantischer Konflikt,<br/>unauflösbare Kollision"| RD["REDESIGN<br/>(Überarbeitungsanforderung)"]
-    GATE -->|"Toxische Deskriptoren,<br/>Inversion von Verboten (MUST NOT)"| RJ["REJECT<br/>(Blockierung, Fail-Closed)"]
+    GATE -->|"Semantischer Konflikt,<br/>unauflösbare Kollision"| RR["REVISION_REQUESTED<br/>(Überarbeitungsanforderung)"]
+    GATE -->|"Toxische Deskriptoren,<br/>Inversion von Verboten (MUST NOT)"| FR["FAIL_CLOSED_REJECT<br/>(Blockierung, Fail-Closed)"]
 
     classDef ok fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
     classDef check fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
     classDef warn fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
     classDef err fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#b71c1c;
 
-    class SC ok;
+    class RA ok;
     class VR check;
-    class RD warn;
-    class RJ err;
+    class RR warn;
+    class FR err;
 ```
 
 Bedeutung der operativen Qualifikationszustände:
 
-1. **`STRUCTURALLY CLEAR`:** Die syntaktische Struktur entspricht vollständig den EARS-Schablonen, die deontische Modalität stimmt mit der Konvention des Quelldokuments überein, und alle numerischen Toleranzen sowie physikalischen Einheiten sind an registrierte Anker gebunden. Die Anforderung wird ohne Vorbehalte zur Kompilierung in SMT-LIB oder LTL zugelassen.
-2. **`VERIFY_REPAIRED`:** Unkritische Mängel (z. B. geringfügige Wortstellungsanomalien, Passivkonstruktionen bei eindeutigem Kontextsubjekt oder Quasimodalität) wurden während der Normalisierung deterministisch korrigiert. Der Status erfordert die Freigabe durch den zuständigen Reviewer.
-3. **`REDESIGN`:** Es wurden logische Widersprüche, nicht-atomare Mehrfachaktionen oder fehlende Alternativzweige festgestellt. Der Autor erhält eine strukturierte Diagnosekarte mit der Aufforderung zur Aufteilung der Anforderung oder zur Definition einer Hysterese.
-4. **`REJECT`:** Vage subjektive Deskriptoren, undefinierte Toleranzen im Sicherheitskreis oder das Risiko einer Inversion von Verboten (`MUST NOT`) wurden detektiert. Es greift das Fail-Closed-Prinzip: Das System blockiert die Aufnahme der Regel in die Wissensbasis bedingungslos.
+1. **`REQUIREMENT_ADMITTED`:** Die syntaktische Struktur entspricht vollständig den EARS-Schablonen, die deontische Modalität stimmt mit der Konvention des Quelldokuments überein, und alle numerischen Toleranzen sowie physikalischen Einheiten sind an registrierte Konstanten und Konfigurationsbereiche gebunden. Die Anforderung wird ohne weitere Vorbehalte zur Kompilierung in SMT-LIB oder LTL zugelassen.
+2. **`VERIFY_REPAIRED`:** Unkritische Mängel (z. B. geringfügige Wortstellungsanomalien, Passivkonstruktionen bei eindeutigem Kontextsubjekt oder Quasimodalität) wurden während der Normalisierung deterministisch korrigiert. Der Status erfordert die Freigabe durch den zuständigen Prüfingenieur.
+3. **`REVISION_REQUESTED`:** Es wurden logische Widersprüche, nicht-atomare Mehrfachaktionen oder fehlende Alternativzweige festgestellt. Der Autor erhält eine strukturierte Diagnosekarte mit der Empfehlung zur Aufteilung der Anforderung oder zur Definition einer Hysterese.
+4. **`FAIL_CLOSED_REJECT`:** Vage subjektive Deskriptoren, undefinierte Toleranzen im Sicherheitskreis oder das Risiko einer Inversion von Verboten (`MUST NOT`) wurden detektiert. Es greift die Fail-Closed-Invariante: Das System blockiert die Aufnahme der Regel in die Wissensbasis bedingungslos.
 
 ## 5. Software-Implementierung: Eine deterministische Analyse-Pipeline in Go
 
@@ -998,7 +998,7 @@ Die deterministische Erkennung und Formalisierung normativer Anforderungen schaf
 17. <a id="src-17"></a>Mitwirkende an cvc5. [*cvc5 Documentation*](https://cvc5.github.io/docs/latest/). Dokumentation des Solvers und der unterstützten Logiken.
 18. <a id="src-18"></a>G. Gerganov et al. [*GBNF (GGML BNF) Grammar Specification and Constrained Sampling*](https://github.com/ggerganov/llama.cpp/blob/master/grammars/README.md). llama.cpp repository, 2023.
 19. <a id="src-19"></a>B. T. Willard, R. Louf. [*Efficient Guided Generation for Large Language Models*](https://arxiv.org/abs/2307.09702). arXiv:2307.09702, 2023.
-20. <a id="src-20"></a>Yurii Kuzmenko, Olena Trofimova. [*Structural Invariant Framework in Low-Data Contradiction-Aware Neural Machine Translation: Architecture and Diagnostic Pipeline (v1.0.2026)*](https://www.researchgate.net/publication/403831779_Structural_Invariant_Framework_in_Low-Data_Contradiction-Aware_Neural_Machine_Translation_Architecture_and_Diagnostic_Pipeline_v102026). ResearchGate, Preprint, 2026.
+20. <a id="src-20"></a>Yurii Kuzmenko, Olena Trofimova. [*SIF as a Contradiction-Resolution Architecture*](https://doi.org/10.5281/zenodo.21976262). Zenodo, 2026.
 
 ---
 
