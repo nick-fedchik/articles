@@ -554,12 +554,12 @@ Ustun, Spangher und Liu wiesen nach, dass das mathematisch nächstgelegene Kontr
 
 Dem Release-Autor kann vorgeschlagen werden, einen Wiederholungstest anzufordern oder ein Review der Ausnahmeerteilung zu beantragen, sofern diese Aktionen für seine Rolle freigegeben sind. Allerdings kann der Test fehlschlagen, und der Sicherheitsverantwortliche kann die Zeichnung verweigern. Es handelt sich um konditionale Handlungspläne, nicht um Garantien für einen Übergang zu ALLOW; nach Vorliegen der Ergebnisse ist ein neuer Inferenzlauf erforderlich. Der kontrafaktische Zustand ändert keine historischen Fakten und liefert keinen Kausalbeweis für den Erfolg der Maßnahme. Die Kostenfunktion darf ausschließlich zulässige Aktionen bewerten und niemals Fälschungen von Daten oder Rollen privilegieren.
 
-> [!NOTE] Warum mathematische Kontrafakta in der realen Ingenieurpraxis versagen
-> Standardalgorithmen der erklärbaren künstlichen Intelligenz (XAI) optimieren die kürzeste euklidische Distanz $d(x, x')$. Für ein System zur Flugzeugmontage oder Fehlerdiagnose generiert ein solcher Optimierer ohne Berücksichtigung von $`F_{\text{feasible}} \cap F_{\text{actionable}} \cap F_{\text{authorized}}`$ absurde oder gefährliche Kontrafakta:
-> - *„Ändern Sie das Fertigungsdatum des Bauteils auf gestern“* (Verletzung der physikalischen Realisierbarkeit $F_{\text{feasible}}$);
-> - *„Erhöhen Sie die Schmelztemperatur des Stahls um 200 °C“* (Verletzung der Umsetzbarkeit $F_{\text{actionable}}$);
-> - *„Genehmigen Sie das Release eigenständig ohne die Unterschrift des Sicherheitsbeauftragten“* (Verletzung des Rollenmandats $F_{\text{authorized}}$).
-> Eine evidenzbasierte kontrafaktische Erklärung darf **ausschließlich legitime ingenieurtechnische Handlungen** vorschlagen (beispielsweise: „Sensor gemäß Kalibriervorschrift M-14 neu abgleichen“ oder „zusätzlichen Stresstest ST-02 ausführen“).
+> [!NOTE]
+> **Drei Zulässigkeitskriterien für kontrafaktische Erklärungen nach dem Autormodell**
+> 1. Physikalische Realisierbarkeit ($F_{\text{feasible}}$): Verbot von Kontrafakta, die Kausalgesetze oder irreversible Zeitkoordinaten verletzen (wie die Rückdatierung eines Fertigungsdatums auf gestern).
+> 2. Technische Umsetzbarkeit ($F_{\text{actionable}}$): Beschränkung des Suchraums auf steuerbare Parameter unter Ausschluss unveränderlicher physikalischer Materialeigenschaften (wie die Schmelzpunkterhöhung um 200 °C).
+> 3. Rollenautorisierung ($F_{\text{authorized}}$): Strikte Validierung des Benutzermandats, die Vorschläge zur eigenmächtigen Umgehung von Freigabeprozessen oder Fälschung von Sicherheitsunterschriften ausschließt.
+> *Runtime-Steuerung:* Jeder kontrafaktische Plan $x'$ außerhalb des Schnitts $`F_{\text{feasible}} \cap F_{\text{actionable}} \cap F_{\text{authorized}}`$ wird durch die Inferenz-Engine als ungültig verworfen.
 
 ## 6. Schutz vor Abfluss vertraulicher Informationen durch Erklärungen
 

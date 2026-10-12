@@ -554,12 +554,12 @@ Ustun, Spangher, and Liu demonstrated that the mathematically nearest counterfac
 
 For a release author, the system can recommend submitting a retest request or initiating a formal waiver review if authorized. However, tests may fail and safety officers may reject waivers. These constitute conditional plans rather than unconditional guarantees of an ALLOW verdict; once executed, a new inference cycle is required. A counterfactual state does not alter historical ground facts, nor does it provide causal proof of future execution success. The cost metric must solely evaluate legitimate engineering actions.
 
-> [!NOTE] Why Purely Mathematical Counterfactuals Fail in Real-World Engineering
-> Standard Explainable AI (XAI) algorithms optimize shortest Euclidean distance $d(x, x')$. Applied to aircraft assembly or diagnostic telemetry, an unconstrained optimizer neglecting $`F_{\text{feasible}} \cap F_{\text{actionable}} \cap F_{\text{authorized}}`$ produces absurd or hazardous recommendations:
-> - *"Change the component manufacturing date to yesterday"* (violates physical feasibility $`F_{\text{feasible}}`$);
-> - *"Increase steel melting point by 200°C"* (violates actionability $`F_{\text{actionable}}`$);
-> - *"Approve release unilaterally without safety officer signature"* (violates role authorization $`F_{\text{authorized}}`$).
-> An evidence-governed counterfactual explanation must propose **exclusively legitimate engineering actions** (such as: "recalibrate sensor per procedure M-14" or "execute supplemental stress test ST-02").
+> [!NOTE]
+> **Three Feasibility Criteria for Counterfactual Explanations in the Author's Model**
+> 1. Physical Feasibility ($`F_{\text{feasible}}`$): prohibition of counterfactuals violating causality or immutable time coordinates (such as altering component manufacturing dates to yesterday).
+> 2. Engineering Actionability ($`F_{\text{actionable}}`$): restriction of search space to controllable parameters, excluding immutable physical properties (such as raising the melting point of steel by 200°C).
+> 3. Role Authorization ($`F_{\text{authorized}}`$): strict verification of user access mandates, eliminating unauthorized advice to bypass approvals or forge safety officer signatures.
+> *Runtime Management:* Any counterfactual trajectory $x'$ falling outside the intersection $`F_{\text{feasible}} \cap F_{\text{actionable}} \cap F_{\text{authorized}}`$ is blocked by the runtime as an invalid proposal.
 
 ## 6. Protection Against Confidential Information Leakage via Explanations
 
