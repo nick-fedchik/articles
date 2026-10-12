@@ -71,6 +71,14 @@ The following foundational concepts will govern subsequent discussions:
 
 None of the three vertices functions autonomously: organizational trust emerges exclusively from navigating the closed operational loop, proceeding from memory to decision and back again. The sections that follow examine each vertex in detail, beginning with the prevailing confusion between expert systems and generative chatbots.
 
+> [!NOTE]
+> **Authorial Conceptual Model of the Triad of Trust and the Closed Decision Loop**  
+> The author formalizes the architectural synergy of three foundational components that constitute an indivisible envelope of trust:
+> 1. **Corporate R&D Memory:** Preserves immutable artifacts, structured architecture decision records (ADRs), defects, baselines, and active lessons learned with explicit context and validity boundaries.
+> 2. **Symbolic Expert System:** Evaluates deterministic production rules and relationship graphs over the working memory of the current case, detecting normative conflicts and rule infractions.
+> 3. **Evidence-Based Recommendation:** Synthesizes a typed justification package specifying primary sources, explicit assumptions, calibrated confidence, and cryptographic integrity digests.
+> 4. **Closed-Loop Human-in-the-Loop Approval:** An authorized engineer verifies evidentiary grounds, executes the decision, and feeds the verdict with its contextual precedent back into corporate memory to enrich the knowledge base.
+
 ## 3. The First Triad Component: Demarcating Expert Systems from Generative Chatbots
 
 Following several years of enthusiasm surrounding large language models, many engineering organizations have arrived at an identical bottleneck: a conversational bot is integrated into internal documentation, its generated answers sound remarkably articulate, yet there is zero verifiable trust for mission-critical engineering decisions. The initial demonstration impresses, but as soon as a decision requires regulatory justification, engineers must manually cross-check every single assertion. The root cause lies not in the language model itself, but in the erroneous expectation that a language model can autonomously handle three disparate engineering responsibilities: memorizing, verifying, and supporting decisions. This section partitions these responsibilities between the language model and the symbolic expert system.
@@ -278,6 +286,17 @@ The first recommendation mirrors the phrase from the author's case study: the cl
 
 Automated completeness verification does not guarantee the veracity of a recommendation, but it decisively eliminates the most pervasive architectural failure mode: a persuasive, articulate conclusion completely stripped of verifiable hooks for engineering audit.
 
+> [!NOTE]
+> **Authorial Minimal Evidence Record Architecture and Automated Recommendation Validation Contract**  
+> To prevent ungrounded assertions from penetrating safety-critical certification pipelines, the author establishes a mandatory seven-field minimal evidence record structure:
+> 1. **Claim or Recommendation:** Unambiguously formulated proposition detailing the target operational action.
+> 2. **Primary Sources:** Cryptographically verified identifiers of requirements, test logs, defects, and source code spans.
+> 3. **Context Snapshot:** Immutable record of product baseline, knowledge corpus snapshot, and temporal timestamps.
+> 4. **Rules and Assumptions:** Versions of enforced regulatory policies, explicit operational assumptions, and detected contradictions.
+> 5. **AI Configuration:** Exact model identifiers, system prompt template revisions, retrieval parameters, and index hashes.
+> 6. **Analysis Identifier:** Cryptographic hash ($\mathrm{SHA\text{-}256}$) binding the complete input payload to the resulting inference output.
+> 7. **Human Decision:** Recorded status (`admitted`, `rejected`, `referred for revision`), rationale, and digital signature of the accountable professional.
+
 ### 4.4. Reviewer Contract Discipline: Code Auditing under ISO 26262 and ISO/SAE 21434
 
 The chasm between unverified text and an auditable record is nowhere more apparent than in automated code compliance analysis. Automotive software engineering is governed by the ISO 26262 functional safety standard published by the International Organization for Standardization (ISO), whose Part 6 dictates software-level product development requirements [[6]](#src-6), and the ISO/SAE 21434 cybersecurity engineering standard developed jointly with SAE International [[7]](#src-7). In these mission-critical environments, an AI tool cannot simply be prompted to "inspect the code"; it must identify concrete anomalies that violate specific software requirements, coding guidelines, or the project verification profile (*project verification profile*)—the project's formally ratified matrix of code expectations. A naive prompt reads: "Check this code for bugs." A disciplined engineering prompt establishes an explicit reviewer contract: defining exactly what inputs the model receives, what criteria it inspects, and in what deterministic schema it must respond.
@@ -348,6 +367,14 @@ where:
 
 3. **Chain-of-Custody Invariant:**
    Any unauthorized modification of the source document by even a single bit alters its $`\mathrm{SHA256}(\mathrm{RawDoc})`$ digest. Upon rule evaluation, an evidence custody breach (*Custody Breach*) is detected, instantly revoking the validity status of the compiled knowledge bundle and transitioning the system into a safe *Fail-Closed* state.
+
+> [!NOTE]
+> **Authorial Evidence Custody Architecture and Byte-Level Grounding of Engineering Knowledge**  
+> To guarantee regulatory standing and prevent broken traceability chains, the author develops and formalizes:
+> 1. **Span Grounding Tuple ($\mathcal{G}$):** The tuple $\langle \mathrm{DocID}, \mathrm{SHA256}(\mathrm{RawDoc}), \mathrm{StartByte}, \mathrm{EndByte}, \mathrm{NormalizedPredicate} \rangle$ that locks a normative rule to raw binary source bytes in `mmap` space.
+> 2. **Non-Normative Fact Isolation:** Automatic demarcation segregating informative text devoid of deontic operators (`SHALL`, `MUST`) from generating mandatory release-blocking invariants.
+> 3. **Chain-of-Custody Invariant:** Modifying even a single bit of a primary document triggers an `ERR_CUSTODY_VIOLATION` hardware exception and immediately forces a Fail-Closed refusal.
+> 4. **Hardware Placement Optimization:** Fixed 64-byte descriptor sizing guarantees that enterprise normative tables fit entirely within CPU L3 cache or controller BRAM ($t_{\mathrm{lookup}} < 12\,\text{ns}$).
 
 #### 4.6.1. Actionable Closed Loop of Byte-Level Evidence Custody
 
@@ -427,7 +454,8 @@ The ultimate stress test of corporate memory is the onboarding velocity of newly
 
 When institutional knowledge is siloed exclusively in human heads, senior engineers repeat the same historical explanations, newcomers inevitably reproduce historical defects, and institutional memory evaporates whenever personnel transition across teams. The newcomer in this chapter's opening vignette exemplifies this systemic failure: the technical answer to "Why is this mode disabled?" existed, but it left the building when the lead engineer transferred.
 
-> [!WARNING] The "Indispensable Lead Engineer Syndrome" and the Bus Factor
+> [!WARNING]
+> **The "Indispensable Lead Engineer Syndrome" and the Bus Factor**  
 > Across many engineering enterprises, critical architectural knowledge regarding hardware quirks, bus timing tolerances, or undocumented silicon errata exists exclusively as oral folklore preserved by a handful of lead developers. The bus factor (*bus factor*) of such a project is exactly one: if the lead engineer departs for a competitor or takes extended leave, the remaining team is terrified to modify the critical module, effectively calcifying it into an untouchable "black box."
 > The corporate memory of an expert system is designed to convert implicit human intuition into externalized, machine-readable knowledge: formalized invariants, linter rules, configuration assertions, and automated regression suites within the CI/CD pipeline.
 
@@ -463,6 +491,16 @@ flowchart TD
 ```
 
 Blue nodes capture the project event and its empirical observation. Purple nodes represent expert engineering analysis: root-cause auditing and knowledge formalization. Orange nodes denote formal version publishing and runtime triggering within the expert system—serving either as contextual guidance or an automated verification interlock. Green nodes represent the engineer's action and the empirical feedback loop. The feedback edge returning to the expert audit node keeps the lesson dynamic: real-world application outcomes either corroborate the rule or refine its operational boundaries. How an expert system learns continuously from such feedback cycles is explored in [Chapter 25](ch25-how-expert-systems-learn.md) and [Chapter 26](ch26-continual-learning.md).
+
+> [!NOTE]
+> **Authorial Six-Stage Active Lessons Learned Pipeline Model**  
+> The author formalizes an automated operational pipeline transforming engineering anomalies into active machine-enforced constraints:
+> 1. **Detection and Observation:** Logging anomalous operational events (failed regression tests, silicon defects, telemetry discrepancies).
+> 2. **Expert Root-Cause Audit:** Identifying underlying logical or physical defects and circumscribing operational validity envelopes.
+> 3. **Knowledge Formalization:** Translating the incident into a typed production rule or precedent tuple with explicit application boundaries.
+> 4. **Consortium Version Publication:** Validating against regression suites, acquiring multi-stakeholder signatures, and publishing the revision.
+> 5. **Proactive Runtime Interlocking:** Triggering automated warnings or interlock blocks whenever similar operational context recurs in new projects.
+> 6. **Calibration Feedback Loop:** Continuously adjusting rule boundaries and exception sets based on empirical field outcomes.
 
 ### 5.5. Convergent Orchestration of Language Models, Knowledge Graphs, and Expert Systems
 
@@ -543,6 +581,14 @@ The full private key is never reconstructed in the memory of any single host.
 
 2. **Hardware Isolation and RFC 3161 Timestamping:**
    Key shares reside exclusively within dedicated hardware security modules (HSM / Hardware Security Tokens certified to FIPS 140-3 Level 3). Exfiltration of private key material is physically blocked at the silicon level. The audit log of signing requests is committed to an immutable append-only ledger stamped with RFC 3161 timestamps from an independent trusted Time Stamping Authority (TSA).
+
+> [!NOTE]
+> **Authorial Consortium Authorization Architecture and Threshold Key Custody for Knowledge Bases**  
+> To neutralize insider threats and enforce the "four-eyes principle" of ISO/IEC 27001, the author introduces:
+> 1. **Threshold Consortium Signature ($k$-of-$n$):** Partitioning the knowledge base publication private key via Shamir's Secret Sharing across $n$ independent parties, requiring consensus of at least $k$ participants ($k=3, n=5$).
+> 2. **Lagrange Polynomial Aggregation:** Synthesizing the aggregate Ed25519 signature through Multi-Party Computation (MPC) without ever assembling the full private key in any device's memory.
+> 3. **Hardware Isolation (HSM):** Securing key shares exclusively inside FIPS 140-3 Level 3 hardware security modules with silicon-level anti-extraction interlocks.
+> 4. **Immutable RFC 3161 Timestamping:** Anchoring each signing attempt and candidate release with a cryptographic timestamp from an independent trusted Time Stamping Authority (TSA).
 
 #### 5.9.1. Actionable Closed Loop of Consortium Knowledge Authorization
 

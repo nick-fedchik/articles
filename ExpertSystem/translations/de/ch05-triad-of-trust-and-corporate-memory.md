@@ -71,6 +71,14 @@ Für die weitere Lektüre sind fünf Schlüsselbegriffe grundlegend:
 
 Kein Eckpunkt des Vertrauensdreiecks existiert isoliert: Verlässlichkeit erwächst erst aus der vollständigen Zirkulation entlang des gesamten Zyklus – vom Gedächtnis zur Entscheidung und zurück. Die folgenden Abschnitte beleuchten diese Komponenten sukzessive, beginnend mit der verbreiteten Verwechslung von Expertensystemen und generativen Chatbots.
 
+> [!NOTE]
+> **Konzeptionelles Modell der Triade des Vertrauens und des geschlossenen Entscheidungskreislaufs des Autors**  
+> Der Autor formalisiert das architektonische Zusammenwirken dreier Kernkomponenten, die einen untrennbaren Vertrauensraum bilden:
+> 1. **Corporate Memory von F&E:** Bewahrt unveränderliche Artefakte, strukturierte Architekturentscheidungsberichte (ADRs), Defekte, Baselines und aktive Lektionen mit klaren Gültigkeitsgrenzen.
+> 2. **Symbolisches Expertensystem:** Wendet deterministische Inferenzregeln und Beziehungsanalyse auf den aktuellen Arbeitskontext an und deckt normative Widersprüche auf.
+> 3. **Evidenzbasierte Empfehlung (Evidence-Based Recommendation):** Generiert ein typisiertes Begründungspaket mit Primärquellen, Annahmen, Konfidenzwerten und kryptografischen Prüfsummen.
+> 4. **Geschlossener menschlicher Freigabekreislauf (Closed-Loop Human-in-the-Loop):** Ein autorisierter Ingenieur prüft die Begründungen, fällt die Entscheidung und speist den Präzedenzfall zur Wissensanreicherung in die Unternehmensdatenbasis zurück.
+
 ## 3. Die erste Komponente der Triade: Demarkation von Expertensystem und generativem Chatbot
 
 Nach mehreren Jahren der Euphorie um große Sprachmodelle sahen sich zahlreiche Ingenieurteams mit derselben Ernüchterung konfrontiert: Der Chatbot ist an die Dokumentation angebunden, die Antworten klingen eloquent und überzeugend, doch für verbindliche Ingenieurentscheidungen fehlt jegliches Vertrauen. Die Demonstration imponiert, doch sobald eine Entscheidung formal begründet werden muss, überprüfen Ingenieure wieder alle Fakten manuell. Die Ursache liegt nicht in Unzulänglichkeiten des Sprachmodells, sondern in der Fehlannahme, ein Sprachmodell könne drei grundverschiedene Aufgaben autonom bewältigen: erinnern, verifizieren und Entscheidungen stützen. Dieser Abschnitt nimmt eine klare funktionale Trennung zwischen Sprachmodell und Expertensystem vor.
@@ -278,6 +286,17 @@ Die erste Empfehlung repliziert die Aussage aus dem Praxisbeispiel des Autors: D
 
 Die automatisierte Vollständigkeitsprüfung bürgt zwar nicht für die inhaltliche Wahrheit einer Empfehlung, eliminiert jedoch zuverlässig das verbreitetste Übel: scheinbar brillante Freitext-Behauptungen ohne jeden prüffähigen Anknüpfungspunkt.
 
+> [!NOTE]
+> **Architektur des minimalen Evidenzdatensatzes und automatisierter Empfehlungsvalidierungsvertrag des Autors**  
+> Um das Eindringen unbegründeter Behauptungen in sicherheitskritische Zertifizierungsabläufe zu verhindern, definiert der Autor eine Pflichtstruktur aus 7 Feldern:
+> 1. **Behauptung oder Empfehlung:** Eindeutig formulierte Maßnahme mit genauer Benennung der Zielhandlung.
+> 2. **Primärquellen:** Kryptografisch verifizierte Identifikatoren von Anforderungen, Testprotokollen, Defekten und Quellcodeausschnitten.
+> 3. **Kontext-Snapshot:** Unveränderliche Momentaufnahme von Produktbaseline, Wissenskorpusstand und Zeitstempeln.
+> 4. **Regeln und Annahmen:** Versionen der angewendeten Richtlinien, explizite Vorannahmen und festgestellte Widersprüche.
+> 5. **KI-Konfiguration:** Exakte Modellbezeichnungen, Prompt-Revisionsstände, Suchparameter und Index-Hashes.
+> 6. **Analyse-Identifikator:** Kryptografischer Hash ($\mathrm{SHA\text{-}256}$), der Eingabepaket und generiertes Resultat unauflösbar bindet.
+> 7. **Menschliche Entscheidung:** Dokumentierter Status (`angenommen`, `abgelehnt`, `zur Überarbeitung`), Begründung und Signatur der verantwortlichen Fachperson.
+
 ### 4.4. Disziplin des Reviewer-Vertrags: Code-Audit nach ISO 26262 und ISO/SAE 21434
 
 Die fundamentale Diskrepanz zwischen Freitext und evidenzbasiertem Datensatz tritt bei der Code-Konformitätsanalyse besonders plastisch zutage. In der Automobilelektronik gelten der funktionale Sicherheitsstandard ISO 26262 der International Organization for Standardization (ISO), dessen Teil 6 die Anforderungen an die Softwareentwicklung festlegt [[6]](#src-6), sowie der Cybersicherheitsstandard ISO/SAE 21434, der gemeinsam mit SAE International erarbeitet wurde [[7]](#src-7). In derartigen Projekten darf eine KI nicht einfach aufgefordert werden, „den Code auf Fehler zu durchsuchen“. Gefordert ist die Identifikation von Abweichungen gegen spezifische Anforderungen, Programmierrichtlinien oder ein definiertes Projekt-Verifikationsprofil (*project verification profile*). Ein unstrukturierter Prompt lautet: „Prüfe diesen Code auf Fehler.“ Ein methodisch sauberer Ansatz bindet das Modell hingegen an einen Reviewer-Vertrag: präzise Definition von Input, Prüfkriterien und Antwortformat.
@@ -348,6 +367,14 @@ wobei:
 
 3. **Unverletzlichkeit der Beweiskette (Chain-of-Custody Invariant):**
    Jede unautorisierte Änderung des Ausgangsdokuments um auch nur 1 Bit modifiziert dessen Wert $`\mathrm{SHA256}(\mathrm{RawDoc})`$. Beim Zugriff auf die Regel wird ein Bruch der Beweisverwahrung (*Custody Breach*) erkannt, was den Gültigkeitsstatus des kompilierten Wissenspakets unverzüglich annulliert und das System in einen sicheren Fehlerzustand (*Fail-Closed*) überführt.
+
+> [!NOTE]
+> **Architektur der kryptografischen Evidenzverwahrung und bytegenauen Wissenserde des Autors**  
+> Zur Gewährleistung rechtlicher Verbindlichkeit und lückenloser Nachweisketten entwickelt und formalisiert der Autor:
+> 1. **Span-Grounding-Tupel ($\mathcal{G}$):** Das Tupel $\langle \mathrm{DocID}, \mathrm{SHA256}(\mathrm{RawDoc}), \mathrm{StartByte}, \mathrm{EndByte}, \mathrm{NormalizedPredicate} \rangle$, das eine Regel an die Rohbytes im `mmap`-Speicher bindet.
+> 2. **Nicht-normative Faktenisolation:** Automatische Trennung rein informativer Abschnitte ohne deontische Operatoren (`SHALL`, `MUST`) von der Generierung verbindlicher Release-Sperrinvarianten.
+> 3. **Chain-of-Custody-Invariante:** Jede unbefugte Änderung des Quelldokuments um auch nur 1 Bit löst eine `ERR_CUSTODY_VIOLATION`-Ausnahme aus und erzwingt eine Fail-Closed-Verweigerung.
+> 4. **Hardware-Platzierungsoptimierung:** Feste 64-Byte-Deskriptoren ermöglichen das vollständige Halten der Normtabellen im CPU-L3-Cache oder Controller-BRAM ($t_{\mathrm{lookup}} < 12\,\text{ns}$).
 
 #### 4.6.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der bytegenauen Beweisverwahrung
 
@@ -427,7 +454,8 @@ Der ultimative Härtetest für jedes Unternehmensgedächtnis ist das Onboarding 
 
 Verbleibt Wissen ausschließlich in den Köpfen von Individuen, wiederholen Experten permanent dieselben Erklärungen, Anfänger replizieren bekannte Fehlgriffe, und bei Personalwechseln droht irreparabler Wissensverlust. Der im Eingangsszenario beschriebene Entwickler ist das klassische Symptom: Die Antwort auf die Frage nach dem deaktivierten Modus existierte – verließ das Unternehmen jedoch mit dem abgewanderten Ingenieur.
 
-> [!WARNING] Das Syndrom des unersetzlichen Chefingenieurs und der Bus-Faktor
+> [!WARNING]
+> **Das Syndrom des unersetzlichen Chefingenieurs und der Bus-Faktor**  
 > In vielen Technologieunternehmen existiert das Kernwissen über Hardware-Eigenheiten, subtile Bus-Timings oder undokumentierte Silizium-Bugs ausschließlich als mündliche Überlieferung weniger leitender Entwickler. Der Bus-Faktor (*bus factor*) eines solchen Projekts liegt gefährlich bei eins: Wechselt dieser Ingenieur zur Konkurrenz oder fällt langfristig aus, wagt es niemand mehr, das betroffene Modul anzutasten – es degeneriert zu einer unveränderlichen „Blackbox“.
 > Das Unternehmensgedächtnis eines Expertensystems hat die Aufgabe, implizites Erfahrungswissen in explizite, maschinenlesbare Artefakte zu transformieren: formalisierte Invarianten, Linter-Regeln, Konfigurationsprüfungen und automatisierte CI/CD-Pipelines.
 
@@ -463,6 +491,16 @@ flowchart TD
 ```
 
 Die blauen Knoten erfassen Ereignis und empirische Beobachtung. Die violetten Knoten stehen für die Expertenarbeit: Ursachenanalyse und Wissensformalisierung. Die orangefarbenen Knoten markieren die versionierte Bereitstellung und die operative Auslösung im Expertensystem – als Kontext-Hinweis oder als Hard-Veto gegen gefährliche Änderungen. Die grünen Knoten symbolisieren die Ingenieurhandlung und die daraus resultierende Rückkopplung. Der Rückwärtspfad vom Praxisergebnis zum Experten-Audit hält das Wissen lebendig: Reale Ergebnisse bestätigen die Regel oder schärfen deren Gültigkeitsgrenzen nach. Wie Expertensysteme aus solchen Rückkopplungsschleifen lernen, vertiefen [Kapitel 25](ch25-how-expert-systems-learn.md) und [Kapitel 26](ch26-continual-learning.md).
+
+> [!NOTE]
+> **Sechsstufiges Pipeline-Modell des Autors für aktive Lektionen (Active Lessons Learned)**  
+> Der Autor formalisiert den automatisierten Ablauf zur Überführung technischer Zwischenfälle in aktiv wirksame Maschinenschranken:
+> 1. **Detektion und Beobachtung:** Erfassung der Anomalie (fehlgeschlagener Test, Hardwaredefekt, Telemetrieabweichung).
+> 2. **Ursachenprüfung durch Fachexperten:** Identifikation des Kernproblems und Eingrenzung des Gültigkeitsbereichs.
+> 3. **Wissensformalisierung:** Übersetzung in eine typisierte Regel oder einen Präzedenzfall mit Anwendungsbedingungen.
+> 4. **Versionierte Konsortiumsfreigabe:** Validierung an der Regressionssuite, Mehr-Augen-Freigabe und Veröffentlichung.
+> 5. **Präventive Aktivierung:** Automatisches Auslösen von Hinweisen oder Verriegelungen bei erneutem Auftreten ähnlicher Kontexte.
+> 6. **Kalibrierendes Feedback:** Laufende Anpassung der Regelgrenzen anhand realer Betriebsergebnisse.
 
 ### 5.5. Konvergente Interaktion von Sprachmodell, Wissensgraph und Expertensystem
 
@@ -543,6 +581,14 @@ Der vollständige private Schlüssel wird zu keinem Zeitpunkt im Speicher eines 
 
 2. **Hardware-Isolation und RFC 3161-Zeitstempelung:**
    Schlüsselanteile werden ausschließlich in Hardware-Sicherheitsmodulen (HSM / Hardware Security Tokens gemäß FIPS 140-3 Level 3) verwahrt. Der Versuch, einen privaten Schlüssel auszulesen, wird auf Siliziumebene hardwareseitig unterbunden. Das Signaturversuchsprotokoll wird in einem unveränderlichen, verteilten Audit-Speicher unter Fixierung kryptografischer Zeitstempel nach dem RFC 3161-Protokoll durch einen unabhängigen, vertrauenswürdigen Zeitstempeldienst (TSA) geführt.
+
+> [!NOTE]
+> **Konsortiumsautorisierungs-Architektur und Schwellenwert-Schlüsselverwahrung des Autors**  
+> Zur Abwehr von Innentätern (*Insider Threat*) und Durchsetzung des Vier-Augen-Prinzips nach ISO/IEC 27001 führt der Autor ein:
+> 1. **Schwellenwert-Konsortiumssignatur ($k$-von-$n$):** Aufteilung des privaten Veröffentlichungsschlüssels nach Shamir auf $n$ Parteien mit Quorum von mindestens $k$ Teilnehmern ($k=3, n=5$).
+> 2. **Lagrange-Polynomaggregation:** Synthese der Ed25519-Signatur über sichere Mehrparteienberechnung (MPC), ohne den Gesamtschlüssel jemals im Speicher eines Knotens zu rekonstruieren.
+> 3. **Hardware-Isolation (HSM):** Speicherung der Teilschlüssel ausschließlich in FIPS-140-3-Level-3-Modulen mit physischem Ausleseschutz.
+> 4. **Unveränderliche RFC-3161-Zeitstempel:** Signierung jedes Freigabeversuchs durch einen unabhängigen autorisierten Zeitstempeldienst (TSA).
 
 #### 5.9.1. Geschlossener Kreis der ingenieurtechnischen Berechnung der Konsortiums-Wissensautorisierung
 
