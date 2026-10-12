@@ -110,6 +110,13 @@ Parameter und Komponenten des lexikografischen Rangs:
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
    Angenommen, die ISO 26262 ASIL D untersagt den Eintritt in den Rekuperationsmodus bei einem Fehler auf dem CAN-Bus ($`\mathrm{Tier} = 3, M = \text{PROHIBITION} \to 2, \mathrm{Specificity} = 4`$), während eine interne Werkstattvorschrift dies zu Kalibrierzwecken gestattet ($`\mathrm{Tier} = 2, M = \text{PERMISSION} \to 1, \mathrm{Specificity} = 2`$). Der lexikografische Rang der Sicherheitsnorm $`\langle 3, 2, 4 \rangle`$ dominiert die Werksvorschrift $`\langle 2, 1, 2 \rangle`$ bereits in der ersten Koordinate ($3 > 2$). Das System blockiert die sicherheitskritische Aktion deterministisch und verhindert eine Havarie.
 
+> [!NOTE]
+> **Drei Koordinaten der lexikografischen Anforderungsrangfolge $\mathrm{Rank}(\mathcal{R})$**
+> 1. Hierarchie der Wissensquelle ($\mathrm{Tier}(\mathrm{Source})$): Vorrang harmonisierter internationaler Normen (ISO/IEC) vor internen Werksnormen und Ingenieurheuristiken.
+> 2. Imperativität der deontischen Modalität ($\mathrm{ModalityRank}(M)$): absoluter Vorrang von Verboten und Verpflichtungen (`PROHIBITION`, `OBLIGATION`) vor dispositiven Erlaubnissen (`PERMISSION`).
+> 3. Spezifität von Kontextbedingungen ($\mathrm{Specificity}(\mathcal{R})$): Vorrang fachspezifischer Ausnahmeregeln vor allgemeinen Normen nach dem Prinzip *Lex Specialis*.
+> *Laufzeitsteuerung:* Der Vergleich des 64-Bit gepackten Deskriptors erfolgt in $O(1)$, und bei einer Kollision gleichrangiger Normen ($\Delta\mathbf{r} = \mathbf{0}$) greift das Fail-Closed-Gateway.
+
 ---
 
 ### 1.3. Unteilbarkeit deontischer Quantoren, Multibyte-Unicode-Grenzen und Span-Erhaltung
@@ -249,6 +256,15 @@ Führt die Verifikation zu einem Negativurteil (`REFUSAL`), formuliert das Syste
    Die Bitmasken-Tabelle für ein Lexikon mit $`\lvert \mathcal{V}_{\mathrm{valid}} \rvert = 4096`$ Token belegt exakt 512 Byte (64 Wörter zu je `uint64`). Dies passt garantiert vollständig in den ultraschnellen L1-Befehlscache ($32\,\text{KB}$) eines NPU-Beschleunigers oder CPU-Kerns, wodurch die Maskierung in einem einzigen Taktzyklus ($< 1\,\text{ns}$) angewendet wird.
 3. **Praktisches numerisches Rechenbeispiel (Worked Numerical Example):**
    Versucht das Sprachmodell, einen nicht existierenden Parameter `battery_fluid_viscosity` zu generieren (nicht im Vokabular $`\mathcal{V}_{\mathrm{valid}}`$ von 1850 Entitäten enthalten), wird der Logit des ersten Worttokens sofort auf $-\infty$ maskiert. Das alternative valide Token `cell_temperature` mit einem Ausgangs-Logit von $14{,}2$ erhält die resultierende Wahrscheinlichkeit von $1.00$. Die Anfrage wird eindeutig in die EARS-Form *„If cell temperature exceeds 65 deg_C, then BMS shall open main relay“* überführt – unter vollständiger Eliminierung jeglichen Halluzinationsrisikos.
+
+> [!NOTE]
+> **Fünf kanonische EARS-Schablonen zur Beseitigung syntaktischer Ambiguität**
+> 1. Allgegenwärtige Anforderungen (Ubiquitous): bedingungslose Systeminvarianten ohne zeitliche oder ereignisbezogene Auslöser.
+> 2. Ereignisgesteuerte Anforderungen (Event-driven): zwingend deterministische Systemreaktion auf ein diskretes externes Ereignis („Wenn...“).
+> 3. Zustandsgesteuerte Anforderungen (State-driven): Parametergrenzen, die ausschließlich während des Verweilens im definierten Zustand gelten („Solange...“).
+> 4. Reaktionen auf unerwünschtes Verhalten (Unwanted behavior): Notfall-Schutzprotokolle zur Rückkehr in den sicheren Zustand bei Abweichungen („Falls...“).
+> 5. Optionale Funktionsanforderungen (Optional features): Vorgaben, die nur bei hardwareseitiger oder konfigurativer Verfügbarkeit greifen („Wo vorhanden...“).
+> *Laufzeitsteuerung:* Der Anforderungs-Compiler weist jede Konstruktion zurück, die die deterministische EARS-Grammatik verletzt, und blockiert unstrukturierten Text.
 
 ---
 
@@ -409,6 +425,14 @@ Die Antwort `unsat` belegt die logische Unverträglichkeit der formalisierten Au
 
 Dieses Beispiel offenbart die Grenzen formaler Methoden: Der Solver identifiziert Widersprüche ausschließlich innerhalb des formalisierten Modells und exakt so, wie der Ingenieur die Abbildung vorgenommen hat. Korrespondiert die Variable `cell_temp_c` fehlerhaft mit dem physikalischen Sensorregister, bleibt dies für den Solver unsichtbar. Die Formalisierung muss daher selbst einem Peer-Review unterzogen werden; der Beweiswert entsteht erst im Verbund mit dem Herkunftsnachweis über Autor, Modellversion und Anforderungsstand.
 
+> [!NOTE]
+> **Vier Invarianten der SMT-Konsistenz- und Erreichbarkeitsprüfung von Anforderungen**
+> 1. Symbolische Formelkodierung: Übersetzung temporaler Prädikate in quantifizierte SMT-LIB-Zusicherungen für den Theorembeweiser Z3.
+> 2. Widerspruchserkennung (Unsat Core): automatische Extraktion der minimalen inkonsistenten Axiomenmenge bei kollidierenden normativen Bedingungen.
+> 3. Schutz vor vacuoser Wahrheit: obligatorische Erreichbarkeitsprüfung der Prämissen ($\Diamond\Phi_{\mathrm{pre}}$) zum Ausschluss fiktiver Validierungen.
+> 4. Deterministisches Zeitlimit (Timeout Gate): Überführung des Solvers in einen sicheren Haltezustand bei Überschreitung des Rechenbudgets.
+> *Laufzeitsteuerung:* Das Auffinden eines nicht-leeren Unsat Core blockiert sofort die Erstellung der Wissensbasis und erzeugt einen Konfliktdiagnosebericht.
+
 ## 4. Metriken und automatisierte Qualitätsprüfung von Anforderungen (Requirements Smells)
 
 Eine Formalisierung setzt qualitativ hochwertige Anforderungen voraus. Der Standard ISO/IEC/IEEE 29148:2018 definiert die Qualitätsmerkmale professioneller Anforderungen: Sie müssen notwendig, eindeutig, vollständig, atomar, realisierbar, prüfbar und korrekt sein [[13]](#src-13). Henning Femmer und Kollegen schlugen vor, Verstöße gegen diese Kriterien automatisiert als Spezifikationsmängel (*Requirements Smells*) zu detektieren: subjektive Formulierungen, vage Adverbien und Adjektive, Schlupflöcher, offene unprüfbare Begriffe, Superlative, uneindeutige Negationen, unklare Pronomina und unvollständige Verweise [[14]](#src-14).
@@ -475,6 +499,15 @@ Bedeutung der operativen Qualifikationszustände:
 2. **`VERIFY_REPAIRED`:** Unkritische Mängel (z. B. geringfügige Wortstellungsanomalien, Passivkonstruktionen bei eindeutigem Kontextsubjekt oder Quasimodalität) wurden während der Normalisierung deterministisch korrigiert. Der Status erfordert die Freigabe durch den zuständigen Prüfingenieur.
 3. **`REVISION_REQUESTED`:** Es wurden logische Widersprüche, nicht-atomare Mehrfachaktionen oder fehlende Alternativzweige festgestellt. Der Autor erhält eine strukturierte Diagnosekarte mit der Empfehlung zur Aufteilung der Anforderung oder zur Definition einer Hysterese.
 4. **`FAIL_CLOSED_REJECT`:** Vage subjektive Deskriptoren, undefinierte Toleranzen im Sicherheitskreis oder das Risiko einer Inversion von Verboten (`MUST NOT`) wurden detektiert. Es greift die Fail-Closed-Invariante: Das System blockiert die Aufnahme der Regel in die Wissensbasis bedingungslos.
+
+> [!NOTE]
+> **Fünf Autoren-Metriken zur Erkennung sprachlicher Anforderungsdefekte (Requirements Smells)**
+> 1. Indikator unqualifizierter Qualität: Erkennung subjektiver Superlative ohne numerische Toleranzen des SI-Einheitensystems.
+> 2. Indikator für Passivkonstruktionen: Blockierung von Anforderungsklauseln ohne explizit benanntes ausführendes Systemsubjekt.
+> 3. Indikator verdeckter Normativität: Identifikation umgangssprachlicher Quasimodalitäten anstelle standardisierter deontischer Operatoren.
+> 4. Indikator syntaktischer Überlastung: Abwertung verschachtelter Sätze mit multiplen Nebensätzen, die Ausführungsbedingungen verschleiern.
+> 5. Indikator struktureller EARS-Unvollständigkeit: Prüfung auf das Vorhandensein aller Pflichtfelder entsprechend dem gewählten Schablonentyp.
+> *Laufzeitsteuerung:* Das Überschreiten toxischer Mängelgrenzwerte (Smells) führt zur Ablehnung der Spezifikation und Rückgabe an den Ingenieur.
 
 ## 5. Software-Implementierung: Eine deterministische Analyse-Pipeline in Go
 
@@ -844,6 +877,14 @@ Für Zahlenwerte und Einheiten eignen sich Bibliotheken wie Pint [[16]](#src-16)
 Z3 verifiziert das formale Modell, nicht den Prosatext. Für eine gewählte Logik-Teilmenge empfiehlt sich ein Kreuzvergleich von Z3 mit cvc5 [[17]](#src-17), indem SMT-LIB-Logik, Versionen, Ressourcenlimits und Soll-Ergebnisse fixiert werden. Die Übereinstimmung zweier Solver heilt jedoch keine fehlerhafte Formalisierung. Erforderlich sind dedizierte Testfälle für unerreichbare Trigger, Grenzzeitwerte, Widersprüche und unvollständig belegte IR-Felder.
 
 Das Ergebnis dieser Zwischenrepräsentation ist ein verifizierbarer Formelkandidat mit transparenten Grenzen. Exakt dieses Artefakt kann – verknüpft mit Herkunftsnachweisen und Genehmigungsvermerken – in die Konstruktion der Wissensbasis überführt werden.
+
+> [!NOTE]
+> **Vier Invarianten des einheitlichen Anforderungs-Zwischenrepräsentations-Vertrags (IR Contract)**
+> 1. Kanonische Entitätstypisierung: Bindung von Subjekt, deontischer Modalität, Prädikat und Bedingungstriggern in einer stabilen AST-Struktur.
+> 2. Byte-Kustodie der Primärquelle: zwingende Erfassung exakter `[byte_start..byte_end]`-Offsets und des SHA-256-Kryptohashes des Quellenzitats.
+> 3. Isolation von der Quellsyntax: vollständige semantische Unabhängigkeit der Zwischenrepräsentation von der ursprünglichen natürlichen Sprache.
+> 4. Deterministische Übersetzung in formale Regeln: direkte Synthese von EVM-Mikrocode und SMT-Zusicherungen ohne probabilistische Modelle.
+> *Laufzeitsteuerung:* Jede Zwischenrepräsentation ohne validierte Byte-Kustodie wird durch das Wissensbasis-Integritätsgateway zurückgewiesen.
 
 ## 8. Dialog Pro et Contra
 

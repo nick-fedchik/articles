@@ -110,6 +110,13 @@ Parameters and components of the lexicographical rank:
 3. **Worked Numerical Example:**
    Suppose an ISO 26262 ASIL D standard clause prohibits transitioning into regenerative braking upon a CAN bus fault ($`\mathrm{Tier} = 3, M = \text{PROHIBITION} \to 2, \mathrm{Specificity} = 4`$), while a local maintenance workshop guideline permits it for calibration purposes ($`\mathrm{Tier} = 2, M = \text{PERMISSION} \to 1, \mathrm{Specificity} = 2`$). The lexicographical rank vector of the standard clause $`\langle 3, 2, 4 \rangle`$ strictly dominates the local guideline vector $`\langle 2, 1, 2 \rangle`$ on the primary coordinate ($3 > 2$). The system deterministically blocks the hazardous action, precluding safety-critical operational failure.
 
+> [!NOTE]
+> **Three Coordinates of Lexicographical Requirement Ranking $\mathrm{Rank}(\mathcal{R})$**
+> 1. Knowledge source tier ($\mathrm{Tier}(\mathrm{Source})$): priority of harmonized international standards (ISO/IEC) over local company specifications and heuristics.
+> 2. Deontic modality imperativeness ($\mathrm{ModalityRank}(M)$): absolute priority of imperative prohibitions and obligations (`PROHIBITION`, `OBLIGATION`) over permissive authorizations (`PERMISSION`).
+> 3. Contextual constraint specificity ($\mathrm{Specificity}(\mathcal{R})$): precedence of specialized predicate exceptions over general clauses under the *Lex Specialis* principle.
+> *Runtime Governance:* Evaluating the 64-bit packed descriptor executes in $O(1)$ time, while equipotent collisions ($\Delta\mathbf{r} = \mathbf{0}$) activate the Fail-Closed security gateway.
+
 ---
 
 ### 1.3. Indivisibility of Deontic Quantifiers, Multibyte Unicode Boundaries, and Span Preservation
@@ -249,6 +256,15 @@ When a refusal verdict (`REFUSAL`) is issued, the system generates explanations 
    The bitmask table for a vocabulary of $`\lvert \mathcal{V}_{\mathrm{valid}} \rvert = 4096`$ tokens occupies exactly 512 bytes (64 `uint64` words), guaranteed to fit inside the ultra-fast L1 instruction cache ($32\,\text{KB}$) of an NPU accelerator or CPU core, executing logit masking in a single cycle ($< 1\,\text{ns}$).
 3. **Worked Numerical Example:**
    Suppose the language model attempts to emit a nonexistent entity `battery_fluid_viscosity` (absent from the $`\mathcal{V}_{\mathrm{valid}}`$ lexicon containing 1,850 authorized entities). The logit of the initial token is instantly masked to $-\infty$, while an authorized alternative token `cell_temperature` with raw logit $14.2$ receives normalized probability $1.00$. The query deterministically compiles into *"If cell temperature exceeds 65 deg_C, then BMS shall open main relay"*, eliminating hallucination risks.
+
+> [!NOTE]
+> **Five Canonical EARS Templates for Eliminating Requirements Ambiguity**
+> 1. Ubiquitous requirements: unconditional system invariants without temporal or event triggers.
+> 2. Event-driven requirements: mandatory deterministic system response to a discrete external event ("When...").
+> 3. State-driven requirements: parameter constraints active strictly while the system occupies a specified state ("While...").
+> 4. Unwanted behavior responses: emergency safety protocols returning the system to a safe state upon anomaly detection ("If...").
+> 5. Optional feature requirements: rules triggered only upon hardware or configuration availability of a subsystem ("Where...").
+> *Runtime Governance:* The requirements compiler rejects any construct violating deterministic EARS grammar, blocking unstructured natural language.
 
 ---
 
@@ -410,6 +426,14 @@ The verdict `unsat` proves that the formalized assertions are mutually incompati
 
 This case illustrates the boundaries of formal methods: an SMT solver detects contradictions strictly within the formalized model as constructed by the engineer. If the variable `cell_temp_c` maps incorrectly to physical sensor telemetry, the solver cannot detect the discrepancy. Hence, formal models must undergo peer review, and solver verdicts serve as certifiable proof only when bundled with complete provenance linking the model to specific baseline specification revisions.
 
+> [!NOTE]
+> **Four Invariants of SMT Verification for Requirement Consistency and Reachability**
+> 1. Symbolic formula encoding: translating temporal predicates into quantified SMT-LIB assertions for the Z3 theorem prover.
+> 2. Contradiction detection (Unsat Core): automated extraction of the minimal inconsistent subset of axioms across conflicting normative clauses.
+> 3. Vacuous truth prevention: mandatory reachability verification of antecedents ($\Diamond\Phi_{\mathrm{pre}}$) to prevent vacuous validation.
+> 4. Deterministic timeout gate: transitioning the solver into a safe hold state upon exceeding its computational resource budget.
+> *Runtime Governance:* Extraction of a non-empty Unsat Core immediately halts knowledge base compilation and emits a requirement conflict diagnostic report.
+
 ## 4. Metrics and Automated Quality Auditing of Requirements (Requirements Smells)
 
 Formalization can succeed only when applied to high-quality requirements. ISO/IEC/IEEE 29148:2018 defines the essential characteristics of well-formed requirements: they must be necessary, unambiguous, complete, singular, feasible, verifiable, and correct [[13]](#src-13). Henning Femmer and colleagues proposed detecting violations of these criteria via automated "requirements smells": subjective language, ambiguous adverbs and adjectives, non-verifiable open-ended terms, comparatives without reference baselines, negative assertions, vague pronouns, and broken cross-references [[14]](#src-14).
@@ -476,6 +500,15 @@ Operational meaning of the qualification states:
 2. **`VERIFY_REPAIRED`:** Non-critical defects (e.g., minor word-order anomalies, passive voice with an unambiguous contextual subject, or quasi-modality) have been deterministically reconstructed during normalization. This status requires sign-off by an authorized reviewing engineer.
 3. **`REVISION_REQUESTED`:** Logical contradictions, composite multi-action clauses, or omitted alternative branches have been detected. The author receives a structured diagnostic card recommending clause decomposition or hysteresis specification.
 4. **`FAIL_CLOSED_REJECT`:** Vague subjective descriptors, unconstrained safety parameters, or risk of modal inversion (`MUST NOT`) are present. The Fail-Closed invariant triggers: the system unconditionally blocks rule admission into the knowledge base.
+
+> [!NOTE]
+> **Five Authorial Metrics for Detecting Requirements Smells**
+> 1. Unquantified quality indicator: detecting subjective superlative adjectives lacking numerical tolerances from the SI system.
+> 2. Passive voice indicator: blocking requirement clauses lacking an explicit designated system agent for the action.
+> 3. Latent normativity indicator: detecting conversational quasi-modal idioms substituted for standardized deontic operators.
+> 4. Syntactic overload indicator: penalizing complex compound clauses with multiple coordinate exceptions that obscure execution logic.
+> 5. Structural EARS incompleteness indicator: verifying presence of all mandatory structural fields according to the selected template type.
+> *Runtime Governance:* Exceeding toxic smell thresholds disqualifies specification quality and returns the requirement to the systems engineer for remediation.
 
 ## 5. Software Implementation: Deterministic Analysis Pipeline in Go
 
@@ -845,6 +878,14 @@ Numerical parsing demands dedicated physical unit libraries, such as Pint [[16]]
 Z3 checks the formal mathematical model, not raw text. For targeted verification subsets, cross-checking Z3 against cvc5 [[17]](#src-17) establishes independence, provided SMT-LIB logic profiles, solver versions, and execution resource limits are strictly pinned. Concordance between two solvers does not rectify an erroneously formalized model. Independent verification must include test cases for unreachable antecedents, boundary deadlines, unsatisfiable assertions, and unresolved semantic fields.
 
 The synthesized intermediate representation constitutes a verifiable candidate formula with bounded semantics. This artifact, backed by cryptographic source provenance and human sign-off, serves as the authoritative input for downstream knowledge base construction.
+
+> [!NOTE]
+> **Four Invariants of the Unified Requirements Intermediate Representation (IR Contract)**
+> 1. Canonical entity typing: binding subject, deontic modality, predicate, and conditional triggers in a stable AST structure.
+> 2. Byte custody of primary source: mandatory recording of exact `[byte_start..byte_end]` offsets and SHA-256 cryptographic digest of the source quote.
+> 3. Source syntax isolation: complete semantic independence of the intermediate representation from the original natural language specification.
+> 4. Deterministic compilation into formal rules: direct synthesis of EVM microcode and SMT assertions without probabilistic model intervention.
+> *Runtime Governance:* Any intermediate representation lacking validated byte-level custody is rejected by the knowledge base integrity gate.
 
 ## 8. Pro et Contra Dialogue
 
