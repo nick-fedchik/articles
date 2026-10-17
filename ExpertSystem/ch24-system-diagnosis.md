@@ -1,8 +1,8 @@
 # Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, тестування, діагностика та обґрунтування безпеки](part-05-verification-and-learning.md)  
-> **Попередня глава:** [Глава 39. Активний експерт-тестувальник: попперівська фальсифікація, нормативний комплаєнс (ASPICE/ISO 26262/ISO 21434) та автономне проєктування випробувань](ch39-active-compliance-auditor-and-popperian-testing.md)  
-> **Наступна глава:** [Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів](ch27-safety-case-gsn-synthesis.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура системи, нормативне виведення, діагностика та пояснення](part-04-architecture-and-inference.md)
+> **Попередня глава:** [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](ch31-syllogistic-reasoning-and-relation-lattices.md)
+> **Наступна глава:** [Глава 20. Рушій пояснень: рішення, відмова та межі компетентності](ch20-explanation-engine.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: інженери з надійності й діагностики, системні архітектори  
@@ -1032,4 +1032,4 @@ J(\pi) = \mathbb{E}_{\pi}\left[\sum_{t=1}^{\tau} \left(c_{\text{test},t} + c_{\t
 
 ---
 
-[← Глава 39](ch39-active-compliance-auditor-and-popperian-testing.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 27 →](ch27-safety-case-gsn-synthesis.md)
+[← Глава 31](ch31-syllogistic-reasoning-and-relation-lattices.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 20 →](ch20-explanation-engine.md)

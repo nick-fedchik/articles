@@ -1,6 +1,6 @@
 # Chapter 11. Knowledge Elicitation from Experts: Interviewing, Cognitive Maps, and Experience Formalization
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Knowledge Acquisition, Linguistic Analysis, and Input Assessment](part-03-knowledge-engineering-nlp.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Input Information Assessment, Knowledge Acquisition, and Linguistic Analysis](part-03-knowledge-engineering-nlp.md)  
 > **Previous Chapter:** [Chapter 10. Knowledge Acquisition Systems: Sources, Admission, and Lifecycle](ch10-knowledge-acquisition-systems.md)  
 > **Next Chapter:** [Chapter 12. Linguistic Analysis and Local Models: Preserving Content and Provenance](ch12-linguistic-analysis-and-local-models.md)  
 > **Table of Contents:** [README.md](README.md)  

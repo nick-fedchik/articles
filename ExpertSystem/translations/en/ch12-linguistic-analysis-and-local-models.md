@@ -1,8 +1,8 @@
 # Chapter 12. Linguistic Analysis and Local Models: Preserving Content and Provenance
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Knowledge Acquisition, Linguistic Analysis, and Input Assessment](part-03-knowledge-engineering-nlp.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Input Information Assessment, Knowledge Acquisition, and Linguistic Analysis](part-03-knowledge-engineering-nlp.md)  
 > **Previous Chapter:** [Chapter 11. Knowledge Elicitation from Experts: Interviewing, Cognitive Maps, and Experience Formalization](ch11-knowledge-elicitation-from-experts.md)  
-> **Next Chapter:** [Chapter 13. Natural Language Variability vs. Determinism: Compiling Question Semantics](ch13-language-variability-vs-determinism.md)  
+> **Next Chapter:** [Chapter 14. Requirements Detection and Formalization: From Normative Text to Invariants](ch14-requirements-detection-and-formalization.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Intermediate: Developers and knowledge engineers  
@@ -1006,4 +1006,4 @@ The boundaries of this paradigm are clearly delineated. Tokenizer behavior varie
 
 ---
 
-[← Chapter 11](ch11-knowledge-elicitation-from-experts.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 13 →](ch13-language-variability-vs-determinism.md)
+[← Chapter 11](ch11-knowledge-elicitation-from-experts.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 14 →](ch14-requirements-detection-and-formalization.md)

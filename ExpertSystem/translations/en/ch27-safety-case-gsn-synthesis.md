@@ -1,8 +1,8 @@
 # Chapter 27. Safety Case: Synthesis and Verification of Arguments
 
-> **Book:** [Architecture of Evidence-Based Expert Systems](README.md) · [Part V: Verification, Testing, Diagnostics, and Safety Assurance](part-05-verification-and-learning.md)  
-> **Previous Chapter:** [Chapter 24. Technical Diagnostics: Distinguishing Symptoms from Root Causes Under Incompleteness](ch24-system-diagnosis.md)  
-> **Next Chapter:** [Chapter 30. Safety and Cybersecurity Co-Engineering](ch30-safety-cybersecurity-co-engineering.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part V: Verification, Testing, Learning, and Safety Case Synthesis](part-05-verification-and-learning.md)  
+> **Previous Chapter:** [Chapter 39. Active Compliance Auditor: Popperian Falsification, Normative Compliance (ASPICE/ISO 26262/ISO 21434), and Autonomous Test Design](ch39-active-compliance-auditor-and-popperian-testing.md)  
+> **Next Chapter:** [Chapter 30. Functional Safety and Cybersecurity Co-Engineering](ch30-safety-cybersecurity-co-engineering.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Audience:** Intermediate and advanced: systems architects, functional safety engineers and auditors, critical systems developers  
@@ -696,4 +696,4 @@ The boundaries of this methodology rest upon **the author's principle of demarca
 
 ---
 
-[← Chapter 24](ch24-system-diagnosis.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 30 →](ch30-safety-cybersecurity-co-engineering.md)
+[← Chapter 39](ch39-active-compliance-auditor-and-popperian-testing.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 30 →](ch30-safety-cybersecurity-co-engineering.md)

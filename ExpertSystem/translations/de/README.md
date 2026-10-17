@@ -176,14 +176,14 @@ Das Werk umfasst sieben Themenblöcke, 40 Kapitel und fünf Anhänge:
 ```mermaid
 flowchart TD
     accTitle: Struktur des Buches und Zusammenhang der Teile
-    accDescr: Sieben Themenblöcke von Wissensverträgen über Repräsentation bis zur verteilten SOA.
+    accDescr: Sieben Themenblöcke von Wissensverträgen über Repräsentation, Eingabebewertung, Inferenz, Verifikation und Neuro-Symbolik bis zur verteilten SOA.
 
     P1["<b>Teil I</b><br/>Wissensvertrag und Vertrauensgrenzen"] --> P2["<b>Teil II</b><br/>Modelle, Repräsentation und Wissenspakete"]
-    P2 --> P3["<b>Teil III</b><br/>Wissensgewinnung und Eingabebewertung"]
-    P3 --> P4["<b>Teil IV</b><br/>Architektur, Stack, Inferenz und Handlung"]
-    P4 --> P5["<b>Teil V</b><br/>Verifikation, Tests und Sicherheitsnachweise"]
-    P5 --> P6["<b>Teil VI</b><br/>Neuro-symbolische Modelle und Lernen"]
-    P6 --> P7["<b>Teil VII</b><br/>Reaktivität, Föderation und verteilte SOA"]
+    P2 --> P3["<b>Teil III</b><br/>Eingabebewertung und Wissensgewinnung"]
+    P3 --> P4["<b>Teil IV</b><br/>Architektur, Inferenz, Diagnose und Erklärung"]
+    P4 --> P5["<b>Teil V</b><br/>Verifikation, Tests, Lernen und Sicherheitsnachweise"]
+    P5 --> P6["<b>Teil VI</b><br/>Neuro-symbolische Architekturen, Abduktion und Halluzinationen"]
+    P6 --> P7["<b>Teil VII</b><br/>Stack, Hardware, Kybernetik und verteilte SOA"]
 
     classDef p1 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
     classDef p2 fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
@@ -226,65 +226,65 @@ flowchart TD
 
 ---
 
-### [Teil III. Wissensgewinnung, Sprachanalyse und Eingabebewertung](part-03-knowledge-engineering-nlp.md)
+### [Teil III. Eingangsdatenbewertung, Wissensgewinnung und Sprachanalyse](part-03-knowledge-engineering-nlp.md)
 
-*Dokumente, Expertenwissen und Beobachtungen: Kandidatenextraktion, Parsing und Evidenzbewertung.*
+*Algorithmische Skepsis und Quellenfilterung, Dokumente und Expertenwissen, Parsing und Formalisierung von Anforderungen.*
 
+* [Kapitel 37. Bewertung von Eingabedaten: Quellen, Evidenz und algorithmische Skepsis](ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Kapitel 10. Systeme zur Wissensakquise: Quellen, Zulassungsgateways und Lebenszyklen](ch10-knowledge-acquisition-systems.md)
 * [Kapitel 11. Wissensextraktion von Fachexperten: Interviews, kognitive Karten und Praxisformalisierung](ch11-knowledge-elicitation-from-experts.md)
 * [Kapitel 12. Linguistische Analyse und lokale Modelle: Wahrung von Semantik und Quellenbezug](ch12-linguistic-analysis-and-local-models.md)
-* [Kapitel 13. Natürliche Sprachvariabilität versus Determinismus: Kompilierung des Abfragesinns](ch13-language-variability-vs-determinism.md)
 * [Kapitel 14. Erkennung von Anforderungen und Modalitäten: Vom Normentext zu formalen Invarianten](ch14-requirements-detection-and-formalization.md)
 * [Kapitel 15. Wissensextraktion und Aufbau der Wissensbasis: Fakten, Grammatiken und Automaten](ch15-knowledge-extraction-and-kb-construction.md)
-* [Kapitel 37. Bewertung von Eingabedaten: Quellen, Evidenz und algorithmische Skepsis](ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
-### [Teil IV. Architektur, Technologie-Stack, Inferenz und Handlung](part-04-architecture-and-inference.md)
+### [Teil IV. Systemarchitektur, normative Inferenz, Diagnose und Erklärung](part-04-architecture-and-inference.md)
 
-*Architekturverträge, Laufzeit-Stack, Hardwarebeschleunigung, Normeninferenz, Erklärung und Regelkreise.*
+*Architekturverträge, Kompilierung der Frageintention, Behauptungsverifikation, Normeninferenz, modellbasierte Diagnose (MBD) und Erklärungs-Engines.*
 
 * [Kapitel 16. Architektur von Expertensystemen: Vom formalen Wissen zur beweisgestützten Entscheidung](ch16-expert-systems-architecture.md)
-* [Kapitel 17. Der Technologie-Stack: Auswahlkriterien für Werkzeuge, Programmiersprachen und Regel-Engines](ch17-implementation-stack.md)
-* [Kapitel 18. Ausführungsinfrastruktur: Lokale SLMs, Hardwarebeschleuniger, Edge und On-Premise](ch18-execution-infrastructure.md)
+* [Kapitel 13. Natürliche Sprachvariabilität versus Determinismus: Kompilierung des Abfragesinns](ch13-language-variability-vs-determinism.md)
 * [Kapitel 19. Von der Frage zum Beweis: Suche, Bindung und Prüfung von Behauptungen](ch19-from-question-to-evidence.md)
 * [Kapitel 31. Normeninferenz: Prädikatenhierarchien, Ausnahmen und zeitliche Gültigkeit](ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Kapitel 24. Technische Diagnose: Trennung von Symptom und Ursache unter unvollständiger Information](ch24-system-diagnosis.md)
 * [Kapitel 20. Erklärungs-Engine: Entscheidungen, begründete Ablehnung und Kompetenzgrenzen](ch20-explanation-engine.md)
-* [Kapitel 21. Von der Empfehlung zur Handlung: Autorisierungskontrolle und sichere Ausführung](ch21-from-recommendation-to-action.md)
-* [Kapitel 22. Der kybernetische Regelkreis: Sensoren, Peripherie und Rückkopplung](ch22-cybernetics-edge-to-backend.md)
 
 ---
 
-### [Teil V. Verifikation, Prüfung, Diagnose und Sicherheitsnachweise](part-05-verification-and-learning.md)
+### [Teil V. Verifikation, Prüfung, Lernen und Sicherheitsnachweise](part-05-verification-and-learning.md)
 
-*Formale Regelprüfung, Wissenstestpyramide, Poppersche Falsifikation, Fehlerdiagnose und GSN-Sicherheitsnachweise.*
+*Formale Regelprüfung, Wissenstestpyramide, Prüfungsmatrizen, kontinuierliches Lernen, Poppersche Falsifikation und GSN-Sicherheitsnachweise.*
 
 * [Kapitel 23. Verifikation der Wissensbasis: Widerspruchsfreiheit, Vollständigkeit und Robustheit](ch23-knowledge-base-verification.md)
 * [Kapitel 36. Die Wissenstestpyramide: Regeln, Interaktionen und Antwortstabilität](ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Kapitel 25. Wie Expertensysteme lernen: Prüfungsmatrizen, Wissensaudits und Regressionskontrolle](ch25-how-expert-systems-learn.md)
+* [Kapitel 26. Kontinuierliches Lernen (Continual Learning) aus Erfahrung und Beherrschung von Protokolldrift](ch26-continual-learning.md)
 * [Kapitel 39. Der aktive Compliance-Auditor: Poppersche Falsifikation, Normenkonformität und Testentwurf](ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Kapitel 24. Technische Diagnose: Trennung von Symptom und Ursache unter unvollständiger Information](ch24-system-diagnosis.md)
 * [Kapitel 27. Sicherheitsnachweise: Formale Synthese und Prüfung von GSN-Argumenten](ch27-safety-case-gsn-synthesis.md)
 * [Kapitel 30. Integrierte Entwicklung von funktionaler Sicherheit und Cybersecurity](ch30-safety-cybersecurity-co-engineering.md)
 
 ---
 
-### [Teil VI. Neuro-symbolische Modelle, kognitive Grenzen und kontinuierliches Lernen](part-06-frontiers-neuro-symbolic.md)
+### [Teil VI. Neuro-symbolische Architekturen, Abduktion und Halluzinationskontrolle](part-06-frontiers-neuro-symbolic.md)
 
-*Strikte Deduktion vs. Hypothesen, Sprachmodell-Integration, Halluzinationskontrolle und Erfahrungslernen.*
+*Strikte Deduktion vs. beratende Hypothesen, relationale Suche und Abduktion bei Wissenslücken, Sprachmodell-Integration und Halluzinationskontrolle.*
 
 * [Kapitel 28. Dual-Mode-Expertensysteme: Strikte Deduktion und beratende Hypothese](ch28-dual-mode-expert-systems.md)
-* [Kapitel 29. Neuro-symbolische Architektur: Sprachmodelle und beweisgestützte Verifikation](ch29-neuro-symbolic-architecture.md)
 * [Kapitel 34. Wissenslücken: Relationale Suche, Abduktion und Klärungsdialog](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Kapitel 29. Neuro-symbolische Architektur: Sprachmodelle und beweisgestützte Verifikation](ch29-neuro-symbolic-architecture.md)
 * [Kapitel 38. Beseitigung maschineller Halluzinationen und Wissensdefizite: Evidenzbasierte Kontrolle](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Kapitel 25. Wie Expertensysteme lernen: Prüfungsmatrizen, Wissensaudits und Regressionskontrolle](ch25-how-expert-systems-learn.md)
-* [Kapitel 26. Kontinuierliches Lernen (Continual Learning) aus Erfahrung und Beherrschung von Protokolldrift](ch26-continual-learning.md)
 
 ---
 
-### [Teil VII. Reaktive Ausführung, Wissensaustausch und verteilte SOA](part-07-runtime-and-knowledge-exchange.md)
+### [Teil VII. Technologie-Stack, Hardware-Infrastruktur, kybernetische Ausführung und verteilte SOA](part-07-runtime-and-knowledge-exchange.md)
 
-*Reaktive Regelausführung, Synergetik, Systemföderation und verteilte epistemische Unternehmensarchitekturen.*
+*Technologie-Stack, Hardwarebeschleuniger, sichere Aktionsausführung, kybernetische Regelkreise, reaktive Synergetik, Systemföderation und verteilte epistemische Unternehmensarchitekturen.*
 
+* [Kapitel 17. Der Technologie-Stack: Auswahlkriterien für Werkzeuge, Programmiersprachen und Regel-Engines](ch17-implementation-stack.md)
+* [Kapitel 18. Ausführungsinfrastruktur: Lokale SLMs, Hardwarebeschleuniger, Edge und On-Premise](ch18-execution-infrastructure.md)
+* [Kapitel 21. Von der Empfehlung zur Handlung: Autorisierungskontrolle und sichere Ausführung](ch21-from-recommendation-to-action.md)
+* [Kapitel 22. Der kybernetische Regelkreis: Sensoren, Peripherie und Rückkopplung](ch22-cybernetics-edge-to-backend.md)
 * [Kapitel 35. Reaktive Expertensysteme: Ereignisse, Widerruf und Wissensselbstorganisation](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Kapitel 33. Intersystemarer Wissensaustausch: Regelbereitstellung, Modellunterrichtung und sichere Rückkopplung](ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Kapitel 40. Verteilte epistemische Architektur: Wissens-SOA, semantisches Routing und Multi-Quellen-Schiedsgericht](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

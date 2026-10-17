@@ -1,8 +1,8 @@
 # Chapter 22. Cybernetic Control Cycle: Sensors, Peripherals, and Edge-to-Backend Feedback
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VII: Implementation Stack, Hardware Infrastructure, Cybernetic Execution, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)  
 > **Previous Chapter:** [Chapter 21. From Recommendation to Action: Authority Control and Safe Execution in Production Environments](ch21-from-recommendation-to-action.md)  
-> **Next Chapter:** [Chapter 23. Knowledge Base Verification: Ensuring Consistency, Completeness, and Rule Reliability](ch23-knowledge-base-verification.md)  
+> **Next Chapter:** [Chapter 35. Reactive Expert Systems: Events, Revocation, and Knowledge Adaptation](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Level:** Advanced Engineering: cyber-physical systems developers, embedded engineers, systems architects  
@@ -1060,4 +1060,4 @@ Proceeding in thematic sequence, [Chapter 23](ch23-knowledge-base-verification.m
 
 ---
 
-[← Chapter 21](ch21-from-recommendation-to-action.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 23 →](ch23-knowledge-base-verification.md)
+[← Chapter 21](ch21-from-recommendation-to-action.md) | [Table of Contents](README.md) | [Part VII](part-07-runtime-and-knowledge-exchange.md) | [Chapter 35 →](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)

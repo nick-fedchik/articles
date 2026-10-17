@@ -196,13 +196,12 @@ flowchart TD
 
 *문서, 전문가 경험, 관측: 후보 추출, 언어 분석, 정형화 및 증거 평가.*
 
+* [제37장 입력 정보 평가: 출처, 증거, 불확실성](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [제10장 지식 획득 시스템: 출처, 인가, 수명 주기](../../ch10-knowledge-acquisition-systems.md)
 * [제11장 전문가로부터의 지식 추출: 인터뷰, 인지 지도, 경험의 형식화](../../ch11-knowledge-elicitation-from-experts.md)
 * [제12장 언어학적 분석과 로컬 모델: 의미와 출처 보존](../../ch12-linguistic-analysis-and-local-models.md)
-* [제13장 자연어의 다양성 대 결정론: 질문 의미의 컴파일](../../ch13-language-variability-vs-determinism.md)
 * [제14장 요구사항 및 양상 감지: 규범 텍스트에서 불변성으로](../../ch14-requirements-detection-and-formalization.md)
 * [제15장 지식 추출 및 지식 베이스 구축: 사실, 문법, 오토마타](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [제37장 입력 정보 평가: 출처, 증거, 불확실성](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *아키텍처 계약, 기술 스택, 하드웨어 실행, 주장 검증, 규범 기반 추론, 설명 및 사이버네틱스 제어 루프.*
 
 * [제16장 전문가 시스템 아키텍처: 형식적 지식에서 증거 기반 의사결정까지](../../ch16-expert-systems-architecture.md)
-* [제17장 기술 스택: 도구, 프로그래밍 언어, 규칙 엔진 선정 기준](../../ch17-implementation-stack.md)
-* [제18장 실행 인프라: 로컬 모델, 하드웨어 가속기, Edge 및 On-Premise](../../ch18-execution-infrastructure.md)
+* [제13장 자연어의 다양성 대 결정론: 질문 의미의 컴파일](../../ch13-language-variability-vs-determinism.md)
 * [제19장 질문에서 증거까지: 검색, 접지 및 주장 검증](../../ch19-from-question-to-evidence.md)
 * [제31장 규범 기반 추론: 술어 계층, 예외, 유효성](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [제24장 기술 진단: 불완전성 조건에서 증상과 근본 원인을 혼동하지 않는 방법](../../ch24-system-diagnosis.md)
 * [제20장 설명 엔진: 의사결정, 거부, 역량의 한계](../../ch20-explanation-engine.md)
-* [제21장 권고에서 행동까지: 권한 관리 및 운영 환경에서의 안전한 실행](../../ch21-from-recommendation-to-action.md)
-* [제22장 사이버네틱스 제어 루프: 센서, 주변기기, 피드백](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [제23장 지식 베이스 검증: 규칙의 무모순성, 완전성, 신뢰성 검사 방법](../../ch23-knowledge-base-verification.md)
 * [제36장 지식 테스트 피라미드: 규칙, 상호작용, 응답 안정성](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [제25장 전문가 시스템 교육 방법: 시험 매트릭스, 지식 감사, 퇴행 방지](../../ch25-how-expert-systems-learn.md)
+* [제26장 경험을 통한 지속적 학습(Continual Learning)과 시스템 로그 표류 극복](../../ch26-continual-learning.md)
 * [제39장 능동적 전문가 테스터: 포퍼적 반증, 규제 준수(ASPICE/ISO 26262/ISO 21434) 및 자율 테스트 설계](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [제24장 기술 진단: 불완전성 조건에서 증상과 근본 원인을 혼동하지 않는 방법](../../ch24-system-diagnosis.md)
 * [제27장 안전 논증: 논거의 합성 및 검증](../../ch27-safety-case-gsn-synthesis.md)
 * [제30장 기능 안전 및 사이버 보안의 공동 엔지니어링](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *엄격한 추론과 자문적 가설, 언어 모델 통합, 지식 결손, 미확인 응답 제어, 시험 매트릭스 및 경험을 통한 지속적 학습.*
 
 * [제28장 듀얼 모드 전문가 시스템: 엄격한 추론과 자문적 가설](../../ch28-dual-mode-expert-systems.md)
-* [제29장 신경-기호 아키텍처: 언어 모델과 증거 근거 검증](../../ch29-neuro-symbolic-architecture.md)
 * [제34장 지식 결손: 관계형 탐색, 귀추법 및 소명 대화](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [제29장 신경-기호 아키텍처: 언어 모델과 증거 근거 검증](../../ch29-neuro-symbolic-architecture.md)
 * [제38장 기계 환각과 지식 부족: 증거 기반 응답 제어](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [제25장 전문가 시스템 교육 방법: 시험 매트릭스, 지식 감사, 퇴행 방지](../../ch25-how-expert-systems-learn.md)
-* [제26장 경험을 통한 지속적 학습(Continual Learning)과 시스템 로그 표류 극복](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *규칙의 반응형 실행, 시너지틱스와 지식의 상전이, 시스템 간 교환 및 엔터프라이즈 규모의 분산 인식론 아키텍처.*
 
+* [제17장 기술 스택: 도구, 프로그래밍 언어, 규칙 엔진 선정 기준](../../ch17-implementation-stack.md)
+* [제18장 실행 인프라: 로컬 모델, 하드웨어 가속기, Edge 및 On-Premise](../../ch18-execution-infrastructure.md)
+* [제21장 권고에서 행동까지: 권한 관리 및 운영 환경에서의 안전한 실행](../../ch21-from-recommendation-to-action.md)
+* [제22장 사이버네틱스 제어 루프: 센서, 주변기기, 피드백](../../ch22-cybernetics-edge-to-backend.md)
 * [제35장 반응형 전문가 시스템: 이벤트, 철회, 지식 적응](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [제33장 시스템 간 지식 교환: 외부 시스템으로의 규칙 배포, 모델 교육, 안전한 피드백](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [제40장 증거 기반 전문가 시스템의 분산 아키텍처: 인식론적 SOA, 시맨틱 라우팅, 메모리 계층 및 다중 소스 반박 가능 중재](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

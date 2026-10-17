@@ -1,8 +1,8 @@
 # Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні моделі, когнітивні фронтири та неперервне навчання](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](ch30-safety-cybersecurity-co-engineering.md)  
-> **Наступна глава:** [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](ch29-neuro-symbolic-architecture.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні архітектури, абдукція та контроль галюцинацій](part-06-frontiers-neuro-symbolic.md)
+> **Попередня глава:** [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](ch30-safety-cybersecurity-co-engineering.md)
+> **Наступна глава:** [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: системні архітектори, інженери зі знань, інженери з верифікації, аудитори функціональної безпеки  
@@ -725,4 +725,4 @@ t_{\mathrm{margin}} < \Delta t_{\mathrm{threshold}} \quad \lor \quad \neg \mathr
 
 ---
 
-[← Глава 30](ch30-safety-cybersecurity-co-engineering.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 29 →](ch29-neuro-symbolic-architecture.md)
+[← Глава 30](ch30-safety-cybersecurity-co-engineering.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 34 →](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)

@@ -1,7 +1,7 @@
 # Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Здобуття знань, мовний аналіз та оцінювання входу](part-03-knowledge-engineering-nlp.md)
-> **Попередня глава:** [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Оцінювання вхідної інформації, здобуття знань та мовний аналіз](part-03-knowledge-engineering-nlp.md)
+> **Попередня глава:** [Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність](ch37-input-information-assessment-and-algorithmic-skepticism.md)
 > **Наступна глава:** [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](ch11-knowledge-elicitation-from-experts.md)
 > **Зміст книги:** [README.md](README.md)
 > **Автор:** [Микола Федчик](about-the-author.md)
@@ -1623,5 +1623,5 @@ $$\mathrm{VaultPath}(D) = \mathcal{F}_{\mathrm{taxonomy}}\!\left(\mathcal{G}_{\m
 
 ---
 
-[← Глава 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 11 →](ch11-knowledge-elicitation-from-experts.md)
+[← Глава 37](ch37-input-information-assessment-and-algorithmic-skepticism.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 11 →](ch11-knowledge-elicitation-from-experts.md)
 

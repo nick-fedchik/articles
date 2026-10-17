@@ -1,6 +1,6 @@
 # Kapitel 11. Erhebung von Expertenwissen: Befragungen, kognitive Karten und Formalisierung von Praxiserfahrung
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Wissensakquisition, linguistische Analyse und Eingangsdatenbewertung](part-03-knowledge-engineering-nlp.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Eingangsdatenbewertung, Wissensakquisition und linguistische Analyse](part-03-knowledge-engineering-nlp.md)  
 > **Vorheriges Kapitel:** [Kapitel 10. Systeme der Wissensakquisition: Quellen, Zulassung und Lebenszyklus](ch10-knowledge-acquisition-systems.md)  
 > **Nächstes Kapitel:** [Kapitel 12. Linguistische Analyse und lokale Modelle: Erhalt von Semantik und Herkunftsnachweis](ch12-linguistic-analysis-and-local-models.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  

@@ -1,8 +1,8 @@
 # Kapitel 13. Natürliche Sprachvarianz versus Determinismus: Kompilierung der Frageintention
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Wissensakquisition, linguistische Analyse und Eingangsdatenbewertung](part-03-knowledge-engineering-nlp.md)  
-> **Vorheriges Kapitel:** [Kapitel 12. Linguistische Analyse und lokale Modelle: Erhalt von Semantik und Herkunftsnachweis](ch12-linguistic-analysis-and-local-models.md)  
-> **Nächstes Kapitel:** [Kapitel 14. Anforderungsextraktion und Modalitäten: Vom normativen Text zu Invarianten](ch14-requirements-detection-and-formalization.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Systemarchitektur, normative Inferenz, Diagnose und Erklärung](part-04-architecture-and-inference.md)  
+> **Vorheriges Kapitel:** [Kapitel 16. Architektur von Expertensystemen: Vom formalen Wissen zur evidenzbasierten Entscheidung](ch16-expert-systems-architecture.md)  
+> **Nächstes Kapitel:** [Kapitel 19. Von der Frage zum Beweis: Suche, Bindung und Prüfung von Behauptungen](ch19-from-question-to-evidence.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Mittelstufe: Entwickler und Knowledge Engineers  
@@ -870,4 +870,4 @@ Das folgende Kapitel überträgt diesen Ansatz auf die Gegenseite des Systems: n
 
 ---
 
-[← Kapitel 12](ch12-linguistic-analysis-and-local-models.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 14 →](ch14-requirements-detection-and-formalization.md)
+[← Kapitel 16](ch16-expert-systems-architecture.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 19 →](ch19-from-question-to-evidence.md)

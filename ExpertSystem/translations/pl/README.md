@@ -190,13 +190,12 @@ flowchart TD
 
 *Dokumenty, wiedza ekspercka i obserwacje: ekstrakcja kandydatów, parsowanie i ocena dowodów.*
 
+* [Rozdział 37. Ocena informacji wejściowej: źródła, dowody i sceptycyzm algorytmiczny](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Rozdział 10. Systemy pozyskiwania wiedzy: źródła, bramy dopuszczenia i cykle życia](../../ch10-knowledge-acquisition-systems.md)
 * [Rozdział 11. Wydobywanie wiedzy od ekspertów dziedzinowych: wywiady, mapy poznawcze i formalizacja praktyki](../../ch11-knowledge-elicitation-from-experts.md)
 * [Rozdział 12. Analiza lingwistyczna i modele lokalne: zachowanie semantyki i atrybucji źródeł](../../ch12-linguistic-analysis-and-local-models.md)
-* [Rozdział 13. Zmienność języka naturalnego a determinizm: kompilacja sensu zapytania](../../ch13-language-variability-vs-determinism.md)
 * [Rozdział 14. Wykrywanie wymagań i modalności: od tekstu normatywnego do niezmienników](../../ch14-requirements-detection-and-formalization.md)
 * [Rozdział 15. Ekstrakcja wiedzy i budowa bazy wiedzy: fakty, gramatyki i automaty](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Rozdział 37. Ocena informacji wejściowej: źródła, dowody i sceptycyzm algorytmiczny](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -205,13 +204,11 @@ flowchart TD
 *Kontrakty architektoniczne, stos uruchomieniowy, wnioskowanie normatywne, silnik wyjaśnień i pętle sterowania.*
 
 * [Rozdział 16. Architektura systemu eksperckiego: od sformalizowanej wiedzy do decyzji dowodowej](../../ch16-expert-systems-architecture.md)
-* [Rozdział 17. Stos technologiczny: kryteria doboru narzędzi, języków programowania i silników reguł](../../ch17-implementation-stack.md)
-* [Rozdział 18. Infrastruktura wykonawcza: lokalne modele SLM, akceleratory sprzętowe, Edge i On-Premise](../../ch18-execution-infrastructure.md)
+* [Rozdział 13. Zmienność języka naturalnego a determinizm: kompilacja sensu zapytania](../../ch13-language-variability-vs-determinism.md)
 * [Rozdział 19. Od pytania do dowodu: wyszukiwanie, wiązanie i weryfikacja twierdzeń](../../ch19-from-question-to-evidence.md)
 * [Rozdział 31. Wnioskowanie normatywne: hierarchie predykatów, wyjątki i ważność czasowa](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Rozdział 24. Diagnostyka techniczna: rozróżnianie objawów od przyczyn w warunkach niepełnej informacji](../../ch24-system-diagnosis.md)
 * [Rozdział 20. Silnik wyjaśnień: decyzje, uzasadniona odmowa i granice kompetencji](../../ch20-explanation-engine.md)
-* [Rozdział 21. Od rekomendacji do działania: kontrola uprawnień i bezpieczne wykonanie](../../ch21-from-recommendation-to-action.md)
-* [Rozdział 22. Cybernetyczna pętla sterowania: sensory, aktuatory i sprzężenie zwrotne](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -221,8 +218,9 @@ flowchart TD
 
 * [Rozdział 23. Weryfikacja bazy wiedzy: spójność, kompletność i niezawodność reguł](../../ch23-knowledge-base-verification.md)
 * [Rozdział 36. Piramida testowania wiedzy: reguły, interakcje i odporność odpowiedzi](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Rozdział 25. Jak uczyć system ekspercki: macierze egzaminacyjne, audyty wiedzy i kontrola regresji](../../ch25-how-expert-systems-learn.md)
+* [Rozdział 26. Uczenie ciągłe (Continual Learning) z doświadczenia i mitygacja dryfu logów](../../ch26-continual-learning.md)
 * [Rozdział 39. Aktywny audytor zgodności: falsyfikacja popperowska, normy (ASPICE/ISO 26262/ISO 21434) i projektowanie testów](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Rozdział 24. Diagnostyka techniczna: rozróżnianie objawów od przyczyn w warunkach niepełnej informacji](../../ch24-system-diagnosis.md)
 * [Rozdział 27. Uzasadnienia bezpieczeństwa: formalna synteza i weryfikacja argumentów GSN](../../ch27-safety-case-gsn-synthesis.md)
 * [Rozdział 30. Zintegrowane projektowanie bezpieczeństwa funkcjonalnego i cyberbezpieczeństwa](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -233,11 +231,9 @@ flowchart TD
 *Dedukcja a hipotezy doradcze, integracja modeli językowych, zwalczanie halucynacji i uczenie z doświadczenia.*
 
 * [Rozdział 28. Dwutrybowe systemy eksperckie: ścisła dedukcja i hipoteza doradcza](../../ch28-dual-mode-expert-systems.md)
-* [Rozdział 29. Architektura neuro-symboliczna: modele językowe i dowodowa weryfikacja faktów](ch29-neuro-symbolic-architecture.md)
 * [Rozdział 34. Luki w wiedzy: wyszukiwanie relacyjne, abdukcja i dialog doprecyzowujący](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Rozdział 29. Architektura neuro-symboliczna: modele językowe i dowodowa weryfikacja faktów](ch29-neuro-symbolic-architecture.md)
 * [Rozdział 38. Halucynacje maszynowe i deficyty wiedzy: dowodowa kontrola odpowiedzi](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Rozdział 25. Jak uczyć system ekspercki: macierze egzaminacyjne, audyty wiedzy i kontrola regresji](../../ch25-how-expert-systems-learn.md)
-* [Rozdział 26. Uczenie ciągłe (Continual Learning) z doświadczenia i mitygacja dryfu logów](../../ch26-continual-learning.md)
 
 ---
 
@@ -245,6 +241,10 @@ flowchart TD
 
 *Reaktywne wykonywanie reguł, synergetyka, federacje systemów i rozproszone architektury SOA.*
 
+* [Rozdział 17. Stos technologiczny: kryteria doboru narzędzi, języków programowania i silników reguł](../../ch17-implementation-stack.md)
+* [Rozdział 18. Infrastruktura wykonawcza: lokalne modele SLM, akceleratory sprzętowe, Edge i On-Premise](../../ch18-execution-infrastructure.md)
+* [Rozdział 21. Od rekomendacji do działania: kontrola uprawnień i bezpieczne wykonanie](../../ch21-from-recommendation-to-action.md)
+* [Rozdział 22. Cybernetyczna pętla sterowania: sensory, aktuatory i sprzężenie zwrotne](../../ch22-cybernetics-edge-to-backend.md)
 * [Rozdział 35. Reaktywne systemy eksperckie: zdarzenia, odwołania i samoorganizacja wiedzy](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Rozdział 33. Międzysystemowa wymiana wiedzy: dostarczanie reguł, nauczanie modeli i bezpieczne sprzężenie](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Rozdział 40. Rozproszona architektura epistemiczna: Knowledge SOA, routing semantyczny i wieloźródłowy arbitraż](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

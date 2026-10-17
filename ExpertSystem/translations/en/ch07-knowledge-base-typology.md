@@ -1,7 +1,7 @@
 # Chapter 7. Knowledge Base Typology: Rules, Ontologies, Precedents, and Vectors
 
 > **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part II: Mathematical Models, Knowledge Representation, and Storage](part-02-knowledge-models.md)  
-> **Previous Chapter:** [Chapter 6. Applied Mathematics for Expert Systems: Rules, Probabilities, Graphs, and Causality](ch06-applied-mathematics-for-expert-systems.md)  
+> **Previous Chapter:** [Chapter 6. Applied Mathematics of Expert Systems: Rules, Probabilities, Graphs, and Causality](ch06-applied-mathematics-for-expert-systems.md)  
 > **Next Chapter:** [Chapter 8. Engineering Artifacts as Data for Expert Systems](ch08-engineering-artifacts-as-data.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  

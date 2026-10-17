@@ -1,8 +1,8 @@
 # Chapter 36. Knowledge Testing Pyramid: Rules, Interactions, and Response Robustness
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part V: Verification, Testing, Diagnostics, and Safety Assurance](part-05-verification-and-learning.md)  
-> **Previous Chapter:** [Chapter 23. Knowledge Base Verification: Checking Consistency, Completeness, and Rule Reliability](ch23-knowledge-base-verification.md)  
-> **Next Chapter:** [Chapter 39. Active Compliance Auditor: Popperian Falsification, Normative Compliance (ASPICE/ISO 26262/ISO 21434), and Autonomous Test Design](ch39-active-compliance-auditor-and-popperian-testing.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part V: Verification, Testing, Learning, and Safety Case Synthesis](part-05-verification-and-learning.md)  
+> **Previous Chapter:** [Chapter 23. Knowledge Base Verification: How to Verify Rule Consistency, Completeness, and Reliability](ch23-knowledge-base-verification.md)  
+> **Next Chapter:** [Chapter 25. How Expert Systems Learn: Examination Matrices, Knowledge Audits, and Regression Control](ch25-how-expert-systems-learn.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Advanced: System architects, knowledge engineers, verification engineers (QA/QE), mathematicians  
@@ -1237,4 +1237,4 @@ Having mastered the full cycle of knowledge testing and calibration, the reader 
 
 ---
 
-[← Chapter 23](ch23-knowledge-base-verification.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 39 →](ch39-active-compliance-auditor-and-popperian-testing.md)
+[← Chapter 23](ch23-knowledge-base-verification.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 25 →](ch25-how-expert-systems-learn.md)

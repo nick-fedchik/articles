@@ -198,13 +198,12 @@ flowchart TD
 
 *Sənədlər, mütəxəssislərin təcrübəsi və müşahidələr: namizədlərin çıxarılması, linqvistik təhlil, rəsmiləşdirmə və sübutların qiymətləndirilməsi.*
 
+* [Fəsil 37. Giriş məlumatlarının qiymətləndirilməsi: Mənbələr, sübutlar və qeyri-müəyyənlik](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Fəsil 10. Bilik əldə etmə sistemləri: Mənbələr, qəbul və həyat dövrü](../../ch10-knowledge-acquisition-systems.md)
 * [Fəsil 11. Ekspertlərdən biliklərin çıxarılması: Müsahibələr, koqnitiv xəritələr və təcrübənin rəsmiləşdirilməsi](../../ch11-knowledge-elicitation-from-experts.md)
 * [Fəsil 12. Linqvistik təhlil və lokal modellər: Mənanın və mənbələrin qorunması](../../ch12-linguistic-analysis-and-local-models.md)
-* [Fəsil 13. Təbii dil variativliyi determinizmə qarşı: Sorğu mənasının tərtibi](../../ch13-language-variability-vs-determinism.md)
 * [Fəsil 14. Tələblərin və modallıqların aşkarlanması: Normativ mətndən invariantlara qədər](../../ch14-requirements-detection-and-formalization.md)
 * [Fəsil 15. Biliklərin çıxarılması və bilik bazasının qurulması: Faktlar, qrammatikalar və avtomatlar](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Fəsil 37. Giriş məlumatlarının qiymətləndirilməsi: Mənbələr, sübutlar və qeyri-müəyyənlik](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -213,13 +212,11 @@ flowchart TD
 *Arxitektura müqavilələri, texnoloji stek, aparat icrası, iddiaların yoxlanılması, normalara əsaslanan mühakimə, izahat və kibernetik idarəetmə dövrəsi.*
 
 * [Fəsil 16. Ekspert sisteminin arxitekturası: Formal bilikdən sübut əsaslı qərara qədər](../../ch16-expert-systems-architecture.md)
-* [Fəsil 17. Texnoloji stek: Alətlərin, proqramlaşdırma dillərinin və qaydalar mühərriklərinin seçilməsi meyarları](../../ch17-implementation-stack.md)
-* [Fəsil 18. İcra infrastrukturu: Lokal modellər, aparat sürətləndiriciləri, Edge və On-Premise](../../ch18-execution-infrastructure.md)
+* [Fəsil 13. Təbii dil variativliyi determinizmə qarşı: Sorğu mənasının tərtibi](../../ch13-language-variability-vs-determinism.md)
 * [Fəsil 19. Sualdan sübuta qədər: Axtarış, əsaslandırma və iddiaların yoxlanılması](../../ch19-from-question-to-evidence.md)
 * [Fəsil 31. Normalara əsaslanan mühakimə: Predikatlar iyerarxiyası, istisnalar və etibarlılıq](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Fəsil 24. Texniki diaqnostika: Məlumat natamamlığı şəraitində simptomu ilkin səbəblə necə qarışdırmamaq olar](../../ch24-system-diagnosis.md)
 * [Fəsil 20. İzahat mühərriki: Qərar, imtina və səlahiyyət sərhədləri](../../ch20-explanation-engine.md)
-* [Fəsil 21. Tövsiyədən fəaliyyətə qədər: İcazə nəzarəti və istehsalat mühitində təhlükəsiz icra](../../ch21-from-recommendation-to-action.md)
-* [Fəsil 22. Kibernetik idarəetmə dövrəsi: Sensorlar, periferiya və əks-əlaqə](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -229,8 +226,9 @@ flowchart TD
 
 * [Fəsil 23. Bilik bazasının yoxlanılması: Qaydaların ziddiyyətsizliyini, tamlığını və etibarlılığını necə yoxlamaq olar](../../ch23-knowledge-base-verification.md)
 * [Fəsil 36. Bilik sınaq piramidası: Qaydalar, qarşılıqlı əlaqələr və cavab sabitliyi](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Fəsil 25. Ekspert sistemini necə öyrətmək olar: İmtahan matrisləri, bilik auditi və reqressiya nəzarəti](../../ch25-how-expert-systems-learn.md)
+* [Fəsil 26. Təcrübədən davamlı öyrənmə (Continual Learning) və sistem jurnalının sürüşməsinin qarşısının alınması](../../ch26-continual-learning.md)
 * [Fəsil 39. Aktiv sınaq eksperti: Popper falsifikasiyası, normativ uyğunluq (ASPICE/ISO 26262/ISO 21434) və avtonom sınaq dizaynı](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Fəsil 24. Texniki diaqnostika: Məlumat natamamlığı şəraitində simptomu ilkin səbəblə necə qarışdırmamaq olar](../../ch24-system-diagnosis.md)
 * [Fəsil 27. Təhlükəsizlik əsaslandırması: Arqumentlərin sintezi və yoxlanılması](../../ch27-safety-case-gsn-synthesis.md)
 * [Fəsil 30. Funksional təhlükəsizlik və kibertəhlükəsizliyin birgə layihələndirilməsi](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -241,11 +239,9 @@ flowchart TD
 *Sərt mühakimə və məsləhətçi hipotez, dil modelinin inteqrasiyası, bilik boşluqları, təsdiqlənməmiş cavabın nəzarəti, imtahan matrisləri və təcrübədən davamlı öyrənmə.*
 
 * [Fəsil 28. İkirejimli ekspert sistemləri: Sərt mühakimə və məsləhətçi hipotez](../../ch28-dual-mode-expert-systems.md)
-* [Fəsil 29. Neyro-simvolik arxitektura: Dil modelləri və sübut əsaslarının yoxlanılması](../../ch29-neuro-symbolic-architecture.md)
 * [Fəsil 34. Bilik boşluqları: Relyasion axtarış, abduksiya və dəqiqləşdirmə dialoqu](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Fəsil 29. Neyro-simvolik arxitektura: Dil modelləri və sübut əsaslarının yoxlanılması](../../ch29-neuro-symbolic-architecture.md)
 * [Fəsil 38. Maşın hallüsinasiyaları və bilik çatışmazlığı: Sübut əsaslı cavab nəzarəti](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Fəsil 25. Ekspert sistemini necə öyrətmək olar: İmtahan matrisləri, bilik auditi və reqressiya nəzarəti](../../ch25-how-expert-systems-learn.md)
-* [Fəsil 26. Təcrübədən davamlı öyrənmə (Continual Learning) və sistem jurnalının sürüşməsinin qarşısının alınması](../../ch26-continual-learning.md)
 
 ---
 
@@ -253,6 +249,10 @@ flowchart TD
 
 *Qaydaların reaktiv icrası, bilik sinergetikası və faza keçidləri, sistemlərarası mübadilə və müəssisə miqyasında paylanmış epistemik arxitektura.*
 
+* [Fəsil 17. Texnoloji stek: Alətlərin, proqramlaşdırma dillərinin və qaydalar mühərriklərinin seçilməsi meyarları](../../ch17-implementation-stack.md)
+* [Fəsil 18. İcra infrastrukturu: Lokal modellər, aparat sürətləndiriciləri, Edge və On-Premise](../../ch18-execution-infrastructure.md)
+* [Fəsil 21. Tövsiyədən fəaliyyətə qədər: İcazə nəzarəti və istehsalat mühitində təhlükəsiz icra](../../ch21-from-recommendation-to-action.md)
+* [Fəsil 22. Kibernetik idarəetmə dövrəsi: Sensorlar, periferiya və əks-əlaqə](../../ch22-cybernetics-edge-to-backend.md)
 * [Fəsil 35. Reaktiv ekspert sistemi: Hadisələr, geri çağırma və biliklərin uyğunlaşdırılması](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Fəsil 33. Sistemlərarası bilik mübadiləsi: Xarici sistemlərə qaydaların verilməsi, modellərin təlimi və təhlükəsiz əks-əlaqə](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Fəsil 40. Sübut əsaslı ekspert sisteminin paylanmış arxitekturası: Epistemik SOA, semantik marşrutlaşdırma, yaddaş iyerarxiyası və çoxsaylı təchizatçılı defezitiv arbitraj](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

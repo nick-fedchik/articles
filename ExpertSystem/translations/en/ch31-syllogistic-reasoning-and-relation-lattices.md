@@ -1,8 +1,8 @@
 # Chapter 31. Normative Inference: Predicate Hierarchies, Exceptions, and Validity
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)  
-> **Previous Chapter:** [Chapter 19. From Question to Evidence: Retrieval, Grounding, and Proposition Verification](ch19-from-question-to-evidence.md)  
-> **Next Chapter:** [Chapter 20. Explanation Engine: Decisions, Refusals, and Competence Boundaries](ch20-explanation-engine.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: System Architecture, Normative Inference, Diagnosis, and Explanation](part-04-architecture-and-inference.md)  
+> **Previous Chapter:** [Chapter 19. From Question to Evidence: Retrieval, Grounding, and Claim Verification](ch19-from-question-to-evidence.md)  
+> **Next Chapter:** [Chapter 24. Technical Diagnostics: Distinguishing Symptoms from Root Causes Under Incompleteness](ch24-system-diagnosis.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Level:** Advanced: Inference Engine Developers, Systems Architects, Knowledge Engineers, Formal Methods Specialists  
@@ -1263,4 +1263,4 @@ The educational Go implementation executes a single inference step and does not 
 
 ---
 
-[← Chapter 19](ch19-from-question-to-evidence.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 20 →](ch20-explanation-engine.md)
+[← Chapter 19](ch19-from-question-to-evidence.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 24 →](ch24-system-diagnosis.md)

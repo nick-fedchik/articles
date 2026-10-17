@@ -1,8 +1,8 @@
 # Глава 17. Технологічний стек: критерії вибору інструментів, мов програмування та рушіїв правил
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, технологічний стек, виведення та дія](part-04-architecture-and-inference.md)  
-> **Попередня глава:** [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](ch16-expert-systems-architecture.md)  
-> **Наступна глава:** [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](ch18-execution-infrastructure.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VII: Технологічний стек, апаратна інфраструктура, кібернетичне виконання та розподілена SOA](part-07-runtime-and-knowledge-exchange.md)
+> **Попередня глава:** [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
+> **Наступна глава:** [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](ch18-execution-infrastructure.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: системні архітектори, розробники експертних систем, інженери даних  
@@ -740,4 +740,4 @@ $$T_{\mathrm{calc}} = \frac{76.8 \cdot 10^6 \times 2}{50 \cdot 10^9} = 3.07\,\te
 
 ---
 
-[← Глава 16](ch16-expert-systems-architecture.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 18 →](ch18-execution-infrastructure.md)
+[← Глава 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | [Зміст книги](README.md) | [Частина VII](part-07-runtime-and-knowledge-exchange.md) | [Глава 18 →](ch18-execution-infrastructure.md)

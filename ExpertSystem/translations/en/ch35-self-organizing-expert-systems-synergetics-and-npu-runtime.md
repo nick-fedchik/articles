@@ -1,8 +1,8 @@
 # Chapter 35. Reactive Expert Systems: Events, Revocation, and Knowledge Adaptation
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VII: Reactive Runtime, Inter-System Knowledge Exchange, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)  
-> **Previous Chapter:** [Chapter 26. Continual Learning from Experience and Mitigating System Log Drift](ch26-continual-learning.md)  
-> **Next Chapter:** [Chapter 33. Inter-System Knowledge Exchange: Rule Provisioning, Model Teaching, and Secure Feedback](ch33-inter-system-knowledge-exchange-and-model-teaching.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VII: Implementation Stack, Hardware Infrastructure, Cybernetic Execution, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)  
+> **Previous Chapter:** [Chapter 22. Cybernetic Control Cycle: Sensors, Peripherals, and Edge-to-Backend Feedback](ch22-cybernetics-edge-to-backend.md)  
+> **Next Chapter:** [Chapter 33. Inter-System Knowledge Exchange: Rule Provisioning to External Systems, Model Teaching, and Secure Feedback Loops](ch33-inter-system-knowledge-exchange-and-model-teaching.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Advanced: Systems Architects, Knowledge Engineers, Safety and Hardware Acceleration Specialists  
@@ -872,4 +872,4 @@ The next thematic chapter, [Chapter 33](ch33-inter-system-knowledge-exchange-and
 
 ---
 
-[← Chapter 26](ch26-continual-learning.md) | [Table of Contents](README.md) | [Part VII](part-07-runtime-and-knowledge-exchange.md) | [Chapter 33 →](ch33-inter-system-knowledge-exchange-and-model-teaching.md)
+[← Chapter 22](ch22-cybernetics-edge-to-backend.md) | [Table of Contents](README.md) | [Part VII](part-07-runtime-and-knowledge-exchange.md) | [Chapter 33 →](ch33-inter-system-knowledge-exchange-and-model-teaching.md)

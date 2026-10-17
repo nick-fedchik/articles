@@ -196,13 +196,12 @@ flowchart TD
 
 *Dokumenty, lidská expertíza a senzorická pozorování: extrakce kandidátů, lingvistická analýza, formalizace a hodnocení důkazů.*
 
+* [Kapitola 37. Hodnocení vstupních informací: Zdroje, důkazy a algoritmický skepticismus](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Kapitola 10. Systémy získávání znalostí: Zdroje, schvalovací brány a životní cykly](../../ch10-knowledge-acquisition-systems.md)
 * [Kapitola 11. Získávání znalostí od doménových expertů: Rozhovory, kognitivní mapy a formalizace praxe](../../ch11-knowledge-elicitation-from-experts.md)
 * [Kapitola 12. Lingvistická analýza a lokální modely: Zachování sémantiky a atribuce zdrojů](../../ch12-linguistic-analysis-and-local-models.md)
-* [Kapitola 13. Variabilita přirozeného jazyka vs. determinismus: Kompilace sémantiky dotazů](../../ch13-language-variability-vs-determinism.md)
 * [Kapitola 14. Extrakce požadavků a modalit: Od normativního textu k formálním invariantům](../../ch14-requirements-detection-and-formalization.md)
 * [Kapitola 15. Extrakce znalostí a konstrukce báze znalostí: Fakta, gramatiky a automaty](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Kapitola 37. Hodnocení vstupních informací: Zdroje, důkazy a algoritmický skepticismus](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Architektonické kontrakty, běhový zásobník, hardwarová akcelerace, verifikace tvrzení, normativní inference, vysvětlovací stroje a kybernetické řídicí smyčky.*
 
 * [Kapitola 16. Architektura expertních systémů: Od formalizovaných znalostí k důkazně řízené akci](../../ch16-expert-systems-architecture.md)
-* [Kapitola 17. Technologický zásobník: Výběr nástrojů, programovací jazyky a pravidlové stroje](../../ch17-implementation-stack.md)
-* [Kapitola 18. Prováděcí infrastruktura: Lokální SLM, hardwarové akcelerátory, edge a on-premise](../../ch18-execution-infrastructure.md)
+* [Kapitola 13. Variabilita přirozeného jazyka vs. determinismus: Kompilace sémantiky dotazů](../../ch13-language-variability-vs-determinism.md)
 * [Kapitola 19. Od otázky k důkazu: Vyhledávání, ukotvení a verifikace tvrzení](../../ch19-from-question-to-evidence.md)
 * [Kapitola 31. Normativní inference: Predikátové hierarchie, výjimky a časová platnost](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Kapitola 24. Technická diagnostika: Oddělení symptomů od kořenových příčin při neúplných informacích](../../ch24-system-diagnosis.md)
 * [Kapitola 20. Vysvětlovací stroj: Rozhodnutí, odůvodněné odmítnutí a kompetenční meze](../../ch20-explanation-engine.md)
-* [Kapitola 21. Od doporučení k akci: Řízení autority a bezpečné provádění v produkci](../../ch21-from-recommendation-to-action.md)
-* [Kapitola 22. Kybernetická řídicí smyčka: Senzory, akční členy a zpětná vazba](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Kapitola 23. Verifikace báze znalostí: Konzistence, úplnost a správnost pravidel](../../ch23-knowledge-base-verification.md)
 * [Kapitola 36. Pyramida testování znalostí: Pravidla, interakce a variační stabilita](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Kapitola 25. Jak se expertní systémy učí: Zkušební matice, znalostní audity a kontrola regresí](../../ch25-how-expert-systems-learn.md)
+* [Kapitola 26. Kontinuální učení ze zkušeností a mitigace driftu systémových protokolů](../../ch26-continual-learning.md)
 * [Kapitola 39. Aktivní auditor shody: Popperovská falzifikace, shoda s normami (ASPICE/ISO 26262/ISO 21434) a autonomní generování testů](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Kapitola 24. Technická diagnostika: Oddělení symptomů od kořenových příčin při neúplných informacích](../../ch24-system-diagnosis.md)
 * [Kapitola 27. Inženýrství bezpečnostních argumentací: Formální syntéza a verifikace argumentů v GSN](../../ch27-safety-case-gsn-synthesis.md)
 * [Kapitola 30. Společné inženýrství funkční bezpečnosti a kybernetické bezpečnosti](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Striktní dedukce vs. poradní hypotézy, integrace jazykových modelů, znalostní mezery, eliminace halucinací, zkušební matice a učení ze zkušeností.*
 
 * [Kapitola 28. Dvourežimové expertní systémy: Striktní dedukce a poradní hypotézy](../../ch28-dual-mode-expert-systems.md)
-* [Kapitola 29. Neuro-symbolická architektura: Jazykové modely a důkazně řízená verifikace](../../ch29-neuro-symbolic-architecture.md)
 * [Kapitola 34. Znalostní mezery: Relační vyhledávání, abdukce a sokratovské vyjasnění](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Kapitola 29. Neuro-symbolická architektura: Jazykové modely a důkazně řízená verifikace](../../ch29-neuro-symbolic-architecture.md)
 * [Kapitola 38. Léčba strojových halucinací a znalostních deficitů: Důkazně ukotvená kontrola výstupů](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Kapitola 25. Jak se expertní systémy učí: Zkušební matice, znalostní audity a kontrola regresí](../../ch25-how-expert-systems-learn.md)
-* [Kapitola 26. Kontinuální učení ze zkušeností a mitigace driftu systémových protokolů](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Reaktivní provádění pravidel, synergetika a fázové přechody znalostí, mezisystémová federace a distribuované podnikové epistemické architektury.*
 
+* [Kapitola 17. Technologický zásobník: Výběr nástrojů, programovací jazyky a pravidlové stroje](../../ch17-implementation-stack.md)
+* [Kapitola 18. Prováděcí infrastruktura: Lokální SLM, hardwarové akcelerátory, edge a on-premise](../../ch18-execution-infrastructure.md)
+* [Kapitola 21. Od doporučení k akci: Řízení autority a bezpečné provádění v produkci](../../ch21-from-recommendation-to-action.md)
+* [Kapitola 22. Kybernetická řídicí smyčka: Senzory, akční členy a zpětná vazba](../../ch22-cybernetics-edge-to-backend.md)
 * [Kapitola 35. Reaktivní expertní systémy: Události, odvolávání pravidel a samoorganizace znalostí](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Kapitola 33. Mezisystémová výměna znalostí: Distribuce pravidel, výuka modelů a zabezpečená zpětná vazba](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Kapitola 40. Distribuovaná epistemická architektura: Znalostní SOA, sémantické směrování, paměťové hierarchie a vícedrojová vyvratitelná arbitráž](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

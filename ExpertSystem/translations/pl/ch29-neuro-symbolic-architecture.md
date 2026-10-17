@@ -1,8 +1,8 @@
 # Rozdział 29. Architektura neuro-symboliczna: modele językowe i dowodowa weryfikacja faktów
 
 > **Książka:** [Architektura dowodowych systemów eksperckich](README.md) · [Część VI: Modele neuro-symboliczne, granice poznawcze i uczenie ciągłe](../../part-06-frontiers-neuro-symbolic.md)  
-> **Poprzedni rozdział:** [Rozdział 28. Dwutrybowe systemy eksperckie: ścisła dedukcja i hipoteza doradcza](../../ch28-dual-mode-expert-systems.md)  
-> **Następny rozdział:** [Rozdział 34. Luki w wiedzy: wyszukiwanie relacyjne, abdukcja i dialog doprecyzowujący](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
+> **Poprzedni rozdział:** [Rozdział 34. Luki w wiedzy: wyszukiwanie relacyjne, abdukcja i dialog doprecyzowujący](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
+> **Następny rozdział:** [Rozdział 38. Eliminacja halucynacji maszynowych i deficytów wiedzy: dowodowa kontrola odpowiedzi](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
 > **Spis treści:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](../../about-the-author.md)  
 > **Poziom:** Zaawansowany: architekci systemowi, inżynierowie uczenia maszynowego, programiści systemów o znaczeniu krytycznym  
@@ -712,4 +712,4 @@ Brama bada oparcie twierdzenia w dokumencie, a nie prawdę samego dokumentu. Zam
 
 ---
 
-[← Rozdział 28](../../ch28-dual-mode-expert-systems.md) | [Spis treści](README.md) | [Część VI](../../part-06-frontiers-neuro-symbolic.md) | [Rozdział 34 →](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+[← Rozdział 34](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | [Spis treści](README.md) | [Część VI](../../part-06-frontiers-neuro-symbolic.md) | [Rozdział 38 →](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)

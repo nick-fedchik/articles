@@ -196,13 +196,12 @@ flowchart TD
 
 *Asiakirjat, inhimillinen asiantuntemus ja aistihavainnot: ehdokkaiden poiminta, kielellinen analyysi, formalisointi ja todisteiden arviointi.*
 
+* [Luku 37. Syöttötietojen arviointi: Lähteet, todisteet ja algoritminen skeptisyys](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Luku 10. Tiedonhankintajärjestelmät: Lähteet, validointiportit ja elinkaaret](../../ch10-knowledge-acquisition-systems.md)
 * [Luku 11. Tiedon hankkiminen verkkoasiantuntijoilta: Haastattelut, kognitiiviset kartat ja käytännön formalisointi](../../ch11-knowledge-elicitation-from-experts.md)
 * [Luku 12. Lingvistinen analyysi ja paikalliset mallit: Semantiikan säilyttäminen ja lähteiden nimeäminen](../../ch12-linguistic-analysis-and-local-models.md)
-* [Luku 13. Luonnollisen kielen vaihtelevuus vs. determinismi: Kyselyn semantiikan kääntäminen](../../ch13-language-variability-vs-determinism.md)
 * [Luku 14. Vaatimusten ja modaliteettien poiminta: Normatiivisesta tekstistä muodollisiin invariantteihin](../../ch14-requirements-detection-and-formalization.md)
 * [Luku 15. Tiedon louhinta ja tietokannan rakentaminen: Faktat, kieliopit ja automaatit](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Luku 37. Syöttötietojen arviointi: Lähteet, todisteet ja algoritminen skeptisyys](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Arkkitehtuurisopimukset, ajonaikainen pino, laitteistokiihdytys, väitteiden verifiointi, normatiivinen päättely, selitysmoottorit ja kyberneettiset ohjaussilmukat.*
 
 * [Luku 16. Asiantuntijajärjestelmien arkkitehtuuri: Formalisoidusta tiedosta todisteohjattuun toimintaan](../../ch16-expert-systems-architecture.md)
-* [Luku 17. Teknologiayhdistelmä: Työkalujen valinta, ohjelmointikielet ja sääntömoottorit](../../ch17-implementation-stack.md)
-* [Luku 18. Suoritusinfrastruktuuri: Paikalliset SLM-mallit, laitteistokiihdyttimet, edge ja on-premise](../../ch18-execution-infrastructure.md)
+* [Luku 13. Luonnollisen kielen vaihtelevuus vs. determinismi: Kyselyn semantiikan kääntäminen](../../ch13-language-variability-vs-determinism.md)
 * [Luku 19. Kysymyksestä todisteeseen: Haku, ankkurointi ja väitteiden verifiointi](../../ch19-from-question-to-evidence.md)
 * [Luku 31. Normatiivinen päättely: Predikaattihierarkiat, poikkeukset ja ajallinen pätevyys](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Luku 24. Tekninen diagnostiikka: Oireiden erottaminen perimmäisistä syistä epätäydellisen tiedon vallitessa](../../ch24-system-diagnosis.md)
 * [Luku 20. Selitysmoottori: Päätökset, perusteltu kieltäytyminen ja pätevyysrajat](../../ch20-explanation-engine.md)
-* [Luku 21. Suosituksesta toimintaan: Valtuutusten hallinta ja turvallinen suoritus tuotannossa](../../ch21-from-recommendation-to-action.md)
-* [Luku 22. Kyberneettinen ohjaussilmukka: Anturit, toimilaitteet ja palaute](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Luku 23. Tietokannan verifiointi: Johdonmukaisuus, täydellisyys ja sääntöjen oikeellisuus](../../ch23-knowledge-base-verification.md)
 * [Luku 36. Tiedontestauspyramidi: Säännöt, vuorovaikutukset ja variationaalinen vakaus](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Luku 25. Kuinka asiantuntijajärjestelmät oppivat: Koematriisit, tiedon auditoinnit ja regressioiden hallinta](../../ch25-how-expert-systems-learn.md)
+* [Luku 26. Jatkuva oppiminen kokemuksesta ja järjestelmälokien siirtymän hillitseminen](../../ch26-continual-learning.md)
 * [Luku 39. Aktiivinen vaatimustenmukaisuuden auditoija: Popperilainen falsifiointi, standardien noudattaminen (ASPICE/ISO 26262/ISO 21434) ja autonominen testien luonti](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Luku 24. Tekninen diagnostiikka: Oireiden erottaminen perimmäisistä syistä epätäydellisen tiedon vallitessa](../../ch24-system-diagnosis.md)
 * [Luku 27. Turvallisuustapausten suunnittelu: GSN-argumenttien muodollinen synteesi ja verifiointi](../../ch27-safety-case-gsn-synthesis.md)
 * [Luku 30. Toiminnallisen turvallisuuden ja kyberturvallisuuden yhteissuunnittelu](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Tiukka deduktio vs. neuvoa-antavat hypoteesit, kielimallien integrointi, tietoaukot, hallusinaatioiden poistaminen, tenttimatriisit ja kokemusperäinen oppiminen.*
 
 * [Luku 28. Kaksoistilan asiantuntijajärjestelmät: Tiukka deduktio ja neuvoa-antavat hypoteesit](../../ch28-dual-mode-expert-systems.md)
-* [Luku 29. Neuro-symbolinen arkkitehtuuri: Kielimallit ja todisteohjattu verifiointi](../../ch29-neuro-symbolic-architecture.md)
 * [Luku 34. Tietoaukot: Relaatiohaku, abduktio ja sokraattinen selvennys](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Luku 29. Neuro-symbolinen arkkitehtuuri: Kielimallit ja todisteohjattu verifiointi](../../ch29-neuro-symbolic-architecture.md)
 * [Luku 38. Konehallusinaatioiden ja tietovajeiden hoitaminen: Todisteisiin ankkuroitu tulosteen valvonta](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Luku 25. Kuinka asiantuntijajärjestelmät oppivat: Koematriisit, tiedon auditoinnit ja regressioiden hallinta](../../ch25-how-expert-systems-learn.md)
-* [Luku 26. Jatkuva oppiminen kokemuksesta ja järjestelmälokien siirtymän hillitseminen](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Reaktiivinen sääntöjen suoritus, synergetiikka ja tiedon faasisiirtymät, järjestelmien välinen federaatio ja hajautetut yrityksen episteemiset arkkitehtuurit.*
 
+* [Luku 17. Teknologiayhdistelmä: Työkalujen valinta, ohjelmointikielet ja sääntömoottorit](../../ch17-implementation-stack.md)
+* [Luku 18. Suoritusinfrastruktuuri: Paikalliset SLM-mallit, laitteistokiihdyttimet, edge ja on-premise](../../ch18-execution-infrastructure.md)
+* [Luku 21. Suosituksesta toimintaan: Valtuutusten hallinta ja turvallinen suoritus tuotannossa](../../ch21-from-recommendation-to-action.md)
+* [Luku 22. Kyberneettinen ohjaussilmukka: Anturit, toimilaitteet ja palaute](../../ch22-cybernetics-edge-to-backend.md)
 * [Luku 35. Reaktiiviset asiantuntijajärjestelmät: Tapahtumat, sääntöjen peruuttaminen ja tiedon itseorganisoituminen](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Luku 33. Järjestelmien välinen tiedonvaihto: Sääntöjen jakelu, mallien opettaminen ja turvallinen palaute](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Luku 40. Hajautettu episteeminen arkkitehtuuri: Tieto-SOA, semanttinen reititys, muistihierarkiat ja monilähdeinen kumottavissa oleva sovittelu](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

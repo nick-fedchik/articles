@@ -196,13 +196,12 @@ flowchart TD
 
 *Dokumendid, inimteadmised ja sensoorsed vaatlused: kandidaatide eraldamine, lingvistiline analüüs, formaliseerimine ja tõendite hindamine.*
 
+* [Peatükk 37. Sisendinfo hindamine: Allikad, tõendid ja algoritmiline skeptitsism](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Peatükk 10. Teadmuse omandamise süsteemid: Allikad, vastuvõtuväravad ja elutsüklid](../../ch10-knowledge-acquisition-systems.md)
 * [Peatükk 11. Teadmuse hankimine valdkonnaekspertidelt: Intervjuud, kognitiivsed kaardid ja praktika formaliseerimine](../../ch11-knowledge-elicitation-from-experts.md)
 * [Peatükk 12. Lingvistiline analüüs ja lokaalsed mudelid: Semantika ja allikate omistamise säilitamine](../../ch12-linguistic-analysis-and-local-models.md)
-* [Peatükk 13. Loomuliku keele varieeruvus vs. determinism: Päringu semantika kompileerimine](../../ch13-language-variability-vs-determinism.md)
 * [Peatükk 14. Nõuete ja modaalsuste eraldamine: Normatiivsest tekstist formaalsete invariantideni](../../ch14-requirements-detection-and-formalization.md)
 * [Peatükk 15. Teadmuse kaevandamine ja teadmusbaasi ehitamine: Faktid, grammatikad ja automaadid](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Peatükk 37. Sisendinfo hindamine: Allikad, tõendid ja algoritmiline skeptitsism](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Arhitektuurilepingud, käituspinu, riistvaraline kiirendus, väidete verifitseerimine, normatiivne järeldus, selgitusmootorid ja küberneetilised juhtimisahelad.*
 
 * [Peatükk 16. Ekspertsüsteemide arhitektuur: Formaliseeritud teadmisest tõenduspõhise tegevuseni](../../ch16-expert-systems-architecture.md)
-* [Peatükk 17. Tehnoloogiapinu: Tööriistade valik, programmeerimiskeeled ja reeglimootorid](../../ch17-implementation-stack.md)
-* [Peatükk 18. Käitusinfrastruktuur: Lokaalsed SLM-id, riistvarakiirendid, edge ja on-premise](../../ch18-execution-infrastructure.md)
+* [Peatükk 13. Loomuliku keele varieeruvus vs. determinism: Päringu semantika kompileerimine](../../ch13-language-variability-vs-determinism.md)
 * [Peatükk 19. Küsimusest tõendini: Otsing, ankurdamine ja propositsioonide verifitseerimine](../../ch19-from-question-to-evidence.md)
 * [Peatükk 31. Normatiivne järeldus: Predikaatide hierarhiad, erandid ja ajaline kehtivus](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Peatükk 24. Tehniline diagnostika: Sümptomite eristamine algpõhjustest mittetäieliku teabe korral](../../ch24-system-diagnosis.md)
 * [Peatükk 20. Selgitusmootor: Otsused, põhjendatud keeldumine ja pädevuspiirid](../../ch20-explanation-engine.md)
-* [Peatükk 21. Soovitusest tegevuseni: Volituste kontroll ja turvaline täitmine tootmises](../../ch21-from-recommendation-to-action.md)
-* [Peatükk 22. Küberneetiline juhtimisahel: Andurid, täiturmehhanismid ja tagasiside](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Peatükk 23. Teadmusbaasi verifitseerimine: Järjepidevus, täielikkus ja reeglite korrektsus](../../ch23-knowledge-base-verification.md)
 * [Peatükk 36. Teadmuse testimise püramiid: Reeglid, interaktsioonid ja variatsiooniline stabiilsus](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Peatükk 25. Kuidas ekspertsüsteemid õpivad: Eksamimaatriksid, teadmuse auditid ja regressioonikontroll](../../ch25-how-expert-systems-learn.md)
+* [Peatükk 26. Pidev õppimine kogemusest ja süsteemilogide nihke leevendamine](../../ch26-continual-learning.md)
 * [Peatükk 39. Aktiivne vastavuse audiitor: Popperlik falsifitseerimine, standarditele vastavus (ASPICE/ISO 26262/ISO 21434) ja autonoomne testide genereerimine](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Peatükk 24. Tehniline diagnostika: Sümptomite eristamine algpõhjustest mittetäieliku teabe korral](../../ch24-system-diagnosis.md)
 * [Peatükk 27. Ohutusjuhtumite inseneeria: GSN-argumentide formaalne süntees ja verifitseerimine](../../ch27-safety-case-gsn-synthesis.md)
 * [Peatükk 30. Funktsionaalse ohutuse ja küberturvalisuse koosprojekteerimine](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Range deduktsioon vs. nõuandvad hüpoteesid, keelemudelite integreerimine, teadmuslüngad, hallutsinatsioonide kõrvaldamine, eksamimaatriksid ja kogemuspõhine õppimine.*
 
 * [Peatükk 28. Kaherežiimilised ekspertsüsteemid: Range deduktsioon ja nõuandvad hüpoteesid](../../ch28-dual-mode-expert-systems.md)
-* [Peatükk 29. Neuro-sümbolne arhitektuur: Keelemudelid ja tõenduspõhine verifitseerimine](../../ch29-neuro-symbolic-architecture.md)
 * [Peatükk 34. Teadmuslüngad: Relatsiooniline otsing, abduktsioon ja sokraatiline selgitamine](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Peatükk 29. Neuro-sümbolne arhitektuur: Keelemudelid ja tõenduspõhine verifitseerimine](../../ch29-neuro-symbolic-architecture.md)
 * [Peatükk 38. Masinhallutsinatsioonide ja teadmuse puudujääkide ravimine: Tõenduspõhine väljundkontroll](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Peatükk 25. Kuidas ekspertsüsteemid õpivad: Eksamimaatriksid, teadmuse auditid ja regressioonikontroll](../../ch25-how-expert-systems-learn.md)
-* [Peatükk 26. Pidev õppimine kogemusest ja süsteemilogide nihke leevendamine](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Reaktiivne reeglite täitmine, sünergeetika ja teadmuse faasisiirded, süsteemidevaheline föderatsioon ja hajutatud ettevõtte episteemilised arhitektuurid.*
 
+* [Peatükk 17. Tehnoloogiapinu: Tööriistade valik, programmeerimiskeeled ja reeglimootorid](../../ch17-implementation-stack.md)
+* [Peatükk 18. Käitusinfrastruktuur: Lokaalsed SLM-id, riistvarakiirendid, edge ja on-premise](../../ch18-execution-infrastructure.md)
+* [Peatükk 21. Soovitusest tegevuseni: Volituste kontroll ja turvaline täitmine tootmises](../../ch21-from-recommendation-to-action.md)
+* [Peatükk 22. Küberneetiline juhtimisahel: Andurid, täiturmehhanismid ja tagasiside](../../ch22-cybernetics-edge-to-backend.md)
 * [Peatükk 35. Reaktiivsed ekspertsüsteemid: Sündmused, tühistamine ja teadmuse iseorganiseerumine](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Peatükk 33. Süsteemidevaheline teadmusvahetus: Reeglite pakkumine, mudelite õpetamine ja turvaline tagasiside](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Peatükk 40. Hajutatud episteemiline arhitektuur: Teadmus-SOA, semantiline marsruutimine, mäluhierarhiad ja mitme allikaga kummutatav vahekohtumenetlus](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

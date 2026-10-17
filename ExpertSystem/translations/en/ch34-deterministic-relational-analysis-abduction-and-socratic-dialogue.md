@@ -1,8 +1,8 @@
 # Chapter 34. Knowledge Gaps: Relational Search, Abduction, and Socratic Clarification
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VI: Neuro-Symbolic Models, Cognitive Frontiers, and Continual Learning](part-06-frontiers-neuro-symbolic.md)  
-> **Previous Chapter:** [Chapter 29. Neuro-Symbolic Architecture: Language Models and Evidence-Grounded Verification](ch29-neuro-symbolic-architecture.md)  
-> **Next Chapter:** [Chapter 38. Machine Hallucinations and Knowledge Deficits: Evidential Control of Answers](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VI: Neuro-Symbolic Architectures, Abduction, and Hallucination Control](part-06-frontiers-neuro-symbolic.md)  
+> **Previous Chapter:** [Chapter 28. Dual-Mode Expert Systems: Strict Deduction and Advisory Hypotheses](ch28-dual-mode-expert-systems.md)  
+> **Next Chapter:** [Chapter 29. Neuro-Symbolic Architecture: Language Models and Evidence-Grounded Verification](ch29-neuro-symbolic-architecture.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Advanced: Systems Architects, Knowledge Engineers, Specialists in Mathematical Logic and AI Philosophy  
@@ -967,4 +967,4 @@ Titans of theoretical artificial intelligence, mathematical logic, and causality
 
 ---
 
-[← Chapter 29](ch29-neuro-symbolic-architecture.md) | [Table of Contents](README.md) | [Part VI](part-06-frontiers-neuro-symbolic.md) | [Chapter 38 →](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
+[← Chapter 28](ch28-dual-mode-expert-systems.md) | [Table of Contents](README.md) | [Part VI](part-06-frontiers-neuro-symbolic.md) | [Chapter 29 →](ch29-neuro-symbolic-architecture.md)

@@ -1,8 +1,8 @@
 # Chapter 24. Technical Diagnostics: Distinguishing Symptoms from Root Causes Under Incompleteness
 
-> **Book:** [Architecture of Evidence-Based Expert Systems](README.md) · [Part V: Verification, Testing, Diagnostics, and Safety Assurance](part-05-verification-and-learning.md)  
-> **Previous Chapter:** [Chapter 39. Active Compliance Auditor: Popperian Falsification, Regulatory Standards (ASPICE/ISO 26262/ISO 21434), and Autonomous Test Generation](ch39-active-compliance-auditor-and-popperian-testing.md)  
-> **Next Chapter:** [Chapter 27. Safety Case: Synthesis and Verification of Arguments](ch27-safety-case-gsn-synthesis.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: System Architecture, Normative Inference, Diagnosis, and Explanation](part-04-architecture-and-inference.md)  
+> **Previous Chapter:** [Chapter 31. Normative Inference: Predicate Hierarchies, Exceptions, and Validity](ch31-syllogistic-reasoning-and-relation-lattices.md)  
+> **Next Chapter:** [Chapter 20. Explanation Engine: Decisions, Refusals, and Competence Boundaries](ch20-explanation-engine.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Audience:** Intermediate and advanced: reliability and diagnostic engineers, systems architects  
@@ -977,4 +977,4 @@ The boundaries of this chapter are well-defined. Consistency with a model does n
 
 ---
 
-[← Chapter 39](ch39-active-compliance-auditor-and-popperian-testing.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 27 →](ch27-safety-case-gsn-synthesis.md)
+[← Chapter 31](ch31-syllogistic-reasoning-and-relation-lattices.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 20 →](ch20-explanation-engine.md)

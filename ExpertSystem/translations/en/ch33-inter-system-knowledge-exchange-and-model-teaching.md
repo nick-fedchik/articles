@@ -1,8 +1,8 @@
 # Chapter 33. Inter-System Knowledge Exchange: Rule Provisioning to External Systems, Model Teaching, and Secure Feedback Loops
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VII: Reactive Execution, Inter-System Knowledge Exchange, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)  
-> **Previous Chapter:** [Chapter 35. Reactive Expert Systems: Events, Retraction, and Knowledge Adaptation](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
-> **Next Chapter:** [Chapter 40. Distributed Architecture of Evidence-Governed Expert Systems: Epistemic SOA, Semantic Routing, Memory Hierarchy, and Multi-Source Defeasible Arbitration](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VII: Implementation Stack, Hardware Infrastructure, Cybernetic Execution, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)  
+> **Previous Chapter:** [Chapter 35. Reactive Expert Systems: Events, Revocation, and Knowledge Adaptation](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
+> **Next Chapter:** [Chapter 40. Distributed Architecture of an Evidence-Governed Expert System: Epistemic SOA, Semantic Routing, Memory Hierarchy, and Multi-Source Defeasible Arbitration](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Advanced: Systems Architects, Knowledge Engineers, Developers of Distributed Systems and Embedded Computing Units  

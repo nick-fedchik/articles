@@ -1,8 +1,8 @@
 # Kapitel 28. Dual-Mode-Expertensysteme: Strikte Deduktion und beratende Hypothese
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VI: Neuro-symbolische Modelle, kognitive Grenzen und kontinuierliches Lernen](part-06-frontiers-neuro-symbolic.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VI: Neuro-symbolische Architekturen, Abduktion und Halluzinationskontrolle](part-06-frontiers-neuro-symbolic.md)  
 > **Vorheriges Kapitel:** [Kapitel 30. Co-Engineering von funktionaler Sicherheit und Cybersicherheit](ch30-safety-cybersecurity-co-engineering.md)  
-> **Nächstes Kapitel:** [Kapitel 29. Neuro-symbolische Architektur: Sprachmodelle und beweisgestützte Verifikation](ch29-neuro-symbolic-architecture.md)  
+> **Nächstes Kapitel:** [Kapitel 34. Wissenslücken: Relationale Suche, Abduktion und Klärungsdialog](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Systemarchitekten, Knowledge Engineers, Verifikationsingenieure, Auditoren für funktionale Sicherheit  
@@ -695,5 +695,5 @@ Die Grenzen der vorgestellten Methodik sind präzise zu beachten: Der strikte Mo
 
 ---
 
-[← Kapitel 30](ch30-safety-cybersecurity-co-engineering.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 29 →](ch29-neuro-symbolic-architecture.md)
+[← Kapitel 30](ch30-safety-cybersecurity-co-engineering.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 34 →](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
 

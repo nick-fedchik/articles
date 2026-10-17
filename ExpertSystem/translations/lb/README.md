@@ -198,13 +198,12 @@ flowchart TD
 
 *Dokumenter, Erfarung vun Experten a Beobachtungen: Kandidatenerfaassung, sproochlech Analys, Formaliséierung a Bewäertung vu Beweiser.*
 
+* [Kapitel 37. Bewäertung vun Input-Informatiounen: Quellen, Beweiser an Onsécherheet](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Kapitel 10. Wëssenserfaassungssystemer: Quellen, Validatioun a Liewenszyklus](../../ch10-knowledge-acquisition-systems.md)
 * [Kapitel 11. Wëssensextraktioun bei Experten: Interviewen, kognitiv Kaarten a Formaliséierung vun Erfarung](../../ch11-knowledge-elicitation-from-experts.md)
 * [Kapitel 12. Linguistesch Analys a lokal Modeller: Erhale vu Sënn a Quellen](../../ch12-linguistic-analysis-and-local-models.md)
-* [Kapitel 13. Variabilitéit vun der natierlecher Sprooch géint Determinismus: Kompilatioun vum Ufro-Sënn](../../ch13-language-variability-vs-determinism.md)
 * [Kapitel 14. Detektioun vun Ufuerderungen a Modalitéiten: Vum normativen Text zu Invarianten](../../ch14-requirements-detection-and-formalization.md)
 * [Kapitel 15. Wëssensextraktioun a Wëssensbasis-Konstruktioun: Fakten, Grammatiken an Automaten](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Kapitel 37. Bewäertung vun Input-Informatiounen: Quellen, Beweiser an Onsécherheet](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -213,13 +212,11 @@ flowchart TD
 *Architekturkontrakter, Technologie-Stack, Hardware-Ausféierung, Fuerderungsverifikatioun, normebaséiert Inferenz, Erklärung a kybernetesch Kontrollschläif.*
 
 * [Kapitel 16. Architektur vun engem Expertensystem: Vum formelle Wëssen zur beweisbaséierter Entscheedung](../../ch16-expert-systems-architecture.md)
-* [Kapitel 17. Technologie-Stack: Critèrë fir d'Wiel vun Tools, Programméiersproochen a Reegelmotoren](../../ch17-implementation-stack.md)
-* [Kapitel 18. Ausféierungsinfrastruktur: Lokal Modeller, Hardware-Beschleuneger, Edge an On-Premise](../../ch18-execution-infrastructure.md)
+* [Kapitel 13. Variabilitéit vun der natierlecher Sprooch géint Determinismus: Kompilatioun vum Ufro-Sënn](../../ch13-language-variability-vs-determinism.md)
 * [Kapitel 19. Vun der Ufro zum Beweis: Sich, Buedemung a Fuerderungsverifikatioun](../../ch19-from-question-to-evidence.md)
 * [Kapitel 31. Normebaséiert Inferenz: Prädikatenhierarchien, Ausnamen a Gëltegkeet](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Kapitel 24. Technesch Diagnostik: Wéi Symptom an Ursaach ënner Donnéenonvollstännegkeet net verwiesselt ginn](../../ch24-system-diagnosis.md)
 * [Kapitel 20. Erklärungsmotor: Entscheedung, Oflehnung a Kompetenzgrenzen](../../ch20-explanation-engine.md)
-* [Kapitel 21. Vun der Empfehlung zur Handlung: Autoritéitskontroll a sécher Ausféierung am Produktiounsëmfeld](../../ch21-from-recommendation-to-action.md)
-* [Kapitel 22. Kybernetesch Kontrollschläif: Sensoren, Peripherie a Feedback](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -229,8 +226,9 @@ flowchart TD
 
 * [Kapitel 23. Verifikatioun vun der Wëssensbasis: Wéi Konsistenz, Vollstännegkeet an Zouverlässegkeet vu Reegelen iwwerpréift ginn](../../ch23-knowledge-base-verification.md)
 * [Kapitel 36. Wëssenstestpyramid: Reegelen, Interaktiounen an Äntwertstabilitéit](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Kapitel 25. Wéi een en Expertensystem trainéiert: Examensmatrizen, Wëssensaudit a Regressiounskontroll](../../ch25-how-expert-systems-learn.md)
+* [Kapitel 26. Kontinuéierlecht Léieren (Continual Learning) aus Erfarung an Iwwerwanndung vu Systemlog-Drift](../../ch26-continual-learning.md)
 * [Kapitel 39. Aktiven Test-Expert: Popperesch Falsifikatioun, reglementaresch Konformitéit (ASPICE/ISO 26262/ISO 21434) an autonomen Testdesign](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Kapitel 24. Technesch Diagnostik: Wéi Symptom an Ursaach ënner Donnéenonvollstännegkeet net verwiesselt ginn](../../ch24-system-diagnosis.md)
 * [Kapitel 27. Sécherheetsfall: Synthees a Verifikatioun vun Argumenter](../../ch27-safety-case-gsn-synthesis.md)
 * [Kapitel 30. Co-Ingenieurswiesen vu funktioneller Sécherheet a Cybersécherheet](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -241,11 +239,9 @@ flowchart TD
 *Strikt Inferenz a berodend Hypothes, Sproochmodellintegratioun, Wëssenslücken, Kontroll vun onbestätegten Äntwerten, Examensmatrizen a kontinuéierlecht Léieren aus Erfarung.*
 
 * [Kapitel 28. Dual-Mode Expertensystemer: Strikt Inferenz a berodend Hypothes](../../ch28-dual-mode-expert-systems.md)
-* [Kapitel 29. Neuro-symbolesch Architektur: Sproochmodeller a Verifikatioun vu Beweisgrënn](../../ch29-neuro-symbolic-architecture.md)
 * [Kapitel 34. Wëssenslücken: Relatiounssich, Abduktioun a Klärungsdialog](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Kapitel 29. Neuro-symbolesch Architektur: Sproochmodeller a Verifikatioun vu Beweisgrënn](../../ch29-neuro-symbolic-architecture.md)
 * [Kapitel 38. Maschinnen-Halluzinatiounen a Wëssensdefiziter: Beweisbaséiert Äntwertkontroll](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Kapitel 25. Wéi een en Expertensystem trainéiert: Examensmatrizen, Wëssensaudit a Regressiounskontroll](../../ch25-how-expert-systems-learn.md)
-* [Kapitel 26. Kontinuéierlecht Léieren (Continual Learning) aus Erfarung an Iwwerwanndung vu Systemlog-Drift](../../ch26-continual-learning.md)
 
 ---
 
@@ -253,6 +249,10 @@ flowchart TD
 
 *Reaktiv Reegelausféierung, Synergetik a Phaseniwwergäng vu Wëssen, tëschen-systemeschen Austausch a verdeelt epistemesch Architektur am Enterprise-Moossstaf.*
 
+* [Kapitel 17. Technologie-Stack: Critèrë fir d'Wiel vun Tools, Programméiersproochen a Reegelmotoren](../../ch17-implementation-stack.md)
+* [Kapitel 18. Ausféierungsinfrastruktur: Lokal Modeller, Hardware-Beschleuneger, Edge an On-Premise](../../ch18-execution-infrastructure.md)
+* [Kapitel 21. Vun der Empfehlung zur Handlung: Autoritéitskontroll a sécher Ausféierung am Produktiounsëmfeld](../../ch21-from-recommendation-to-action.md)
+* [Kapitel 22. Kybernetesch Kontrollschläif: Sensoren, Peripherie a Feedback](../../ch22-cybernetics-edge-to-backend.md)
 * [Kapitel 35. Reaktiivt Expertensystem: Evenementer, Revokatioun a Wëssensadaptatioun](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Kapitel 33. Tëschen-System Wëssensaustausch: Reegelen u Fremdsystemer liwweren, Modeller trainéieren a séchere Feedback](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Kapitel 40. Verdeelt Architektur vu beweisbaséierten Expertensystemer: Epistemesch SOA, semantesch Routage, Gediechtneshierarchie a Multi-Vendor Defeasible Arbitrage](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

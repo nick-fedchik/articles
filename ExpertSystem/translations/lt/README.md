@@ -196,13 +196,12 @@ flowchart TD
 
 *Dokumentai, žmogiškoji patirtis ir jutiminiai stebėjimai: kandidatų išskyrimas, lingvistinė analizė, formalizavimas ir įrodymų vertinimas.*
 
+* [37 Skyrius. Įvesties informacijos vertinimas: Šaltiniai, įrodymai ir algoritminis skepticizmas](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [10 Skyrius. Žinių įgijimo sistemos: Šaltiniai, priėmimo šliuzai ir gyvavimo ciklai](../../ch10-knowledge-acquisition-systems.md)
 * [11 Skyrius. Žinių gavimas iš srities ekspertų: Interviu, kognityviniai žemėlapiai ir praktikos formalizavimas](../../ch11-knowledge-elicitation-from-experts.md)
 * [12 Skyrius. Lingvistinė analizė ir vietiniai modeliai: Semantikos ir šaltinių priskyrimo išsaugojimas](../../ch12-linguistic-analysis-and-local-models.md)
-* [13 Skyrius. Natūralios kalbos kintamumas vs. determinizmas: Užklausų semantikos kompiliavimas](../../ch13-language-variability-vs-determinism.md)
 * [14 Skyrius. Reikalavimų ir modalumų išskyrimas: Nuo normatyvinio teksto iki formaliųjų invariantų](../../ch14-requirements-detection-and-formalization.md)
 * [15 Skyrius. Žinių gavyba ir žinių bazės kūrimas: Faktai, gramatikos ir automatai](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [37 Skyrius. Įvesties informacijos vertinimas: Šaltiniai, įrodymai ir algoritminis skepticizmas](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Architektūrinės sutartys, vykdymo rinkinys, aparatinis greitinimas, teiginių tikrinimas, normatyvinis išvedimas, paaiškinimų varikliai ir kibernetiniai valdymo ciklai.*
 
 * [16 Skyrius. Ekspertinių sistemų architektūra: Nuo formalizuotų žinių iki įrodymais valdomo veiksmo](../../ch16-expert-systems-architecture.md)
-* [17 Skyrius. Technologijų rinkinys: Įrankių pasirinkimas, programavimo kalbos ir taisyklių varikliai](../../ch17-implementation-stack.md)
-* [18 Skyrius. Vykdymo infrastruktūra: Vietiniai SLM, aparatiniai greitintuvai, edge ir on-premise](../../ch18-execution-infrastructure.md)
+* [13 Skyrius. Natūralios kalbos kintamumas vs. determinizmas: Užklausų semantikos kompiliavimas](../../ch13-language-variability-vs-determinism.md)
 * [19 Skyrius. Nuo klausimo iki įrodymo: Paieška, įtvirtinimas ir teiginių tikrinimas](../../ch19-from-question-to-evidence.md)
 * [31 Skyrius. Normatyvinis išvedimas: Predikatų hierarchijos, išimtys ir laiko galiojimas](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [24 Skyrius. Techninė diagnostika: Simptomų atskyrimas nuo pagrindinių priežasčių esant neišsamiai informacijai](../../ch24-system-diagnosis.md)
 * [20 Skyrius. Paaiškinimų variklis: Sprendimai, pagrįstas atsisakymas ir kompetencijos ribos](../../ch20-explanation-engine.md)
-* [21 Skyrius. Nuo rekomendacijos iki veiksmo: Įgaliojimų kontrolė ir saugus vykdymas gamyboje](../../ch21-from-recommendation-to-action.md)
-* [22 Skyrius. Kibernetinis valdymo ciklas: Jutikliai, vykdomieji mechanizmai ir grįžtamasis ryšys](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [23 Skyrius. Žinių bazės verifikavimas: Nuoseklumas, išsamumas ir taisyklių teisingumas](../../ch23-knowledge-base-verification.md)
 * [36 Skyrius. Žinių testavimo piramidė: Taisyklės, sąveikos ir variacinis stabilumas](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [25 Skyrius. Kaip mokosi ekspertinės sistemos: Egzaminų matricos, žinių auditai ir regresijos kontrolė](../../ch25-how-expert-systems-learn.md)
+* [26 Skyrius. Nuolatinis mokymasis iš patirties ir sistemos žurnalų poslinkio mažinimas](../../ch26-continual-learning.md)
 * [39 Skyrius. Aktyvus atitikties auditorius: Poperiškasis falsifikavimas, standartų atitiktis (ASPICE/ISO 26262/ISO 21434) ir autonominis testų generavimas](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [24 Skyrius. Techninė diagnostika: Simptomų atskyrimas nuo pagrindinių priežasčių esant neišsamiai informacijai](../../ch24-system-diagnosis.md)
 * [27 Skyrius. Saugos atvejų inžinerija: GSN argumentų formali sintezė ir verifikavimas](../../ch27-safety-case-gsn-synthesis.md)
 * [30 Skyrius. Funkcinės saugos ir kibernetinio saugumo bendroji inžinerija](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Griežta dedukcija vs. patariamosios hipotezės, kalbos modelių integracija, žinių spragos, haliucinacijų šalinimas, egzaminų matricos ir mokymasis iš patirties.*
 
 * [28 Skyrius. Dviejų režimų ekspertinės sistemos: Griežta dedukcija ir patariamosios hipotezės](../../ch28-dual-mode-expert-systems.md)
-* [29 Skyrius. Neuro-simbolinė architektūra: Kalbos modeliai ir įrodymais valdomas verifikavimas](../../ch29-neuro-symbolic-architecture.md)
 * [34 Skyrius. Žinių spragos: Santykių paieška, abdukcija ir sokratiškasis paaiškinimas](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [29 Skyrius. Neuro-simbolinė architektūra: Kalbos modeliai ir įrodymais valdomas verifikavimas](../../ch29-neuro-symbolic-architecture.md)
 * [38 Skyrius. Mašinos haliucinacijų ir žinių trūkumo gydymas: Įrodymais pagrįsta išvesties kontrolė](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [25 Skyrius. Kaip mokosi ekspertinės sistemos: Egzaminų matricos, žinių auditai ir regresijos kontrolė](../../ch25-how-expert-systems-learn.md)
-* [26 Skyrius. Nuolatinis mokymasis iš patirties ir sistemos žurnalų poslinkio mažinimas](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Reaktyvus taisyklių vykdymas, sinergetika ir žinių faziniai virsmai, tarpusavio federacija ir paskirstytos įmonės episteminės architektūros.*
 
+* [17 Skyrius. Technologijų rinkinys: Įrankių pasirinkimas, programavimo kalbos ir taisyklių varikliai](../../ch17-implementation-stack.md)
+* [18 Skyrius. Vykdymo infrastruktūra: Vietiniai SLM, aparatiniai greitintuvai, edge ir on-premise](../../ch18-execution-infrastructure.md)
+* [21 Skyrius. Nuo rekomendacijos iki veiksmo: Įgaliojimų kontrolė ir saugus vykdymas gamyboje](../../ch21-from-recommendation-to-action.md)
+* [22 Skyrius. Kibernetinis valdymo ciklas: Jutikliai, vykdomieji mechanizmai ir grįžtamasis ryšys](../../ch22-cybernetics-edge-to-backend.md)
 * [35 Skyrius. Reaktyviosios ekspertinės sistemos: Įvykiai, taisyklių atšaukimas ir žinių saviorganizacija](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [33 Skyrius. Tarpusavio žinių mainai: Taisyklių teikimas, modelių mokymas ir saugus grįžtamasis ryšys](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [40 Skyrius. Paskirstyta episteminė architektūra: Žinių SOA, semantinis maršrutizavimas, atminties hierarchijos ir kelių šaltinių paneigiamas arbitražas](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

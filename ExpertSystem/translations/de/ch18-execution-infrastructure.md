@@ -1,8 +1,8 @@
 # Kapitel 18. Ausführungsinfrastruktur: Lokale Modelle, Hardwarebeschleuniger, Edge und On-Premise
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Architektur, Technologie-Stack, Inferenz und Aktion](part-04-architecture-and-inference.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VII: Technologie-Stack, Hardware-Infrastruktur, kybernetische Ausführung und verteilte SOA](part-07-runtime-and-knowledge-exchange.md)  
 > **Vorheriges Kapitel:** [Kapitel 17. Technologie-Stack: Auswahlkriterien für Werkzeuge, Programmiersprachen und Regel-Engines](ch17-implementation-stack.md)  
-> **Nächstes Kapitel:** [Kapitel 19. Von der Frage zum Beweis: Suche, Bindung und Prüfung von Behauptungen](ch19-from-question-to-evidence.md)  
+> **Nächstes Kapitel:** [Kapitel 21. Von der Empfehlung zur Aktion: Autoritätskontrolle und sichere Ausführung in Produktionsumgebungen](ch21-from-recommendation-to-action.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Mittelstufe und Fortgeschrittene: Systemingenieure, Architekten für ML-Infrastruktur, Entwickler eingebetteter Systeme und Edge-Geräte  
@@ -1334,4 +1334,4 @@ Die Nicht-Additivität von Perzentilen belegt, dass Latenzbudgets ganzheitlich g
 
 ---
 
-[← Kapitel 17](ch17-implementation-stack.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 19 →](ch19-from-question-to-evidence.md)
+[← Kapitel 17](ch17-implementation-stack.md) | [Inhaltsverzeichnis](README.md) | [Teil VII](part-07-runtime-and-knowledge-exchange.md) | [Kapitel 21 →](ch21-from-recommendation-to-action.md)

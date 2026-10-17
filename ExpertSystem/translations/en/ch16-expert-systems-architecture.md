@@ -1,8 +1,8 @@
 # Chapter 16. Expert System Architecture: From Formal Knowledge to Evidence-Governed Decisions
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)  
-> **Previous Chapter:** [Chapter 37. Input Information Assessment: Sources, Evidence, and Uncertainty](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
-> **Next Chapter:** [Chapter 17. Technology Stack: Selection Criteria for Tools, Programming Languages, and Rule Engines](ch17-implementation-stack.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: System Architecture, Normative Inference, Diagnosis, and Explanation](part-04-architecture-and-inference.md)  
+> **Previous Chapter:** [Chapter 15. Knowledge Extraction and Knowledge Base Construction: Facts, Grammars, and Automata](ch15-knowledge-extraction-and-kb-construction.md)  
+> **Next Chapter:** [Chapter 13. Natural Language Variability vs. Determinism: Compiling Question Semantics](ch13-language-variability-vs-determinism.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Level:** Intermediate and advanced: systems architects, knowledge engineers, expert systems developers  
@@ -921,4 +921,4 @@ Architecture does not make rules sound, nor does it guarantee reproducibility in
 
 ---
 
-[← Chapter 37](ch37-input-information-assessment-and-algorithmic-skepticism.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 17 →](ch17-implementation-stack.md)
+[← Chapter 15](ch15-knowledge-extraction-and-kb-construction.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 13 →](ch13-language-variability-vs-determinism.md)

@@ -190,13 +190,12 @@ flowchart TD
 
 *Documenten, domeinexpertise en metingen: kandidaatextractie, parsing en bewijswaardering.*
 
+* [Hoofdstuk 37. Beoordeling van invoerinformatie: bronnen, bewijskracht en algoritmische scepsis](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Hoofdstuk 10. Kennisverwervingssystemen: bronnen, toelatingsgateways en levenscycli](../../ch10-knowledge-acquisition-systems.md)
 * [Hoofdstuk 11. Kennisextractie bij domeinexperts: interviews, cognitieve kaarten en formalisering van praktijkkennis](../../ch11-knowledge-elicitation-from-experts.md)
 * [Hoofdstuk 12. Linguïstische analyse en lokale modellen: behoud van semantiek en bronattributie](../../ch12-linguistic-analysis-and-local-models.md)
-* [Hoofdstuk 13. Natuurlijke taalvariabiliteit versus determinisme: compileren van de vraagbedoeling](../../ch13-language-variability-vs-determinism.md)
 * [Hoofdstuk 14. Detectie van eisen en modaliteiten: van normatieve tekst naar formele invarianten](../../ch14-requirements-detection-and-formalization.md)
 * [Hoofdstuk 15. Kennisextractie en opbouw van de kennisbasis: feiten, grammatica's en automaten](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Hoofdstuk 37. Beoordeling van invoerinformatie: bronnen, bewijskracht en algoritmische scepsis](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -205,13 +204,11 @@ flowchart TD
 *Architectuurcontracten, runtime-stack, hardwareversnelling, normatieve inferentie, verklaringsmotoren en regelkringen.*
 
 * [Hoofdstuk 16. Architectuur van het expertsysteem: van geformaliseerde kennis naar handeling gebaseerd op bewijs](../../ch16-expert-systems-architecture.md)
-* [Hoofdstuk 17. De technologie-stack: selectiecriteria voor gereedschappen, programmeertalen en regelmotoren](../../ch17-implementation-stack.md)
-* [Hoofdstuk 18. Executie-infrastructuur: lokale SLM's, hardwareversnellers, Edge en On-Premise](../../ch18-execution-infrastructure.md)
+* [Hoofdstuk 13. Natuurlijke taalvariabiliteit versus determinisme: compileren van de vraagbedoeling](../../ch13-language-variability-vs-determinism.md)
 * [Hoofdstuk 19. Van vraag naar bewijs: zoeken, koppelen en verifiëren van stellingen](../../ch19-from-question-to-evidence.md)
 * [Hoofdstuk 31. Normatieve inferentie: predicaathierarchieën, uitzonderingen en temporele geldigheid](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Hoofdstuk 24. Technische diagnostiek: symptomen en grondoorzaken scheiden bij onvolledige informatie](../../ch24-system-diagnosis.md)
 * [Hoofdstuk 20. Verklaringsmotor: beslissingen, gemotiveerde weigering en competentiegrenzen](../../ch20-explanation-engine.md)
-* [Hoofdstuk 21. Van aanbeveling naar actie: autorisatiecontrole en veilige uitvoering](../../ch21-from-recommendation-to-action.md)
-* [Hoofdstuk 22. De cybernetische regelkring: sensoren, actuatoren en gesloten terugkoppeling](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -221,8 +218,9 @@ flowchart TD
 
 * [Hoofdstuk 23. Verificatie van de kennisbasis: consistentie, volledigheid en regelrobuustheid](../../ch23-knowledge-base-verification.md)
 * [Hoofdstuk 36. De kennis-testpiramide: regels, interacties en variationele stabiliteit](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Hoofdstuk 25. Hoe expertsystemen leren: examenmatrices, kennisaudits en regressiecontrole](../../ch25-how-expert-systems-learn.md)
+* [Hoofdstuk 26. Continu leren (Continual Learning) uit ervaring en beheersing van logdrift](../../ch26-continual-learning.md)
 * [Hoofdstuk 39. De actieve compliance-auditor: Popperiaanse falsificatie, normering (ASPICE/ISO 26262/ISO 21434) en testontwerp](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Hoofdstuk 24. Technische diagnostiek: symptomen en grondoorzaken scheiden bij onvolledige informatie](../../ch24-system-diagnosis.md)
 * [Hoofdstuk 27. Veiligheidsdossiers: formele synthese en verificatie van GSN-argumenten](../../ch27-safety-case-gsn-synthesis.md)
 * [Hoofdstuk 30. Co-engineering van functionele veiligheid en cybersecurity](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -233,11 +231,9 @@ flowchart TD
 *Strikte deductie vs. adviserende hypothesen, taalmodelintegratie, hallucinatiebeheersing en ervaringsleren.*
 
 * [Hoofdstuk 28. Bimodale expertsystemen: strikte deductie en adviserende hypothese](../../ch28-dual-mode-expert-systems.md)
-* [Hoofdstuk 29. Neuro-symbolische architectuur: taalmodellen en verificatie op basis van bewijs](../../ch29-neuro-symbolic-architecture.md)
 * [Hoofdstuk 34. Kennislacunes: relationeel zoeken, abductie en verhelderende dialoog](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Hoofdstuk 29. Neuro-symbolische architectuur: taalmodellen en verificatie op basis van bewijs](../../ch29-neuro-symbolic-architecture.md)
 * [Hoofdstuk 38. Bestrijding van machinehallucinaties en kennistekorten: controle gebaseerd op bewijs](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Hoofdstuk 25. Hoe expertsystemen leren: examenmatrices, kennisaudits en regressiecontrole](../../ch25-how-expert-systems-learn.md)
-* [Hoofdstuk 26. Continu leren (Continual Learning) uit ervaring en beheersing van logdrift](../../ch26-continual-learning.md)
 
 ---
 
@@ -245,6 +241,10 @@ flowchart TD
 
 *Reactieve regeluitvoering, synergetica, systeemfederaties en gedistribueerde enterprise-architecturen.*
 
+* [Hoofdstuk 17. De technologie-stack: selectiecriteria voor gereedschappen, programmeertalen en regelmotoren](../../ch17-implementation-stack.md)
+* [Hoofdstuk 18. Executie-infrastructuur: lokale SLM's, hardwareversnellers, Edge en On-Premise](../../ch18-execution-infrastructure.md)
+* [Hoofdstuk 21. Van aanbeveling naar actie: autorisatiecontrole en veilige uitvoering](../../ch21-from-recommendation-to-action.md)
+* [Hoofdstuk 22. De cybernetische regelkring: sensoren, actuatoren en gesloten terugkoppeling](../../ch22-cybernetics-edge-to-backend.md)
 * [Hoofdstuk 35. Reactieve expertsystemen: gebeurtenissen, intrekking en zelforganisatie van kennis](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Hoofdstuk 33. Kennisuitwisseling tussen systemen: regelbevoorrading, modeltraining en veilige terugkoppeling](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Hoofdstuk 40. Gedistribueerde epistemische architectuur: Knowledge SOA, semantische routering en multi-source arbitrage](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

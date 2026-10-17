@@ -1,8 +1,8 @@
 # Kapitel 38. Maschinelle Halluzinationen und Wissensdefizite: Evidenzkontrolle von Antworten
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VI: Neuro-symbolische Modelle, kognitive Grenzen und kontinuierliches Lernen](part-06-frontiers-neuro-symbolic.md)  
-> **Vorheriges Kapitel:** [Kapitel 34. Wissenslücken: Relationale Suche, Abduktion und Klärungsdialog](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
-> **Nächstes Kapitel:** [Kapitel 25. Wie Expertensysteme lernen: Prüfungsmatrizen, Wissensaudit und Regressionskontrolle](ch25-how-expert-systems-learn.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VI: Neuro-symbolische Architekturen, Abduktion und Halluzinationskontrolle](part-06-frontiers-neuro-symbolic.md)  
+> **Vorheriges Kapitel:** [Kapitel 29. Neuro-symbolische Architektur: Sprachmodelle und beweisgestützte Verifikation](ch29-neuro-symbolic-architecture.md)  
+> **Nächstes Kapitel:** [Kapitel 17. Technologie-Stack: Auswahlkriterien für Werkzeuge, Programmiersprachen und Regel-Engines](ch17-implementation-stack.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Wissensingenieure, Architekten neuro-symbolischer Systeme, Entwickler missionskritischer Software  
@@ -872,4 +872,4 @@ Auf diese Weise wandelt sich generative KI von einer unberechenbaren Gefahrenque
 
 ---
 
-[← Kapitel 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 25 →](ch25-how-expert-systems-learn.md)
+[← Kapitel 29](ch29-neuro-symbolic-architecture.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 17 →](ch17-implementation-stack.md)

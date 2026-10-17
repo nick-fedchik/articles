@@ -1,7 +1,7 @@
 # Kapitel 2. Philosophie für Ingenieure: Was eine Maschine rechtmäßig Wissen nennen darf
 
 > **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil I: Konzeptionelle und epistemische Grundlagen](part-01-foundations.md)  
-> **Vorheriges Kapitel:** [Kapitel 1. Einführung in Expertensysteme: Vom Chaos zu kontrolliertem Wissen](ch01-introduction-to-expert-systems.md)  
+> **Vorheriges Kapitel:** [Kapitel 1. Einführung in Expertensysteme: Vom Chaos zu beherrschbarem Wissen](ch01-introduction-to-expert-systems.md)  
 > **Nächstes Kapitel:** [Kapitel 3. Wie sich ein Expertensystem von einem Informations- und Auskunftssystem unterscheidet](ch03-beyond-reference-information-systems.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  

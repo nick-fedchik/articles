@@ -1,7 +1,7 @@
 # Kapitel 17. Technologie-Stack: Auswahlkriterien für Werkzeuge, Programmiersprachen und Regel-Engines
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Architektur, Technologie-Stack, Inferenz und Aktion](part-04-architecture-and-inference.md)  
-> **Vorheriges Kapitel:** [Kapitel 16. Architektur von Expertensystemen: Vom formalen Wissen zur evidenzbasierten Entscheidung](ch16-expert-systems-architecture.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VII: Technologie-Stack, Hardware-Infrastruktur, kybernetische Ausführung und verteilte SOA](part-07-runtime-and-knowledge-exchange.md)  
+> **Vorheriges Kapitel:** [Kapitel 38. Maschinelle Halluzinationen und Wissensdefizite: Evidenzkontrolle von Antworten](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
 > **Nächstes Kapitel:** [Kapitel 18. Ausführungsinfrastruktur: Lokale Modelle, Hardwarebeschleuniger, Edge und On-Premise](ch18-execution-infrastructure.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
@@ -661,4 +661,4 @@ Auch die Grenzen dieser Empfehlungen müssen klar benannt werden: Die aufgeführ
 
 ---
 
-[← Kapitel 16](ch16-expert-systems-architecture.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 18 →](ch18-execution-infrastructure.md)
+[← Kapitel 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | [Inhaltsverzeichnis](README.md) | [Teil VII](part-07-runtime-and-knowledge-exchange.md) | [Kapitel 18 →](ch18-execution-infrastructure.md)

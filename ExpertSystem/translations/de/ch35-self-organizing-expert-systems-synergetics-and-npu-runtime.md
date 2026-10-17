@@ -1,7 +1,7 @@
 # Kapitel 35. Reaktives Expertensystem: Ereignisse, Widerruf und Wissensadaptation
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VII: Reaktive Ausführung, systemübergreifender Wissensaustausch und verteilte SOA](part-07-runtime-and-knowledge-exchange.md)  
-> **Vorheriges Kapitel:** [Kapitel 26. Kontinuierliches Lernen (Continual Learning) aus Erfahrung und Beherrschung von Systemprotokoll-Drift](ch26-continual-learning.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VII: Technologie-Stack, Hardware-Infrastruktur, kybernetische Ausführung und verteilte SOA](part-07-runtime-and-knowledge-exchange.md)  
+> **Vorheriges Kapitel:** [Kapitel 22. Kybernetischer Regelkreis: Sensoren, Peripherie und Rückkopplung](ch22-cybernetics-edge-to-backend.md)  
 > **Nächstes Kapitel:** [Kapitel 33. Systemübergreifender Wissensaustausch: Regelbereitstellung für Drittsysteme, Modell-Training und sicheres Feedback](ch33-inter-system-knowledge-exchange-and-model-teaching.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
@@ -870,4 +870,4 @@ Das im thematischen Aufbau folgende [Kapitel 33](ch33-inter-system-knowledge-exc
 
 ---
 
-[← Kapitel 26](ch26-continual-learning.md) | [Inhaltsverzeichnis](README.md) | [Teil VII](part-07-runtime-and-knowledge-exchange.md) | [Kapitel 33 →](ch33-inter-system-knowledge-exchange-and-model-teaching.md)
+[← Kapitel 22](ch22-cybernetics-edge-to-backend.md) | [Inhaltsverzeichnis](README.md) | [Teil VII](part-07-runtime-and-knowledge-exchange.md) | [Kapitel 33 →](ch33-inter-system-knowledge-exchange-and-model-teaching.md)

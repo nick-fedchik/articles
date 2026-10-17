@@ -1,7 +1,7 @@
 # Chapter 14. Requirements Detection and Formalization: From Normative Text to Invariants
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Knowledge Acquisition, Linguistic Analysis, and Input Assessment](part-03-knowledge-engineering-nlp.md)  
-> **Previous Chapter:** [Chapter 13. Natural Language Variability vs. Determinism: Compiling Question Semantics](ch13-language-variability-vs-determinism.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Input Information Assessment, Knowledge Acquisition, and Linguistic Analysis](part-03-knowledge-engineering-nlp.md)  
+> **Previous Chapter:** [Chapter 12. Linguistic Analysis and Local Models: Preserving Content and Provenance](ch12-linguistic-analysis-and-local-models.md)  
 > **Next Chapter:** [Chapter 15. Knowledge Extraction and Knowledge Base Construction: Facts, Grammars, and Automata](ch15-knowledge-extraction-and-kb-construction.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
@@ -1044,4 +1044,4 @@ Deterministic detection and formalization of normative requirements establishes 
 
 ---
 
-[← Chapter 13](ch13-language-variability-vs-determinism.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 15 →](ch15-knowledge-extraction-and-kb-construction.md)
+[← Chapter 12](ch12-linguistic-analysis-and-local-models.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 15 →](ch15-knowledge-extraction-and-kb-construction.md)

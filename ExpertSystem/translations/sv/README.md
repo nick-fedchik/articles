@@ -196,13 +196,12 @@ flowchart TD
 
 *Dokument, mänsklig expertis och sensoriska observationer: kandidatutvinning, lingvistisk analys, formalisering och bevisbedömning.*
 
+* [Kapitel 37. Bedömning av ingående information: Källor, bevis och algoritmisk skepticism](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Kapitel 10. System för kunskapsinhämtning: Källor, valideringsgrindar och livscykler](../../ch10-knowledge-acquisition-systems.md)
 * [Kapitel 11. Att inhämta kunskap från domänexperter: Intervjuer, kognitiva kartor och formalisering av praxis](../../ch11-knowledge-elicitation-from-experts.md)
 * [Kapitel 12. Lingvistisk analys och lokala modeller: Att bevara semantik och källattribution](../../ch12-linguistic-analysis-and-local-models.md)
-* [Kapitel 13. Naturlig språkvariabilitet vs. determinism: Kompilering av frågesemantik](../../ch13-language-variability-vs-determinism.md)
 * [Kapitel 14. Extraktion av krav och modaliteter: Från normativ text till formella invarianter](../../ch14-requirements-detection-and-formalization.md)
 * [Kapitel 15. Kunskapsutvinning och uppbyggnad av kunskapsbaser: Fakta, grammatiker och automater](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Kapitel 37. Bedömning av ingående information: Källor, bevis och algoritmisk skepticism](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Arkitektoniska kontrakt, körstack, hårdvaruacceleration, påståendeverifiering, normativ inferens, förklaringsmotorer och cybernetiska styrslingor.*
 
 * [Kapitel 16. Expertsystemarkitektur: Från formaliserad kunskap till evidensstyrd handling](../../ch16-expert-systems-architecture.md)
-* [Kapitel 17. Teknikstacken: Val av verktyg, programmeringsspråk och regelmotorer](../../ch17-implementation-stack.md)
-* [Kapitel 18. Exekveringsinfrastruktur: Lokala SLM:er, hårdvaruacceleratorer, edge och on-premise](../../ch18-execution-infrastructure.md)
+* [Kapitel 13. Naturlig språkvariabilitet vs. determinism: Kompilering av frågesemantik](../../ch13-language-variability-vs-determinism.md)
 * [Kapitel 19. Från fråga till bevis: Sökning, förankring och påståendeverifiering](../../ch19-from-question-to-evidence.md)
 * [Kapitel 31. Normativ inferens: Predikathierarkier, undantag och tidsmässig giltighet](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Kapitel 24. Teknisk diagnostik: Att särskilja symtom från grundorsaker under ofullständig information](../../ch24-system-diagnosis.md)
 * [Kapitel 20. Förklaringsmotor: Beslut, motiverad vägran och kompetensgränser](../../ch20-explanation-engine.md)
-* [Kapitel 21. Från rekommendation till handling: Auktoritetskontroll och säker exekvering i produktion](../../ch21-from-recommendation-to-action.md)
-* [Kapitel 22. Den cybernetiska styrslingan: Sensorer, ställdon och återkoppling](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Kapitel 23. Verifiering av kunskapsbaser: Konsistens, fullständighet och regelkorrekthet](../../ch23-knowledge-base-verification.md)
 * [Kapitel 36. Kunskapstestpyramiden: Regler, interaktioner och variationell stabilitet](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Kapitel 25. Hur expertsystem lär sig: Examinationsmatriser, kunskapsrevisioner och regressionskontroll](../../ch25-how-expert-systems-learn.md)
+* [Kapitel 26. Kontinuerlig inlärning från erfarenhet och begränsning av drift i systemloggar](../../ch26-continual-learning.md)
 * [Kapitel 39. Den aktiva efterlevnadsrevisorn: Poppersk falsifiering, standardefterlevnad (ASPICE/ISO 26262/ISO 21434) och autonom testgenerering](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Kapitel 24. Teknisk diagnostik: Att särskilja symtom från grundorsaker under ofullständig information](../../ch24-system-diagnosis.md)
 * [Kapitel 27. Konstruktion av säkerhetsfall: Formell syntes och verifiering av GSN-argument](../../ch27-safety-case-gsn-synthesis.md)
 * [Kapitel 30. Samkonstruktion av funktionell säkerhet och cybersäkerhet](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Strikt deduktion vs. rådgivande hypoteser, integrering av språkmodeller, kunskapsluckor, eliminering av hallucinationer, examinationsmatriser och erfarenhetsbaserad inlärning.*
 
 * [Kapitel 28. Expertsystem med dubbla lägen: Strikt deduktion och rådgivande hypoteser](../../ch28-dual-mode-expert-systems.md)
-* [Kapitel 29. Neuro-symbolisk arkitektur: Språkmodeller och evidensstyrd verifiering](../../ch29-neuro-symbolic-architecture.md)
 * [Kapitel 34. Kunskapsluckor: Relationssökning, abduktion och sokratiskt förtydligande](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Kapitel 29. Neuro-symbolisk arkitektur: Språkmodeller och evidensstyrd verifiering](../../ch29-neuro-symbolic-architecture.md)
 * [Kapitel 38. Att bota maskinhallucinationer och kunskapsunderskott: Evidensförankrad utdatakontroll](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Kapitel 25. Hur expertsystem lär sig: Examinationsmatriser, kunskapsrevisioner och regressionskontroll](../../ch25-how-expert-systems-learn.md)
-* [Kapitel 26. Kontinuerlig inlärning från erfarenhet och begränsning av drift i systemloggar](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Reaktiv regelexekvering, synergetik och kunskapsfasövergångar, federation mellan system och distribuerade epistemiska företagsarkitekturer.*
 
+* [Kapitel 17. Teknikstacken: Val av verktyg, programmeringsspråk och regelmotorer](../../ch17-implementation-stack.md)
+* [Kapitel 18. Exekveringsinfrastruktur: Lokala SLM:er, hårdvaruacceleratorer, edge och on-premise](../../ch18-execution-infrastructure.md)
+* [Kapitel 21. Från rekommendation till handling: Auktoritetskontroll och säker exekvering i produktion](../../ch21-from-recommendation-to-action.md)
+* [Kapitel 22. Den cybernetiska styrslingan: Sensorer, ställdon och återkoppling](../../ch22-cybernetics-edge-to-backend.md)
 * [Kapitel 35. Reaktiva expertsystem: Händelser, återkallelse och självorganisering av kunskap](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Kapitel 33. Kunskapsutbyte mellan system: Regeltillhandahållande, modellundervisning och säker återkoppling](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Kapitel 40. Distribuerad epistemisk arkitektur: Kunskaps-SOA, semantisk dirigering, minneshierarkier och omprövbar skiljedom från flera källor](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

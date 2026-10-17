@@ -1,8 +1,8 @@
 # Kapitel 39. Aktiver Compliance-Auditor: Popper'sche Falsifikation, normative Compliance (ASPICE/ISO 26262/ISO 21434) und autonomes Testdesign
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Diagnose und Sicherheitsbegründung](part-05-verification-and-learning.md)  
-> **Vorheriges Kapitel:** [Kapitel 36. Testpyramide für Wissensbasen: Regeln, Interaktionen und Antwortstabilität](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
-> **Nächstes Kapitel:** [Kapitel 24. Technische Diagnose: Trennung von Symptom und Ursache unter Unsicherheit](ch24-system-diagnosis.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Lernen und Sicherheitsbegründung](part-05-verification-and-learning.md)  
+> **Vorheriges Kapitel:** [Kapitel 26. Kontinuierliches Lernen (Continual Learning) aus Erfahrung und Beherrschung von Systemprotokoll-Drift](ch26-continual-learning.md)  
+> **Nächstes Kapitel:** [Kapitel 27. Sicherheitsbegründung: Synthese und Verifikation von Argumenten](ch27-safety-case-gsn-synthesis.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Ingenieure für funktionale Sicherheit (Safety Engineers), Cybersicherheits-Spezialisten (Cybersecurity Engineers), Compliance-Auditoren (ASPICE/ISO Assessors), Architekten evidenzbasierter KI  
@@ -795,4 +795,4 @@ Zu dieser virtuellen intellektuellen Diskussion wurden weltweit anerkannte Koryp
 
 ---
 
-[← Kapitel 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 24 →](ch24-system-diagnosis.md)
+[← Kapitel 26](ch26-continual-learning.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 27 →](ch27-safety-case-gsn-synthesis.md)

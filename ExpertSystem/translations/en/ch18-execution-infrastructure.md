@@ -1,8 +1,8 @@
 # Chapter 18. Execution Infrastructure: Local Models, Hardware Accelerators, Edge, and On-Premise
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VII: Implementation Stack, Hardware Infrastructure, Cybernetic Execution, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)  
 > **Previous Chapter:** [Chapter 17. Technology Stack: Selection Criteria for Tools, Programming Languages, and Rule Engines](ch17-implementation-stack.md)  
-> **Next Chapter:** [Chapter 19. From Question to Evidence: Retrieval, Grounding, and Claim Verification](ch19-from-question-to-evidence.md)  
+> **Next Chapter:** [Chapter 21. From Recommendation to Action: Authority Control and Safe Execution in Production Environments](ch21-from-recommendation-to-action.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Level:** Intermediate and advanced: systems engineers, machine learning infrastructure architects, embedded and edge device developers  
@@ -1353,4 +1353,4 @@ The boundaries of this chapter are clear. Theoretical compute calculations and d
 
 ---
 
-[← Chapter 17](ch17-implementation-stack.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 19 →](ch19-from-question-to-evidence.md)
+[← Chapter 17](ch17-implementation-stack.md) | [Table of Contents](README.md) | [Part VII](part-07-runtime-and-knowledge-exchange.md) | [Chapter 21 →](ch21-from-recommendation-to-action.md)

@@ -1,8 +1,8 @@
 # Kapitel 26. Kontinuierliches Lernen (Continual Learning) aus Erfahrung und Beherrschung von Systemprotokoll-Drift
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VI: Neuro-symbolische Modelle, kognitive Frontlinien und kontinuierliches Lernen](part-06-frontiers-neuro-symbolic.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Lernen und Sicherheitsbegründung](part-05-verification-and-learning.md)  
 > **Vorheriges Kapitel:** [Kapitel 25. Wie Expertensysteme lernen: Prüfungsmatrizen, Wissensaudits und Regressionskontrolle](ch25-how-expert-systems-learn.md)  
-> **Nächstes Kapitel:** [Kapitel 35. Reaktives Expertensystem: Ereignisse, Widerruf und Wissensadaptation](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
+> **Nächstes Kapitel:** [Kapitel 39. Aktiver Compliance-Auditor: Popper'sche Falsifikation, normative Compliance (ASPICE/ISO 26262/ISO 21434) und autonomes Testdesign](ch39-active-compliance-auditor-and-popperian-testing.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Knowledge Engineers, Machine-Learning-Ingenieure, Forscher  
@@ -995,4 +995,4 @@ Die im thematischen Aufbau folgenden Kapitel [27](ch27-safety-case-gsn-synthesis
 
 ---
 
-[← Kapitel 25](ch25-how-expert-systems-learn.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 35 →](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
+[← Kapitel 25](ch25-how-expert-systems-learn.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 39 →](ch39-active-compliance-auditor-and-popperian-testing.md)

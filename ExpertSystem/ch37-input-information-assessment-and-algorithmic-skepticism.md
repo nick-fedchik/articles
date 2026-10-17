@@ -1,8 +1,8 @@
 # Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Здобуття знань, мовний аналіз та оцінювання входу](part-03-knowledge-engineering-nlp.md)  
-> **Попередня глава:** [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](ch15-knowledge-extraction-and-kb-construction.md)  
-> **Наступна глава:** [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](ch16-expert-systems-architecture.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Оцінювання вхідної інформації, здобуття знань та мовний аналіз](part-03-knowledge-engineering-nlp.md)
+> **Попередня глава:** [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)
+> **Наступна глава:** [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](ch10-knowledge-acquisition-systems.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** поглиблений: інженери знань, аналітики, архітектори периферійних і потокових обчислень  
@@ -923,4 +923,4 @@ func TestAssessment(t *testing.T) {
 
 ---
 
-[← Глава 15](ch15-knowledge-extraction-and-kb-construction.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 16 →](ch16-expert-systems-architecture.md)
+[← Глава 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 10 →](ch10-knowledge-acquisition-systems.md)

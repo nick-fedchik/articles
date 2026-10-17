@@ -1,6 +1,6 @@
 # Kapitel 7. Typologie von Wissensbasen: Regeln, Ontologien, Präzedenzfälle und Vektoren
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil II: Mathematische Modelle, Wissensrepräsentation und Wissensspeicherung](part-02-knowledge-models.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil II: Mathematische Modelle, Repräsentation und Wissensspeicherung](part-02-knowledge-models.md)  
 > **Vorheriges Kapitel:** [Kapitel 6. Angewandte Mathematik für Expertensysteme: Regeln, Wahrscheinlichkeiten, Graphen und Kausalität](ch06-applied-mathematics-for-expert-systems.md)  
 > **Nächstes Kapitel:** [Kapitel 8. Ingenieurtechnische Artefakte als Daten des Expertensystems](ch08-engineering-artifacts-as-data.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  

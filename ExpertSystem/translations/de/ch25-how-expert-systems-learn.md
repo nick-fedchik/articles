@@ -1,7 +1,7 @@
 # Kapitel 25. Wie Expertensysteme lernen: Prüfungsmatrizen, Wissensaudits und Regressionskontrolle
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VI: Neuro-symbolische Modelle, kognitive Frontlinien und kontinuierliches Lernen](part-06-frontiers-neuro-symbolic.md)  
-> **Vorheriges Kapitel:** [Kapitel 38. Maschinelle Halluzinationen und Wissensdefizite: Evidenzbasierte Antwortkontrolle](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Lernen und Sicherheitsbegründung](part-05-verification-and-learning.md)  
+> **Vorheriges Kapitel:** [Kapitel 36. Testpyramide für Wissensbasen: Regeln, Interaktionen und Antwortstabilität](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
 > **Nächstes Kapitel:** [Kapitel 26. Kontinuierliches Lernen (Continual Learning) aus Erfahrung und Beherrschung von Systemprotokoll-Drift](ch26-continual-learning.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
@@ -1176,4 +1176,4 @@ Die Grenzen des Kapitels sind evident: Zahlenwerte dienen didaktischen Zwecken. 
 
 ---
 
-[← Kapitel 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 26 →](ch26-continual-learning.md)
+[← Kapitel 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 26 →](ch26-continual-learning.md)

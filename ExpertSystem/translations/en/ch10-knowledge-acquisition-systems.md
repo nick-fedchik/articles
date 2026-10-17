@@ -1,7 +1,7 @@
 # Chapter 10. Knowledge Acquisition Systems: Sources, Admission, and Lifecycle
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Knowledge Acquisition, Linguistic Analysis, and Input Assessment](part-03-knowledge-engineering-nlp.md)  
-> **Previous Chapter:** [Chapter 32. Immutable Knowledge Packs: Byte-Level Admission, Indices, and Memory Mapping](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Input Information Assessment, Knowledge Acquisition, and Linguistic Analysis](part-03-knowledge-engineering-nlp.md)  
+> **Previous Chapter:** [Chapter 37. Input Information Assessment: Sources, Evidence, and Uncertainty](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
 > **Next Chapter:** [Chapter 11. Knowledge Elicitation from Experts: Interviewing, Cognitive Maps, and Experience Formalization](ch11-knowledge-elicitation-from-experts.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
@@ -1535,4 +1535,4 @@ These works and industry guidelines establish the methodological foundation of t
 
 ---
 
-[← Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 11 →](ch11-knowledge-elicitation-from-experts.md)
+[← Chapter 37](ch37-input-information-assessment-and-algorithmic-skepticism.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 11 →](ch11-knowledge-elicitation-from-experts.md)

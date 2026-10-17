@@ -1,8 +1,8 @@
 # Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Здобуття знань, мовний аналіз та оцінювання входу](part-03-knowledge-engineering-nlp.md)
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Оцінювання вхідної інформації, здобуття знань та мовний аналіз](part-03-knowledge-engineering-nlp.md)
 > **Попередня глава:** [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](ch11-knowledge-elicitation-from-experts.md)
-> **Наступна глава:** [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](ch13-language-variability-vs-determinism.md)
+> **Наступна глава:** [Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів](ch14-requirements-detection-and-formalization.md)
 > **Зміст книги:** [README.md](README.md)
 > **Автор:** [Микола Федчик](about-the-author.md)
 > **Рівень:** середній: розробники та інженери знань
@@ -1090,4 +1090,4 @@ $$\mathrm{Score}_{\mathrm{relevance}}(c_k \mid w_{\mathrm{ext}}) = \gamma(\mathc
 
 ---
 
-[← Глава 11](ch11-knowledge-elicitation-from-experts.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 13 →](ch13-language-variability-vs-determinism.md)
+[← Глава 11](ch11-knowledge-elicitation-from-experts.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 14 →](ch14-requirements-detection-and-formalization.md)

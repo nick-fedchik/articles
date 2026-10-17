@@ -1,8 +1,8 @@
 # Глава 35. Реактивна експертна система: події, відкликання й адаптація знань
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VII: Реактивне виконання, міжсистемний обмін знаннями та розподілена SOA](part-07-runtime-and-knowledge-exchange.md)  
-> **Попередня глава:** [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](ch26-continual-learning.md)  
-> **Наступна глава:** [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](ch33-inter-system-knowledge-exchange-and-model-teaching.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VII: Технологічний стек, апаратна інфраструктура, кібернетичне виконання та розподілена SOA](part-07-runtime-and-knowledge-exchange.md)
+> **Попередня глава:** [Глава 22. Кібернетичний цикл керування: сенсори, периферія та зворотний зв'язок](ch22-cybernetics-edge-to-backend.md)
+> **Наступна глава:** [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні архітектори, інженери знань, фахівці з безпеки та апаратного прискорення: просунутий  
@@ -911,4 +911,4 @@ func TestQuarantineBuffer_Lifecycle(t *testing.T) {
 
 ---
 
-[← Глава 26](ch26-continual-learning.md) | [Зміст книги](README.md) | [Частина VII](part-07-runtime-and-knowledge-exchange.md) | [Глава 33 →](ch33-inter-system-knowledge-exchange-and-model-teaching.md)
+[← Глава 22](ch22-cybernetics-edge-to-backend.md) | [Зміст книги](README.md) | [Частина VII](part-07-runtime-and-knowledge-exchange.md) | [Глава 33 →](ch33-inter-system-knowledge-exchange-and-model-teaching.md)

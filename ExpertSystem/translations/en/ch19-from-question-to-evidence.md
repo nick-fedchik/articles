@@ -1,8 +1,8 @@
 # Chapter 19. From Question to Evidence: Retrieval, Grounding, and Claim Verification
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)  
-> **Previous Chapter:** [Chapter 18. Execution Infrastructure: Local Models, Hardware Accelerators, Edge, and On-Premise](ch18-execution-infrastructure.md)  
-> **Next Chapter:** [Chapter 31. Syllogistic Reasoning and Relation Lattices: Hierarchies of Predicates, Exceptions, and Validity](ch31-syllogistic-reasoning-and-relation-lattices.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: System Architecture, Normative Inference, Diagnosis, and Explanation](part-04-architecture-and-inference.md)  
+> **Previous Chapter:** [Chapter 13. Natural Language Variability vs. Determinism: Compiling Question Semantics](ch13-language-variability-vs-determinism.md)  
+> **Next Chapter:** [Chapter 31. Normative Inference: Predicate Hierarchies, Exceptions, and Validity](ch31-syllogistic-reasoning-and-relation-lattices.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Level:** Intermediate and advanced: software engineers, knowledge engineers, language model practitioners  
@@ -864,4 +864,4 @@ The operational boundaries of this methodology are clear. Byte grounding proves 
 
 ---
 
-[← Chapter 18](ch18-execution-infrastructure.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 31 →](ch31-syllogistic-reasoning-and-relation-lattices.md)
+[← Chapter 13](ch13-language-variability-vs-determinism.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 31 →](ch31-syllogistic-reasoning-and-relation-lattices.md)

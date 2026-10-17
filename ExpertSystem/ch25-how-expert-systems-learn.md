@@ -1,8 +1,8 @@
 # Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні моделі, когнітивні фронтири та неперервне навчання](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
-> **Наступна глава:** [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](ch26-continual-learning.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, тестування, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)
+> **Попередня глава:** [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+> **Наступна глава:** [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](ch26-continual-learning.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: інженери зі знань, інженери машинного навчання, відповідальні за якість і випуск версій  
@@ -1320,4 +1320,4 @@ flowchart LR
 
 ---
 
-[← Глава 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 26 →](ch26-continual-learning.md)
+[← Глава 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 26 →](ch26-continual-learning.md)

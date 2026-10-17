@@ -196,13 +196,12 @@ flowchart TD
 
 *Dokumenti, cilvēku ekspertīze un sensoru novērojumi: kandidātu iegūšana, lingvistiskā analīze, formalizācija un pierādījumu novērtēšana.*
 
+* [37. Nodaļa. Ievades informācijas novērtēšana: Avoti, pierādījumi un algoritmiskais skepticisms](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [10. Nodaļa. Zināšanu iegūšanas sistēmas: Avoti, piekļuves vārtejas un dzīves cikli](../../ch10-knowledge-acquisition-systems.md)
 * [11. Nodaļa. Zināšanu iegūšana no nozares ekspertiem: Intervijas, kognitīvās kartes un prakses formalizēšana](../../ch11-knowledge-elicitation-from-experts.md)
 * [12. Nodaļa. Lingvistiskā analīze un lokālie modeļi: Semantikas un avotu piesaistes saglabāšana](../../ch12-linguistic-analysis-and-local-models.md)
-* [13. Nodaļa. Dabiskās valodas mainīgums pret determinismu: Vaicājumu semantikas kompilēšana](../../ch13-language-variability-vs-determinism.md)
 * [14. Nodaļa. Prasību un modalitāšu ieguve: No normatīvā teksta līdz formālajiem invariantiem](../../ch14-requirements-detection-and-formalization.md)
 * [15. Nodaļa. Zināšanu ieguve un zināšanu bāzes veidošana: Fakti, gramatikas un automāti](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [37. Nodaļa. Ievades informācijas novērtēšana: Avoti, pierādījumi un algoritmiskais skepticisms](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Arhitektūras līgumi, izpildlaika steks, aparatūras paātrināšana, apgalvojumu verifikācija, normatīvā secināšana, paskaidrojumu dzinēji un kibernētiskie vadības cikli.*
 
 * [16. Nodaļa. Ekspertsistēmu arhitektūra: No formalizētām zināšanām līdz pierādījumos balstītai rīcībai](../../ch16-expert-systems-architecture.md)
-* [17. Nodaļa. Tehnoloģiju steks: Rīku izvēle, programmēšanas valodas un likumu dzinēji](../../ch17-implementation-stack.md)
-* [18. Nodaļa. Izpildes infrastruktūra: Lokālie SLM, aparatūras paātrinātāji, edge un on-premise](../../ch18-execution-infrastructure.md)
+* [13. Nodaļa. Dabiskās valodas mainīgums pret determinismu: Vaicājumu semantikas kompilēšana](../../ch13-language-variability-vs-determinism.md)
 * [19. Nodaļa. No jautājuma līdz pierādījumam: Meklēšana, nostiprināšana un apgalvojumu pārbaude](../../ch19-from-question-to-evidence.md)
 * [31. Nodaļa. Normatīvā secināšana: Predikātu hierarhijas, izņēmumi un laika derīgums](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [24. Nodaļa. Tehniskā diagnostika: Simptomu nošķiršana no pamatcēloņiem nepilnīgas informācijas apstākļos](../../ch24-system-diagnosis.md)
 * [20. Nodaļa. Paskaidrojumu dzinējs: Lēmumi, pamatots atteikums un kompetences robežas](../../ch20-explanation-engine.md)
-* [21. Nodaļa. No ieteikuma līdz darbībai: Pilnvaru kontrole un droša izpilde ražošanā](../../ch21-from-recommendation-to-action.md)
-* [22. Nodaļa. Kibernētiskais vadības cikls: Sensori, izpildmehānismi un atgriezeniskā saite](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [23. Nodaļa. Zināšanu bāzes verifikācija: Konsekvence, pilnīgums un likumu pareizība](../../ch23-knowledge-base-verification.md)
 * [36. Nodaļa. Zināšanu testēšanas piramīda: Likumi, mijiedarbības un variāciju stabilitāte](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [25. Nodaļa. Kā mācās ekspertsistēmas: Eksāmenu matricas, zināšanu auditi un regresijas kontrole](../../ch25-how-expert-systems-learn.md)
+* [26. Nodaļa. Nepārtraukta mācīšanās no pieredzes un sistēmas žurnālu novirzes mazināšana](../../ch26-continual-learning.md)
 * [39. Nodaļa. Aktīvais atbilstības auditors: Poperiskā falsifikācija, atbilstība standartiem (ASPICE/ISO 26262/ISO 21434) un autonoma testu ģenerēšana](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [24. Nodaļa. Tehniskā diagnostika: Simptomu nošķiršana no pamatcēloņiem nepilnīgas informācijas apstākļos](../../ch24-system-diagnosis.md)
 * [27. Nodaļa. Drošības gadījumu inženierija: GSN argumentu formālā sintēze un verifikācija](../../ch27-safety-case-gsn-synthesis.md)
 * [30. Nodaļa. Funkcionālās drošības un kiberdrošības kopinženierija](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Stingra dedukcija pret konsultatīvajām hipoēzēm, valodas modeļu integrācija, zināšanu robi, halucināciju novēršana, eksāmenu matricas un pieredzē balstīta mācīšanās.*
 
 * [28. Nodaļa. Divrežīmu ekspertsistēmas: Stingra dedukcija un konsultatīvās hipoēzes](../../ch28-dual-mode-expert-systems.md)
-* [29. Nodaļa. Neirosimboliskā arhitektūra: Valodas modeļi un pierādījumos balstīta verifikācija](../../ch29-neuro-symbolic-architecture.md)
 * [34. Nodaļa. Zināšanu robi: Relāciju meklēšana, abdukcija un sokrātiskā precizēšana](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [29. Nodaļa. Neirosimboliskā arhitektūra: Valodas modeļi un pierādījumos balstīta verifikācija](../../ch29-neuro-symbolic-architecture.md)
 * [38. Nodaļa. Mašīnas halucināciju un zināšanu deficīta ārstēšana: Pierādījumos balstīta izvades kontrole](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [25. Nodaļa. Kā mācās ekspertsistēmas: Eksāmenu matricas, zināšanu auditi un regresijas kontrole](../../ch25-how-expert-systems-learn.md)
-* [26. Nodaļa. Nepārtraukta mācīšanās no pieredzes un sistēmas žurnālu novirzes mazināšana](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Reaktīva likumu izpilde, sinerģētika un zināšanu fāzu pārejas, starpsistēmu federācija un izkliedētās uzņēmuma epistemiskās arhitektūras.*
 
+* [17. Nodaļa. Tehnoloģiju steks: Rīku izvēle, programmēšanas valodas un likumu dzinēji](../../ch17-implementation-stack.md)
+* [18. Nodaļa. Izpildes infrastruktūra: Lokālie SLM, aparatūras paātrinātāji, edge un on-premise](../../ch18-execution-infrastructure.md)
+* [21. Nodaļa. No ieteikuma līdz darbībai: Pilnvaru kontrole un droša izpilde ražošanā](../../ch21-from-recommendation-to-action.md)
+* [22. Nodaļa. Kibernētiskais vadības cikls: Sensori, izpildmehānismi un atgriezeniskā saite](../../ch22-cybernetics-edge-to-backend.md)
 * [35. Nodaļa. Reaktīvās ekspertsistēmas: Notikumi, likumu atsaukšana un zināšanu pašorganizācija](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [33. Nodaļa. Starpsistēmu zināšanu apmaiņa: Likumu nodrošināšana, modeļu apmācība un droša atgriezeniskā saite](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [40. Nodaļa. Izkliedētā epistemiskā arhitektūra: Zināšanu SOA, semantiskā maršrutēšana, atmiņas hierarhijas un vairāku avotu atspēkojama šķīrējtiesa](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

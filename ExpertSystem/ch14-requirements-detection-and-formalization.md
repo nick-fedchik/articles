@@ -1,7 +1,7 @@
 # Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Здобуття знань, мовний аналіз та оцінювання входу](part-03-knowledge-engineering-nlp.md)
-> **Попередня глава:** [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](ch13-language-variability-vs-determinism.md)
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Оцінювання вхідної інформації, здобуття знань та мовний аналіз](part-03-knowledge-engineering-nlp.md)
+> **Попередня глава:** [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](ch12-linguistic-analysis-and-local-models.md)
 > **Наступна глава:** [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](ch15-knowledge-extraction-and-kb-construction.md)
 > **Зміст книги:** [README.md](README.md)
 > **Автор:** [Микола Федчик](about-the-author.md)
@@ -1048,4 +1048,4 @@ Z3 перевіряє формальну модель, а не текст. Дл�
 
 ---
 
-[← Глава 13](ch13-language-variability-vs-determinism.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 15 →](ch15-knowledge-extraction-and-kb-construction.md)
+[← Глава 12](ch12-linguistic-analysis-and-local-models.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 15 →](ch15-knowledge-extraction-and-kb-construction.md)

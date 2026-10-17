@@ -1,8 +1,8 @@
 # Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні моделі, когнітивні фронтири та неперервне навчання](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](ch29-neuro-symbolic-architecture.md)  
-> **Наступна глава:** [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні архітектури, абдукція та контроль галюцинацій](part-06-frontiers-neuro-symbolic.md)
+> **Попередня глава:** [Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза](ch28-dual-mode-expert-systems.md)
+> **Наступна глава:** [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](ch29-neuro-symbolic-architecture.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні архітектори, інженери знань, фахівці з математичної логіки та філософії штучного інтелекту: просунутий  
@@ -1010,4 +1010,4 @@ $$\exists M_2 \in D_2 : \mathrm{IMPROVES}(M_2, P_2) \;\land\; \neg \mathrm{DEGRA
 
 ---
 
-[← Глава 29](ch29-neuro-symbolic-architecture.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 38 →](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
+[← Глава 28](ch28-dual-mode-expert-systems.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 29 →](ch29-neuro-symbolic-architecture.md)

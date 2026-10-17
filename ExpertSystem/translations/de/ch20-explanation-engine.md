@@ -1,8 +1,8 @@
 # Kapitel 20. Erklärungskomponente: Entscheidung, Ablehnung und Kompetenzgrenzen
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Architektur, Technologie-Stack, Inferenz und Aktion](part-04-architecture-and-inference.md)  
-> **Vorheriges Kapitel:** [Kapitel 31. Normenbasierte Inferenz: Prädikatenhierarchien, Ausnahmen und Geltung](ch31-syllogistic-reasoning-and-relation-lattices.md)  
-> **Nächstes Kapitel:** [Kapitel 21. Von der Empfehlung zur Aktion: Autoritätskontrolle und sichere Ausführung in Produktionsumgebungen](ch21-from-recommendation-to-action.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Systemarchitektur, normative Inferenz, Diagnose und Erklärung](part-04-architecture-and-inference.md)  
+> **Vorheriges Kapitel:** [Kapitel 24. Technische Diagnose: Trennung von Symptom und Ursache unter Unsicherheit](ch24-system-diagnosis.md)  
+> **Nächstes Kapitel:** [Kapitel 23. Verifikation der Wissensbasis: Widerspruchsfreiheit, Vollständigkeit und Robustheit von Regeln](ch23-knowledge-base-verification.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Mittelstufe und Fortgeschrittene: Entwickler von Inferenzmaschinen, Systemarchitekten, Wissensingenieure  
@@ -867,4 +867,4 @@ Korrekte Regeln und Fakten sind notwendig, doch auch der Renderer kann deren Sin
 
 ---
 
-[← Kapitel 31](ch31-syllogistic-reasoning-and-relation-lattices.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 21 →](ch21-from-recommendation-to-action.md)
+[← Kapitel 24](ch24-system-diagnosis.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 23 →](ch23-knowledge-base-verification.md)

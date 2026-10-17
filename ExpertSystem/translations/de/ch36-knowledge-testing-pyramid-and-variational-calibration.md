@@ -1,8 +1,8 @@
 # Kapitel 36. Testpyramide für Wissensbasen: Regeln, Interaktionen und Antwortstabilität
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Diagnose und Sicherheitsbegründung](part-05-verification-and-learning.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Lernen und Sicherheitsbegründung](part-05-verification-and-learning.md)  
 > **Vorheriges Kapitel:** [Kapitel 23. Verifikation der Wissensbasis: Widerspruchsfreiheit, Vollständigkeit und Robustheit von Regeln](ch23-knowledge-base-verification.md)  
-> **Nächstes Kapitel:** [Kapitel 39. Aktiver Prüfexperte: Poppersche Falsifikation, normative Compliance (ASPICE/ISO 26262/ISO 21434) und autonomes Testdesign](ch39-active-compliance-auditor-and-popperian-testing.md)  
+> **Nächstes Kapitel:** [Kapitel 25. Wie Expertensysteme lernen: Prüfungsmatrizen, Wissensaudits und Regressionskontrolle](ch25-how-expert-systems-learn.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Systemarchitekten, Wissensingenieure, Verifikationsingenieure (QA/QE), Mathematiker: Fortgeschritten  
@@ -1232,4 +1232,4 @@ Nach der Beherrschung der Methodik des vollständigen Test- und Kalibrierungszyk
 
 ---
 
-[← Kapitel 23](ch23-knowledge-base-verification.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 39 →](ch39-active-compliance-auditor-and-popperian-testing.md)
+[← Kapitel 23](ch23-knowledge-base-verification.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 25 →](ch25-how-expert-systems-learn.md)

@@ -198,13 +198,12 @@ flowchart TD
 
 *Dokumenti, esperjenza ta' speċjalisti u osservazzjonijiet: estrazzjoni ta' kandidati, analiżi lingwistika, formalizzazzjoni u valutazzjoni tal-evidenza.*
 
+* [Kapitlu 37. Valutazzjoni tal-Informazzjoni tal-Input: Għejun, Evidenza u Inċertezza](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Kapitlu 10. Sistemi ta' Akkwist tal-Għarfien: Għejun, Verifika u Ċiklu tal-Ħajja](../../ch10-knowledge-acquisition-systems.md)
 * [Kapitlu 11. Estrazzjoni tal-Għarfien minn Esperti: Intervisti, Mapep Konjittivi u Formalizzazzjoni tal-Esperjenza](../../ch11-knowledge-elicitation-from-experts.md)
 * [Kapitlu 12. Analiżi Lingwistika u Mudelli Lokali: Preservazzjoni tat-Tifsira u tal-Għejun](../../ch12-linguistic-analysis-and-local-models.md)
-* [Kapitlu 13. Varjabbiltà tal-Lingwa Naturali Kontra d-Determiniżmu: Kompilazzjoni tat-Tifsira tal-Mistoqsija](../../ch13-language-variability-vs-determinism.md)
 * [Kapitlu 14. Sejbien ta' Rekwiżiti u Modalitajiet: Minn Test Normattiv għal Invarjanti](../../ch14-requirements-detection-and-formalization.md)
 * [Kapitlu 15. Estrazzjoni tal-Għarfien u Kostruzzjoni tal-Bażi tal-Għarfien: Fatti, Grammatiki u Awtomati](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Kapitlu 37. Valutazzjoni tal-Informazzjoni tal-Input: Għejun, Evidenza u Inċertezza](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -213,13 +212,11 @@ flowchart TD
 *Kuntratti arkitettoniċi, munzell teknoloġiku, eżekuzzjoni tal-ħardwer, verifika ta' stqarrijiet, inferenza bbażata fuq normi, spjegazzjoni u linja ta' kontroll ċibernetiku.*
 
 * [Kapitlu 16. Arkitettura ta' Sistema Esperta: Minn Għarfien Formali għal Deċiżjoni Bbażata fuq l-Evidenza](../../ch16-expert-systems-architecture.md)
-* [Kapitlu 17. Munzell Teknoloġiku: Kriterji għall-Għażla ta' Għodod, Lingwi ta' Programmar u Magni ta' Regoli](../../ch17-implementation-stack.md)
-* [Kapitlu 18. Infrastruttura tal-Eżekuzzjoni: Mudelli Lokali, Aċċeleraturi tal-Ħardwer, Edge u On-Premise](../../ch18-execution-infrastructure.md)
+* [Kapitlu 13. Varjabbiltà tal-Lingwa Naturali Kontra d-Determiniżmu: Kompilazzjoni tat-Tifsira tal-Mistoqsija](../../ch13-language-variability-vs-determinism.md)
 * [Kapitlu 19. Minn Mistoqsija għal Evidenza: Tiftix, Ankraġġ u Verifika ta' Stqarrijiet](../../ch19-from-question-to-evidence.md)
 * [Kapitlu 31. Inferenza Bbażata fuq Normi: Ġerarkiji ta' Predikati, Eċċezzjonijiet u Validità](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Kapitlu 24. Dijanjostika Teknika: Kif Ma Tħallatx Sintomu ma' Kawża Ewlenija Taħt Inkompletezza tad-Dejta](../../ch24-system-diagnosis.md)
 * [Kapitlu 20. Magna tal-Ispjegazzjonijiet: Deċiżjoni, Rifjut u Konfini tal-Kompetenza](../../ch20-explanation-engine.md)
-* [Kapitlu 21. Minn Rakkomandazzjoni għal Azzjoni: Kontroll tal-Awtorità u Eżekuzzjoni Sikura fl-Ambjent tal-Produzzjoni](../../ch21-from-recommendation-to-action.md)
-* [Kapitlu 22. Linja ta' Kontroll Ċibernetika: Sensuri, Periferali u Rispons](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -229,8 +226,9 @@ flowchart TD
 
 * [Kapitlu 23. Verifika tal-Bażi tal-Għarfien: Kif Tiċċekkja l-Konsistenza, il-Kompletezza u l-Affidabbiltà tar-Regoli](../../ch23-knowledge-base-verification.md)
 * [Kapitlu 36. Piramida tal-Ittestjar tal-Għarfien: Regoli, Interazzjonijiet u Stabbiltà tat-Tweġibiet](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Kapitlu 25. Kif Tħarreġ Sistema Esperta: Matriċi ta' Eżami, Awditjar tal-Għarfien u Kontroll tar-Rigressjoni](../../ch25-how-expert-systems-learn.md)
+* [Kapitlu 26. Tagħlim Kontinwu (Continual Learning) mill-Esperjenza u Kif Tingħeleb id-Drift tar-Reġistri tas-Sistema](../../ch26-continual-learning.md)
 * [Kapitlu 39. Awditur tal-Konformità Attiv: Falsifikazzjoni Popperjana, Konformità Regolatorja (ASPICE/ISO 26262/ISO 21434) u Disinn ta' Testijiet Awtonomu](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Kapitlu 24. Dijanjostika Teknika: Kif Ma Tħallatx Sintomu ma' Kawża Ewlenija Taħt Inkompletezza tad-Dejta](../../ch24-system-diagnosis.md)
 * [Kapitlu 27. Każ tas-Sikurezza: Sinteżi u Verifika ta' Argumenti](../../ch27-safety-case-gsn-synthesis.md)
 * [Kapitlu 30. Ko-Inġinerija ta' Sikurezza Funzjonali u Ċibersigurtà](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -241,11 +239,9 @@ flowchart TD
 *Inferenza riġida u ipoteżi konsultattiva, integrazzjoni ta' mudelli lingwistiċi, lakuni fl-għarfien, kontroll ta' tweġibiet mhux sostnuti, matriċi ta' eżami u tagħlim kontinwu mill-esperjenza.*
 
 * [Kapitlu 28. Sistemi Esperti b'Modalità Doppja: Inferenza Riġida u Ipoteżi Konsultattiva](../../ch28-dual-mode-expert-systems.md)
-* [Kapitlu 29. Arkitettura Newro-Simbolika: Mudelli Lingwistiċi u Verifika tal-Pedamenti tal-Evidenza](../../ch29-neuro-symbolic-architecture.md)
 * [Kapitlu 34. Lakuni fl-Għarfien: Tiftix Relazzjonali, Abduzzjoni u Djalogu ta' Kjarifika](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Kapitlu 29. Arkitettura Newro-Simbolika: Mudelli Lingwistiċi u Verifika tal-Pedamenti tal-Evidenza](../../ch29-neuro-symbolic-architecture.md)
 * [Kapitlu 38. Alluċinazzjonijiet tal-Magni u Defiċits tal-Għarfien: Kontroll tat-Tweġibiet Ibbażat fuq l-Evidenza](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Kapitlu 25. Kif Tħarreġ Sistema Esperta: Matriċi ta' Eżami, Awditjar tal-Għarfien u Kontroll tar-Rigressjoni](../../ch25-how-expert-systems-learn.md)
-* [Kapitlu 26. Tagħlim Kontinwu (Continual Learning) mill-Esperjenza u Kif Tingħeleb id-Drift tar-Reġistri tas-Sistema](../../ch26-continual-learning.md)
 
 ---
 
@@ -253,6 +249,10 @@ flowchart TD
 
 *Eżekuzzjoni reattiva ta' regoli, sinerġetika u tranżizzjonijiet ta' fażi tal-għarfien, skambju bejn sistemi u arkitettura epistemika mqassma fuq skala ta' intrapriża.*
 
+* [Kapitlu 17. Munzell Teknoloġiku: Kriterji għall-Għażla ta' Għodod, Lingwi ta' Programmar u Magni ta' Regoli](../../ch17-implementation-stack.md)
+* [Kapitlu 18. Infrastruttura tal-Eżekuzzjoni: Mudelli Lokali, Aċċeleraturi tal-Ħardwer, Edge u On-Premise](../../ch18-execution-infrastructure.md)
+* [Kapitlu 21. Minn Rakkomandazzjoni għal Azzjoni: Kontroll tal-Awtorità u Eżekuzzjoni Sikura fl-Ambjent tal-Produzzjoni](../../ch21-from-recommendation-to-action.md)
+* [Kapitlu 22. Linja ta' Kontroll Ċibernetika: Sensuri, Periferali u Rispons](../../ch22-cybernetics-edge-to-backend.md)
 * [Kapitlu 35. Sistema Esperta Reattiva: Avvenimenti, Revoka u Adattament tal-Għarfien](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Kapitlu 33. Skambju ta' Għarfien Bejn is-Sistemi: Provvista ta' Regoli lil Sistemi Esterni, Tagħlim ta' Mudelli u Rispons Sikur](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Kapitlu 40. Arkitettura Mqassma ta' Sistema Esperta Bbażata fuq l-Evidenza: SOA Epistemika, Rotot Semantiċi, Ġerarkija tal-Memorja u Arbitraġġ Defeasible b'Diversi Bejjiegħa](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

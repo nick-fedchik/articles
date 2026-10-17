@@ -1,7 +1,7 @@
 # Chapter 30. Functional Safety and Cybersecurity Co-Engineering
 
-> **Book:** [Architecture of Evidence-Grounded Expert Systems](README.md) · [Part V: Verification, Testing, Diagnostics, and Safety Assurance](part-05-verification-and-learning.md)  
-> **Previous Chapter:** [Chapter 27. Safety Cases: Synthesis and Verification of Arguments](ch27-safety-case-gsn-synthesis.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part V: Verification, Testing, Learning, and Safety Case Synthesis](part-05-verification-and-learning.md)  
+> **Previous Chapter:** [Chapter 27. Safety Case: Synthesis and Verification of Arguments](ch27-safety-case-gsn-synthesis.md)  
 > **Next Chapter:** [Chapter 28. Dual-Mode Expert Systems: Strict Deduction and Advisory Hypotheses](ch28-dual-mode-expert-systems.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  

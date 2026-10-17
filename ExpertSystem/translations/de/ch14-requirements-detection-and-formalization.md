@@ -1,7 +1,7 @@
 # Kapitel 14. Anforderungsextraktion und Modalitäten: Vom normativen Text zu Invarianten
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Wissensakquisition, linguistische Analyse und Eingangsdatenbewertung](part-03-knowledge-engineering-nlp.md)  
-> **Vorheriges Kapitel:** [Kapitel 13. Natürliche Sprachvarianz versus Determinismus: Kompilierung der Frageintention](ch13-language-variability-vs-determinism.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Eingangsdatenbewertung, Wissensakquisition und linguistische Analyse](part-03-knowledge-engineering-nlp.md)  
+> **Vorheriges Kapitel:** [Kapitel 12. Linguistische Analyse und lokale Modelle: Erhalt von Semantik und Herkunftsnachweis](ch12-linguistic-analysis-and-local-models.md)  
 > **Nächstes Kapitel:** [Kapitel 15. Wissensextraktion und Aufbau der Wissensbasis: Fakten, Grammatiken und Automaten](ch15-knowledge-extraction-and-kb-construction.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
@@ -1043,4 +1043,4 @@ Die deterministische Erkennung und Formalisierung normativer Anforderungen schaf
 
 ---
 
-[← Kapitel 13](ch13-language-variability-vs-determinism.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 15 →](ch15-knowledge-extraction-and-kb-construction.md)
+[← Kapitel 12](ch12-linguistic-analysis-and-local-models.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 15 →](ch15-knowledge-extraction-and-kb-construction.md)

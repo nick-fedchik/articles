@@ -1,8 +1,8 @@
 # Chapter 25. How Expert Systems Learn: Examination Matrices, Knowledge Audits, and Regression Control
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VI: Neuro-Symbolic Models, Cognitive Frontiers, and Continuous Learning](part-06-frontiers-neuro-symbolic.md)  
-> **Previous Chapter:** [Chapter 38. Machine Hallucinations and Knowledge Deficits: Evidence-Governed Output Control](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
-> **Next Chapter:** [Chapter 26. Continuous Learning from Experience and Overcoming System Log Drift](ch26-continual-learning.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part V: Verification, Testing, Learning, and Safety Case Synthesis](part-05-verification-and-learning.md)  
+> **Previous Chapter:** [Chapter 36. Knowledge Testing Pyramid: Rules, Interactions, and Response Robustness](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
+> **Next Chapter:** [Chapter 26. Continual Learning from Operational Experience and Mitigating System Log Bias](ch26-continual-learning.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Intermediate and Advanced: knowledge engineers, machine learning engineers, quality assurance and release engineering leads  
@@ -1253,4 +1253,4 @@ Operational boundaries must be explicitly noted. Numerical examples are syntheti
 
 ---
 
-[← Chapter 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | [Table of Contents](README.md) | [Part VI](part-06-frontiers-neuro-symbolic.md) | [Chapter 26 →](ch26-continual-learning.md)
+[← Chapter 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 26 →](ch26-continual-learning.md)

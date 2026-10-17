@@ -1,8 +1,8 @@
 # Chapter 39. Active Compliance Auditor: Popperian Falsification, Normative Compliance (ASPICE/ISO 26262/ISO 21434), and Autonomous Test Design
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part V: Verification, Testing, Diagnostics, and Safety Assurance](part-05-verification-and-learning.md)  
-> **Previous Chapter:** [Chapter 36. Knowledge Testing Pyramid: Rules, Interactions, and Response Robustness](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
-> **Next Chapter:** [Chapter 24. Technical Diagnostics: Distinguishing Symptoms from Root Causes Under Incompleteness](ch24-system-diagnosis.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part V: Verification, Testing, Learning, and Safety Case Synthesis](part-05-verification-and-learning.md)  
+> **Previous Chapter:** [Chapter 26. Continual Learning from Operational Experience and Mitigating System Log Bias](ch26-continual-learning.md)  
+> **Next Chapter:** [Chapter 27. Safety Case: Synthesis and Verification of Arguments](ch27-safety-case-gsn-synthesis.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Advanced: Functional Safety Engineers, Cybersecurity Engineers, Compliance Auditors (ASPICE/ISO Assessors), Evidence-Governed AI Architects  
@@ -792,4 +792,4 @@ Globally recognized authorities in systems safety engineering and information sy
 
 ---
 
-[← Chapter 36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 24 →](ch24-system-diagnosis.md)
+[← Chapter 26](ch26-continual-learning.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 27 →](ch27-safety-case-gsn-synthesis.md)

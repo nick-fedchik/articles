@@ -2,7 +2,7 @@
 
 > **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part I: Conceptual and Epistemic Foundations](part-01-foundations.md)  
 > **Previous Chapter:** [Part I. Conceptual and Epistemic Foundations](part-01-foundations.md)  
-> **Next Chapter:** [Chapter 2. Philosophy for the Engineer: What a Machine Has the Right to Call Knowledge](ch02-epistemology-of-machine-knowledge.md)  
+> **Next Chapter:** [Chapter 2. Philosophy for the Engineer: What a Machine May Lawfully Call Knowledge](ch02-epistemology-of-machine-knowledge.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Level:** Foundational Engineering  

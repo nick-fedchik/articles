@@ -1,8 +1,8 @@
 # Chapter 26. Continual Learning from Operational Experience and Mitigating System Log Bias
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VI: Neuro-Symbolic Models, Cognitive Frontiers, and Continuous Learning](part-06-frontiers-neuro-symbolic.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part V: Verification, Testing, Learning, and Safety Case Synthesis](part-05-verification-and-learning.md)  
 > **Previous Chapter:** [Chapter 25. How Expert Systems Learn: Examination Matrices, Knowledge Audits, and Regression Control](ch25-how-expert-systems-learn.md)  
-> **Next Chapter:** [Chapter 35. Reactive Expert Systems: Events, Revocation, and Knowledge Adaptation](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
+> **Next Chapter:** [Chapter 39. Active Compliance Auditor: Popperian Falsification, Normative Compliance (ASPICE/ISO 26262/ISO 21434), and Autonomous Test Design](ch39-active-compliance-auditor-and-popperian-testing.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Intermediate and Advanced: knowledge engineers, machine learning engineers, researchers  
@@ -1000,4 +1000,4 @@ The subsequent thematic chapters, [27](ch27-safety-case-gsn-synthesis.md) and [3
 
 ---
 
-[← Chapter 25](ch25-how-expert-systems-learn.md) | [Table of Contents](README.md) | [Part VI](part-06-frontiers-neuro-symbolic.md) | [Chapter 35 →](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
+[← Chapter 25](ch25-how-expert-systems-learn.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 39 →](ch39-active-compliance-auditor-and-popperian-testing.md)

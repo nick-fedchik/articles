@@ -1,8 +1,8 @@
 # Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні моделі, когнітивні фронтири та неперервне навчання](part-06-frontiers-neuro-symbolic.md)  
-> **Попередня глава:** [Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза](ch28-dual-mode-expert-systems.md)  
-> **Наступна глава:** [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина VI: Нейро-символьні архітектури, абдукція та контроль галюцинацій](part-06-frontiers-neuro-symbolic.md)
+> **Попередня глава:** [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+> **Наступна глава:** [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** поглиблений: системні архітектори, інженери машинного навчання, розробники критичних систем  
@@ -842,4 +842,4 @@ flowchart TD
 
 ---
 
-[← Глава 28](ch28-dual-mode-expert-systems.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 34 →](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+[← Глава 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | [Зміст книги](README.md) | [Частина VI](part-06-frontiers-neuro-symbolic.md) | [Глава 38 →](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)

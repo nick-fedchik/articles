@@ -196,13 +196,12 @@ flowchart TD
 
 *Dokumenti, ljudska stručnost i senzorska opažanja: ekstrakcija kandidata, lingvistička analiza, formalizacija i procjena dokaza.*
 
+* [Poglavlje 37. Procjena ulaznih informacija: Izvori, dokazi i algoritamski skepticizam](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Poglavlje 10. Sustavi za stjecanje znanja: Izvori, pristupna vrata i životni ciklusi](../../ch10-knowledge-acquisition-systems.md)
 * [Poglavlje 11. Prikupljanje znanja od domenskih stručnjaka: Intervjui, kognitivne karte i formalizacija prakse](../../ch11-knowledge-elicitation-from-experts.md)
 * [Poglavlje 12. Lingvistička analiza i lokalni modeli: Očuvanje semantike i atribucija izvora](../../ch12-linguistic-analysis-and-local-models.md)
-* [Poglavlje 13. Varijabilnost prirodnog jezika nasuprot determinizmu: Kompiliranje semantike upita](../../ch13-language-variability-vs-determinism.md)
 * [Poglavlje 14. Ekstrakcija zahtjeva i modaliteta: Od normativnog teksta do formalnih invarijanti](../../ch14-requirements-detection-and-formalization.md)
 * [Poglavlje 15. Ekstrakcija znanja i izgradnja baze znanja: Činjenice, gramatike i automati](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Poglavlje 37. Procjena ulaznih informacija: Izvori, dokazi i algoritamski skepticizam](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Arhitektonski ugovori, izvedbeni stog, hardversko ubrzanje, provjera tvrdnji, normativno zaključivanje, mehanizmi objašnjenja i kibernetičke upravljačke petlje.*
 
 * [Poglavlje 16. Arhitektura ekspertnih sustava: Od formaliziranog znanja do djelovanja vođenog dokazima](../../ch16-expert-systems-architecture.md)
-* [Poglavlje 17. Tehnološki stog: Odabir alata, programski jezici i mehanizmi pravila](../../ch17-implementation-stack.md)
-* [Poglavlje 18. Infrastruktura izvođenja: Lokalni SLM-ovi, hardverski akceleratori, edge i on-premise](../../ch18-execution-infrastructure.md)
+* [Poglavlje 13. Varijabilnost prirodnog jezika nasuprot determinizmu: Kompiliranje semantike upita](../../ch13-language-variability-vs-determinism.md)
 * [Poglavlje 19. Od pitanja do dokaza: Pretraživanje, usidrenje i provjera propozicija](../../ch19-from-question-to-evidence.md)
 * [Poglavlje 31. Normativno zaključivanje: Hijerarhije predikata, iznimke i vremenska valjanost](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Poglavlje 24. Tehnička dijagnostika: Razdvajanje simptoma od temeljnih uzroka uz nepotpune informacije](../../ch24-system-diagnosis.md)
 * [Poglavlje 20. Mehanizam objašnjenja: Odluke, obrazloženo odbijanje i granice kompetencija](../../ch20-explanation-engine.md)
-* [Poglavlje 21. Od preporuke do akcije: Kontrola ovlasti i sigurno izvršavanje u proizvodnji](../../ch21-from-recommendation-to-action.md)
-* [Poglavlje 22. Kibernetička upravljačka petlja: Senzori, aktuatori i povratna veza](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Poglavlje 23. Verifikacija baze znanja: Dosljednost, potpunost i ispravnost pravila](../../ch23-knowledge-base-verification.md)
 * [Poglavlje 36. Piramida testiranja znanja: Pravila, interakcije i varijacijska stabilnost](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Poglavlje 25. Kako ekspertni sustavi uče: Ispitne matrice, revizije znanja i kontrola regresije](../../ch25-how-expert-systems-learn.md)
+* [Poglavlje 26. Kontinuirano učenje iz iskustva i ublažavanje pomaka u zapisima sustava](../../ch26-continual-learning.md)
 * [Poglavlje 39. Aktivni revizor sukladnosti: Popperovska falsifikacija, sukladnost sa standardima (ASPICE/ISO 26262/ISO 21434) i autonomno generiranje testova](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Poglavlje 24. Tehnička dijagnostika: Razdvajanje simptoma od temeljnih uzroka uz nepotpune informacije](../../ch24-system-diagnosis.md)
 * [Poglavlje 27. Inženjerstvo sigurnosnih slučajeva: Formalna sinteza i verifikacija GSN argumenata](../../ch27-safety-case-gsn-synthesis.md)
 * [Poglavlje 30. Zajedničko inženjerstvo funkcionalne i kibernetičke sigurnosti](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Stroga dedukcija nasuprot savjetodavnih hipoteza, integracija jezičnih modela, praznine u znanju, eliminacija halucinacija, ispitne matrice i učenje iz iskustva.*
 
 * [Poglavlje 28. Dvomodalni ekspertni sustavi: Stroga dedukcija i savjetodavne hipoteze](../../ch28-dual-mode-expert-systems.md)
-* [Poglavlje 29. Neuro-simbolička arhitektura: Jezični modeli i verifikacija utemeljena na dokazima](../../ch29-neuro-symbolic-architecture.md)
 * [Poglavlje 34. Praznine u znanju: Relacijsko pretraživanje, abdukcija i sokratovsko razjašnjenje](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Poglavlje 29. Neuro-simbolička arhitektura: Jezični modeli i verifikacija utemeljena na dokazima](../../ch29-neuro-symbolic-architecture.md)
 * [Poglavlje 38. Liječenje strojnih halucinacija i deficita znanja: Kontrola izlaza usidrena u dokazima](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Poglavlje 25. Kako ekspertni sustavi uče: Ispitne matrice, revizije znanja i kontrola regresije](../../ch25-how-expert-systems-learn.md)
-* [Poglavlje 26. Kontinuirano učenje iz iskustva i ublažavanje pomaka u zapisima sustava](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Reaktivno izvršavanje pravila, sinergetika i fazni prijelazi znanja, međusustavna federacija i distribuirane korporativne epistemičke arhitekture.*
 
+* [Poglavlje 17. Tehnološki stog: Odabir alata, programski jezici i mehanizmi pravila](../../ch17-implementation-stack.md)
+* [Poglavlje 18. Infrastruktura izvođenja: Lokalni SLM-ovi, hardverski akceleratori, edge i on-premise](../../ch18-execution-infrastructure.md)
+* [Poglavlje 21. Od preporuke do akcije: Kontrola ovlasti i sigurno izvršavanje u proizvodnji](../../ch21-from-recommendation-to-action.md)
+* [Poglavlje 22. Kibernetička upravljačka petlja: Senzori, aktuatori i povratna veza](../../ch22-cybernetics-edge-to-backend.md)
 * [Poglavlje 35. Reaktivni ekspertni sustavi: Događaji, opoziv pravila i samoorganizacija znanja](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Poglavlje 33. Međusustavna razmjena znanja: Distribucija pravila, podučavanje modela i sigurna povratna sprega](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Poglavlje 40. Distribuirana epistemička arhitektura: SOA znanja, semantičko usmjeravanje, memorijske hijerarhije i višeizvorna oboriva arbitraža](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

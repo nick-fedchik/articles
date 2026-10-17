@@ -196,13 +196,12 @@ flowchart TD
 
 *Dokumenter, menneskelig ekspertise og sensoriske observasjoner: kandidatutvinning, lingvistisk analyse, formalisering og bevisvurdering.*
 
+* [Kapittel 37. Vurdering av inngangsinformasjon: Kilder, bevis og algoritmisk skepsis](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Kapittel 10. Systemer for kunnskapsinnhenting: Kilder, adgangsporter og livssykluser](../../ch10-knowledge-acquisition-systems.md)
 * [Kapittel 11. Innhenting av kunnskap fra domeneeksperter: Intervjuer, kognitive kart og formalisering av praksis](../../ch11-knowledge-elicitation-from-experts.md)
 * [Kapittel 12. Lingvistisk analyse og lokale modeller: Bevaring av semantikk og kildeattribusjon](../../ch12-linguistic-analysis-and-local-models.md)
-* [Kapittel 13. Naturlig språkvariabilitet vs. determinisme: Kompilering av spørresemanikk](../../ch13-language-variability-vs-determinism.md)
 * [Kapittel 14. Utvinning av krav og modaliteter: Fra normativ tekst til formelle invarianter](../../ch14-requirements-detection-and-formalization.md)
 * [Kapittel 15. Kunnskapsutvinning og bygging av kunnskapsbase: Fakta, grammatikker og automater](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Kapittel 37. Vurdering av inngangsinformasjon: Kilder, bevis og algoritmisk skepsis](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Arkitektoniske kontrakter, kjøretidsstakk, maskinvareakselerasjon, påstandsverifisering, normativ inferens, forklaringsmotorer og kybernetiske kontrollsløyfer.*
 
 * [Kapittel 16. Ekspertsystemarkitektur: Fra formalisert kunnskap til bevisstyrt handling](../../ch16-expert-systems-architecture.md)
-* [Kapittel 17. Teknologistacken: Verktøyvalg, programmeringsspråk og regelmotorer](../../ch17-implementation-stack.md)
-* [Kapittel 18. Utføringsinfrastruktur: Lokale SLM-er, maskinvareakseleratorer, edge og on-premise](../../ch18-execution-infrastructure.md)
+* [Kapittel 13. Naturlig språkvariabilitet vs. determinisme: Kompilering av spørresemanikk](../../ch13-language-variability-vs-determinism.md)
 * [Kapittel 19. Fra spørsmål til bevis: Søk, forankring og påstandsverifisering](../../ch19-from-question-to-evidence.md)
 * [Kapittel 31. Normativ inferens: Predikathierarkier, unntak og tidsmessig gyldighet](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Kapittel 24. Teknisk diagnostikk: Å skille symptomer fra rotårsaker under ufullstendig informasjon](../../ch24-system-diagnosis.md)
 * [Kapittel 20. Forklaringsmotor: Beslutninger, begrunnet avslag og kompetansegrenser](../../ch20-explanation-engine.md)
-* [Kapittel 21. Fra anbefaling til handling: Autoritetskontroll og sikker utførelse i produksjon](../../ch21-from-recommendation-to-action.md)
-* [Kapittel 22. Den kybernetiske kontrollsløyfen: Sensorer, aktuatorer og tilbakekobling](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Kapittel 23. Verifisering av kunnskapsbaser: Konsistens, fullstendighet og regelkorrekthet](../../ch23-knowledge-base-verification.md)
 * [Kapittel 36. Kunnskapstestpyramiden: Regler, interaksjoner og variasjonell stabilitet](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Kapittel 25. Hvordan ekspertsystemer lærer: Eksamensmatriser, kunnskapsrevisjoner og regresjonskontroll](../../ch25-how-expert-systems-learn.md)
+* [Kapittel 26. Kontinuerlig læring fra erfaring og reduksjon av drift i systemlogger](../../ch26-continual-learning.md)
 * [Kapittel 39. Den aktive samsvarsrevisoren: Popperiansk falsifisering, standardoverholdelse (ASPICE/ISO 26262/ISO 21434) og autonom testgenerering](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Kapittel 24. Teknisk diagnostikk: Å skille symptomer fra rotårsaker under ufullstendig informasjon](../../ch24-system-diagnosis.md)
 * [Kapittel 27. Sikkerhetscase-teknikk: Formell syntese og verifisering av GSN-argumenter](../../ch27-safety-case-gsn-synthesis.md)
 * [Kapittel 30. Samprosjektering av funksjonell sikkerhet og cybersikkerhet](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Streng deduksjon vs. rådgivende hypoteser, integrering av språkmodeller, kunnskapshull, eliminering av hallusinasjoner, eksamensmatriser og erfaringsbasert læring.*
 
 * [Kapittel 28. Dobbeltmodus ekspertsystemer: Streng deduksjon og rådgivende hypoteser](../../ch28-dual-mode-expert-systems.md)
-* [Kapittel 29. Nevro-symbolsk arkitektur: Språkmodeller og bevisstyrt verifisering](../../ch29-neuro-symbolic-architecture.md)
 * [Kapittel 34. Kunnskapshull: Relasjonssøk, abduksjon og sokratisk avklaring](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Kapittel 29. Nevro-symbolsk arkitektur: Språkmodeller og bevisstyrt verifisering](../../ch29-neuro-symbolic-architecture.md)
 * [Kapittel 38. Behandling av maskinhallusioner og kunnskapsunderskudd: Bevisforankret utdatakontroll](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Kapittel 25. Hvordan ekspertsystemer lærer: Eksamensmatriser, kunnskapsrevisjoner og regresjonskontroll](../../ch25-how-expert-systems-learn.md)
-* [Kapittel 26. Kontinuerlig læring fra erfaring og reduksjon av drift i systemlogger](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Reaktiv regelutførelse, synergetikk og kunnskapsfaseoverganger, føderasjon mellom systemer og distribuerte epistemiske bedriftsarkitekturer.*
 
+* [Kapittel 17. Teknologistacken: Verktøyvalg, programmeringsspråk og regelmotorer](../../ch17-implementation-stack.md)
+* [Kapittel 18. Utføringsinfrastruktur: Lokale SLM-er, maskinvareakseleratorer, edge og on-premise](../../ch18-execution-infrastructure.md)
+* [Kapittel 21. Fra anbefaling til handling: Autoritetskontroll og sikker utførelse i produksjon](../../ch21-from-recommendation-to-action.md)
+* [Kapittel 22. Den kybernetiske kontrollsløyfen: Sensorer, aktuatorer og tilbakekobling](../../ch22-cybernetics-edge-to-backend.md)
 * [Kapittel 35. Reaktive ekspertsystemer: Hendelser, tilbakekalling og selvorganisering av kunnskap](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Kapittel 33. Kunnskapsutveksling mellom systemer: Regeltilførsel, modellundervisning og sikker tilbakemelding](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Kapittel 40. Distribuert epistemisk arkitektur: Kunnskaps-SOA, semantisk ruting, minnehierarkier og omstøtelig voldgift fra flere kilder](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

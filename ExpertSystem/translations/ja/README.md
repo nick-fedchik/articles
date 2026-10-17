@@ -196,13 +196,12 @@ flowchart TD
 
 *ドキュメント、専門家の経験、および観測：候補の抽出、言語分析、形式化、および証拠の評価。*
 
+* [第37章 入力情報の評価：ソース、証拠、および不確実性](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [第10章 知識獲得システム：ソース、承認、およびライフサイクル](../../ch10-knowledge-acquisition-systems.md)
 * [第11章 専門家からの知識抽出：インタビュー、認知マップ、および経験の形式化](../../ch11-knowledge-elicitation-from-experts.md)
 * [第12章 言語分析とローカルモデル：意味と出所の保存](../../ch12-linguistic-analysis-and-local-models.md)
-* [第13章 自然言語の多様性対決定論：質問の意味のコンパイル](../../ch13-language-variability-vs-determinism.md)
 * [第14章 要件とモダリティの検出：規範テキストから不変条件へ](../../ch14-requirements-detection-and-formalization.md)
 * [第15章 知識抽出と知識ベース構築：事実、文法、オートマトン](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [第37章 入力情報の評価：ソース、証拠、および不確実性](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *アーキテクチャコントラクト、技術スタック、ハードウェア実行、主張の検証、規範に基づく推論、説明、およびサイバネティクス制御ループ。*
 
 * [第16章 エキスパートシステムのアーキテクチャ：形式的知識から証拠に基づく意思決定へ](../../ch16-expert-systems-architecture.md)
-* [第17章 技術スタック：ツール、プログラミング言語、ルールエンジンの選定基準](../../ch17-implementation-stack.md)
-* [第18章 実行インフラストラクチャ：ローカルモデル、ハードウェアアクセラレータ、Edge、On-Premise](../../ch18-execution-infrastructure.md)
+* [第13章 自然言語の多様性対決定論：質問の意味のコンパイル](../../ch13-language-variability-vs-determinism.md)
 * [第19章 質問から証拠へ：検索、グラウンディング、主張の検証](../../ch19-from-question-to-evidence.md)
 * [第31章 規範に基づく推論：述語階層、例外、有効性](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [第24章 技術診断：不完全性の下で症状と根本原因を混同しない方法](../../ch24-system-diagnosis.md)
 * [第20章 説明エンジン：意思決定、拒否、能力の限界](../../ch20-explanation-engine.md)
-* [第21章 推奨から行動へ：権限管理と本番環境での安全な実行](../../ch21-from-recommendation-to-action.md)
-* [第22章 サイバネティクス制御ループ：センサー、周辺機器、フィードバック](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [第23章 知識ベースの検証：ルールの無矛盾性、完全性、信頼性をいかに検査するか](../../ch23-knowledge-base-verification.md)
 * [第36章 知識テストピラミッド：ルール、相互作用、応答の安定性](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [第25章 エキスパートシステムの教え方：テストマトリクス、知識監査、回帰防止](../../ch25-how-expert-systems-learn.md)
+* [第26章 経験からの継続的学習（Continual Learning）とシステムログドリフトの克服](../../ch26-continual-learning.md)
 * [第39章 アクティブ・エキスパートテスター：ポパー的反証、規制適合（ASPICE/ISO 26262/ISO 21434）、および自律的テスト設計](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [第24章 技術診断：不完全性の下で症状と根本原因を混同しない方法](../../ch24-system-diagnosis.md)
 * [第27章 安全論証：議論の合成と検証](../../ch27-safety-case-gsn-synthesis.md)
 * [第30章 機能安全とサイバーセキュリティの共同エンジニアリング](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *厳密な結論と諮問的仮説、言語モデルの統合、知識ギャップ、未確認応答の制御、テストマトリクス、および経験からの継続的学習。*
 
 * [第28章 デュアルモードエキスパートシステム：厳格な推論と諮問的仮説](../../ch28-dual-mode-expert-systems.md)
-* [第29章 ニューロ・シンボリックアーキテクチャ：言語モデルと証拠根拠の検証](../../ch29-neuro-symbolic-architecture.md)
 * [第34章 知識ギャップ：リレーショナル探索、アブダクション、釈明対話](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [第29章 ニューロ・シンボリックアーキテクチャ：言語モデルと証拠根拠の検証](../../ch29-neuro-symbolic-architecture.md)
 * [第38章 機械のハルシネーションと知識不足：証拠駆動型の応答制御](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [第25章 エキスパートシステムの教え方：テストマトリクス、知識監査、回帰防止](../../ch25-how-expert-systems-learn.md)
-* [第26章 経験からの継続的学習（Continual Learning）とシステムログドリフトの克服](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *ルールのリアクティブ実行、シナジェティクスと知識の相転移、システム間共有、およびエンタープライズ規模の分散エピステミックアーキテクチャ。*
 
+* [第17章 技術スタック：ツール、プログラミング言語、ルールエンジンの選定基準](../../ch17-implementation-stack.md)
+* [第18章 実行インフラストラクチャ：ローカルモデル、ハードウェアアクセラレータ、Edge、On-Premise](../../ch18-execution-infrastructure.md)
+* [第21章 推奨から行動へ：権限管理と本番環境での安全な実行](../../ch21-from-recommendation-to-action.md)
+* [第22章 サイバネティクス制御ループ：センサー、周辺機器、フィードバック](../../ch22-cybernetics-edge-to-backend.md)
 * [第35章 リアクティブエキスパートシステム：イベント、取り消し、知識適応](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [第33章 システム間知識共有：外部システムへのルール配信、モデル教育、安全なフィードバック](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [第40章 証拠駆動型エキスパートシステムの分散アーキテクチャ：エピステミックSOA、セマンティックルーティング、メモリ階層、複数ソースの取消可能調停](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

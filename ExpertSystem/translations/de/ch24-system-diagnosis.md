@@ -1,8 +1,8 @@
 # Kapitel 24. Technische Diagnose: Trennung von Symptom und Ursache unter Unsicherheit
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Diagnose und Sicherheitsbegründung](part-05-verification-and-learning.md)  
-> **Vorheriges Kapitel:** [Kapitel 39. Aktiver Compliance-Auditor: Popper’sche Falsifikation, normative Compliance (ASPICE/ISO 26262/ISO 21434) und autonomes Testdesign](ch39-active-compliance-auditor-and-popperian-testing.md)  
-> **Nächstes Kapitel:** [Kapitel 27. Sicherheitsbegründung: Synthese und Verifikation von Argumenten](ch27-safety-case-gsn-synthesis.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Systemarchitektur, normative Inferenz, Diagnose und Erklärung](part-04-architecture-and-inference.md)  
+> **Vorheriges Kapitel:** [Kapitel 31. Normenbasierte Inferenz: Prädikatenhierarchien, Ausnahmen und Geltung](ch31-syllogistic-reasoning-and-relation-lattices.md)  
+> **Nächstes Kapitel:** [Kapitel 20. Erklärungskomponente: Entscheidung, Ablehnung und Kompetenzgrenzen](ch20-explanation-engine.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Zuverlässigkeits- und Diagnosesystemingenieure, Systemarchitekten  
@@ -978,4 +978,4 @@ Die Grenzen dieses Kapitels sind methodisch vorgegeben: Logische Konsistenz mit 
 
 ---
 
-[← Kapitel 39](ch39-active-compliance-auditor-and-popperian-testing.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 27 →](ch27-safety-case-gsn-synthesis.md)
+[← Kapitel 31](ch31-syllogistic-reasoning-and-relation-lattices.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 20 →](ch20-explanation-engine.md)

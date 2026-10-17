@@ -1,8 +1,8 @@
 # Kapitel 32. Unveränderliche Wissenspakete: Byte-Level-Zulassung, Indizes und Memory Mapping
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil II: Mathematische Modelle, Wissensrepräsentation und Wissensspeicherung](part-02-knowledge-models.md)  
-> **Vorheriges Kapitel:** [Kapitel 9. Der technische Wissensgraph: Rückverfolgbarkeit von Anforderungen bis zur Hardware](ch09-engineering-knowledge-graph-traceability.md)  
-> **Nächstes Kapitel:** [Kapitel 10. Wissensakquisitionssysteme: Quellen, Zulassung und Lebenszyklus](ch10-knowledge-acquisition-systems.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil II: Mathematische Modelle, Repräsentation und Wissensspeicherung](part-02-knowledge-models.md)  
+> **Vorheriges Kapitel:** [Kapitel 9. Ingenieurtechnischer Wissensgraph: Traceability von Anforderungen bis zur Hardware](ch09-engineering-knowledge-graph-traceability.md)  
+> **Nächstes Kapitel:** [Kapitel 37. Eingangsdatenbewertung: Quellen, Zeugnisse und epistemische Unsicherheit](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Systemarchitekten, Datenbank- und Indexentwickler, Knowledge Engineers, Spezialisten für Hochleistungssysteme (High Performance Computing, Edge AI)  
@@ -2424,4 +2424,4 @@ Herausragende Architekten der Systemprogrammierung, Betriebssystemkerne und ange
 
 ---
 
-[← Kapitel 9](ch09-engineering-knowledge-graph-traceability.md) | [Inhaltsverzeichnis](README.md) | [Teil II](part-02-knowledge-models.md) | [Kapitel 10 →](ch10-knowledge-acquisition-systems.md)
+[← Kapitel 9](ch09-engineering-knowledge-graph-traceability.md) | [Inhaltsverzeichnis](README.md) | [Teil II](part-02-knowledge-models.md) | [Kapitel 37 →](ch37-input-information-assessment-and-algorithmic-skepticism.md)

@@ -1,8 +1,8 @@
 # Kapitel 34. Wissenslücken: Relationale Suche, Abduktion und Klärungsdialog
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VI: Neuro-symbolische Modelle, kognitive Grenzen und kontinuierliches Lernen](part-06-frontiers-neuro-symbolic.md)  
-> **Vorheriges Kapitel:** [Kapitel 29. Neuro-symbolische Architektur: Sprachmodelle und Evidenzprüfung](ch29-neuro-symbolic-architecture.md)  
-> **Nächstes Kapitel:** [Kapitel 38. Maschinelle Halluzinationen und Wissensdefizite: Evidenzkontrolle von Antworten](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VI: Neuro-symbolische Architekturen, Abduktion und Halluzinationskontrolle](part-06-frontiers-neuro-symbolic.md)  
+> **Vorheriges Kapitel:** [Kapitel 28. Dual-Mode-Expertensysteme: Strikte Deduktion und beratende Hypothese](ch28-dual-mode-expert-systems.md)  
+> **Nächstes Kapitel:** [Kapitel 29. Neuro-symbolische Architektur: Sprachmodelle und beweisgestützte Verifikation](ch29-neuro-symbolic-architecture.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Systemarchitekten, Wissensingenieure, Spezialisten für mathematische Logik und Philosophie der künstlichen Intelligenz  
@@ -967,4 +967,4 @@ Zu diesem virtuellen intellektuellen Fachdialog sind Titanen der theoretischen k
 
 ---
 
-[← Kapitel 29](ch29-neuro-symbolic-architecture.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 38 →](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
+[← Kapitel 28](ch28-dual-mode-expert-systems.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 29 →](ch29-neuro-symbolic-architecture.md)

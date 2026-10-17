@@ -1,8 +1,8 @@
 # Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина III: Здобуття знань, мовний аналіз та оцінювання входу](part-03-knowledge-engineering-nlp.md)
-> **Попередня глава:** [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](ch12-linguistic-analysis-and-local-models.md)
-> **Наступна глава:** [Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів](ch14-requirements-detection-and-formalization.md)
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура системи, нормативне виведення, діагностика та пояснення](part-04-architecture-and-inference.md)
+> **Попередня глава:** [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](ch16-expert-systems-architecture.md)
+> **Наступна глава:** [Глава 19. Від запитання до доказу: пошук, прив'язка та перевірка твердження](ch19-from-question-to-evidence.md)
 > **Зміст книги:** [README.md](README.md)
 > **Автор:** [Микола Федчик](about-the-author.md)
 > **Рівень:** середній: розробники та інженери знань
@@ -880,4 +880,4 @@ flowchart TB
 
 ---
 
-[← Глава 12](ch12-linguistic-analysis-and-local-models.md) | [Зміст книги](README.md) | [Частина III](part-03-knowledge-engineering-nlp.md) | [Глава 14 →](ch14-requirements-detection-and-formalization.md)
+[← Глава 16](ch16-expert-systems-architecture.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 19 →](ch19-from-question-to-evidence.md)

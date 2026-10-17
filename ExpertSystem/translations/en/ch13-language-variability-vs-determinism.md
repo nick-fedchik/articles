@@ -1,8 +1,8 @@
 # Chapter 13. Natural Language Variability vs. Determinism: Compiling Question Semantics
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Knowledge Acquisition, Linguistic Analysis, and Input Assessment](part-03-knowledge-engineering-nlp.md)  
-> **Previous Chapter:** [Chapter 12. Linguistic Analysis and Local Models: Preserving Content and Provenance](ch12-linguistic-analysis-and-local-models.md)  
-> **Next Chapter:** [Chapter 14. Requirements Detection and Formalization: From Normative Text to Invariants](ch14-requirements-detection-and-formalization.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: System Architecture, Normative Inference, Diagnosis, and Explanation](part-04-architecture-and-inference.md)  
+> **Previous Chapter:** [Chapter 16. Expert System Architecture: From Formal Knowledge to Evidence-Governed Decisions](ch16-expert-systems-architecture.md)  
+> **Next Chapter:** [Chapter 19. From Question to Evidence: Retrieval, Grounding, and Claim Verification](ch19-from-question-to-evidence.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Intermediate: Developers and knowledge engineers  
@@ -875,4 +875,4 @@ The subsequent chapter applies this foundational architecture to the reverse dir
 
 ---
 
-[← Chapter 12](ch12-linguistic-analysis-and-local-models.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 14 →](ch14-requirements-detection-and-formalization.md)
+[← Chapter 16](ch16-expert-systems-architecture.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 19 →](ch19-from-question-to-evidence.md)

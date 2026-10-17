@@ -1,7 +1,7 @@
 # Kapitel 10. Systeme der Wissensakquisition: Quellen, Zulassung und Lebenszyklus
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Wissensakquisition, linguistische Analyse und Eingangsdatenbewertung](part-03-knowledge-engineering-nlp.md)  
-> **Vorheriges Kapitel:** [Kapitel 32. Unveränderliche Wissenspakete: Byte-genaue Zulassung, Indizes und Memory-Mapping](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Eingangsdatenbewertung, Wissensakquisition und linguistische Analyse](part-03-knowledge-engineering-nlp.md)  
+> **Vorheriges Kapitel:** [Kapitel 37. Eingangsdatenbewertung: Quellen, Zeugnisse und epistemische Unsicherheit](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
 > **Nächstes Kapitel:** [Kapitel 11. Erhebung von Expertenwissen: Befragungen, kognitive Karten und Formalisierung von Praxiserfahrung](ch11-knowledge-elicitation-from-experts.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
@@ -1525,4 +1525,4 @@ Die nachfolgenden Standards, Fachpublikationen und Richtlinien bilden den method
 
 ---
 
-[← Kapitel 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 11 →](ch11-knowledge-elicitation-from-experts.md)
+[← Kapitel 37](ch37-input-information-assessment-and-algorithmic-skepticism.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 11 →](ch11-knowledge-elicitation-from-experts.md)

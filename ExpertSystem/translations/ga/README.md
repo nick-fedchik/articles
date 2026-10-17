@@ -196,13 +196,12 @@ flowchart TD
 
 *Cáipéisí, taithí saineolaithe agus breathnuithe: Eastóscadh iarrthóirí, anailís theangeolaíoch, foirmiú agus measúnú fianaise.*
 
+* [Caibidil 37. Measúnú Faisnéise Ionchuir: Foinsí, Fianaise agus Éiginnteacht](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Caibidil 10. Córais Sealbhaithe Eolais: Foinsí, Ceadú agus Saolré](../../ch10-knowledge-acquisition-systems.md)
 * [Caibidil 11. Eolas a Bhaint as Saineolaithe: Agallaimh, Léarscáileanna Cognaíocha agus Foirmiú Taithí](../../ch11-knowledge-elicitation-from-experts.md)
 * [Caibidil 12. Anailís Teangeolaíoch agus Samhlacha Áitiúla: Caomhnú Brí agus Foinsí](../../ch12-linguistic-analysis-and-local-models.md)
-* [Caibidil 13. Éagsúlacht Teanga Nádúrtha i gCoinne Cinntithíochta: Tiomsú Bhrí na Ceiste](../../ch13-language-variability-vs-determinism.md)
 * [Caibidil 14. Riachtanais agus Modhúlachtaí a Bhrath: Ó Théacs Normatach go hInathraitheacha](../../ch14-requirements-detection-and-formalization.md)
 * [Caibidil 15. Eastóscadh Eolais agus Tógáil Bunachair Eolais: Fíricí, Gramadaí agus Uathoibreáin](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Caibidil 37. Measúnú Faisnéise Ionchuir: Foinsí, Fianaise agus Éiginnteacht](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Conarthaí ailtireachta, cruach teicneolaíochta, forghníomhú crua-earraí, fíorú éilimh, tátal bunaithe ar noirm, míniú agus lúb rialaithe cibearneitice.*
 
 * [Caibidil 16. Ailtireacht Córais Shaineolaigh: Ó Eolas Foirmiúil go Cinneadh Fianaise-Bhunaithe](../../ch16-expert-systems-architecture.md)
-* [Caibidil 17. Cruach Teicneolaíochta: Critéir chun Uirlisí, Teangacha Ríomhchlárúcháin agus Innill Rialacha a Roghnú](../../ch17-implementation-stack.md)
-* [Caibidil 18. Bonneagar Forghníomhaithe: Samhlacha Áitiúla, Luasairí Crua-Earraí, Edge agus On-Premise](../../ch18-execution-infrastructure.md)
+* [Caibidil 13. Éagsúlacht Teanga Nádúrtha i gCoinne Cinntithíochta: Tiomsú Bhrí na Ceiste](../../ch13-language-variability-vs-determinism.md)
 * [Caibidil 19. Ó Cheist go Fianaise: Cuardach, Talamhú agus Fíorú Éilimh](../../ch19-from-question-to-evidence.md)
 * [Caibidil 31. Tátal Bunaithe ar Noirm: Ordlathais Phreideacáidí, Eisceachtaí agus Bailíocht](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Caibidil 24. Diagnóis Theicniúil: Conas Gan Comhartha agus Bunúis a Mheascadh faoi Neamhiomláine Sonraí](../../ch24-system-diagnosis.md)
 * [Caibidil 20. Inneall Mínithe: Cinneadh, Diúltú agus Teorainneacha Inniúlachta](../../ch20-explanation-engine.md)
-* [Caibidil 21. Ó Mholadh go Gníomh: Rialú Údaráis agus Forghníomhú Sábháilte i dTimpeallacht Táirgthe](../../ch21-from-recommendation-to-action.md)
-* [Caibidil 22. Lúb Rialaithe Cibearneitice: Braiteoirí, Forimeallaigh agus Aiseolas](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Caibidil 23. Fíorú Bunachar Eolais: Conas Comhsheasmhacht, Iomláine agus Iontaofacht Rialacha a Seiceáil](../../ch23-knowledge-base-verification.md)
 * [Caibidil 36. Pirimid Tástála Eolais: Rialacha, Idirghníomhaíochtaí agus Cobhsaíocht Freagartha](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Caibidil 25. Conas Córas Saineolach a Oiliúint: Maitrísí Scrúdaithe, Iniúchadh Eolais agus Rialú Cúlchéimnithe](../../ch25-how-expert-systems-learn.md)
+* [Caibidil 26. Foghlaim Leanúnach (Continual Learning) ó Thaithí agus Sárú ar Shiorradh Logaí Córais](../../ch26-continual-learning.md)
 * [Caibidil 39. Tástálaí Saineolach Gníomhach: Falsú Popperian, Comhlíonadh Rialála (ASPICE/ISO 26262/ISO 21434) agus Dearadh Tástála Uathrialach](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Caibidil 24. Diagnóis Theicniúil: Conas Gan Comhartha agus Bunúis a Mheascadh faoi Neamhiomláine Sonraí](../../ch24-system-diagnosis.md)
 * [Caibidil 27. Cás Sábháilteachta: Sintéis agus Fíorú Argóintí](../../ch27-safety-case-gsn-synthesis.md)
 * [Caibidil 30. Comh-Innealtóireacht ar Shábháilteacht Fheidhmiúil agus Cibearshlándáil](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Tátal docht agus hipitéis chomhairleach, comhtháthú samhlacha teanga, bearnaí eolais, rialú ar fhreagraí gan tacaíocht, maitrísí scrúdaithe agus foghlaim leanúnach ó thaithí.*
 
 * [Caibidil 28. Córais Shaineolacha Dé-Mhód: Tátal Docht agus Hipitéis Chomhairleach](../../ch28-dual-mode-expert-systems.md)
-* [Caibidil 29. Ailtireacht Néar-Shiombalach: Samhlacha Teanga agus Fíorú Bunús Fianaise](../../ch29-neuro-symbolic-architecture.md)
 * [Caibidil 34. Bearnaí Eolais: Cuardach Coibhneasta, Asbhaint agus Idirphlé Soiléirithe](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Caibidil 29. Ailtireacht Néar-Shiombalach: Samhlacha Teanga agus Fíorú Bunús Fianaise](../../ch29-neuro-symbolic-architecture.md)
 * [Caibidil 38. Bréagchéadfaí Meaisín agus Easnamh Eolais: Rialú Freagartha Fianaise-Bhunaithe](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Caibidil 25. Conas Córas Saineolach a Oiliúint: Maitrísí Scrúdaithe, Iniúchadh Eolais agus Rialú Cúlchéimnithe](../../ch25-how-expert-systems-learn.md)
-* [Caibidil 26. Foghlaim Leanúnach (Continual Learning) ó Thaithí agus Sárú ar Shiorradh Logaí Córais](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Forghníomhú rialacha imoibríoch, sinéirgitic agus aistrithe céime eolais, malartú idir córais agus ailtireacht eipistéimeach dháilte ar scála fiontraíochta.*
 
+* [Caibidil 17. Cruach Teicneolaíochta: Critéir chun Uirlisí, Teangacha Ríomhchlárúcháin agus Innill Rialacha a Roghnú](../../ch17-implementation-stack.md)
+* [Caibidil 18. Bonneagar Forghníomhaithe: Samhlacha Áitiúla, Luasairí Crua-Earraí, Edge agus On-Premise](../../ch18-execution-infrastructure.md)
+* [Caibidil 21. Ó Mholadh go Gníomh: Rialú Údaráis agus Forghníomhú Sábháilte i dTimpeallacht Táirgthe](../../ch21-from-recommendation-to-action.md)
+* [Caibidil 22. Lúb Rialaithe Cibearneitice: Braiteoirí, Forimeallaigh agus Aiseolas](../../ch22-cybernetics-edge-to-backend.md)
 * [Caibidil 35. Córas Saineolach Imoibríoch: Teagmhais, Aisghairm agus Oiriúnú Eolais](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Caibidil 33. Malartú Eolais Idir-Chórais: Rialacha a Sholáthar do Chórais Sheachtracha, Múnlaí a Theagasc agus Aiseolas Slán](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Caibidil 40. Ailtireacht Dháilte Córais Shaineolaigh Fianaise-Bhunaithe: SOA Eipistéimeach, Ródú Séimeantach, Ordlathas Cuimhne agus Eadráin Ildíoltóir](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

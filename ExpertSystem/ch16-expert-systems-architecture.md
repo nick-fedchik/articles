@@ -1,8 +1,8 @@
 # Глава 16. Архітектура експертної системи: від формального знання до доказового рішення
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура, технологічний стек, виведення та дія](part-04-architecture-and-inference.md)  
-> **Попередня глава:** [Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
-> **Наступна глава:** [Глава 17. Технологічний стек: критерії вибору інструментів, мов програмування та рушіїв правил](ch17-implementation-stack.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина IV: Архітектура системи, нормативне виведення, діагностика та пояснення](part-04-architecture-and-inference.md)
+> **Попередня глава:** [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](ch15-knowledge-extraction-and-kb-construction.md)
+> **Наступна глава:** [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](ch13-language-variability-vs-determinism.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: системні архітектори, інженери знань, розробники експертних систем  
@@ -936,4 +936,4 @@ rule-R-SEC-BLOCK-v3
 
 ---
 
-[← Глава 37](ch37-input-information-assessment-and-algorithmic-skepticism.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 17 →](ch17-implementation-stack.md)
+[← Глава 15](ch15-knowledge-extraction-and-kb-construction.md) | [Зміст книги](README.md) | [Частина IV](part-04-architecture-and-inference.md) | [Глава 13 →](ch13-language-variability-vs-determinism.md)

@@ -196,13 +196,12 @@ flowchart TD
 
 *Documente, expertiză umană și observații senzoriale: extragerea candidaților, analiză lingvistică, formalizare și evaluarea dovezilor.*
 
+* [Capitolul 37. Evaluarea informațiilor de intrare: Surse, dovezi și scepticism algoritmic](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Capitolul 10. Sisteme de achiziție a cunoștințelor: Surse, porți de admitere și cicluri de viață](../../ch10-knowledge-acquisition-systems.md)
 * [Capitolul 11. Extragerea cunoștințelor de la experții din domeniu: Interviuri, hărți cognitive și formalizarea practicilor](../../ch11-knowledge-elicitation-from-experts.md)
 * [Capitolul 12. Analiză lingvistică și modele locale: Păstrarea semanticii și atribuirea surselor](../../ch12-linguistic-analysis-and-local-models.md)
-* [Capitolul 13. Variabilitatea limbajului natural vs. determinism: Compilarea semanticii interogărilor](../../ch13-language-variability-vs-determinism.md)
 * [Capitolul 14. Extragerea cerințelor și a modalităților: De la text normativ la invarianți formali](../../ch14-requirements-detection-and-formalization.md)
 * [Capitolul 15. Extragerea cunoștințelor și construirea bazei de cunoștințe: Fapte, gramatici și automate](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Capitolul 37. Evaluarea informațiilor de intrare: Surse, dovezi și scepticism algoritmic](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Contracte arhitecturale, stiva de execuție, accelerare hardware, verificarea afirmațiilor, inferență normativă, motoare de explicații și bucle de control cibernetice.*
 
 * [Capitolul 16. Arhitectura sistemelor experte: De la cunoaștere formalizată la acțiune guvernată de dovezi](../../ch16-expert-systems-architecture.md)
-* [Capitolul 17. Stiva tehnologică: Selectarea instrumentelor, limbaje de programare și motoare de reguli](../../ch17-implementation-stack.md)
-* [Capitolul 18. Infrastructura de execuție: SLM-uri locale, acceleratoare hardware, edge și on-premise](../../ch18-execution-infrastructure.md)
+* [Capitolul 13. Variabilitatea limbajului natural vs. determinism: Compilarea semanticii interogărilor](../../ch13-language-variability-vs-determinism.md)
 * [Capitolul 19. De la întrebare la dovadă: Căutare, ancorare și verificarea propozițiilor](../../ch19-from-question-to-evidence.md)
 * [Capitolul 31. Inferență normativă: Ierarhii de predicate, excepții și valabilitate temporală](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Capitolul 24. Diagnosticare tehnică: Separarea simptomelor de cauzele rădăcină în condiții de informații incomplete](../../ch24-system-diagnosis.md)
 * [Capitolul 20. Motorul de explicații: Decizii, refuz justificat și limite de competență](../../ch20-explanation-engine.md)
-* [Capitolul 21. De la recomandare la acțiune: Controlul autorității și execuție sigură în producție](../../ch21-from-recommendation-to-action.md)
-* [Capitolul 22. Bucla de control cibernetică: Senzori, actuatori și buclă de reacție](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Capitolul 23. Verificarea bazei de cunoștințe: Consistență, completitudine și validitatea regulilor](../../ch23-knowledge-base-verification.md)
 * [Capitolul 36. Piramida de testare a cunoștințelor: Reguli, interacțiuni și stabilitate variațională](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Capitolul 25. Cum învață sistemele experte: Matrici de examinare, audituri de cunoștințe și controlul regresiei](../../ch25-how-expert-systems-learn.md)
+* [Capitolul 26. Învățare continuă din experiență și atenuarea deviației jurnalelor de sistem](../../ch26-continual-learning.md)
 * [Capitolul 39. Auditorul activ de conformitate: Falsificare popperiană, conformitate cu standardele (ASPICE/ISO 26262/ISO 21434) și generare autonomă de teste](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Capitolul 24. Diagnosticare tehnică: Separarea simptomelor de cauzele rădăcină în condiții de informații incomplete](../../ch24-system-diagnosis.md)
 * [Capitolul 27. Ingineria cazurilor de siguranță: Sinteza formală și verificarea argumentelor GSN](../../ch27-safety-case-gsn-synthesis.md)
 * [Capitolul 30. Co-Ingineria siguranței funcționale și securității cibernetice](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Deducție strictă vs. ipoteze consultative, integrarea modelelor de limbaj, lacune de cunoaștere, eliminarea halucinațiilor, matrici de examinare și învățare bazată pe experiență.*
 
 * [Capitolul 28. Sisteme experte cu mod dublu: Deducție strictă și ipoteze consultative](../../ch28-dual-mode-expert-systems.md)
-* [Capitolul 29. Arhitectura neuro-simbolică: Modele de limbaj și verificare guvernată de dovezi](../../ch29-neuro-symbolic-architecture.md)
 * [Capitolul 34. Lacune de cunoaștere: Căutare relațională, abducție și clarificare socratică](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Capitolul 29. Arhitectura neuro-simbolică: Modele de limbaj și verificare guvernată de dovezi](../../ch29-neuro-symbolic-architecture.md)
 * [Capitolul 38. Vindecarea halucinațiilor mașinii și a deficitelor de cunoaștere: Controlul ieșirilor ancorat în dovezi](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Capitolul 25. Cum învață sistemele experte: Matrici de examinare, audituri de cunoștințe și controlul regresiei](../../ch25-how-expert-systems-learn.md)
-* [Capitolul 26. Învățare continuă din experiență și atenuarea deviației jurnalelor de sistem](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Execuția reactivă a regulilor, sinergetică și tranziții de fază ale cunoștințelor, federație inter-sisteme și arhitecturi epistemice de întreprindere distribuite.*
 
+* [Capitolul 17. Stiva tehnologică: Selectarea instrumentelor, limbaje de programare și motoare de reguli](../../ch17-implementation-stack.md)
+* [Capitolul 18. Infrastructura de execuție: SLM-uri locale, acceleratoare hardware, edge și on-premise](../../ch18-execution-infrastructure.md)
+* [Capitolul 21. De la recomandare la acțiune: Controlul autorității și execuție sigură în producție](../../ch21-from-recommendation-to-action.md)
+* [Capitolul 22. Bucla de control cibernetică: Senzori, actuatori și buclă de reacție](../../ch22-cybernetics-edge-to-backend.md)
 * [Capitolul 35. Sisteme experte reactive: Evenimente, revocare și auto-organizarea cunoștințelor](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Capitolul 33. Schimbul inter-sisteme de cunoștințe: Distribuirea regulilor, instruirea modelelor și feedback securizat](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Capitolul 40. Arhitectură epistemică distribuită: SOA de cunoștințe, rutare semantică, ierarhii de memorie și arbitraj revocabil multi-sursă](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

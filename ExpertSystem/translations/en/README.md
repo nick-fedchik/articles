@@ -182,14 +182,14 @@ The monograph is organized into seven thematic parts, comprising 40 chapters and
 ```mermaid
 flowchart TD
     accTitle: Book Structure and Part Interconnections
-    accDescr: Seven thematic parts: knowledge contract, representation, elicitation, architecture and action, verification and safety, neuro-symbolics and learning, runtime and distributed SOA.
+    accDescr: Seven thematic parts: knowledge contract, representation, input assessment and elicitation, architecture and inference, verification and learning, neuro-symbolics and abduction, runtime and distributed SOA.
 
     P1["<b>Part I</b><br/>Knowledge Contract and Trust Boundaries"] --> P2["<b>Part II</b><br/>Models, Representation, and Knowledge Packs"]
-    P2 --> P3["<b>Part III</b><br/>Knowledge Elicitation and Input Assessment"]
-    P3 --> P4["<b>Part IV</b><br/>Architecture, Stack, Inference, and Action"]
-    P4 --> P5["<b>Part V</b><br/>Verification, Testing, and Safety Cases"]
-    P5 --> P6["<b>Part VI</b><br/>Neuro-Symbolic Models and Learning"]
-    P6 --> P7["<b>Part VII</b><br/>Reactivity, Federation, and Distributed SOA"]
+    P2 --> P3["<b>Part III</b><br/>Input Assessment and Knowledge Elicitation"]
+    P3 --> P4["<b>Part IV</b><br/>Architecture, Inference, Diagnosis, and Explanation"]
+    P4 --> P5["<b>Part V</b><br/>Verification, Testing, Learning, and Safety Cases"]
+    P5 --> P6["<b>Part VI</b><br/>Neuro-Symbolic Architectures, Abduction, and Hallucinations"]
+    P6 --> P7["<b>Part VII</b><br/>Stack, Hardware, Cybernetics, and Distributed SOA"]
 
     classDef p1 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
     classDef p2 fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
@@ -232,65 +232,65 @@ flowchart TD
 
 ---
 
-### [Part III. Knowledge Acquisition, Linguistic Analysis, and Input Assessment](part-03-knowledge-engineering-nlp.md)
+### [Part III. Input Information Assessment, Knowledge Acquisition, and Linguistic Analysis](part-03-knowledge-engineering-nlp.md)
 
-*Documents, human expertise, and sensory observations: candidate extraction, linguistic parsing, formalization, and evidence assessment.*
+*Algorithmic skepticism and source filtering, documents and human expertise, linguistic parsing, and requirement formalization.*
 
+* [Chapter 37. Input Information Assessment: Sources, Evidence, and Algorithmic Skepticism](ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Chapter 10. Knowledge Acquisition Systems: Sources, Admission Gateways, and Lifecycles](ch10-knowledge-acquisition-systems.md)
 * [Chapter 11. Eliciting Knowledge from Domain Experts: Interviews, Cognitive Maps, and Practice Formalization](ch11-knowledge-elicitation-from-experts.md)
 * [Chapter 12. Linguistic Analysis and Local Models: Preserving Semantics and Source Attribution](ch12-linguistic-analysis-and-local-models.md)
-* [Chapter 13. Natural Language Variability vs. Determinism: Compiling Query Semantics](ch13-language-variability-vs-determinism.md)
 * [Chapter 14. Requirements and Modality Extraction: From Normative Text to Formal Invariants](ch14-requirements-detection-and-formalization.md)
 * [Chapter 15. Knowledge Extraction and KB Construction: Facts, Grammars, and Automata](ch15-knowledge-extraction-and-kb-construction.md)
-* [Chapter 37. Input Information Assessment: Sources, Evidence, and Algorithmic Skepticism](ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
-### [Part IV. Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)
+### [Part IV. System Architecture, Normative Inference, Diagnosis, and Explanation](part-04-architecture-and-inference.md)
 
-*Architectural contracts, runtime stack, hardware acceleration, claim verification, normative inference, explanation engines, and cybernetic control loops.*
+*Architectural contracts, compiling query intent, claim verification, normative inference, Model-Based Diagnosis, and explanation engines.*
 
 * [Chapter 16. Expert System Architecture: From Formalized Knowledge to Evidence-Governed Action](ch16-expert-systems-architecture.md)
-* [Chapter 17. The Technology Stack: Tooling Selection, Programming Languages, and Rule Engines](ch17-implementation-stack.md)
-* [Chapter 18. Execution Infrastructure: Local SLMs, Hardware Accelerators, Edge, and On-Premise](ch18-execution-infrastructure.md)
+* [Chapter 13. Natural Language Variability vs. Determinism: Compiling Query Semantics](ch13-language-variability-vs-determinism.md)
 * [Chapter 19. From Question to Evidence: Search, Grounding, and Proposition Verification](ch19-from-question-to-evidence.md)
 * [Chapter 31. Normative Inference: Predicate Hierarchies, Exceptions, and Temporal Validity](ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Chapter 24. Technical Diagnostics: Disentangling Symptoms from Root Causes Under Incomplete Information](ch24-system-diagnosis.md)
 * [Chapter 20. Explanation Engine: Decisions, Justified Refusal, and Competence Boundaries](ch20-explanation-engine.md)
-* [Chapter 21. From Recommendation to Action: Authority Control and Safe Execution in Production](ch21-from-recommendation-to-action.md)
-* [Chapter 22. The Cybernetic Control Loop: Sensors, Actuators, and Closed-Loop Feedback](ch22-cybernetics-edge-to-backend.md)
 
 ---
 
-### [Part V. Verification, Testing, Diagnostics, and Safety Cases](part-05-verification-and-learning.md)
+### [Part V. Verification, Testing, Learning, and Safety Case Synthesis](part-05-verification-and-learning.md)
 
-*Formal rule verification, knowledge testing pyramids, Popperian falsification, technical diagnostics, and functional safety/cybersecurity cases.*
+*Formal rule verification, knowledge testing pyramids, examination matrices, continual learning, Popperian falsification, and functional safety/cybersecurity cases.*
 
 * [Chapter 23. Knowledge Base Verification: Consistency, Completeness, and Rule Soundness](ch23-knowledge-base-verification.md)
 * [Chapter 36. The Knowledge Testing Pyramid: Rules, Interactions, and Variational Stability](ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Chapter 25. How Expert Systems Learn: Examination Matrices, Knowledge Audits, and Regression Control](ch25-how-expert-systems-learn.md)
+* [Chapter 26. Continual Learning from Experience and Mitigating System Log Drift](ch26-continual-learning.md)
 * [Chapter 39. The Active Compliance Auditor: Popperian Falsification, Standards Compliance (ASPICE/ISO 26262/ISO 21434), and Autonomous Test Generation](ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Chapter 24. Technical Diagnostics: Disentangling Symptoms from Root Causes Under Incomplete Information](ch24-system-diagnosis.md)
 * [Chapter 27. Safety Case Engineering: Formal Synthesis and Verification of GSN Arguments](ch27-safety-case-gsn-synthesis.md)
 * [Chapter 30. Functional Safety and Cybersecurity Co-Engineering](ch30-safety-cybersecurity-co-engineering.md)
 
 ---
 
-### [Part VI. Neuro-Symbolic Models, Cognitive Frontiers, and Continual Learning](part-06-frontiers-neuro-symbolic.md)
+### [Part VI. Neuro-Symbolic Architectures, Abduction, and Hallucination Control](part-06-frontiers-neuro-symbolic.md)
 
-*Strict deduction vs. advisory hypotheses, language model integration, knowledge gaps, hallucination mitigation, examination matrices, and experience-based learning.*
+*Strict deduction vs. advisory hypotheses, relational search and abduction for knowledge gaps, language model integration, and hallucination mitigation.*
 
 * [Chapter 28. Dual-Mode Expert Systems: Strict Deduction and Advisory Hypotheses](ch28-dual-mode-expert-systems.md)
-* [Chapter 29. Neuro-Symbolic Architecture: Language Models and Evidence-Grounded Verification](ch29-neuro-symbolic-architecture.md)
 * [Chapter 34. Knowledge Gaps: Relational Search, Abduction, and Socratic Clarification](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Chapter 29. Neuro-Symbolic Architecture: Language Models and Evidence-Grounded Verification](ch29-neuro-symbolic-architecture.md)
 * [Chapter 38. Curing Machine Hallucinations and Knowledge Deficits: Evidence-Grounded Output Control](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Chapter 25. How Expert Systems Learn: Examination Matrices, Knowledge Audits, and Regression Control](ch25-how-expert-systems-learn.md)
-* [Chapter 26. Continual Learning from Experience and Mitigating System Log Drift](ch26-continual-learning.md)
 
 ---
 
-### [Part VII. Reactive Runtime, Inter-System Knowledge Exchange, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)
+### [Part VII. Implementation Stack, Hardware Infrastructure, Cybernetic Execution, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)
 
-*Reactive rule execution, synergetics and knowledge phase transitions, inter-system federation, and distributed enterprise epistemic architectures.*
+*Technology stack selection, hardware acceleration, safe production action, cybernetic control loops, reactive synergetics, inter-system federation, and distributed enterprise epistemic architectures.*
 
+* [Chapter 17. The Technology Stack: Tooling Selection, Programming Languages, and Rule Engines](ch17-implementation-stack.md)
+* [Chapter 18. Execution Infrastructure: Local SLMs, Hardware Accelerators, Edge, and On-Premise](ch18-execution-infrastructure.md)
+* [Chapter 21. From Recommendation to Action: Authority Control and Safe Execution in Production](ch21-from-recommendation-to-action.md)
+* [Chapter 22. The Cybernetic Control Loop: Sensors, Actuators, and Closed-Loop Feedback](ch22-cybernetics-edge-to-backend.md)
 * [Chapter 35. Reactive Expert Systems: Events, Revocation, and Knowledge Self-Organization](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Chapter 33. Inter-System Knowledge Exchange: Rule Provisioning, Model Teaching, and Secure Feedback](ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Chapter 40. Distributed Epistemic Architecture: Knowledge SOA, Semantic Routing, Memory Hierarchies, and Multi-Source Defeasible Arbitration](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

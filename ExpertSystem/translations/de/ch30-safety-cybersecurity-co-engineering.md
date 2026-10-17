@@ -1,6 +1,6 @@
 # Kapitel 30. Co-Engineering von funktionaler Sicherheit und Cybersicherheit
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Diagnose und Sicherheitsbegründung](part-05-verification-and-learning.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Lernen und Sicherheitsbegründung](part-05-verification-and-learning.md)  
 > **Vorheriges Kapitel:** [Kapitel 27. Sicherheitsbegründung: Synthese und Verifikation von Argumenten](ch27-safety-case-gsn-synthesis.md)  
 > **Nächstes Kapitel:** [Kapitel 28. Dual-Mode-Expertensysteme: Strikte Deduktion und beratende Hypothese](ch28-dual-mode-expert-systems.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  

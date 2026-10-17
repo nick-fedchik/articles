@@ -196,13 +196,12 @@ flowchart TD
 
 *Dokumen, pengalaman pakar, dan observasi: Ekstraksi kandidat, analisis linguistik, formalisasi, dan evaluasi bukti.*
 
+* [Bab 37. Evaluasi Informasi Masukan: Sumber, Bukti, dan Ketidakpastian](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Bab 10. Sistem Akuisisi Pengetahuan: Sumber, Penerimaan, dan Siklus Hidup](../../ch10-knowledge-acquisition-systems.md)
 * [Bab 11. Elisitasi Pengetahuan dari Para Pakar: Wawancara, Peta Kognitif, dan Formalisasi Pengalaman](../../ch11-knowledge-elicitation-from-experts.md)
 * [Bab 12. Analisis Linguistik dan Model Lokal: Preservasi Makna dan Sumber](../../ch12-linguistic-analysis-and-local-models.md)
-* [Bab 13. Variabilitas Bahasa Alami Melawan Determinisme: Kompilasi Makna Pertanyaan](../../ch13-language-variability-vs-determinism.md)
 * [Bab 14. Deteksi Persyaratan dan Modalitas: Dari Teks Regulasi ke Invarian](../../ch14-requirements-detection-and-formalization.md)
 * [Bab 15. Ekstraksi Pengetahuan dan Konstruksi Basis Pengetahuan: Fakta, Tata Bahasa, dan Otomata](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Bab 37. Evaluasi Informasi Masukan: Sumber, Bukti, dan Ketidakpastian](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Kontrak arsitektur, tumpukan teknologi, eksekusi perangkat keras, verifikasi klaim, inferensi berdasarkan norma, penjelasan, dan siklus kendali sibernetika.*
 
 * [Bab 16. Arsitektur Sistem Pakar: Dari Pengetahuan Formal ke Keputusan Berbasis Bukti](../../ch16-expert-systems-architecture.md)
-* [Bab 17. Tumpukan Teknologi: Kriteria Pemilihan Alat, Bahasa Pemrograman, dan Mesin Aturan](../../ch17-implementation-stack.md)
-* [Bab 18. Infrastruktur Eksekusi: Model Lokal, Akselerator Perangkat Keras, Edge, dan On-Premise](../../ch18-execution-infrastructure.md)
+* [Bab 13. Variabilitas Bahasa Alami Melawan Determinisme: Kompilasi Makna Pertanyaan](../../ch13-language-variability-vs-determinism.md)
 * [Bab 19. Dari Pertanyaan ke Bukti: Pencarian, Penjangkaran, dan Verifikasi Klaim](../../ch19-from-question-to-evidence.md)
 * [Bab 31. Inferensi Berdasarkan Norma: Hierarki Predikat, Pengecualian, dan Validitas](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Bab 24. Diagnosis Teknis: Cara Menghindari Kerancuan Antara Gejala dan Akar Masalah di Bawah Ketidaklengkapan Data](../../ch24-system-diagnosis.md)
 * [Bab 20. Mesin Penjelasan: Keputusan, Penolakan, dan Batas Kompetensi](../../ch20-explanation-engine.md)
-* [Bab 21. Dari Rekomendasi ke Tindakan: Kontrol Otoritas dan Eksekusi Aman di Lingkungan Produksi](../../ch21-from-recommendation-to-action.md)
-* [Bab 22. Siklus Kendali Sibernetika: Sensor, Periferal, dan Umpan Balik](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Bab 23. Verifikasi Basis Pengetahuan: Cara Memeriksa Konsistensi, Kelengkapan, dan Keandalan Aturan](../../ch23-knowledge-base-verification.md)
 * [Bab 36. Piramida Pengujian Pengetahuan: Aturan, Interaksi, dan Stabilitas Respons](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Bab 25. Cara Melatih Sistem Pakar: Matriks Ujian, Audit Pengetahuan, dan Kontrol Regresi](../../ch25-how-expert-systems-learn.md)
+* [Bab 26. Pembelajaran Berkelanjutan (Continual Learning) dari Pengalaman dan Mengatasi Pergeseran Log Sistem](../../ch26-continual-learning.md)
 * [Bab 39. Penguji Pakar Aktif: Falsifikasi Popperian, Kepatuhan Regulasi (ASPICE/ISO 26262/ISO 21434), dan Desain Pengujian Otonom](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Bab 24. Diagnosis Teknis: Cara Menghindari Kerancuan Antara Gejala dan Akar Masalah di Bawah Ketidaklengkapan Data](../../ch24-system-diagnosis.md)
 * [Bab 27. Argumen Keselamatan: Sintesis dan Verifikasi Argumen](../../ch27-safety-case-gsn-synthesis.md)
 * [Bab 30. Rekayasa Bersama Keselamatan Fungsional dan Keamanan Siber](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Inferensi ketat dan hipotesis penasihat, integrasi model bahasa, celah pengetahuan, kontrol respons tanpa bukti, matriks ujian, dan pembelajaran berkelanjutan dari pengalaman.*
 
 * [Bab 28. Sistem Pakar Mode Ganda: Inferensi Ketat dan Hipotesis Penasihat](../../ch28-dual-mode-expert-systems.md)
-* [Bab 29. Arsitektur Neuro-Simbolik: Model Bahasa dan Verifikasi Landasan Bukti](../../ch29-neuro-symbolic-architecture.md)
 * [Bab 34. Celah Pengetahuan: Pencarian Relasional, Abduksi, dan Dialog Klarifikasi](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Bab 29. Arsitektur Neuro-Simbolik: Model Bahasa dan Verifikasi Landasan Bukti](../../ch29-neuro-symbolic-architecture.md)
 * [Bab 38. Halusinasi Mesin dan Defisit Pengetahuan: Kontrol Respons Berbasis Bukti](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Bab 25. Cara Melatih Sistem Pakar: Matriks Ujian, Audit Pengetahuan, dan Kontrol Regresi](../../ch25-how-expert-systems-learn.md)
-* [Bab 26. Pembelajaran Berkelanjutan (Continual Learning) dari Pengalaman dan Mengatasi Pergeseran Log Sistem](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Eksekusi reaktif aturan, sinergetika dan transisi fase pengetahuan, pertukaran antarsistem, dan arsitektur epistemik terdistribusi skala perusahaan.*
 
+* [Bab 17. Tumpukan Teknologi: Kriteria Pemilihan Alat, Bahasa Pemrograman, dan Mesin Aturan](../../ch17-implementation-stack.md)
+* [Bab 18. Infrastruktur Eksekusi: Model Lokal, Akselerator Perangkat Keras, Edge, dan On-Premise](../../ch18-execution-infrastructure.md)
+* [Bab 21. Dari Rekomendasi ke Tindakan: Kontrol Otoritas dan Eksekusi Aman di Lingkungan Produksi](../../ch21-from-recommendation-to-action.md)
+* [Bab 22. Siklus Kendali Sibernetika: Sensor, Periferal, dan Umpan Balik](../../ch22-cybernetics-edge-to-backend.md)
 * [Bab 35. Sistem Pakar Reaktif: Kejadian, Pencabutan, dan Adaptasi Pengetahuan](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Bab 33. Pertukaran Pengetahuan Antarsistem: Distribusi Aturan ke Sistem Eksternal, Pengajaran Model, dan Umpan Balik Aman](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Bab 40. Arsitektur Terdistribusi Sistem Pakar Berbasis Bukti: SOA Epistemik, Perutean Semantik, Hierarki Memori, dan Arbitrase Multi-Sumber](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

@@ -1,6 +1,6 @@
 # Kapitel 8. Ingenieurtechnische Artefakte als Daten des Expertensystems
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil II: Mathematische Modelle, Wissensrepräsentation und Wissensspeicherung](part-02-knowledge-models.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil II: Mathematische Modelle, Repräsentation und Wissensspeicherung](part-02-knowledge-models.md)  
 > **Vorheriges Kapitel:** [Kapitel 7. Typologie von Wissensbasen: Regeln, Ontologien, Präzedenzfälle und Vektoren](ch07-knowledge-base-typology.md)  
 > **Nächstes Kapitel:** [Kapitel 9. Ingenieurtechnischer Wissensgraph: Traceability von Anforderungen bis zur Hardware](ch09-engineering-knowledge-graph-traceability.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  

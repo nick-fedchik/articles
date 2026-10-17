@@ -196,13 +196,12 @@ flowchart TD
 
 *文檔、專家經驗與觀測：候選知識獲取、語言分析、形式化與證據評估。*
 
+* [第37章 輸入資訊評估：來源、證據與不確定性](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [第10章 知識獲取系統：來源、准入與生命週期](../../ch10-knowledge-acquisition-systems.md)
 * [第11章 從專家萃取知識：訪談、認知地圖與經驗形式化](../../ch11-knowledge-elicitation-from-experts.md)
 * [第12章 語言學分析與本地模型：保留語義與出處來源](../../ch12-linguistic-analysis-and-local-models.md)
-* [第13章 自然語言多樣性對抗確定性：編譯問題的核心意義](../../ch13-language-variability-vs-determinism.md)
 * [第14章 需求與模態偵測：從法規條文到系統不變量](../../ch14-requirements-detection-and-formalization.md)
 * [第15章 知識抽取與知識庫建構：事實、文法與自動機](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [第37章 輸入資訊評估：來源、證據與不確定性](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *架構契約、技術棧、硬體執行、主張驗證、基於規範的推理、解釋機制與控制論反饋迴路。*
 
 * [第16章 專家系統架構：從形式知識到證據導向決策](../../ch16-expert-systems-architecture.md)
-* [第17章 技術棧：工具、程式語言與規則引擎的選型標準](../../ch17-implementation-stack.md)
-* [第18章 執行基礎設施：本地模型、硬體加速器、Edge 與 On-Premise](../../ch18-execution-infrastructure.md)
+* [第13章 自然語言多樣性對抗確定性：編譯問題的核心意義](../../ch13-language-variability-vs-determinism.md)
 * [第19章 從問題到證據：檢索、錨定與主張驗證](../../ch19-from-question-to-evidence.md)
 * [第31章 基於規範的推理：謂詞階層、例外情況與有效性](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [第24章 技術診斷：在資訊不完備條件下如何避免混淆徵狀與根因](../../ch24-system-diagnosis.md)
 * [第20章 解釋引擎：決策、拒絕與能力極限](../../ch20-explanation-engine.md)
-* [第21章 從建議到行動：權限控制與生產環境中的安全執行](../../ch21-from-recommendation-to-action.md)
-* [第22章 控制論反饋迴路：感測器、外圍設備與回授](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [第23章 知識庫驗證：如何檢查規則的一致性、完備性與可靠性](../../ch23-knowledge-base-verification.md)
 * [第36章 知識測試金字塔：規則、交互與回答穩定性](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [第25章 如何訓練專家系統：考試矩陣、知識審計與迴歸控制](../../ch25-how-expert-systems-learn.md)
+* [第26章 經驗實踐中的持續學習（Continual Learning）與克服系統日誌漂移](../../ch26-continual-learning.md)
 * [第39章 主動專家測試員：波普爾證偽、法規合規性（ASPICE/ISO 26262/ISO 21434）與自主測試設計](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [第24章 技術診斷：在資訊不完備條件下如何避免混淆徵狀與根因](../../ch24-system-diagnosis.md)
 * [第27章 安全論證：論據合成與驗證](../../ch27-safety-case-gsn-synthesis.md)
 * [第30章 功能安全與網路安全協同工程](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *嚴格推論與諮詢假說、語言模型整合、知識缺口、無憑據回答控制、考試矩陣與實踐持續學習。*
 
 * [第28章 雙模式專家系統：嚴格推理與諮詢假說](../../ch28-dual-mode-expert-systems.md)
-* [第29章 神經-符號架構：語言模型與證據依據驗證](../../ch29-neuro-symbolic-architecture.md)
 * [第34章 知識空缺：關聯搜尋、溯因與澄清對話](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [第29章 神經-符號架構：語言模型與證據依據驗證](../../ch29-neuro-symbolic-architecture.md)
 * [第38章 機器幻覺與知識匱乏：基於證據的應答控制](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [第25章 如何訓練專家系統：考試矩陣、知識審計與迴歸控制](../../ch25-how-expert-systems-learn.md)
-* [第26章 經驗實踐中的持續學習（Continual Learning）與克服系統日誌漂移](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *規則響應式執行、協同論與知識相變、跨系統知識交換，以及企業級分散式認識論架構。*
 
+* [第17章 技術棧：工具、程式語言與規則引擎的選型標準](../../ch17-implementation-stack.md)
+* [第18章 執行基礎設施：本地模型、硬體加速器、Edge 與 On-Premise](../../ch18-execution-infrastructure.md)
+* [第21章 從建議到行動：權限控制與生產環境中的安全執行](../../ch21-from-recommendation-to-action.md)
+* [第22章 控制論反饋迴路：感測器、外圍設備與回授](../../ch22-cybernetics-edge-to-backend.md)
 * [第35章 響應式專家系統：事件、撤銷與知識調適](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [第33章 跨系統知識共享：向外部系統分發規則、模型教學與安全反饋](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [第40章 證據導向專家系統的分散式架構：認識論 SOA、語義路由、記憶體階層與多源可撤銷仲裁](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

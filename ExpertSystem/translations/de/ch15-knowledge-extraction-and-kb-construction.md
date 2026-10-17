@@ -1,8 +1,8 @@
 # Kapitel 15. Wissensextraktion und Aufbau der Wissensbasis: Fakten, Grammatiken und Automaten
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Wissensakquisition, linguistische Analyse und Eingangsdatenbewertung](part-03-knowledge-engineering-nlp.md)  
-> **Vorheriges Kapitel:** [Kapitel 14. Anforderungs- und Modalitätserkennung: Vom normativen Text zu Systeminvarianten](ch14-requirements-detection-and-formalization.md)  
-> **Nächstes Kapitel:** [Kapitel 37. Eingangsdatenbewertung: Quellen, Zeugnisse und epistemische Unsicherheit](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Eingangsdatenbewertung, Wissensakquisition und linguistische Analyse](part-03-knowledge-engineering-nlp.md)  
+> **Vorheriges Kapitel:** [Kapitel 14. Anforderungsextraktion und Modalitäten: Vom normativen Text zu Invarianten](ch14-requirements-detection-and-formalization.md)  
+> **Nächstes Kapitel:** [Kapitel 16. Architektur von Expertensystemen: Vom formalen Wissen zur evidenzbasierten Entscheidung](ch16-expert-systems-architecture.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Wissensingenieure, Systemarchitekten, Entwickler von Expertensystemen  
@@ -1549,4 +1549,4 @@ Nach der inhaltlichen Extraktion muss die Belastbarkeit der Quellenquellen bewer
 
 ---
 
-[← Kapitel 14](ch14-requirements-detection-and-formalization.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 37 →](ch37-input-information-assessment-and-algorithmic-skepticism.md)
+[← Kapitel 14](ch14-requirements-detection-and-formalization.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 16 →](ch16-expert-systems-architecture.md)

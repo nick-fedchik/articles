@@ -1,8 +1,8 @@
 # Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина II: Математичні моделі, подання та зберігання знань](part-02-knowledge-models.md)  
-> **Попередня глава:** [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](ch09-engineering-knowledge-graph-traceability.md)  
-> **Наступна глава:** [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](ch10-knowledge-acquisition-systems.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина II: Математичні моделі, представлення та збереження знань](part-02-knowledge-models.md)
+> **Попередня глава:** [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](ch09-engineering-knowledge-graph-traceability.md)
+> **Наступна глава:** [Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність](ch37-input-information-assessment-and-algorithmic-skepticism.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** системні архітектори, розробники баз даних та індексаторів, інженери знань, фахівці з високопродуктивних систем (High Performance Computing, Edge AI): просунутий  
@@ -2552,4 +2552,4 @@ flowchart TD
 
 ---
 
-[← Глава 9](ch09-engineering-knowledge-graph-traceability.md) | [Зміст книги](README.md) | [Частина II](part-02-knowledge-models.md) | [Глава 10 →](ch10-knowledge-acquisition-systems.md)
+[← Глава 9](ch09-engineering-knowledge-graph-traceability.md) | [Зміст книги](README.md) | [Частина II](part-02-knowledge-models.md) | [Глава 37 →](ch37-input-information-assessment-and-algorithmic-skepticism.md)

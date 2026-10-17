@@ -1,7 +1,7 @@
 # Kapitel 21. Von der Empfehlung zur Aktion: Autoritätskontrolle und sichere Ausführung in Produktionsumgebungen
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Architektur, Technologie-Stack, Inferenz und Aktion](part-04-architecture-and-inference.md)  
-> **Vorheriges Kapitel:** [Kapitel 20. Erklärungskomponente: Entscheidung, Ablehnung und Kompetenzgrenzen](ch20-explanation-engine.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VII: Technologie-Stack, Hardware-Infrastruktur, kybernetische Ausführung und verteilte SOA](part-07-runtime-and-knowledge-exchange.md)  
+> **Vorheriges Kapitel:** [Kapitel 18. Ausführungsinfrastruktur: Lokale Modelle, Hardwarebeschleuniger, Edge und On-Premise](ch18-execution-infrastructure.md)  
 > **Nächstes Kapitel:** [Kapitel 22. Kybernetischer Regelkreis: Sensoren, Peripherie und Rückkopplung](ch22-cybernetics-edge-to-backend.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
@@ -650,4 +650,4 @@ Die Negativ- und Nebenläufigkeitstests des didaktischen Dienstes validieren Sch
 
 ---
 
-[← Kapitel 20](ch20-explanation-engine.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 22 →](ch22-cybernetics-edge-to-backend.md)
+[← Kapitel 18](ch18-execution-infrastructure.md) | [Inhaltsverzeichnis](README.md) | [Teil VII](part-07-runtime-and-knowledge-exchange.md) | [Kapitel 22 →](ch22-cybernetics-edge-to-backend.md)

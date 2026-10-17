@@ -1,8 +1,8 @@
 # Kapitel 12. Linguistische Analyse und lokale Modelle: Erhalt von Semantik und Herkunftsnachweis
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Wissensakquisition, linguistische Analyse und Eingangsdatenbewertung](part-03-knowledge-engineering-nlp.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Eingangsdatenbewertung, Wissensakquisition und linguistische Analyse](part-03-knowledge-engineering-nlp.md)  
 > **Vorheriges Kapitel:** [Kapitel 11. Erhebung von Expertenwissen: Befragungen, kognitive Karten und Formalisierung von Praxiserfahrung](ch11-knowledge-elicitation-from-experts.md)  
-> **Nächstes Kapitel:** [Kapitel 13. Natürliche Sprachvarianz versus Determinismus: Kompilierung der Frageintention](ch13-language-variability-vs-determinism.md)  
+> **Nächstes Kapitel:** [Kapitel 14. Anforderungsextraktion und Modalitäten: Vom normativen Text zu Invarianten](ch14-requirements-detection-and-formalization.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Entwickler und Knowledge Engineers  
@@ -1007,4 +1007,4 @@ Auch die Grenzen dieses Ansatzes wurden klar umrissen. Die Tokenisierung variier
 
 ---
 
-[← Kapitel 11](ch11-knowledge-elicitation-from-experts.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 13 →](ch13-language-variability-vs-determinism.md)
+[← Kapitel 11](ch11-knowledge-elicitation-from-experts.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 14 →](ch14-requirements-detection-and-formalization.md)

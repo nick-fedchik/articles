@@ -198,13 +198,12 @@ flowchart TD
 
 *Hujjatlar, mutaxassislar tajribasi va kuzatishlar: nomzodlarni ajratib olish, lingvistik tahlil, rasmiylashtirish va dalillarni baholash.*
 
+* [37-bob. Kirish axborotini baholash: Manbalar, dalillar va noaniqlik](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [10-bob. Bilimlarni egallash tizimlari: Manbalar, ruxsat va hayotiy davr](../../ch10-knowledge-acquisition-systems.md)
 * [11-bob. Mutaxassislardan bilimlarni ajratib olish: Intervyular, kognitiv xaritalar va tajribani rasmiylashtirish](../../ch11-knowledge-elicitation-from-experts.md)
 * [12-bob. Lingvistik tahlil va lokal modellar: Maʼno va manbalarni saqlash](../../ch12-linguistic-analysis-and-local-models.md)
-* [13-bob. Tabiiy tilning oʻzgaruvchanligi determinizmga qarshi: Soʻrov maʼnosini kompilyatsiya qilish](../../ch13-language-variability-vs-determinism.md)
 * [14-bob. Talablar va modalliklarni aniqlash: Meʼyoriy matndan invariantlargacha](../../ch14-requirements-detection-and-formalization.md)
 * [15-bob. Bilimlarni ajratib olish va bilim bazasini qurish: Faktlar, grammatikalar va avtomatlar](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [37-bob. Kirish axborotini baholash: Manbalar, dalillar va noaniqlik](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -213,13 +212,11 @@ flowchart TD
 *Arxitektura shartnomalari, texnologik stek, apparat ijrosi, daʼvolarni tekshirish, meʼyorlarga asoslangan xulosa, tushuntirish va kibernetik boshqaruv zanjiri.*
 
 * [16-bob. Ekspert tizimi arxitekturasi: Formal bilimdan dalillarga asoslangan qarorgacha](../../ch16-expert-systems-architecture.md)
-* [17-bob. Texnologik stek: Vositalar, dasturlash tillari va qoidalar dvigatellarini tanlash mezonlari](../../ch17-implementation-stack.md)
-* [18-bob. Ijro infratuzilmasi: Lokal modellar, apparat tezlatkichlari, Edge va On-Premise](../../ch18-execution-infrastructure.md)
+* [13-bob. Tabiiy tilning oʻzgaruvchanligi determinizmga qarshi: Soʻrov maʼnosini kompilyatsiya qilish](../../ch13-language-variability-vs-determinism.md)
 * [19-bob. Savoldan dalilgacha: Qidiruv, asoslash va daʼvolarni tekshirish](../../ch19-from-question-to-evidence.md)
 * [31-bob. Meʼyorlarga asoslangan xulosa: Predikatlar iyerarxiyasi, istisnolar va amal qilish muddati](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [24-bob. Texnik diagnostika: Maʼlumotlar toʻliq boʻlmaganda simptomni tub sabab bilan qanday adashtirmaslik kerak](../../ch24-system-diagnosis.md)
 * [20-bob. Tushuntirish dvigateli: Qaror, rad etish va vakolat chegaralari](../../ch20-explanation-engine.md)
-* [21-bob. Tavsiyadan harakatgacha: Vakolat nazorati va ishlab chiqarish muhitida xavfsiz ijro](../../ch21-from-recommendation-to-action.md)
-* [22-bob. Kibernetik boshqaruv zanjiri: Datchiklar, periferiya va teskari aloqa](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -229,8 +226,9 @@ flowchart TD
 
 * [23-bob. Bilim bazasini tekshirish: Qoidalarning ziddiyatsizligi, toʻliqligi va ishonchliligini qanday tekshirish mumkin](../../ch23-knowledge-base-verification.md)
 * [36-bob. Bilimlarni testlash piramidasi: Qoidalar, oʻzaro taʼsirlar va javob barqarorligi](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [25-bob. Ekspert tizimini qanday oʻrgatish kerak: Imtihon matritsalari, bilimlar auditi va regressiya nazorati](../../ch25-how-expert-systems-learn.md)
+* [26-bob. Tajribadan uzluksiz oʻrganish (Continual Learning) va tizim jurnalining siljishini bartaraf etish](../../ch26-continual-learning.md)
 * [39-bob. Faol sinovchi-ekspert: Popper falsifikatsiyasi, meʼyoriy muvofiqlik (ASPICE/ISO 26262/ISO 21434) va avtonom test dizayni](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [24-bob. Texnik diagnostika: Maʼlumotlar toʻliq boʻlmaganda simptomni tub sabab bilan qanday adashtirmaslik kerak](../../ch24-system-diagnosis.md)
 * [27-bob. Xavfsizlik asosi: Argumentlarni sintez qilish va tekshirish](../../ch27-safety-case-gsn-synthesis.md)
 * [30-bob. Funksional xavfsizlik va kiberxavfsizlikni birgalikda loyihalash](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -241,11 +239,9 @@ flowchart TD
 *Qatʼiy xulosa va maslahat gipotezasi, til modelini integratsiya qilish, bilim boʻshliqlari, tasdiqlanmagan javobni nazorat qilish, imtihon matritsalari va tajribadan uzluksiz oʻrganish.*
 
 * [28-bob. Ikki rejimli ekspert tizimlari: Qatʼiy xulosa va maslahat gipotezasi](../../ch28-dual-mode-expert-systems.md)
-* [29-bob. Neyro-simvolik arxitektura: Til modellari va dalil asoslarini tekshirish](../../ch29-neuro-symbolic-architecture.md)
 * [34-bob. Bilim boʻshliqlari: Relyatsion qidiruv, abduksiya va aniqlashtirish muloqoti](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [29-bob. Neyro-simvolik arxitektura: Til modellari va dalil asoslarini tekshirish](../../ch29-neuro-symbolic-architecture.md)
 * [38-bob. Mashina gallyutsinatsiyalari va bilim taqchilligi: Dalillarga asoslangan javob nazorati](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [25-bob. Ekspert tizimini qanday oʻrgatish kerak: Imtihon matritsalari, bilimlar auditi va regressiya nazorati](../../ch25-how-expert-systems-learn.md)
-* [26-bob. Tajribadan uzluksiz oʻrganish (Continual Learning) va tizim jurnalining siljishini bartaraf etish](../../ch26-continual-learning.md)
 
 ---
 
@@ -253,6 +249,10 @@ flowchart TD
 
 *Qoidalarni reaktiv bajarish, bilimlar sinergetikasi va faza oʻtishlari, tizimlararo almashinuv va korxona miqyosidagi taqsimlangan epistemik arxitektura.*
 
+* [17-bob. Texnologik stek: Vositalar, dasturlash tillari va qoidalar dvigatellarini tanlash mezonlari](../../ch17-implementation-stack.md)
+* [18-bob. Ijro infratuzilmasi: Lokal modellar, apparat tezlatkichlari, Edge va On-Premise](../../ch18-execution-infrastructure.md)
+* [21-bob. Tavsiyadan harakatgacha: Vakolat nazorati va ishlab chiqarish muhitida xavfsiz ijro](../../ch21-from-recommendation-to-action.md)
+* [22-bob. Kibernetik boshqaruv zanjiri: Datchiklar, periferiya va teskari aloqa](../../ch22-cybernetics-edge-to-backend.md)
 * [35-bob. Reaktiv ekspert tizimi: Hodisalar, bekor qilish va bilimlarni moslashtirish](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [33-bob. Tizimlararo bilim almashinuvi: Tashqi tizimlarga qoidalarni yetkazib berish, modellarni oʻrgatish va xavfsiz teskari aloqa](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [40-bob. Dalillarga asoslangan ekspert tizimining taqsimlangan arxitekturasi: Epistemik SOA, semantik marshrutlash, xotira iyerarxiyasi va koʻp yetkazib beruvchili defeazitiv arbitraj](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

@@ -1,8 +1,8 @@
 # Kapitel 16. Architektur von Expertensystemen: Vom formalen Wissen zur evidenzbasierten Entscheidung
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Architektur, Technologie-Stack, Inferenz und Aktion](part-04-architecture-and-inference.md)  
-> **Vorheriges Kapitel:** [Kapitel 37. Eingangsdatenbewertung: Quellen, Zeugnisse und epistemische Unsicherheit](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
-> **Nächstes Kapitel:** [Kapitel 17. Technologie-Stack: Auswahlkriterien für Werkzeuge, Programmiersprachen und Regel-Engines](ch17-implementation-stack.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Systemarchitektur, normative Inferenz, Diagnose und Erklärung](part-04-architecture-and-inference.md)  
+> **Vorheriges Kapitel:** [Kapitel 15. Wissensextraktion und Aufbau der Wissensbasis: Fakten, Grammatiken und Automaten](ch15-knowledge-extraction-and-kb-construction.md)  
+> **Nächstes Kapitel:** [Kapitel 13. Natürliche Sprachvarianz versus Determinismus: Kompilierung der Frageintention](ch13-language-variability-vs-determinism.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Systemarchitekten, Wissensingenieure, Entwickler von Expertensystemen  
@@ -922,4 +922,4 @@ Architektur allein macht Regeln nicht fehlerfrei und garantiert aus sich heraus 
 
 ---
 
-[← Kapitel 37](ch37-input-information-assessment-and-algorithmic-skepticism.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 17 →](ch17-implementation-stack.md)
+[← Kapitel 15](ch15-knowledge-extraction-and-kb-construction.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 13 →](ch13-language-variability-vs-determinism.md)

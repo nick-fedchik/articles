@@ -198,13 +198,12 @@ flowchart TD
 
 *Documents, experiència d'especialistes i observacions: extracció de candidats, anàlisi lingüística, formalització i avaluació d'evidències.*
 
+* [Capítol 37. Avaluació de la informació d'entrada: Fonts, evidències i incertesa](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Capítol 10. Sistemes d'adquisició de coneixement: Fonts, admissió i cicle de vida](../../ch10-knowledge-acquisition-systems.md)
 * [Capítol 11. Extracció de coneixement a partir d'experts: Entrevistes, mapes cognitius i formalització de l'experiència](../../ch11-knowledge-elicitation-from-experts.md)
 * [Capítol 12. Anàlisi lingüística i models locals: Preservació de sentit i fonts](../../ch12-linguistic-analysis-and-local-models.md)
-* [Capítol 13. Variabilitat del llenguatge natural enfront del determinisme: Compilació del sentit de la consulta](../../ch13-language-variability-vs-determinism.md)
 * [Capítol 14. Detecció de requisits i modalitats: Del text normatiu als invariants](../../ch14-requirements-detection-and-formalization.md)
 * [Capítol 15. Extracció de coneixement i construcció de la base de coneixement: Fets, gramàtiques i autòmats](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Capítol 37. Avaluació de la informació d'entrada: Fonts, evidències i incertesa](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -213,13 +212,11 @@ flowchart TD
 *Contractes d'arquitectura, pila tecnològica, execució en maquinari, verificació d'asseveracions, inferència basada en normes, explicació i bucle de control cibernètic.*
 
 * [Capítol 16. Arquitectura d'un sistema expert: Del coneixement formal a la decisió basada en evidències](../../ch16-expert-systems-architecture.md)
-* [Capítol 17. Pila tecnològica: Criteris per a la selecció d'eines, llenguatges de programació i motors de regles](../../ch17-implementation-stack.md)
-* [Capítol 18. Infraestructura d'execució: Models locals, acceleradors de maquinari, Edge i On-Premise](../../ch18-execution-infrastructure.md)
+* [Capítol 13. Variabilitat del llenguatge natural enfront del determinisme: Compilació del sentit de la consulta](../../ch13-language-variability-vs-determinism.md)
 * [Capítol 19. De la consulta a l'evidència: Cerca, ancoratge i verificació d'asseveracions](../../ch19-from-question-to-evidence.md)
 * [Capítol 31. Inferència basada en normes: Jerarquies de predicats, excepcions i validesa](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Capítol 24. Diagnòstic tècnic: Com no confondre símptoma amb causa arrel sota incomplets de dades](../../ch24-system-diagnosis.md)
 * [Capítol 20. Motor d'explicacions: Decisió, rebuig i límits de competència](../../ch20-explanation-engine.md)
-* [Capítol 21. De la recomanació a l'acció: Control d'autoritat i execució segura en l'entorn de producció](../../ch21-from-recommendation-to-action.md)
-* [Capítol 22. Bucle de control cibernètic: Sensors, perifèrics i retroalimentació](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -229,8 +226,9 @@ flowchart TD
 
 * [Capítol 23. Verificació de la base de coneixement: Com comprovar la consistència, completesa i fiabilitat de regles](../../ch23-knowledge-base-verification.md)
 * [Capítol 36. Piràmide de proves de coneixement: Regles, interaccions i estabilitat de respostes](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Capítol 25. Com entrenar un sistema expert: Matrius d'examen, auditoria de coneixement i control de regressions](../../ch25-how-expert-systems-learn.md)
+* [Capítol 26. Aprenentatge continu (Continual Learning) a partir de l'experiència i superació de la deriva de registres de sistema](../../ch26-continual-learning.md)
 * [Capítol 39. Auditor de compliment actiu: Falsació popperiana, compliment normatiu (ASPICE/ISO 26262/ISO 21434) i disseny autònom de proves](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Capítol 24. Diagnòstic tècnic: Com no confondre símptoma amb causa arrel sota incomplets de dades](../../ch24-system-diagnosis.md)
 * [Capítol 27. Cas de seguretat: Síntesi i verificació d'arguments](../../ch27-safety-case-gsn-synthesis.md)
 * [Capítol 30. Coenginyeria de seguretat funcional i ciberseguretat](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -241,11 +239,9 @@ flowchart TD
 *Inferència estricta i hipòtesi consultiva, integració de models lingüístics, llacunes de coneixement, control de respostes no confirmades, matrius d'examen i aprenentatge continu a partir de l'experiència.*
 
 * [Capítol 28. Sistemes experts de mode dual: Inferència estricta i hipòtesi consultiva](../../ch28-dual-mode-expert-systems.md)
-* [Capítol 29. Arquitectura neurosimbòlica: Models lingüístics i verificació de fonaments d'evidència](../../ch29-neuro-symbolic-architecture.md)
 * [Capítol 34. Llacunes de coneixement: Cerca relacional, abducció i diàleg de clarificació](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Capítol 29. Arquitectura neurosimbòlica: Models lingüístics i verificació de fonaments d'evidència](../../ch29-neuro-symbolic-architecture.md)
 * [Capítol 38. Al·lucinacions de màquines i dèficits de coneixement: Control de respostes basat en evidències](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Capítol 25. Com entrenar un sistema expert: Matrius d'examen, auditoria de coneixement i control de regressions](../../ch25-how-expert-systems-learn.md)
-* [Capítol 26. Aprenentatge continu (Continual Learning) a partir de l'experiència i superació de la deriva de registres de sistema](../../ch26-continual-learning.md)
 
 ---
 
@@ -253,6 +249,10 @@ flowchart TD
 
 *Execució reactiva de regles, sinergètica i transicions de fase del coneixement, intercanvi entre sistemes i arquitectura epistèmica distribuïda a escala empresarial.*
 
+* [Capítol 17. Pila tecnològica: Criteris per a la selecció d'eines, llenguatges de programació i motors de regles](../../ch17-implementation-stack.md)
+* [Capítol 18. Infraestructura d'execució: Models locals, acceleradors de maquinari, Edge i On-Premise](../../ch18-execution-infrastructure.md)
+* [Capítol 21. De la recomanació a l'acció: Control d'autoritat i execució segura en l'entorn de producció](../../ch21-from-recommendation-to-action.md)
+* [Capítol 22. Bucle de control cibernètic: Sensors, perifèrics i retroalimentació](../../ch22-cybernetics-edge-to-backend.md)
 * [Capítol 35. Sistema expert reactiu: Esdeveniments, revocació i adaptació del coneixement](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Capítol 33. Intercanvi de coneixement entre sistemes: Provisió de regles a sistemes externs, entrenament de models i retroalimentació segura](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Capítol 40. Arquitectura distribuïda de sistemes experts basats en evidències: SOA epistèmica, encaminament semàntic, jerarquia de memòria i arbitratge derrotable multifurnidor](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

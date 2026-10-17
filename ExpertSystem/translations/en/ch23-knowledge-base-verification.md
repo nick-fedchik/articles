@@ -1,8 +1,8 @@
 # Chapter 23. Knowledge Base Verification: How to Verify Rule Consistency, Completeness, and Reliability
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part V: Verification, Testing, Diagnostics, and Safety Justification](part-05-verification-and-learning.md)  
-> **Previous Chapter:** [Chapter 22. Cybernetic Control Cycle: Sensors, Peripherals, and Feedback](ch22-cybernetics-edge-to-backend.md)  
-> **Next Chapter:** [Chapter 36. Knowledge Testing Pyramid: Rules, Interactions, and Response Stability](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part V: Verification, Testing, Learning, and Safety Case Synthesis](part-05-verification-and-learning.md)  
+> **Previous Chapter:** [Chapter 20. Explanation Engine: Decisions, Refusals, and Competence Boundaries](ch20-explanation-engine.md)  
+> **Next Chapter:** [Chapter 36. Knowledge Testing Pyramid: Rules, Interactions, and Response Robustness](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Level:** Intermediate and Advanced: expert systems engineers, knowledge engineers, QA engineers  
@@ -1045,4 +1045,4 @@ The operational boundaries of these methods are well-defined. Model checkers and
 
 ---
 
-[← Chapter 22](ch22-cybernetics-edge-to-backend.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 36 →](ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+[← Chapter 20](ch20-explanation-engine.md) | [Table of Contents](README.md) | [Part V](part-05-verification-and-learning.md) | [Chapter 36 →](ch36-knowledge-testing-pyramid-and-variational-calibration.md)

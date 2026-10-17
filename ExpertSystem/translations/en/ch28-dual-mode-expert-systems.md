@@ -1,8 +1,8 @@
 # Chapter 28. Dual-Mode Expert Systems: Strict Deduction and Advisory Hypotheses
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VI: Neuro-Symbolic Models, Cognitive Frontiers, and Continual Learning](part-06-frontiers-neuro-symbolic.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VI: Neuro-Symbolic Architectures, Abduction, and Hallucination Control](part-06-frontiers-neuro-symbolic.md)  
 > **Previous Chapter:** [Chapter 30. Functional Safety and Cybersecurity Co-Engineering](ch30-safety-cybersecurity-co-engineering.md)  
-> **Next Chapter:** [Chapter 29. Neuro-Symbolic Architecture: Language Models and Evidence-Grounded Verification](ch29-neuro-symbolic-architecture.md)  
+> **Next Chapter:** [Chapter 34. Knowledge Gaps: Relational Search, Abduction, and Socratic Clarification](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Level:** Intermediate and Advanced: Systems Architects, Knowledge Engineers, Verification Engineers, Functional Safety Auditors  
@@ -693,4 +693,4 @@ The architectural limitations of this chapter must be recognized. Strict mode gu
 
 ---
 
-[← Chapter 30](ch30-safety-cybersecurity-co-engineering.md) | [Table of Contents](README.md) | [Part VI](part-06-frontiers-neuro-symbolic.md) | [Chapter 29 →](ch29-neuro-symbolic-architecture.md)
+[← Chapter 30](ch30-safety-cybersecurity-co-engineering.md) | [Table of Contents](README.md) | [Part VI](part-06-frontiers-neuro-symbolic.md) | [Chapter 34 →](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)

@@ -1,7 +1,7 @@
 # Chapter 17. Technology Stack: Selection Criteria for Tools, Programming Languages, and Rule Engines
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)  
-> **Previous Chapter:** [Chapter 16. Expert System Architecture: From Formal Knowledge to Evidence-Governed Decisions](ch16-expert-systems-architecture.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VII: Implementation Stack, Hardware Infrastructure, Cybernetic Execution, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)  
+> **Previous Chapter:** [Chapter 38. Machine Hallucinations and Knowledge Deficits: Evidence-Governed Output Control](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
 > **Next Chapter:** [Chapter 18. Execution Infrastructure: Local Models, Hardware Accelerators, Edge, and On-Premise](ch18-execution-infrastructure.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
@@ -661,4 +661,4 @@ The boundaries of these guidelines must also be recognized. The products and lib
 
 ---
 
-[← Chapter 16](ch16-expert-systems-architecture.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 18 →](ch18-execution-infrastructure.md)
+[← Chapter 38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | [Table of Contents](README.md) | [Part VII](part-07-runtime-and-knowledge-exchange.md) | [Chapter 18 →](ch18-execution-infrastructure.md)

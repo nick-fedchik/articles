@@ -190,13 +190,12 @@ flowchart TD
 
 *Documents, expertise métier et observations : extraction de candidats, parsing linguistique et évaluation des preuves.*
 
+* [Chapitre 37. Évaluation des informations d'entrée : sources, preuves et scepticisme algorithmique](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Chapitre 10. Systèmes d'acquisition des connaissances : sources, passerelles d'admission et cycles de vie](../../ch10-knowledge-acquisition-systems.md)
 * [Chapitre 11. Élicitation des connaissances expertes : entretiens, cartes cognitives et formalisation de la pratique](../../ch11-knowledge-elicitation-from-experts.md)
 * [Chapitre 12. Analyse linguistique et modèles locaux : préservation de la sémantique et attribution des sources](../../ch12-linguistic-analysis-and-local-models.md)
-* [Chapitre 13. Variabilité du langage naturel vs déterminisme : compilation du sens de la requête](../../ch13-language-variability-vs-determinism.md)
 * [Chapitre 14. Détection des exigences et modalités : du texte normatif aux invariants formels](../../ch14-requirements-detection-and-formalization.md)
 * [Chapitre 15. Extraction de connaissances et construction de base : faits, grammaires et automates](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Chapitre 37. Évaluation des informations d'entrée : sources, preuves et scepticisme algorithmique](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -205,13 +204,11 @@ flowchart TD
 *Contrats d'architecture, infrastructure d'exécution, inférence normative, moteur d'explication et boucle de régulation.*
 
 * [Chapitre 16. Architecture du système expert : de la connaissance formalisée à l'action gouvernée par les preuves](../../ch16-expert-systems-architecture.md)
-* [Chapitre 17. Le stack technologique : critères de sélection des outils, langages et moteurs de règles](../../ch17-implementation-stack.md)
-* [Chapitre 18. Infrastructure d'exécution : SLM locaux, accélérateurs matériels, Edge et On-Premise](../../ch18-execution-infrastructure.md)
+* [Chapitre 13. Variabilité du langage naturel vs déterminisme : compilation du sens de la requête](../../ch13-language-variability-vs-determinism.md)
 * [Chapitre 19. De la question à la preuve : recherche, ancrage et vérification d'assertions](../../ch19-from-question-to-evidence.md)
 * [Chapitre 31. Inférence normative : hiérarchies de prédicats, exceptions et validité temporelle](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Chapitre 24. Diagnostic technique : dissociation des symptômes et des causes racines en information incomplète](../../ch24-system-diagnosis.md)
 * [Chapitre 20. Moteur d'explication : décisions, refus motivé et limites de compétence](../../ch20-explanation-engine.md)
-* [Chapitre 21. De la recommandation à l'action : contrôle d'habilitation et exécution sécurisée](../../ch21-from-recommendation-to-action.md)
-* [Chapitre 22. La boucle de régulation cybernétique : capteurs, actionneurs et rétroaction fermée](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -221,8 +218,9 @@ flowchart TD
 
 * [Chapitre 23. Vérification de la base de connaissances : cohérence, complétude et robustesse](../../ch23-knowledge-base-verification.md)
 * [Chapitre 36. La pyramide de test des connaissances : règles, interactions et stabilité variationnelle](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Chapitre 25. Comment apprennent les systèmes experts : matrices d'examen, audits de connaissances et contrôle de régression](../../ch25-how-expert-systems-learn.md)
+* [Chapitre 26. Apprentissage continu (Continual Learning) à partir de l'expérience et atténuation de la dérive des journaux](../../ch26-continual-learning.md)
 * [Chapitre 39. L'auditeur actif de conformité : falsification poppérienne, conformité (ASPICE/ISO 26262/ISO 21434) et conception d'essais](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Chapitre 24. Diagnostic technique : dissociation des symptômes et des causes racines en information incomplète](../../ch24-system-diagnosis.md)
 * [Chapitre 27. Ingénierie des dossiers de sécurité : synthèse et vérification formelle d'arguments GSN](../../ch27-safety-case-gsn-synthesis.md)
 * [Chapitre 30. Co-ingénierie de la sûreté de fonctionnement et de la cybersécurité](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -233,11 +231,9 @@ flowchart TD
 *Déduction stricte vs hypothèses consultatives, intégration des modèles de langage, remède aux hallucinations et apprentissage d'expérience.*
 
 * [Chapitre 28. Systèmes experts bimodaux : déduction stricte et hypothèse consultative](../../ch28-dual-mode-expert-systems.md)
-* [Chapitre 29. Architecture neuro-symbolique : modèles de langage et vérification des fondements de preuve](../../ch29-neuro-symbolic-architecture.md)
 * [Chapitre 34. Lacunes de connaissances : recherche relationnelle, abduction et dialogue socratique](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Chapitre 29. Architecture neuro-symbolique : modèles de langage et vérification des fondements de preuve](../../ch29-neuro-symbolic-architecture.md)
 * [Chapitre 38. Élimination des hallucinations machine et déficits de connaissances : contrôle fondé sur les preuves](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Chapitre 25. Comment apprennent les systèmes experts : matrices d'examen, audits de connaissances et contrôle de régression](../../ch25-how-expert-systems-learn.md)
-* [Chapitre 26. Apprentissage continu (Continual Learning) à partir de l'expérience et atténuation de la dérive des journaux](../../ch26-continual-learning.md)
 
 ---
 
@@ -245,6 +241,10 @@ flowchart TD
 
 *Exécution réactive de règles, synergétique, fédération inter-systèmes et architectures SOA distribuées.*
 
+* [Chapitre 17. Le stack technologique : critères de sélection des outils, langages et moteurs de règles](../../ch17-implementation-stack.md)
+* [Chapitre 18. Infrastructure d'exécution : SLM locaux, accélérateurs matériels, Edge et On-Premise](../../ch18-execution-infrastructure.md)
+* [Chapitre 21. De la recommandation à l'action : contrôle d'habilitation et exécution sécurisée](../../ch21-from-recommendation-to-action.md)
+* [Chapitre 22. La boucle de régulation cybernétique : capteurs, actionneurs et rétroaction fermée](../../ch22-cybernetics-edge-to-backend.md)
 * [Chapitre 35. Systèmes experts réactifs : événements, révocation et auto-organisation des connaissances](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Chapitre 33. Échange inter-systèmes de connaissances : diffusion de règles, entraînement de modèles et rétroaction sécurisée](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Chapitre 40. Architecture épistémique distribuée : Knowledge SOA, routage sémantique et arbitrage multi-sources](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

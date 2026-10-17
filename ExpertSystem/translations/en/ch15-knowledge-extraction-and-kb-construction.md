@@ -1,8 +1,8 @@
 # Chapter 15. Knowledge Extraction and Knowledge Base Construction: Facts, Grammars, and Automata
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Knowledge Acquisition, Linguistic Analysis, and Input Assessment](part-03-knowledge-engineering-nlp.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Input Information Assessment, Knowledge Acquisition, and Linguistic Analysis](part-03-knowledge-engineering-nlp.md)  
 > **Previous Chapter:** [Chapter 14. Requirements Detection and Formalization: From Normative Text to Invariants](ch14-requirements-detection-and-formalization.md)  
-> **Next Chapter:** [Chapter 37. Input Information Assessment: Sources, Evidence, and Uncertainty](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
+> **Next Chapter:** [Chapter 16. Expert System Architecture: From Formal Knowledge to Evidence-Governed Decisions](ch16-expert-systems-architecture.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Intermediate and Advanced: Knowledge engineers, systems architects, expert system developers  
@@ -1562,4 +1562,4 @@ Once knowledge content is extracted, the epistemic quality of its underlying war
 
 ---
 
-[← Chapter 14](ch14-requirements-detection-and-formalization.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 37 →](ch37-input-information-assessment-and-algorithmic-skepticism.md)
+[← Chapter 14](ch14-requirements-detection-and-formalization.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 16 →](ch16-expert-systems-architecture.md)

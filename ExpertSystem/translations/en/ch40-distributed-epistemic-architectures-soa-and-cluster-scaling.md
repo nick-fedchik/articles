@@ -1,8 +1,8 @@
 # Chapter 40. Distributed Architecture of an Evidence-Governed Expert System: Epistemic SOA, Semantic Routing, Memory Hierarchy, and Multi-Source Defeasible Arbitration
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VII: Reactive Execution, Inter-System Knowledge Exchange, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)  
-> **Previous Chapter:** [Chapter 33. Inter-System Knowledge Exchange: Rule Provisioning, Model Teaching, and Secure Feedback](ch33-inter-system-knowledge-exchange-and-model-teaching.md)  
-> **Table of Contents:** [README.md](README.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VII: Implementation Stack, Hardware Infrastructure, Cybernetic Execution, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)  
+> **Previous Chapter:** [Chapter 33. Inter-System Knowledge Exchange: Rule Provisioning to External Systems, Model Teaching, and Secure Feedback Loops](ch33-inter-system-knowledge-exchange-and-model-teaching.md)  
+> **Next Chapter:** [Appendix A. Practical Evidence-Governed Research Framework for Complex Engineering Projects](appendix-a-evidence-governed-framework.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Advanced: Lead System Architects, Knowledge Engineers, Distributed Systems Developers, Compliance and Safety Specialists  
 > **Expected Learning Outcomes:** Synthesize theoretical principles across all monograph chapters into a complete reference architectural prototype of a distributed expert system; architect a three-tier service-oriented architecture (Epistemic SOA) separating thin interaction clients from domain knowledge services; implement syntactic-lexical preprocessing and content-based semantic query routing; bridge the latency gap between massive knowledge repositories and micro-capacity high-speed memory via active working sets and ping-pong pipelined double buffering; orchestrate federated search (Scatter-Gather) and multi-source defeasible evidence aggregation (ASPIC+) under source uncertainty; make rigorous engineering decisions regarding scaling and hardware/software class selection balanced against project budget.

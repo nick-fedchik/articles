@@ -1,8 +1,8 @@
 # Chapter 37. Input Information Assessment: Sources, Evidence, and Uncertainty
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Knowledge Acquisition, Linguistic Analysis, and Input Assessment](part-03-knowledge-engineering-nlp.md)  
-> **Previous Chapter:** [Chapter 15. Knowledge Extraction and Knowledge Base Construction: Facts, Grammars, and Automata](ch15-knowledge-extraction-and-kb-construction.md)  
-> **Next Chapter:** [Chapter 16. Expert System Architecture: From Formal Knowledge to Evidence-Governed Decisions](ch16-expert-systems-architecture.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part III: Input Information Assessment, Knowledge Acquisition, and Linguistic Analysis](part-03-knowledge-engineering-nlp.md)  
+> **Previous Chapter:** [Chapter 32. Immutable Knowledge Packs: Byte-Level Admission, Indices, and Memory Mapping](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)  
+> **Next Chapter:** [Chapter 10. Knowledge Acquisition Systems: Sources, Admission, and Lifecycle](ch10-knowledge-acquisition-systems.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Advanced: Knowledge engineers, analysts, edge and streaming compute architects  
@@ -881,4 +881,4 @@ The reference implementation demonstrated two verifiable invariant boundaries: d
 
 ---
 
-[← Chapter 15](ch15-knowledge-extraction-and-kb-construction.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 16 →](ch16-expert-systems-architecture.md)
+[← Chapter 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | [Table of Contents](README.md) | [Part III](part-03-knowledge-engineering-nlp.md) | [Chapter 10 →](ch10-knowledge-acquisition-systems.md)

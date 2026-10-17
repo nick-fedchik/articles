@@ -196,13 +196,12 @@ flowchart TD
 
 *Dokumentumok, emberi szaktudás és szenzoros megfigyelések: jelöltkinyerés, nyelvészeti elemzés, formalizálás és bizonyítékértékelés.*
 
+* [37. Fejezet. Bemeneti információk értékelése: Források, bizonyítékok és algoritmikus szkepticizmus](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [10. Fejezet. Tudásszerző rendszerek: Források, beléptető kapuk és életciklusok](../../ch10-knowledge-acquisition-systems.md)
 * [11. Fejezet. Tudásszerzés szakterületi szakértőktől: Interjúk, kognitív térképek és a gyakorlat formalizálása](../../ch11-knowledge-elicitation-from-experts.md)
 * [12. Fejezet. Nyelvészeti elemzés és helyi modellek: A szemantika megőrzése és forrásmegjelölés](../../ch12-linguistic-analysis-and-local-models.md)
-* [13. Fejezet. A természetes nyelv változékonysága vs. determinizmus: A lekérdezési szemantika fordítása](../../ch13-language-variability-vs-determinism.md)
 * [14. Fejezet. Követelmények és modalitások kinyerése: A normatív szövegtől a formális invariánsokig](../../ch14-requirements-detection-and-formalization.md)
 * [15. Fejezet. Tudáskinyerés és tudásbázis-építés: Tények, nyelvtanok és automaták](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [37. Fejezet. Bemeneti információk értékelése: Források, bizonyítékok és algoritmikus szkepticizmus](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Architekturális szerződések, futtatókörnyezet, hardveres gyorsítás, állításellenőrzés, normatív következtetés, magyarázó motorok és kibernetikai vezérlési hurkok.*
 
 * [16. Fejezet. Szakértői rendszerek architektúrája: A formalizált tudástól a bizonyíték-vezérelt cselekvésig](../../ch16-expert-systems-architecture.md)
-* [17. Fejezet. A technológiai réteg: Eszközválasztás, programozási nyelvek és szabálymotorok](../../ch17-implementation-stack.md)
-* [18. Fejezet. Végrehajtási infrastruktúra: Helyi SLM-ek, hardveres gyorsítók, edge és on-premise](../../ch18-execution-infrastructure.md)
+* [13. Fejezet. A természetes nyelv változékonysága vs. determinizmus: A lekérdezési szemantika fordítása](../../ch13-language-variability-vs-determinism.md)
 * [19. Fejezet. A kérdéstől a bizonyítékig: Keresés, horgonyzás és állításellenőrzés](../../ch19-from-question-to-evidence.md)
 * [31. Fejezet. Normatív következtetés: Predikátum-hierarchiák, kivételek és időbeli érvényesség](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [24. Fejezet. Műszaki diagnosztika: A tünetek és a kiváltó okok szétválasztása hiányos információk mellett](../../ch24-system-diagnosis.md)
 * [20. Fejezet. Magyarázó motor: Döntések, indokolt elutasítás és kompetenciahatárok](../../ch20-explanation-engine.md)
-* [21. Fejezet. Az ajánlástól a cselekvésig: Jogosultságkezelés és biztonságos végrehajtás a termelésben](../../ch21-from-recommendation-to-action.md)
-* [22. Fejezet. A kibernetikai vezérlési hurok: Érzékelők, beavatkozók és zárt visszacsatolás](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [23. Fejezet. Tudásbázis verifikációja: Konzisztencia, teljesség és szabályhelyesség](../../ch23-knowledge-base-verification.md)
 * [36. Fejezet. A tudástesztelési piramis: Szabályok, interakciók és variációs stabilitás](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [25. Fejezet. Hogyan tanulnak a szakértői rendszerek: Vizsgamátrixok, tudásauditok és regresszió-ellenőrzés](../../ch25-how-expert-systems-learn.md)
+* [26. Fejezet. Folyamatos tanulás a tapasztalatból és a rendszernaplók eltolódásának mérséklése](../../ch26-continual-learning.md)
 * [39. Fejezet. Az aktív megfelelőségi auditor: Popperi cáfolat, szabványmegfelelőség (ASPICE/ISO 26262/ISO 21434) és autonóm tesztgenerálás](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [24. Fejezet. Műszaki diagnosztika: A tünetek és a kiváltó okok szétválasztása hiányos információk mellett](../../ch24-system-diagnosis.md)
 * [27. Fejezet. Biztonsági esetek tervezése: GSN-érvek formális szintézise és verifikációja](../../ch27-safety-case-gsn-synthesis.md)
 * [30. Fejezet. Funkcionális biztonság és kiberbiztonság együttes tervezése](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Szigorú dedukció vs. tanácsadó hipotézisek, nyelvi modellek integrációja, tudáshiányok, hallucinációk kiküszöbölése, vizsgamátrixok és tapasztalati tanulás.*
 
 * [28. Fejezet. Kétmódú szakértői rendszerek: Szigorú dedukció és tanácsadó hipotézisek](../../ch28-dual-mode-expert-systems.md)
-* [29. Fejezet. Neuro-szimbolikus architektúra: Nyelvi modellek és bizonyíték-alapú ellenőrzés](../../ch29-neuro-symbolic-architecture.md)
 * [34. Fejezet. Tudáshiányok: Relációs keresés, abdukció és szókratészi pontosítás](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [29. Fejezet. Neuro-szimbolikus architektúra: Nyelvi modellek és bizonyíték-alapú ellenőrzés](../../ch29-neuro-symbolic-architecture.md)
 * [38. Fejezet. Gépi hallucinációk és tudáshiányok kezelése: Bizonyíték-alapú kimenet-ellenőrzés](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [25. Fejezet. Hogyan tanulnak a szakértői rendszerek: Vizsgamátrixok, tudásauditok és regresszió-ellenőrzés](../../ch25-how-expert-systems-learn.md)
-* [26. Fejezet. Folyamatos tanulás a tapasztalatból és a rendszernaplók eltolódásának mérséklése](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Reaktív szabályvégrehajtás, szinergetika és tudásfázis-átmenetek, rendszerek közötti szövetség és elosztott vállalati episztemikus architektúrák.*
 
+* [17. Fejezet. A technológiai réteg: Eszközválasztás, programozási nyelvek és szabálymotorok](../../ch17-implementation-stack.md)
+* [18. Fejezet. Végrehajtási infrastruktúra: Helyi SLM-ek, hardveres gyorsítók, edge és on-premise](../../ch18-execution-infrastructure.md)
+* [21. Fejezet. Az ajánlástól a cselekvésig: Jogosultságkezelés és biztonságos végrehajtás a termelésben](../../ch21-from-recommendation-to-action.md)
+* [22. Fejezet. A kibernetikai vezérlési hurok: Érzékelők, beavatkozók és zárt visszacsatolás](../../ch22-cybernetics-edge-to-backend.md)
 * [35. Fejezet. Reaktív szakértői rendszerek: Események, visszavonás és a tudás önszerveződése](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [33. Fejezet. Rendszerek közötti tudáscsere: Szabálykiszolgálás, modelltatás és biztonságos visszacsatolás](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [40. Fejezet. Elosztott episztemikus architektúra: Tudás-SOA, szemantikai útválasztás, memóriahierarchiák és többforrású megdönthető döntőbíráskodás](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

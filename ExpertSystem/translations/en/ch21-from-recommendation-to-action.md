@@ -1,7 +1,7 @@
 # Chapter 21. From Recommendation to Action: Authority Control and Safe Execution in Production Environments
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)  
-> **Previous Chapter:** [Chapter 20. Explanation Engine: Decisions, Refusals, and Competence Boundaries](ch20-explanation-engine.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VII: Implementation Stack, Hardware Infrastructure, Cybernetic Execution, and Distributed SOA](part-07-runtime-and-knowledge-exchange.md)  
+> **Previous Chapter:** [Chapter 18. Execution Infrastructure: Local Models, Hardware Accelerators, Edge, and On-Premise](ch18-execution-infrastructure.md)  
 > **Next Chapter:** [Chapter 22. Cybernetic Control Cycle: Sensors, Peripherals, and Edge-to-Backend Feedback](ch22-cybernetics-edge-to-backend.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
@@ -655,4 +655,4 @@ The negative and concurrent test suites in the reference implementation validate
 
 ---
 
-[← Chapter 20](ch20-explanation-engine.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 22 →](ch22-cybernetics-edge-to-backend.md)
+[← Chapter 18](ch18-execution-infrastructure.md) | [Table of Contents](README.md) | [Part VII](part-07-runtime-and-knowledge-exchange.md) | [Chapter 22 →](ch22-cybernetics-edge-to-backend.md)

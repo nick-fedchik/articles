@@ -196,13 +196,12 @@ flowchart TD
 
 *מסמכים, ניסיון מומחים ותצפיות: הפקת מועמדים, ניתוח לשוני, פורמליזציה והערכת ראיות.*
 
+* [פרק 37. הערכת מידע נכנס: מקורות, ראיות ואי-ודאות](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [פרק 10. מערכות לרכישת ידע: מקורות, אישור ומחזור חיים](../../ch10-knowledge-acquisition-systems.md)
 * [פרק 11. חילוץ ידע ממומחים: ראיונות, מפות קוגניטיביות ופורמליזציה של מומחיות](../../ch11-knowledge-elicitation-from-experts.md)
 * [פרק 12. ניתוח בלשני ומודלים מקומיים: שימור משמעות ומקורות](../../ch12-linguistic-analysis-and-local-models.md)
-* [פרק 13. שונות השפה הטבעית מול דטרמיניזם: קומפילציה של משמעות השאלה](../../ch13-language-variability-vs-determinism.md)
 * [פרק 14. זיהוי דרישות ומודאליות: מטקסט נורמטיבי לאינווריאנטים](../../ch14-requirements-detection-and-formalization.md)
 * [פרק 15. חילוץ ידע ובניית בסיס ידע: עובדות, דקדוקים ואוטומטים](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [פרק 37. הערכת מידע נכנס: מקורות, ראיות ואי-ודאות](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *חוזים ארכיטקטוניים, סטאק טכנולוגי, ביצוע חומרתי, בדיקת טענות, היסק מבוסס נורמות, הסברים ולולאת בקרה קיברנטית.*
 
 * [פרק 16. ארכיטקטורה של מערכת מומחה: מידע פורמלי לפתרון מבוסס ראיות](../../ch16-expert-systems-architecture.md)
-* [פרק 17. הסטאק הטכנולוגי: קריטריונים לבחירת כלים, שפות תכנות ומנועי כללים](../../ch17-implementation-stack.md)
-* [פרק 18. תשתית ביצוע: מודלים מקומיים, מאיצי חומרה, קצה (Edge) ו-On-Premise](../../ch18-execution-infrastructure.md)
+* [פרק 13. שונות השפה הטבעית מול דטרמיניזם: קומפילציה של משמעות השאלה](../../ch13-language-variability-vs-determinism.md)
 * [פרק 19. משאלה לראיה: חיפוש, עיגון ובדיקת טענה](../../ch19-from-question-to-evidence.md)
 * [פרק 31. היסק לפי נורמות: היררכיות פרדיקטים, חריגים ותוקף](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [פרק 24. אבחון טכני: כיצד לא לבלבל בין סימפטום לגורם שורש בתנאי אי-שלמות](../../ch24-system-diagnosis.md)
 * [פרק 20. מנוע הסברים: החלטה, סירוב וגבולות יכולת](../../ch20-explanation-engine.md)
-* [פרק 21. מהמלצה לפעולה: בקרת הרשאות וביצוע בטוח בסביבת ייצור](../../ch21-from-recommendation-to-action.md)
-* [פרק 22. לולאת בקרה קיברנטית: חיישנים, פריפריה ומשוב](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [פרק 23. אימות בסיס הידע: כיצד לבדוק עקביות, שלמות ואמינות של כללים](../../ch23-knowledge-base-verification.md)
 * [פרק 36. פירמידת בדיקות ידע: כללים, אינטראקציות ויציבות מענה](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [פרק 25. כיצד ללמד מערכת מומחה: מטריצות בחינה, ביקורת ידע ובקרת רגרסיות](../../ch25-how-expert-systems-learn.md)
+* [פרק 26. למידה מתמדת (Continual Learning) מניסיון והתמודדות עם היסחף יומני מערכת](../../ch26-continual-learning.md)
 * [פרק 39. בודק מומחה אקטיבי: הפרכה פופריאנית, תאימות תקנים (ASPICE/ISO 26262/ISO 21434) ותכנון בדיקות אוטונומי](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [פרק 24. אבחון טכני: כיצד לא לבלבל בין סימפטום לגורם שורש בתנאי אי-שלמות](../../ch24-system-diagnosis.md)
 * [פרק 27. ביסוס בטיחות: סינתזה ואימות טיעונים](../../ch27-safety-case-gsn-synthesis.md)
 * [פרק 30. הנדסה משותפת של בטיחות תפקודית ואבטחת סייבר](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *היסק קפדני מול השערה מייעצת, שילוב מודלי שפה, פערי ידע, בקרה על מענה בלתי מבוסס, מטריצות בחינה ולמידה מניסיון.*
 
 * [פרק 28. מערכות מומחה במצב כפול: היסק קפדני מול השערה מייעצת](../../ch28-dual-mode-expert-systems.md)
-* [פרק 29. ארכיטקטורה נוירו-סימבולית: מודלי שפה ואימות בסיס הראיות](../../ch29-neuro-symbolic-architecture.md)
 * [פרק 34. פערי ידע: חיפוש יחסים, אבדוקציה ודיאלוג הבהרה](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [פרק 29. ארכיטקטורה נוירו-סימבולית: מודלי שפה ואימות בסיס הראיות](../../ch29-neuro-symbolic-architecture.md)
 * [פרק 38. הזיות מכונה ומחסור בידע: בקרה מבוססת ראיות על תשובות](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [פרק 25. כיצד ללמד מערכת מומחה: מטריצות בחינה, ביקורת ידע ובקרת רגרסיות](../../ch25-how-expert-systems-learn.md)
-* [פרק 26. למידה מתמדת (Continual Learning) מניסיון והתמודדות עם היסחף יומני מערכת](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *ביצוע תגובתי של כללים, סינרגטיקה ומעברי פאזה בידע, שיתוף בין מערכות וארכיטקטורה אפיסטמית מבוזרת בקנה מידה ארגוני.*
 
+* [פרק 17. הסטאק הטכנולוגי: קריטריונים לבחירת כלים, שפות תכנות ומנועי כללים](../../ch17-implementation-stack.md)
+* [פרק 18. תשתית ביצוע: מודלים מקומיים, מאיצי חומרה, קצה (Edge) ו-On-Premise](../../ch18-execution-infrastructure.md)
+* [פרק 21. מהמלצה לפעולה: בקרת הרשאות וביצוע בטוח בסביבת ייצור](../../ch21-from-recommendation-to-action.md)
+* [פרק 22. לולאת בקרה קיברנטית: חיישנים, פריפריה ומשוב](../../ch22-cybernetics-edge-to-backend.md)
 * [פרק 35. מערכת מומחה תגובתית: אירועים, ביטול והתאמת ידע](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [פרק 33. שיתוף ידע בין מערכות: אספקת כללים לצדדים שלישיים, הוראת מודלים ומשוב מאובטח](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [פרק 40. ארכיטקטורה מבוזרת של מערכת מומחה מבוססת ראיות: SOA אפיסטמי, ניתוב סמנטי, היררכיית זיכרון ובוררות מרובת מקורות](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

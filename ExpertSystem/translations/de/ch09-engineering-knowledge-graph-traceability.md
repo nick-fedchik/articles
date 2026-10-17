@@ -1,8 +1,8 @@
 # Kapitel 9. Ingenieurtechnischer Wissensgraph: Traceability von Anforderungen bis zur Hardware
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil II: Mathematische Modelle, Wissensrepräsentation und Wissensspeicherung](part-02-knowledge-models.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil II: Mathematische Modelle, Repräsentation und Wissensspeicherung](part-02-knowledge-models.md)  
 > **Vorheriges Kapitel:** [Kapitel 8. Ingenieurtechnische Artefakte als Daten des Expertensystems](ch08-engineering-artifacts-as-data.md)  
-> **Nächstes Kapitel:** [Kapitel 32. Unveränderliche Wissenspakete: Byte-genaue Zulassung, Indizes und Memory-Mapping](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)  
+> **Nächstes Kapitel:** [Kapitel 32. Unveränderliche Wissenspakete: Byte-Level-Zulassung, Indizes und Memory Mapping](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Grundlegendes Ingenieurniveau; Quellcode- und Datenbeispiele sind in einklappbare Blöcke ausgelagert  

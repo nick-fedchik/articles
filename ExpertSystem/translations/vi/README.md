@@ -196,13 +196,12 @@ flowchart TD
 
 *Tài liệu, kinh nghiệm chuyên gia và quan sát: Trích xuất ứng viên, phân tích ngôn ngữ, hình thức hóa và đánh giá bằng chứng.*
 
+* [Chương 37. Đánh giá thông tin đầu vào: Nguồn gốc, bằng chứng và sự không chắc chắn](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Chương 10. Hệ thống thu nhận tri thức: Nguồn gốc, phê duyệt và vòng đời](../../ch10-knowledge-acquisition-systems.md)
 * [Chương 11. Khai thác tri thức từ chuyên gia: Phỏng vấn, bản đồ nhận thức và hình thức hóa kinh nghiệm](../../ch11-knowledge-elicitation-from-experts.md)
 * [Chương 12. Phân tích ngôn ngữ và mô hình cục bộ: Bảo toàn ngữ nghĩa và nguồn gốc](../../ch12-linguistic-analysis-and-local-models.md)
-* [Chương 13. Tính biến thiên của ngôn ngữ tự nhiên đối đầu với tính tất định: Biên dịch ý nghĩa câu hỏi](../../ch13-language-variability-vs-determinism.md)
 * [Chương 14. Phát hiện yêu cầu và phương thái: Từ văn bản quy chuẩn đến các bất biến](../../ch14-requirements-detection-and-formalization.md)
 * [Chương 15. Trích xuất tri thức và xây dựng cơ sở tri thức: Sự thật, ngữ pháp và máy tự động](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Chương 37. Đánh giá thông tin đầu vào: Nguồn gốc, bằng chứng và sự không chắc chắn](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Hợp đồng kiến trúc, ngăn xếp công nghệ, thực thi phần cứng, kiểm tra khẳng định, suy diễn theo quy chuẩn, giải thích và vòng điều khiển điều khiển học.*
 
 * [Chương 16. Kiến trúc hệ chuyên gia: Từ tri thức hình thức đến quyết định dựa trên bằng chứng](../../ch16-expert-systems-architecture.md)
-* [Chương 17. Ngăn xếp công nghệ: Tiêu chí lựa chọn công cụ, ngôn ngữ lập trình và công cụ quy tắc](../../ch17-implementation-stack.md)
-* [Chương 18. Hạ tầng thực thi: Mô hình cục bộ, bộ tăng tốc phần cứng, Edge và On-Premise](../../ch18-execution-infrastructure.md)
+* [Chương 13. Tính biến thiên của ngôn ngữ tự nhiên đối đầu với tính tất định: Biên dịch ý nghĩa câu hỏi](../../ch13-language-variability-vs-determinism.md)
 * [Chương 19. Từ câu hỏi đến bằng chứng: Tìm kiếm, neo giữ và kiểm tra khẳng định](../../ch19-from-question-to-evidence.md)
 * [Chương 31. Suy luận theo quy chuẩn: Phân cấp vị từ, ngoại lệ và hiệu lực](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Chương 24. Chẩn đoán kỹ thuật: Cách tránh nhầm lẫn giữa triệu chứng và nguyên nhân gốc trong điều kiện thiếu thông tin](../../ch24-system-diagnosis.md)
 * [Chương 20. Công cụ giải thích: Quyết định, từ chối và giới hạn năng lực](../../ch20-explanation-engine.md)
-* [Chương 21. Từ khuyến nghị đến hành động: Kiểm soát thẩm quyền và thực thi an toàn trong môi trường sản xuất](../../ch21-from-recommendation-to-action.md)
-* [Chương 22. Vòng điều khiển điều khiển học: Cảm biến, thiết bị ngoại vi và phản hồi](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Chương 23. Kiểm chứng cơ sở tri thức: Cách kiểm tra tính nhất quán, tính đầy đủ và độ tin cậy của quy tắc](../../ch23-knowledge-base-verification.md)
 * [Chương 36. Kim tự tháp kiểm thử tri thức: Quy tắc, tương tác và độ ổn định của câu trả lời](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Chương 25. Cách huấn luyện hệ chuyên gia: Ma trận khảo hạch, kiểm toán tri thức và kiểm soát suy thoái](../../ch25-how-expert-systems-learn.md)
+* [Chương 26. Học tập liên tục (Continual Learning) từ kinh nghiệm và vượt qua hiện tượng trôi dạt nhật ký hệ thống](../../ch26-continual-learning.md)
 * [Chương 39. Người kiểm thử chuyên gia chủ động: Bác bỏ kiểu Popper, tuân thủ tiêu chuẩn (ASPICE/ISO 26262/ISO 21434) và tự chủ thiết kế thử nghiệm](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Chương 24. Chẩn đoán kỹ thuật: Cách tránh nhầm lẫn giữa triệu chứng và nguyên nhân gốc trong điều kiện thiếu thông tin](../../ch24-system-diagnosis.md)
 * [Chương 27. Biện minh an toàn: Tổng hợp và xác thực các luận điểm](../../ch27-safety-case-gsn-synthesis.md)
 * [Chương 30. Kỹ nghệ đồng thời giữa an toàn chức năng và an ninh mạng](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Suy luận chặt chẽ và giả thuyết tư vấn, tích hợp mô hình ngôn ngữ, lỗ hổng tri thức, kiểm soát phản hồi vô căn cứ, ma trận khảo hạch và học tập liên tục từ thực tế.*
 
 * [Chương 28. Hệ chuyên gia chế độ kép: Suy luận nghiêm ngặt và giả thuyết tư vấn](../../ch28-dual-mode-expert-systems.md)
-* [Chương 29. Kiến trúc thần kinh - ký hiệu: Mô hình ngôn ngữ và kiểm tra căn cứ bằng chứng](../../ch29-neuro-symbolic-architecture.md)
 * [Chương 34. Lỗ hổng tri thức: Tìm kiếm quan hệ, suy đoán và đối thoại làm rõ](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Chương 29. Kiến trúc thần kinh - ký hiệu: Mô hình ngôn ngữ và kiểm tra căn cứ bằng chứng](../../ch29-neuro-symbolic-architecture.md)
 * [Chương 38. Ảo giác máy móc và thiếu hụt tri thức: Kiểm soát phản hồi dựa trên bằng chứng](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Chương 25. Cách huấn luyện hệ chuyên gia: Ma trận khảo hạch, kiểm toán tri thức và kiểm soát suy thoái](../../ch25-how-expert-systems-learn.md)
-* [Chương 26. Học tập liên tục (Continual Learning) từ kinh nghiệm và vượt qua hiện tượng trôi dạt nhật ký hệ thống](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Thực thi quy tắc phản ứng, hiệp đồng học và chuyển pha tri thức, trao đổi liên hệ thống và kiến trúc nhận thức phân tán quy mô doanh nghiệp.*
 
+* [Chương 17. Ngăn xếp công nghệ: Tiêu chí lựa chọn công cụ, ngôn ngữ lập trình và công cụ quy tắc](../../ch17-implementation-stack.md)
+* [Chương 18. Hạ tầng thực thi: Mô hình cục bộ, bộ tăng tốc phần cứng, Edge và On-Premise](../../ch18-execution-infrastructure.md)
+* [Chương 21. Từ khuyến nghị đến hành động: Kiểm soát thẩm quyền và thực thi an toàn trong môi trường sản xuất](../../ch21-from-recommendation-to-action.md)
+* [Chương 22. Vòng điều khiển điều khiển học: Cảm biến, thiết bị ngoại vi và phản hồi](../../ch22-cybernetics-edge-to-backend.md)
 * [Chương 35. Hệ chuyên gia phản ứng: Sự kiện, thu hồi và thích ứng tri thức](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Chương 33. Trao đổi tri thức liên hệ thống: Phân phối quy tắc cho hệ thống bên ngoài, huấn luyện mô hình và phản hồi an toàn](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Chương 40. Kiến trúc phân tán của hệ chuyên gia dựa trên bằng chứng: SOA nhận thức, định tuyến ngữ nghĩa, phân cấp bộ nhớ và trọng tài đa nguồn](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

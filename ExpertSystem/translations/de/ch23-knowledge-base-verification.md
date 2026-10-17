@@ -1,7 +1,7 @@
 # Kapitel 23. Verifikation der Wissensbasis: Widerspruchsfreiheit, Vollständigkeit und Robustheit von Regeln
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Diagnose und Sicherheitsbegründung](part-05-verification-and-learning.md)  
-> **Vorheriges Kapitel:** [Kapitel 22. Kybernetischer Regelkreis: Sensoren, Peripherie und Rückkopplung](ch22-cybernetics-edge-to-backend.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Lernen und Sicherheitsbegründung](part-05-verification-and-learning.md)  
+> **Vorheriges Kapitel:** [Kapitel 20. Erklärungskomponente: Entscheidung, Ablehnung und Kompetenzgrenzen](ch20-explanation-engine.md)  
 > **Nächstes Kapitel:** [Kapitel 36. Testpyramide für Wissensbasen: Regeln, Interaktionen und Antwortstabilität](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
@@ -1030,4 +1030,4 @@ Zugleich sind die Grenzen dieser Methoden klar definiert: Solver beweisen Eigens
 
 ---
 
-[← Kapitel 22](ch22-cybernetics-edge-to-backend.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 36 →](ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+[← Kapitel 20](ch20-explanation-engine.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 36 →](ch36-knowledge-testing-pyramid-and-variational-calibration.md)

@@ -1,8 +1,8 @@
 # Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил
 
-> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, тестування, діагностика та обґрунтування безпеки](part-05-verification-and-learning.md)  
-> **Попередня глава:** [Глава 22. Кібернетичний цикл керування: сенсори, периферія та зворотний зв'язок](ch22-cybernetics-edge-to-backend.md)  
-> **Наступна глава:** [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](ch36-knowledge-testing-pyramid-and-variational-calibration.md)  
+> **Книга:** [Архітектура доказових експертних систем](README.md) · [Частина V: Верифікація, тестування, навчання та обґрунтування безпеки](part-05-verification-and-learning.md)
+> **Попередня глава:** [Глава 20. Рушій пояснень: рішення, відмова та межі компетентності](ch20-explanation-engine.md)
+> **Наступна глава:** [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](ch36-knowledge-testing-pyramid-and-variational-calibration.md)
 > **Зміст книги:** [README.md](README.md)  
 > **Автор:** [Микола Федчик](about-the-author.md)  
 > **Рівень:** середній і поглиблений: розробники експертних систем, інженери знань, інженери з якості  
@@ -1099,4 +1099,4 @@ flowchart LR
 
 ---
 
-[← Глава 22](ch22-cybernetics-edge-to-backend.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 36 →](ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+[← Глава 20](ch20-explanation-engine.md) | [Зміст книги](README.md) | [Частина V](part-05-verification-and-learning.md) | [Глава 36 →](ch36-knowledge-testing-pyramid-and-variational-calibration.md)

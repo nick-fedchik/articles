@@ -1,7 +1,7 @@
 # Kapitel 27. Sicherheitsbegründung: Synthese und Verifikation von Argumenten
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Diagnose und Sicherheitsbegründung](part-05-verification-and-learning.md)  
-> **Vorheriges Kapitel:** [Kapitel 24. Technische Diagnose: Trennung von Symptom und Ursache unter Unsicherheit](ch24-system-diagnosis.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil V: Verifikation, Testen, Lernen und Sicherheitsbegründung](part-05-verification-and-learning.md)  
+> **Vorheriges Kapitel:** [Kapitel 39. Aktiver Compliance-Auditor: Popper'sche Falsifikation, normative Compliance (ASPICE/ISO 26262/ISO 21434) und autonomes Testdesign](ch39-active-compliance-auditor-and-popperian-testing.md)  
 > **Nächstes Kapitel:** [Kapitel 30. Co-Engineering von funktionaler Sicherheit und Cybersicherheit](ch30-safety-cybersecurity-co-engineering.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
@@ -696,4 +696,4 @@ Die Grenzen dieses Kapitels stützen sich auf **das ingenieurmäßige Demarkatio
 
 ---
 
-[← Kapitel 24](ch24-system-diagnosis.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 30 →](ch30-safety-cybersecurity-co-engineering.md)
+[← Kapitel 39](ch39-active-compliance-auditor-and-popperian-testing.md) | [Inhaltsverzeichnis](README.md) | [Teil V](part-05-verification-and-learning.md) | [Kapitel 30 →](ch30-safety-cybersecurity-co-engineering.md)

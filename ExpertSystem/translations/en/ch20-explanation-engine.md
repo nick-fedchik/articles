@@ -1,8 +1,8 @@
 # Chapter 20. Explanation Engine: Decisions, Refusals, and Competence Boundaries
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: Architecture, Technology Stack, Inference, and Action](part-04-architecture-and-inference.md)  
-> **Previous Chapter:** [Chapter 31. Syllogistic Reasoning and Relation Lattices: Hierarchies of Predicates, Exceptions, and Validity](ch31-syllogistic-reasoning-and-relation-lattices.md)  
-> **Next Chapter:** [Chapter 21. From Recommendation to Action: Authority Control and Safe Execution in Production Environments](ch21-from-recommendation-to-action.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part IV: System Architecture, Normative Inference, Diagnosis, and Explanation](part-04-architecture-and-inference.md)  
+> **Previous Chapter:** [Chapter 24. Technical Diagnostics: Distinguishing Symptoms from Root Causes Under Incompleteness](ch24-system-diagnosis.md)  
+> **Next Chapter:** [Chapter 23. Knowledge Base Verification: How to Verify Rule Consistency, Completeness, and Reliability](ch23-knowledge-base-verification.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Level:** Intermediate and advanced: inference engine developers, architects, knowledge engineers  
@@ -872,4 +872,4 @@ Accurate rules and verified facts are necessary prerequisites, yet text renderer
 
 ---
 
-[← Chapter 31](ch31-syllogistic-reasoning-and-relation-lattices.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 21 →](ch21-from-recommendation-to-action.md)
+[← Chapter 24](ch24-system-diagnosis.md) | [Table of Contents](README.md) | [Part IV](part-04-architecture-and-inference.md) | [Chapter 23 →](ch23-knowledge-base-verification.md)

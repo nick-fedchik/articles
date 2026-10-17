@@ -1,8 +1,8 @@
 # Kapitel 22. Kybernetischer Regelkreis: Sensoren, Peripherie und Rückkopplung
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Architektur, Technologie-Stack, Inferenz und Aktion](part-04-architecture-and-inference.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VII: Technologie-Stack, Hardware-Infrastruktur, kybernetische Ausführung und verteilte SOA](part-07-runtime-and-knowledge-exchange.md)  
 > **Vorheriges Kapitel:** [Kapitel 21. Von der Empfehlung zur Aktion: Autoritätskontrolle und sichere Ausführung in Produktionsumgebungen](ch21-from-recommendation-to-action.md)  
-> **Nächstes Kapitel:** [Kapitel 23. Verifikation der Wissensbasis: Widerspruchsfreiheit, Vollständigkeit und Robustheit von Regeln](ch23-knowledge-base-verification.md)  
+> **Nächstes Kapitel:** [Kapitel 35. Reaktives Expertensystem: Ereignisse, Widerruf und Wissensadaptation](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Lernziele:** Das Gesetz der erforderlichen Varietät nach Ashby und das Good-Regulator-Theorem auf die Architektur von Expertensystemen anwenden; den Objektzustand über Filter statt Rohsignale schätzen; Funktionen über Zeithorizonte der Ebenen L0–L4 verteilen; kryptografisch signierte Merkmale statt bloßer Urteile von Sensoren übertragen; Degradierungsmodi bei Verbindungsabbruch und Zustandsabgleich nach Wiederherstellung entwerfen; Wissensbestände auf Edge-Geräten über signierte Bundles aktualisieren.  
@@ -1060,4 +1060,4 @@ Das thematisch folgende [Kapitel 23](ch23-knowledge-base-verification.md) eröff
 
 ---
 
-[← Kapitel 21](ch21-from-recommendation-to-action.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 23 →](ch23-knowledge-base-verification.md)
+[← Kapitel 21](ch21-from-recommendation-to-action.md) | [Inhaltsverzeichnis](README.md) | [Teil VII](part-07-runtime-and-knowledge-exchange.md) | [Kapitel 35 →](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)

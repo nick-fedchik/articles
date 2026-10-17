@@ -1,8 +1,8 @@
 # Kapitel 1. Einführung in Expertensysteme: Vom Chaos zu beherrschbarem Wissen
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil I: Konzeptionelles und epistemisches Fundament](part-01-foundations.md)  
-> **Vorheriges Kapitel:** [Teil I. Konzeptionelles und epistemisches Fundament](part-01-foundations.md)  
-> **Nächstes Kapitel:** [Kapitel 2. Philosophie für den Ingenieur: Was eine Maschine als Wissen bezeichnen darf](ch02-epistemology-of-machine-knowledge.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil I: Konzeptionelle und epistemische Grundlagen](part-01-foundations.md)  
+> **Vorheriges Kapitel:** [Teil I. Konzeptionelle und epistemische Grundlagen](part-01-foundations.md)  
+> **Nächstes Kapitel:** [Kapitel 2. Philosophie für Ingenieure: Was eine Maschine rechtmäßig Wissen nennen darf](ch02-epistemology-of-machine-knowledge.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Ingenieurtechnische Grundlagen  

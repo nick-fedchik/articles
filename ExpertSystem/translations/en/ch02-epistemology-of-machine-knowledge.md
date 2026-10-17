@@ -2,7 +2,7 @@
 
 > **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part I: Conceptual and Epistemic Foundations](part-01-foundations.md)  
 > **Previous Chapter:** [Chapter 1. Introduction to Expert Systems: From Chaos to Governed Knowledge](ch01-introduction-to-expert-systems.md)  
-> **Next Chapter:** [Chapter 3. Beyond Reference Information Systems](ch03-beyond-reference-information-systems.md)  
+> **Next Chapter:** [Chapter 3. How an Expert System Differs from an Information Retrieval System](ch03-beyond-reference-information-systems.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Foundational Engineering; code listings are placed in collapsible blocks, formal specifications are labeled as "Formally"  

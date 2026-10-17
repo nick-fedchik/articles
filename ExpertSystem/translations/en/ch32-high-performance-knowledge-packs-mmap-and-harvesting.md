@@ -2,7 +2,7 @@
 
 > **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part II: Mathematical Models, Knowledge Representation, and Storage](part-02-knowledge-models.md)  
 > **Previous Chapter:** [Chapter 9. Engineering Knowledge Graph: Traceability from Requirements to Hardware](ch09-engineering-knowledge-graph-traceability.md)  
-> **Next Chapter:** [Chapter 10. Knowledge Acquisition Systems: Sources, Admission, and Lifecycle](ch10-knowledge-acquisition-systems.md)  
+> **Next Chapter:** [Chapter 37. Input Information Assessment: Sources, Evidence, and Uncertainty](ch37-input-information-assessment-and-algorithmic-skepticism.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Advanced: Systems Architects, Database and Index Developers, Knowledge Engineers, High-Performance Computing and Edge AI Specialists  
@@ -2433,4 +2433,4 @@ Eminent architects of systems programming, operating system kernels, and applied
 
 ---
 
-[← Chapter 9](ch09-engineering-knowledge-graph-traceability.md) | [Table of Contents](README.md) | [Part II](part-02-knowledge-models.md) | [Chapter 10 →](ch10-knowledge-acquisition-systems.md)
+[← Chapter 9](ch09-engineering-knowledge-graph-traceability.md) | [Table of Contents](README.md) | [Part II](part-02-knowledge-models.md) | [Chapter 37 →](ch37-input-information-assessment-and-algorithmic-skepticism.md)

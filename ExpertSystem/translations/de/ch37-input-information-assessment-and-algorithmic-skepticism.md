@@ -1,8 +1,8 @@
 # Kapitel 37. Eingangsdatenbewertung: Quellen, Zeugnisse und epistemische Unsicherheit
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Wissensakquisition, linguistische Analyse und Eingangsdatenbewertung](part-03-knowledge-engineering-nlp.md)  
-> **Vorheriges Kapitel:** [Kapitel 15. Wissensextraktion und Aufbau der Wissensbasis: Fakten, Grammatiken und Automaten](ch15-knowledge-extraction-and-kb-construction.md)  
-> **Nächstes Kapitel:** [Kapitel 16. Architektur von Expertensystemen: Vom formalen Wissen zur beweisbasierten Entscheidung](ch16-expert-systems-architecture.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil III: Eingangsdatenbewertung, Wissensakquisition und linguistische Analyse](part-03-knowledge-engineering-nlp.md)  
+> **Vorheriges Kapitel:** [Kapitel 32. Unveränderliche Wissenspakete: Byte-Level-Zulassung, Indizes und Memory Mapping](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md)  
+> **Nächstes Kapitel:** [Kapitel 10. Systeme der Wissensakquisition: Quellen, Zulassung und Lebenszyklus](ch10-knowledge-acquisition-systems.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Wissensingenieure, Analysten, Architekten von Edge- und Streaming-Systemen  
@@ -891,4 +891,4 @@ Ein zentrales ingenieurtechnisches Fazit liegt in der strikten methodischen Entk
 
 ---
 
-[← Kapitel 15](ch15-knowledge-extraction-and-kb-construction.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 16 →](ch16-expert-systems-architecture.md)
+[← Kapitel 32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | [Inhaltsverzeichnis](README.md) | [Teil III](part-03-knowledge-engineering-nlp.md) | [Kapitel 10 →](ch10-knowledge-acquisition-systems.md)

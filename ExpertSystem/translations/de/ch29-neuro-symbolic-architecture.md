@@ -1,8 +1,8 @@
 # Kapitel 29. Neuro-symbolische Architektur: Sprachmodelle und beweisgestützte Verifikation
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VI: Neuro-symbolische Modelle, kognitive Grenzen und kontinuierliches Lernen](part-06-frontiers-neuro-symbolic.md)  
-> **Vorheriges Kapitel:** [Kapitel 28. Dual-Mode-Expertensysteme: Strikte Deduktion und beratende Hypothese](ch28-dual-mode-expert-systems.md)  
-> **Nächstes Kapitel:** [Kapitel 34. Wissenslücken: Relationale Suche, Abduktion und Klärungsdialog](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil VI: Neuro-symbolische Architekturen, Abduktion und Halluzinationskontrolle](part-06-frontiers-neuro-symbolic.md)  
+> **Vorheriges Kapitel:** [Kapitel 34. Wissenslücken: Relationale Suche, Abduktion und Klärungsdialog](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
+> **Nächstes Kapitel:** [Kapitel 38. Maschinelle Halluzinationen und Wissensdefizite: Evidenzkontrolle von Antworten](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
 > **Niveau:** Fortgeschritten: Systemarchitekten, ML-Ingenieure, Entwickler sicherheitskritischer Systeme  
@@ -780,4 +780,4 @@ Das Gateway prüft die Dokumentenabstützung, nicht die materielle Richtigkeit d
 
 ---
 
-[← Kapitel 28](ch28-dual-mode-expert-systems.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 34 →](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+[← Kapitel 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | [Inhaltsverzeichnis](README.md) | [Teil VI](part-06-frontiers-neuro-symbolic.md) | [Kapitel 38 →](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)

@@ -1,8 +1,8 @@
 # Chapter 38. Machine Hallucinations and Knowledge Deficits: Evidence-Governed Output Control
 
-> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VI: Neuro-Symbolic Models, Cognitive Frontiers, and Continuous Learning](part-06-frontiers-neuro-symbolic.md)  
-> **Previous Chapter:** [Chapter 34. Knowledge Gaps: Deterministic Relational Analysis, Abduction, and Socratic Dialogue](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)  
-> **Next Chapter:** [Chapter 25. How Expert Systems Learn: Examination Matrices, Knowledge Audits, and Regression Control](ch25-how-expert-systems-learn.md)  
+> **Book:** [Architecture of Evidence-Governed Expert Systems](README.md) · [Part VI: Neuro-Symbolic Architectures, Abduction, and Hallucination Control](part-06-frontiers-neuro-symbolic.md)  
+> **Previous Chapter:** [Chapter 29. Neuro-Symbolic Architecture: Language Models and Evidence-Grounded Verification](ch29-neuro-symbolic-architecture.md)  
+> **Next Chapter:** [Chapter 17. Technology Stack: Selection Criteria for Tools, Programming Languages, and Rule Engines](ch17-implementation-stack.md)  
 > **Table of Contents:** [README.md](README.md)  
 > **Author:** [Mykola Fedchyk](about-the-author.md)  
 > **Target Level:** Advanced: Knowledge engineers, neuro-symbolic systems architects, safety-critical software developers  
@@ -867,4 +867,4 @@ Under this paradigm, artificial intelligence transforms from an unpredictable li
 
 ---
 
-[← Chapter 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | [Table of Contents](README.md) | [Part VI](part-06-frontiers-neuro-symbolic.md) | [Chapter 25 →](ch25-how-expert-systems-learn.md)
+[← Chapter 29](ch29-neuro-symbolic-architecture.md) | [Table of Contents](README.md) | [Part VI](part-06-frontiers-neuro-symbolic.md) | [Chapter 17 →](ch17-implementation-stack.md)

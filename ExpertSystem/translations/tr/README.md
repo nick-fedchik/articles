@@ -196,13 +196,12 @@ flowchart TD
 
 *Belgeler, uzman deneyimi ve gözlemler: Adayların çıkarımı, dilsel analiz, biçimselleştirme ve kanıtların değerlendirilmesi.*
 
+* [Bölüm 37. Girdi Bilgisinin Değerlendirilmesi: Kaynaklar, Kanıtlar ve Belirsizlik](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 * [Bölüm 10. Bilgi Edinme Sistemleri: Kaynaklar, Kabul ve Yaşam Döngüsü](../../ch10-knowledge-acquisition-systems.md)
 * [Bölüm 11. Uzmanlardan Bilgi Çıkarımı: Mülakatlar, Bilişsel Haritalar ve Deneyim Biçimlendirmesi](../../ch11-knowledge-elicitation-from-experts.md)
 * [Bölüm 12. Dilbilimsel Analiz ve Yerel Modeller: Anlam ve Kaynak Korunumu](../../ch12-linguistic-analysis-and-local-models.md)
-* [Bölüm 13. Doğal Dil Çeşitliliği Determinizme Karşı: Soru Anlamının Derlenmesi](../../ch13-language-variability-vs-determinism.md)
 * [Bölüm 14. Gereksinimlerin ve Kipliklerin Tespiti: Normatif Metinden Değişmezlere](../../ch14-requirements-detection-and-formalization.md)
 * [Bölüm 15. Bilgi Çıkarımı ve Bilgi Tabanı İnşası: Olgular, Dilbilgileri ve Otomatlar](../../ch15-knowledge-extraction-and-kb-construction.md)
-* [Bölüm 37. Girdi Bilgisinin Değerlendirilmesi: Kaynaklar, Kanıtlar ve Belirsizlik](../../ch37-input-information-assessment-and-algorithmic-skepticism.md)
 
 ---
 
@@ -211,13 +210,11 @@ flowchart TD
 *Mimari sözleşmeler, teknoloji yığını, donanım yürütmesi, iddia denetimi, normatif çıkarım, açıklama ve sibernetik kontrol döngüsü.*
 
 * [Bölüm 16. Uzman Sistem Mimarisi: Biçimsel Bilgiden Kanıt Temelli Karara](../../ch16-expert-systems-architecture.md)
-* [Bölüm 17. Teknoloji Yığını: Araçlar, Programlama Dilleri ve Kural Motorları Seçim Kriterleri](../../ch17-implementation-stack.md)
-* [Bölüm 18. Yürütme Altyapısı: Yerel Modeller, Donanım Hızlandırıcıları, Edge ve On-Premise](../../ch18-execution-infrastructure.md)
+* [Bölüm 13. Doğal Dil Çeşitliliği Determinizme Karşı: Soru Anlamının Derlenmesi](../../ch13-language-variability-vs-determinism.md)
 * [Bölüm 19. Sorudan Kanıta: Arama, Dayanaklama ve İddia Denetimi](../../ch19-from-question-to-evidence.md)
 * [Bölüm 31. Normlara Dayalı Çıkarım: Yüklem Hiyerarşileri, İstisnalar ve Geçerlilik](../../ch31-syllogistic-reasoning-and-relation-lattices.md)
+* [Bölüm 24. Teknik Teşhis: Eksik Bilgi Koşullarında Belirti ile Kök Neden Nasıl Ayırt Edilir](../../ch24-system-diagnosis.md)
 * [Bölüm 20. Açıklama Motoru: Karar, Ret ve Yetkinlik Sınırları](../../ch20-explanation-engine.md)
-* [Bölüm 21. Öneriden Eyleme: Yetki Denetimi ve Üretim Ortamında Güvenli Yürütme](../../ch21-from-recommendation-to-action.md)
-* [Bölüm 22. Sibernetik Kontrol Döngüsü: Sensörler, Çevre Birimleri ve Geribildirim](../../ch22-cybernetics-edge-to-backend.md)
 
 ---
 
@@ -227,8 +224,9 @@ flowchart TD
 
 * [Bölüm 23. Bilgi Tabanı Doğrulaması: Kuralların Tutarlılığı, Tamlığı ve Güvenilirliği Nasıl Denetlenir](../../ch23-knowledge-base-verification.md)
 * [Bölüm 36. Bilgi Test Piramidi: Kurallar, Etkileşimler ve Yanıt Kararlılığı](../../ch36-knowledge-testing-pyramid-and-variational-calibration.md)
+* [Bölüm 25. Uzman Sistem Nasıl Eğitilir: Sınav Matrisleri, Bilgi Denetimi ve Regresyon Kontrolü](../../ch25-how-expert-systems-learn.md)
+* [Bölüm 26. Deneyimden Sürekli Öğrenme (Continual Learning) ve Sistem Günlüğü Kaymasını Aşma](../../ch26-continual-learning.md)
 * [Bölüm 39. Aktif Uzman Testçi: Popperci Yanlışlama, Standart Uyumluluğu (ASPICE/ISO 26262/ISO 21434) ve Otonom Test Tasarımı](../../ch39-active-compliance-auditor-and-popperian-testing.md)
-* [Bölüm 24. Teknik Teşhis: Eksik Bilgi Koşullarında Belirti ile Kök Neden Nasıl Ayırt Edilir](../../ch24-system-diagnosis.md)
 * [Bölüm 27. Güvenlik Gerekçelendirmesi: Argümanların Sentezi ve Doğrulaması](../../ch27-safety-case-gsn-synthesis.md)
 * [Bölüm 30. Fonksiyonel Güvenlik ve Siber Güvenliğin Birlikte Mühendisliği](../../ch30-safety-cybersecurity-co-engineering.md)
 
@@ -239,11 +237,9 @@ flowchart TD
 *Kesin çıkarım ve danışman hipotez, dil modeli entegrasyonu, açıklar, kanıtsız yanıt denetimi, sınav matrisleri ve deneyimden sürekli öğrenme.*
 
 * [Bölüm 28. Çift Modlu Uzman Sistemler: Kesin Çıkarım ve Danışman Hipotez](../../ch28-dual-mode-expert-systems.md)
-* [Bölüm 29. Nöro-Sembolik Mimari: Dil Modelleri ve Kanıt Temellerinin Denetimi](../../ch29-neuro-symbolic-architecture.md)
 * [Bölüm 34. Bilgi Açıkları: İlişkisel Arama, Abdüksiyon ve Netleştirme Diyaloğu](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
+* [Bölüm 29. Nöro-Sembolik Mimari: Dil Modelleri ve Kanıt Temellerinin Denetimi](../../ch29-neuro-symbolic-architecture.md)
 * [Bölüm 38. Makine Halüsinasyonları ve Bilgi Yetersizliği: Kanıta Dayalı Yanıt Denetimi](../../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
-* [Bölüm 25. Uzman Sistem Nasıl Eğitilir: Sınav Matrisleri, Bilgi Denetimi ve Regresyon Kontrolü](../../ch25-how-expert-systems-learn.md)
-* [Bölüm 26. Deneyimden Sürekli Öğrenme (Continual Learning) ve Sistem Günlüğü Kaymasını Aşma](../../ch26-continual-learning.md)
 
 ---
 
@@ -251,6 +247,10 @@ flowchart TD
 
 *Kuralların reaktif yürütülmesi, sinerjetik ve bilgi faz geçişleri, sistemler arası paylaşım ve kurumsal ölçekte dağıtık epistemik mimari.*
 
+* [Bölüm 17. Teknoloji Yığını: Araçlar, Programlama Dilleri ve Kural Motorları Seçim Kriterleri](../../ch17-implementation-stack.md)
+* [Bölüm 18. Yürütme Altyapısı: Yerel Modeller, Donanım Hızlandırıcıları, Edge ve On-Premise](../../ch18-execution-infrastructure.md)
+* [Bölüm 21. Öneriden Eyleme: Yetki Denetimi ve Üretim Ortamında Güvenli Yürütme](../../ch21-from-recommendation-to-action.md)
+* [Bölüm 22. Sibernetik Kontrol Döngüsü: Sensörler, Çevre Birimleri ve Geribildirim](../../ch22-cybernetics-edge-to-backend.md)
 * [Bölüm 35. Reaktif Uzman Sistem: Olaylar, İptal ve Bilgi Adaptasyonu](../../ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)
 * [Bölüm 33. Sistemler Arası Bilgi Değişimi: Dış Sistemlere Kural Temini, Model Eğitimi ve Güvenli Geribildirim](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md)
 * [Bölüm 40. Kanıt Temelli Uzman Sistemin Dağıtık Mimarisi: Epistemik SOA, Semantik Yönlendirme, Bellek Hiyerarşisi ve Çok Kaynaklı Tahkim](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)

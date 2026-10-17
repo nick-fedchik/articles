@@ -1,7 +1,7 @@
 # Kapitel 19. Von der Frage zum Beweis: Suche, Bindung und Prüfung von Behauptungen
 
-> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Architektur, Technologie-Stack, Inferenz und Aktion](part-04-architecture-and-inference.md)  
-> **Vorheriges Kapitel:** [Kapitel 18. Ausführungsinfrastruktur: Lokale Modelle, Hardwarebeschleuniger, Edge und On-Premise](ch18-execution-infrastructure.md)  
+> **Buch:** [Architektur evidenzbasierter Expertensysteme](README.md) · [Teil IV: Systemarchitektur, normative Inferenz, Diagnose und Erklärung](part-04-architecture-and-inference.md)  
+> **Vorheriges Kapitel:** [Kapitel 13. Natürliche Sprachvarianz versus Determinismus: Kompilierung der Frageintention](ch13-language-variability-vs-determinism.md)  
 > **Nächstes Kapitel:** [Kapitel 31. Normenbasierte Inferenz: Prädikatenhierarchien, Ausnahmen und Geltung](ch31-syllogistic-reasoning-and-relation-lattices.md)  
 > **Inhaltsverzeichnis:** [README.md](README.md)  
 > **Autor:** [Mykola Fedchyk](about-the-author.md)  
@@ -858,4 +858,4 @@ Auch die Grenzen des Ansatzes wurden präzise abgesteckt. Die Bytestellen-Bindun
 
 ---
 
-[← Kapitel 18](ch18-execution-infrastructure.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 31 →](ch31-syllogistic-reasoning-and-relation-lattices.md)
+[← Kapitel 13](ch13-language-variability-vs-determinism.md) | [Inhaltsverzeichnis](README.md) | [Teil IV](part-04-architecture-and-inference.md) | [Kapitel 31 →](ch31-syllogistic-reasoning-and-relation-lattices.md)
