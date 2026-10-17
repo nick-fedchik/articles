@@ -836,6 +836,29 @@ func TestAbductionEngine_And_SocraticDialogue(t *testing.T) {
 
 </details>
 
+### 8.1. Contradiction Compensation Algebra and Safeguarding Combinatorial Synthesis from Semantic Degradation
+
+In advanced engineering synthesis, abductive discovery of an intermediate bridge entity (*Bridge Entity*) transcends merely recovering an omitted cross-reference between two standard paragraphs. As Genrich Altshuller demonstrated in the Theory of Inventive Problem Solving (TRIZ), the essence of genuine engineering invention lies in **overcoming technical contradictions**: when attempting to enhance target system parameter $P_1$ via known mechanism $M_1$ within domain $D_1$ inevitably induces intolerable degradation in another critical parameter $P_2$ (e.g., increasing inverter switching frequency $M_1$ reduces filter size $P_1$, but triggers a severe electromagnetic interference spike $\text{EMI}$ and insulation breakdown $P_2$).
+
+Within the Federated Reasoning Arena, this challenge is formalized via the **author's technical contradiction compensation algebra**. Each engineering rule $r \in R$ is annotated with directional functional impact predicates on physical parameters: `IMPROVES(Mechanism, Parameter, Interval)` and `DEGRADES(Mechanism, Parameter, Interval)`. When an impasse contradiction arises within a single knowledge pack $D_1$:
+
+$$\mathrm{IMPROVES}(M_1, P_1) \;\land\; \mathrm{DEGRADES}(M_1, P_2) \;\land\; \mathrm{Constraint}(P_2 \in \Omega_{\text{safe}})$$
+
+the relational engine does not halt in refusal; rather, it initiates a targeted cross-pack search for a complementary compensating mechanism $M_2$ across adjacent knowledge packs $D_2, \dots, D_m$ satisfying the orthogonal neutralization condition:
+
+$$\exists M_2 \in D_2 : \mathrm{IMPROVES}(M_2, P_2) \;\land\; \neg \mathrm{DEGRADES}(M_2, P_1) \;\land\; (\Omega(M_1) \cap \Omega(M_2) \neq \varnothing)$$
+
+In this manner, at the intersection of three independent knowledge packs (`power_sic.kp`, `emi_nanocrystalline.kp`, `iso26262_asil_d.kp`), the system automatically synthesizes a solution featuring a Multi-Step Active Gate Driver that maintains switching time within the window $[1.00, 5.00]\,\mu\text{s}$ while simultaneously satisfying thermal budgets, EMI emission ceilings, and the Fault Tolerant Time Interval (FTTI).
+
+> [!NOTE]
+> **Five Authorial Laws for Safeguarding Combinatorial Synthesis from Semantic Degradation**
+> 1. **Law of Exponential Confidence Decay in Fuzzy Parsers:** The author demonstrates mathematically that given a linguistic extraction error probability $p > 0$, the confidence of multi-source synthesis at depth $d$ degrades as $(1-p)^d$, precluding deep inference chains directly over raw, uncanonicalized text.
+> 2. **Principle of Two-Tier Synthesis Rule Stratification:** The monograph establishes an architectural principle whereby only canonicalized, first-tier trusted rules (Tier-1 Formalized Specs) with explicitly defined boundary applicability conditions are admitted into the combinatorial invention pipeline.
+> 3. **Physical SI Dimensional and Interval Compatibility Filter:** The author mandates rigorous verification of physical SI units and dynamic ranges `[min..max]` across cross-domain boundaries, pruning pseudoscientific literary metaphors and spurious isomorphisms.
+> 4. **Technical Contradiction Compensation Algebra:** The author's model formulates a formal operator to discover complementary mechanisms $(M_1 \in D_1, M_2 \in D_2)$ where negative side effect `DEGRADES(M1, P2)` from one domain is neutralized by property `IMPROVES(M2, P2)` from another domain without compromising objective function `IMPROVES(M1, P1)`.
+> 5. **Law of the Human Navigator in NP-Hard Search Space (Human-Guided Epistemic Frame):** The author proves that taming combinatorial explosion $\mathcal{O}(b^d)$ and the "frame problem" requires role allocation where the human architect supplies the topological solution frame, while the machine conducts exhaustive compatibility verification across thousands of normative constraints.
+> *Runtime Control / Engineering Invariant:* Any attempt to link two predicates from distinct `.kp` packs without matching dimensional signatures and overlapping admissible intervals is automatically aborted via hardware exception `ERR_DIMENSIONAL_MISMATCH`.
+
 ---
 
 ## 9. Pro et Contra Dialogue
