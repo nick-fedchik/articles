@@ -644,13 +644,110 @@ The fundamental value of this theoretical prototype lies in defining an **archit
 
 ---
 
-## 9. Pro et Contra Dialogue
+## 9. Tabula Rasa Cold Readiness of Dynamic Knowledge Registry, Diagnostic Evidence Purity, and Sub-Millisecond Phonotactic-Entropic Input Sanitizer
+
+Classical expert systems and enterprise search engines are predominantly engineered under the paradigm of static knowledge binding (*Static Knowledge Binding*): the user interface or client daemon mandates explicit command-line configuration of paths to knowledge base files upon startup (`--kb /path/to/domain.pack`) and crashes if the store is empty. In an Epistemic Service-Oriented Architecture (Epistemic SOA), such behavior is impermissible: thin operator consoles and inference nodes must initialize with zero configuration (*Zero-Configuration Startup*) and maintain full operational readiness even in a "blank slate" state (**Tabula Rasa**, where mounted knowledge pack count $N_{\mathrm{packs}} = 0$).
+
+### 9.1. Reactive Lifecycle of the Dynamic Knowledge Registry and Telemetry Bifurcation
+
+The distributed knowledge registry operates as a reactive state machine over shared memory `mmap(MAP_SHARED)` and a publish/subscribe event bus (*Pub/Sub Event Bus*), orchestrated by a background host daemon without client interface intervention:
+
+```mermaid
+sequenceDiagram
+    participant UI as Thin Operator Console
+    participant San as Phonotactic-Entropic Sanitizer
+    participant Reg as Dynamic Knowledge Registry (RCU)
+    participant Host as Shared-Memory Host Daemon
+
+    Note over UI,Host: Phase 1: Cold Start over Empty Store (Tabula Rasa, N_packs = 0)
+    UI->>Reg: Query Q1 ("What is the maximum braking response time?")
+    Reg-->>UI: REFUSAL (NO_KNOWLEDGE_PACKS_MOUNTED)<br/>EvidenceList = ∅, Diagnostics = {MountedPacks: 0}
+
+    Note over UI,Host: Phase 2: Asynchronous Compilation and Hot-Mount
+    Host->>Reg: Event bus.events.pack.mounted (Domain: Automotive, SHA-256)
+    Reg->>Reg: Atomic update of active epoch RCU pointer
+
+    Note over UI,Host: Phase 3: Ingress Protection and Proof-Carrying Inference (N_packs > 0)
+    UI->>San: Query Q2 ("asdfghjkl qwerty 123")
+    San-->>UI: REFUSAL (UNINTELLIGIBLE_INPUT, t < 50 µs)
+    UI->>San: Query Q3 ("What is the maximum braking response time?")
+    San->>Reg: Valid Query (ρ_V ∈ [0.15, 0.85], L_C ≤ 5)
+    Reg-->>UI: ACCEPT + Byte-exact citation from Automotive pack [byte_start..byte_end]
+```
+
+To prevent cognitive conflation between authentic primary source evidence and internal system diagnostics, the **Zero Synthetic Evidence Law** is enforced:
+
+$$\forall r \in \mathrm{Response.\mathbf{EvidenceList}}: \quad \mathcal{G}(r) \ne \varnothing \;\land\; \mathrm{SHA256}\!\left(\mathrm{Source}[b_{\mathrm{start}}:b_{\mathrm{end}}]\right) = r.\mathrm{QuoteHash}$$
+
+If the system returns a refusal (e.g., due to an absence of mounted knowledge bases in the *Tabula Rasa* state or lack of support across mounted packs), the `EvidenceList` array must remain **mathematically empty** ($\mathbf{EvidenceList} = \varnothing$). Recording system notifications or compiler diagnostic strings in `EvidenceQuote` with fictitious byte coordinates `[0:0]` is strictly forbidden, as it compromises cryptographic custody. All operational telemetry is emitted exclusively in a distinct `Diagnostics` container and surfaced in the operator interface via **Cognitive-Forensic UI Bifurcation**:
+- **Cognitive Chat Stream:** Presents concise natural language responses or transparent operational refusal rationales to human operators;
+- **Forensic Auditor Panel:** Visualizes cryptographic hashes of mounted packs, citation byte offsets, and coprocessor execution metrics without polluting the conversation view.
+
+### 9.2. Mathematical Model of the Sub-Millisecond Phonotactic-Entropic Input Sanitizer
+
+Before an operator query reaches the semantic broker, local small language model (SLM), or hardware inference core, it is filtered through a deterministic **Phonotactic-Entropic Input Sanitizer**. Its objective is to prune random character sequences ("keyboard chatter" such as `asdfghjkl`, corrupted text encodings, or tokenizer buffer overflow attempts) within $t < 50\,\mu\text{s}$, conserving GPU/NPU compute budgets and preventing false knowledge deficit tickets.
+
+Grounded in Claude Shannon's mathematical theory of communication and entropy of printed language [[11]](#src-11) and Noam Chomsky and Morris Halle's phonotactic syllable structure constraints [[12]](#src-12), every alphabetic token $w$ in query $Q = (w_1, \dots, w_m)$ (of length $|w| \ge 4$ characters, excluded from technical acronym whitelist $\mathcal{A}_{\mathrm{tech}}$ such as `HTML`, `HTTP`, `DBMS`, `FPGA`, `RTOS`, `UTF8`) is evaluated against three invariants:
+
+1. **Vocalic Density Invariant ($\rho_V$):** The ratio of vowel count $V(w)$ (for Latin `{a, e, i, o, u, y}` and Cyrillic `{а, е, є, и, і, ї, о, у, ю, я}`) to total token length $|w|$ must fall within natural speech physiological limits:
+
+$$\rho_V(w) = \frac{V(w)}{|w|} \in [0.15, \; 0.85]$$
+
+2. **Maximum Consonant Cluster Invariant ($L_C$):** The length of the longest continuous consonant sequence $L_C(w)$ within a token cannot exceed natural Indo-European phonotactic thresholds [[12]](#src-12):
+
+$$L_C(w) = \max_{[i, j] \subseteq [1, |w|]} \left\{ j - i + 1 \;\middle|\; \forall k \in [i, j]: w[k] \in \mathrm{Consonants} \right\} \le 5$$
+
+3. **Shannon Entropy and Bigram Plausibility Invariant ($H_1$):** For long query strings ($|Q| \ge 12$), character-level Shannon entropy [[11]](#src-11) must indicate neither degenerate single-character repetitions (`aaaaaaaaaa`, $H_1 \to 0$) nor uniform high-entropy pseudo-random noise devoid of natural language bigram frequencies:
+
+$$H_1(Q) = -\sum_{c \in \Sigma} p(c) \log_2 p(c) \in [1.5, \; 4.7]\,\text{bits/symbol}$$
+
+If the proportion of phonotactically invalid tokens exceeds threshold $\theta_{\mathrm{gibberish}} = 0.50$, the sanitizer immediately aborts processing with `REFUSAL (UNINTELLIGIBLE_INPUT)` in sub-50 microseconds, shielding compute clusters and messaging fabrics from junk traffic.
+
+> [!NOTE]
+> **Three Laws of Knowledge Registry Readiness and Ingress Stream Hygiene (Fedchyk's Model)**
+> 1. **Zero-Config Tabula Rasa Readiness Law:** Thin operator consoles and inference nodes initialize without pre-bound knowledge base paths and, upon encountering an empty registry ($N_{\mathrm{packs}} = 0$), emit deterministic typed refusal `NO_KNOWLEDGE_PACKS_MOUNTED`, instantaneously transitioning to active inference upon hot-mount events from host daemons.
+> 2. **Zero Synthetic Evidence Law:** No diagnostic payload, prompt template, or runtime error description may enter `EvidenceList` masked as a citation with zeroed offsets `[0:0]`; upon refusal, the evidence list remains strictly empty ($\mathbf{EvidenceList} = \varnothing$), while telemetry is segregated in the forensic audit panel.
+> 3. **Phonotactic-Entropic Pre-Brokering Guard Law:** Evaluation of vocalic density $\rho_V \in [0.15, 0.85]$, consonant cluster length $L_C \le 5$, and Shannon entropy $H_1$ prunes unintelligible input at ingress perimeters in $< 50\,\mu\text{s}$ prior to invoking language models or broker logic.
+> *Runtime Control / Engineering Invariant:* Active knowledge pack updates during `MOUNT / UNMOUNT / SWAP` events execute via non-blocking Read-Copy-Update (RCU [[13]](#src-13)), ensuring zero reader downtime during live knowledge base replenishment.
+
+### 9.3. Federated Zero-Copy Inter-Pack Reasoning Arena and Three Generations of Synthesis Accelerators
+
+When dynamic registries concurrently mount $m \ge 2$ knowledge packs $\mathcal{P} = \{P_1, P_2, \dots, P_m\}$, evaluating each container within an isolated silo (`Single-Pack Evaluation Silo`) precludes end-to-end deduction where premise $A \to B$ resides in pack $P_1$, intermediate step $B \to C$ in pack $P_2$, and normative safety constraints in pack $P_3$. To enable **proof-carrying cross-pack synthesis** without violating zero-copy guarantees (`Zero-Copy Invariant`), distributed runtimes introduce the **Federated Reasoning Arena** (`pkg/reasoning/arena`).
+
+The Federated Arena maps binary sections of all active `.kp` containers into a unified virtual address space via `mmap(MAP_SHARED)`, constructing a canonical concept equivalence field $\Phi: \bigcup_{i=1}^m A_i \to \mathcal{G}_{\text{canon}}$:
+
+$$\mathcal{S}^*(Q) = \left\{ \pi = \left(r_{i_1}^{(1)}, r_{i_2}^{(2)}, \dots, r_{i_k}^{(k)}\right) \;\middle|\; \begin{aligned}
+& \forall j \in [1..k]: r_{i_j}^{(j)} \in R_{i_j}, \; \mathrm{Custody}_{i_j}\!\left(r_{i_j}^{(j)}\right) = \mathrm{VALID}, \\
+& \Phi\!\left(\mathrm{Consequent}(r_{i_j}^{(j)})\right) \equiv \Phi\!\left(\mathrm{Antecedent}(r_{i_{j+1}}^{(j+1)})\right), \\
+& \Omega^*(\pi) = \bigcap_{j=1}^k \left[\underline{v}_j, \overline{v}_j\right] \neq \varnothing, \; \neg \exists u \in \bigcup_{l=1}^m R_l : \mathrm{Defeats}(u, \pi)
+\end{aligned} \right\}$$
+
+If the discovered chain $\pi \in \mathcal{S}^*(Q)$ spans at least two distinct primary sources ($|\{i_1, \dots, i_k\}| \ge 2$), neither of which contains the complete deduction independently, the core emits verdict **`SYNTHESIZED`** accompanied by vector byte-exact passport $\vec{E}(\pi) = \langle (P_{i_1}, [\text{start}_1..\text{end}_1], H_1), \dots, (P_{i_k}, [\text{start}_k..\text{end}_k], H_k) \rangle$ and calculated parameter convergence window $\Omega^*(\pi)$.
+
+Because constraint intersection workloads scale non-linearly with mounted pack count $m$ and composition depth $k$, the author formulates a **roadmap of three hardware generations for federated synthesis**:
+
+| Hardware Generation | Base Compute Architecture | Active Rule Field Capacity | Selector Throughput | Target Synthesis Workload Class |
+|---|---|---|---|---|
+| **Generation I (Heterogeneous Lab Test Bench)** | NVIDIA Jetson AGX Orin 64 GB UMA (275 TOPS) + **2× PYNQ-Z1 FPGA** cluster (Zynq-7020, BRAM 630 KB) | Up to $10^4$ active rules in BRAM windows | $\sim 10^6$ checks/s ($< 1\,\mu\text{s}$ per chain) | Cross-pack synthesis at depth $d \le 5$ across $5\text{--}15$ `.kp` domains |
+| **Generation II (Scalable HBM-EPU Node)** | Server CPU 128+ GB UMA + **FPGA with HBM2e / UltraRAM** (Alveo / Versal HBM, 16–32 GB on-chip, 460 GB/s) | Up to $10^7$ rules without external DMA paging | $\sim 10^8$ graph transitions/s | Real-time industrial compliance audit and synthesis across hundreds of standards |
+| **Generation III (CXL 3.0 Coherent Fabric + Digital Annealers)** | **CXL 3.0** coherent memory pool (terabytes of shared `.kp`) + **FPGA-based Digital Annealers / Ising Machines** | Over $10^9$ rules in unified address space | Instantaneous global constraint energy minimization | Solving ultra-complex combinatorial Max-SAT optimization across high-dimensional requirement manifolds |
+
+> [!NOTE]
+> **Three Generations of Hardware Evolution for the Federated Synthesis Arena (Fedchyk's Roadmap)**
+> 1. **Generation I — Heterogeneous UMA + BRAM FPGA Tandem (Jetson AGX Orin + 2× PYNQ-Z1):** The author implements an entry-level architecture where 64 GB unified memory hosts mounted `.kp` containers and local neural mutators, while dual FPGA boards perform sub-microsecond ASPIC+ conflict pruning across active rule partitions.
+> 2. **Generation II — Epistemic Synthesis Processors with High-Bandwidth Memory (HBM2e-EPU):** The author's roadmap establishes the migration to FPGA accelerators with integrated HBM2e stacks ($> 460\,\text{GB/s}$ throughput), eliminating bus refill bottlenecks during cross-domain rule composition.
+> 3. **Generation III — CXL 3.0 Coherent Fabrics and Dedicated Ising Solvers (Digital Annealers):** The author conceptualizes coupling terabyte-scale Zero-Copy CXL 3.0 pools with FPGA digital Ising machines, transforming multi-source Max-SAT synthesis into physical lattice spin relaxation toward zero-conflict ground states.
+> *Runtime Control / Engineering Invariant:* The Federated Arena (`pkg/reasoning/arena`) emits verdict `SYNTHESIZED` if and only if every element of vector proof $\vec{E}(\pi)$ has passed cryptographic custody checks within its originating `mmap` segment without intermediate heap string copying.
+
+---
+
+## 10. Pro et Contra Dialogue
 
 Distinguished architects of distributed systems whose foundational theorems and treatises define the modern landscape of global computing have been invited to this virtual intellectual discussion: Martin Kleppmann (Researcher at the University of Cambridge, author of the definitive monograph *Designing Data-Intensive Applications*, and leading investigator of Conflict-free Replicated Data Types — CRDTs and Local-First Software) and Eric Brewer (Professor Emeritus at the University of California, Berkeley, Vice President of Infrastructure at Google, and formulator of the foundational CAP Theorem). Their seminal discoveries concerning the physical limits of distributed consensus, the inescapable trade-offs between consistency and availability under network partitions, and the mathematical mechanics of state replication establish an unmatched foundation for critically challenging the author's Epistemic Service-Oriented Architecture (Epistemic SOA) and the Merkle-tree-based immutable decision ledger.
 
 *Disclaimer:* This discussion is a heuristic virtual simulation conducted exclusively within the monograph's scholarly and pedagogical context. The opponents' arguments and stances are synthesized from their published works, academic papers, and monographs; they do not claim to be verbatim real-world quotes and serve critical rationalism (Popperian falsification) of the author's engineering hypotheses.
 
-**Chapter Thesis.** Scaling an evidence-governed industrial expert system beyond the research laboratory mandates transitioning to a three-tier Epistemic Service-Oriented Architecture (Epistemic SOA) comprising thin clients ($S_{\mathrm{client}} = 0$), an intelligent semantic broker, and distributed domain knowledge clusters. The fundamental trade-offs of distributed computing are resolved mathematically: the latency-hiding condition ($T_{\mathrm{refill}} \ll T_{\mathrm{execute}}$) eliminates BRAM/DMA pipeline stalls; multi-source ASPIC+/Dung defeasible aggregation decentralizes argumentation; 64-bit SimHash and BK-trees execute distributed knowledge deficit triage; the CAP theorem is governed by Safety-First Partitioning (strict CP mode for ASIL D and local epoch certificates for edge nodes); and an Immutable Decision Ledger on Merkle trees with WORM anchoring ensures lifelong, legally unassailable auditability without retroactive state distortion.
+**Chapter Thesis.** Scaling an evidence-governed industrial expert system beyond the research laboratory mandates transitioning to a three-tier Epistemic Service-Oriented Architecture (Epistemic SOA) comprising thin clients ($S_{\mathrm{client}} = 0$), cold Tabula Rasa readiness of the dynamic knowledge registry, phonotactic-entropic input sanitization, an intelligent semantic broker, and distributed domain knowledge clusters. The fundamental trade-offs of distributed computing are resolved mathematically: the latency-hiding condition ($T_{\mathrm{refill}} \ll T_{\mathrm{execute}}$) eliminates BRAM/DMA pipeline stalls; multi-source ASPIC+/Dung defeasible aggregation decentralizes argumentation; 64-bit SimHash and BK-trees execute distributed knowledge deficit triage; the CAP theorem is governed by Safety-First Partitioning (strict CP mode for ASIL D and local epoch certificates for edge nodes); and an Immutable Decision Ledger on Merkle trees with WORM anchoring ensures lifelong, legally unassailable auditability without retroactive state distortion.
 
 **Dialogue with Martin Kleppmann: Performance of Distributed Immutable Decision Ledgers on Merkle Trees**
 
@@ -772,7 +869,10 @@ Distinguished architects of distributed systems whose foundational theorems and 
 <a id="src-7"></a>[7] NIST AI 100-1 (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0)*. National Institute of Standards and Technology.  
 <a id="src-8"></a>[8] Charikar, M. S. (2002). Similarity estimation techniques from rounding algorithms. *Proceedings of the thirtieth annual ACM symposium on Theory of computing*, 380–388.  
 <a id="src-9"></a>[9] Burkhard, W. A., & Keller, R. M. (1973). Some approaches to best-match file searching. *Communications of the ACM*, 16(4), 230–236.  
-<a id="src-10"></a>[10] Merkle, R. C. (1987). A digital signature based on a conventional encryption function. *Advances in Cryptology — CRYPTO ’87*, LNCS 293, 369–378.
+<a id="src-10"></a>[10] Merkle, R. C. (1987). A digital signature based on a conventional encryption function. *Advances in Cryptology — CRYPTO ’87*, LNCS 293, 369–378.  
+<a id="src-11"></a>[11] Shannon, C. E. (1948). A Mathematical Theory of Communication. *The Bell System Technical Journal*, 27(3), 379–423; 27(4), 623–656.  
+<a id="src-12"></a>[12] Chomsky, N., & Halle, M. (1968). *The Sound Pattern of English*. Harper & Row, New York.  
+<a id="src-13"></a>[13] McKenney, P. E., & Slingwine, J. D. (1998). Read-Copy Update: Using Execution History to Solve Concurrency Problems. *Parallel and Distributed Computing and Systems*, 509–518.
 
 ---
 
