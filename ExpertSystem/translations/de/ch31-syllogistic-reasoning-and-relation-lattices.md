@@ -1102,6 +1102,23 @@ Die beiden letzten Zeilen der Tabelle entstammen dem Text- und Datamining. Marti
 
 Fertige Softwarewerkzeuge decken mithin einzelne Teilaspekte ab, kein einzelnes Werkzeug integriert jedoch Prädikatenhierarchien, Ausnahmen, Revisionswahl und Fail-Closed-Verhalten autonom. Mining-Verfahren reduzieren den manuellen Konstruktionsaufwand, liefern jedoch ausschließlich Kandidaten, die dasselbe strenge Zulassungsgateway durchlaufen müssen wie die Fakten aus [Kapitel 15](ch15-knowledge-extraction-and-kb-construction.md).
 
+### 9.1. Physikalischer SI-Dimensions- und Intervallkompatibilitätsfilter bei paketübergreifender syllogistischer Inferenz
+
+Überschreitet die syllogistische Inferenz die Grenzen eines einzelnen normativen Dokuments und verknüpft Regeln aus verschiedenen domänenspezifischen Wissenspaketen $\mathcal{P} = \{P_1, P_2, \dots, P_m\}$ (beispielsweise Halbleiterelektronik, elektromagnetische Verträglichkeit und funktionale Sicherheit), reicht eine rein symbolische Übereinstimmung von Prädikatsnamen oder lexikalischen Token nicht mehr aus. In natürlicher Sprache kann der Begriff „Durchschlagspannung“, „Flankensteilheit“ oder „Impedanz“ in inkompatiblen physikalischen Skalen oder gar in metaphorischer Bedeutung verwendet werden. Der Versuch, einen transitiven Syllogismus $A \xrightarrow{P_1} B \xrightarrow{P_2} C$ allein aufgrund der textuellen Namensgleichheit des Zwischenkonzepts $B$ zu schließen, erzeugt eine gefährliche Fehlerklasse: den **scheinbaren domänenübergreifenden Isomorphismus** (*Spurious Cross-Domain Isomorphism*).
+
+Um diese Gefahr in der Architektur der Föderierten Arena (`pkg/reasoning/arena`) zu bannen, durchläuft jede Kante eines paketübergreifenden Syllogismus einen obligatorischen **physikalischen SI-Dimensions- und Intervallkompatibilitätsfilter**. Jedes getypte Konzept wird von einem Vektor der Exponenten der SI-Basiseinheiten $\vec{d} = \langle \text{m}, \text{kg}, \text{s}, \text{A}, \text{K}, \text{mol}, \text{cd} \rangle \in \mathbb{Z}^7$ und einem zulässigen numerischen Betriebsbereich $I = [\underline{v}, \overline{v}] \subset \mathbb{R}$ begleitet. Die Verknüpfung der Konklusion von Regel $r_1 \in P_1$ mit der Prämisse von Regel $r_2 \in P_2$ ist ausschließlich dann zulässig, wenn zwei Bedingungen erfüllt sind:
+
+$$\vec{d}(\text{Consequent}(r_1)) = \vec{d}(\text{Antecedent}(r_2)) \quad \land \quad I^* = [\underline{v}_1, \overline{v}_1] \cap [\underline{v}_2, \overline{v}_2] \neq \varnothing$$
+
+Stimmen die Dimensionsvektoren nicht überein (beispielsweise der Versuch, die Spannungsanstiegsgeschwindigkeit $\text{V/ns}$ ohne vermittelndes Impedanzgesetz mit einer Stromanstiegsgeschwindigkeit $\text{A/}\mu\text{s}$ zu verbinden), bricht die Laufzeitumgebung die Konstruktion des Syllogismus sofort mit der Hardware-Ausnahme `ERR_DIMENSIONAL_MISMATCH` (`0x0422`) ab. Sind die Dimensionen identisch, die numerischen Intervalle jedoch disjunkt ($I^* = \varnothing$), registriert das System die exakte Größe der Parameterlücke $\Delta v$ und stuft die Kette von einer bewiesenen Lösung auf den Status einer lokalisierten Hypothese `BOUNDED_HYPOTHESIS` herab.
+
+> [!NOTE]
+> **Drei Regeln der dimensions- und intervallbasierten Steuerung syllogistischer Ketten nach M. Fedchyk**
+> 1. **Obligatorische Invarianz von SI-Dimensionsvektoren:** Vom Autor wurde nachgewiesen, dass kein transitiver Übergang zwischen Regeln aus verschiedenen Wissenspaketen allein auf lexikalischer Identität von Entitätsnamen ohne vollständige Gleichheit der siebenkomponentigen physikalischen SI-Dimensionsvektoren beruhen darf.
+> 2. **Durchgängige Verengung des Konvergenzintervalls:** Im Modell des Autors berechnet die syllogistische Inferenz entlang einer Kette aus $k$ Regeln den Schnitt zulässiger physikalischer Bereiche $\Omega^* = \bigcap_{j=1}^k [\underline{v}_j, \overline{v}_j]$ und liefert dem Ingenieur das exakte Parameterfenster, in dem das System sämtliche Standards simultan erfüllt.
+> 3. **Hardwarenahe Blockierung semantischer Metaphern (`ERR_DIMENSIONAL_MISMATCH`):** Der Autor führt eine deterministische Barriere ein, die auf Inferenzkernebene homonyme und metaphorische Begriffskollisionen zwischen disjunkten Domänen abschneidet und die physikalische Realisierbarkeit jeder synthetisierten Lösung garantiert.
+> *Kernebene-Steuerung / Systeminvariante:* Wird am Übergang zweier Regeln eine Diskrepanz der Maßeinheiten $\vec{d}_1 \neq \vec{d}_2$ festgestellt, setzt die Inferenzmaschine unverzüglich das Fehlerflag `0x0422 (ERR_DIMENSIONAL_MISMATCH)` und verwirft den Suchzweig ohne Konsultation eines Sprachmodells.
+
 ---
 
 ## 10. Dialog Pro et Contra

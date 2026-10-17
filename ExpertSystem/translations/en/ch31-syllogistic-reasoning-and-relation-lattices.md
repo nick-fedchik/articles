@@ -1105,6 +1105,23 @@ The final two rows originate from natural language processing and inductive data
 
 Consequently, established frameworks support each mechanism of this chapter in isolation, but none automatically synthesize subsumption hierarchies, defeasible exceptions, version timelines, and fail-closed verification into a single engine. Knowledge mining reduces the manual labor of ontology construction, yet its outputs remain candidate hypotheses subject to the same admission gateway applied to extracted assertions in [Chapter 15](ch15-knowledge-extraction-and-kb-construction.md).
 
+### 9.1. Physical SI Dimensional and Interval Compatibility Filter in Cross-Pack Syllogistic Inference
+
+When syllogistic inference transcends the boundaries of a single normative document and combines rules across heterogeneous domain knowledge packs $\mathcal{P} = \{P_1, P_2, \dots, P_m\}$ (e.g., semiconductor electronics, electromagnetic compatibility, and functional safety), purely symbolic matching of predicate names or lexical tokens becomes insufficient. In natural language, terms such as "breakdown voltage", "slew rate", or "impedance" may appear at incompatible physical scales or even in metaphorical contexts. Attempting to close a transitive syllogism $A \xrightarrow{P_1} B \xrightarrow{P_2} C$ solely based on textual token identity of intermediate concept $B$ spawns a dangerous failure class: **Spurious Cross-Domain Isomorphism**.
+
+To eliminate this threat within the Federated Arena architecture (`pkg/reasoning/arena`), every edge of a cross-pack syllogism undergoes a mandatory **physical SI dimensional and interval compatibility filter**. Each typed concept is annotated with a vector of base SI unit exponents $\vec{d} = \langle \text{m}, \text{kg}, \text{s}, \text{A}, \text{K}, \text{mol}, \text{cd} \rangle \in \mathbb{Z}^7$ and an admissible operational numerical range $I = [\underline{v}, \overline{v}] \subset \mathbb{R}$. Linking the consequent of rule $r_1 \in P_1$ with the antecedent of rule $r_2 \in P_2$ is permitted if and only if two conditions are satisfied:
+
+$$\vec{d}(\text{Consequent}(r_1)) = \vec{d}(\text{Antecedent}(r_2)) \quad \land \quad I^* = [\underline{v}_1, \overline{v}_1] \cap [\underline{v}_2, \overline{v}_2] \neq \varnothing$$
+
+If the dimensional vectors mismatch (e.g., attempting to couple voltage slew rate $\text{V/ns}$ with current slew rate $\text{A/}\mu\text{s}$ without an intermediate impedance relation), the runtime instantly aborts syllogism construction via hardware exception `ERR_DIMENSIONAL_MISMATCH` (`0x0422`). If the dimensions are identical but the numeric intervals do not intersect ($I^* = \varnothing$), the system records the exact magnitude of the parameter gap $\Delta v$ and transitions the chain from proven solutions to the status of a localized hypothesis `BOUNDED_HYPOTHESIS`.
+
+> [!NOTE]
+> **Three Rules of the Author's Dimensional-Interval Control of Syllogistic Chains**
+> 1. **Mandatory Invariance of SI Dimensional Vectors:** The author establishes that no transitive transition between rules from distinct knowledge packs may rely solely on lexical identity of entity names without full equality of their seven-component physical SI dimensional vectors.
+> 2. **End-to-End Convergence Interval Narrowing:** In the author's model, syllogistic inference across a chain of $k$ rules computes the intersection of admissible physical ranges $\Omega^* = \bigcap_{j=1}^k [\underline{v}_j, \overline{v}_j]$, delivering to the engineer the exact parameter window within which the system simultaneously satisfies all standards.
+> 3. **Hardware Blocking of Semantic Metaphors (`ERR_DIMENSIONAL_MISMATCH`):** The author introduces a deterministic barrier that cuts off homonymic and metaphorical term collisions between disparate domains at the inference engine core, guaranteeing the physical realism of every synthesized solution.
+> *Runtime Control / Engineering Invariant:* Upon detecting a unit mismatch $\vec{d}_1 \neq \vec{d}_2$ at the boundary of two rules, the inference engine immediately asserts error flag `0x0422 (ERR_DIMENSIONAL_MISMATCH)` and prunes the search branch without querying a language model.
+
 ---
 
 ## 10. Pro et Contra Dialogue
