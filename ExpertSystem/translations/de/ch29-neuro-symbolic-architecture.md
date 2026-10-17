@@ -616,6 +616,40 @@ Das systematische Protokollieren abgelehnter Kandidaten (nach Ursachen wie Vokab
 
 Physikalische Anwendungsfelder behandeln die Anhänge: Robotik in [Anhang B](appendix-b-robotics-and-cyber-physical-systems.md), Navigation in [Anhang C](appendix-c-autonomous-navigation-and-geosearch.md) und neuromorphe Systeme in [Anhang D](appendix-d-analog-expert-systems-and-neuromorphic-computing.md) und [Anhang E](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
 
+### 10.1. Asymmetrische „Mutator–Selektor“-Pipeline für paketübergreifende technische Synthese
+
+Steht ein Expertensystem vor der Aufgabe, nicht bloß eine bekannte Vorschrift aus Texten zu extrahieren, sondern eine prinzipiell neuartige ingenieurtechnische Lösung am Schnittpunkt Dutzender Standards zu synthetisieren, versagt die klassische sequentielle Aufteilung „SLM parst die Anfrage $\to$ symbolischer Kern ruft Fakten ab“ aufgrund der kombinatorischen Explosion des Suchraums $\mathcal{O}(b^d)$. Eine vollständige Traversierung von Tausenden Regeln aus verschiedenen Fachbereichen erfordert astronomische Zeiträume, während eine ungebundene Generierung durch ein Sprachmodell unweigerlich physikalische und regulatorische Invarianten verletzt.
+
+Um diese Barriere zu überwinden, wurde vom Autor die **asymmetrische neuro-symbolische „Mutator–Selektor“-Pipeline** (*Asymmetric Mutator–Selector Pipeline*) entwickelt, die einen darwinistisch-popperianischen Auslesezyklus („Blind variation and selective retention“ nach D. Campbell und K. Popper) auf einem heterogenen Hardware-Prüfstand realisiert:
+
+1. **Neuronaler heuristischer Routen-Mutator (System 1 — GPU/NPU-Cluster, z. B. NVIDIA Jetson AGX Orin 64 GB, 275 TOPS):** Nutzt das breite semantische Vorwissen lokaler Modelle, um Kandidaten-Topologien und „Brücken“ zwischen weit entfernten Wissenspaketen $(P_a \leftrightarrow P_b)$ zu generieren. System 1 beweist keine Theoreme; seine Aufgabe ist die rasche Reduktion des Suchraums durch den Vorschlag plausibler Kompositionskandidaten in Form getypter Graph-Routen.
+2. **Föderierte Zero-Copy-Arena (`pkg/reasoning/arena`):** Mappt Dutzende binäre `.kp`-Container über `mmap(MAP_SHARED)` mit 64-Byte-Ausrichtung in einen gemeinsamen virtuellen Adressraum und baut ohne Deserialisierungs-Overhead einen kanonischen Konzept-Äquivalenzindex auf.
+3. **Hardwarenaher Popperianischer Selektor (System 2 — EVM und Dual-FPGA-Cluster 2× PYNQ-Z1):** Nimmt den Strom der Kandidatenketten von System 1 auf und führt eine strikte sub-mikrosekundenschnelle Popper'sche Falsifikation durch ($< 1\,\mu\text{s}$ pro Schritt): Prüfung der `%ebx[1..k]`-Byte-Custody-Deskriptoren, der SI-Maßeinheiten-Kompatibilität, des nichtleeren Schnitts numerischer Intervalle sowie konfliktfreier Bitmasken in der ASPIC+-Argumentation. Fehlerhafte oder physikalisch inkompatible Hypothesen werden sofort in Silizium verworfen; an den Systemarchitekten wird exakt jene Parameterkombination zurückgegeben, die eine 100%ige Konvergenz ohne Kollisionen erreicht.
+
+```mermaid
+flowchart TD
+    Architect["<b>Menschlicher Systemarchitekt</b><br/>Problemstellung und Randbedingungen"] --> System1
+    
+    subgraph Stand["<b>Heterogener Prüfstand beweisgestützter Synthese</b>"]
+        System1["<b>System 1: Jetson AGX Orin (275 TOPS)</b><br/>Stochastischer Mutator für Brücken und Routen"]
+        Arena["<b>Föderierte Zero-Copy-Arena (pkg/reasoning/arena)</b><br/>Gemeinsames Feld von Atomen und Regeln über N .kp-Pakete"]
+        System2["<b>System 2: Dual-PYNQ-Z1-FPGA-Cluster</b><br/>Sub-Mikrosekunden-Selektor für ASPIC+- und %ebx-Regeln"]
+        
+        System1 -->|"Kompositionshypothesen"| Arena
+        Arena -->|"Paketübergreifende Ketten"| System2
+        System2 -->|"Kollisions-Pruning < 1 µs"| System1
+    end
+    
+    System2 -->|"100% bewiesene kollisionsfreie Komposition"| Passport["<b>Synthetisierter Lösungspass</b><br/>Zitierkette über K Quellen + Verifikationsspur"]
+```
+
+> [!NOTE]
+> **Drei Architekturprinzipien des neuro-symbolischen Autoren-Tandems zur Wissensgenerierung**
+> 1. **Asymmetrische „Mutator–Selektor“-Pipeline:** Vom Autor wird eine Architektur implementiert, in der ein hochperformanter neuronaler Knoten (System 1, GPU/NPU) als stochastischer Generator domänenübergreifender Hypothesen agiert, während ein deterministischer logischer Cluster (System 2, FPGA/EVM) als hardwarebasierter Popper'scher Falsifikator mit Sub-Mikrosekunden-Pruning-Latenz ($< 1\,\mu\text{s}$) dient.
+> 2. **Föderierte Zero-Copy-Arena paketübergreifenden Schließens:** In der Monografie wird eine Methode zum parallelen sektionsweisen Mapping (`mmap`) Dutzender unabhängiger `.kp`-Wissensbasen in einen gemeinsamen Inferenz-Adressraum ohne Deserialisierung eingeführt, wodurch eine lückenlose kryptografische Rückverfolgbarkeit für jedes Atom gewahrt bleibt.
+> 3. **Konzept spezialisierter kombinatorischer Syntheseprozessoren (HBM-EPU und Digital Annealer):** Vom Autor wird der Übergang von klassischen Von-Neumann-CPUs zu FPGA-Matrizen mit integriertem HBM2e/UltraRAM-Speicher und digitalen Ising-Annealern zur Lösung von Max-SAT-Problemen auf globalen ingenieurtechnischen Randbedingungsgraphen begründet.
+> *Kernebene-Steuerung / Systeminvariante:* Der System-1-Knoten besitzt physisch keine Schreibberechtigung auf das Urteilsregister; das endgültige Freigabesignal (`disp_accept` / `disp_synthesized`) wird ausschließlich von der Hardware-Zustandsmaschine des Systems 2 nach formaler Zyklen- und Kollisionsprüfung erzeugt.
+
 ## 11. Dialog Pro et Contra
 
 Zu einer virtuellen intellektuellen Diskussion wurden der herausragende Kognitionswissenschaftler und kompromisslose Kritiker rein statistischer künstlicher Intelligenz Gary Marcus (emeritierter Professor an der New York University; Autor von *The Algebraic Mind* und *Rebooting AI*, Pionier der neuro-symbolischen Bewegung) sowie der Turing-Preisträger Yann LeCun (Professor an der New York University; leitender KI-Wissenschaftler bei Meta, Schöpfer von Faltungsnetzen und Architekt differenzierbarer Weltmodelle wie I-JEPA) eingeladen. Ihre fundamentale Kontroverse über das Wesen der Intelligenz, die inhärenten Grenzen generativer Sprachmodelle und die Unverzichtbarkeit diskreter symbolischer Repräsentationen bildet einen idealen Rahmen zur kritischen Prüfung der vom Autor vorgeschlagenen neuro-symbolischen Architektur.

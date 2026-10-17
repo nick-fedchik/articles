@@ -632,6 +632,40 @@ Neuro-symbolic architectures open several active research frontiers where indust
 
 Domain-specific physical world integrations are addressed in dedicated appendices: robotics and cyber-physical systems in [Appendix B](appendix-b-robotics-and-cyber-physical-systems.md), autonomous navigation in [Appendix C](appendix-c-autonomous-navigation-and-geosearch.md), and neuromorphic mixed-signal compute in [Appendices D](appendix-d-analog-expert-systems-and-neuromorphic-computing.md) and [E](appendix-e-mixed-signal-neuromorphic-expert-systems.md).
 
+### 10.1. Asymmetric "Mutator–Selector" Pipeline for Cross-Pack Engineering Synthesis
+
+When an expert system faces the challenge of not merely retrieving an established requirement from text, but synthesizing a fundamentally novel engineering solution at the intersection of dozens of standards, the classical sequential division "SLM parses query $\to$ symbolic core retrieves fact" fails due to the combinatorial explosion of the search space $\mathcal{O}(b^d)$. Exhaustive search across thousands of rules spanning different domains demands astronomical time, while unconstrained generation by a language model inevitably violates physical and regulatory invariants.
+
+To overcome this barrier, the author developed the **asymmetric neuro-symbolic "Mutator–Selector" pipeline** (*Asymmetric Mutator–Selector Pipeline*), implementing a Darwinian-Popperian cycle of selection ("Blind variation and selective retention" per D. Campbell and K. Popper) on a heterogeneous hardware test bench:
+
+1. **Neural Heuristic Route Mutator (System 1 — GPU/NPU Cluster, e.g., NVIDIA Jetson AGX Orin 64 GB, 275 TOPS):** Exploits broad semantic erudition of local models to generate candidate topologies and "bridges" between distant knowledge packs $(P_a \leftrightarrow P_b)$. System 1 does not attempt to prove theorems; its role is rapid search space reduction by proposing plausible composition candidates structured as typed graph routes.
+2. **Federated Zero-Copy Arena (`pkg/reasoning/arena`):** Maps dozens of binary `.kp` containers into a unified virtual address space via `mmap(MAP_SHARED)` aligned to 64-byte boundaries, constructing a canonical concept equivalence index without deserialization overhead.
+3. **Hardware Popperian Selector (System 2 — EVM and Dual FPGA Cluster 2× PYNQ-Z1):** Ingests the stream of candidate chains from System 1 and executes rigid sub-microsecond Popperian falsification ($< 1\,\mu\text{s}$ per step): verifying `%ebx[1..k]` byte custody descriptors, SI physical dimensional consistency, non-empty numerical interval intersections, and conflict-free bitmasks in ASPIC+ argumentation. Erroneous or physically incompatible hypotheses are instantly pruned in silicon, returning to the systems architect strictly that parameter combination which achieves 100% convergence without collision.
+
+```mermaid
+flowchart TD
+    Architect["<b>Human Architect</b><br/>Engineering problem formulation and constraints"] --> System1
+    
+    subgraph Stand["<b>Heterogeneous Proof-Carrying Synthesis Bench</b>"]
+        System1["<b>System 1: Jetson AGX Orin (275 TOPS)</b><br/>Stochastic Mutator of candidate bridges and routes"]
+        Arena["<b>Federated Zero-Copy Arena (pkg/reasoning/arena)</b><br/>Unified atom and rule field across N .kp packs"]
+        System2["<b>System 2: Dual PYNQ-Z1 FPGA Cluster</b><br/>Sub-microsecond Selector of ASPIC+ and %ebx constraints"]
+        
+        System1 -->|"Composition hypotheses"| Arena
+        Arena -->|"Multi-source chains"| System2
+        System2 -->|"Collision pruning < 1 µs"| System1
+    end
+    
+    System2 -->|"100% Proven conflict-free composition"| Passport["<b>Synthesized Engineering Solution Passport</b><br/>Citation chain across K sources + verification trace"]
+```
+
+> [!NOTE]
+> **Three Architectural Principles of the Author's Neuro-Symbolic Knowledge Generation Tandem**
+> 1. **Asymmetric "Mutator–Selector" Pipeline:** The author develops an architecture where a high-throughput neural node (System 1, GPU/NPU) acts as a stochastic generator of cross-domain hypotheses, while a deterministic logical cluster (System 2, FPGA/EVM) operates as a hardware Popperian falsifier with sub-microsecond pruning latency ($< 1\,\mu\text{s}$).
+> 2. **Federated Zero-Copy Inter-Pack Reasoning Arena:** The monograph introduces a method for concurrent section-wise mapping (`mmap`) of dozens of independent `.kp` knowledge bases into a unified reasoning address space without deserialization, preserving end-to-end cryptographic traceability for every atom.
+> 3. **Concept of Specialized Combinatorial Synthesis Processors (HBM-EPU and Digital Annealers):** The author substantiates the transition from classical von Neumann CPUs to FPGA fabrics with integrated HBM2e/UltraRAM memory and digital Ising annealers (Digital Annealers) for solving Max-SAT problems over global graphs of engineering constraints.
+> *Runtime Control / Engineering Invariant:* The System 1 node is physically stripped of write authority to the verdict register; the final clearance signal (`disp_accept` / `disp_synthesized`) is emitted exclusively by the hardware state machine of System 2 following formal cycle and collision verification.
+
 ## 11. Pro et Contra Dialogue
 
 Distinguished cognitive scientist and uncompromising critic of purely statistical artificial intelligence Gary Marcus (Professor Emeritus at New York University; author of *The Algebraic Mind* and *Rebooting AI*, pioneer of the neuro-symbolic movement) and Turing Award laureate Yann LeCun (Professor at New York University; Chief AI Scientist at Meta, pioneer of convolutional neural networks and designer of differentiable world architectures such as I-JEPA) are invited to this virtual intellectual dialogue. Their seminal polemic on the nature of intelligence, the inherent boundaries of generative language models, and the indispensability of discrete symbolic representations provides the ideal scholarly foundation for critically stress-testing the author's neuro-symbolic architecture.
