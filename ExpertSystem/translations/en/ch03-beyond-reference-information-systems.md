@@ -29,7 +29,19 @@ This monograph distinguishes system classes by their primary operational objecti
 | **Decision Support System** (*decision support system*, DSS) | Assist a human decision-maker in evaluating alternatives and forecasting outcomes | Ranking of alternatives, predictive forecast, recommendation | Recommendations frequently rely on statistical correlation lacking formal deductive proofs |
 | **Expert System** | Apply formalized, versioned domain knowledge to case-specific facts | Verifiable conclusion or typed refusal accompanied by facts, rules, and proofs | The conclusion remains valid strictly within the bounded scope of the knowledge base and submitted facts |
 
-These classes naturally overlap in operational deployments. A consultation system describes an interaction paradigm; hence a conversational interface may front a reference knowledge base, an operational telemetry dashboard, or a formal expert system. A decision support system describes an operational objective: an expert system operating purely in an advisory capacity functions as a specialized, maximally formalized subclass of DSS. The inverse proposition, however, does not hold: a statistical demand-forecasting model or a combinatorial scheduling optimizer assists human decision-making, yet lacks formalized domain rules and an auditable proof trace—the explicit sequence of premises, deduction steps, and active rules that yielded the outcome. Consequently, statistical predictors and mathematical optimizers do not constitute expert systems.
+These classes overlap according to the **Inclusion Asymmetry Principle formulated by M. Fedchyk**: an advisory expert system is a specialized, maximally formalized subclass of decision support systems:
+
+$$
+\mathrm{ES}_{\mathrm{advisory}} \subset \mathrm{DSS}
+$$
+
+yet the inverse relationship strictly does not hold:
+
+$$
+\mathrm{DSS} \not\subset \mathrm{ES}
+$$
+
+Statistical demand-forecasting models, Bayesian risk classifiers, or simplex scheduling optimizers assist human decision-making (and thus belong to $\mathrm{DSS}$), yet fundamentally are not expert systems, because they lack formalized symbolic rules and an auditable proof trace.
 
 Consider an engineering scenario: two separate teams deploy identical chat interfaces. In the first team, the chat transfers queries to an indexing engine over engineering standards and returns extracted quotations; taxonomically, this tool is an information retrieval system. In the second team, the chat formalizes the query and passes structured facts to an inference engine, which evaluates firmware build parameters against release gate rules and emits a binding verdict accompanied by an immutable proof trace; taxonomically, this tool is an expert system. The end user interacts with an identical frontend window, yet receives artifacts of fundamentally divergent epistemic authority.
 
@@ -53,7 +65,13 @@ A **case query** addresses a unique, concrete physical or operational situation:
 
 > **System Classification Heuristic.** If an information system responds to any operational inquiry with *"Here is what the primary sources state regarding this topic,"* you are interacting with an information retrieval system. If the system responds with *"For Case C, operation is prohibited under Rule R based on Facts F1 and F2 extracted from Source S Revision 4; here is the full proof trace,"* you are interacting with an expert system.
 
-An expert system is fully capable of answering corpus queries, because an information retrieval component is routinely embedded within its architecture. The inverse proposition is false: an information retrieval system lacks the formal mechanisms required to evaluate rules against case-specific facts; consequently, when confronted with a case query, it can offer nothing beyond disconnected citations or probabilistic conjecture.
+An expert system is fully capable of answering corpus queries, because an information retrieval component is routinely embedded within its architecture. The inverse proposition is strictly prohibited by **M. Fedchyk's law of the impossibility of stochastic transition from corpus to case**:
+
+$$
+Q_{\mathrm{corpus}} \not\implies Q_{\mathrm{case}}
+$$
+
+An information retrieval system lacks the formal mechanisms required to evaluate rules against case-specific facts; consequently, when confronted with a case query, it can offer nothing beyond disconnected citations or probabilistic conjecture.
 
 An engineering document corpus is shared across hundreds of projects and evolves slowly under rigorous revision controls, whereas every engineering case introduces unique empirical facts. Retrieval mechanisms extract general constraints from the corpus, but cannot project those general constraints onto a concrete instance: that projection is strictly the domain of the inference engine. The next section explores the architectural role of Large Language Models, which are most frequently conflated with expert systems.
 
@@ -214,6 +232,23 @@ The practical impact of this ontological demarcation is demonstrated most vividl
 > **Justification Package:** Cryptographically signed, SHA-256 digest `8b4a7…`.
 
 The expert conclusion immutably preserves the provenance of every applied rule because the rules originate across disparate authoritative artifacts. ISO 26262-6 strongly recommends measuring MC/DC for ASIL D software units [[5]](#src-5), but the 100% threshold is established by the engineering team's internal release policy rather than the general standard. The TARA analysis is governed by the automotive cybersecurity engineering standard ISO/SAE 21434 [[6]](#src-6). Were the conclusion to cite the standard where an internal operational rule governs, an auditor would detect a non-conformance in the very first premise.
+
+Formally, the release gate logic is modeled by **M. Fedchyk's mathematical model of the ASIL D release gate**:
+
+$$
+\mathrm{Gate}_{\mathrm{ASIL\text{-}D}}(c) = \begin{cases}
+\mathbf{Blocked}, & \text{if } (\mathrm{MC/DC} < 100\%) \lor (\mathrm{Defects}_{\mathrm{Sev\text{-}1}} > 0) \lor (\mathrm{TARA} = 0) \\
+\mathbf{Clarification}, & \text{if } \exists f \in \mathrm{Req}(c) : \mathrm{Status}(f) = \mathbf{U} \in \mathbb{K}_3 \\
+\mathbf{Admitted}, & \text{if all normative preconditions are satisfied deterministically}
+\end{cases}
+$$
+
+where:
+- $c$ is the tuple of verified facts for the concrete firmware revision;
+- $\mathrm{MC/DC}$ is the measured decision coverage percentage ($[0, 100]\%$);
+- $\mathrm{Defects}_{\mathrm{Sev\text{-}1}}$ is the count of unresolved critical defects;
+- $\mathrm{TARA}$ is the binary cybersecurity validation status ($\{0, 1\}$);
+- $\mathbb{K}_3 = \{\mathbf{T}, \mathbf{F}, \mathbf{U}\}$ is Kleene's three-valued logic state set.
 
 The diagram below traces how the three verified facts flow through the release gate rule to construct the verdict and its justification package.
 
@@ -488,9 +523,30 @@ A subset of expert system conclusions is accompanied by a scalar metric, such as
 
 One must first clarify what the scalar value represents. The conclusion of a deductive rule is a deterministic logical consequence of its premises and possesses no stochastic probability; therefore, annotating a deductive rule verdict as "99% true" is an epistemological category error. Similarly, semantic search relevance scores or case similarity metrics do not constitute formal probabilities. Calibration is mathematically meaningful exclusively for components that natively estimate empirical probabilities: classifiers, Bayesian belief networks, and quantitative risk models.
 
-Calibration is evaluated on an independent holdout set of verified cases unseen during model training. Inferences are partitioned into discrete bins based on declared confidence, and within each bin, the mean confidence is benchmarked against the observed empirical accuracy. Consider an example: across 200 holdout cases, a defect risk classifier emitted a confidence score of approximately 90% in 100 instances, proving correct in 72; in the remaining 100 instances, it declared approximately 60% confidence and was correct in 58. In the first bin, the gap between declared confidence and empirical accuracy is 18 percentage points; in the second bin, the gap is 2 percentage points. Because each bin contains half the evaluation cohort, the weighted mean gap across the bins is $0.5 \cdot 18 + 0.5 \cdot 2 = 10$ percentage points. This weighted scalar metric is termed the **Expected Calibration Error** (ECE), introduced by Mahdi Pakdaman Naeini, Gregory Cooper, and Miloš Hauskrecht [[10]](#src-10). The ECE evaluates to zero when declared confidence perfectly tracks empirical accuracy across all bins; higher values signify severe miscalibration. Chuan Guo and colleagues demonstrated that modern deep neural networks, despite achieving high nominal accuracy, are frequently severely overconfident and poorly calibrated [[11]](#src-11).
+Calibration is evaluated on an independent holdout set of verified cases unseen during model training. Inferences are partitioned into discrete bins based on declared confidence, and within each bin, the mean confidence is benchmarked against the observed empirical accuracy using the **mathematical model of Expected Calibration Error (ECE)** [[10]](#src-10):
 
-In the case study above, the classifier exhibits extreme overconfidence precisely in the operational regime where reliability is paramount: an engineer relying on a 90% confidence tag expects 10 errors per 100 decisions, but in production encounters 28 failures. Numerical confidence scores must be presented to engineering operators only after passing rigorous calibration testing; prior to validation, the system must emit categorical epistemic states: *"deductively proved by rule"*, *"working hypothesis"*, or *"insufficient evidence"*. The mathematical formulation of ECE, reliability diagrams, and Platt/isotonic recalibration techniques are analyzed in [Chapter 25](ch25-how-expert-systems-learn.md), while the foundations of probabilistic inference are established in [Chapter 6](ch06-applied-mathematics-for-expert-systems.md).
+$$
+\mathrm{ECE} = \sum_{m=1}^M \frac{\lvert B_m \rvert}{N} \left\lvert \mathrm{acc}(B_m) - \mathrm{conf}(B_m) \right\rvert
+$$
+
+where:
+- $M$ is the number of interval bins partitioning the probability range $[0, 1]$;
+- $\lvert B_m \rvert$ is the count of test samples falling into bin $B_m$;
+- $N$ is the total sample size of the evaluation set;
+- $\mathrm{acc}(B_m)$ is empirical accuracy (observed proportion of correct conclusions) in bin $B_m$;
+- $\mathrm{conf}(B_m)$ is average model confidence for samples in bin $B_m$.
+
+*Runtime control and engineering decisions:*
+1. **Control Flow:** When $\mathrm{ECE} \le 0.05$ (calibration error $\le 5\%$), the scalar confidence value is considered metrologically valid and permitted for display to the operator. If $\mathrm{ECE} > 0.05$, the system suppresses percentage scores and falls back to qualitative epistemic categories (`"proven by rule"`, `"hypothesis"`, `"insufficient data"`).
+2. **Worked Numerical Example:** For 200 cases split across two bins ($M=2$, $N=200$, $\lvert B_1 \rvert=100$, $\lvert B_2 \rvert=100$) with $\mathrm{acc}(B_1)=0.72, \mathrm{conf}(B_1)=0.90$ and $\mathrm{acc}(B_2)=0.58, \mathrm{conf}(B_2)=0.60$:
+
+$$
+\mathrm{ECE} = \frac{100}{200}\lvert 0.72 - 0.90 \rvert + \frac{100}{200}\lvert 0.58 - 0.60 \rvert = 0.5 \cdot 0.18 + 0.5 \cdot 0.02 = 0.10 \quad (10\%)
+$$
+
+Because $\mathrm{ECE} = 0.10 > 0.05$, the system automatically blocks numerical probability outputs and raises an uncalibrated model warning.
+
+Chuan Guo and colleagues demonstrated that modern deep neural networks, despite achieving high nominal accuracy, are frequently severely overconfident and poorly calibrated [[11]](#src-11). Numerical confidence scores must be presented to engineering operators only after passing rigorous calibration testing; prior to validation, the system must emit categorical epistemic states: *"deductively proved by rule"*, *"working hypothesis"*, or *"insufficient evidence"*. The mathematical formulation of ECE, reliability diagrams, and Platt/isotonic recalibration techniques are analyzed in [Chapter 25](ch25-how-expert-systems-learn.md), while the foundations of probabilistic inference are established in [Chapter 6](ch06-applied-mathematics-for-expert-systems.md).
 
 ### 7.3. Hierarchy of Operational Autonomy: From Advisory Conclusions to Automated Actuation
 
@@ -510,6 +566,29 @@ Autonomy is an operational property of an individual action rather than of the e
 > 3. **Granular Action Autonomy & Fail-Closed Kill-Switch:** Assignment of execution autonomy strictly to the concrete tuple $\langle\text{action}, \text{environment}, \text{risk level}\rangle$; non-negotiable enforcement of an independent hardware interlock; the inviolable invariant that delegating execution never waives the requirement for an end-to-end auditable proof trace.
 
 These three operational principles share a common foundation: no knowledge evolution, no confidence metric, and no autonomous actuation may be introduced without an auditable verification trace. This is the exact requirement that separates an expert conclusion from a reference summary, projected across the operational lifecycle of the system.
+
+### 7.4. Three-Tier Stratification of Epistemic Systems Beyond RAG: Reproduction, Combinatorial Synthesis, and Bounded Abductive Hypothesis
+
+Industrial deployment of evidence-governed inference engines reveals a fundamental boundary beyond which even an impeccably verified reference pipeline ceases to satisfy high-level engineering demands. A system that merely retrieves an existing answer from a single source and accompanies it with byte-level provenance operates in **reproductive mode** (*Reproductive Lookup*). It protects the engineer from hallucinations ($\text{ZHR} = 1.00$), yet remains fundamentally incapable of proposing a novel architectural or design solution that does not already exist as a pre-written paragraph in some single file. Concurrently, probabilistic Large Language Models (LLMs)—due to autoregressive mode collapse toward the median of their training distribution (*Modal Mediocrity*)—cannot discover engineering inventions at the intersection of rigid physical and regulatory constraints, substituting synthesis with trivial generalizations or hazardous confabulations.
+
+To transcend this boundary, the monograph establishes **Mykola Fedchyk's three-tier stratification of engineering intelligence beyond RAG**, classifying epistemic inference states by the depth of source composition:
+
+1. **Tier I — Verified Reproduction (`VERIFIED_FACT`):** Direct or single-pack deterministic deduction within a single normative document $P_a$, where both premise and conclusion are localized within a unified `%ebx` custody space. This represents the baseline level of reference reliability, eliminating hallucinations during standards lookup.
+2. **Tier II — Cross-Pack Combinatorial Synthesis (`SYNTHESIZED`):** Construction of a formal inference chain $\pi = (r_1 \in P_1, r_2 \in P_2, \dots, r_k \in P_k)$ across multiple independent knowledge packs ($|\{P_1, \dots, P_k\}| \ge 2$) within a shared reasoning arena. A conclusion of status `SYNTHESIZED` does not exist in any isolated document, yet is 100% proven by physical interval intersection, SI dimensional identity, and the absence of defeating counterarguments in ASPIC+ across all integrated domains.
+3. **Tier III — Bounded Abductive Hypothesis with Experiment Plan (`BOUNDED_HYPOTHESIS`):** If in an $N$-step cross-domain chain, $N-1$ links possess 100% byte-level custody and dimensional compatibility, while a single link $r_{\text{gap}}$ contains an unbridged interval gap $[\underline{v}_1, \overline{v}_1] \cap [\underline{v}_2, \overline{v}_2] = \varnothing$, the system neither emits silent refusal nor hallucinates, but yields a **bounded engineering hypothesis** accompanied by an automatically generated test or simulation specification to empirically validate the bottleneck.
+
+| Stratification Tier | Core Verdict Code | Active Knowledge Packs (`.kp`) | Byte Custody Status (`%ebx`) | Engineering Outcome for Architect |
+|---|---|---|---|---|
+| **I. Reproductive** | `VERIFIED_FACT` | $m = 1$ (single source) | Direct quote descriptor `%ebx[1]` | Precise normative reference without confabulation |
+| **II. Combinatorial Synthesis** | `SYNTHESIZED` | $m \ge 2$ (federated composition) | Vector of descriptors $\vec{E} = \langle \%ebx[1..k] \rangle$ | Novel engineering solution with full proof of compatibility |
+| **III. Abductive Search** | `BOUNDED_HYPOTHESIS` | $m \ge 2$ with localized gap | Proven $k-1$ links + isolated gap $\Delta$ | Promising hypothesis + test specification for experiment |
+
+> [!NOTE]
+> **Three Tiers of the Author's Stratification of Epistemic Systems Beyond RAG**
+> 1. **Tier of Verified Reproduction (`VERIFIED_FACT`):** The author delineates the foundational mode of error-free reproduction of recorded normative knowledge from a single primary source with byte-level custody tracking, which eliminates hallucinations but remains bounded by existing text.
+> 2. **Tier of Cross-Pack Combinatorial Synthesis (`SYNTHESIZED`):** The author's model formulates the mode of generating novel engineering solutions through the formal composition of theorems, physical laws, and constraints across multiple independent knowledge packs (`.kp`) while maintaining $ZHR = 1.00$ at every step.
+> 3. **Tier of Bounded Abductive Hypothesis (`BOUNDED_HYPOTHESIS`):** The author develops a protocol for productively handling incomplete cross-domain chains $(N-1 \text{ proven} + 1 \text{ gap})$, where the system isolates the parameter gap and synthesizes a verification test specification instead of blind generation or silent failure.
+> *Runtime Control / Engineering Invariant:* Transition from `VERIFIED_FACT` to `SYNTHESIZED` is permitted exclusively when at least two independent knowledge containers participate ($m \ge 2$) and their physical tolerance intervals exhibit a non-empty intersection $\bigcap_{j=1}^k [\underline{v}_j, \overline{v}_j] \neq \varnothing$.
 
 ## 8. Pro et Contra Dialogue
 

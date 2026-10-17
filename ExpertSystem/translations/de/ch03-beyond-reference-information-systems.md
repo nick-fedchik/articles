@@ -28,7 +28,19 @@ In diesem Werk erfolgt die Klassifizierung strikt anhand des Einsatzzwecks und d
 | **Entscheidungsunterstützungssystem** (*Decision Support System*, DSS) | Unterstützung des Menschen beim Variantenvergleich und bei der Folgenabschätzung | Rangfolge von Optionen, Prognose, Handlungsempfehlung | Empfehlung basiert häufig auf Statistik ohne formalen logischen Beweis |
 | **Expertensystem** | Anwenden formalisierter Wissensregeln auf die Faktenbasis eines konkreten Einzelfalls | Urteil oder begründete Verweigerung samt Fakten, Regeln und Beweisen | Urteil gilt streng innerhalb der Grenzen der Wissensbasis und Falldaten |
 
-Diese Klassen weisen funktionale Überschneidungen auf. Ein Konsultationssystem beschreibt primär die Interaktionsmodalität; ein Dialog kann daher als Schnittstelle vor einer Auskunftsdatenbank, einem BI-Dashboard oder einem Expertensystem dienen. Ein Entscheidungsunterstützungssystem beschreibt den übergeordneten Zweck, und ein Expertensystem, das lediglich Ratschläge an den Ingenieur ausgibt, stellt eine hochgradig formalisierte Sonderform eines solchen Unterstützungssystems dar. Die Umkehrung gilt indessen nicht: Ein Modell zur Nachfrageprognose oder ein mathematischer Optimierer unterstützen den Menschen zwar bei Entscheidungen, verfügen jedoch weder über explizite Fachregeln noch über eine nachvollziehbare Beweisspur – also jene Kette von Fakten und Inferenzschritten, die das Ergebnis legitimiert. Folglich stellen Prognosemodelle und Optimierer keine Expertensysteme dar.
+Diese Klassen überschneiden sich nach dem vom Autor formulierten **Prinzip der Inklusionsasymmetrie von Entscheidungshilfesystemen und Expertensystemen (Inclusion Asymmetry Principle) von M. Fedchyk**: Ein beratendes Expertensystem ist eine spezialisierte, maximal formalisierte Unterklasse von Entscheidungshilfesystemen:
+
+$$
+\mathrm{ES}_{\mathrm{advisory}} \subset \mathrm{DSS}
+$$
+
+wobei die umgekehrte Relation strikt nicht gilt:
+
+$$
+\mathrm{DSS} \not\subset \mathrm{ES}
+$$
+
+Stochastische Zeitreihenprognosemodelle, Bayessche Risikoklassifikatoren oder Simplex-Ablaufplanungsoptimierer unterstützen menschliche Entscheidungen (gehören also zu $\mathrm{DSS}$), sind jedoch prinzipiell keine Expertensysteme, da ihnen explizit formalisierte symbolische Domänenregeln und ein reproduzierbarer Beweispfad fehlen.
 
 Zur Veranschaulichung betrachte man zwei Ingenieurteams mit identischer Chat-Oberfläche. Im ersten Team leitet der Chatbot Benutzeranfragen an einen Volltext-Suchindex für Normen weiter und liefert Textzitate zurück: Architektonisch handelt es sich hierbei um ein klassisches Auskunftssystem. Im zweiten Team übergibt der Chatbot die strukturierten Anfragedaten an eine Inferenzmaschine, die die tatsächlichen Metriken eines Firmware-Builds gegen formalisierte Freigaberegeln prüft und ein bindendes Urteil samt Beweisspur ausgibt: Dieses Werkzeug operiert als echtes Expertensystem. Der Benutzer interagiert mit derselben UI-Maske, erhält jedoch Ergebnisse von grundlegend verschiedener epistemischer Tragweite.
 
@@ -52,7 +64,13 @@ Eine **Einzelfallanfrage** bezieht sich hingegen auf eine konkrete, individuelle
 
 > **Prüfkriterium für die Systemklasse.** Antwortet ein Informationssystem auf jede Eingabe im Stil von „Folgendes steht dazu in den Quellen“, liegt ein Auskunftssystem vor. Antwortet das System im Format „Für den vorliegenden Fall C ist die Operation gemäß Regel R auf Basis der Fakten F1 und F2 aus Dokument S in Version 4 gesperrt; hier ist die vollständige Beweisspur“, operiert ein Expertensystem.
 
-Ein Expertensystem beherrscht auch Korpusanfragen, da ein Suchmodul als Subkomponente in seine Architektur integriert ist. Die Umkehrung gilt nicht: Einem Auskunftssystem fehlt prinzipbedingt der Mechanismus zur Regelanwendung auf Fallfakten. Daher kann ein Auskunftssystem auf eine Einzelfallanfrage bestenfalls mit einem Quellenzitat oder einer stochastischen Mutmaßung reagieren.
+Ein Expertensystem beherrscht auch Korpusanfragen, da ein Suchmodul als Subkomponente in seine Architektur integriert ist. Die Umkehrung verbietet kategorisch das vom Autor formulierte **Gesetz über die Unmöglichkeit des stochastischen Übergangs vom Korpus zum Einzelfall von M. Fedchyk**:
+
+$$
+Q_{\mathrm{corpus}} \not\implies Q_{\mathrm{case}}
+$$
+
+Einem Auskunftssystem fehlt prinzipbedingt der Mechanismus zur Regelanwendung auf Fallfakten. Daher kann ein Auskunftssystem auf eine Einzelfallanfrage bestenfalls mit einem Quellenzitat oder einer stochastischen Mutmaßung reagieren.
 
 Ein Dokumentkorpus gilt übergeordnet für viele Anwendungsfälle und ändert sich selten, wohingegen jeder Fall seine eigenen, variablen Fakten besitzt. Eine Suchmaschine ruft allgemeine Regeln aus dem Korpus ab, kann diese Regeln jedoch nicht auf den Einzelfall abbilden: Diese Synthese obliegt der Inferenzmaschine. Der folgende Abschnitt beleuchtet, welche Rolle in dieser Teilung großen Sprachmodellen zukommt, die in der Praxis am häufigsten mit Expertensystemen verwechselt werden.
 
@@ -213,6 +231,23 @@ Die praktische Tragweite der ontologischen Abgrenzung tritt bei der Freigabe mis
 > **Begründungspaket:** digital signiert, SHA-256-Hash `8b4a7…`.
 
 Das Expertensystem weist die Quelle jeder Regel explizit aus, da die Vorgaben aus verschiedenen normativen Dokumenten stammen. ISO 26262-6 empfiehlt für ASIL D nachdrücklich den Nachweis der MC/DC-Abdeckung [[5]](#src-5), die konkrete 100-%-Hürde wird jedoch durch interne Qualitätsrichtlinien des Unternehmens definiert. Das TARA-Verfahren wiederum entstammt dem automobilen Cybersicherheitsstandard ISO/SAE 21434 [[6]](#src-6). Würde das System fälschlicherweise behaupten, die 100-%-Vorgabe stünde direkt in der ISO-Norm, würde ein externer Auditor bereits beim ersten Faktum eine Diskrepanz beanstanden.
+
+Formal wird die Freigabegate-Logik durch das **mathematische Modell des ASIL-D-Zulassungsgates von M. Fedchyk** beschrieben:
+
+$$
+\mathrm{Gate}_{\mathrm{ASIL\text{-}D}}(c) = \begin{cases}
+\mathbf{Blocked}, & \text{wenn } (\mathrm{MC/DC} < 100\%) \lor (\mathrm{Defects}_{\mathrm{Sev\text{-}1}} > 0) \lor (\mathrm{TARA} = 0) \\
+\mathbf{Clarification}, & \text{wenn } \exists f \in \mathrm{Req}(c) : \mathrm{Status}(f) = \mathbf{U} \in \mathbb{K}_3 \\
+\mathbf{Admitted}, & \text{wenn alle normativen Vorbedingungen deterministisch erfüllt sind}
+\end{cases}
+$$
+
+wobei:
+- $c$ das Tupel verifizierter Fakten einer konkreten Firmware-Version ist;
+- $\mathrm{MC/DC}$ der gemessene Prozentsatz der Entscheidungsabdeckung ist ($[0, 100]\%$);
+- $\mathrm{Defects}_{\mathrm{Sev\text{-}1}}$ die Anzahl ungelöster kritischer Defekte ist;
+- $\mathrm{TARA}$ der binäre Validierungsstatus der Cybersicherheit ist ($\{0, 1\}$);
+- $\mathbb{K}_3 = \{\mathbf{T}, \mathbf{F}, \mathbf{U}\}$ die Zustandsmenge der dreiwertigen Kleene-Logik ist.
 
 Das folgende Diagramm zeigt den deterministischen Ablauf: Drei diskrete Fakten werden der Freigaberegel zugeführt, die das Urteil, die Beweisspur und das signierte Begründungspaket erzeugt.
 
@@ -487,9 +522,30 @@ Manche Schlussfolgerungen eines Expertensystems werden von einer numerischen Kon
 
 Zunächst muss die epistemische Bedeutung dieser Kennzahl präzisiert werden: Das Urteil einer deterministischen Regel ist eine zwingende logische Konsequenz der Prämissen und besitzt keine Wahrscheinlichkeit; eine Regel als „zu 99 % wahr“ zu kennzeichnen, ist mathematisch sinnwidrig. Auch semantische Relevanzwerte einer Volltextsuche oder Ähnlichkeitsdistanzen im Vektorraum stellen keine Wahrscheinlichkeiten dar. Eine Kalibrierung ist ausschließlich für jene Submodule erforderlich, die echte stochastische Wahrscheinlichkeiten schätzen: statistische Klassifikatoren, probabilistische Graphmodelle oder stochastische Risikoschätzer.
 
-Die Überprüfung der Kalibrierung erfolgt anhand unabhängiger Testdaten, die nicht Bestandteil des Trainingskorpus waren. Die Vorhersagen werden in Konfidenzintervalle unterteilt, und für jedes Intervall wird die prognostizierte Konfidenz mit der tatsächlichen Trefferquote verglichen. Ein Beispielszenario: Bei 200 Testfällen weist ein Schadensklassifikator in 100 Fällen eine Konfidenz von rund 90 % aus, liegt jedoch nur 72-mal richtig; in den anderen 100 Fällen schätzt er die Konfidenz auf 60 % und behält 58-mal recht. In der ersten Gruppe klafft eine Lücke von 18 Prozentpunkten zwischen Anspruch und Realität, in der zweiten Gruppe beträgt die Diskrepanz lediglich 2 Prozentpunkte. Da beide Gruppen gleich groß sind, beträgt der gewichtete mittlere Fehler $0{,}5 \cdot 18 + 0{,}5 \cdot 2 = 10$ Prozentpunkte. Diese statistische Maßzahl wird als erwarteter Kalibrierungsfehler (*Expected Calibration Error*, ECE) bezeichnet und geht auf Mahdi Pakdaman Naeini, Gregory Cooper und Miloš Hauskrecht zurück [[10]](#src-10). Der ECE nimmt den Wert Null an, wenn die behauptete Konfidenz in jedem Intervall perfekt mit der empirischen Genauigkeit koinzidiert. Chuan Guo und Koautoren wiesen nach, dass moderne tiefe neuronale Netze trotz exzellenter Klassifikationsgenauigkeit häufig dramatisch fehlkalibriert sind [[11]](#src-11).
+Die Überprüfung der Kalibrierung erfolgt anhand unabhängiger Testdaten, die nicht Bestandteil des Trainingskorpus waren. Die Vorhersagen werden in Konfidenzintervalle unterteilt, und für jedes Intervall wird die prognostizierte Konfidenz mit der tatsächlichen Trefferquote mithilfe des **mathematischen Modells des erwarteten Kalibrierungsfehlers (Expected Calibration Error, ECE)** verglichen [[10]](#src-10):
 
-Im beschriebenen Beispiel leidet der Klassifikator an gefährlicher Überkonfidenz (*Overconfidence*) – und zwar genau im kritischen Bereich hoher Sicherheit: Ein Versuchsingenieur, der der 90-%-Angabe vertraut, kalkuliert mit 10 Fehlern auf 100 Fälle, sieht sich in der Praxis jedoch mit 28 Ausfällen konfrontiert. Einem Ingenieur sollte ein numerischer Wahrscheinlichkeitswert erst dann angezeigt werden, wenn dessen Kalibrierung messtechnisch nachgewiesen ist. Bis dahin sind diskrete kategoriale Statusmeldungen zu bevorzugen: „formal bewiesen“, „empirische Hypothese“, „Datenbasis unzureichend“. Die mathematische Formalisierung des ECE, Zuverlässigkeitsdiagramme (*Reliability Diagrams*) und Rekalibrierungsverfahren werden in [Kapitel 25](ch25-how-expert-systems-learn.md) detailliert, probabilistische Grundlagen in [Kapitel 6](ch06-applied-mathematics-for-expert-systems.md) vertieft.
+$$
+\mathrm{ECE} = \sum_{m=1}^M \frac{\lvert B_m \rvert}{N} \left\lvert \mathrm{acc}(B_m) - \mathrm{conf}(B_m) \right\rvert
+$$
+
+wobei:
+- $M$ die Anzahl der Intervallgruppen (Bins) der Wahrscheinlichkeitsskala $[0, 1]$ ist;
+- $\lvert B_m \rvert$ die Anzahl der Testfälle in der Gruppe $B_m$ ist;
+- $N$ der Gesamtumfang der Teststichprobe ist;
+- $\mathrm{acc}(B_m)$ die empirische Genauigkeit (tatsächlicher Anteil richtiger Schlussfolgerungen) in Gruppe $B_m$ ist;
+- $\mathrm{conf}(B_m)$ die durchschnittliche deklarierte Konfidenz für Stichproben der Gruppe $B_m$ ist.
+
+*Laufzeitsteuerung und technische Entscheidungen:*
+1. **Control Flow:** Unter der Bedingung $\mathrm{ECE} \le 0{,}05$ (Kalibrierungsfehler $\le 5\%$) gilt der numerische Konfidenzwert als metrologisch valide und darf dem Operator angezeigt werden. Wenn $\mathrm{ECE} > 0{,}05$, unterdrückt das System Prozentangaben und wechselt zu qualitativen epistemischen Kategorien (`„durch Regel bestätigt“`, `„Hypothese“`, `„Daten unzureichend“`).
+2. **Worked Numerical Example:** Für 200 Fälle mit zwei Bins ($M=2$, $N=200$, $\lvert B_1 \rvert=100$, $\lvert B_2 \rvert=100$) bei $\mathrm{acc}(B_1)=0{,}72, \mathrm{conf}(B_1)=0{,}90$ und $\mathrm{acc}(B_2)=0{,}58, \mathrm{conf}(B_2)=0{,}60$ gilt:
+
+$$
+\mathrm{ECE} = \frac{100}{200}\lvert 0{,}72 - 0{,}90 \rvert + \frac{100}{200}\lvert 0{,}58 - 0{,}60 \rvert = 0{,}5 \cdot 0{,}18 + 0{,}5 \cdot 0{,}02 = 0{,}10 \quad (10\%)
+$$
+
+Da $\mathrm{ECE} = 0{,}10 > 0{,}05$, blockiert das System automatisch die Anzeige numerischer Wahrscheinlichkeiten und gibt eine Warnung über ein unkalibriertes Modell aus.
+
+Chuan Guo und Koautoren wiesen nach, dass moderne tiefe neuronale Netze trotz exzellenter Klassifikationsgenauigkeit häufig dramatisch fehlkalibriert sind [[11]](#src-11). Einem Ingenieur sollte ein numerischer Wahrscheinlichkeitswert erst dann angezeigt werden, wenn dessen Kalibrierung messtechnisch nachgewiesen ist. Bis dahin sind diskrete kategoriale Statusmeldungen zu bevorzugen: „formal bewiesen“, „empirische Hypothese“, „Datenbasis unzureichend“. Die mathematische Formalisierung des ECE, Zuverlässigkeitsdiagramme (*Reliability Diagrams*) und Rekalibrierungsverfahren werden in [Kapitel 25](ch25-how-expert-systems-learn.md) detailliert, probabilistische Grundlagen in [Kapitel 6](ch06-applied-mathematics-for-expert-systems.md) vertieft.
 
 ### 7.3. Hierarchie der operationalen Autonomie: Vom konsultativen Gutachten zur automatisierten Sperrung
 
@@ -509,6 +565,29 @@ Autonomie ist somit keine pauschale Eigenschaft des Gesamtsystems, sondern ein s
 > 3. **Granulare Handlungsautonomie und Notabschaltung (Kill-Switch):** Zuweisung von Ausführungsautonomie strikt an das konkrete Tupel $\langle\text{Aktion}, \text{Umgebung}, \text{Risiko}\rangle$; unverzichtbarer unabhängiger Hardware-Unterbrecher; Unveräußerlichkeit der Beweispflicht (Automatisierung entbindet niemals von 100 % Auditierbarkeit).
 
 Alle drei Betriebsregeln teilen ein gemeinsames Fundament: Weder eine Wissensaktualisierung noch eine Konfidenzangabe noch eine automatisierte Aktion darf ohne verifizierbare Beweisspur existieren. Es ist exakt dieselbe Forderung nach Nachvollziehbarkeit, die das Expertengutachten vom unverbindlichen Auskunftsdokument unterscheidet – konsequent angewendet auf den gesamten Betriebslebenszyklus.
+
+### 7.4. Dreistufige Stratifizierung epistemischer Systeme jenseits von RAG: Reproduktion, kombinatorische Synthese und lokalisierte abduktive Hypothese
+
+Die praktische Erfahrung beim Aufbau beweisgestützter Inferenzkerne offenbart eine fundamentale Grenze, jenseits derer selbst eine tadellos verifizierte Referenzpipeline den Anforderungen anspruchsvoller Ingenieurpraxis nicht mehr genügt. Ein System, das lediglich eine fertige Antwort in einer einzelnen Quelle sucht und mit einem bytegenauen Verweis versieht, arbeitet im **reproduktiven Modus** (*Reproductive Lookup*). Es schützt den Ingenieur vor Halluzinationen ($\text{ZHR} = 1{,}00$), ist jedoch prinzipiell unfähig, eine neue konstruktive oder systemische Lösung vorzuschlagen, die nicht bereits als vorgefertigter Absatz in einer isolierten Datei existiert. Zugleich sind probabilistische große Sprachmodelle (LLMs) aufgrund des statistischen Zusammenbruchs auf den Modalwert der Trainingsverteilung (*Modal Mediocrity*) unfähig, ingenieurtechnische Erfindungen an der Schnittstelle strikter physikalischer und normativer Randbedingungen zu generieren, und ersetzen Synthese durch triviale Verallgemeinerungen oder gefährliche Fehlannahmen.
+
+Zur Überwindung dieser Barriere wird in der Monographie **Mykola Fedchyks dreistufige Stratifizierung der Ingenieurintelligenz jenseits von RAG** eingeführt, die epistemische Inferenzzustände nach der Tiefe der Quellenkomposition klassifiziert:
+
+1. **Stufe I — Verifizierte Reproduktion (`VERIFIED_FACT`):** direkte oder einzeldokumentäre deterministische Deduktion innerhalb einer normativen Quelle $P_a$, bei der sowohl Prämisse als auch Konklusion im gemeinsamen `%ebx`-Verwahrungsraum liegen. Dies ist das Basisniveau dokumentarischer Zuverlässigkeit, das Halluzinationen beim Nachschlagen von Normen eliminiert.
+2. **Stufe II — Paketübergreifende kombinatorische Synthese (`SYNTHESIZED`):** Konstruktion einer formalen Inferenzkette $\pi = (r_1 \in P_1, r_2 \in P_2, \dots, r_k \in P_k)$ über einer Menge unabhängiger Wissenspakete ($|\{P_1, \dots, P_k\}| \ge 2$) in einer gemeinsamen Reasoning-Arena. Eine Konklusion vom Status `SYNTHESIZED` ist in keinem Einzeldokument enthalten, jedoch zu 100 % bewiesen durch physikalischen Intervallschnitt, Identität der SI-Dimensionen und das Fehlen dominanter Entkräfter (Defeater) in ASPIC+ über alle integrierten Domänen.
+3. **Stufe III — Lokalisierte abduktive Hypothese mit Versuchsspezifikation (`BOUNDED_HYPOTHESIS`):** Wenn in einer domänenübergreifenden Kette aus $N$ Schritten $N-1$ Glieder 100 % bytegenaue Verwahrung und dimensionale Kompatibilität aufweisen, während ein einziges Glied $r_{\text{gap}}$ eine unüberbrückte Intervalllücke $[\underline{v}_1, \overline{v}_1] \cap [\underline{v}_2, \overline{v}_2] = \varnothing$ enthält, verweigert das System weder stumm noch halluziniert es, sondern liefert eine **lokalisierte technische Hypothese** zusammen mit einer automatisch generierten Spezifikation für Prüfstands- oder Simulationsversuche zur Validierung des Engpasses.
+
+| Stratifizierungsstufe | Urteilscode des Kerns | Aktive Wissenspakete (`.kp`) | Status der Byte-Verwahrung (`%ebx`) | Technisches Ergebnis für den Architekten |
+|---|---|---|---|---|
+| **I. Reproduktiv** | `VERIFIED_FACT` | $m = 1$ (Einzelquelle) | Direkter Zitatdeskriptor `%ebx[1]` | Präzise normative Referenz ohne Fiktion |
+| **II. Kombinatorisch-synthetisch** | `SYNTHESIZED` | $m \ge 2$ (föderierte Komposition) | Deskriptorenvektor $\vec{E} = \langle \%ebx[1..k] \rangle$ | Neue technische Lösung mit vollständigem Kompatibilitätsnachweis |
+| **III. Such-abduktiv** | `BOUNDED_HYPOTHESIS` | $m \ge 2$ mit lokalisierter Lücke | Bewiesen $k-1$ Glieder + isolierte Lücke $\Delta$ | Perspektivische Hypothese + Aufgabenstellung für Experiment |
+
+> [!NOTE]
+> **Drei Stufen der Autorenstratifizierung epistemischer Systeme jenseits von RAG von M. M. Fedchyk**
+> 1. **Stufe der verifizierten Reproduktion (`VERIFIED_FACT`):** Der Autor grenzt den grundlegenden Modus der fehlerfreien Wiedergabe normativen Wissens aus einer einzelnen Primärquelle mit bytegenauer Verwahrung ab, der Halluzinationen eliminiert, jedoch auf den dokumentierten Rahmen beschränkt bleibt.
+> 2. **Stufe der paketübergreifenden kombinatorischen Synthese (`SYNTHESIZED`):** Im Autorenmodell wird der Modus zur Generierung neuer technischer Lösungen durch formale Verknüpfung von Theoremen, physikalischen Gesetzen und Randbedingungen aus mehreren unabhängigen Wissenspaketen (`.kp`) unter Wahrung von $ZHR = 1{,}00$ auf jedem Kompositionsschritt formuliert.
+> 3. **Stufe der lokalisierten abduktiven Hypothese (`BOUNDED_HYPOTHESIS`):** Der Autor entwickelt ein Protokoll zur produktiven Verarbeitung unvollständiger domänenübergreifender Ketten $(N-1 \text{ bewiesen} + 1 \text{ Lücke})$, bei dem das System anstelle blinder Generierung oder stummer Ablehnung die Parameterlücke isoliert und ein Programm für Validierungsexperimente synthetisiert.
+> *Laufzeitsteuerung / Technische Invariante:* Der Übergang von `VERIFIED_FACT` zu `SYNTHESIZED` ist ausschließlich zulässig, wenn mindestens zwei unabhängige Wissenscontainer beteiligt sind ($m \ge 2$) und deren physikalische Toleranzintervalle einen nicht-leeren Schnitt aufweisen: $\bigcap_{j=1}^k [\underline{v}_j, \overline{v}_j] \neq \varnothing$.
 
 ## 8. Dialog Pro et Contra
 
