@@ -43,15 +43,15 @@ flowchart TD
 
 ### [Chapter 28. Dual-Mode Expert Systems: Rigorous Deduction and Advisory Hypotheses](ch28-dual-mode-expert-systems.md)
 
-* **Abstract:** Strict results supported by verified evidence or explicit refusals alongside distinctly flagged advisory hypotheses. Deduction, case-based reasoning, and abduction fulfill specialized roles. An operational refusal or specialist consultation yields a candidate knowledge artifact that cannot bypass independent verification and release governance.
+* **Abstract:** Strict results supported by verified evidence or explicit refusals alongside distinctly flagged advisory hypotheses. Deduction, case-based reasoning, and abduction fulfill specialized roles. Dual-mode synergy of reproductive verification and combinatorial synthesis over a shared knowledge registry; 3 operational rules of dual-mode synergy and cryptographic hypothesis promotion via verification experiments. An operational refusal or specialist consultation yields a candidate knowledge artifact that cannot bypass independent verification and release governance.
 
 ### [Chapter 29. Neuro-Symbolic Architecture: Language Models and Verifying Evidential Grounding](ch29-neuro-symbolic-architecture.md)
 
-* **Abstract:** The division of responsibilities where "the model proposes, the symbolic engine approves": an admission gateway with document revision registries, closed vocabularies, byte-level verbatim citation verification, and token-level value validation; constrained local model outputs via Ollama JSON schemas; explanation validation; advisory query reconstruction with host validation; recording refusal rationales for telemetry analysis; benchmark suites distinguishing adapted from foundation models; open research horizons.
+* **Abstract:** The division of responsibilities where "the model proposes, the symbolic engine approves": an admission gateway with document revision registries, closed vocabularies, byte-level verbatim citation verification, and token-level value validation; asymmetric "Mutator–Selector" pipeline for cross-pack synthesis (NVIDIA Jetson AGX Orin + Federated Zero-Copy Arena + 2× FPGA PYNQ-Z1) and three architectural principles of the tandem; constrained local model outputs via Ollama JSON schemas; explanation validation; advisory query reconstruction with host validation; recording refusal rationales for telemetry analysis; benchmark suites distinguishing adapted from foundation models; open research horizons.
 
 ### [Chapter 34. Knowledge Gaps: Relational Search, Abduction, and Socratic Clarification](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
 
-* **Abstract:** Transforming inference impasses into identifiable missing premises. Relational search identifies candidate links, abduction synthesizes testable hypotheses, and dialogue isolates necessary user clarifications. Inductively mined rules or similar historical cases cannot elevate hypothesis status without formal domain verification.
+* **Abstract:** Transforming inference impasses into identifiable missing premises. Relational search identifies candidate links, abduction synthesizes testable hypotheses, and dialogue isolates necessary user clarifications. Algebra of technical contradiction compensation and 5 authorial laws protecting combinatorial synthesis from semantic degradation. Inductively mined rules or similar historical cases cannot elevate hypothesis status without formal domain verification.
 
 ### [Chapter 38. Machine Hallucinations and Knowledge Deficits: Evidential Control of Answers](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
 

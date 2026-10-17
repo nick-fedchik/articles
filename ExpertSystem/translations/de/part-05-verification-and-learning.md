@@ -52,7 +52,7 @@ flowchart TD
 
 ### [Kapitel 39. Aktiver Compliance-Auditor: Popper’sche Falsifikation, normative Compliance (ASPICE/ISO 26262/ISO 21434) und autonomes Testdesign](ch39-active-compliance-auditor-and-popperian-testing.md)
 
-* **Abstract:** Autonomes Testdesign nach dem Prinzip der Popper’schen Falsifikation: Generierung härtester Gegenbeispiele, Auditierung von Ausführungsspuren auf Konformität mit Standards für funktionale Sicherheit und Cybersicherheit sowie automatische Erkennung blinder Flecken in normativen Anforderungen.
+* **Abstract:** Autonomes Testdesign nach dem Prinzip der Popper’schen Falsifikation: Generierung härtester Gegenbeispiele, Auditierung von Ausführungsspuren auf Konformität mit Standards für funktionale Sicherheit und Cybersicherheit sowie automatische Erkennung blinder Flecken in normativen Anforderungen. Dialektische Verifikation kombinatorischer Synthese: Widerlegung der fünf Thesen des wissenschaftlichen Opponenten (analytische Tautologie, Frame-Problem, Parsing-Degradation $(1-p)^d$, Scheintrugschlüsse und kombinatorische Wand $\mathcal{O}(b^d)$) durch ingenieurtechnische Schutzbarrieren.
 
 ### [Kapitel 24. Technische Diagnose: Trennung von Symptom und Ursache unter Unsicherheit](ch24-system-diagnosis.md)
 

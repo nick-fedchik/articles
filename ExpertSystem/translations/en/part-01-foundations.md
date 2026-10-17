@@ -43,11 +43,11 @@ flowchart LR
 
 ### [Chapter 2. Philosophy for the Engineer: What a Machine May Lawfully Call Knowledge](ch02-epistemology-of-machine-knowledge.md)
 
-* **Abstract:** Seven philosophical dilemmas translated into rigorous verification checks for automated answers: evidentiary grounding, entity identity, logic, intent, quotation context, assertion category, and explicit authorization. A procedural contract separating auditable knowledge from plausible generation without turning flawed sources into empirical truth.
+* **Abstract:** Seven philosophical dilemmas translated into rigorous verification checks for automated answers: evidentiary grounding, entity identity, logic, intent, quotation context, assertion category, and explicit authorization. A procedural contract separating auditable knowledge from plausible generation without turning flawed sources into empirical truth. Resolving the "Omniscient Supervisor Trap", the theorem on cross-pack evidence composition (Proof-Carrying Invention), and the 4 postulates of engineering knowledge synthesis transferring byte-level custody `%ebx[1..k]`.
 
 ### [Chapter 3. How an Expert System Differs from an Information Retrieval System](ch03-beyond-reference-information-systems.md)
 
-* **Abstract:** The boundary between retrieval systems and expert systems across three architectural dimensions: queries over document corpora versus case-specific situations, document summaries versus expert decisions with justification packages, search pipelines versus knowledge bases with inference engines. The role of Large Language Models and Retrieval-Augmented Generation (RAG), comparison of six information system classes under epistemic contracts, and three operational rules: controlled knowledge modification, confidence calibration, and autonomous action boundaries.
+* **Abstract:** The boundary between retrieval systems and expert systems across three architectural dimensions: queries over document corpora versus case-specific situations, document summaries versus expert decisions with justification packages, search pipelines versus knowledge bases with inference engines. The role of Large Language Models and Retrieval-Augmented Generation (RAG), the three-tier stratification of epistemic systems beyond RAG (reproductive verification `VERIFIED_FACT`, combinatorial synthesis `SYNTHESIZED`, and bounded abductive hypothesis `BOUNDED_HYPOTHESIS`), comparison of six information system classes under epistemic contracts, and three operational rules: controlled knowledge modification, confidence calibration, and autonomous action boundaries.
 
 ### [Chapter 4. Evolution of Expert Systems: From Bayes' Theorem to Evidence-Based AI](ch04-evolution-from-bayes-to-evidence-ai.md)
 

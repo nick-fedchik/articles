@@ -43,15 +43,15 @@ flowchart TD
 
 ### [Kapitel 28. Dual-Mode-Expertensysteme: Strikte Schlussfolgerung und beratende Hypothese](ch28-dual-mode-expert-systems.md)
 
-* **Abstract:** Striktes Ergebnis mit verifizierten Begründungen oder Ablehnung neben separat gekennzeichneten beratenden Hypothesen. Deduktion, Fallbasiertes Schließen und Abduktion erfüllen spezialisierte Aufgaben. Eine Ablehnung oder Fachberatung liefert Wissenskandidaten, die unabhängige Prüfungs- und Freigabeverfahren nicht umgehen dürfen.
+* **Abstract:** Striktes Ergebnis mit verifizierten Begründungen oder Ablehnung neben separat gekennzeichneten beratenden Hypothesen. Deduktion, Fallbasiertes Schließen und Abduktion erfüllen spezialisierte Aufgaben. Zweimodus-Synergie aus reproduktiver Verifikation und kombinatorischer Synthese über ein gemeinsames Wissensregister; 3 Regeln der Zweimodus-Synergie und kryptografischen Hypothesen-Promotion durch Verifikationsexperimente. Eine Ablehnung oder Fachberatung liefert Wissenskandidaten, die unabhängige Prüfungs- und Freigabeverfahren nicht umgehen dürfen.
 
 ### [Kapitel 29. Neuro-symbolische Architektur: Sprachmodelle und Evidenzprüfung](ch29-neuro-symbolic-architecture.md)
 
-* **Abstract:** Aufgabenverteilung nach dem Prinzip „Das Modell schlägt vor, der Kern genehmigt“: Zulassungsschleuse mit Dokumentenrevisionsregister, geschlossenem Vokabular, bytegenauer Zitatprüfung und lexikalischer Token-Validierung; Beschränkung lokaler Sprachmodellausgaben über Ollama-JSON-Schemata; Validierung von Modellerklärungen; beratende Abfragestrukturierung mit Host-Verifikation; Erfassung von Ablehnungsgründen zur Telemetrieanalyse; Testsuiten zur Unterscheidung adaptierter von Basissprachmodellen; offene Forschungsfragen.
+* **Abstract:** Aufgabenverteilung nach dem Prinzip „Das Modell schlägt vor, der Kern genehmigt“: Zulassungsschleuse mit Dokumentenrevisionsregister, geschlossenem Vokabular, bytegenauer Zitatprüfung und lexikalischer Token-Validierung; asymmetrische «Mutator–Selektor»-Pipeline für packungsübergreifende Synthese (NVIDIA Jetson AGX Orin + Föderierte Zero-Copy-Arena + 2× FPGA PYNQ-Z1) und drei Architekturprinzipien des Tandems; Beschränkung lokaler Sprachmodellausgaben über Ollama-JSON-Schemata; Validierung von Modellerklärungen; beratende Abfragestrukturierung mit Host-Verifikation; Erfassung von Ablehnungsgründen zur Telemetrieanalyse; Testsuiten zur Unterscheidung adaptierter von Basissprachmodellen; offene Forschungsfragen.
 
 ### [Kapitel 34. Wissenslücken: Relationale Suche, Abduktion und Klärungsdialog](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
 
-* **Abstract:** Transformation von Inferenzblockaden in identifizierbare fehlende Prämissen. Die relationale Suche findet Verbindungskandidaten, Abduktion generiert prüfbare Hypothesen und der sokratische Dialog isoliert notwendige Benutzerklärungen. Induktiv abgeleitete Regeln oder ähnliche Präzedenzfälle können den Status von Hypothesen ohne formale Domänenprüfung nicht aufwerten.
+* **Abstract:** Transformation von Inferenzblockaden in identifizierbare fehlende Prämissen. Die relationale Suche findet Verbindungskandidaten, Abduktion generiert prüfbare Hypothesen und der sokratische Dialog isoliert notwendige Benutzerklärungen. Algebra zur Kompensation technischer Widersprüche und 5 Schutzgesetze der kombinatorischen Synthese vor semantischer Degradation. Induktiv abgeleitete Regeln oder ähnliche Präzedenzfälle können den Status von Hypothesen ohne formale Domänenprüfung nicht aufwerten.
 
 ### [Kapitel 38. Maschinelle Halluzinationen und Wissensdefizite: Evidenzkontrolle von Antworten](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)
 

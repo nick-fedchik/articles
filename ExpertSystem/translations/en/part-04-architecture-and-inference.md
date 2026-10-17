@@ -60,7 +60,7 @@ flowchart TD
 
 ### [Chapter 31. Normative Inference: Predicate Hierarchies, Exceptions, and Temporal Validity](ch31-syllogistic-reasoning-and-relation-lattices.md)
 
-* **Abstract:** Distinguishing predicate hierarchies from relation lattices; current normative revisions do not retroactively annul historical application conditions. The instructional Go step evaluates classes, specialization, exceptions, and competing rules; practical network examples partition operational actions by state, sequence number, and supported profile.
+* **Abstract:** Distinguishing predicate hierarchies from relation lattices; current normative revisions do not retroactively annul historical application conditions. SI physical dimensional-interval compatibility filter ($[\vec{d}_1] = [\vec{d}_2]$, $\Omega^* \neq \varnothing$) and cross-pack syllogistic chain governance rules guarding against the `0x0422 ERR_DIMENSIONAL_MISMATCH` hardware exception. The instructional Go step evaluates classes, specialization, exceptions, and competing rules; practical network examples partition operational actions by state, sequence number, and supported profile.
 
 ### [Chapter 20. Explanation Engine: Decisions, Refusals, and Competence Boundaries](ch20-explanation-engine.md)
 

@@ -45,7 +45,7 @@ flowchart LR
 
 ### [Chapter 40. Distributed Architecture of Evidence-Governed Expert Systems: Epistemic SOA, Semantic Routing, Memory Hierarchies, and Multi-Source Defeasible Arbitration](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)
 
-* **Overview:** Industrial reference architecture for evidence-governed expert systems. Three-tier Epistemic SOA (thin mobile clients, semantic broker, federated domain services). Bridging the memory capacity gap via Active Working Sets (AWS) and Ping-Pong pipelined double-buffering with complete latency hiding. Scatter-gather pattern and multi-source defeasible aggregation (ASPIC+) for handling incomplete knowledge and regulatory collisions. Technology selection matrix and budget-guided scaling.
+* **Overview:** Industrial reference architecture for evidence-governed expert systems. Three-tier Epistemic SOA (thin mobile clients, semantic broker, federated domain services). Bridging the memory capacity gap via Active Working Sets (AWS) and Ping-Pong pipelined double-buffering with complete latency hiding. Federated Zero-Copy Arena for cross-pack reasoning ($\mathcal{S}^*(Q)$) and 3 hardware generations of synthesis evolution (UMA + dual PYNQ-Z1 $\to$ HBM2e-EPU $\to$ coherent CXL 3.0 fabrics with digital Ising annealers). Scatter-gather pattern and multi-source defeasible aggregation (ASPIC+) for handling incomplete knowledge and regulatory collisions. Technology selection matrix and budget-guided scaling.
 
 ---
 

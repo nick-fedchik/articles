@@ -45,7 +45,7 @@ flowchart LR
 
 ### [Kapitel 40. Verteilte Architektur evidenzbasierter Expertensysteme: Epistemische SOA, semantisches Routing, Speicherhierarchien und mehrquellenbasiertes defeasibles Schiedsverfahren](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)
 
-* **Abstract:** Industrieller Referenzarchitektur-Prototyp für evidenzbasierte Expertensysteme. Dreischichtige Epistemic SOA (schlanke mobile Clients, semantischer Broker, föderierte Domänendienste). Überwindung der Speicherkapazitätskluft durch Active Working Sets (AWS) und Ping-Pong-Pipeline-Doppelpufferung mit vollständiger Latenzverbergung. Scatter-Gather-Muster und mehrquellenbasierte defeasible Aggregation (ASPIC+) zur Bewältigung unvollständigen Wissens und regulatorischer Normenkollisionen. Technologieauswahlmatrix und budgetorientierte Skalierung.
+* **Abstract:** Industrieller Referenzarchitektur-Prototyp für evidenzbasierte Expertensysteme. Dreischichtige Epistemic SOA (schlanke mobile Clients, semantischer Broker, föderierte Domänendienste). Überwindung der Speicherkapazitätskluft durch Active Working Sets (AWS) und Ping-Pong-Pipeline-Doppelpufferung mit vollständiger Latenzverbergung. Föderierte Zero-Copy-Arena für packungsübergreifende Inferenz ($\mathcal{S}^*(Q)$) und 3 Hardware-Generationen der Synthese-Evolution (UMA + duale PYNQ-Z1 $\to$ HBM2e-EPU $\to$ kohärente CXL-3.0-Fabrics mit digitalen Ising-Annealern). Scatter-Gather-Muster und mehrquellenbasierte defeasible Aggregation (ASPIC+) zur Bewältigung unvollständigen Wissens und regulatorischer Normenkollisionen. Technologieauswahlmatrix und budgetorientierte Skalierung.
 
 ---
 

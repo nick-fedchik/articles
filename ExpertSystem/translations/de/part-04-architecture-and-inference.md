@@ -60,7 +60,7 @@ flowchart TD
 
 ### [Kapitel 31. Normative Inferenz: Prädikatenhierarchien, Ausnahmen und zeitliche Gültigkeit](ch31-syllogistic-reasoning-and-relation-lattices.md)
 
-* **Abstract:** Unterscheidung zwischen Prädikatenhierarchien und Relationsverbänden; eine aktuelle Normfassung setzt Anwendungsvoraussetzungen vergangener Zeitintervalle nicht außer Kraft. Der Go-Lernschritt prüft Klassen, Spezialisierungen, Ausnahmen und konkurrierende Regeln; Netzwerkbeispiele unterteilen Aktionen nach Zustand, Sequenznummer und Profil.
+* **Abstract:** Unterscheidung zwischen Prädikatenhierarchien und Relationsverbänden; eine aktuelle Normfassung setzt Anwendungsvoraussetzungen vergangener Zeitintervalle nicht außer Kraft. Physikalischer SI-Dimensions- und Intervallkompatibilitätsfilter ($[\vec{d}_1] = [\vec{d}_2]$, $\Omega^* \neq \varnothing$) sowie Steuerungsregeln für packungsübergreifende syllogistische Ketten zur Vermeidung der Hardware-Ausnahme `0x0422 ERR_DIMENSIONAL_MISMATCH`. Der Go-Lernschritt prüft Klassen, Spezialisierungen, Ausnahmen und konkurrierende Regeln; Netzwerkbeispiele unterteilen Aktionen nach Zustand, Sequenznummer und Profil.
 
 ### [Kapitel 20. Erklärungskomponente: Entscheidungen, Ablehnung und Kompetenzgrenzen](ch20-explanation-engine.md)
 

@@ -43,11 +43,11 @@ flowchart LR
 
 ### [Kapitel 2. Philosophie für Ingenieure: Was eine Maschine rechtmäßig Wissen nennen darf](ch02-epistemology-of-machine-knowledge.md)
 
-* **Abstract:** Sieben philosophische Fragen als konkrete Prüfungen für automatisierte Aussagen: Begründungsfundament, Objektidentität, Logik, Absicht, Zitatkontext, Behauptungskategorie und explizite Vollmacht. Ein verfahrensbasierter Kontrakt trennt verifizierbares Wissen von plausibler Prosa, ohne fehlerhafte Quellen nachträglich wahr zu machen.
+* **Abstract:** Sieben philosophische Fragen als konkrete Prüfungen für automatisierte Aussagen: Begründungsfundament, Objektidentität, Logik, Absicht, Zitatkontext, Behauptungskategorie und explizite Vollmacht. Ein verfahrensbasierter Kontrakt trennt verifizierbares Wissen von plausibler Prosa, ohne fehlerhafte Quellen nachträglich wahr zu machen. Überwindung der «Falle des Allwissenden Aufsehers», Theorem der packungsübergreifenden Beweiskomposition (Proof-Carrying Invention) und 4 Postulate der Wissenssynthese mit bytegenauer Verwahrung `%ebx[1..k]`.
 
 ### [Kapitel 3. Wie sich ein Expertensystem von einem Informations- und Auskunftssystem unterscheidet](ch03-beyond-reference-information-systems.md)
 
-* **Abstract:** Die Grenze zwischen Auskunftssystemen und Expertensystemen auf drei Ebenen: Abfragen über Dokumentenkorpora versus Einzelfallentscheidungen, Dokumentauszüge versus Expertenurteile mit Begründungspaket, Such-Pipelines versus Wissensbasen mit Inferenzmaschine. Die Rolle großer Sprachmodelle und Retrieval-Augmented Generation (RAG), Vergleich von sechs Informationssystemklassen und drei Betriebsregeln: kontrollierte Wissensänderung, Konfidenzkalibrierung und autonome Aktionsgrenzen.
+* **Abstract:** Die Grenze zwischen Auskunftssystemen und Expertensystemen auf drei Ebenen: Abfragen über Dokumentenkorpora versus Einzelfallentscheidungen, Dokumentauszüge versus Expertenurteile mit Begründungspaket, Such-Pipelines versus Wissensbasen mit Inferenzmaschine. Die Rolle großer Sprachmodelle und Retrieval-Augmented Generation (RAG), die dreistufige Schichtung epistemischer Systeme jenseits von RAG (reproduktive Verifikation `VERIFIED_FACT`, kombinatorische Synthese `SYNTHESIZED` und lokalisierte abduktive Hypothese `BOUNDED_HYPOTHESIS`), Vergleich von sechs Informationssystemklassen und drei Betriebsregeln: kontrollierte Wissensänderung, Konfidenzkalibrierung und autonome Aktionsgrenzen.
 
 ### [Kapitel 4. Evolution der Expertensysteme: Vom Satz von Bayes zu evidenzbasierten KI-Entscheidungen](ch04-evolution-from-bayes-to-evidence-ai.md)
 

@@ -52,7 +52,7 @@ flowchart TD
 
 ### [Chapter 39. Active Compliance Auditor: Popperian Falsification, Normative Compliance (ASPICE/ISO 26262/ISO 21434), and Autonomous Test Design](ch39-active-compliance-auditor-and-popperian-testing.md)
 
-* **Abstract:** Autonomous test design based on the principle of Popperian falsification: generating the most adversarial counterexamples, auditing execution traces against functional safety and cybersecurity standards, and automatically detecting blind spots in normative requirements.
+* **Abstract:** Autonomous test design based on the principle of Popperian falsification: generating the most adversarial counterexamples, auditing execution traces against functional safety and cybersecurity standards, and automatically detecting blind spots in normative requirements. Dialectical verification of combinatorial synthesis: refuting the five theses of the Scientific Opponent (analytical tautology, frame problem, parsing decay $(1-p)^d$, false analogies, and combinatorial barrier $\mathcal{O}(b^d)$) via defensive engineering safeguards.
 
 ### [Chapter 24. System Diagnosis: Disentangling Symptoms from Root Causes under Uncertainty](ch24-system-diagnosis.md)
 
