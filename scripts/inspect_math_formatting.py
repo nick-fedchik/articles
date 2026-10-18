@@ -17,6 +17,7 @@ Checks performed:
   [ERR-MATH-07] Unbalanced inline `$` or block `$$` delimiters
   [ERR-MATH-08] Corrupted LaTeX escape sequences (control chars \x07, \x08, \x0b, \x0c, or split \r/\n/\t macros)
   [ERR-MATH-09] Unprotected inline math containing Markdown formatting characters ('_' or '*')
+  [ERR-MATH-10] Unbalanced curly braces or broken subscript/superscript patterns (missing '_' or '^') in math
   [ERR-ADV-01]  Missing blank line after `</summary>` inside `<details>` block
   [ERR-ADV-02]  Text on the same line after GitHub Alert tag `> [!NOTE|TIP|IMPORTANT|WARNING|CAUTION]`
 
@@ -468,6 +469,18 @@ def inspect_file(filepath: str, fix: bool = False) -> Tuple[List[Tuple[int, str,
                             idx,
                             "ERR-MATH-09",
                             f"Unprotected inline math '${expr}$' contains Markdown conflicting chars ('_' or '*'). Use GitHub protected syntax $`{expr}`$ to prevent italics/bold corruption."
+                        ))
+                    if expr.count("{") != expr.count("}"):
+                        errors.append((
+                            idx,
+                            "ERR-MATH-10",
+                            f"Unbalanced curly braces in inline math '${expr}$' ({expr.count('{')} opening vs {expr.count('}')} closing)"
+                        ))
+                    if re.search(r"\\[a-zA-Z]+\{[^}]+\}\s*\{[a-zA-Z\\]", expr):
+                        errors.append((
+                            idx,
+                            "ERR-MATH-10",
+                            f"Potentially broken subscript/superscript (missing '_' or '^') in inline math: '${expr}$'"
                         ))
 
         # Check [ERR-ADV-01]: </summary> followed immediately by non-blank line
