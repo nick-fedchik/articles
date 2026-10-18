@@ -51,12 +51,12 @@
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Глава 01** | [ch01-introduction-to-expert-systems.md](file:///home/mfedchyk/book/ExpertSystem/ch01-introduction-to-expert-systems.md) | [registry/ch01-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch01-registry.md) | ✅ Завершено | 31 положення (L1: 19, L2: 12; `100% EXPLICIT_COMPLETE`, L4: 6, разом: 37) | 21/21 підтверджено (`100% PASS`; додано Post, Robinson, Forgy, Minsky, DO-178C, ASPIC+) |
 | **Глава 02** | [ch02-epistemology-of-machine-knowledge.md](file:///home/mfedchyk/book/ExpertSystem/ch02-epistemology-of-machine-knowledge.md) | [registry/ch02-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch02-registry.md) | ✅ Завершено | 72 положення (L1: 51, L2: 21; `100% EXPLICIT_COMPLETE`, 10 канонічних блоків `[!NOTE]`, L4: 10, разом: 82) | 34/34 підтверджено (`100% PASS`; додано Floridi, Bell-LaPadula, прив'язано Geifman) |
-| **Глава 03** | [ch03-beyond-reference-information-systems.md](file:///home/mfedchyk/book/ExpertSystem/ch03-beyond-reference-information-systems.md) | [registry/ch03-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch03-registry.md) | ✅ Завершено | 33 положення (L1: 14, L2: 9, L3: 10; `100% EXPLICIT_COMPLETE`, 4 канонічні блоки `[!NOTE]`, L4: 2, разом: 35) | 15/15 підтверджено (`100% PASS`; додано Deutsch, Meyer, de Moura & Bjørner Z3) |
+| **Глава 03** | [ch03-beyond-reference-information-systems.md](file:///home/mfedchyk/book/ExpertSystem/ch03-beyond-reference-information-systems.md) | [registry/ch03-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch03-registry.md) | ✅ Завершено | 36 положень (L1: 17, L2: 9, L3: 10; `100% EXPLICIT_COMPLETE`, 7 канонічних блоків `[!NOTE]`, L4: 2, разом: 38) | 15/15 підтверджено (`100% PASS`; додано Deutsch, Meyer, de Moura & Bjørner Z3) |
 | **Глава 04** | [ch04-evolution-from-bayes-to-evidence-ai.md](file:///home/mfedchyk/book/ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md) | [registry/ch04-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch04-registry.md) | ✅ Завершено | 43 положення (L1: 25, L2: 17, L3: 1; `100% EXPLICIT_COMPLETE`, L4: 5, разом: 48) | 31/31 підтверджено (`100% PASS`; додано Quillian 1968, Forgy 1982) |
 | **Глава 05** | [ch05-triad-of-trust-and-corporate-memory.md](file:///home/mfedchyk/book/ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md) | [registry/ch05-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch05-registry.md) | ✅ Завершено | 38 положень (L1: 28, L2: 10; `100% EXPLICIT_COMPLETE`, 6 канонічних блоків `[!NOTE]`/`[!WARNING]`, L4: 0, разом: 38) | 18/18 підтверджено (`100% PASS`; додано Feigenbaum 1984, Ed25519, FIPS 140-3, ISO 27001) |
 
 > **Підсумок аудиту Частини I (Глави 1–5):**  
-> Проаналізовано **240 наукових одиниць**, з яких **217 одиниць (90,4 %)** становлять авторський науковий та інженерний доробок Миколи Федчика (`L1: 137`, `L2/L3: 80`), а **23 одиниці (9,6 %)** — класичний науковий фундамент (`L4`).
+> Проаналізовано **243 наукові одиниці**, з яких **220 одиниць (90,5 %)** становлять авторський науковий та інженерний доробок Миколи Федчика (`L1: 140`, `L2/L3: 80`), а **23 одиниці (9,5 %)** — класичний науковий фундамент (`L4`).
 
 ### Частина II. Математичні моделі, подання та зберігання знань ([part-02-knowledge-models.md](file:///home/mfedchyk/book/ExpertSystem/part-02-knowledge-models.md))
 
@@ -80,10 +80,10 @@
 | **Глава 11** | [ch11-knowledge-elicitation-from-experts.md](file:///home/mfedchyk/book/ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | [registry/ch11-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch11-registry.md) | ✅ Завершено | 67 положень (L1: 50, L2: 17; `100% EXPLICIT_COMPLETE`, L4: 21, разом: 88) | 27/27 підтверджено (`100% PASS`; додано Kelly 1955, Brier 1950, Klein 1998, Vapnik) |
 | **Глава 12** | [ch12-linguistic-analysis-and-local-models.md](file:///home/mfedchyk/book/ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | [registry/ch12-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch12-registry.md) | ✅ Завершено | 44 положення (L1: 29, L2: 15; `100% EXPLICIT_COMPLETE`, L4: 1, разом: 45) | 43/43 підтверджено (`100% PASS`; додано Chomsky, Searle, Tarski, UCUM) |
 | **Глава 14** | [ch14-requirements-detection-and-formalization.md](file:///home/mfedchyk/book/ExpertSystem/ch14-requirements-detection-and-formalization.md) | [registry/ch14-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch14-registry.md) | ✅ Завершено | 55 положень (L1: 42, L2: 13; `100% EXPLICIT_COMPLETE`, L4: 5, разом: 60) | 21/21 підтверджено (`100% PASS`; прив'язано GBNF, Willard; додано Zave & Jackson) |
-| **Глава 15** | [ch15-knowledge-extraction-and-kb-construction.md](file:///home/mfedchyk/book/ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | [registry/ch15-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch15-registry.md) | ✅ Завершено | 73 положення (L1: 60, L2: 13; `100% EXPLICIT_COMPLETE`, L4: 28, разом: 101) | 30/30 підтверджено (`100% PASS`; додано HermiT, WordNet, Etzioni) |
+| **Глава 15** | [ch15-knowledge-extraction-and-kb-construction.md](file:///home/mfedchyk/book/ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | [registry/ch15-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch15-registry.md) | ✅ Завершено | 74 положення (L1: 61, L2: 13; `100% EXPLICIT_COMPLETE`, 6 канонічних блоків `[!NOTE]`, L4: 28, разом: 102) | 30/30 підтверджено (`100% PASS`; додано HermiT, WordNet, Etzioni) |
 
 > **Підсумок аудиту Частини III (Глави 37, 10, 11, 12, 14, 15):**  
-> Проаналізовано **473 наукові одиниці**, з яких **394 одиниці (83,3 %)** становлять авторський науковий та інженерний доробок Миколи Федчика (`L1: 293`, `L2: 101`), а **79 одиниць (16,7 %)** — класичний науковий фундамент (`L4`).
+> Проаналізовано **474 наукові одиниці**, з яких **395 одиниць (83,3 %)** становлять авторський науковий та інженерний доробок Миколи Федчика (`L1: 294`, `L2: 101`), а **79 одиниць (16,7 %)** — класичний науковий фундамент (`L4`).
 
 ### Частина IV. Архітектура ядра, детерміноване виведення, діагностика та пояснення ([part-04-architecture-and-inference.md](file:///home/mfedchyk/book/ExpertSystem/part-04-architecture-and-inference.md))
 
@@ -104,7 +104,7 @@
 | Глава | Файл глави | Файл поглавного реєстру | Статус аудиту | Кількість виявлених авторських положень (L1–L3) | Перевірка цитувань (L4) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Глава 23** | [ch23-knowledge-base-verification.md](file:///home/mfedchyk/book/ExpertSystem/ch23-knowledge-base-verification.md) | [registry/ch23-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch23-registry.md) | ✅ Завершено | 79 положень (L1: 69, L2: 10; `100% EXPLICIT_COMPLETE`, L4: 24, разом: 103) | 25/25 підтверджено (`100% PASS`; 0 залишків стоп-слова) |
-| **Глава 36** | [ch36-knowledge-testing-pyramid-and-variational-calibration.md](file:///home/mfedchyk/book/ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [registry/ch36-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch36-registry.md) | ✅ Завершено | 44 положення (L1: 35, L2: 9; L4: 1, разом: 45; з них 32 у черзі на канонічну номінацію) | 13/16 підтверджено (рекомендовано прив'язати інлайн-якорі [14]–[16]; додати Vovk, Forgy) |
+| **Глава 36** | [ch36-knowledge-testing-pyramid-and-variational-calibration.md](file:///home/mfedchyk/book/ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md) | [registry/ch36-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch36-registry.md) | ✅ Завершено | 45 положень (L1: 36, L2: 9; L4: 1, разом: 46; 6 канонічних блоків `[!NOTE]`, з них 32 у черзі на канонічну номінацію) | 13/16 підтверджено (рекомендовано прив'язати інлайн-якорі [14]–[16]; додати Vovk, Forgy) |
 | **Глава 25** | [ch25-how-expert-systems-learn.md](file:///home/mfedchyk/book/ExpertSystem/ch25-how-expert-systems-learn.md) | [registry/ch25-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch25-registry.md) | ✅ Завершено | 74 положення (L1: 57, L2: 17; `100% EXPLICIT_COMPLETE`, L4: 8, разом: 82) | 50/50 підтверджено (`100% PASS`; додано Compton RDR, Mitchell, Valiant PAC) |
 | **Глава 26** | [ch26-continual-learning.md](file:///home/mfedchyk/book/ExpertSystem/ch26-continual-learning.md) | [registry/ch26-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch26-registry.md) | ✅ Завершено | 56 положень (L1: 47, L2: 9; `100% EXPLICIT_COMPLETE`, L4: 26, разом: 82) | 27/27 підтверджено (`100% PASS`; додано McCloskey-Cohen, Grossberg ART, Pearl) |
 | **Глава 39** | [ch39-active-compliance-auditor-and-popperian-testing.md](file:///home/mfedchyk/book/ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md) | [registry/ch39-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch39-registry.md) | ✅ Завершено | 51 положення (L1: 37, L2: 14; `100% EXPLICIT_COMPLETE`, 7 канонічних блоків `[!NOTE]`, L4: 5, разом: 56) | 10/10 підтверджено (`100% PASS`; 0 залишків стоп-слова) |
@@ -112,7 +112,7 @@
 | **Глава 30** | [ch30-safety-cybersecurity-co-engineering.md](file:///home/mfedchyk/book/ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | [registry/ch30-registry.md](file:///home/mfedchyk/book/ExpertSystem/registry/ch30-registry.md) | ✅ Завершено | 71 положення (L1: 53, L2: 18; L4: 13, разом: 84; з них 15 у черзі на канонічну номінацію) | 17/18 підтверджено (рекомендовано прив'язати інлайн-посилання [18]; додати Anderson, Rushby MILS) |
 
 > **Підсумок аудиту Частини V (Глави 23, 36, 25, 26, 39, 27, 30):**  
-> Проаналізовано **512 наукових одиниць**, з яких **423 одиниці (82,6 %)** становлять авторський науковий та інженерний доробок Миколи Федчика (`L1: 336`, `L2: 87`), а **89 одиниць (17,4 %)** — класичний науковий фундамент і стандарти безпеки (`L4`).
+> Проаналізовано **513 наукових одиниць**, з яких **424 одиниці (82,7 %)** становлять авторський науковий та інженерний доробок Миколи Федчика (`L1: 337`, `L2: 87`), а **89 одиниць (17,3 %)** — класичний науковий фундамент і стандарти безпеки (`L4`).
 
 ### Частина VI. Дворежимні системи, абдуктивне відкриття та нейро-символьні архітектури ([part-06-frontiers-neuro-symbolic.md](file:///home/mfedchyk/book/ExpertSystem/part-06-frontiers-neuro-symbolic.md))
 
@@ -162,23 +162,23 @@
 
 | Частина монографії | К-сть документів | Усього наукових одиниць | Чисті авторські розробки (`L1`) | Авторські розширення та синтез (`L2/L3`) | Сукупний авторський доробок (`L1–L3`) | Класичний базис і стандарти (`L4`) | Частка авторського доробку |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Частина I (Глави 1–5)** | 5 | 240 | 137 | 80 | **217** | 23 | **90,4 %** |
+| **Частина I (Глави 1–5)** | 5 | 243 | 140 | 80 | **220** | 23 | **90,5 %** |
 | **Частина II (Глави 6–9, 32)** | 5 | 355 | 222 | 70 | **292** | 63 | **82,3 %** |
-| **Частина III (Глави 37, 10–12, 14–15)** | 6 | 473 | 293 | 101 | **394** | 79 | **83,3 %** |
+| **Частина III (Глави 37, 10–12, 14–15)** | 6 | 474 | 294 | 101 | **395** | 79 | **83,3 %** |
 | **Частина IV (Глави 16, 13, 19, 31, 24, 20)** | 6 | 392 | 253 | 96 | **349** | 43 | **89,0 %** |
-| **Частина V (Глави 23, 36, 25, 26, 39, 27, 30)** | 7 | 512 | 336 | 87 | **423** | 89 | **82,6 %** |
+| **Частина V (Глави 23, 36, 25, 26, 39, 27, 30)** | 7 | 513 | 337 | 87 | **424** | 89 | **82,7 %** |
 | **Частина VI (Глави 28, 34, 29, 38)** | 4 | 252 | 173 | 42 | **215** | 37 | **85,3 %** |
 | **Частина VII (Глави 17, 18, 21, 22, 35, 33, 40)** | 7 | 482 | 336 | 91 | **427** | 55 | **88,6 %** |
 | **Додатки А–Д** | 5 | 237 | 146 | 62 | **208** | 29 | **87,8 %** |
-| **РАЗОМ ПО МОНОГРАФІЇ** | **45** | **2 943** | **1 896 (64,4 %)** | **629 (21,4 %)** | **2 525 (85,8 %)** | **418 (14,2 %)** | **85,8 %** |
+| **РАЗОМ ПО МОНОГРАФІЇ** | **45** | **2 948** | **1 901 (64,5 %)** | **629 (21,3 %)** | **2 530 (85,8 %)** | **418 (14,2 %)** | **85,8 %** |
 
 ---
 
 ### 3.2. Головні висновки епістемічного аудиту та перевірки на відсутність плагіату
 
 1. **Висока концентрація оригінального наукового та інженерного доробку (`85,8 %`):**
-   - Із **2 943** паспортизованих наукових одиниць **1 896 одиниць (`64,4 %`)** є чистими авторськими розробками (`[L1: PURE_ORIGINAL]`): авторські закони, теореми, аксіоми, постулати, математичні оператори з замкненим циклом рантайму (*Actionable Closed Loop*), архітектурні патерни (`Zero-Copy mmap`, `Double-Bank BRAM Buffering`, `Fail-Closed Gates`, `Cognitive Shims`, `SimHash/BK-Tree Triage`, `VAIM`), трирівнева ієрархія складності експертних систем, шестирольова таксономія стейкхолдерів, інженерні інваріанти та експериментальні стенди.
-   - Ще **629 одиниць (`21,4 %`)** становлять авторські формалізації та інженерні розширення класичних теорій (`[L2: AUTHORIAL_EXTENSION]`), де в кожному поглавному реєстрі (`registry/*.md`) явно зафіксовано демаркаційну лінію: *«Класичне ядро першоджерела vs. Інженерно-математична надбудова М. Федчика»*.
+   - Із **2 948** паспортизованих наукових одиниць **1 901 одиниця (`64,5 %`)** є чистими авторськими розробками (`[L1: PURE_ORIGINAL]`): авторські закони, теореми, аксіоми, постулати, математичні оператори з замкненим циклом рантайму (*Actionable Closed Loop*), архітектурні патерни (`Zero-Copy mmap`, `Double-Bank BRAM Buffering`, `Fail-Closed Gates`, `Cognitive Shims`, `SimHash/BK-Tree Triage`, `VAIM`), трирівнева ієрархія складності експертних систем, шестирольова таксономія стейкхолдерів, інженерні інваріанти та експериментальні стенди.
+   - Ще **629 одиниць (`21,3 %`)** становлять авторські формалізації та інженерні розширення класичних теорій (`[L2: AUTHORIAL_EXTENSION]`), де в кожному поглавному реєстрі (`registry/*.md`) явно зафіксовано демаркаційну лінію: *«Класичне ядро першоджерела vs. Інженерно-математична надбудова М. Федчика»*.
 2. **Канонічна топологічна структура монографії (`Частини I–VII`):**
    - Усі 40 глав організовано в суворому дедуктивному причинно-наслідковому порядку без інверсій залежностей: **Частина I** (епістемічний фундамент) $\to$ **Частина II** (математичні моделі, схеми та `mmap`-пакети знань) $\to$ **Частина III** (вхідний скептицизм та здобуття знань) $\to$ **Частина IV** (архітектура ядра, детерміноване виведення, решітки відношень, діагностика та пояснення) $\to$ **Частина V** (верифікація, піраміда випробувань, індукція, неперервне навчання, аудит та сертифікація безпеки) $\to$ **Частина VI** (дворежимні системи, абдуктивне відкриття та нейро-символьні архітектури) $\to$ **Частина VII** (стек реалізації, інфраструктура виконання, безпечна дія, кібернетика Edge-to-Backend, синергетика NPU, міжсистемний обмін та розподілена SOA).
 3. **Академічна чистота та відсутність плагіату (`100 % верифіковано`):**

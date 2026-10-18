@@ -54,6 +54,41 @@ The taxonomic classification of an information system is governed neither by its
 > 2. **Consultation (Dialogue) System:** Conducts human-machine dialogue, gathers primary parameters, and presents explanatory workflows without legal or auditable evidential force.
 > 3. **Decision Support System (DSS):** Performs statistical ranking of alternatives, predictive forecasting, or optimization without a deterministic logical proof trace.
 > 4. **Evidence-Governed Expert System:** Deterministically applies normative rules to the facts of a specific case, synthesizing a verifiable conclusion accompanied by an inspectable proof trace and a cryptographically signed justification bundle.
+> *Engineering Invariant:* The system class is invariant to interface form and computational substrate, and is determined exclusively by the epistemic force of the output artifact and the presence of a verified proof trace.
+
+### 1.1. Internal Stratification of Evidence-Governed Expert Systems: Consultative-Advisory, Recommendatory, and Inventive
+
+While the external typology (Section 1) draws a strict demarcation line between passive information retrieval systems ($\mathrm{RIS}$), statistical decision support systems ($\mathrm{DSS}$), and the class of evidence-governed expert systems ($\mathrm{ES}$), a fundamental question arises within the $\mathrm{ES}$ class itself: **what specific intellectual operation does the inference engine perform over byte-verified knowledge?**
+
+In Mykola Fedchyk's authorial conception, the class of evidence-governed expert systems $\mathrm{ES}$ is internally stratified into three functional echelons according to the nature of the synthesized conclusion and the depth of resolving engineering contradictions:
+
+| Expert System Echelon | Input Epistemic Situation | Logical and Vector Inference Mechanism | Canonical Output Verdict Type |
+| :--- | :--- | :--- | :--- |
+| **1. Consultative-Advisory ($\mathrm{ES}_{\mathrm{consultative}}$)** | Incomplete case fact vector $C$ or exploratory query at the boundary of normative applicability | Backward abductive analysis of premise deficits, Socratic question generation, and review of adjacent precedents | `CLARIFICATION` / `QUALIFIED_NONANSWER` with a list of missing parameters and a map of applicable norms |
+| **2. Recommendatory ($\mathrm{ES}_{\mathrm{recommendatory}}$)** | Complete case fact vector $C$ within one or more harmonized standards | Forward and backward deductive inference, SI interval verification, and ASPIC+ normative collision resolution | `VERIFIED_FACT` / `ACCEPT` / `REFUSAL` with a signed action contract and byte-level trace |
+| **3. Inventive ($\mathrm{ES}_{\mathrm{inventive}}$)** | Local unsolvability in domain $D_1$ (antagonistic contradiction $M_1 \implies \mathrm{IMPROVES}(P_1) \land \mathrm{DEGRADES}(P_2)$) | Vector-algebraic abduction of isomorphic bridges on a weighted basis + cross-pack synthesis in the Federated Arena ($D_1 \oplus \dots \oplus D_k$) | `SYNTHESIZED` (Engineering Invention Passport) or `BOUNDED_HYPOTHESIS` (missing-link passport) |
+
+The principal scientific novelty of this stratification is that a **consultative-advisory expert system** in M. Fedchyk's architecture differs fundamentally from a conventional dialogue system (Class 2 of the external taxonomy): it conducts consultation not by freely paraphrasing text, but by strictly computing underdetermined variables in a formal rule graph. In turn, an **inventive expert system** for the first time elevates symbolic artificial intelligence beyond the reproductive application of pre-existing instructions into the realm of **discovering novel cross-domain engineering solutions**, where every constituent link of the invention is protected by byte-level primary-source custody.
+
+> [!NOTE]
+> **Three Degrees of Epistemic Power in Expert Systems under M. M. Fedchyk's Model**
+> 1. **Consultative Navigation via Deterministic Gap Detection (`Consultative Epistemic Guidance`):** when data is insufficient for an unambiguous ruling, the expert system neither guesses the answer nor stops at passive search, but computes the minimal set of missing measurements and advises the engineer on the entry conditions for each branch of the normative tree.
+> 2. **Recommendatory Verification and Normative Adjudication (`Recommendatory Normative Adjudication`):** given all input case parameters, the system executes a deterministic compatibility check and emits a binding engineering recommendation or prohibition with full cryptographic binding to active axioms.
+> 3. **Inventive Cross-Domain Synthesis and Missing-Link Abduction (`Inventive Cross-Domain Synthesis`):** when routine rules of a single domain reach an impasse of technical contradiction, the system transitions to the Federated Arena and vector-algebraic collider mode, synthesizing a novel multi-pack solution (`SYNTHESIZED`) or formulating an exact technical specification for experimental discovery (`BOUNDED_HYPOTHESIS`).
+> *Engineering Invariant:* All three classes operate over a single immutable knowledge format and obey a shared hardware-software truth gate, precluding unverified assumptions in any of the three modes.
+
+### 1.2. Epistemic Spiral from Needs Marketing to the Invention Passport and Patent Claim
+
+In traditional corporations, a deep semantic chasm separates product marketing, systems engineers, the research laboratory, and patent counsel: marketers operate with presentations and customer wishes, engineers with fragmented requirement tables, and inventors rely on serendipitous insight. M. M. Fedchyk's three-tier expert system architecture stitches these divisions into a **single closed cybernetic loop of need discovery and technology creation**.
+
+The mechanism of this spiral operates as follows: when a Field Application Engineer (`FAE`) or Technical Marketing Engineer (`TME`) evaluates a complex customer request through the recommendatory tier ($\mathrm{ES}_{\mathrm{recommendatory}}$) and receives a deterministic `REFUSAL` due to a physical or normative contradiction (for example, the impossibility of simultaneously satisfying switching speed and electromagnetic compatibility limits within the existing catalog), the system does not merely reject the request. It automatically registers a **formalized epistemic and product gap ticket (`KnowledgeGapTicket`)**. The accumulated array of such tickets provides product marketing with an exact quantitative map of unmet market demand and automatically triggers the **inventive expert system ($\mathrm{ES}_{\mathrm{inventive}}$)** pipeline to synthesize a next-generation solution.
+
+> [!NOTE]
+> **Three Laws of Transforming Unmet Market Need into a Verified Invention (after M. M. Fedchyk)**
+> 1. **Law of Productive Refusal (`Refusal-as-Invention-Trigger`):** every deterministic refusal of a recommendatory expert system (`REFUSAL`) on a real customer query caused by a parameter conflict is recorded as a structured `KnowledgeGapTicket` and becomes a formal technical specification for inventive synthesis.
+> 2. **Law of Evidence-Driven Reconnaissance in Technical Marketing (`Evidence-Driven Technical Marketing`):** product and technical marketers (`PMM/TME/FAE`) use statistics of unresolved gaps and boundary `CLARIFICATION` queries to objectively identify market "white spaces" and formulate new product specifications without subjective guesswork.
+> 3. **Law of the Tri-Role Synthesis Passport (`Tri-Role Invention Passport`):** the output document of the inventive system (`SynthesisPassport`) simultaneously serves as an architectural blueprint for the R&D engineer (`SYNTHESIZED`), an exact laboratory experiment plan for the scientist (`BOUNDED_HYPOTHESIS`), and a ready-made scaffold of an independent patent claim for the patent attorney.
+> *Runtime Governance / Engineering Invariant:* Task handoff from a marketing inquiry to R&D synthesis occurs without loss of formal SI measurement units and boundary intervals `[ValMin..ValMax]`, eliminating distortion of customer needs on the path to the laboratory.
 
 ### 1.3. Three Nested Operational Modes of Evidence-Governed Expert Systems: Engineering Refinements from Consultation to Invention
 
