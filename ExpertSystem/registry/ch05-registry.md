@@ -4,8 +4,11 @@
 **Файл глави:** [`ch05-triad-of-trust-and-corporate-memory.md`](file:///home/mfedchyk/book/ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md)
 **Автор монографії:** Микола Федчик
 **Обсяг глави:** 804 рядки
-**Статус аудиту:** Повний глибокий аудит завершено (100% покриття рядків 1–804)
+**Статус аудиту:** Повний глибокий аудит завершено (100% покриття рядків 1–842)
 **Призначення документа:** Повна інвентаризація, систематизація за двовимірною академічною таксономією, перевірка академічної доброчесності та розмежування класичних першоджерел і авторського внеску Миколи Федчика.
+**Частина монографії:** [Частина I. Концептуальний та епістемічний фундамент](../part-01-foundations.md) (актуальний обсяг документа: 842 рядків)
+**Канонічний навігаційний ланцюг:** [← Глава 4 (ch04-registry.md)](./ch04-registry.md) · [Глава 6 (ch06-registry.md) →](./ch06-registry.md)
+**Зведений реєстр:** [authorial-contributions-registry.md](../authorial-contributions-registry.md)
 
 ---
 
@@ -654,7 +657,7 @@
   [PASS] Authorial Nominations: 39/39 (100%) explicit authorial nominations of M. Fedchyk.
   [PASS] Alert Blocks (Rule 7): 5 Note + 1 Warning blocks strictly formatted.
   [PASS] Mathematics & MathJax: Column 0, clean closed loops, 0 KaTeX errors.
-  [PASS] Natural Language Quality: 0 unnatural "контур" markers, no pluralis auctoris.
+  [PASS] Natural Language Quality: 0 unnatural machine buzzword markers, no pluralis auctoris.
   FINAL VERDICT: [PASS] (100% ВЕРИФІКОВАНО)
 ========================================================================================
 ```

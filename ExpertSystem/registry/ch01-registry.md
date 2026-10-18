@@ -6,6 +6,9 @@
 **Дата аудиту:** 15 жовтня 2026 р.  
 **Статус документа:** Затверджений еталонний науковий реєстр (Пілотний аудит Частини I)  
 **Нормативна таксономія:** [authorial-contributions-registry.md](../authorial-contributions-registry.md)
+**Частина монографії:** [Частина I. Концептуальний та епістемічний фундамент](../part-01-foundations.md) (актуальний обсяг документа: 467 рядків)
+**Канонічний навігаційний ланцюг:** [← Зведений реєстр](../authorial-contributions-registry.md) · [Глава 2 (ch02-registry.md) →](./ch02-registry.md)
+**Зведений реєстр:** [authorial-contributions-registry.md](../authorial-contributions-registry.md)
 
 ---
 

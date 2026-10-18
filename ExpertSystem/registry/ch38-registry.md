@@ -3,9 +3,12 @@
 **Глава:** [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](../ch38-curing-machine-hallucinations-and-knowledge-deficits.md)  
 **Монографія:** «Архітектура доказових експертних систем»  
 **Автор монографії:** Микола Федчик  
-**Файл глави:** `ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md` (всього 896 рядків)  
+**Файл глави:** `ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md` (всього 895 рядків)  
 **Дата аудиту:** 15 жовтня 2026 р.  
 **Мета аудиту:** Поглиблена наукова систематизація, виявлення явного та неявного авторського доробку, верифікація академічної доброчесності (плагіат-контроль, демаркація першоджерел Kalai & Vempala, Ji et al., Farquhar et al. Semantic Entropy, Manakul et al. SelfCheckGPT, Shumailov et al., Willard & Louf, Charles S. Peirce, Könighofer, Shalev-Shwartz Mobileye RSS, Rafailov DPO, Bourtoule SISA, Wang Self-Consistency, Doyle JTMS, Karl Popper, Zheng et al. LLM-as-a-Judge, та авторського внеску М. Федчика: детермінована доказова терапія галюцинацій, синдром «коробочності» Boxiness, динамічні когнітивні ремонтні патчі CRP / когнітивні прошарки Shims, дворівневий шлюз із побайтовою кустодією SHA-256 і показником $\mathrm{ZHR} = 1{,}000000$, попперівський цикл фальсифікації гіпотез $F^+$ проти $F^-$, геологічна стратифікація дефіциту знань KDI, шлюз безпечної відмови Fail-Closed Gate та предикатне екранування нейромереж) та підготовка науково-номенклатурного підґрунтя для патентування, ліцензування й міжнародного академічного цитування.
+**Частина монографії:** [Частина VI. Дворежимні системи, абдуктивне відкриття та нейро-символьні архітектури](../part-06-frontiers-neuro-symbolic.md) (актуальний обсяг документа: 895 рядків)
+**Канонічний навігаційний ланцюг:** [← Глава 29 (ch29-registry.md)](./ch29-registry.md) · [Глава 17 (ch17-registry.md) →](./ch17-registry.md)
+**Зведений реєстр:** [authorial-contributions-registry.md](../authorial-contributions-registry.md)
 
 ---
 

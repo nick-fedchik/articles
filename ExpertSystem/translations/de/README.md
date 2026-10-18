@@ -149,15 +149,15 @@ Der redaktionelle Prüfbericht zur Monografiestruktur enthält die thematische B
 
 ## Lesepfade
 
-**Erste Softwareverifikation:** [1](ch01-introduction-to-expert-systems.md) → [7](ch07-knowledge-base-typology.md) → [8](ch08-engineering-artifacts-as-data.md) → [17](ch17-implementation-stack.md) → [23](ch23-knowledge-base-verification.md) → [25](ch25-how-expert-systems-learn.md). Ziel: Reproduzierbares, evidenzbasiertes Urteil mit Negativtests und kontrollierter Wissensänderung.
+**Erste Softwareverifikation:** [1](ch01-introduction-to-expert-systems.md) → [7](ch07-knowledge-base-typology.md) → [8](ch08-engineering-artifacts-as-data.md) → [32](ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) → [19](ch19-from-question-to-evidence.md) → [23](ch23-knowledge-base-verification.md) → [25](ch25-how-expert-systems-learn.md). Ziel: Reproduzierbares, evidenzbasiertes Urteil mit Negativtests und kontrollierter Wissensänderung.
 
-**Wissensingenieurwesen:** [Teil II](part-02-knowledge-models.md) → [Teil III](part-03-knowledge-engineering-nlp.md) → [19](ch19-from-question-to-evidence.md) → [20](ch20-explanation-engine.md) → [26](ch26-continual-learning.md). Ziel: Semantik, Provenienz, Wissensgewinnung und Kandidatenprüfung abgleichen.
+**Wissensingenieurwesen:** [Teil II](part-02-knowledge-models.md) → [Teil III](part-03-knowledge-engineering-nlp.md) → [19](ch19-from-question-to-evidence.md) → [20](ch20-explanation-engine.md) → [26](ch26-continual-learning.md). Ziel: Semantik, Provenienz, Eingangsskepsis ([37](ch37-input-information-assessment-and-algorithmic-skepticism.md)), Wissensgewinnung und Kandidatenprüfung abgleichen.
 
-**Lösungsarchitektur:** [16](ch16-expert-systems-architecture.md) → [19](ch19-from-question-to-evidence.md) → [31](ch31-syllogistic-reasoning-and-relation-lattices.md) → [20](ch20-explanation-engine.md) → [21](ch21-from-recommendation-to-action.md). Ziel: Trennung von Beweisprüfung, Normenanwendung, Erklärung und Ausführungsautorisierung.
+**Kernarchitektur und deterministische Inferenz ([Teil IV](part-04-architecture-and-inference.md)):** [16](ch16-expert-systems-architecture.md) → [13](ch13-language-variability-vs-determinism.md) → [19](ch19-from-question-to-evidence.md) → [31](ch31-syllogistic-reasoning-and-relation-lattices.md) → [24](ch24-system-diagnosis.md) → [20](ch20-explanation-engine.md). Ziel: Trennung von Kernverträgen, Abfragekompilierung, Normenanwendung, modellbasierter Ursachendiagnose und Erklärung von der Ausführungsautorisierung ([21](ch21-from-recommendation-to-action.md)).
 
-**Verifikation und Sicherheit:** [23](ch23-knowledge-base-verification.md) → [36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) → [25](ch25-how-expert-systems-learn.md) → [26](ch26-continual-learning.md) → [27](ch27-safety-case-gsn-synthesis.md) → [30](ch30-safety-cybersecurity-co-engineering.md). Externe Anlagendiagnose über [Kapitel 24](ch24-system-diagnosis.md).
+**Verifikation, Lernen und Sicherheit ([Teil V](part-05-verification-and-learning.md)):** [23](ch23-knowledge-base-verification.md) → [36](ch36-knowledge-testing-pyramid-and-variational-calibration.md) → [25](ch25-how-expert-systems-learn.md) → [26](ch26-continual-learning.md) → [39](ch39-active-compliance-auditor-and-popperian-testing.md) → [27](ch27-safety-case-gsn-synthesis.md) → [30](ch30-safety-cybersecurity-co-engineering.md).
 
-**Hybride Systeme und Betrieb:** [Teil VI](part-06-frontiers-neuro-symbolic.md) → [Teil VII](part-07-runtime-and-knowledge-exchange.md) → [40](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) und Anhänge. Ziel: Sprachmodelle integrieren, verteilte Wissens-SOAs skalieren und Systemföderationen absichern.
+**Hybride Systeme und Betrieb:** [Teil VI](part-06-frontiers-neuro-symbolic.md) ([28](ch28-dual-mode-expert-systems.md) → [34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) → [29](ch29-neuro-symbolic-architecture.md) → [38](ch38-curing-machine-hallucinations-and-knowledge-deficits.md)) → [Teil VII](part-07-runtime-and-knowledge-exchange.md) ([17](ch17-implementation-stack.md) → [18](ch18-execution-infrastructure.md) → [21](ch21-from-recommendation-to-action.md) → [22](ch22-cybernetics-edge-to-backend.md) → [35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md) → [33](ch33-inter-system-knowledge-exchange-and-model-teaching.md) → [40](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md)) und Anhänge. Ziel: Sprachmodelle integrieren, verteilte Wissens-SOAs skalieren und Systemföderationen absichern.
 
 ---
 
@@ -176,7 +176,7 @@ Das Werk umfasst sieben Themenblöcke, 40 Kapitel und fünf Anhänge:
 ```mermaid
 flowchart TD
     accTitle: Struktur des Buches und Zusammenhang der Teile
-    accDescr: Sieben Themenblöcke von Wissensverträgen über Repräsentation, Eingabebewertung, Inferenz, Verifikation und Neuro-Symbolik bis zur verteilten SOA.
+    accDescr: Sieben Themenblöcke von Wissensverträgen über Repräsentation, Eingabebewertung, Inferenz, Verifikation und Neuro-Symbolik bis zur verteilte SOA.
 
     P1["<b>Teil I</b><br/>Wissensvertrag und Vertrauensgrenzen"] --> P2["<b>Teil II</b><br/>Modelle, Repräsentation und Wissenspakete"]
     P2 --> P3["<b>Teil III</b><br/>Eingabebewertung und Wissensgewinnung"]
@@ -298,6 +298,7 @@ flowchart TD
 * [Anhang C. GNSS-freie autonome Navigation: Georäumlicher Abgleich (TRN/DSMAC), visuelle Odometrie (VIO) und Sensorfusion](appendix-c-autonomous-navigation-and-geosearch.md)
 * [Anhang D. Analoge Expertensysteme, neuromorphe Berechnungen und Hardware-Inferenz](appendix-d-analog-expert-systems-and-neuromorphic-computing.md)
 * [Anhang E. Gemischt analog-digitale Expertensysteme unter beweisgestützter Kontrolle](appendix-e-mixed-signal-neuromorphic-expert-systems.md)
+* [Gesamtregister der wissenschaftlichen Eigenleistungen und epistemischen Integrität (46 Kapitelregister)](../../authorial-contributions-registry.md)
 * [Über den Autor: Mykola Fedchyk (Nick Fedchik)](about-the-author.md)
 
 ---
