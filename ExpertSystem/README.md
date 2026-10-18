@@ -310,7 +310,7 @@ flowchart TD
 * [Додаток В. Автономна навігація без GNSS: геопросторове зіставлення (TRN/DSMAC), візуальна одометрія (VIO) та експертний арбітраж сенсорного злиття](appendix-c-autonomous-navigation-and-geosearch.md)
 * [Додаток Г. Аналогові експертні системи, нейроморфні обчислення та апаратне логічне виведення](appendix-d-analog-expert-systems-and-neuromorphic-computing.md)
 * [Додаток Д. Змішані аналого-цифрові експертні системи: нейроморфні, аналогові та інші нетрадиційні обчислювачі під доказовим контролем](appendix-e-mixed-signal-neuromorphic-expert-systems.md)
-* [Зведений науково-експертний реєстр авторського доробку та епістемічної чистоти монографії (46 поглавних реєстрів у registry/)](authorial-contributions-registry.md)
+* [Зведений науково-експертний реєстр авторського доробку та епістемічної чистоти монографії (45 поглавних реєстрів у registry/)](authorial-contributions-registry.md)
 * [Про автора: Микола Федчик (Nick Fedchik)](about-the-author.md)
 
 ---

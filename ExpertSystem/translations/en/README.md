@@ -304,7 +304,7 @@ flowchart TD
 * [Appendix C. GNSS-Denied Autonomous Navigation: Geospatial Matching (TRN/DSMAC), Visual-Inertial Odometry (VIO), and Expert Sensor Fusion Arbitration](appendix-c-autonomous-navigation-and-geosearch.md)
 * [Appendix D. Analog Expert Systems, Neuromorphic Computing, and Hardware Inference](appendix-d-analog-expert-systems-and-neuromorphic-computing.md)
 * [Appendix E. Mixed-Signal Analog-Digital Expert Systems: Neuromorphic, Analog, and Non-Von-Neumann Processors Under Evidence Governance](appendix-e-mixed-signal-neuromorphic-expert-systems.md)
-* [Master Registry of Authorial Scientific Contributions and Epistemic Integrity (46 Chapter Registries)](../../authorial-contributions-registry.md)
+* [Master Registry of Authorial Scientific Contributions and Epistemic Integrity (45 Chapter Registries)](../../authorial-contributions-registry.md)
 * [About the Author: Mykola Fedchyk (Nick Fedchik)](about-the-author.md)
 
 ---

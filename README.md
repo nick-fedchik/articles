@@ -14,7 +14,7 @@ This repository contains books and articles by **Mykola Fedchyk** (Ukrainian: М
 
 1. **[Architecture of Evidence-Based Expert Systems: From Formal Ontologies to Neuro-Symbolic AI](ExpertSystem/README.md)**  
    Epistemic foundations, mathematical models and zero-copy knowledge packs, input skepticism and knowledge elicitation, core architecture and deterministic inference, verification and safety cases, dual-mode neuro-symbolic abduction, and runtime cybernetics with distributed epistemic SOA.  
-   Structure: 7 parts, 40 chapters, 5 appendices · [Authorial Contributions Registry (46 documents)](ExpertSystem/authorial-contributions-registry.md) · [Multilingual editions (45 languages)](ExpertSystem/translations/README.md).
+   Structure: 7 parts, 40 chapters, 5 appendices · [Authorial Contributions Registry (45 documents)](ExpertSystem/authorial-contributions-registry.md) · [Multilingual editions (45 languages)](ExpertSystem/translations/README.md).
 2. **[Managing Complex Engineering Projects and Programmes: From Work Breakdown Structure to Digital Thread and Evidence-Based Release](Project_Management/book/README.md)**  
    Work breakdown structure (WBS) and hybrid planning for hardware and software, baselines and change control, event-driven management and metrics, earned value and Monte Carlo schedule forecasting, continuous compliance, release evidence, product, programme and portfolio management, the project management office (PMO) and AI assistants.  
    Structure: 6 parts, 18 chapters, 3 appendices.
@@ -95,7 +95,7 @@ Copyright © 2026 Mykola Fedchyk.
 
 1. **[Архітектура доказових експертних систем: від формальних онтологій до нейро-символьного ШІ](ExpertSystem/README.md)**  
    Епістемічний фундамент, математичні моделі та незмінні пакети знань, оцінювання входу й здобуття знань, архітектура ядра та детерміноване виведення, верифікація й обґрунтування безпеки, дворежимна нейро-символьна абдукція, інфраструктура виконання та розподілена епістемічна SOA.  
-   Структура: 7 частин, 40 глав, 5 додатків · [Зведений реєстр авторського наукового доробку (46 документів)](ExpertSystem/authorial-contributions-registry.md) · [Багатомовні видання (45 мов світу)](ExpertSystem/translations/README.md).
+   Структура: 7 частин, 40 глав, 5 додатків · [Зведений реєстр авторського наукового доробку (45 документів)](ExpertSystem/authorial-contributions-registry.md) · [Багатомовні видання (45 мов світу)](ExpertSystem/translations/README.md).
 2. **[Керування складними інженерними проєктами та програмами: від структури робіт до цифрової нитки й доказового релізу](Project_Management/book/README.md)**  
    Структура декомпозиції робіт (WBS) і гібридне планування апаратної та програмної розробки, базові версії та контроль змін, подійно-орієнтоване управління й метрики, освоєний обсяг і прогноз строків методом Монте-Карло, безперервний комплаєнс, докази релізу, продуктовий, програмний і портфельний менеджмент, проєктний офіс (PMO) та ШІ-асистенти.  
    Структура: 6 частин, 18 глав, 3 додатки.

@@ -298,7 +298,7 @@ flowchart TD
 * [Anhang C. GNSS-freie autonome Navigation: Georäumlicher Abgleich (TRN/DSMAC), visuelle Odometrie (VIO) und Sensorfusion](appendix-c-autonomous-navigation-and-geosearch.md)
 * [Anhang D. Analoge Expertensysteme, neuromorphe Berechnungen und Hardware-Inferenz](appendix-d-analog-expert-systems-and-neuromorphic-computing.md)
 * [Anhang E. Gemischt analog-digitale Expertensysteme unter beweisgestützter Kontrolle](appendix-e-mixed-signal-neuromorphic-expert-systems.md)
-* [Gesamtregister der wissenschaftlichen Eigenleistungen und epistemischen Integrität (46 Kapitelregister)](../../authorial-contributions-registry.md)
+* [Gesamtregister der wissenschaftlichen Eigenleistungen und epistemischen Integrität (45 Kapitelregister)](../../authorial-contributions-registry.md)
 * [Über den Autor: Mykola Fedchyk (Nick Fedchik)](about-the-author.md)
 
 ---
