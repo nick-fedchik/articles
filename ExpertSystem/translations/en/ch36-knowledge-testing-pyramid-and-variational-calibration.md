@@ -601,6 +601,35 @@ flowchart TD
 
 The stigmergic principle eliminates human subjectivity: knowledge engineers are prioritized with tickets for rule engineering corresponding to the highest pheromone weight accumulated from recurring query failures.
 
+### 7.1. Matrix of Quantitative Evaluation Criteria Across the Three Expert System Modes: From Zero Hallucination to Cross-Domain Novelty Index
+
+Because the three operational modes of an expert system ($\mathrm{ES}_{\mathrm{consultative}}, \mathrm{ES}_{\mathrm{recommendatory}}, \mathrm{ES}_{\mathrm{inventive}}$) solve problems of distinct epistemic complexity, they cannot be evaluated by a single averaged metric such as `F1-score` or `BLEU`. The author has developed a hierarchical system of quantitative evaluation criteria partitioned into **global inviolable safety invariants** (`G-1..G-3`, where flexibility equals zero across all modes) and **mode-specific performance metrics** for each class of system:
+
+| Criterion Group | Metric Code and Name | Mathematical Definition / Calculation Formula | Canonical Acceptance Standard |
+| :--- | :--- | :--- | :---: |
+| **0. Global Safety Invariants (Shared)** | **`G-1`: Zero Hallucination Rate ($\mathrm{ZHR}$)** | $1 - \frac{N_{\mathrm{unverified\_assertions}}}{N_{\mathrm{total\_responses}}}$ | **$= 1.000000$** |
+| | **`G-2`: Byte-Custody Integrity (`%ebx`)** | $\frac{N_{\mathrm{valid\_sha256\_slices}}}{N_{\mathrm{cited\_slices}}} \times 100\%$ | **$= 100.0\%$** |
+| | **`G-3`: Bit-Exact Reproducibility (`Determinism`)** | Exact match of `ChainMerkleRoot` across $M = 1000$ repeated runs | **$= 100.0\%$** |
+| **1. Criteria for $\mathrm{ES}_{\mathrm{consultative}}$** | **`C-1`: Presupposition Trap Rejection ($\mathrm{PTRR}$)** | Fraction of false-premise queries blocked at Level 1 (`ontology.zkpg`) or Level 2 | **$\ge 99.5\%$** |
+| | **`C-2`: Defeater Disclosure Recall ($\mathrm{DR}_{\mathrm{cons}}$)** | Fraction of active `SECTION_DEFEATERS` returned alongside the primary norm | **$= 100.0\%$** |
+| | **`C-3`: Consultation Latency ($T_{\mathrm{cons}}$)** | Time from query to verified byte-level quote (`Gate + Pack`) | **$< 100\ \mu\text{s}$ / $< 5\text{ ms}$** |
+| **2. Criteria for $\mathrm{ES}_{\mathrm{recommendatory}}$** | **`R-1`: Collision Rejection Precision ($\mathrm{CRP}$)** | Fraction of incompatible alternatives (`0x0408`/`0x0409`) filtered prior to recommendation | **$= 100.0\%$** |
+| | **`R-2`: Pareto Ranking Concordance ($\tau_{\mathrm{Kendall}}$)** | Kendall rank correlation coefficient between $\mathcal{M}(a, R)$ ranking and ground truth | **$\tau \ge 0.90$** |
+| | **`R-3`: Counterfactual Remediation Hit Rate ($\mathrm{RHR}$)** | Fraction of single-pack `.kp` refusals resolved via a valid alternative from another pack | Empirical Vault Metric |
+| **3. Criteria for $\mathrm{ES}_{\mathrm{inventive}}$** | **`I-1`: Antonym Collapse Immunity ($\mathrm{ACI}$)** | Fraction of vector neighbors with $\cos\theta > 0.95$ and opposite deontic polarity blocked by System 2 | **$= 100.0\%$** |
+| | **`I-2`: Cross-Domain Novelty Index ($\mathcal{N}_{\mathrm{orth}}$)** | Mean Jaccard distance across `DomainMask64` bitmasks in `SYNTHESIZED` chains | **$\mathcal{N}_{\mathrm{orth}} \ge 0.50$** |
+| | **`I-3`: Validated Synthesis Yield ($\mathrm{VSY}$)** | Fraction of `Section 5 (HV4096+FP16)` candidates passing all System 2 gates (`%ebx + SI`) | $K_{\mathrm{verified}} / K_{\mathrm{proposed}}$ |
+| | **`I-4`: Bounded Hypothesis Localization ($\mathrm{BHLA}$)** | Precision of isolating the single missing link ($N-1$ of $N$) and `ExperimentPlan` completeness | **$= 100.0\%$** |
+| | **`I-5`: UMA Abduction Latency ($T_{\mathrm{abduct}}$)** | Execution time of `RelationalParallelogramSearch` (`HV4096 + FP16`) over $10\,000$ nodes | **$\le 1.2\text{ ms}$ (CPU)** |
+
+> [!NOTE]
+> **Four Groups of Quantitative Attestation Criteria for Evidence-Governed Expert Systems (by M. M. Fedchyk)**
+> 1. **Global Safety Invariants Group (`G-1..G-3`):** establishes an absolute zero-hallucination barrier ($\mathrm{ZHR} = 1.000000$), one hundred percent cryptographic integrity of primary source byte slices (`%ebx Custody = 100%`), and bit-exact determinism of the Merkle tree (`ChainMerkleRoot`) regardless of the selected operating mode.
+> 2. **Advisory-Consultative Mode Criteria Group (`C-1..C-3`):** measures the system's ability to instantaneously ($<100\ \mu\text{s}$ at the `ontology.zkpg` gate) reject false-premise queries ($\mathrm{PTRR} \ge 99.5\%$) and guarantee one hundred percent disclosure of all normative exceptions and caveats (`Defeater Recall = 100%`).
+> 3. **Recommendatory Mode Criteria Group (`R-1..R-3`):** evaluates the infallibility of filtering inter-package normative and physical collisions ($\mathrm{CRP} = 100\%$), the quality of Pareto-optimal ranking of alternatives by safety margin in SI units ($\tau_{\mathrm{Kendall}} \ge 0.90$), and the effectiveness of counterfactual substitution for rejected components.
+> 4. **Inventive Mode Criteria Group (`I-1..I-5`):** attests the immunity of the De-Vectorization Diode against antonym collapse in vector space ($\mathrm{ACI} = 100\%$), the degree of cross-domain novelty of synthesized solutions ($\mathcal{N}_{\mathrm{orth}} \ge 0.50$), the localization precision of a single missing link for laboratory experiment planning ($\mathrm{BHLA} = 100\%$), and the speed of hyperdimensional search in UMA ($\le 1.2\text{ ms}$ per $10^4$ concepts).
+> *Runtime Governance / Engineering Invariant:* No improvement in abduction speed or yield (`I-3`, `I-5`) may be admitted into production if it degrades the global safety invariants `G-1..G-3` or antonym collapse immunity `I-1` by even one part per million.
+
 ---
 
 ## 8. Software Implementation in Go

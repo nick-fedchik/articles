@@ -601,6 +601,35 @@ flowchart TD
 
 Das stigmergische Prinzip eliminiert menschliche Subjektivität: Wissensingenieure bearbeiten vorrangig jene Regelerstellungsaufgaben, die das höchste Pheromongewicht durch wiederholte Abfragen aufweisen.
 
+### 7.1. Matrix quantitativer Bewertungskriterien für die drei Betriebsmodi von Expertensystemen: Von der Null-Halluzination zum domänenübergreifenden Neuheitsindex
+
+Da die drei operativen Modi eines Expertensystems ($\mathrm{ES}_{\mathrm{consultative}}, \mathrm{ES}_{\mathrm{recommendatory}}, \mathrm{ES}_{\mathrm{inventive}}$) Aufgaben unterschiedlicher epistemischer Komplexität lösen, lassen sie sich nicht mit einer einzigen gemittelten Metrik wie `F1-Score` oder `BLEU` bewerten. Der Autor hat ein hierarchisches System quantitativer Bewertungskriterien entwickelt, das sich in **globale unverbrüchliche Sicherheitsinvarianten** (`G-1..G-3`, bei denen die Flexibilität für alle Modi gleich null ist) und **spezialisierte Leistungsmetriken** für jede Systemklasse gliedert:
+
+| Kriteriengruppe | Code und Bezeichnung der Metrik | Mathematische Definition / Berechnungsformel | Kanonische Abnahmenorm |
+| :--- | :--- | :--- | :---: |
+| **0. Globale Sicherheitsinvarianten (gemeinsam)** | **`G-1`: Zero Hallucination Rate ($\mathrm{ZHR}$)** | $1 - \frac{N_{\mathrm{unverified\_assertions}}}{N_{\mathrm{total\_responses}}}$ | **$= 1{,}000000$** |
+| | **`G-2`: Integrität der Byte-Verwahrung (`%ebx`)** | $\frac{N_{\mathrm{valid\_sha256\_slices}}}{N_{\mathrm{cited\_slices}}} \times 100\%$ | **$= 100{,}0\%$** |
+| | **`G-3`: Bitgenaue Reproduzierbarkeit (`Determinism`)** | Übereinstimmung von `ChainMerkleRoot` bei $M = 1000$ Wiederholungsläufen | **$= 100{,}0\%$** |
+| **1. Kriterien für $\mathrm{ES}_{\mathrm{consultative}}$** | **`C-1`: Abweisung von Präsuppositionsfallen ($\mathrm{PTRR}$)** | Anteil von Fragen mit falschen Prämissen, blockiert auf Ebene 1 (`ontology.zkpg`) oder Ebene 2 | **$\ge 99{,}5\%$** |
+| | **`C-2`: Vollständigkeit der Ausnahmenoffenlegung ($\mathrm{DR}_{\mathrm{cons}}$)** | Anteil aktiver Defeater `SECTION_DEFEATERS`, die zusammen mit der Norm ausgegeben werden | **$= 100{,}0\%$** |
+| | **`C-3`: Konsultationslatenz ($T_{\mathrm{cons}}$)** | Zeit von der Anfrage bis zum verifizierten Zitat (`Gate + Pack`) | **$< 100\ \mu\text{s}$ / $< 5\text{ ms}$** |
+| **2. Kriterien für $\mathrm{ES}_{\mathrm{recommendatory}}$** | **`R-1`: Präzision der Kollisionsabweisung ($\mathrm{CRP}$)** | Anteil inkompatibler Alternativen (`0x0408`/`0x0409`), die vor Empfehlungsausgabe ausgefiltert werden | **$= 100{,}0\%$** |
+| | **`R-2`: Konkordanz der Pareto-Rangfolge ($\tau_{\mathrm{Kendall}}$)** | Kendallscher Rangkorrelationskoeffizient zwischen $\mathcal{M}(a, R)$-Rangfolge und Referenz | **$\tau \ge 0{,}90$** |
+| | **`R-3`: Kontrafaktische Substitutionsrate ($\mathrm{RHR}$)** | Anteil von Ablehnungen eines `.kp`-Pakets, kompensiert durch eine Alternative aus einem Nachbarpaket | Empirische Tresormetrik |
+| **3. Kriterien für $\mathrm{ES}_{\mathrm{inventive}}$** | **`I-1`: Immunität gegen Antonym-Kollaps ($\mathrm{ACI}$)** | Anteil von Vektornachbarn mit $\cos\theta > 0{,}95$ und konträrer Deontik, blockiert durch System 2 | **$= 100{,}0\%$** |
+| | **`I-2`: Domänenübergreifender Neuheitsindex ($\mathcal{N}_{\mathrm{orth}}$)** | Mittlere Jaccard-Distanz über `DomainMask64`-Bitmasken in `SYNTHESIZED`-Ketten | **$\mathcal{N}_{\mathrm{orth}} \ge 0{,}50$** |
+| | **`I-3`: Ausbeute produktiver Abduktion ($\mathrm{VSY}$)** | Anteil von Kandidaten aus `Section 5 (HV4096+FP16)`, die alle System-2-Schleusen (`%ebx + SI`) passieren | $K_{\mathrm{verified}} / K_{\mathrm{proposed}}$ |
+| | **`I-4`: Lokalisierungspräzision der Hypothese ($\mathrm{BHLA}$)** | Präzision der Isolierung des einzigen fehlenden Glieds ($N-1$ aus $N$) und `ExperimentPlan`-Vollständigkeit | **$= 100{,}0\%$** |
+| | **`I-5`: Latenz der UMA-Abduktion ($T_{\mathrm{abduct}}$)** | Ausführungszeit von `RelationalParallelogramSearch` (`HV4096 + FP16`) auf $10\,000$ Knoten | **$\le 1{,}2\text{ ms}$ (CPU)** |
+
+> [!NOTE]
+> **Vier Gruppen quantitativer Attestierungskriterien für evidenzbasierte Expertensysteme (nach M. M. Fedchyk)**
+> 1. **Gruppe der globalen Sicherheitsinvarianten (`G-1..G-3`):** errichtet eine absolute Barriere der Null-Halluzination ($\mathrm{ZHR} = 1{,}000000$), hundertprozentiger kryptografischer Integrität byteweiser Primärquellenschnitte (`%ebx Custody = 100%`) und bitgenauer Determiniertheit des Merkle-Baums (`ChainMerkleRoot`) unabhängig vom gewählten Betriebsmodus des Systems.
+> 2. **Kriteriengruppe des beratend-konsultativen Modus (`C-1..C-3`):** misst die Fähigkeit des Systems, Anfragen mit falschen Prämissen verzögerungsfrei ($<100\ \mu\text{s}$ am `ontology.zkpg`-Gate) abzuweisen ($\mathrm{PTRR} \ge 99{,}5\%$) und eine hundertprozentige Offenlegung aller normativen Ausnahmen und Vorbehalte zu garantieren (`Defeater Recall = 100%`).
+> 3. **Kriteriengruppe des empfehlenden Modus (`R-1..R-3`):** bewertet die Fehlerfreiheit bei der Ausfilterung paketübergreifender normativer und physikalischer Kollisionen ($\mathrm{CRP} = 100\%$), die Güte der Pareto-optimalen Rangreihung von Alternativen nach Sicherheitsreserve in SI-Einheiten ($\tau_{\mathrm{Kendall}} \ge 0{,}90$) sowie die Wirksamkeit der kontrafaktischen Substitution verworfener Komponenten.
+> 4. **Kriteriengruppe des erfinderischen Modus (`I-1..I-5`):** attestiert die Immunität der De-Vektorisierungs-Diode gegenüber dem Antonym-Kollaps im Vektorraum ($\mathrm{ACI} = 100\%$), den Grad der domänenübergreifenden Neuheit der synthetisierten Lösung ($\mathcal{N}_{\mathrm{orth}} \ge 0{,}50$), die Lokalisierungspräzision eines einzelnen fehlenden Glieds für die Laborexperimentplanung ($\mathrm{BHLA} = 100\%$) und die Geschwindigkeit der hyperdimensionalen Suche in UMA ($\le 1{,}2\text{ ms}$ auf $10^4$ Konzepten).
+> *Laufzeitsteuerung / Ingenieurtechnische Invariante:* Keine Verbesserung der Abduktionsgeschwindigkeit oder -ausbeute (`I-3`, `I-5`) darf für den Produktivbetrieb freigegeben werden, wenn sie die globalen Sicherheitsinvarianten `G-1..G-3` oder die Immunität gegen Antonym-Kollaps `I-1` auch nur um ein Millionstel verringert.
+
 ---
 
 ## 8. Software-Implementierung in Go
