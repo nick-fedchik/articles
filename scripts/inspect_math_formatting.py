@@ -16,6 +16,7 @@ Checks performed:
   [ERR-MATH-06] Unescaped vertical pipe `|` inside math within a Markdown table row
   [ERR-MATH-07] Unbalanced inline `$` or block `$$` delimiters
   [ERR-MATH-08] Corrupted LaTeX escape sequences (control chars \x07, \x08, \x0b, \x0c, or split \r/\n/\t macros)
+  [ERR-MATH-09] Unprotected inline math containing Markdown formatting characters ('_' or '*')
   [ERR-ADV-01]  Missing blank line after `</summary>` inside `<details>` block
   [ERR-ADV-02]  Text on the same line after GitHub Alert tag `> [!NOTE|TIP|IMPORTANT|WARNING|CAUTION]`
 
@@ -248,6 +249,19 @@ def inspect_file(filepath: str, fix: bool = False) -> Tuple[List[Tuple[int, str,
             prot_line = re.sub(r"(?<!\$)`\$([^`\$]+)\$`(?!\$)", _fix_code_wrapped_math, prot_line)
             line = restore_valid_math(prot_line, prot_tokens)
 
+            # Fix [ERR-MATH-09]: Protect inline $expr$ containing Markdown special chars (_, *) with $`expr`$
+            prot_line, prot_tokens = protect_valid_math(line)
+            def _fix_unprotected_markdown_math(m: re.Match) -> str:
+                nonlocal modified
+                expr = m.group(1).strip()
+                if any(ch in expr for ch in ("_", "*", "|", "{", "}")):
+                    modified = True
+                    return f"$`{expr}`$"
+                return m.group(0)
+
+            prot_line = re.sub(r"(?<![\$`\\])\$([^\$\n]+)\$(?![\$`])", _fix_unprotected_markdown_math, prot_line)
+            line = restore_valid_math(prot_line, prot_tokens)
+
             # Fix [ERR-ADV-01]: missing blank line after </summary>
             if stripped.endswith("</summary>") and i + 1 < n and lines[i + 1].strip() != "":
                 new_lines.append(line)
@@ -448,6 +462,12 @@ def inspect_file(filepath: str, fix: bool = False) -> Tuple[List[Tuple[int, str,
                             idx,
                             "ERR-MATH-06",
                             f"Unescaped pipe '|' inside inline math '${expr}$' in table row splits table cell (use \\lvert, \\rvert, or \\mid)"
+                        ))
+                    if any(ch in expr for ch in ("_", "*")):
+                        errors.append((
+                            idx,
+                            "ERR-MATH-09",
+                            f"Unprotected inline math '${expr}$' contains Markdown conflicting chars ('_' or '*'). Use GitHub protected syntax $`{expr}`$ to prevent italics/bold corruption."
                         ))
 
         # Check [ERR-ADV-01]: </summary> followed immediately by non-blank line
