@@ -41,7 +41,7 @@ def find_markdown_files(paths: List[str]) -> List[str]:
             result.append(p)
         elif os.path.isdir(p):
             for root, dirs, files in os.walk(p):
-                if "registry" in root.split(os.sep):
+                if "registry" in root.split(os.sep) or "translations" in root.split(os.sep):
                     continue
                 for f in sorted(files):
                     if f.endswith(".md"):
@@ -476,7 +476,7 @@ def inspect_file(filepath: str, fix: bool = False) -> Tuple[List[Tuple[int, str,
                             "ERR-MATH-10",
                             f"Unbalanced curly braces in inline math '${expr}$' ({expr.count('{')} opening vs {expr.count('}')} closing)"
                         ))
-                    if re.search(r"\\[a-zA-Z]+\{[^}]+\}\s*\{[a-zA-Z\\]", expr):
+                    if re.search(r"\\(mathrm|mathbf|mathit|text|textbf|textit|operatorname|mathcal|mathbb|boldsymbol|bm)\{[^}]+\}\s*\{", expr):
                         errors.append((
                             idx,
                             "ERR-MATH-10",

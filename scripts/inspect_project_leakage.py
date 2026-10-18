@@ -31,11 +31,12 @@ LEAKAGE_PATTERNS = [
     (re.compile(r"/home/\w+/vida\b", re.IGNORECASE), "Internal absolute path leaked; replace with generalized architecture path"),
 ]
 
-# Files or directories to skip (e.g. this inspection script itself, git directories)
+# Files or directories to skip (e.g. this inspection script itself, git directories, frozen translations)
 IGNORED_PATHS = {
     "inspect_project_leakage.py",
     ".git",
     "node_modules",
+    "translations",
 }
 
 
