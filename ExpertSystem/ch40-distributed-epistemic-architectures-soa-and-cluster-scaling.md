@@ -748,11 +748,13 @@ $$H_1(Q) = -\sum_{c \in \Sigma} p(c) \log_2 p(c) \in [1{,}5; \; 4{,}7]\,\text{б
 
 Федеративна Арена відображає бінарні секції всіх активних контейнерів `.kp` у спільний віртуальний адресний простір через `mmap(MAP_SHARED)` та будує над ними єдине поле канонічної еквівалентності концептів $\Phi: \bigcup_{i=1}^m A_i \to \mathcal{G}_{\text{canon}}$:
 
-$$\mathcal{S}^*(Q) = \left\{ \pi = \left(r_{i_1}^{(1)}, r_{i_2}^{(2)}, \dots, r_{i_k}^{(k)}\right) \;\middle|\; \begin{aligned}
+$$
+\mathcal{S}^*(Q) = \left\{ \pi = \left(r_{i_1}^{(1)}, r_{i_2}^{(2)}, \dots, r_{i_k}^{(k)}\right) \;\middle|\; \begin{aligned}
 & \forall j \in [1..k]: r_{i_j}^{(j)} \in R_{i_j}, \; \mathrm{Custody}_{i_j}\!\left(r_{i_j}^{(j)}\right) = \mathrm{VALID}, \\
 & \Phi\!\left(\mathrm{Consequent}(r_{i_j}^{(j)})\right) \equiv \Phi\!\left(\mathrm{Antecedent}(r_{i_{j+1}}^{(j+1)})\right), \\
 & \Omega^*(\pi) = \bigcap_{j=1}^k \left[\underline{v}_j, \overline{v}_j\right] \neq \varnothing, \; \neg \exists u \in \bigcup_{l=1}^m R_l : \mathrm{Defeats}(u, \pi)
-\end{aligned} \right\}$$
+\end{aligned} \right\}
+$$
 
 Якщо знайдений ланцюг $\pi \in \mathcal{S}^*(Q)$ охоплює щонайменше два різні першоджерела ($|\{i_1, \dots, i_k\}| \ge 2$), жодне з яких самостійно не містить повного висновку, ядро генерує вердикт **`SYNTHESIZED`** із векторним побайтовим паспортом $\vec{E}(\pi) = \langle (P_{i_1}, [\text{start}_1..\text{end}_1], H_1), \dots, (P_{i_k}, [\text{start}_k..\text{end}_k], H_k) \rangle$ та обчисленим вікном параметричної збіжності $\Omega^*(\pi)$.
 
