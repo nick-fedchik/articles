@@ -73,6 +73,33 @@ Project management office, platforms and AI:
 - [Information Security and Cybersecurity: Evolution from the 1990s to the 2020s. Part 1: The 1990s and 2000s](Inform_Security/DOU-Information-Security-Cybersecurity-Evolution-UA-Part1.md)
 - [Information Security and Cybersecurity: Evolution from the 1990s to the 2020s. Part 2: The 2010s and 2020s](Inform_Security/DOU-Information-Security-Cybersecurity-Evolution-UA-Part2.md)
 
+#### Expert systems for R&D (DOU series)
+
+Framing and foundations:
+
+- [Why Expert Systems Are Needed in R&D Again: Manifest](Articles/DOU/01-DOU-Expert-Systems-for-RD.md)
+- [From Bayes' Theorem to Evidence-Based AI Decisions](Articles/DOU/02-DOU-Expert-Systems-Evolution-Evidence-UA.md)
+- [Expert System, AI Recommendation, and Corporate Memory: Triad of Trust](Articles/DOU/03-DOU-Expert-System-And-Evidence-Memory-UA.md)
+
+Mathematics and implementation:
+
+- [Applied Mathematics for Expert Systems: From Rules to Graphs and Causality](Articles/DOU/04-DOU-Expert-Systems-Applied-Mathematics-UA.md)
+- [From Mathematical Method to Technology Stack Selection](Articles/DOU/05-DOU-Expert-Systems-Implementation-Stack-UA.md)
+- [Architecture of an Evidence-Based Expert System: Knowledge, Rules, Evidence, Audit](Articles/DOU/06-DOU-Expert-Systems-Architecture-UA.md)
+- [Execution Infrastructure: Models, Hardware, and Deployment](Articles/DOU/07-DOU-Expert-Systems-Infrastructure-UA.md)
+- [Beyond Reference Systems: Why Search Is Not an Expert System](Articles/DOU/08-DOU-Expert-Systems-Beyond-Reference-UA.md)
+
+Knowledge as data:
+
+- [Engineering Artifacts as Data: Slicing, Triage, and Vectorization](Articles/DOU/09-DOU-Engineering-Artifacts-As-Data-UA.md)
+- [Knowledge Acquisition System: Controlled Harvesting Without Leakage](Articles/DOU/10-DOU-Knowledge-Acquisition-System-UA.md)
+- [Knowledge Base Types: Open vs Closed World Assumptions](Articles/DOU/11-DOU-Knowledge-Base-Types-UA.md)
+
+Verification, learning, and algorithmic skepticism:
+
+- [How Expert Systems Learn: Knowledge Lifecycle, Examination, and Regression Testing](Articles/DOU/12-DOU-How-Expert-Systems-Learn-UA.md)
+- [Popper vs. AI: Teaching Systems to Refute Themselves Before Production Does](Articles/DOU/13-DOU-Popperian-Testing-Algorithmic-Skepticism-UA.md)
+
 ### Authorship and citation
 
 All books and articles listed above are written by **Mykola Fedchyk** (Микола Федчик). When quoting or reusing the material, credit the author and link to the source file.
@@ -153,6 +180,33 @@ Copyright © 2026 Mykola Fedchyk.
 
 - [Інформаційна безпека і кібербезпека: еволюція від 1990-х до 2020-х. Частина 1: Періоди 1990-х та 2000-х років](Inform_Security/DOU-Information-Security-Cybersecurity-Evolution-UA-Part1.md)
 - [Інформаційна безпека і кібербезпека: еволюція від 1990-х до 2020-х. Частина 2: 2010-ті і 2020-ті](Inform_Security/DOU-Information-Security-Cybersecurity-Evolution-UA-Part2.md)
+
+#### Експертні системи для R&D (серія для DOU)
+
+Фреймінг і визначення:
+
+- [Експертні системи для досліджень і розробки (R&D): від хаосу до керованих знань](Articles/DOU/01-DOU-Expert-Systems-for-RD.md)
+- [Експертні системи: від теореми Байєса до доказових рішень ШІ](Articles/DOU/02-DOU-Expert-Systems-Evolution-Evidence-UA.md)
+- [Експертна система, доказова рекомендація ШІ і корпоративна пам'ять](Articles/DOU/03-DOU-Expert-System-And-Evidence-Memory-UA.md)
+
+Математика та імплементація:
+
+- [Прикладна математика експертних систем](Articles/DOU/04-DOU-Expert-Systems-Applied-Mathematics-UA.md)
+- [Експертні системи: крок від математичного методу до обрання технологій](Articles/DOU/05-DOU-Expert-Systems-Implementation-Stack-UA.md)
+- [Архітектура доказової ES: знання, правила, докази, аудит](Articles/DOU/06-DOU-Expert-Systems-Architecture-UA.md)
+- [Інфраструктура виконання ES: моделі, залізо, розгортання](Articles/DOU/07-DOU-Expert-Systems-Infrastructure-UA.md)
+- [Експертна система це більше ніж інформаційно-довідкова система](Articles/DOU/08-DOU-Expert-Systems-Beyond-Reference-UA.md)
+
+Знання як дані:
+
+- [Артефакти інженерії як дані: формати, нарізання, тріаж і векторизація](Articles/DOU/09-DOU-Engineering-Artifacts-As-Data-UA.md)
+- [Система здобуття знань: конвеєр збирання та контроль конфіденційності](Articles/DOU/10-DOU-Knowledge-Acquisition-System-UA.md)
+- [Типи баз знань і припущення відкритого/закритого світу](Articles/DOU/11-DOU-Knowledge-Base-Types-UA.md)
+
+Перевірка, навчання та алгоритмічний скептицизм:
+
+- [Як навчати експертну систему: знання, іспит і перевірка змін](Articles/DOU/12-DOU-How-Expert-Systems-Learn-UA.md)
+- [Поппер проти ШІ: як навчити систему спростовувати саму себе до того, як це зробить продакшен](Articles/DOU/13-DOU-Popperian-Testing-Algorithmic-Skepticism-UA.md)
 
 ### Авторство та цитування
 

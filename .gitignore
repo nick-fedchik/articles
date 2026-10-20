@@ -5,3 +5,7 @@ ExpertSystem/translations/glossaries/
 translations/glossaries/
 AGENTS.md
 
+scripts/
+*.cff
+*.json
+
