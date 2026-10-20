@@ -1,6 +1,6 @@
 # Architecture of Evidence-Governed Expert Systems: From Formal Ontologies to Neuro-Symbolic AI
 
-**An engineering monograph and handbook on the design, mathematical foundations, architecture, and verification of high-integrity intelligent systems (Safety-Critical & Evidence-Grounded AI)**
+**An engineering monograph on the design, mathematical models, knowledge compilation, and formal verification of hallucination-free deterministic intelligent systems (Safety-Critical & Evidence-Grounded AI)**
 
 **Author:** [Mykola Fedchyk](about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
 **Format:** Engineering Monograph / AI Architect's Desk Reference  

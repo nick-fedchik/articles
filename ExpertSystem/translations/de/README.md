@@ -1,6 +1,6 @@
 # Architektur evidenzbasierter Expertensysteme: Von formalen Ontologien zu neuro-symbolischer KI
 
-**Technisches Handbuch und Monographie über Entwurf, mathematische Modelle, Architektur und Verifikation hochzuverlässiger intelligenter Systeme (Safety-Critical & Evidence-Grounded AI)**
+**Monographie über Entwurf, mathematische Modelle, Wissenskompilierung und formale Verifikation halluzinationsfreier deterministischer intelligenter Systeme (Safety-Critical & Evidence-Grounded AI)**
 
 **Autor:** [Mykola Fedchyk](about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
 **Format:** Technische Monographie / Handbuch für KI-Systemarchitekten  
