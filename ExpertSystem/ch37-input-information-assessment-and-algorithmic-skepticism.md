@@ -29,6 +29,50 @@
 | Твердження | зафіксовано «насос P-7 працює о 12:03» | чи достатні підстави твердження |
 | Оцінка | відомі перевірки, альтернативи й невизначеність | чи дозволено використовувати оцінку для конкретної дії |
 
+Діаграма ілюструє шлях трансформації фізичного сигналу через контрольно-пропускні шлюзи до стану доказового факту:
+
+```mermaid
+flowchart TD
+    accTitle: Онтологічна декомпозиція вхідної інформації
+    accDescr: Чотирирівнева таксономія перетворення фізичного сигналу на доказовий факт бази знань із контрольно-пропускними шлюзами.
+
+    subgraph Physical["1. Фізичний рівень"]
+        Sig[/"<b>Фізичний сигнал</b><br/>(Напруга, байти, аудіовідліки)"/]
+    end
+
+    subgraph Sensor["2. Сенсорний аналіз"]
+        Obs["<b>Первинне спостереження</b><br/>(Частота обертання, пакет RUNNING)"]
+    end
+
+    subgraph Epistemic["3. Семантичний рівень"]
+        Assert["<b>Формальне твердження</b><br/>(«Насос P-7 працює о 12:03»)<br/><i>Контекст + об'єкт + час</i>"]
+        Assess{"<b>Шлюз оцінювання</b><br/>(Перевірка альтернатив,<br/>походження та залежностей)"}
+    end
+
+    subgraph Knowledge["4. Доказова база знань"]
+        Fact[("<b>Верифікований факт</b><br/>(Допущено до дій)")]
+        Quarantine[/"<b>Захисний карантин</b><br/>(Невизначеність / конфлікт)"/]
+    end
+
+    Sig -->|"Апаратне оцифрування"| Obs
+    Obs -->|"Синтаксична нормалізація"| Assert
+    Assert --> Assess
+    Assess -->|"Підтверджено (ZHR = 1.0)"| Fact
+    Assess -->|"Недостатньо підстав / Збій"| Quarantine
+
+    classDef physStyle fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef sensStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
+    classDef gateStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef okStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef warnStyle fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+
+    class Sig physStyle;
+    class Obs sensStyle;
+    class Assert,Assess gateStyle;
+    class Fact okStyle;
+    class Quarantine warnStyle;
+```
+
 Підпис цифрового пакета підтверджує автора підпису та цілісність пакета за прийнятої моделі ключів, але не справність датчика. Якісний звук підтверджує якість запису, але не тотожність насоса. Перший авторський інженерний принцип глави: інформацію неприпустимо допускати у базу фактів лише за фактом того, що канал доставив повідомлення без помилки.
 
 ## 2. Дев'ять аналітичних традицій: метод, свідчення й межі перенесення
@@ -258,6 +302,54 @@
 - $`40 \le S_{\mathrm{doc}} < 70`$ балів $\to$ `DEFER` (потребує другого незалежного підтверджуючого джерела або санкціонування інженером);
 - $`S_{\mathrm{doc}} < 40`$ балів $\to$ `DISMISS` (відхилення без витрат ресурсів на обробку).
 
+Діаграма відображає дуальну архітектуру вхідного оцінювання та маршрутизацію потоків:
+
+```mermaid
+flowchart LR
+    accTitle: Дуалізм вхідного оцінювання експертної системи
+    accDescr: Розділення обробки на оперативну сенсорну телеметрію реального часу та семантичне здобуття знань із корпусів.
+
+    subgraph Ingress["Вхідні потоки даних"]
+        Telemetry[/"<b>Оперативна телеметрія</b><br/>(Датчики тиску, струму, АЦП)"/]
+        Corpus[/"<b>Текстові корпуси</b><br/>(Стандарти, даташити, схеми)"/]
+    end
+
+    subgraph StreamEngine["Режим 1: Сенсорний потік (Operational Stream)"]
+        direction TB
+        SPRT["Послідовний аналіз Вальда (SPRT)"]
+        CI["Фільтрація коваріацій (CI)"]
+        FTTI{"Дедлайн циклу<br/>(T <= 20 мс)"}
+        ActFast["Автономне керування (Fail-Safe)"]
+        
+        SPRT --> CI --> FTTI --> ActFast
+    end
+
+    subgraph IngestEngine["Режим 2: Здобуття знань (Knowledge Ingestion)"]
+        direction TB
+        Scorecard["Епістемічний чекліст S_doc (0..100)"]
+        Gate{"Пороговий розподіл"}
+        Admit["ADMIT (>= 70): Кристалізація"]
+        Defer["DEFER (40..69): Санкція інженера"]
+        Dismiss["DISMISS (< 40): Відсікання"]
+        
+        Scorecard --> Gate
+        Gate --> Admit
+        Gate --> Defer
+        Gate --> Dismiss
+    end
+
+    Telemetry ==> StreamEngine
+    Corpus ==> IngestEngine
+
+    classDef inStyle fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef streamStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
+    classDef ingestStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+
+    class Telemetry,Corpus inStyle;
+    class SPRT,CI,FTTI,ActFast streamStyle;
+    class Scorecard,Gate,Admit,Defer,Dismiss ingestStyle;
+```
+
 ---
 
 ## 7. Ймовірнісна оцінка: сила свідчення, залежність і невизначеність
@@ -311,6 +403,56 @@ O(H\mid E)=O(H)\,\Lambda(E),\qquad O(H)=\frac{P(H)}{1-P(H)},\qquad
 > 2. Анулювання повторних копій: детерміноване прирівнювання умовного відношення правдоподібностей дублікатів до одиниці ($`\frac{1}{1} = 1`$) із нульовим приростом шансів ($\log 1 = 0$).
 > 3. Групування за пулами залежності `GroupID`: накопичення логарифмічних шансів виключно між підтверджено незалежними фізичними каналами.
 > *Керування рантаймом / Інженерний інваріант:* Унеможливлює штучне роздування впевненості експертної системи через ретрансляцію одного й того самого первинного повідомлення.
+
+Діаграма демонструє різницю між наївним псевдопідтвердженням дублікатів та детермінованим колапсом копій на графі походження:
+
+```mermaid
+flowchart TD
+    accTitle: Придушення інформаційного відлуння на графі походження
+    accDescr: Порівняння наївного сумування залежних копій та детермінованого анулювання шансів на графі походження.
+
+    subgraph NAIVE["Антипатерн: Наївне підтвердження (штучне роздування)"]
+        direction TB
+        E0_N["Первинне повідомлення E0"]
+        C1["Копія 1"]
+        C2["Копія 2"]
+        C3["Копія N..."]
+        SUM_N["Штучне зростання: P(H|E) -> 99.99%<br/>Помилковий аварійний зупин комплексу"]
+
+        E0_N --> C1
+        E0_N --> C2
+        E0_N --> C3
+        C1 --> SUM_N
+        C2 --> SUM_N
+        C3 --> SUM_N
+    end
+
+    subgraph PROVENANCE["Архітектурний патерн: Граф походження (Provenance DAG)"]
+        direction TB
+        E0_P["Первинне спостереження E0<br/>(GroupID: G1, log Lambda > 0)"]
+        REP1["Ретранслятор 1 (батько: E0)"]
+        REP2["Ретранслятор 2 (батько: E0)"]
+        COLLAPSE{"Перевірка графа:<br/>P(E_i | H, E0) = 1"}
+        ZERO["Анулювання копій:<br/>log(1/1) = 0 log-odds"]
+        INDEP["Ортогональний сенсор E_alt<br/>(GroupID: G2, log Lambda_2 > 0)"]
+        RESULT["Об'єктивна апостеріорна оцінка:<br/>P(H|E) = 0.471 -> 0.780 (ZHR = 1.0)"]
+
+        E0_P --> REP1 --> COLLAPSE
+        E0_P --> REP2 --> COLLAPSE
+        COLLAPSE --> ZERO
+        E0_P ==> RESULT
+        ZERO -.->|"Нульовий приріст"| RESULT
+        INDEP ==>|"Незалежне оновлення"| RESULT
+    end
+
+    classDef naiveStyle fill:#ffebee,stroke:#c62828,stroke-width:1.5px,color:#b71c1c;
+    classDef provStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:1.5px,color:#1b5e20;
+    classDef gateStyle fill:#fff3e0,stroke:#e65100,stroke-width:1.5px,color:#bf360c;
+
+    class E0_N,C1,C2,C3,SUM_N naiveStyle;
+    class E0_P,REP1,REP2,ZERO,INDEP,RESULT provStyle;
+    class COLLAPSE gateStyle;
+```
 
 ### 7.3. Інтервал оцінки замість удаваної точності
 
@@ -370,6 +512,59 @@ P_{\mathrm{CI}}^{-1}=\omega P_1^{-1}+(1-\omega)P_2^{-1},\qquad
 6. Перевірити чутливість: вилучити найсильніше незалежне свідчення, змінити допустимі параметри й повторити розрахунок.
 7. Допустити оцінку лише до конкретної задачі або запросити додаткове спостереження; після відкликання підстав перерахувати залежні висновки.
 
+Скінченний автомат реалізації семикрокового алгоритму експертного скепсису подано на діаграмі переходів станів:
+
+```mermaid
+stateDiagram-v2
+    accTitle: Семикроковий детермінований алгоритм експертного скепсису
+    accDescr: Скінченний автомат поетапної верифікації вхідного повідомлення від ініціалізації до санкціонування дії.
+
+    [*] --> S1_Framing : Вхідне повідомлення
+    
+    state S1_Framing {
+        [*] --> ParameterBinding
+        ParameterBinding --> TemporalCheck
+    }
+    note right of S1_Framing : Крок 1. Фіксація об'єкта, часу, одиниць і області
+
+    S1_Framing --> S2_TransportCheck : Повне формулювання
+    S1_Framing --> Rejected : Нечіткий вхід [Underconstrained]
+
+    state S2_TransportCheck {
+        [*] --> SignatureVerify
+        SignatureVerify --> IntegrityValidation
+    }
+    note right of S2_TransportCheck : Крок 2. Перевірка носія, цілісності та прав
+
+    S2_TransportCheck --> S3_LineageRecovery : Тракт справний
+    S2_TransportCheck --> Quarantined : Збій цілісності / підпису
+
+    S3_LineageRecovery --> S4_DualHypothesis : Групи залежності виділено
+    note right of S3_LineageRecovery : Крок 3. Контроль відлуння (Circular Reporting)
+
+    S4_DualHypothesis --> S5_ProbInterval : Альтернативи згенеровано
+    note right of S4_DualHypothesis : Крок 4. Предметна альтернатива + модель похибки
+
+    S5_ProbInterval --> S6_SensitivityTest : Інтервал розраховано
+    note right of S5_ProbInterval : Крок 5. Обчислення невизначеності та контрсвідчень
+
+    S6_SensitivityTest --> S7_TaskAdmission : S_leave <= tau_fragile (Стійкий)
+    note right of S6_SensitivityTest : Крок 6. Тест вилучення групи (Leave-One-Group-Out)
+    
+    S6_SensitivityTest --> FragileEvidence : S_leave > tau_fragile (Крихкий)
+
+    state S7_TaskAdmission {
+        [*] --> ScopeBinding
+        ScopeBinding --> AdmittedForAction
+    }
+    note right of S7_TaskAdmission : Крок 7. Допуск до задачі або запит свідчення
+
+    AdmittedForAction --> [*]
+    FragileEvidence --> Quarantined : Блокування незворотної дії
+    Quarantined --> [*]
+    Rejected --> [*]
+```
+
 Для кількісної оцінки залежності висновку від окремого джерела шлюз аудиту розраховує показник чутливості за методом вилучення групи свідчень (*Leave-One-Group-Out Sensitivity*):
 
 ```math
@@ -408,17 +603,60 @@ S_{\mathrm{leave}}=\max_{g\in\mathcal{G}}\left|p(H\mid E)-p(H\mid E\setminus E_g
 Діаграма показує, як вихід швидкої оцінки залишається відкритим до пізнішого перегляду:
 
 ```mermaid
-flowchart LR
-    RAW["Текст, звук, радіосигнал, зображення"] --> CAP["Фіксація носія, часу й параметрів тракту"]
-    CAP --> GATE["Схема, цілісність, повноваження, застосовність"]
-    GATE --> FAST["Швидка оцінка на периферії"]
-    FAST --> WORK["Оцінка з межами й строком чинності"]
-    FAST --> HOLD["Невизначеність або карантин"]
-    CAP --> LOG["Журнал первинних спостережень"]
-    LOG --> BATCH["Пакетна перевірка залежностей і альтернатив"]
-    BATCH --> REV["Нова версія оцінки або відкликання"]
-    REV --> WORK
-    WORK --> ACT["Окремий контроль допустимості дії"]
+flowchart TD
+    accTitle: Гібридна архітектура обробки: потоковий периферійний та центральний пакетний аналіз
+    accDescr: Двоконтурний конвеєр оцінювання первинних спостережень із розділенням локальної диспетчеризації та ретроспективного аудиту залежностей.
+
+    subgraph Ingress["1. Приймальний тракт первинних даних"]
+        Raw[/"Текст, звук, радіосигнал, телеметрія"/]
+        Cap["<b>Апаратне захоплення</b><br/>(Часові мітки події, параметри тракту, підпис)"]
+    end
+
+    subgraph FastPath["2. Периферійний контур (Edge Stream / RTOS)"]
+        Gate{"<b>Шлюз цілісності</b><br/>(Схема, права, домен)"}
+        FastEval["<b>Швидка локальна оцінка</b><br/>(SPRT, пороговий фільтр, FTTI <= 20 мс)"]
+        EdgeState["<b>Оперативна оцінка</b><br/>(Строк чинності, допуск дій)"]
+        EdgeQuarantine[/"Локальний карантин"/]
+    end
+
+    subgraph DeepPath["3. Центральний аналітичний кластер (Central Batch)"]
+        RawLog[("<b>Журнал первинних спостережень</b><br/>(Незмінний append-only лог)")]
+        BatchEval["<b>Глибокий аудит залежностей</b><br/>(Аналіз графа копій, перетин коваріацій CI, ACH)"]
+        Revision{"<b>Результат аудиту</b>"}
+        ReviseState["<b>Оновлення або відкликання оцінки</b>"]
+    end
+
+    subgraph Execution["4. Виконавчий контур"]
+        ActionEngine[["<b>Контроль допустимості дії</b><br/>(Перевірка повноважень та ризику)"]]
+    end
+
+    Raw --> Cap
+    Cap ==> Gate
+    Cap -.->|"Асинхронна реплікація"| RawLog
+
+    Gate -->|"Валідовано"| FastEval
+    Gate -->|"Порушення / Шум"| EdgeQuarantine
+    
+    FastEval -->|"Достатньо підстав"| EdgeState
+    FastEval -->|"Невизначеність"| EdgeQuarantine
+
+    RawLog --> BatchEval --> Revision
+    Revision -->|"Виявлено відлуння / колізію"| ReviseState
+    ReviseState ==>|"Анулювання підстав"| EdgeState
+
+    EdgeState --> ActionEngine
+
+    classDef inStyle fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef edgeStyle fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
+    classDef deepStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef execStyle fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef warnStyle fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
+
+    class Raw,Cap inStyle;
+    class Gate,FastEval,EdgeState edgeStyle;
+    class RawLog,BatchEval,Revision,ReviseState deepStyle;
+    class ActionEngine execStyle;
+    class EdgeQuarantine warnStyle;
 ```
 
 Журнал та механізм водяних міток за моделлю потокової обробки даних (*Dataflow Model*) із розділенням часу події та часу обробки [[25]](#src-25) дозволяють пояснити не тільки поточну оцінку, а й рішення, яке було доступне вузлу до приходу запізнілих даних. Відкликане рішення не стирається, але не залишається чинною підставою нового висновку. Динамічний шар фактів і механізм відкликання пов'язуються з [главою 35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md).
@@ -492,6 +730,61 @@ T_{\mathrm{queue}}+T_{\mathrm{capture}}+T_{\mathrm{parse}}+T_{\mathrm{checks}}+T
 > 3. Рівень 2 (Легка семантична модель SLM 1B–3B, $`50\text{--}200\,\text{мс}`$): доменна класифікація та базова верифікація фізичної правдоподібності параметрів.
 > 4. Рівень 3 (Глибока аналітична екстракція, ядро ЕС, секунди): вичерпний логічний аналіз, що запускається лише для відібраних 2–5% найбільш надійних документів.
 > *Керування рантаймом / Інженерний інваріант:* Забезпечує стабільну пропускну здатність вхідного шлюзу при масових потоках неперевіреної інформації.
+
+Діаграма ілюструє поетапне звуження обсягу оброблюваних даних у каскадній воронці з фіксацією допустимих часових затримок на кожному рівні фільтрації:
+
+```mermaid
+flowchart TD
+    accTitle: Каскадна воронка попереднього відсіювання Fail-Early
+    accDescr: Чотирирівнева архітектура попереднього відсіювання вхідних потоків для збереження обчислювального бюджету експертної системи.
+
+    subgraph INGRESS["Вхідний неперевірений потік"]
+        RAW["Сирі джерела та спостереження (100% обсягу)"]
+    end
+
+    subgraph TIER0["Рівень 0: Фільтрація метаданих (CPU < 0.1 мс)"]
+        F0{"Синтаксис, ліміти обсягу,<br/>ABAC та ліцензійна чистота"}
+        DROP0["Карантин / Відхилено: невалідний формат або ліцензія (~60% відсіяно)"]
+    end
+
+    subgraph TIER1["Рівень 1: Детерміновані сигнатури (< 2 мс)"]
+        F1{"Пошук деонтичних маркерів<br/>MUST/SHALL та одиниць SI"}
+        DROP1["Карантин / Відхилено: відсутні нормативні предикати (~25% відсіяно)"]
+    end
+
+    subgraph TIER2["Рівень 2: Легка семантична модель (SLM 50-200 мс)"]
+        F2{"Класифікація предметної галузі<br/>та перевірка правдоподібності"}
+        DROP2["Карантин / Відхилено: нерелевантний домен або аномалія (~10% відсіяно)"]
+    end
+
+    subgraph TIER3["Рівень 3: Глибока експертиза (Ядро ЕС, секунди)"]
+        CORE["Вичерпний логічний висновок, детекція софізмів<br/>та криптографічна фіксація доказів (2-5% допущеного обсягу)"]
+    end
+
+    RAW --> F0
+    F0 -->|"Невідповідність"| DROP0
+    F0 -->|"Схвалено (40%)"| F1
+
+    F1 -->|"Невідповідність"| DROP1
+    F1 -->|"Схвалено (15%)"| F2
+
+    F2 -->|"Невідповідність"| DROP2
+    F2 -->|"Схвалено (2-5%)"| CORE
+
+    classDef ingress fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
+    classDef t0 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
+    classDef t1 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef t2 fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c;
+    classDef t3 fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f;
+    classDef dropStyle fill:#ffebee,stroke:#c62828,stroke-width:1.5px,color:#b71c1c;
+
+    class RAW ingress;
+    class F0 t0;
+    class F1 t1;
+    class F2 t2;
+    class CORE t3;
+    class DROP0,DROP1,DROP2 dropStyle;
+```
 
 1. **Рівень 0: Фільтрація метаданих і системного допуску (CPU, $`<0{,}1\,\text{мс}`$):**
    - Перевірка допустимості розширення файлу та його синтаксичної структури (PDF, Markdown, C/C++, JSON, DBC);
