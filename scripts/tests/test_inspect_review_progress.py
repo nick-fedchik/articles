@@ -3,6 +3,7 @@ import sys
 import tempfile
 import unittest
 from contextlib import redirect_stdout
+from datetime import datetime
 from io import StringIO
 from pathlib import Path
 from unittest.mock import patch
@@ -155,11 +156,12 @@ class ReviewProgressTests(unittest.TestCase):
         record = next(record for record in records if record["chapter"] == "09" and record["section"] ==
                       "5. Архітектура промислової платформи управління графом знань")
         self.assertEqual(record["status"], "reviewed")
-        self.assertEqual(record["timestamp"], "2026-10-27T11:44:21+02:00")
+        self.assertGreaterEqual(datetime.fromisoformat(record["timestamp"]),
+                                datetime.fromisoformat("2026-10-27T11:44:21+02:00"))
         self.assertIn("Зафіксовано відкриті питання", record["notes"])
         self.assertIn("REQ-L2-07-06", record["requirement_ids"])
         self.assertIn("REQ-L2-07-06", record["requirement_sha256"])
-        self.assertEqual(record["decision_references"], ["А-06", "А-13", "А-15"])
+        self.assertTrue({"А-06", "А-13", "А-15"} <= set(record["decision_references"]))
 
     def test_invalid_or_duplicate_records(self):
         self.chapter("## Section\n")

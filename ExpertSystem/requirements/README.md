@@ -97,7 +97,7 @@ flowchart TD
 | [ch06](../../ch06-applied-mathematics-for-expert-systems.md) | REQ-L1-06-01, REQ-L1-06-02 | REQ-L2-06-01 … REQ-L2-06-06 | REQ-L3-06-01 … REQ-L3-06-04 |
 | [ch07](../../ch07-knowledge-base-typology.md) | REQ-L1-07-01 … REQ-L1-07-04 | REQ-L2-07-01 … REQ-L2-07-07 | REQ-L3-07-01 … REQ-L3-07-07 |
 | [ch08](../../ch08-engineering-artifacts-as-data.md) | REQ-L1-08-01 … REQ-L1-08-03 | REQ-L2-08-01 … REQ-L2-08-05 | REQ-L3-08-01 … REQ-L3-08-03 |
-| [ch09](../../ch09-engineering-knowledge-graph-traceability.md) | REQ-L1-09-01 … REQ-L1-09-04 | REQ-L2-09-01 … REQ-L2-09-10 | REQ-L3-09-01 … REQ-L3-09-10 |
+| [ch09](../../ch09-engineering-knowledge-graph-traceability.md) | REQ-L1-09-01 … REQ-L1-09-04 | REQ-L2-09-01 … REQ-L2-09-11 | REQ-L3-09-01 … REQ-L3-09-19 |
 | [ch10](../../ch10-knowledge-acquisition-systems.md) | REQ-L1-10-01 … REQ-L1-10-03 | REQ-L2-10-01 … REQ-L2-10-06 | REQ-L3-10-01 … REQ-L3-10-05 |
 | [ch11](../../ch11-knowledge-elicitation-from-experts.md) | REQ-L1-11-01 … REQ-L1-11-18 | REQ-L2-11-01 … REQ-L2-11-36 | REQ-L3-11-01 … REQ-L3-11-51 |
 | [ch12](../../ch12-linguistic-analysis-and-local-models.md) | REQ-L1-12-01 … REQ-L1-12-15 | REQ-L2-12-01 … REQ-L2-12-47 | REQ-L3-12-01 … REQ-L3-12-80 |
@@ -134,7 +134,7 @@ flowchart TD
 
 - ch07: REQ-L2-07-01, -02, -04 ← REQ-L1-07-01; REQ-L2-07-07 ← REQ-L1-07-02; REQ-L2-07-05 ← REQ-L1-07-03; REQ-L2-07-03, -06 ← REQ-L1-07-04; REQ-L3-07-01 ← REQ-L2-07-01; REQ-L3-07-02 ← REQ-L2-07-02; REQ-L3-07-03 ← REQ-L2-07-01; REQ-L3-07-04 ← REQ-L2-07-05; REQ-L3-07-05 ← REQ-L2-07-03; REQ-L3-07-06 ← REQ-L2-07-06; REQ-L3-07-07 ← REQ-L2-07-04.
 - ch08: REQ-L2-08-01, -02 ← REQ-L1-08-01; REQ-L2-08-03, -04 ← REQ-L1-08-02; REQ-L2-08-05 ← REQ-L1-08-03; REQ-L3-08-01 ← REQ-L2-08-05; REQ-L3-08-02 ← REQ-L2-08-01; REQ-L3-08-03 ← REQ-L2-08-03.
-- ch09: REQ-L2-09-01, -02, -09, -10 ← REQ-L1-09-01; REQ-L2-09-03 ← REQ-L1-09-02; REQ-L2-09-04, -05 ← REQ-L1-09-03; REQ-L2-09-06, -07, -08 ← REQ-L1-09-04; REQ-L3-09-01, -08, -10 ← REQ-L2-09-01; REQ-L3-09-02 ← REQ-L2-09-02; REQ-L3-09-03 ← REQ-L2-09-06; REQ-L3-09-04 ← REQ-L2-09-05; REQ-L3-09-05 ← REQ-L2-09-07; REQ-L3-09-06 ← REQ-L2-09-08; REQ-L3-09-07 ← REQ-L2-09-09; REQ-L3-09-09 ← REQ-L2-09-10.
+- ch09: REQ-L2-09-01, -02, -09, -10, -11 ← REQ-L1-09-01; REQ-L2-09-03 ← REQ-L1-09-02; REQ-L2-09-04, -05 ← REQ-L1-09-03; REQ-L2-09-06, -07, -08 ← REQ-L1-09-04; REQ-L3-09-01, -08, -10, -11, -12, -14, -15 ← REQ-L2-09-01; REQ-L3-09-02, -13, -16, -17 ← REQ-L2-09-02; REQ-L3-09-18, -19 ← REQ-L2-09-03; REQ-L3-09-18, -19 ← REQ-L2-09-03; REQ-L3-09-03 ← REQ-L2-09-06; REQ-L3-09-04 ← REQ-L2-09-05; REQ-L3-09-05 ← REQ-L2-09-07; REQ-L3-09-06 ← REQ-L2-09-08; REQ-L3-09-07 ← REQ-L2-09-09; REQ-L3-09-09 ← REQ-L2-09-10.
 - ch10: REQ-L2-10-01, -02, -03, -05 ← REQ-L1-10-01; REQ-L2-10-04 ← REQ-L1-10-02; REQ-L2-10-06 ← REQ-L1-10-03; REQ-L3-10-01, -02, -04 ← REQ-L2-10-02; REQ-L3-10-03 ← REQ-L2-02-03 (міжглавне посилання: двочасова модель запису визначена в главі 2); REQ-L3-10-05 ← REQ-L2-10-06.
 
 Міжглавні батьківські посилання допускаються, коли тематично точний батько визначений в іншій главі. Приклади: REQ-L3-10-03 ← REQ-L2-02-03, REQ-L3-34-19 ← REQ-L2-31-16.
