@@ -508,10 +508,18 @@ $$
 Кожен експортований факт підписується цифровим підписом системи-джерела за схемою Ed25519 Бернштейна та співавторів [[12]](#src-12). Структура атестованого факту містить канонічні байти твердження, ідентифікатор джерела та криптографічний підпис:
 
 ```math
-\sigma = \mathrm{Ed25519}_{\mathrm{Sign}}\bigl(SK_{\mathrm{source}}, \mathrm{SHA256}(s \parallel p \parallel o \parallel \mathrm{level} \parallel \mathrm{source\_id})\bigr)
+\sigma = \mathrm{Ed25519}_{\mathrm{Sign}}\!\left(
+SK_{\mathrm{source}},
+\mathrm{SHA256}\!\left(\mathrm{Canon}(\texttt{attested-fact-v1},s,p,o,l,i)\right)\right).
 ```
 
-Перевірка підпису гарантує цілісність даних та неспростовність авторства (non-repudiation) згідно з принципами ланцюжків постачання артефактів in-toto Торрес-Аріаса та співавторів [[13]](#src-13).
+Тут $\sigma$ — 64-байтний підпис Ed25519, $`SK_{\mathrm{source}}`$ — закритий ключ джерела (64 байти в поданні Go), а $s,p,o$ — точні байти предмета, предиката й об'єкта. $l$ позначає мітку рівня доступу в найкоротшому десятковому ASCII-поданні, $i$ — ідентифікатор джерела. `Canon` кодує домен формату та кожне з п'яти полів окремо: спочатку 8-байтну беззнакову довжину big-endian, потім незмінні байти поля. SHA-256 дає 32 байти; Ed25519 підписує саме їх, не шістнадцятковий текст. Методи `Fact.Digest` і `Fact.ID` нижче використовують цей навчальний формат.
+
+Довжинні префікси потрібні до криптографії: кортежі `("a|b","c","d",0,"s")` та `("a","b|c","d",0,"s")` дають однакове наївне склеювання, але різні канонічні пакети по 71 байту. Це не колізія SHA-256, а неоднозначність старого кодування. Зміна будь-якого з п'яти полів створює іншу ідентичність факту; попередній підпис і дозвіл baseline не переносяться на неї. Обсяг 71 байт стосується цих двох пакетів, не загального розміру Go-об'єкта або буфера; підпис додає ще 64 байти без накладних витрат.
+
+Підпис підтверджує походження й цілісність відносно довіреного ключа за прийнятих криптографічних припущень, не істинність твердження або дозвіл імпорту. Роль такої атестації в ланцюжках постачання артефактів розглянуто в in-toto Торрес-Аріаса та співавторів [[13]](#src-13). Для промоції в §9 застосовано інший домен підписаних байтів, `promotion-certificate-v1`, щоб підпис джерела не підміняв затвердження зміни знань.
+
+П'ять полів утворюють лише навчальний профіль факту. Якщо тип твердження потребує одиниці, модальності, умови або області чинності, вони мають увійти до погодженої схеми й підписаних байтів, а не залишатися ігнорованими полями зовнішнього JSON. Декодер і повний контракт матеріальних атомів у цьому Go-прикладі не реалізовано; точна байтова ідентичність не є доказом семантичної повноти.
 
 ### 7.2. Таксономія загроз: форми атак отруєння знань (Knowledge Poisoning)
 
@@ -543,43 +551,51 @@ P_1(x) \leftarrow P_2(x), \quad P_2(x) \leftarrow P_3(x), \quad P_3(x) \leftarro
 
 ### 7.3. Шлюз вхідного контролю та життєвий цикл карантину знань
 
-Щоб нейтралізувати зазначені загрози, шлюз вхідного контролю (Admission Controller) реалізує суворий багатоетапний **життєвий цикл карантину знань (Knowledge Quarantine Lifecycle)**:
+Шлюз вхідного контролю відділяє походження факту від права включити його в активні знання експертної системи. Якщо зразки з недійсним підписом і справжні кандидати мають спільний шлях просування, сам ключ сховища стає помилковим дозволом на імпорт. Якщо ж допуск прив'язано лише до назви предиката, один перевірений факт відкриває шлях неперевіреним твердженням з іншими предметом, значенням або походженням. Авторський **життєвий цикл карантину знань (Knowledge Quarantine Lifecycle)** розділяє ці стани й прив'язує рішення до точної ідентичності:
 
 ```mermaid
 flowchart TD
     accTitle: Шлюз вхідного контролю та карантин фактів
-    accDescr: Перевірка підпису (з відмовою REFUSAL, ізоляцією в QUARANTINE і записом у журнал аудиту при недійсному підписі), перевірка аксіом та поміщення невідомих предикатів у карантин для офлайн-верифікації.
+    accDescr: Відхилені зразки ізолюються у форензичному сховищі без шляху промоції. Валідний новий факт стає кандидатом незалежно від відомості предиката; просування вимагає формальної й регресійної перевірки, затвердження конкретної зміни та чинної прив'язки до кандидата й baseline.
 
     IN["Вхідний атестований факт<br/>(Attested Fact)"] --> C1{"Криптографічний підпис<br/>(Ed25519 & Trusted Registry)"}
-    C1 -->|НЕДІЙСНИЙ| REJ_SIG["Відмова допуску (REFUSAL):<br/>DecisionRejectSignature +<br/>Ізоляція в QUARANTINE та запис в Audit Log"]
+    C1 -->|"НЕДІЙСНИЙ"| REJ_SIG["<b>REFUSAL: DecisionRejectSignature</b><br/>Форензичне сховище й аудит"]
     C1 -->|ВАЛІДНИЙ| C2{"Сумісність з аксіомами<br/>(Authoritative Axioms)"}
     
-    C2 -->|СУПЕРЕЧНІСТЬ| REJ_POI["Блоковано:<br/>DecisionRejectPoisoning"]
+    C2 -->|"СУПЕРЕЧНІСТЬ"| REJ_POI["<b>REFUSAL: DecisionRejectPoisoning</b><br/>Форензичне сховище й аудит"]
     C2 -->|ВІДПОВІДАЄ| C3{"Статус у базі знань"}
     
-    C3 -->|Відомий факт/клас| ADMIT["Прямий допуск:<br/>DecisionAdmit"]
-    C3 -->|Новий предикат/зв'язок| QUAR["Карантинний буфер:<br/>DecisionQuarantine"]
+    C3 -->|"Точний факт має чинний допуск"| ADMIT["<b>DecisionAdmit</b><br/>Не весь предикат або пакет"]
+    C3 -->|"Інший факт або допуску немає"| QUAR["<b>DecisionQuarantine</b><br/>Ізольований кандидат"]
     
     subgraph Quarantine["<b>Карантинне середовище верифікації (Offline/Batch Audit)</b>"]
-        QUAR --> SMT["Формальна перевірка SMT/ASP<br/>(Z3 / Clingo: відсутність циклів)"]
-        SMT --> REG["Регресійне тестування<br/>на екзаменаційній матриці"]
-        REG --> HITL{"Аудит інженера знань<br/>(Human-in-the-Loop)"}
-        HITL -->|ЗАТВЕРДЖЕНО| PROMOTE["Просування в канонічну базу<br/>(Promoted Fact)"]
-        HITL -->|ВІДХИЛЕНО| PURGE["Вилучення з карантину<br/>з фіксацією інциденту"]
+        QUAR --> SMT{"Формальний іспит SMT/ASP успішний?<br/>Погоджений профіль та інваріанти"}
+        SMT -->|"Так"| REG{"Регресійний іспит успішний?<br/>Погоджена екзаменаційна матриця"}
+        SMT -->|"Ні або невідомо"| HOLD
+        REG -->|"Ні або невідомо"| HOLD
+        REG -->|"Так"| HITL{"Аудит інженера знань<br/>(Human-in-the-Loop)"}
+        HITL -->|"ЗАТВЕРДЖЕНО конкретну зміну"| BIND{"<b>Чинний сертифікат промоції?</b><br/>Тип, точний факт, baseline, звіти,<br/>роль підписанта й повторна атестація"}
+        BIND -->|"Так, версія не змінилась"| PROMOTE["Просування лише цього факту<br/>та фіксація нового покоління"]
+        BIND -->|"Ні або невідомо"| HOLD["Кандидат неактивний<br/>Явна причина й аудит"]
+        HITL -->|"ВІДХИЛЕНО"| HOLD
     end
 ```
 
-1. **Криптографічна валідація та форензична ізоляція:** якщо відкритий ключ джерела відсутній у списку довірених або цифровий підпис не відповідає згортці байтів, факт або пакет знань негайно відхиляється від допуску в активне ядро виведення (`DecisionRejectSignature` / `REFUSAL`, ніколи не монтується в робочу пам'ять) і водночас примусово ізолюється в захищеному карантинному сховищі (`QUARANTINE`) із незмінним записом у журналі аудиту (Audit Log) для збереження криміналістичних (форензичних) доказів спроби підробки (узгоджено з регламентом [Глави 37, §8](ch37-epistemic-security-crypto-attestation.md)).
+1. **Криптографічна валідація та форензична ізоляція:** якщо відкритий ключ джерела відсутній у списку довірених або цифровий підпис не відповідає згортці байтів, факт або пакет знань негайно відхиляється від допуску в активне ядро виведення (`DecisionRejectSignature` / `REFUSAL`, ніколи не монтується в робочу пам'ять) і водночас примусово ізолюється в захищеному карантинному сховищі (`QUARANTINE`) із незмінним записом у журналі аудиту (Audit Log) для збереження криміналістичних (форензичних) доказів спроби підробки (узгоджено з регламентом [Глави 37, §8](ch37-input-information-assessment-and-algorithmic-skepticism.md#8-експертний-скепсис-як-алгоритм)).
 2. **Перевірка суперечностей з аксіомами:** факт відхиляється негайно (`DecisionRejectPoisoning`), якщо його предикат прямо заперечує встановлені фундаментальні аксіоми безпеки.
-3. **Карантинний буфер (Quarantine Buffer) та авторський метод формальної офлайн-верифікації знань розв'язувачами SMT / ASP:** синтаксично коректні факти, що містять раніше невідомі предикати або нові структурні зв'язки, не потрапляють одразу до робочого простору виведення. Вони поміщаються в ізольований буфер кандидатів (`DecisionQuarantine`), де проходять регресійні тести та перевірку SMT-розв'язувачем Z3 де Моури та Бйорнера [[20]](#src-20) або ASP-розв'язувачем Clingo Гебсера та співавторів [[21]](#src-21) ([Глава 23](ch23-knowledge-base-verification.md)) на відсутність циклів, прихованих протиріч та збереження інваріантів безпеки перед остаточним допуском.
+3. **Кандидатний буфер та формальна офлайн-верифікація:** кожне нове твердження, навіть із відомим предикатом, потребує власного допуску. Валідний кандидат ізолюється від форензичних зразків і проходить перевірки за погодженим логічним профілем, зокрема SMT-розв'язувачем Z3 [[20]](#src-20) або ASP-розв'язувачем Clingo [[21]](#src-21), регресійний іспит та фахове затвердження конкретної зміни baseline. Формальна перевірка не зводиться до заборони будь-якого циклу ([Глава 23](ch23-knowledge-base-verification.md)).
+
+Сертифікат промоції повинен зв'язувати тип переходу, повну ідентичність кандидата, вихідну версію baseline, звіти формальної й регресійної перевірок та уповноваженого підписанта затвердження. Сам ключ карантину, підпис постачальника або ознака «предикат відомий» не є такими свідченнями. За невідомого результату, недоступного звіту, зміни кандидата/версії або недійсного дозволу знання не активуються. Форензичний зразок не змінює статусу на кандидатний через виклик промоції: для нового розгляду потрібен окремий автентифікований вхід.
+
+У навчальному §9 `forensics` і `candidates` є різними сховищами, а `admitted` індексується повним `Fact.ID`. Підпис джерела перевіряється знову перед просуванням; зміна довірчої конфігурації консервативно інвалідує кеш дозволів. Підписаний сертифікат прив'язаний до поточного покоління стану шлюзу, а перевірка й перехід серіалізовані одним м'ютексом. Дозвіл належить конкретному факту, не всьому предикату чи пакету; повторне використання незміненого допущеного факту не потребує нового людського підпису.
 
 > [!NOTE]
 > **Чотири стадії карантинної фільтрації знань за моделлю автора**
 > 1. Криптографічна автентифікація та форензичний карантин: миттєве відхилення допуску (`REFUSAL` / `DecisionRejectSignature`) вхідних тверджень або пакетів із невалідним цифровим підписом Ed25519 без монтування в активне ядро виведення з одночасною ізоляцією артефакту в `QUARANTINE` та незмінною фіксацією інциденту в журналі аудиту.
 > 2. Аксіоматична сумісність: жорстке блокування фактів, що прямо заперечують засадничі онтологічні норми та закони фізики системи.
-> 3. Ізоляція в карантинному буфері: перенаправлення синтаксично валідних, але раніше невідомих предикатів у буфер офлайн-аудиту.
-> 4. Формальна верифікація та SMT-розв'язання: автоматична перевірка кандидатних знань розв'язувачами Z3/Clingo на відсутність циклів і збереження несуперечності.
-> *Керування рантаймом / Інженерний інваріант:* Унеможливлює отруєння бази знань цілеспрямованими диверсіями, семантичним дрейфом або атаками Сивіли у розподілених мережах, зберігаючи форензичні докази спроб компрометації.
+> 3. Кандидатна ізоляція: нове твердження не успадковує допуску лише через відомий предикат; форензичні зразки не потрапляють на цей шлях.
+> 4. Формальний і регресійний іспити та затвердження зміни baseline: дозвіл зв'язано з точним кандидатом, звітами й вихідною версією.
+> *Керування рантаймом / Інженерний інваріант:* Без усіх необхідних чинних підстав факт не активується; відмова й форензичний запис не підміняють доказу достатності, але зберігають слід відхилення.
 
 ---
 
@@ -611,13 +627,19 @@ flowchart TD
 
 ## 9. Програмна реалізація мовою Go: модуль xchange
 
-Розглянемо практичну реалізацію ядра міжсистемного обміну знаннями на мові Go. Пакет `xchange` демонструє:
+Навчальний пакет `xchange` показує межу між підписаним зовнішнім фактом, кандидатом і конкретним дозволом його введення. Він перевіряє реальні Ed25519-підписи факту та сертифіката промоції, розділяє сховища й зв'язує перехід із поколінням стану. Це не виробничий завантажувач знань або повна реалізація всіх механізмів глави. У лістингу також залишено окремі демонстрації:
 1. Експорт знань із фільтрацією за решіткою рівнів доступу та цифровим підписом Ed25519.
 2. Шлюз вхідного контролю фактів із захистом від отруєння знань (перевірка підпису та аксіоматичних суперечностей).
 3. Валідацію числових сигналів сенсорним конвертом.
 4. Зворотний зв'язок: колектор аномалій із фіксацією порогу для запуску циклу донавчання.
 
 Код не використовує сторонніх бібліотек, спираючись виключно на стандартний пакет Go (`crypto/ed25519`, `crypto/sha256`, `sync`, `math`).
+
+`FormalPassed` і `RegressionPassed` у сертифікаті є **підписаними твердженнями уповноваженого власника baseline** з хешами звітів. Контролер перевіряє тип, зв'язування та підпис цих свідчень, але не запускає Z3/Clingo, не виконує регресійного іспиту й не перевіряє зміст звітів. У тестах використано синтетичні звіти та тимчасові ключі. Довірені ключі джерел і підписантів baseline задаються різними конфігураційними реєстрами; вхідний пакет не може сам додати собі таке повноваження.
+
+У канонічному `PromotionCertificate.Digest` немає поля `Signature`; підпис обчислюється після дайджесту, без самопосилання. Зв'язаний `Baseline` — лише хеш ланцюжка змін стану цього екземпляра: довірені ключі, аксіоми й допущені факти. Це не повний маніфест усіх правил, джерел і платформ. Перевірка та зміна під м'ютексом стосуються одного процесу; немає стійкого commit, глобального replay-захисту після перезапуску, строків чинності або незмінного зовнішнього журналу. `AuditLog` повертає копію накопиченого в пам'яті журналу, не доказ його довговічності. Потрібні окремі ресурсні межі буферів; обрізання кандидатів або пропуск перевірок не є допустимою деградацією.
+
+Одновимірний `SecurityLevel` не моделює категорій доступу; сенсорний `ValidateSample` не є повною перевіркою швидкості та особливих числових значень. Ці незалежні залишки прикладу не виправляються сертифікатом промоції.
 
 <details>
 <summary>Вихідний код модуля xchange (Go): xchange.go</summary>
@@ -628,10 +650,12 @@ package xchange
 import (
 	"crypto/ed25519"
 	"crypto/sha256"
+	"encoding/binary"
 	"encoding/hex"
 	"errors"
 	"fmt"
 	"math"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -660,13 +684,31 @@ type Fact struct {
 	SourceID  string        `json:"source_id"`
 }
 
-// Digest обчислює канонічний криптографічний хеш SHA-256 для факту.
-func (f Fact) Digest() [32]byte {
+func hashFields(domain string, fields ...string) [32]byte {
 	h := sha256.New()
-	fmt.Fprintf(h, "%s|%s|%s|%d|%s", f.Subject, f.Predicate, f.Object, f.Level, f.SourceID)
+	var length [8]byte
+	for _, field := range append([]string{domain}, fields...) {
+		binary.BigEndian.PutUint64(length[:], uint64(len(field)))
+		h.Write(length[:])
+		h.Write([]byte(field))
+	}
 	var d [32]byte
 	copy(d[:], h.Sum(nil))
 	return d
+}
+
+func hexDigest(d [32]byte) string {
+	return hex.EncodeToString(d[:])
+}
+
+// Digest зв'язує точні байти всіх полів; довжинні префікси усувають неоднозначність роздільників.
+func (f Fact) Digest() [32]byte {
+	return hashFields("attested-fact-v1", f.Subject, f.Predicate, f.Object,
+		strconv.Itoa(int(f.Level)), f.SourceID)
+}
+
+func (f Fact) ID() string {
+	return hexDigest(f.Digest())
 }
 
 // AttestedFact об'єднує факт із криптографічним цифровим підписом системи-постачальника.
@@ -745,47 +787,106 @@ const (
 	DecisionQuarantine
 )
 
-// AdmissionController перевіряє справжність вхідних фактів і захищає від отруєння знань.
+const PromotionCertificateKind = "baseline-promotion-v1"
+
+// PromotionCertificate засвідчує результати зовнішніх перевірок і схвалення конкретної зміни.
+type PromotionCertificate struct {
+	Kind             string
+	FactID           string
+	Baseline         string
+	FormalReport     string
+	RegressionReport string
+	FormalPassed     bool
+	RegressionPassed bool
+	ApproverID       string
+	Signature        string
+}
+
+func (c PromotionCertificate) Digest() [32]byte {
+	return hashFields("promotion-certificate-v1", c.Kind, c.FactID, c.Baseline,
+		c.FormalReport, c.RegressionReport, strconv.FormatBool(c.FormalPassed),
+		strconv.FormatBool(c.RegressionPassed), c.ApproverID)
+}
+
+type axiomKey struct {
+	subject, predicate string
+}
+
 type AdmissionController struct {
 	mu          sync.RWMutex
 	trustedKeys map[string]ed25519.PublicKey
-	axioms      map[string]string
-	knownPreds  map[string]bool
-	quarantine  map[string]AttestedFact
-\tauditLog    []string
+	approvers   map[string]ed25519.PublicKey
+	axioms      map[axiomKey]string
+	candidates  map[string]AttestedFact
+	forensics   map[string]AttestedFact
+	admitted    map[string]bool
+	baseline    string
+	auditLog    []string
 }
 
 // NewAdmissionController ініціалізує шлюз вхідного контролю.
 func NewAdmissionController() *AdmissionController {
 	return &AdmissionController{
 		trustedKeys: make(map[string]ed25519.PublicKey),
-		axioms:      make(map[string]string),
-		knownPreds:  make(map[string]bool),
-		quarantine:  make(map[string]AttestedFact),
+		approvers:   make(map[string]ed25519.PublicKey),
+		axioms:      make(map[axiomKey]string),
+		candidates:  make(map[string]AttestedFact),
+		forensics:   make(map[string]AttestedFact),
+		admitted:    make(map[string]bool),
+		baseline:    hexDigest(hashFields("baseline-revision-v1", "empty")),
 	}
+}
+
+func (ac *AdmissionController) advanceBaseline(event string, fields ...string) {
+	ac.baseline = hexDigest(hashFields("baseline-revision-v1",
+		append([]string{ac.baseline, event}, fields...)...))
+}
+
+func (ac *AdmissionController) CurrentBaseline() string {
+	ac.mu.RLock()
+	defer ac.mu.RUnlock()
+	return ac.baseline
 }
 
 // RegisterTrustedSource додає відкритий ключ довіреного постачальника знань.
 func (ac *AdmissionController) RegisterTrustedSource(sourceID string, pub ed25519.PublicKey) {
 	ac.mu.Lock()
 	defer ac.mu.Unlock()
-	ac.trustedKeys[sourceID] = pub
+	ac.trustedKeys[sourceID] = append(ed25519.PublicKey(nil), pub...)
+	ac.advanceBaseline("source-key", sourceID, hex.EncodeToString(pub))
+	ac.admitted = make(map[string]bool)
 }
 
-// RegisterKnownPredicate реєструє перевірений і безпечний предикат базової онтології.
-func (ac *AdmissionController) RegisterKnownPredicate(predicate string) {
+// RegisterBaselineApprover є довіреним конфігураційним API, не обробником вхідного пакета.
+func (ac *AdmissionController) RegisterBaselineApprover(id string, pub ed25519.PublicKey) {
 	ac.mu.Lock()
 	defer ac.mu.Unlock()
-	ac.knownPreds[predicate] = true
+	ac.approvers[id] = append(ed25519.PublicKey(nil), pub...)
+	ac.advanceBaseline("approver-key", id, hex.EncodeToString(pub))
+	ac.admitted = make(map[string]bool)
 }
 
 // SetAuthoritativeAxiom фіксує непорушну норму, спростування якої кваліфікується як отруєння знань.
 func (ac *AdmissionController) SetAuthoritativeAxiom(subject, predicate, object string) {
 	ac.mu.Lock()
 	defer ac.mu.Unlock()
-	key := subject + "#" + predicate
-	ac.axioms[key] = object
-	ac.knownPreds[predicate] = true
+	ac.axioms[axiomKey{subject, predicate}] = object
+	ac.advanceBaseline("axiom", subject, predicate, object)
+	ac.admitted = make(map[string]bool)
+}
+
+func (ac *AdmissionController) validAttestation(af AttestedFact) bool {
+	pub, ok := ac.trustedKeys[af.Fact.SourceID]
+	sig, err := hex.DecodeString(af.Signature)
+	digest := af.Fact.Digest()
+	return ok && len(pub) == ed25519.PublicKeySize && err == nil &&
+		len(sig) == ed25519.SignatureSize && ed25519.Verify(pub, digest[:], sig)
+}
+
+func (ac *AdmissionController) isolate(af AttestedFact, reason string) {
+	key := hexDigest(hashFields("forensic-envelope-v1", af.Fact.ID(), af.Signature))
+	ac.forensics[key] = af
+	ac.auditLog = append(ac.auditLog, "REFUSAL+FORENSIC: "+reason+" sample="+key)
 }
 
 // Ingest здійснює атестацію факту: перевірку підпису, сумісності з аксіомами та маршрутизацію в карантин.
@@ -793,53 +894,78 @@ func (ac *AdmissionController) Ingest(af AttestedFact) AdmissionDecision {
 	ac.mu.Lock()
 	defer ac.mu.Unlock()
 
-	key := af.Fact.Subject + "#" + af.Fact.Predicate
-	pub, ok := ac.trustedKeys[af.Fact.SourceID]
-	if !ok {
-		ac.quarantine["tamper#"+key] = af
-		ac.auditLog = append(ac.auditLog, "REFUSAL+QUARANTINE: untrusted source "+af.Fact.SourceID)
+	if !ac.validAttestation(af) {
+		ac.isolate(af, "untrusted source or invalid signature")
 		return DecisionRejectSignature
 	}
-
-	sigBytes, err := hex.DecodeString(af.Signature)
-	if err != nil || len(sigBytes) != ed25519.SignatureSize {
-		ac.quarantine["tamper#"+key] = af
-		ac.auditLog = append(ac.auditLog, "REFUSAL+QUARANTINE: malformed signature for "+key)
-		return DecisionRejectSignature
-	}
-
-	digest := af.Fact.Digest()
-	if !ed25519.Verify(pub, digest[:], sigBytes) {
-		ac.quarantine["tamper#"+key] = af
-		ac.auditLog = append(ac.auditLog, "REFUSAL+QUARANTINE: invalid Ed25519 signature for "+key)
-		return DecisionRejectSignature
-	}
-	if existing, hasAxiom := ac.axioms[key]; hasAxiom {
+	if existing, hasAxiom := ac.axioms[axiomKey{af.Fact.Subject, af.Fact.Predicate}]; hasAxiom {
 		if existing != af.Fact.Object {
+			ac.isolate(af, "authoritative axiom conflict")
 			return DecisionRejectPoisoning
 		}
 	}
 
-	// Якщо предикат раніше не атестовано — скеровуємо в карантинний буфер
-	if !ac.knownPreds[af.Fact.Predicate] {
-		ac.quarantine[key] = af
-		return DecisionQuarantine
+	key := af.Fact.ID()
+	if ac.admitted[key] {
+		return DecisionAdmit
 	}
-
-	return DecisionAdmit
+	ac.candidates[key] = af
+	ac.auditLog = append(ac.auditLog, "CANDIDATE: "+key)
+	return DecisionQuarantine
 }
 
-// PromoteFromQuarantine переводить перевірений SMT/ASP-розв'язувачем факт у статус затверджених.
-func (ac *AdmissionController) PromoteFromQuarantine(key string) (AttestedFact, bool) {
+var ErrPromotionDenied = errors.New("promotion denied")
+
+func reportDigestValid(value string) bool {
+	raw, err := hex.DecodeString(value)
+	return err == nil && len(raw) == sha256.Size &&
+		value == hex.EncodeToString(raw) && value != hexDigest([32]byte{})
+}
+
+// PromoteFromQuarantine перевіряє підписане свідчення, але не запускає SMT або регресійні тести.
+func (ac *AdmissionController) PromoteFromQuarantine(key string, cert PromotionCertificate) (AttestedFact, error) {
 	ac.mu.Lock()
 	defer ac.mu.Unlock()
-	af, ok := ac.quarantine[key]
-	if !ok {
-		return AttestedFact{}, false
+	deny := func(reason string) (AttestedFact, error) {
+		ac.auditLog = append(ac.auditLog, "PROMOTION_BLOCKED: "+reason+" fact="+strconv.Quote(key))
+		return AttestedFact{}, fmt.Errorf("%w: %s", ErrPromotionDenied, reason)
 	}
-	delete(ac.quarantine, key)
-	ac.knownPreds[af.Fact.Predicate] = true
-	return af, true
+	af, ok := ac.candidates[key]
+	if !ok {
+		return deny("not an eligible candidate")
+	}
+	if cert.Kind != PromotionCertificateKind || cert.FactID != key || cert.Baseline != ac.baseline {
+		return deny("certificate type or candidate/baseline binding mismatch")
+	}
+	if !cert.FormalPassed || !cert.RegressionPassed ||
+		!reportDigestValid(cert.FormalReport) || !reportDigestValid(cert.RegressionReport) {
+		return deny("missing successful verification attestations")
+	}
+	pub, trusted := ac.approvers[cert.ApproverID]
+	sig, err := hex.DecodeString(cert.Signature)
+	digest := cert.Digest()
+	if !trusted || len(pub) != ed25519.PublicKeySize || err != nil ||
+		len(sig) != ed25519.SignatureSize || !ed25519.Verify(pub, digest[:], sig) {
+		return deny("invalid baseline approval signature")
+	}
+	if af.Fact.ID() != key || !ac.validAttestation(af) {
+		return deny("candidate identity or source attestation changed")
+	}
+	if existing, found := ac.axioms[axiomKey{af.Fact.Subject, af.Fact.Predicate}]; found &&
+		existing != af.Fact.Object {
+		return deny("candidate conflicts with current axiom")
+	}
+	delete(ac.candidates, key)
+	ac.admitted[key] = true
+	ac.advanceBaseline("promote", key, hexDigest(cert.Digest()))
+	ac.auditLog = append(ac.auditLog, "PROMOTED: "+key+" baseline="+ac.baseline)
+	return af, nil
+}
+
+func (ac *AdmissionController) AuditLog() []string {
+	ac.mu.RLock()
+	defer ac.mu.RUnlock()
+	return append([]string(nil), ac.auditLog...)
 }
 
 // AnomalyReport фіксує крайовий випадок чи порушення меж сенсорної інформації стороннім процесором.
@@ -898,9 +1024,52 @@ func (fc *FeedbackCollector) IncidentCount(signalName string) int {
 package xchange
 
 import (
+	"crypto/ed25519"
+	"crypto/sha256"
+	"encoding/hex"
+	"errors"
+	"strings"
+	"sync"
 	"testing"
 	"time"
 )
+
+// Сертифікат тестового власника baseline засвідчує лише синтетичні звіти.
+func signedTestCertificate(ac *AdmissionController, af AttestedFact, key ed25519.PrivateKey) PromotionCertificate {
+	cert := PromotionCertificate{
+		Kind: PromotionCertificateKind, FactID: af.Fact.ID(), Baseline: ac.CurrentBaseline(),
+		FormalReport:     hexDigest(sha256.Sum256([]byte("synthetic formal report"))),
+		RegressionReport: hexDigest(sha256.Sum256([]byte("synthetic regression report"))),
+		FormalPassed:     true, RegressionPassed: true, ApproverID: "baseline-owner",
+	}
+	signTestCertificate(&cert, key)
+	return cert
+}
+
+func signTestCertificate(cert *PromotionCertificate, key ed25519.PrivateKey) {
+	digest := cert.Digest()
+	cert.Signature = hex.EncodeToString(ed25519.Sign(key, digest[:]))
+}
+
+func admissionFixture(t *testing.T) (*AdmissionController, *KnowledgeExporter, ed25519.PrivateKey, AttestedFact) {
+	t.Helper()
+	exp, err := NewKnowledgeExporter("source")
+	if err != nil {
+		t.Fatal(err)
+	}
+	pub, priv, err := ed25519.GenerateKey(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ac := NewAdmissionController()
+	ac.RegisterTrustedSource(exp.SystemID, exp.PublicKey)
+	ac.RegisterBaselineApprover("baseline-owner", pub)
+	af := exp.Export([]Fact{{Subject: "s", Predicate: "p", Object: "v"}}, LevelPublic)[0]
+	if ac.Ingest(af) != DecisionQuarantine {
+		t.Fatal("new fact did not become a candidate")
+	}
+	return ac, exp, priv, af
+}
 
 func TestExportAndAccessControl(t *testing.T) {
 	exp, err := NewKnowledgeExporter("es-primary-node")
@@ -937,7 +1106,11 @@ func TestAdmissionAndPoisoningDefense(t *testing.T) {
 
 	ac := NewAdmissionController()
 	ac.RegisterTrustedSource("es-primary-node", exp.PublicKey)
-	ac.RegisterKnownPredicate("nominal_celsius")
+	ownerPub, ownerPriv, err := ed25519.GenerateKey(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ac.RegisterBaselineApprover("baseline-owner", ownerPub)
 	ac.SetAuthoritativeAxiom("safety_valve", "state_at_overpressure", "OPEN")
 
 	facts := []Fact{
@@ -948,9 +1121,16 @@ func TestAdmissionAndPoisoningDefense(t *testing.T) {
 		t.Fatalf("expected 1 attested fact, got %d", len(attested))
 	}
 
-	// 1. Успішний допуск валідного факту з відомим предикатом
-	if dec := ac.Ingest(attested[0]); dec != DecisionAdmit {
-		t.Errorf("expected DecisionAdmit, got %v", dec)
+	// Новий факт не допускається лише через знайомий тип предиката.
+	if dec := ac.Ingest(attested[0]); dec != DecisionQuarantine {
+		t.Fatalf("expected candidate, got %v", dec)
+	}
+	cert := signedTestCertificate(ac, attested[0], ownerPriv)
+	if _, err := ac.PromoteFromQuarantine(attested[0].Fact.ID(), cert); err != nil {
+		t.Fatal(err)
+	}
+	if ac.Ingest(attested[0]) != DecisionAdmit {
+		t.Fatal("exact approved fact was not admitted")
 	}
 
 	// 2. Підробка вмісту (недійсний підпис)
@@ -979,13 +1159,262 @@ func TestAdmissionAndPoisoningDefense(t *testing.T) {
 	}
 
 	// 5. Просування з карантину після успішної верифікації
-	promoted, ok := ac.PromoteFromQuarantine("coolant_pump#experimental_flow_rate")
-	if !ok || promoted.Fact.Object != "42.0" {
-		t.Errorf("failed to promote fact from quarantine")
+	promoted, err := ac.PromoteFromQuarantine(attestedCandidate[0].Fact.ID(),
+		signedTestCertificate(ac, attestedCandidate[0], ownerPriv))
+	if err != nil || promoted.Fact.Object != "42.0" {
+		t.Fatalf("failed to promote candidate: %v", err)
 	}
-	// Після просування предикат стає відомим і допускається безпосередньо
+	// Повторне використання того самого факту не потребує нового схвалення baseline.
 	if dec := ac.Ingest(attestedCandidate[0]); dec != DecisionAdmit {
 		t.Errorf("expected DecisionAdmit after promotion, got %v", dec)
+	}
+}
+
+func TestCanonicalFactAndAxiomIdentity(t *testing.T) {
+	a := Fact{Subject: "a|b", Predicate: "c", Object: "d", SourceID: "s"}
+	b := Fact{Subject: "a", Predicate: "b|c", Object: "d", SourceID: "s"}
+	if a.Digest() == b.Digest() {
+		t.Fatal("ambiguous fact serialization")
+	}
+	if a.ID() != "55ce74009bde4f2afd8ff07ec3404e4e76eec8c25f65fb3b114873b52954f0d2" ||
+		b.ID() != "51cf849baa8e1d8d3e44724fed3c93f92464499c9b1a67eca9e7c3c77aa4895f" {
+		t.Fatal("canonical fact vectors differ from independent length-prefixed encoding")
+	}
+	if hashFields("domain-a", "ab", "c") == hashFields("domain-a", "a", "bc") ||
+		hashFields("domain-a", "x") == hashFields("domain-b", "x") {
+		t.Fatal("field boundaries or domains were lost")
+	}
+	ac, exp, _, _ := admissionFixture(t)
+	ac.SetAuthoritativeAxiom("a#b", "c", "old")
+	af := exp.Export([]Fact{{Subject: "a", Predicate: "b#c", Object: "new"}}, LevelPublic)[0]
+	if ac.Ingest(af) != DecisionQuarantine {
+		t.Fatal("different subject/predicate pair was confused with an axiom")
+	}
+}
+
+func TestPromotionCertificateDenials(t *testing.T) {
+	tests := []struct {
+		name   string
+		edit   func(*PromotionCertificate)
+		resign bool
+	}{
+		{"wrong type", func(c *PromotionCertificate) { c.Kind = "source-attestation" }, true},
+		{"wrong fact", func(c *PromotionCertificate) { c.FactID = strings.Repeat("a", 64) }, true},
+		{"wrong baseline", func(c *PromotionCertificate) { c.Baseline = strings.Repeat("b", 64) }, true},
+		{"formal failed", func(c *PromotionCertificate) { c.FormalPassed = false }, true},
+		{"regression failed", func(c *PromotionCertificate) { c.RegressionPassed = false }, true},
+		{"missing report", func(c *PromotionCertificate) { c.FormalReport = "" }, true},
+		{"invalid report", func(c *PromotionCertificate) { c.RegressionReport = "not-a-digest" }, true},
+		{"zero report", func(c *PromotionCertificate) { c.FormalReport = strings.Repeat("0", 64) }, true},
+		{"uppercase report", func(c *PromotionCertificate) { c.FormalReport = strings.Repeat("A", 64) }, true},
+		{"source is not owner", func(c *PromotionCertificate) { c.ApproverID = "source" }, true},
+		{"malformed signature", func(c *PromotionCertificate) { c.Signature = "zz" }, false},
+		{"short signature", func(c *PromotionCertificate) { c.Signature = "00" }, false},
+		{"changed signed payload", func(c *PromotionCertificate) { c.FormalReport = strings.Repeat("a", 64) }, false},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			ac, _, owner, af := admissionFixture(t)
+			cert := signedTestCertificate(ac, af, owner)
+			tc.edit(&cert)
+			if tc.resign {
+				signTestCertificate(&cert, owner)
+			}
+			baseline := ac.CurrentBaseline()
+			got, err := ac.PromoteFromQuarantine(af.Fact.ID(), cert)
+			if !errors.Is(err, ErrPromotionDenied) || got != (AttestedFact{}) {
+				t.Fatal("invalid certificate was not explicitly rejected")
+			}
+			if len(ac.candidates) != 1 || len(ac.admitted) != 0 || ac.CurrentBaseline() != baseline {
+				t.Fatal("denial changed candidate or baseline state")
+			}
+			if !strings.HasPrefix(ac.AuditLog()[len(ac.AuditLog())-1], "PROMOTION_BLOCKED:") {
+				t.Fatal("denial was not audited")
+			}
+		})
+	}
+	ac, exp, _, af := admissionFixture(t)
+	if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), PromotionCertificate{}); !errors.Is(err, ErrPromotionDenied) {
+		t.Fatal("key-only equivalent was accepted")
+	}
+	cert := signedTestCertificate(ac, af, exp.PrivateKey)
+	if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), cert); !errors.Is(err, ErrPromotionDenied) {
+		t.Fatal("source signature substituted for baseline approval")
+	}
+}
+
+func TestForensicSamplesCannotBePromoted(t *testing.T) {
+	ac, exp, owner, _ := admissionFixture(t)
+	ac.SetAuthoritativeAxiom("valve", "state", "OPEN")
+	tampered := exp.Export([]Fact{{Subject: "other", Predicate: "p", Object: "old"}}, LevelPublic)[0]
+	tampered.Fact.Object = "tampered"
+	malformed := tampered
+	malformed.Signature = "zz"
+	untrusted := tampered
+	untrusted.Fact.SourceID = "unknown"
+	poison := exp.Export([]Fact{{Subject: "valve", Predicate: "state", Object: "CLOSED"}}, LevelPublic)[0]
+	for _, af := range []AttestedFact{tampered, malformed, untrusted, poison} {
+		decision := ac.Ingest(af)
+		if decision != DecisionRejectSignature && decision != DecisionRejectPoisoning {
+			t.Fatal("rejected sample entered candidate path")
+		}
+		cert := signedTestCertificate(ac, af, owner)
+		if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), cert); !errors.Is(err, ErrPromotionDenied) {
+			t.Fatal("forensic fact identity was promoted")
+		}
+	}
+	if len(ac.forensics) != 4 || len(ac.candidates) != 1 || len(ac.admitted) != 0 {
+		t.Fatal("forensic and candidate stores were mixed")
+	}
+	for key := range ac.forensics {
+		cert := signedTestCertificate(ac, poison, owner)
+		cert.FactID = key
+		signTestCertificate(&cert, owner)
+		if _, err := ac.PromoteFromQuarantine(key, cert); !errors.Is(err, ErrPromotionDenied) {
+			t.Fatal("forensic storage key was promoted")
+		}
+	}
+	log := ac.AuditLog()
+	log[0] = "changed by caller"
+	if ac.AuditLog()[0] == log[0] {
+		t.Fatal("audit snapshot aliases controller memory")
+	}
+}
+
+func TestVerificationResultCombinations(t *testing.T) {
+	for _, formal := range []bool{false, true} {
+		for _, regression := range []bool{false, true} {
+			ac, _, owner, af := admissionFixture(t)
+			cert := signedTestCertificate(ac, af, owner)
+			cert.FormalPassed, cert.RegressionPassed = formal, regression
+			signTestCertificate(&cert, owner)
+			_, err := ac.PromoteFromQuarantine(af.Fact.ID(), cert)
+			if (err == nil) != (formal && regression) {
+				t.Fatal("verification results did not jointly control promotion")
+			}
+		}
+	}
+}
+
+func TestAdmissionDoesNotSpreadToPredicate(t *testing.T) {
+	ac, exp, owner, af := admissionFixture(t)
+	otherSource, err := NewKnowledgeExporter("other-source")
+	if err != nil {
+		t.Fatal(err)
+	}
+	ac.RegisterTrustedSource(otherSource.SystemID, otherSource.PublicKey)
+	cert := signedTestCertificate(ac, af, owner)
+	if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), cert); err != nil {
+		t.Fatal(err)
+	}
+	variants := []Fact{af.Fact, af.Fact, af.Fact, af.Fact, af.Fact}
+	variants[0].Subject = "different-subject"
+	variants[1].Object = "different-object"
+	variants[2].Predicate = "different-predicate"
+	variants[3].Level = LevelInternal
+	for i, fact := range variants {
+		exporter := exp
+		if i == 4 {
+			exporter = otherSource
+		}
+		candidate := exporter.Export([]Fact{fact}, LevelCritical)[0]
+		if ac.Ingest(candidate) != DecisionQuarantine {
+			t.Fatalf("different fact variant %d inherited admission", i)
+		}
+	}
+	if len(ac.candidates) != len(variants) || ac.Ingest(af) != DecisionAdmit {
+		t.Fatal("candidates overwrite each other or exact replay lost its permit")
+	}
+	if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), cert); !errors.Is(err, ErrPromotionDenied) {
+		t.Fatal("consumed certificate was reused")
+	}
+}
+
+func TestPromotionRechecksCurrentState(t *testing.T) {
+	t.Run("stale approval", func(t *testing.T) {
+		ac, _, owner, af := admissionFixture(t)
+		cert := signedTestCertificate(ac, af, owner)
+		ac.SetAuthoritativeAxiom("new", "invariant", "value")
+		if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), cert); !errors.Is(err, ErrPromotionDenied) {
+			t.Fatal("stale baseline approval was used")
+		}
+	})
+	t.Run("candidate source signature", func(t *testing.T) {
+		ac, _, owner, af := admissionFixture(t)
+		cert := signedTestCertificate(ac, af, owner)
+		changed := af
+		changed.Signature = "00"
+		ac.candidates[af.Fact.ID()] = changed
+		if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), cert); !errors.Is(err, ErrPromotionDenied) {
+			t.Fatal("changed candidate was promoted")
+		}
+	})
+	t.Run("candidate identity", func(t *testing.T) {
+		ac, exp, owner, af := admissionFixture(t)
+		other := exp.Export([]Fact{{Subject: "new", Predicate: "p", Object: "v"}}, LevelPublic)[0]
+		ac.candidates[af.Fact.ID()] = other
+		if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), signedTestCertificate(ac, af, owner)); !errors.Is(err, ErrPromotionDenied) {
+			t.Fatal("different signed candidate used an old storage key")
+		}
+	})
+	t.Run("current axiom", func(t *testing.T) {
+		ac, _, owner, af := admissionFixture(t)
+		ac.SetAuthoritativeAxiom("s", "p", "different")
+		if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), signedTestCertificate(ac, af, owner)); !errors.Is(err, ErrPromotionDenied) {
+			t.Fatal("owner certificate bypassed current axiom")
+		}
+	})
+	t.Run("invalid source key", func(t *testing.T) {
+		ac, exp, _, af := admissionFixture(t)
+		ac.RegisterTrustedSource(exp.SystemID, nil)
+		if ac.Ingest(af) != DecisionRejectSignature {
+			t.Fatal("invalid source key was accepted")
+		}
+	})
+	t.Run("invalid owner key", func(t *testing.T) {
+		ac, _, owner, af := admissionFixture(t)
+		ac.RegisterBaselineApprover("baseline-owner", nil)
+		if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), signedTestCertificate(ac, af, owner)); !errors.Is(err, ErrPromotionDenied) {
+			t.Fatal("invalid owner key was accepted")
+		}
+	})
+	t.Run("configuration invalidates permits", func(t *testing.T) {
+		ac, exp, owner, af := admissionFixture(t)
+		if _, err := ac.PromoteFromQuarantine(af.Fact.ID(), signedTestCertificate(ac, af, owner)); err != nil {
+			t.Fatal(err)
+		}
+		ac.RegisterTrustedSource(exp.SystemID, exp.PublicKey)
+		if ac.Ingest(af) != DecisionQuarantine {
+			t.Fatal("old permit survived a new trust configuration")
+		}
+	})
+}
+
+func TestConcurrentPromotion(t *testing.T) {
+	ac, _, owner, af := admissionFixture(t)
+	cert := signedTestCertificate(ac, af, owner)
+	results := make(chan error, 16)
+	var workers sync.WaitGroup
+	for i := 0; i < cap(results); i++ {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			_, err := ac.PromoteFromQuarantine(af.Fact.ID(), cert)
+			results <- err
+		}()
+	}
+	workers.Wait()
+	close(results)
+	success := 0
+	for err := range results {
+		if err == nil {
+			success++
+		} else if !errors.Is(err, ErrPromotionDenied) {
+			t.Fatal(err)
+		}
+	}
+	if success != 1 || len(ac.candidates) != 0 || !ac.admitted[af.Fact.ID()] {
+		t.Fatal("promotion was not a single serialized transition")
 	}
 }
 
@@ -1054,12 +1483,16 @@ func TestFeedbackCollectorThreshold(t *testing.T) {
 
 </details>
 
-Тести перевіряють чотири критичні сценарії:
+Тести перевіряють такі сценарії в заявлених навчальних межах:
 - Відсікання конфіденційного факту отримувачу з недостатнім рівнем допуску (`Dominates`).
 - Виявлення спроби підробки байтів факту за порушенням підпису Ed25519.
 - Блокування отруєння знань при спробі замінити аксіому безпеки на протилежне значення навіть при валідному підписі джерела.
-- Захист сенсорного тракту від неприпустимих стрибків вимірювань і перевищення фізичного діапазону.
+- Наведені випадки відсікання стрибка й виходу за діапазон; не повну часову модель або всі особливі числові значення сенсорного тракту.
 - Акумуляція аномалій для передачі контрприкладів у конвеєр донавчання експертної системи.
+- Непридатність форензичних зразків до просування, тип і підпис сертифіката, його зв'язок із точним фактом та поточним baseline, обов'язковість свідчень і відсутність допуску цілого предиката.
+- Відмову за зміненого кандидата або конфігурації та рівно один успішний перехід при конкурентних спробах у межах процесу.
+
+Після збереження двох опублікованих Go-блоків як `xchange.go` і `xchange_test.go` виконуються `go test -race -count=1 xchange.go xchange_test.go` та `go vet xchange.go xchange_test.go`. Це локальні тести лістингу, не атестація реалізації VIDA, математичної достатності SMT-свідчень або фізичної безпеки сенсорів.
 
 ---
 
@@ -1104,7 +1537,7 @@ func TestFeedbackCollectorThreshold(t *testing.T) {
 4. **Стандартизовані протоколи обміну:** сумісність забезпечується серіалізацією JSON-LD, формами обмежень SHACL та підписаними бінарними пакетами знань, а мережева доставка реалізується через брокер NATS JetStream з гарантією доставки або низьколатентний gRPC.
 5. **Збереження семантики через модульність:** правила безпечного експорту гарантують властивість консервативного розширення та локальності модулів, запобігаючи неконтрольованій зміні поведінки цільової системи та втраті модальностей вимог.
 6. **Решітка рівнів безпеки та селективне розкриття:** передача фактів контролюється домінуванням міток конфіденційності в решітці Деннінг, а докази включення Меркла дозволяють сторонньому аудитору перевірити автентичність норми без витоку закритого вмісту всієї бази знань.
-7. **Захист від отруєння знань:** шлюз вхідного контролю верифікує криптографічні підписи Ed25519, блокує факти, що заперечують базові аксіоми безпеки, та скеровує нові твердження у карантинний буфер для формальної перевірки розв'язувачем.
+7. **Точна область допуску знань:** джерельний підпис не замінює затвердження зміни baseline. Відхилені форензичні зразки відділено від кандидатів, а просування зв'язане з конкретним фактом, чинною версією та свідченнями формальної й регресійної перевірок. Один допущений факт не відкриває весь предикат або пакет; навчальний контролер перевіряє підписані свідчення, не доводить їхню математичну достатність.
 8. **Керований зворотний зв'язок:** сторонні системи повертають структуровані звіти про контрприклади й граничні аномалії, які після досягнення статистичного порогу поповнюють екзаменаційні матриці та живлять алгоритми виявлення дрейфу без небезпечного прямого самонавчання на сирих спостереженнях.
 
 ---
@@ -1138,6 +1571,8 @@ func TestFeedbackCollectorThreshold(t *testing.T) {
 | Отруєння знань | Knowledge Poisoning | Зловмисне або помилкове впровадження суперечливих фактів для порушення коректності логічного виведення |
 | Шлюз вхідного контролю | Admission Controller | Програмний компонент, що виконує перевірку підписів, аксіом та сумісності вхідних фактів до їх збереження |
 | Карантинний буфер | Quarantine Buffer | Ізольоване сховище нових фактів і правил для проходження формальних перевірок та екзаменаційних тестів |
+| Форензичне сховище | Forensic store | Зразки, відхилені через атестацію або конфлікт аксіом; їхній ключ не є дозволом промоції |
+| Сертифікат промоції | Promotion certificate | Типізоване підписане свідчення про конкретного кандидата, вихідний baseline і результати перевірок; не підпис кожного runtime-застосування |
 | Черга контрприкладів | Counterexample Queue | Буфер накопичення повідомлень про аномалії та граничні випадки від сторонніх систем для донавчання |
 
 ---
