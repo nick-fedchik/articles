@@ -100,7 +100,7 @@ flowchart TD
         SYNTH_DOC["<b>Синтезатор артефактів</b><br/>HARA, TARA, DFAR, GSN Safety Case"]
     end
 
-    subgraph LIFECYCLE["3. Багаторічний життєвий цикл (10-15 років)"]
+    subgraph LIFECYCLE["3. Багаторічний життєвий цикл (від 7 до 15 років)"]
         direction TB
         DEV["<b>Фаза проєктування та розробки (Concept to SOP)</b><br/>• Гід для PM, Safety, Security, Architect, V&V"]
         SOP["<b>Випуск у серію (Start of Production — SOP)</b><br/>• Сертифікаційні аудити TÜV / Dekra, доказовий пакет"]
@@ -129,7 +129,7 @@ flowchart TD
 
 ### 2.3. Довготривалий супровід продукту на етапі експлуатації (Post-SOP)
 
-Життя вбудованого програмно-апаратного комплексу в автомобільній чи авіаційній індустрії триває **від 7 до 15 років**. Сертифікація під час запуску в серію (*Start of Production, SOP*) є лише першим рубежем. Протягом подальшої багаторічної експлуатації активна експертна система залишається надійним охоронцем системи:
+Життя вбудованого програмно-апаратного комплексу в автомобільній чи авіаційній індустрії триває **від 7 до 15 років** (`7–15 років`). Сертифікація під час запуску в серію (*Start of Production, SOP*) є лише першим рубежем. Протягом подальшої багаторічної експлуатації активна експертна система залишається надійним охоронцем системи:
 
 1. **Безпека бездротових оновлень (OTA Updates):**  
    Будь-який патч прошивки контролера несе ризик порушення засадничих сертифікаційних властивостей. Експертна система перед кожним OTA-релізом здійснює регресійну попперівську фальсифікацію: перевіряє, чи не ламає новий код доведені інваріанти надійності та чи задовольняє вимогам кібербезпеки UN ECE R156.
@@ -151,14 +151,14 @@ flowchart TD
 | **`ERL-1` (Exploratory Prototype)** | Пошукові R&D-експерименти, внутрішні пісочниці, ранні прототипи | Логування джерел у режимі попереджень (`WARN`) | М'яка кваліфікація (`QUALIFIED_HYPOTHESIS`) | Автоматичний синтаксичний лінтинг вимог і базові модульні тести | $< 1\,\text{с}$ |
 | **`ERL-2` (Commercial Production)** | Корпоративні інформаційні системи, SaaS, технічна підтримка, DevOps | Обов'язкова побайтова прив'язка `SHA-256` для всіх стверджувальних відповідей ($\mathrm{ZHR}=1{,}00$) | Детермінована відмова `REFUSAL` при прогалині знань | Автоматична перевірка зв'язків `SWR <-> Code <-> Test` та стратифікованого Datalog | $1\text{--}3\,\text{с}$ |
 | **`ERL-3` (Regulated Enterprise)** | Фінансовий і податковий аудит, юридичні реєстри, медичні інформаційні системи, кіберзахист | Побайтова кастодія + криптографічний сертифікат доведення $\pi$ з підписом Ed25519 | Жорсткий `Fail-Closed` + карантин невідомих предикатів | Повна матриця трасованості `SHR <-> SWR <-> ADR`, перевірка несуперечливості SMT-солвером | $3\text{--}10\,\text{с}$ |
-| **`ERL-4` (Safety-Critical Cyber-Physical)** | Автономний транспорт (ISO 26262 ASIL D), авіоніка (DO-178C DAL A), енергетика, оборона | Побайтова кастодія + пороговий підпис консорціуму HSM ($k$-of-$n$) + мітка часу RFC 3161 | Двоконтурний `Fail-Closed` із перемиканням на апаратний контур Simplex / MRM | Формальний доказ повноти й ортогональності правил, попперівський фазинг, синтез дерева GSN та HIL-стенд | $10\text{--}60\,\text{с}$ |
+| **`ERL-4` (Safety-Critical Cyber-Physical)** | Автономний транспорт (ISO 26262 ASIL D), авіоніка (DO-178C DAL A), енергетика, оборона | Побайтова кастодія + пороговий підпис консорціуму HSM ($k$-of-$n$) + мітка часу RFC 3161 | Дворівневий `Fail-Closed` із перемиканням на апаратний тракт Simplex / MRM | Формальний доказ повноти й ортогональності правил, попперівський фазинг, синтез дерева GSN та HIL-стенд | $10\text{--}60\,\text{с}$ |
 
 > [!NOTE]
 > **Чотири рівні градації епістемічної суворості (`ERL-1`..`ERL-4`) за методологією автора**
 > 1. **Рівень `ERL-1` (Дослідницький прототип):** Дозволяє швидку перевірку гіпотез у пісочниці з автоматичним маркуванням непідтверджених висновків без зупинки конвеєра розробки.
-> 2. **Рівень `ERL-2` (Комерційна експлуатація):** Забезпечує інваріант нульових галюцинацій ($\mathrm{ZHR} = 1{,}00$) та побайтову кастодію першоджерел у режимі інженерного лінтера CI/CD за $< 3\,\text{с}$ без бюрократичних затримок.
+> 2. **Рівень `ERL-2` (Комерційна експлуатація):** Забезпечує інваріант нульових галюцинацій ($`\mathrm{ZHR} = 1{,}00`$) та побайтову кастодію першоджерел у режимі інженерного лінтера CI/CD за $< 3\,\text{с}$ без бюрократичних затримок.
 > 3. **Рівень `ERL-3` (Регульоване підприємство):** Додає обов'язкові криптографічні сертифікати доведення Ed25519 та SMT-верифікацію несуперечливості при кожному випуску бази знань.
-> 4. **Рівень `ERL-4` (Критичні кіберфізичні системи):** Впроваджує повний цикл консорціумного підпису HSM ($k$-of-$n$), синтез аргументів безпеки GSN та апаратну верифікацію в контурі керування (HIL).
+> 4. **Рівень `ERL-4` (Критичні кіберфізичні системи):** Впроваджує повний цикл консорціумного підпису HSM ($k$-of-$n$), синтез аргументів безпеки GSN та апаратну верифікацію з апаратурою в циклі керування (HIL).
 > *Керування рантаймом / Інженерний інваріант:* Перехід проєкту з раннього прототипу (`ERL-1`) до промислової чи сертифікаційної зрілості (`ERL-2`..`ERL-4`) здійснюється перемиканням профілю суворості в маніфесті CI/CD без зміни архітектури коду.
 
 ---
@@ -201,6 +201,8 @@ flowchart TD
 
 #### 1. Керування потоком верифікації та вердикти системи
 
+Наведені нижче рівняння стосуються коректно завершеної перевірки визначеного застосовного фрагмента норм. За скасування або неповних підстав проміжний список відомих порушень зберігається, але не видається за повністю обчислену множину $`\mathcal{F}(\mathcal{H},\mathcal{K})`$: виклик повертає `REFUSAL` і явну ознаку неповноти. Жодний із цих станів не дозволяє відкрити релізний шлюз.
+
 Якщо $`\mathcal{F}(\mathcal{H}, \mathcal{K}) \neq \emptyset`$ (виявлено хоча б одне спростування):
 
 ```math
@@ -209,13 +211,13 @@ flowchart TD
 
 **Дія системи:** Конвеєр безперервної інтеграції (CI/CD) негайно зупиняється з кодом помилки `EX_SAFETY_VIOLATION`. Система генерує криптографічний токен відмови $`\mathrm{Refusal}(\rho)`$ із цифровим підписом Ed25519, блокує прошивання бінарного образу в цільовий мікроконтролер ECU та реєструє дефект в інженерному трекері (Jira/GitLab) з посиланням на точний побайтовий фрагмент стандарту.
 
-Якщо $`\mathcal{F}(\mathcal{H}, \mathcal{K}) = \emptyset`$ (жодного нормативного контрприкладу не знайдено):
+Якщо $`\mathcal{F}(\mathcal{H}, \mathcal{K}) = \emptyset`$ і перевірку всього заданого застосовного фрагмента завершено, норми та їхні докази чинні, а стан кожного обов'язку відомий, можливий лише умовний результат:
 
 ```math
 \mathrm{Verdict} = \mathbf{PROVISIONALLY\_CORROBORATED}
 ```
 
-**Дія системи:** Система повертає вердикт умовного підтвердження, видає цифровий сертифікат проходження нормативного шлюзу та відкриває доступ до етапу апаратного моделювання в циклі керування (HIL-тестування).
+**Дія системи:** Система повертає вердикт умовного підтвердження з точними межами перевіреного фрагмента. Відсутність норм, неповні підстави або незавершений пошук дають `REFUSAL`, а не порожню множину спростувань із позитивним статусом. Подальші HIL-випробування чи реліз потребують власних погоджених шлюзів; умовний результат не є `ACCEPT` або доведенням фізичної безпеки.
 
 ```mermaid
 stateDiagram-v2
@@ -225,6 +227,7 @@ stateDiagram-v2
     [*] --> HypothesisFormulation: Проєктне твердження H
     HypothesisFormulation --> PotentialFalsifierMining: Формалізація в деонтичний предикат
     PotentialFalsifierMining --> AdversarialTesting: Знайдено нормативні норми K
+    PotentialFalsifierMining --> Incomplete: Норми відсутні або їх застосовність невідома
     
     state AdversarialTesting {
         [*] --> SMT_Check: Символьний SMT-аналіз
@@ -232,8 +235,11 @@ stateDiagram-v2
         BoundaryFuzzing --> HIL_Simulation: Апаратне моделювання в циклі
     }
 
-    AdversarialTesting --> Falsified: Знайдено F(H, K) != empty (Порушення норми)
-    AdversarialTesting --> Corroborated: F(H, K) == empty (Стійкість до спростування)
+    AdversarialTesting --> Falsified: Перевірку завершено, F(H, K) != empty
+    AdversarialTesting --> Corroborated: Перевірку завершено, F(H, K) == empty
+    AdversarialTesting --> Incomplete: Помилка, невідомі підстави або скасування
+    state "REFUSAL: неповна перевірка" as Incomplete
+    Incomplete --> [*]
 
     state Falsified {
         [*] --> RefusalToken: Генерація криптографічного токена відмови
@@ -242,8 +248,8 @@ stateDiagram-v2
     }
 
     state Corroborated {
-        [*] --> ComplianceCertificate: Видача сертифіката проходження шлюзу
-        ComplianceCertificate --> StageGateRelease: Допуск до серійного релізу / HIL
+        [*] --> ComplianceCertificate: Умовний результат з межами перевірки
+        ComplianceCertificate --> StageGateRelease: Передача на окремий шлюз HIL або релізу
     }
 
     Falsified --> Refinement: Звуження або коригування гіпотези (без конвенціоналізму)
@@ -517,9 +523,9 @@ flowchart TD
 \mathcal{C}_{\mathrm{abstract}} \cap \mathcal{C}_{\mathrm{physical}} = \emptyset
 ```
 
-де $\mathcal{C}_{\mathrm{abstract}}$ містить поняття специфікацій інтерфейсів, форматів передачі даних, мережевих протоколів та чистих алгебраїчних структур (наприклад, протокол передачі гіпертексту, решітка понять, простір Чу), а $\mathcal{C}_{\mathrm{physical}}$ описує матеріальні та кінематичні параметри макросвіту (об'єм циліндрів двигуна, кінські сили, кінетична енергія, термодинамічна температура, швидкість звуку, гравітаційна стала).
+де $`\mathcal{C}_{\mathrm{abstract}}`$ містить поняття специфікацій інтерфейсів, форматів передачі даних, мережевих протоколів та чистих алгебраїчних структур (наприклад, протокол передачі гіпертексту, решітка понять, простір Чу), а $`\mathcal{C}_{\mathrm{physical}}`$ описує матеріальні та кінематичні параметри макросвіту (об'єм циліндрів двигуна, кінські сили, кінетична енергія, термодинамічна температура, швидкість звуку, гравітаційна стала).
 
-У разі надходження запиту $q = (s, p)$, де $s \in \mathcal{C}_{\mathrm{abstract}}$, а $p \in \mathcal{C}_{\mathrm{physical}}$, наївна експертна система демонструє **деградацію вичерпного перебору (Exhaustive Scan Degeneracy)**: намагаючись перевірити наявність факту у сховищі з понад 19 000 доменних кластерів знань, алгоритм обходить десятки нерелевантних баз, викликаючи неприпустиме зростання часу відповіді ($t_{\mathrm{resp}} > 30\,\text{с}$) та ризик вичерпання дескрипторів пам'яті.
+У разі надходження запиту $q = (s, p)$, де $`s \in \mathcal{C}_{\mathrm{abstract}}`$, а $`p \in \mathcal{C}_{\mathrm{physical}}`$, наївна експертна система демонструє **деградацію вичерпного перебору (Exhaustive Scan Degeneracy)**: намагаючись перевірити наявність факту у сховищі з понад 19 000 доменних кластерів знань, алгоритм обходить десятки нерелевантних баз, викликаючи неприпустиме зростання часу відповіді ($`t_{\mathrm{resp}} > 30\,\text{с}`$) та ризик вичерпання дескрипторів пам'яті.
 
 ```mermaid
 flowchart TD
@@ -539,16 +545,16 @@ flowchart TD
 ```
 
 Для нейтралізації цієї загрози автором розроблено архітектурний механізм **двостадійного шлюзу швидкої відмови (Fast-Refusal Gate, за моделлю автора)**:
-1. **Шлюз першого рівня (Level-1 Fast-Refusal Gate):** перевірка категоріальної сумісності здійснюється безпосередньо під час вхідного синтаксичного фреймінгу запиту ще до звернення до індексу та структур даних спільних відображень пам'яті (`mmap`). При виявленні диз'юнктних класів система миттєво повертає детерміновану типізовану відмову (`REFUSAL`, код `0x0401` `CATEGORY_MISMATCH_OR_FALSE_PREMISE`) за час $t_{\mathrm{gate}} < 3\,\text{мс}$.
-2. **Обмежений відбір кандидатів ($K_{\max} = 10$):** у разі складних міждоменних запитів із багатьма поняттями пул аналізованих кластерів обмежується 10 найбільш релевантними за онтологічним графом вузлами, що усуває лінійне уповільнення та скорочує час обробки у 3 рази (з 33 с до 8–12 с) над сховищем з 19 263 кластерів знань.
+1. **Шлюз першого рівня (Level-1 Fast-Refusal Gate):** перевірка категоріальної сумісності здійснюється безпосередньо під час вхідного синтаксичного фреймінгу запиту ще до звернення до індексу та структур даних спільних відображень пам'яті (`mmap`). При виявленні диз'юнктних класів система миттєво повертає детерміновану типізовану відмову (`REFUSAL`, код `0x0401` `CATEGORY_MISMATCH_OR_FALSE_PREMISE`) за час $`t_{\mathrm{gate}} < 3\,\text{мс}`$.
+2. **Обмежений відбір кандидатів ($`K_{\max} = 10`$):** у разі складних міждоменних запитів із багатьма поняттями пул аналізованих кластерів обмежується 10 найбільш релевантними за онтологічним графом вузлами, що усуває лінійне уповільнення та скорочує час обробки у 3 рази (з 33 с до 8–12 с) над сховищем з 19 263 кластерів знань.
 
 > [!NOTE]
 > **Чотири принципи попперівської демаркації та швидкої відмови за моделлю автора**
 > 1. *Категоріальна ортогональність понять*: суворе розмежування абстрактних специфікацій та фізичних властивостей на етапі вхідного синтаксичного фреймінгу.
 > 2. *Миттєва типізована відмова (Fast-Refusal)*: повернення детермінованого статусу відмови з кодом категоріальної розбіжності за час $t < 3\,\text{мс}$ без звернення до сховища знань.
-> 3. *Обмежений онтологічний перебір*: гарантоване лімітування пулу кандидатів до $K_{\max} = 10$ для ліквідації деградації затримки при багатопонятійних запитах.
+> 3. *Обмежений онтологічний перебір*: гарантоване лімітування пулу кандидатів до $`K_{\max} = 10`$ для ліквідації деградації затримки при багатопонятійних запитах.
 > 4. *Непорушність інваріанта нульових галюцинацій*: дотримання принципу Fail-Closed ($ZHR = 1{,}000000$), що унеможливлює генерацію правдоподібних непідтверджених синтезів.
-> *Керування рантаймом / Інженерний інваріант:* Детермінований шлюз першого рівня блокує будь-яке звернення до пам'яті кластерів при виявленні категоріальної помилки, гарантуючи реакцію за $t_{\mathrm{gate}} < 3\,\text{мс}$.
+> *Керування рантаймом / Інженерний інваріант:* Детермінований шлюз першого рівня блокує будь-яке звернення до пам'яті кластерів при виявленні категоріальної помилки, гарантуючи реакцію за $`t_{\mathrm{gate}} < 3\,\text{мс}`$.
 
 #### Емпірична валідація на репрезентативному наборі з 20 випробувань
 
@@ -657,7 +663,9 @@ flowchart TD
 | **System 1 (Зона релевантності / Relevance Zone)** | SLM / LLM / Евристичний парсер | Первинна розвідка, аналіз наміру користувача, виділення семантичних термінів і синонімів | **Виключно дорадчі (Advisory).** Не мають права оголошувати твердження нормативно істинним чи сертифікованим. Довіра строго $`\mathrm{Conf} < 1{,}00`$. |
 | **System 2 (Зона правомірності / Eligibility Zone)** | Детерміновані мікрокоманди віртуальної машини, SAT, ASPIC+ | Нормативна верифікація, допуск за фізичними межами, апаратні блокування | **Виключні та остаточні (Decisive).** Математичний доказ відповідності першоджерелу із побайтовою регістровою кастодією (SHA-256) та $`\mathrm{ZHR} = 1{,}000000`$. |
 
-Жоден висновок або рекомендація компонента System 1 не можуть змінити стан сертифікаційного шлюзу без проходження через детерміноване сито System 2.
+Жоден висновок або рекомендація компонента System 1 не можуть змінити стан сертифікаційного шлюзу без проходження через детерміноване сито System 2. Зокрема, для місійно-критичних систем класу ASIL-D (узгоджено з [Главою 40](ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md), §5.2.1) сертифікаційний вердикт `ACCEPT` випускається **виключно** на підставі детермінованого формального доведення суверенного ядра (System 2); будь-яка ймовірнісна короборація $`\mathrm{Conf} \ge 0{,}95`$ від дорадчих каналів System 1 дає щонайбільше статус `QUALIFIED` (із обов'язковою ескалацією людині-експерту або лише як сигнал пріоритетного ранжування перед детермінованою верифікацією).
+
+Узгодження автономної самоорганізації рантайму ([Глава 35](ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md)) із обов'язковим людським підтвердженням ([Глава 34](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md), §9.3) забезпечується розподілом системних змін на **три класи**: (1) *автономні операційні коригування без участі оператора* (балансування навантаження, маршрутизація, переупорядкування черг, перемикання банків пам'яті в межах затверджених інваріантів); (2) *оновлення еталонної бази знань і порогів (`baseline`)* (модифікація правил, онтологій або порогів допуску вимагає схвалення людиною-експертом і криптографічного підпису Ed25519 у `baseline`); (3) *заборонені рантайм-мутації* (інваріанти безпеки та шлюзові політики `Fail-Closed` не можуть послаблюватися автономно).
 
 ### 7.3. Делегування рутинних верифікаційних обчислень машині
 
@@ -679,10 +687,255 @@ flowchart TD
 
 ## 8. Програмна реалізація ядра активного аудитора TARA та директив безпеки на Go
 
-Нижче наведено розширену реалізацію активного аудитора, що підтримує сутності стандартів ISO 26262 та ISO/SAE 21434:
+Навчальний аудитор нижче показує закритий фрагмент перевірки безумовних `MUST` і `MUST_NOT`, а не виробничу реалізацію TARA, сертифікаційний солвер або повне тлумачення стандартів. Він не реалізує нормативного арбітражу ASPIC+, формального аналізу прошивки, підписування токенів або керування ECU. Порожній набір норм не підтверджує гіпотези; непідтримувана модальність, невідома застосовність або стан дії залишають результат недопущеним.
+
+Довірений спостерігач `ActionObserver` має отримувати стан дії з незалежно перевірених артефактів саме цільової версії проєкту, не з упевненості LLM або довільного поля `ProposedAction`. Відсутність доказу реалізації означає `ActionUnknown`, а не доведену відсутність: `ActionAbsent` допустимий лише за перевіреним повним описом реалізації в заданому фрагменті. Тести використовують синтетичний спостерігач і не доводять правильності продуктивного адаптера.
+
+Конструктор копіює джерело та правила й більше не змінює їх під час перевірки; це спрощує відтворення та не вимагає очікування блокування реєстратора. Попередній завантажувач має перевірити підпис і чинність baseline, повноту очікуваного фрагмента та зв'язок правил із джерелом: локальне порівняння SHA-256 не встановлює довіри до одночасно підмінених тексту й очікуваного хешу. Поля `Complete` й `EvidenceVerified` у прикладі стосуються лише переданого фрагмента; вони не доводять охоплення всіх стандартів, істинності джерела або безпечності фізичного проєкту. Для паралельних викликів довірений спостерігач теж має бути потокобезпечним і працювати з узгодженими артефактами цільової версії.
+
+| Стан перевірки | Внутрішній результат прикладу | Межа висновку |
+|---|---|---|
+| Немає норм, застосовність/дія невідома, кастодію порушено, є помилка або скасування | `REFUSAL`, `Complete=false`, `EvidenceVerified=false` | Відомі до зупинки порушення збережено, але повнота списку не заявляється |
+| Усі застосовні підтримувані правила перевірено, є порушення | `FALSIFIED`, `Complete=true` | Повертається повний список порушень цього завантаженого фрагмента |
+| Усі застосовні підтримувані правила перевірено, порушень немає | `PROVISIONALLY_CORROBORATED`, `Complete=true` | Лише умовне підтвердження в межах фрагмента; не `ACCEPT`, не допуск релізу |
+
+`ctx` перевіряється до роботи, між правилами, після виклику спостерігача та перед завершенням. Це кооперативне скасування: спостерігач теж повинен виконувати свій контракт контексту. Метод не перериває сторонню функцію, що його ігнорує, і не доводить жорсткого WCET; `Latency` є спостереженим часом конкретного виклику.
 
 <details>
-<summary><b>Повний вихідний код: Ядро активного аудитора TARA та Safety Directives на Go (~150 рядків)</b></summary>
+<summary><b>Навчальний Go-модуль: явні відмови, перевірка обов'язків і кастодія</b></summary>
+
+```go
+package compliance
+
+import (
+	"bytes"
+	"context"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"time"
+)
+
+type DomainStandard string
+type DeonticModality string
+
+const (
+	ModalityMust    DeonticModality = "MUST"
+	ModalityMustNot DeonticModality = "MUST_NOT"
+)
+
+type ComplianceRule struct {
+	ID            string
+	Standard      DomainStandard
+	Clause        string
+	Entity        string
+	Modality      DeonticModality
+	TargetAction  string
+	VerbatimQuote string
+	ByteStart     uint64
+	ByteEnd       uint64
+	ExpectedSHA   string
+}
+
+type EngineeringHypothesis struct {
+	HypothesisID string
+	TargetEntity string
+}
+
+type ActionState uint8
+
+const (
+	ActionUnknown ActionState = iota
+	ActionPresent
+	ActionAbsent
+)
+
+type Observation struct {
+	ApplicabilityKnown bool
+	Applicable         bool
+	State              ActionState
+}
+
+type ActionObserver func(context.Context, EngineeringHypothesis, ComplianceRule) (Observation, error)
+
+type Verdict string
+
+const (
+	VerdictRefusal      Verdict = "REFUSAL"
+	VerdictFalsified    Verdict = "FALSIFIED"
+	VerdictCorroborated Verdict = "PROVISIONALLY_CORROBORATED"
+)
+
+type FalsificationResult struct {
+	Verdict          Verdict
+	Violations       []ComplianceRule
+	Issues           []string
+	Complete         bool
+	EvidenceVerified bool
+	Latency          time.Duration
+}
+
+type ActiveComplianceEngine struct {
+	rulesByEntity map[string][]ComplianceRule
+	rawSourceData []byte
+	observe       ActionObserver
+}
+
+func NewComplianceEngine(sourceData []byte, rules []ComplianceRule, observe ActionObserver) (*ActiveComplianceEngine, error) {
+	if len(sourceData) == 0 || observe == nil {
+		return nil, fmt.Errorf("source and trusted observer are required")
+	}
+	e := &ActiveComplianceEngine{
+		rulesByEntity: make(map[string][]ComplianceRule),
+		rawSourceData: append([]byte(nil), sourceData...),
+		observe:       observe,
+	}
+	seen := make(map[string]bool)
+	for _, r := range rules {
+		if r.ID == "" || r.Standard == "" || r.Clause == "" ||
+			r.Entity == "" || r.TargetAction == "" || r.Modality == "" || seen[r.ID] {
+			return nil, fmt.Errorf("invalid or duplicate rule %q", r.ID)
+		}
+		seen[r.ID] = true
+		e.rulesByEntity[r.Entity] = append(e.rulesByEntity[r.Entity], r)
+	}
+	return e, nil
+}
+
+func (e *ActiveComplianceEngine) FalsifyDesignHypothesis(ctx context.Context, h EngineeringHypothesis) (result FalsificationResult, err error) {
+	start := time.Now()
+	result.Verdict = VerdictRefusal
+	defer func() {
+		result.Latency = time.Since(start)
+		if err != nil {
+			result.Verdict = VerdictRefusal
+			result.Complete = false
+			result.EvidenceVerified = false
+			result.Issues = append(result.Issues, err.Error())
+		}
+	}()
+	if ctx == nil || h.HypothesisID == "" || h.TargetEntity == "" {
+		return result, fmt.Errorf("context and hypothesis identity are required")
+	}
+	if err := ctx.Err(); err != nil {
+		return result, err
+	}
+	rules := e.rulesByEntity[h.TargetEntity]
+	if len(rules) == 0 {
+		result.Issues = append(result.Issues, "NO_APPLICABLE_RULES")
+		return result, nil
+	}
+
+	applicable := 0
+	for _, rule := range rules {
+		if err := ctx.Err(); err != nil {
+			return result, err
+		}
+		if !e.checkCustody(rule) {
+			result.Issues = append(result.Issues, "CUSTODY_FAILED:"+rule.ID)
+			continue
+		}
+		if rule.Modality != ModalityMust && rule.Modality != ModalityMustNot {
+			result.Issues = append(result.Issues, "UNSUPPORTED_MODALITY:"+rule.ID)
+			continue
+		}
+		obs, err := e.observe(ctx, h, rule)
+		if err != nil {
+			return result, fmt.Errorf("observe %s: %w", rule.ID, err)
+		}
+		if err := ctx.Err(); err != nil {
+			return result, err
+		}
+		if !obs.ApplicabilityKnown {
+			result.Issues = append(result.Issues, "UNSUPPORTED_CONDITION:"+rule.ID)
+			continue
+		}
+		if !obs.Applicable {
+			continue
+		}
+		applicable++
+		if obs.State != ActionPresent && obs.State != ActionAbsent {
+			result.Issues = append(result.Issues, "ACTION_UNKNOWN:"+rule.ID)
+			continue
+		}
+		if (rule.Modality == ModalityMust && obs.State == ActionAbsent) ||
+			(rule.Modality == ModalityMustNot && obs.State == ActionPresent) {
+			result.Violations = append(result.Violations, rule)
+		}
+	}
+
+	if err := ctx.Err(); err != nil {
+		return result, err
+	}
+	if applicable == 0 {
+		result.Issues = append(result.Issues, "NO_APPLICABLE_RULES")
+	}
+	if len(result.Issues) != 0 {
+		return result, nil
+	}
+	result.Complete = true
+	result.EvidenceVerified = true
+	result.Verdict = VerdictCorroborated
+	if len(result.Violations) != 0 {
+		result.Verdict = VerdictFalsified
+	}
+	return result, nil
+}
+
+func (e *ActiveComplianceEngine) checkCustody(r ComplianceRule) bool {
+	if r.ByteStart >= r.ByteEnd || r.ByteEnd > uint64(len(e.rawSourceData)) {
+		return false
+	}
+	chunk := e.rawSourceData[r.ByteStart:r.ByteEnd]
+	expected, err := hex.DecodeString(r.ExpectedSHA)
+	if err != nil || len(expected) != sha256.Size || !bytes.Equal(chunk, []byte(r.VerbatimQuote)) {
+		return false
+	}
+	hash := sha256.Sum256(chunk)
+	return bytes.Equal(hash[:], expected)
+}
+
+func (e *ActiveComplianceEngine) InterrogateSystem(ctx context.Context, entity string) ([]string, error) {
+	if ctx == nil {
+		return nil, fmt.Errorf("context is required")
+	}
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+	rules := e.rulesByEntity[entity]
+	if len(rules) == 0 {
+		return nil, fmt.Errorf("no rules for entity %q", entity)
+	}
+	var probes []string
+	for _, rule := range rules {
+		if err := ctx.Err(); err != nil {
+			return nil, err
+		}
+		if !e.checkCustody(rule) {
+			return nil, fmt.Errorf("custody failed for %s", rule.ID)
+		}
+		if rule.Modality == ModalityMust {
+			probes = append(probes, fmt.Sprintf(
+				"ACTIVE COMPLIANCE PROBE [%s %s]: verify %q; quote: %q",
+				rule.Standard, rule.Clause, rule.TargetAction, rule.VerbatimQuote,
+			))
+		}
+	}
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+	return probes, nil
+}
+```
+
+</details>
+
+API прикладу навмисно уточнено: замість паралельної реєстрації під час аудиту конструктор фіксує копію завантаженої нормативної бази, а стан реалізації надає окремий довірений спостерігач. Результат містить один явний вердикт і список порушень, а не суперечливу пару булевих ознак або тільки першу норму. За помилки чи скасування частковий список не губиться, але `Complete` й `EvidenceVerified` лишаються хибними. Генератор запитань також перевіряє цитату; порожній список запитань не є доказом комплаєнсу.
+
+Контрольні тести виконуються разом із модулем у пакеті `compliance`: перший блок зберігається як `compliance.go`, другий як `compliance_test.go` у власному тестовому Go-модулі. Команди відтворення: `go test ./...` і `go test -race ./...`. Тексти правил синтетичні й не є цитатами стандартів. Позитивні контроли потрібні, щоб відмова на всі входи не виглядала виправленням аудитора.
+
+<details>
+<summary><b>Go-тести: обов'язки, невідомість, кастодія, скасування та незмінний зріз</b></summary>
 
 ```go
 package compliance
@@ -691,150 +944,279 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"errors"
 	"fmt"
+	"strings"
 	"sync"
+	"testing"
 	"time"
 )
 
-// DomainStandard ідентифікатор стандарту комплаєнсу.
-type DomainStandard string
-
-const (
-	StandardISO26262 DomainStandard = "ISO-26262:2018"
-	StandardISO21434 DomainStandard = "ISO/SAE-21434:2021"
-	StandardASPICE4  DomainStandard = "ASPICE-4.0"
-	StandardRFC9110  DomainStandard = "RFC-9110"
-)
-
-// DeonticModality модальність норми за RFC 2119 / ISO Directives.
-type DeonticModality string
-
-const (
-	ModalityMust    DeonticModality = "MUST"
-	ModalityMustNot DeonticModality = "MUST_NOT"
-	ModalityShould  DeonticModality = "SHOULD"
-)
-
-// ComplianceRule репрезентує непорушний нормативний атом бінарного контейнера знань.
-type ComplianceRule struct {
-	Standard      DomainStandard  `json:"standard"`
-	Clause        string          `json:"clause"`         // напр. "Part 6 Clause 8.4.2"
-	Entity        string          `json:"entity"`         // напр. "SafetyMechanism"
-	Modality      DeonticModality `json:"modality"`       // MUST / MUST_NOT
-	TargetAction  string          `json:"target_action"`  // напр. "SilentFailure"
-	VerbatimQuote string          `json:"verbatim_quote"` // Дослівна норма
-	ByteStart     uint64          `json:"byte_start"`     // Початок у першоджерелі
-	ByteEnd       uint64          `json:"byte_end"`       // Кінець у першоджерелі
-	ExpectedSHA   string          `json:"expected_sha"`   // Хеш цитати (регістрова кастодія першоджерела)
+func fixture(t *testing.T, modalities []DeonticModality, states map[string]ActionState) (*ActiveComplianceEngine, []byte, []ComplianceRule) {
+	t.Helper()
+	source := []byte("synthetic source\n")
+	var rules []ComplianceRule
+	for i, modality := range modalities {
+		quote := fmt.Sprintf("synthetic rule %d: %s action", i, modality)
+		start := len(source)
+		source = append(source, []byte(quote)...)
+		hash := sha256.Sum256([]byte(quote))
+		rules = append(rules, ComplianceRule{
+			ID: fmt.Sprintf("r%d", i), Standard: "SYNTHETIC", Clause: fmt.Sprint(i),
+			Entity: "unit", Modality: modality, TargetAction: fmt.Sprintf("a%d", i),
+			VerbatimQuote: quote, ByteStart: uint64(start), ByteEnd: uint64(len(source)),
+			ExpectedSHA: hex.EncodeToString(hash[:]),
+		})
+		source = append(source, '\n')
+	}
+	observe := func(ctx context.Context, h EngineeringHypothesis, r ComplianceRule) (Observation, error) {
+		return Observation{ApplicabilityKnown: true, Applicable: true, State: states[r.ID]}, nil
+	}
+	e, err := NewComplianceEngine(source, rules, observe)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return e, source, rules
 }
 
-// EngineeringHypothesis проектне рішення, надане інженером або LLM.
-type EngineeringHypothesis struct {
-	HypothesisID   string `json:"hypothesis_id"`
-	TargetEntity   string `json:"target_entity"`
-	ProposedAction string `json:"proposed_action"`
-	SafetyASIL     string `json:"safety_asil,omitempty"` // "QM", "ASIL-A".."ASIL-D"
-	Rationale      string `json:"rationale"`
+func hypothesis() EngineeringHypothesis {
+	return EngineeringHypothesis{HypothesisID: "h1", TargetEntity: "unit"}
 }
 
-// FalsificationResult підсумок перевірки за Поппером.
-type FalsificationResult struct {
-	IsFalsified      bool            `json:"is_falsified"`
-	ViolatedRule     *ComplianceRule `json:"violated_rule,omitempty"`
-	RefusalReason    string          `json:"refusal_reason"`
-	EvidenceVerified bool            `json:"evidence_verified"`
-	Latency          time.Duration   `json:"latency"`
-}
-
-// ActiveComplianceEngine автономний аудитор TARA/SAR/DFAR.
-type ActiveComplianceEngine struct {
-	mu           sync.RWMutex
-	rulesByEntity map[string][]ComplianceRule
-	rawSourceData []byte // mmap масив першоджерела
-}
-
-// NewComplianceEngine ініціалізує аудитор з прив'язкою до першоджерела.
-func NewComplianceEngine(sourceData []byte) *ActiveComplianceEngine {
-	return &ActiveComplianceEngine{
-		rulesByEntity: make(map[string][]ComplianceRule),
-		rawSourceData: sourceData,
+func assertRefusal(t *testing.T, result FalsificationResult) {
+	t.Helper()
+	if result.Verdict != VerdictRefusal || result.Complete || result.EvidenceVerified || len(result.Issues) == 0 {
+		t.Fatalf("expected explicit incomplete refusal: %+v", result)
 	}
 }
 
-// RegisterComplianceRule додає правило з нормативної бази.
-func (e *ActiveComplianceEngine) RegisterComplianceRule(r ComplianceRule) {
-	e.mu.Lock()
-	defer e.mu.Unlock()
-	e.rulesByEntity[r.Entity] = append(e.rulesByEntity[r.Entity], r)
+func TestModalities(t *testing.T) {
+	cases := []struct {
+		name     string
+		modality DeonticModality
+		state    ActionState
+		verdict  Verdict
+	}{
+		{"must-present", ModalityMust, ActionPresent, VerdictCorroborated},
+		{"must-absent", ModalityMust, ActionAbsent, VerdictFalsified},
+		{"must-not-present", ModalityMustNot, ActionPresent, VerdictFalsified},
+		{"must-not-absent", ModalityMustNot, ActionAbsent, VerdictCorroborated},
+		{"unknown-action", ModalityMust, ActionUnknown, VerdictRefusal},
+		{"invalid-action", ModalityMust, ActionState(99), VerdictRefusal},
+		{"unsupported-modality", "SHOULD", ActionPresent, VerdictRefusal},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			e, _, _ := fixture(t, []DeonticModality{tc.modality}, map[string]ActionState{"r0": tc.state})
+			result, err := e.FalsifyDesignHypothesis(context.Background(), hypothesis())
+			if err != nil || result.Verdict != tc.verdict {
+				t.Fatalf("result=%+v err=%v", result, err)
+			}
+			if tc.verdict == VerdictRefusal {
+				assertRefusal(t, result)
+			} else if !result.Complete || !result.EvidenceVerified {
+				t.Fatalf("complete audit lost evidence: %+v", result)
+			}
+		})
+	}
 }
 
-// FalsifyDesignHypothesis здійснює попперівську фальсифікацію за час < 1ms.
-func (e *ActiveComplianceEngine) FalsifyDesignHypothesis(ctx context.Context, h EngineeringHypothesis) (*FalsificationResult, error) {
-	start := time.Now()
-	e.mu.RLock()
-	defer e.mu.RUnlock()
-
-	rules, found := e.rulesByEntity[h.TargetEntity]
-	if !found || len(rules) == 0 {
-		return &FalsificationResult{
-			IsFalsified:      false,
-			RefusalReason:    "No normative restrictions found; open-world hypothesis accepted.",
-			EvidenceVerified: true,
-			Latency:          time.Since(start),
-		}, nil
-	}
-
-	for _, rule := range rules {
-		// Побайтова верифікація першоджерела (перевірка регістрової кастодії)
-		if !e.checkCustody(rule) {
-			return nil, fmt.Errorf("custody breach on %s [%d..%d]", rule.Clause, rule.ByteStart, rule.ByteEnd)
+func TestUnknownAndInapplicableRules(t *testing.T) {
+	t.Run("unknown-entity", func(t *testing.T) {
+		e, _, _ := fixture(t, []DeonticModality{ModalityMust}, map[string]ActionState{"r0": ActionPresent})
+		h := hypothesis()
+		h.TargetEntity = "unknown"
+		result, err := e.FalsifyDesignHypothesis(context.Background(), h)
+		if err != nil {
+			t.Fatal(err)
 		}
-
-		// Попперівське спростування: пряме порушення заборони стандарту
-		if rule.Modality == ModalityMustNot && rule.TargetAction == h.ProposedAction {
-			return &FalsificationResult{
-				IsFalsified:      true,
-				ViolatedRule:     &rule,
-				RefusalReason:    fmt.Sprintf("Direct compliance breach of %s (%s): %s", rule.Standard, rule.Clause, rule.VerbatimQuote),
-				EvidenceVerified: true,
-				Latency:          time.Since(start),
-			}, nil
+		assertRefusal(t, result)
+	})
+	t.Run("empty-registry", func(t *testing.T) {
+		e, _, _ := fixture(t, nil, nil)
+		result, err := e.FalsifyDesignHypothesis(context.Background(), hypothesis())
+		if err != nil {
+			t.Fatal(err)
 		}
+		assertRefusal(t, result)
+	})
+	for _, obs := range []Observation{{}, {ApplicabilityKnown: true, Applicable: false}} {
+		e, _, _ := fixture(t, []DeonticModality{ModalityMust}, nil)
+		e.observe = func(context.Context, EngineeringHypothesis, ComplianceRule) (Observation, error) {
+			return obs, nil
+		}
+		result, err := e.FalsifyDesignHypothesis(context.Background(), hypothesis())
+		if err != nil {
+			t.Fatal(err)
+		}
+		assertRefusal(t, result)
 	}
-
-	return &FalsificationResult{
-		IsFalsified:      false,
-		RefusalReason:    "Design hypothesis withstood Popperian falsification against loaded compliance rules.",
-		EvidenceVerified: true,
-		Latency:          time.Since(start),
-	}, nil
 }
 
-// checkCustody перевіряє SHA-256 цитати в mmap зрізі.
-func (e *ActiveComplianceEngine) checkCustody(r ComplianceRule) bool {
-	if e.rawSourceData == nil || r.ByteEnd > uint64(len(e.rawSourceData)) || r.ByteStart >= r.ByteEnd {
-		return false
+func TestAllViolationsAndPartialResult(t *testing.T) {
+	e, _, _ := fixture(t, []DeonticModality{ModalityMust, ModalityMustNot},
+		map[string]ActionState{"r0": ActionAbsent, "r1": ActionPresent})
+	result, err := e.FalsifyDesignHypothesis(context.Background(), hypothesis())
+	if err != nil || result.Verdict != VerdictFalsified || len(result.Violations) != 2 || !result.Complete {
+		t.Fatalf("result=%+v err=%v", result, err)
 	}
-	chunk := e.rawSourceData[r.ByteStart:r.ByteEnd]
-	h := sha256.Sum256(chunk)
-	return hex.EncodeToString(h[:]) == r.ExpectedSHA
+	e, _, _ = fixture(t, []DeonticModality{ModalityMust, ModalityMust},
+		map[string]ActionState{"r0": ActionAbsent})
+	result, err = e.FalsifyDesignHypothesis(context.Background(), hypothesis())
+	if err != nil || len(result.Violations) != 1 {
+		t.Fatalf("partial evidence lost: %+v err=%v", result, err)
+	}
+	assertRefusal(t, result)
 }
 
-// InterrogateSystem генерує активні директиви допиту інженерної команди.
-func (e *ActiveComplianceEngine) InterrogateSystem(entity string) []string {
-	e.mu.RLock()
-	defer e.mu.RUnlock()
-
-	var probes []string
-	for _, rule := range e.rulesByEntity[entity] {
-		if rule.Modality == ModalityMust {
-			probes = append(probes, fmt.Sprintf(
-				"ACTIVE COMPLIANCE PROBE [%s %s]: System MUST implement and verify '%s'. Where is the test evidence? Quote: \"%s\"",
-				rule.Standard, rule.Clause, rule.TargetAction, rule.VerbatimQuote,
-			))
-		}
+func TestCustodyRejectsInvalidEvidence(t *testing.T) {
+	mutations := []func(*ComplianceRule){
+		func(r *ComplianceRule) { r.VerbatimQuote = "a different reported quote" },
+		func(r *ComplianceRule) { r.ExpectedSHA = "not-hex" },
+		func(r *ComplianceRule) { r.ExpectedSHA = "00" },
+		func(r *ComplianceRule) { r.ExpectedSHA = strings.Repeat("0", 64) },
+		func(r *ComplianceRule) { r.ByteEnd = r.ByteStart },
+		func(r *ComplianceRule) { r.ByteStart = r.ByteEnd + 1 },
+		func(r *ComplianceRule) { r.ByteEnd = ^uint64(0) },
 	}
-	return probes
+	for i, mutate := range mutations {
+		t.Run(fmt.Sprint(i), func(t *testing.T) {
+			e, source, rules := fixture(t, []DeonticModality{ModalityMust}, nil)
+			mutate(&rules[0])
+			calls := 0
+			observe := func(context.Context, EngineeringHypothesis, ComplianceRule) (Observation, error) {
+				calls++
+				return Observation{true, true, ActionPresent}, nil
+			}
+			e, err := NewComplianceEngine(source, rules, observe)
+			if err != nil {
+				t.Fatal(err)
+			}
+			result, err := e.FalsifyDesignHypothesis(context.Background(), hypothesis())
+			if err != nil || calls != 0 {
+				t.Fatalf("bad custody reached observer: result=%+v err=%v calls=%d", result, err, calls)
+			}
+			assertRefusal(t, result)
+			if _, err := e.InterrogateSystem(context.Background(), "unit"); err == nil {
+				t.Fatal("probe repeated an unverified quote")
+			}
+		})
+	}
+}
+
+func TestContextAndObserverErrors(t *testing.T) {
+	e, _, _ := fixture(t, []DeonticModality{ModalityMust}, nil)
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	result, err := e.FalsifyDesignHypothesis(ctx, hypothesis())
+	if !errors.Is(err, context.Canceled) {
+		t.Fatal(err)
+	}
+	assertRefusal(t, result)
+	expired, stop := context.WithDeadline(context.Background(), time.Now().Add(-time.Second))
+	defer stop()
+	result, err = e.FalsifyDesignHypothesis(expired, hypothesis())
+	if !errors.Is(err, context.DeadlineExceeded) {
+		t.Fatal(err)
+	}
+	assertRefusal(t, result)
+	ctx, cancel = context.WithCancel(context.Background())
+	e.observe = func(context.Context, EngineeringHypothesis, ComplianceRule) (Observation, error) {
+		cancel()
+		return Observation{true, true, ActionPresent}, nil
+	}
+	result, err = e.FalsifyDesignHypothesis(ctx, hypothesis())
+	if !errors.Is(err, context.Canceled) {
+		t.Fatal(err)
+	}
+	assertRefusal(t, result)
+	cause := errors.New("synthetic observer failure")
+	e.observe = func(context.Context, EngineeringHypothesis, ComplianceRule) (Observation, error) {
+		return Observation{}, cause
+	}
+	result, err = e.FalsifyDesignHypothesis(context.Background(), hypothesis())
+	if !errors.Is(err, cause) {
+		t.Fatal(err)
+	}
+	assertRefusal(t, result)
+	if _, err := e.InterrogateSystem(expired, "unit"); !errors.Is(err, context.DeadlineExceeded) {
+		t.Fatal(err)
+	}
+}
+
+func TestCancellationPreservesKnownViolation(t *testing.T) {
+	e, _, _ := fixture(t, []DeonticModality{ModalityMust, ModalityMustNot}, nil)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	e.observe = func(ctx context.Context, h EngineeringHypothesis, rule ComplianceRule) (Observation, error) {
+		if rule.ID == "r0" {
+			return Observation{true, true, ActionAbsent}, nil
+		}
+		cancel()
+		return Observation{true, true, ActionPresent}, nil
+	}
+	result, err := e.FalsifyDesignHypothesis(ctx, hypothesis())
+	if !errors.Is(err, context.Canceled) || len(result.Violations) != 1 || result.Violations[0].ID != "r0" {
+		t.Fatalf("known violation lost at cancellation: %+v err=%v", result, err)
+	}
+	assertRefusal(t, result)
+}
+
+func TestImmutableSnapshotAndConcurrentReads(t *testing.T) {
+	e, source, rules := fixture(t, []DeonticModality{ModalityMust}, map[string]ActionState{"r0": ActionPresent})
+	source[rules[0].ByteStart] ^= 1
+	rules[0].Entity = "changed"
+	probes, err := e.InterrogateSystem(context.Background(), "unit")
+	if err != nil || len(probes) != 1 {
+		t.Fatalf("snapshot was aliased: %v %v", probes, err)
+	}
+	var workers sync.WaitGroup
+	for i := 0; i < 8; i++ {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			for j := 0; j < 20; j++ {
+				result, err := e.FalsifyDesignHypothesis(context.Background(), hypothesis())
+				if err != nil || result.Verdict != VerdictCorroborated || !result.Complete {
+					t.Errorf("result=%+v err=%v", result, err)
+				}
+			}
+		}()
+	}
+	workers.Wait()
+}
+
+func TestInvalidInputs(t *testing.T) {
+	e, source, rules := fixture(t, []DeonticModality{ModalityMust}, nil)
+	if _, err := NewComplianceEngine(nil, rules, e.observe); err == nil {
+		t.Fatal("missing source accepted")
+	}
+	if _, err := NewComplianceEngine(source, rules, nil); err == nil {
+		t.Fatal("missing observer accepted")
+	}
+	if _, err := NewComplianceEngine(source, append(rules, rules[0]), e.observe); err == nil {
+		t.Fatal("duplicate rule accepted")
+	}
+	rules[0].ID = ""
+	if _, err := NewComplianceEngine(source, rules, e.observe); err == nil {
+		t.Fatal("missing rule ID accepted")
+	}
+	result, err := e.FalsifyDesignHypothesis(nil, hypothesis())
+	if err == nil {
+		t.Fatal("nil context accepted")
+	}
+	assertRefusal(t, result)
+	result, err = e.FalsifyDesignHypothesis(context.Background(), EngineeringHypothesis{})
+	if err == nil {
+		t.Fatal("missing hypothesis identity accepted")
+	}
+	assertRefusal(t, result)
+	if _, err := e.InterrogateSystem(context.Background(), "unknown"); err == nil {
+		t.Fatal("unknown entity produced a silent probe success")
+	}
+	if _, err := e.InterrogateSystem(nil, "unit"); err == nil {
+		t.Fatal("nil context accepted by probe")
+	}
 }
 ```
 
@@ -918,18 +1300,19 @@ func (e *ActiveComplianceEngine) InterrogateSystem(entity string) []string {
    Залишаючи людину арбітром і стратегом (Human-in-the-Loop), доказова експертна система повертає інженерії безпеки радість творчості, елегантності та інтелектуальної гідності.
 
 > [!NOTE]
-> **Практичне застосування попперівських критеріїв фальсифікації на фізичних апаратних стендах:**
-> - [Додаток Б. Робототехніка та кіберфізичні системи](appendix-b-robotics-and-cyber-physical-systems.md) — попперівський критерій фальсифікації гіпотези ASIL-D для гетерогенного тандему Jetson AGX Orin + Xilinx Virtex FPGA ($`P(T_{\mathrm{loop}} > T_{\mathrm{wdg}}) > 10^{-9}`$ на годину).
-> - [Додаток В. Автономна навігація без GNSS](appendix-c-autonomous-navigation-and-geosearch.md) — фальсифікація навігаційної стійкості безпілотників в умовах РЕБ та супутникового спуфінгу ($`P(\mathrm{drift} > 5\ \mathrm{m}) > 10^{-6}`$).
-> - [Додаток Г. Аналогові експертні системи та апаратне виведення](appendix-d-analog-expert-systems-and-neuromorphic-computing.md) — фальсифікація придатності аналогового шлюзу Махаланобіса за температурного дрейфу ($`P(\mathrm{MissedEmergency}) > 0`$).
-> - [Додаток Д. Змішані аналого-цифрові експертні системи](appendix-e-mixed-signal-neuromorphic-expert-systems.md) — попперівське спростування нейроморфного доказового контракту при виході за межі шлюзу запасу ($`M(\mathbf{x}) < \gamma_{\mathrm{margin}}`$).
+> **Чотири методичні перевірки контрактів доказової системи, запропоновані автором:**
+> 1. [Глава 18 §8.3.1](ch18-execution-infrastructure.md#831-запас-до-порога-та-чинна-межа-сумарної-похибки): перевірити блокування допуску, коли чинна межа сумарної похибки вичерпує запас до порога.
+> 2. [Глава 37 §5.1](ch37-input-information-assessment-and-algorithmic-skepticism.md#51-незалежний-аудит-мовчазних-пропусків): незалежно перевірити мовчазні пропуски, а не лише вже прийняті кандидати.
+> 3. [Глава 21 §1](ch21-from-recommendation-to-action.md#1-рекомендація-план-і-дія-три-рівні-відповідальності): перевірити, що успішна відповідь API без незалежного підтвердження фізичної післяумови не означає успішного виконання.
+> 4. [Глава 28](ch28-dual-mode-expert-systems.md): перевірити перемикання Simplex на детермінований контролер при порушенні умов допуску дорадчого тракту.
+> *Інженерний інваріант:* Це методичні сценарії фальсифікації контрактів, а не звіт про виконані фізичні випробування чи емпіричний доказ сертифікаційної надійності.
 
 ---
 
 ## Запитання для самоперевірки
 1. Чому ручні методи підтвердження нормативної відповідності (Compliance Theatre) стають джерелом критичних ризиків у місійно-критичних системах?
 2. У чому полягає зсув інженерної парадигми від пасивного довідника до проактивного інтерактивного навігатора життєвого циклу?
-3. Як активний аудитор здійснює довготривалий супровід виробу на етапі експлуатації (Post-SOP) протягом 10–15 років?
+3. Як активний аудитор здійснює довготривалий супровід виробу на етапі експлуатації (Post-SOP) протягом від 7 до 15 років (`7–15 років`)?
 4. Як математичний принцип фальсифікованості Карла Поппера формалізується для перевірки інженерних гіпотез безпеки?
 5. Що таке «потенційний фальсифікатор» (Potential Falsifier) у контексті сертифікаційних вимог ISO 26262 та ISO/SAE 21434?
 6. Яким чином експертна система автоматизує складання матриці TARA та розрахунок показників Attack Feasibility?

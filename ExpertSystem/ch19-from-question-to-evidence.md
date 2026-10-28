@@ -27,7 +27,7 @@
 - *«Покажи в RFC, де визначено мінімальну довжину датаграми»* (запит на доказ);
 - *«Чи правильно, що мінімальна UDP-датаграма має 8 октетів?»* (запит на перевірку твердження).
 
-Ці репліки різняться граматикою й комунікативною дією, але спираються на одне інженерне твердження. Набір даних Natural Questions формалізував схожу різницю між довгою відповіддю (абзацом, що містить відповідь) і короткою відповіддю (точним фрагментом усередині абзацу) [[3]](#src-3). Для експертної системи навіть коротка відповідь є недостатньою: автором впроваджено **концепцію повноструктурного інженерного твердження** ($`\text{Subject} + \text{Relation} + \text{Value} + \text{Unit} + \text{Provenance}`$), яка вимагає явної формалізації предмета, відношення, числового значення, одиниці вимірювання та повного ланцюга джерельного походження для кожної матеріальної складової.
+Ці репліки різняться граматикою й комунікативною дією, але спираються на одне інженерне твердження. Набір даних Natural Questions формалізував схожу різницю між довгою відповіддю (абзацом, що містить відповідь) і короткою відповіддю (точним фрагментом усередині абзацу) [[3]](#src-3). Для експертної системи навіть коротка відповідь є недостатньою: автором впроваджено **концепцію повноструктурного інженерного твердження** ($`\text{Subject} + \text{Relation} + \text{Value} + \text{Unit} + \text{Provenance}`$), яка вимагає явної формалізації предмета, відношення, числового значення, одиниці вимірювання та повного ланцюга джерельного походження для кожної матеріальної складової. Це фрейм простого кількісного визначення, не універсальний перелік полів: для умовної чи деонтичної норми повний склад задає контракт §5.1.
 
 Ця глава відповідає на запитання: **як перетворити знайдений фрагмент на перевірюване твердження для відповіді?** Для розв'язання цієї проблеми автором розроблено **чотириетапну архітектурну модель перетворення запитання на доказ** (Виявлення $\to$ Вилучення $\to$ Прив'язка $\to$ Перевірка). Мовна модель пропонує структуру й якорі, зв'язувач відтворює адреси, а окрема перевірка встановлює ролі, застосовність і відповідність запитанню. При цьому втілено **інженерний принцип необхідності побайтової прив'язки для джерельної верифікації**: повна прив'язка матеріальних атомів до фізичних байтів першоджерела є обов'язковою, фундаментальною передумовою джерельної перевірки, за якої будь-які непідтверджені поля ведуть до уточнення або обґрунтованої відмови (`REFUSAL`), категорично унеможливлюючи генеративне домислювання.
 
@@ -215,17 +215,20 @@ flowchart TB
 ```mermaid
 flowchart TD
     accTitle: Детерміноване зв'язування твердження з байтами першоджерела
-    accDescr: Твердження мовної моделі проходить перевірку схеми, пошук кожного якоря в байтах документа й типові перевірки; неоднозначний або відсутній якір робить твердження неповним.
+    accDescr: Хост визначає схвалений контракт типу й обов'язковий контекст до оцінювання якорів. Прив'язка всіх очікуваних текстових атомів веде лише до семантичної перевірки, не до ENTAILED.
 
     P["<b>Незмінні байти фрагмента</b>"] --> LLM["<b>Мовна модель</b><br/>твердження й дослівні якорі"]
-    LLM --> SV["<b>Перевірка JSON Schema</b><br/>структура й типи полів"]
-    SV --> BIND["<b>Детермінований зв'язувач</b><br/>пошук кожного якоря в байтах"]
+    LLM --> SV{"<b>Контракт типу й контекст визначені?</b><br/>Схема, очікувані атоми та групи<br/>Перевірені джерельні метадані"}
+    HOST["<b>Схвалений контракт на хості</b><br/>Не список полів, обраний моделлю"] --> SV
+    SV -->|"Так"| BIND["<b>Детермінований зв'язувач</b><br/>пошук усіх очікуваних якорів"]
+    SV -->|"Ні або невідомо"| INC
+    P -.->|"Джерельні байти"| BIND
     BIND -->|"рівно одне входження"| VAL["<b>Типові перевірки атомів</b><br/>числа, одиниці, ідентифікатори"]
     BIND -->|"нуль або кілька входжень"| AMB["<b>NOT_FOUND або AMBIGUOUS_SPAN</b>"]
-    VAL --> CHK{"<b>Усі матеріальні атоми прив'язано?</b>"}
+    VAL --> CHK{"<b>Усі очікувані атоми й складники прив'язано?</b>"}
     AMB --> CHK
-    CHK -->|так| GR_OK["<b>Прив'язка успішна</b>"]
-    CHK -->|ні| INC["<b>INCOMPLETE_CLAIM</b><br/>твердження відхилено"]
+    CHK -->|"Так"| GR_OK["<b>Прив'язка успішна</b><br/>Лише перехід до перевірки слідування"]
+    CHK -->|"Ні"| INC["<b>INCOMPLETE_CLAIM</b><br/>твердження не допущено<br/>Явні причина й прогалини"]
 
     classDef src fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
     classDef proc fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
@@ -233,7 +236,7 @@ flowchart TD
     classDef res fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
     classDef err fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c;
 
-    class P src;
+    class P,HOST src;
     class LLM,SV,BIND,VAL proc;
     class CHK check;
     class GR_OK res;
@@ -242,45 +245,82 @@ flowchart TD
 
 ### 5.1. Повнота прив'язки та критерії валідності
 
-Для кількісної верифікації того, що вилучене твердження повністю спирається на авторитетний нормативний текст і не містить галюцинованих елементів, вводиться метрика повноти прив'язки $`\mathrm{Comp}(C)`$. Вона оцінює частку матеріальних компонентів знання, успішно зіставлених із фізичними координатами першоджерела:
+Повнота прив'язки потрібна верифікатору експертної системи, щоб не пропустити твердження з утраченою умовою чи винятком. Якщо знаменник метрики містить тільки поля, які запропонувала модель, пропущене обмеження зникає також із перевірки: чотири правильні якорі можуть приховати неправильне правило. Тому перед обчисленням $`\mathrm{Comp}(C)`$ хост визначає контракт $\Gamma$ для типу твердження $C$ та його джерельного контексту, а не довіряє довільному переліку полів кандидата.
+
+Контракт має схвалені тип і версію схеми, повний перелік очікуваних текстових атомів, правила їхньої кратності та обов'язкові контекстні підстави. Застосовність кожної групи — модальності, умов, винятків, кількісних значень — повинна бути визначена незалежно від бажаного результату кандидата. «У джерелі підтверджено відсутність винятків» відрізняється від «аналізатор не знає, чи вони є»; другий стан не вилучає групу зі знаменника й блокує просування. Невідомий тип, порожня схема або непідтверджений контекст не отримують числової оцінки за замовчуванням.
+
+| Приклад типу | Очікувані текстові компоненти за підтвердженим контрактом | Контекст і межа прикладу |
+|---|---|---|
+| Просте кількісне визначення | Предмет, відношення, значення й одиниця, якщо вона фізично застосовна | Модальність визначення та ідентичність/редакція джерела перевіряються окремо; чотири поля не є універсальною схемою |
+| Деонтична норма | Актанти й дія, модальність, заперечення, квантори та всі застосовні умови/винятки | Відсутність маркера не дає права довільно вибрати `MUST`, дозвіл чи безумовність |
+| Умовна кількісна норма | Основна величина та всі матеріальні складники кожної умови: наприклад, також значення й одиниця напруги | Кілька умов мають окремі екземпляри атомів і перевірені логічні зв'язки; одна знайдена умова не замінює решти |
+
+Таблиця задає приклади, не вичерпну онтологію всіх речень. Точний склад і статуси застосовності фіксуються схваленим контрактом після перевірки джерельної структури; автоматичної повноти такого визначення для довільної природної мови тут не доведено. Якщо редакція, час чинності чи класифікація типу походять із паспорта документа або схеми, зберігається перевірене посилання на цей артефакт. Їм не вигадуються текстові спани в цитаті. Непідтверджена контекстна підстава блокує повний результат навіть за всіх знайдених текстових якорів.
+
+Для визначеного непорожнього контракту з підтвердженим контекстом метрика текстової повноти має вигляд; позначення $`\mathrm{Comp}(C)`$ далі є скороченням за фіксованого $\Gamma$:
 
 ```math
-\mathrm{Comp}(C) = \frac{\sum_{a \in A_m(C)} w_a \cdot \mathbb{I}[b(a) \neq \varnothing]}{\sum_{a \in A_m(C)} w_a}
+\mathrm{Comp}(C;\Gamma)=
+\frac{\sum_{a\in A_m(C;\Gamma)}w_a\,\mathbb I[\mathrm{CompleteBinding}(a)]}
+{\sum_{a\in A_m(C;\Gamma)}w_a}.
 ```
 
 де:
 - $`\mathrm{Comp}(C)`$ — скалярний показник повноти прив'язки твердження $C$, визначений у нормованому діапазоні $[0, 1]$;
-- $`A_m(C)`$ — скінченна множина матеріальних атомів твердження, відсутність будь-якого з яких спотворює сенс інженерного правила ($`A_m(C) = \{\text{subject}, \text{relation}, \text{value}, \text{unit}\}`$);
+- $\Gamma$ — схвалений контракт типу й очікуваних екземплярів, а $`A_m(C;\Gamma)`$ — визначена хостом скінченна непорожня множина необхідних текстових атомів; вона не скорочується до наявних у кандидата полів;
 - $a$ — окремий матеріальний атом із множини $`A_m(C)`$;
-- $`w_a`$ — ваговий коефіцієнт критичності атома ($`w_a > 0`$, дійсне число; у каліброваній конфігурації $`w_{\text{subject}} = 0{,}1`$, $`w_{\text{relation}} = 0{,}2`$, $`w_{\text{value}} = 0{,}4`$, $`w_{\text{unit}} = 0{,}3`$);
-- $b(a)$ — напіввідкритий інтервал зміщень у байтах $[s, e)$, що однозначно ідентифікує входження текстового якоря атома в нормалізованому тексті першоджерела, або $\varnothing$, якщо якір не знайдено чи знайдено неоднозначно;
-- $`\mathbb{I}[b(a) \neq \varnothing]`$ — індикаторна функція, яка набуває значення 1, якщо атом $a$ має рівно одне несуперечливе входження в діапазоні байтів, і 0 у разі статусу $`\text{NOT\_FOUND}`$ або $`\text{AMBIGUOUS\_SPAN}`$.
+- $`w_a`$ — додатна скінченна діагностична вага, зафіксована контрактом, а не підібрана моделлю для проходження шлюзу. Нульова, від'ємна, нескінченна або `NaN`-вага робить конфігурацію недійсною; знаменник має бути додатним і скінченним;
+- $b(a)$ — повний набір потрібних для атома якорів. Кожний інтервал $[s,e)$ має ідентичність джерела й координатного простору; для сирого UTF-8 виконується $`0\le s<e\le\mathrm{len}(\mathrm{raw})`$. Пошук у нормалізованому поданні потребує відтворюваного відображення до сирих байтів; складеному атому може знадобитися кілька спанів;
+- $`\mathrm{CompleteBinding}(a)`$ означає, що всі очікувані складники атома однозначно прив'язані в належному просторі та пройшли типову перевірку. Один знайдений спан не компенсує відсутнього другого; $`\mathbb I`$ дає 1 тільки за повного результату й 0 за відсутності, неоднозначності або типового дефекту.
 
 **Практичне застосування та інженерні висновки:**
-1. Розрахунок виконується детермінованим зв'язувачем для кожного твердження, запропонованого мовною моделлю, до передачі результату в рушій логічного виведення.
+1. Спершу перевіряються контракт, застосовність груп і походження обов'язкового контексту; потім зв'язувач обчислює повноту. Невизначений контракт не перетворюється ні на порожню кон'юнкцію, ні на `Comp = 1`. За додатних ваг у точній арифметиці значення 1 еквівалентне повній прив'язці всіх очікуваних атомів, тому для рішення не потрібне емпіричне калібрування ваг. Реалізація перевіряє булеве «усі прив'язані», а не округлене відображення `1,00`. Якщо floating-point подання втратило малу вагу й показує 1 за неповної булевої перевірки, результат лишається `INCOMPLETE_CLAIM`.
 2. **Числовий поріг допуску (Критерій відсікання):**
-   - $`\mathrm{Comp}(C) = 1{,}00`$: **ПОВНЕ ЗВ'ЯЗУВАННЯ (GROUNDED / Green Gate)**. Усі матеріальні атоми успішно прив'язано до фізичних байтів; твердження допускається до семантичної перевірки слідування;
-   - $`0{,}70 \le \mathrm{Comp}(C) < 1{,}00`$: **НЕПОВНЕ ТВЕРДЖЕННЯ (INCOMPLETE_CLAIM / Fail-Closed)**. Втрачено або спотворено критичний атом (наприклад, одиницю вимірювання чи обмежувальне застереження). Твердження безумовно відхиляється. В інженерних системах часткова точність неприпустима: знання про те, що затримка дорівнює «8», без зв'язування одиниці вимірювання (`мс` чи `мкс`) є прямим ризиком аварії;
-   - $`\mathrm{Comp}(C) < 0{,}70`$: **ГАЛЮЦИНАЦІЯ МОДЕЛІ (UNGROUNDED / Red Gate)**. Твердження відхиляється з формуванням журналу інциденту телеметрії.
+   - $`\mathrm{Comp}(C) = 1{,}00`$ за чинного контракту й перевіреного контексту: **ПОВНЕ ЗВ'ЯЗУВАННЯ (GROUNDED / Green Gate)**. Це перехід лише до перевірки слідування, не `ENTAILED`, не `ACCEPT` і не промоція в baseline;
+   - $`0{,}70 \le \mathrm{Comp}(C) < 1{,}00`$: **НЕПОВНЕ ТВЕРДЖЕННЯ (INCOMPLETE_CLAIM / Fail-Closed)**. Початкове твердження не допускається з переліком відсутніх атомів;
+   - $`\mathrm{Comp}(C) < 0{,}70`$: **НЕПІДТВЕРДЖЕНА ПРИВ'ЯЗКА (UNGROUNDED / Red Gate)**. Кандидат не допускається, причина реєструється. Сама низька оцінка не доводить, що причиною була саме галюцинація, а не дефект вилучення чи даних.
+3. Контракт задає граничну кількість атомів і спанів та бюджет їх перевірки. За умовного формату 64 байти на запис-підставу шість односпанових атомів потребують 384 байти без джерел, метаданих і робочих буферів; це приклад сайзингу, не ABI. Нестача ресурсу не дозволяє вилучити умову зі знаменника. Перевірена відокремлювана підмножина QM має власний повний контракт; це не дозвіл видати неповне початкове ASIL-твердження (§9).
 
 **Числовий приклад розрахунку:**
-З екстрагованого нормативу вилучено твердження: «Максимальний струм спрацьовування становить 25 А при напрузі 12 В». Матеріальні атоми: суб'єкт ($`w = 0{,}1`$), відношення ($`w = 0{,}2`$), числове значення ($`w = 0{,}4`$), розмірність ($`w = 0{,}3`$).
-Якщо розмірність «А» у першоджерелі не пройшла перевірку байтових зміщень через спотворення кодування ($`\mathbb{I}[b(\text{unit}) \neq \varnothing] = 0`$):
+Для прикладу «Максимальний струм спрацьовування становить 25 А при напрузі 12 В» підтверджений контракт містить шість текстових атомів: предмет, відношення, значення й одиницю струму, значення й одиницю умови напруги. Логічна роль «при напрузі» має власну прив'язку у складі умовного атома, а не вгадується з наявності числа. Для прозорого розрахунку всі шість ваг у цьому прикладі дорівнюють 1, без заяви про їх емпіричне калібрування.
+
+Якщо умову напруги втрачено повністю, прив'язані лише чотири з шести очікуваних атомів:
 ```math
-\mathrm{Comp}(C) = \frac{0{,}1 \cdot 1 + 0{,}2 \cdot 1 + 0{,}4 \cdot 1 + 0{,}3 \cdot 0}{0{,}1 + 0{,}2 + 0{,}4 + 0{,}3} = \frac{0{,}70}{1{,}0} = 0{,}70
+\mathrm{Comp}(C;\Gamma)=\frac{4}{6}\approx0{,}6667<1.
 ```
-Оскільки $`\mathrm{Comp}(C) = 0{,}70 < 1{,}00`$, шлюз допуску негайно відхиляє факт зі статусом `INCOMPLETE_CLAIM: missing verified unit atom`, запобігаючи передачі неоднозначного значення до машини виведення.
+Тут чисельник 4 — успішно прив'язані атоми, знаменник 6 — очікувані за контрактом; обидва лічильники й оцінка безрозмірні. Кандидат отримує `UNGROUNDED` з переліком утрачених складників умови, не хибну одиницю від чотирипольового фрейму. За пропуску лише одиниці «А» результат $`5/6\approx0{,}8333`$ дає `INCOMPLETE_CLAIM`. Обидва стани блокують початковий факт незалежно від вагової «важливості» втрати.
+
+Якщо кандидат підмінив 12 В на 24 В і числа 24 у потрібній опорі немає, прив'язка не є повною. Якщо ж «24 В» знайдено в іншій клаузі, всі якорі можуть бути присутні й `Comp` може дорівнювати 1, але слідування конкретного твердження не доведено: семантичний перевірювач має відхилити неправильний зв'язок умови з правилом. Байтовий успіх і семантична істинність залишаються різними результатами.
 
 > [!IMPORTANT]
 > **Три інженерні причини обов'язковості 100% повноти прив'язки $`\mathrm{Comp}(C) = 1{,}0`$**
-> 1. Унеможливлення прихованих аварійних відмов: в авіоніці (DO-178C DAL-A) та автомобільних контролерах (ISO 26262 ASIL-D) твердження із $`\mathrm{Comp}(C) = 0{,}7`$ є прямою передумовою аварії внаслідок втрати критичного параметра або граничного застереження.
+> 1. Контроль утрачених підстав: для неподільного критичного рішення непідтверджений параметр або застереження блокує початкове твердження. Саме значення `Comp` не є ймовірністю аварії чи доказом її неминучості.
 > 2. Недопустимість ампутації розмірностей: втрата прив'язки атома фізичної одиниці вимірювання (наприклад, змішування мілісекунд `мс` із мікросекундами `мкс`) або температурного режиму роботи («за температури вище 85°C») руйнує детермінізм функціонування апаратної підсистеми.
 > 3. Жорсткий детермінізм шлюзу допуску: будь-яке значення $`\mathrm{Comp}(C) < 1{,}00`$ детерміновано активує захисний режим Fail-Closed з негайним відхиленням твердження та формуванням точного діагностичного списку неприв'язаних матеріальних атомів.
 > *Інженерний інваріант:* Відхилення $`\mathrm{Comp}(C) < 1{,}00`$ блокує просування факту в символьне ядро з кодом E_INCOMPLETE_GROUNDING_REJECTED.
 
 ### 5.2. Практична реалізація: прив'язка твердження з RFC 768
 
-Програма мовою Go реалізує зв'язувач для прикладу з UDP. Їй потрібен файл `rfc768.txt` (5896 байтів), завантажений з RFC Editor у той самий каталог. Функція `normalize` така сама, як у [Главі 15](ch15-knowledge-extraction-and-kb-construction.md): вона стискає пробільні символи й пам'ятає позиції сирих байтів, тому якір знаходиться навіть тоді, коли в тексті RFC між словами стоїть кілька пробілів чи перенесення рядка. Ваги атомів обрано так: предмет 0,1, відношення 0,2, значення 0,4, одиниця 0,3.
+Програма Go реалізує лише навчальний зв'язувач чотирьох текстових якорів кількісного фрейму UDP: предмета, відношення, значення й одиниці. Вона не визначає повноти загального контракту $\Gamma$, не перевіряє джерельних метаданих, модальності чи умов і не підтримує довільних умовних норм. Тому позитивний результат названо `TEXT_ATOMS_BOUND`, а частковий показник — `Comp_text`; вони не є повним `GROUNDED` для довільного твердження.
+
+Для запуску `main` потрібен незмінний знімок [тексту RFC 768 від RFC Editor](https://www.rfc-editor.org/rfc/rfc768.txt): 5896 байтів, SHA-256 `7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0`. `main` перевіряє саме цей навчальний знімок і завершується з помилкою за інших байтів; це фіксація тестового входу, не доменне правило зв'язувача. Синтетичні тести працюють без файла, а інтеграційний тест знімка вимагає його наявності.
+
+Профіль `ascii-ws-fold-v1` точно відповідає функції `normalize`: послідовності байтів SP/HT/CR/LF/FF стискаються до одного SP, початкові пропуски вилучаються, один кінцевий SP зберігається. Інші байти, зокрема багатобайтові UTF-8-послідовності, не перекодовуються; це не Unicode-нормалізація. `pos[i]` зберігає сире зміщення для кожного **байта**, не символу чи руни нормалізованого подання. Карта строго зростає й відображає нормалізований інтервал на сирий; зворотної бієкції всіх байтів немає.
+
+Ваги 0,1 / 0,2 / 0,4 / 0,3 залишаються діагностичним прикладом. Негативний результат вузького зв'язувача завжди `INCOMPLETE_CLAIM`, не тризональний клас §5.1. Хеші знімка й перетворень не атестують повноти контракту, джерельної авторитетності чи семантичного слідування.
+
+Команди відтворення після збереження двох Go-блоків як `main.go` та `main_test.go`:
+
+```bash
+set -euo pipefail
+curl --fail --silent --show-error --location \
+  --output rfc768.txt https://www.rfc-editor.org/rfc/rfc768.txt
+printf '%s  rfc768.txt\n' \
+  '7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0' \
+  | sha256sum --check
+go test -race -count=1 main.go main_test.go
+go run main.go
+```
 
 <details>
 <summary>Приклад мовою Go: зв'язувач твердження з RFC 768</summary>
@@ -290,8 +330,10 @@ package main
 
 import (
 	"bytes"
-  "fmt"
-  "math"
+	"crypto/sha256"
+	"encoding/binary"
+	"fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -344,9 +386,9 @@ var unitCodes = map[string]string{"octets": "By", "bits": "bit"} // коди UCU
 // typed перевіряє тип атома: значення має бути числом, одиниця має бути відомою.
 func typed(a Atom) (string, bool) {
 	w := strings.Fields(strings.ToLower(a.Anchor))
-  if len(w) == 0 {
-    return "", false
-  }
+	if len(w) == 0 {
+		return "", false
+	}
 	last := w[len(w)-1]
 	switch a.Name {
 	case "value":
@@ -359,28 +401,28 @@ func typed(a Atom) (string, bool) {
 		c, ok := unitCodes[last]
 		return c, ok
 	}
-  return a.Anchor, a.Name == "subject" || a.Name == "relation"
+	return a.Anchor, a.Name == "subject" || a.Name == "relation"
 }
 
-func check(norm []byte, pos []int, name string, atoms []Atom) string {
+func checkQuantityTextAnchors(norm []byte, pos []int, name string, atoms []Atom) string {
 	fmt.Println("==", name)
-  required := map[string]bool{"subject": false, "relation": false, "value": false, "unit": false}
-  var weightSum float64
-  for _, atom := range atoms {
-    seen, known := required[atom.Name]
-    if !known || seen || atom.Weight <= 0 || math.IsNaN(atom.Weight) || math.IsInf(atom.Weight, 0) {
-      fmt.Println("  INVALID_CLAIM_SCHEMA")
-      return "INCOMPLETE_CLAIM"
-    }
-    required[atom.Name] = true
-    weightSum += atom.Weight
-  }
-  if len(atoms) != len(required) || math.IsInf(weightSum, 0) || len(pos) != len(norm) {
-    fmt.Println("  INVALID_CLAIM_SCHEMA")
-    return "INCOMPLETE_CLAIM"
-  }
+	required := map[string]bool{"subject": false, "relation": false, "value": false, "unit": false}
+	var weightSum float64
+	for _, atom := range atoms {
+		seen, known := required[atom.Name]
+		if !known || seen || atom.Weight <= 0 || math.IsNaN(atom.Weight) || math.IsInf(atom.Weight, 0) {
+			fmt.Println("  INVALID_CLAIM_SCHEMA")
+			return "INCOMPLETE_CLAIM"
+		}
+		required[atom.Name] = true
+		weightSum += atom.Weight
+	}
+	if len(atoms) != len(required) || math.IsInf(weightSum, 0) || len(pos) != len(norm) {
+		fmt.Println("  INVALID_CLAIM_SCHEMA")
+		return "INCOMPLETE_CLAIM"
+	}
 	var got, total float64
-  allBound := true
+	allBound := true
 	for _, a := range atoms {
 		total += a.Weight
 		s, e, st := bind(norm, pos, a.Anchor)
@@ -390,19 +432,46 @@ func check(norm []byte, pos []int, name string, atoms []Atom) string {
 		}
 		if st == "OK" {
 			got += a.Weight
-			fmt.Printf("  %-8s %-34q [%d, %d) -> %s\n", a.Name, a.Anchor, s, e, v)
+			fmt.Printf("  %-8s %-34q raw[%d, %d) -> %s\n", a.Name, a.Anchor, s, e, v)
 		} else {
-      allBound = false
+			allBound = false
 			fmt.Printf("  %-8s %-34q %s\n", a.Name, a.Anchor, st)
 		}
 	}
 	comp := got / total
-	verdict := "GROUNDED"
-  if !allBound {
+	verdict := "TEXT_ATOMS_BOUND"
+	if !allBound {
 		verdict = "INCOMPLETE_CLAIM"
 	}
-	fmt.Printf("  Comp = %.2f -> %s\n", comp, verdict)
-  return verdict
+	fmt.Printf("  Comp_text = %.2f -> %s\n", comp, verdict)
+	return verdict
+}
+
+// Карта normalize серіалізується як масив uint64 big-endian без заголовка.
+func positionMapHash(pos []int) [32]byte {
+	h := sha256.New()
+	var field [8]byte
+	for _, offset := range pos {
+		binary.BigEndian.PutUint64(field[:], uint64(offset))
+		h.Write(field[:])
+	}
+	var result [32]byte
+	copy(result[:], h.Sum(nil))
+	return result
+}
+
+// Канонічне поле: uint64be довжини в байтах, потім незмінні байти поля.
+func hashFields(fields ...[]byte) [32]byte {
+	h := sha256.New()
+	var length [8]byte
+	for _, field := range fields {
+		binary.BigEndian.PutUint64(length[:], uint64(len(field)))
+		h.Write(length[:])
+		h.Write(field)
+	}
+	var result [32]byte
+	copy(result[:], h.Sum(nil))
+	return result
 }
 
 func main() {
@@ -411,102 +480,266 @@ func main() {
 		fmt.Println("помилка читання:", err)
 		os.Exit(1)
 	}
+	rawHash := sha256.Sum256(raw)
+	if len(raw) != 5896 || fmt.Sprintf("%x", rawHash) != "7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0" {
+		fmt.Fprintln(os.Stderr, "RFC_SNAPSHOT_MISMATCH: потрібен зафіксований знімок RFC 768")
+		os.Exit(1)
+	}
 	norm, pos := normalize(raw)
+	normHash, mapHash := sha256.Sum256(norm), positionMapHash(pos)
+	passage := hashFields(
+		[]byte("passage-v1"), []byte("urn:ietf:rfc:768"),
+		[]byte(fmt.Sprintf("%x", rawHash)), []byte("ascii-ws-fold-v1"),
+		[]byte("raw-utf8-byte"), []byte(fmt.Sprintf("%x", normHash)),
+		[]byte(fmt.Sprintf("%x", mapHash)), []byte("0"),
+		[]byte(strconv.Itoa(len(raw))), raw,
+	)
+	fmt.Printf("raw bytes=%d sha256=%x\n", len(raw), rawHash)
+	fmt.Printf("normalized bytes=%d sha256=%x\n", len(norm), normHash)
+	fmt.Printf("mapping uint64be-array-v1 entries=%d sha256=%x\n", len(pos), mapHash)
+	fmt.Printf("passage raw[0,%d) id=%x\n", len(raw), passage)
 	subj := Atom{"subject", "this user datagram", 0.1}
 	rel := Atom{"relation", "the minimum value of the length", 0.2}
 	val := Atom{"value", "eight", 0.4}
 	unit := Atom{"unit", "in octets", 0.3}
 
-	check(norm, pos, "A: повне твердження", []Atom{subj, rel, val, unit})
-	check(norm, pos, "B: вигадана одиниця", []Atom{subj, rel, val, {"unit", "in bits", 0.3}})
-	check(norm, pos, "C: надто короткий якір", []Atom{subj, {"relation", "length", 0.2}, val, unit})
+	checkQuantityTextAnchors(norm, pos, "A: чотири текстові якорі", []Atom{subj, rel, val, unit})
+	checkQuantityTextAnchors(norm, pos, "B: вигадана одиниця", []Atom{subj, rel, val, {"unit", "in bits", 0.3}})
+	checkQuantityTextAnchors(norm, pos, "C: надто короткий якір", []Atom{subj, {"relation", "length", 0.2}, val, unit})
 }
 ```
 
-Синтетичний тест не потребує RFC-файла; команда виконання: `go test -v main.go main_test.go`.
+Синтетичні тести перевіряють сирі й нормалізовані координати незалежно від RFC. Для запуску лише їх без файла використовується `go test -run 'TestQuantity|TestCoordinate|TestCanonical' main.go main_test.go`; повна команда вище додатково перевіряє зафіксований знімок.
 
 ```go
 package main
 
 import (
+	"bytes"
+	"crypto/sha256"
+	"fmt"
 	"math"
+	"os"
 	"testing"
 )
 
-func TestGroundingCompleteness(testCase *testing.T) {
+func TestQuantityTextBinding(testCase *testing.T) {
 	norm, positions := normalize([]byte("The datagram minimum is eight octets."))
 	valid := []Atom{{"subject", "datagram", 0.1}, {"relation", "minimum", 0.2},
 		{"value", "eight", 0.4}, {"unit", "octets", 0.3}}
-	if check(norm, positions, "valid", valid) != "GROUNDED" {
+	if checkQuantityTextAnchors(norm, positions, "valid", valid) != "TEXT_ATOMS_BOUND" {
 		testCase.Fatal("valid anchors rejected")
 	}
-	if check(norm, positions, "empty", nil) == "GROUNDED" {
+	if checkQuantityTextAnchors(norm, positions, "empty", nil) != "INCOMPLETE_CLAIM" {
 		testCase.Fatal("empty claim accepted")
 	}
-	if check(norm, positions, "missing unit", valid[:3]) == "GROUNDED" {
+	if checkQuantityTextAnchors(norm, positions, "missing unit", valid[:3]) != "INCOMPLETE_CLAIM" {
 		testCase.Fatal("missing required field accepted")
 	}
-	for _, weight := range []float64{0, -1, math.NaN(), math.Inf(1)} {
+	for _, weight := range []float64{0, -1, math.NaN(), math.Inf(1), math.Inf(-1), math.MaxFloat64} {
 		invalid := append([]Atom(nil), valid...)
 		invalid[0].Weight = weight
-		if check(norm, positions, "invalid weight", invalid) == "GROUNDED" {
+		if weight == math.MaxFloat64 {
+			invalid[1].Weight = weight
+		}
+		if checkQuantityTextAnchors(norm, positions, "invalid weight", invalid) != "INCOMPLETE_CLAIM" {
 			testCase.Fatal("invalid weight accepted")
 		}
 	}
 	missing := append([]Atom(nil), valid...)
 	missing[3].Anchor = ""
-	if check(norm, positions, "empty anchor", missing) == "GROUNDED" {
+	if checkQuantityTextAnchors(norm, positions, "empty anchor", missing) != "INCOMPLETE_CLAIM" {
 		testCase.Fatal("empty anchor accepted")
 	}
 	duplicate := append([]Atom(nil), valid...)
 	duplicate[3] = duplicate[0]
-	if check(norm, positions, "duplicate field", duplicate) == "GROUNDED" {
+	if checkQuantityTextAnchors(norm, positions, "duplicate field", duplicate) != "INCOMPLETE_CLAIM" {
 		testCase.Fatal("duplicate field accepted")
 	}
 	if _, ok := typed(Atom{Name: "unit", Anchor: ""}); ok {
 		testCase.Fatal("empty typed anchor accepted")
+	}
+	rounded := append([]Atom(nil), valid...)
+	rounded[3] = Atom{"unit", "in bits", math.SmallestNonzeroFloat64}
+	var boundWeight, totalWeight float64
+	for _, atom := range rounded {
+		totalWeight += atom.Weight
+		if atom.Name != "unit" {
+			boundWeight += atom.Weight
+		}
+	}
+	if boundWeight/totalWeight != 1 {
+		testCase.Fatal("fixture does not demonstrate loss of floating-point precision")
+	}
+	if checkQuantityTextAnchors(norm, positions, "rounded score is not a gate", rounded) != "INCOMPLETE_CLAIM" {
+		testCase.Fatal("rounded Comp_text accepted an unbound required atom")
+	}
+	unknown := append([]Atom(nil), valid...)
+	unknown[3].Name = "condition"
+	if checkQuantityTextAnchors(norm, positions, "unsupported profile", unknown) != "INCOMPLETE_CLAIM" {
+		testCase.Fatal("unsupported atom accepted by the four-field example")
+	}
+	ambiguous, ambiguousPositions := normalize([]byte("The datagram minimum minimum is eight octets."))
+	if checkQuantityTextAnchors(ambiguous, ambiguousPositions, "ambiguous relation", valid) != "INCOMPLETE_CLAIM" {
+		testCase.Fatal("ambiguous required anchor accepted")
+	}
+	badType := append([]Atom(nil), valid...)
+	badType[2].Anchor = "minimum"
+	if checkQuantityTextAnchors(norm, positions, "non-numeric value", badType) != "INCOMPLETE_CLAIM" {
+		testCase.Fatal("bound but incorrectly typed anchor accepted")
+	}
+	if checkQuantityTextAnchors(norm, positions[:len(positions)-1], "incomplete map", valid) != "INCOMPLETE_CLAIM" {
+		testCase.Fatal("incomplete position map accepted")
+	}
+	low := []Atom{{"subject", "datagram", 0.1}, {"relation", "maximum", 0.2},
+		{"value", "four", 0.4}, {"unit", "bits", 0.3}}
+	if checkQuantityTextAnchors(norm, positions, "low text score", low) != "INCOMPLETE_CLAIM" {
+		testCase.Fatal("the teaching helper is not the three-zone classifier")
+	}
+}
+
+func TestCoordinateSpaces(t *testing.T) {
+	cases := []struct {
+		raw, anchor, normalized, quote string
+		ns, ne, rs, re                 int
+	}{
+		{"a  b", "b", "a b", "b", 2, 3, 3, 4},
+		{"a  b", "a b", "a b", "a  b", 0, 3, 0, 4},
+		{"a\r\nb", "b", "a b", "b", 2, 3, 3, 4},
+		{"a\tb", "b", "a b", "b", 2, 3, 2, 3},
+		{"a\fb", "b", "a b", "b", 2, 3, 2, 3},
+		{" \tА  Б\r\nВ ", "Б В", "А Б В ", "Б\r\nВ", 3, 8, 6, 12},
+	}
+	for _, tc := range cases {
+		t.Run(fmt.Sprintf("%q/%q", tc.raw, tc.anchor), func(t *testing.T) {
+			raw := []byte(tc.raw)
+			norm, pos := normalize(raw)
+			if string(norm) != tc.normalized || len(norm) != len(pos) {
+				t.Fatal("wrong normalized bytes or map length")
+			}
+			for i, offset := range pos {
+				if offset < 0 || offset >= len(raw) || (i > 0 && pos[i-1] >= offset) {
+					t.Fatal("invalid raw-byte map")
+				}
+				if norm[i] != raw[offset] && !(norm[i] == ' ' && bytes.ContainsRune([]byte(" \t\r\n\f"), rune(raw[offset]))) {
+					t.Fatal("map does not explain the normalized byte")
+				}
+			}
+			if start := bytes.Index(norm, []byte(tc.anchor)); start != tc.ns || start+len([]byte(tc.anchor)) != tc.ne {
+				t.Fatal("wrong normalized-byte interval")
+			}
+			s, e, status := bind(norm, pos, tc.anchor)
+			if status != "OK" || s != tc.rs || e != tc.re || string(raw[s:e]) != tc.quote {
+				t.Fatal("wrong raw-byte interval or quote")
+			}
+		})
+	}
+	a, pa := normalize([]byte("a b"))
+	b, pb := normalize([]byte("a\r\nb"))
+	if !bytes.Equal(a, b) || positionMapHash(pa) == positionMapHash(pb) {
+		t.Fatal("equal normalized text does not imply the same source map")
+	}
+	tab, pt := normalize([]byte("a\tb"))
+	if !bytes.Equal(a, tab) || positionMapHash(pa) != positionMapHash(pt) ||
+		sha256.Sum256([]byte("a b")) == sha256.Sum256([]byte("a\tb")) {
+		t.Fatal("source identity must remain separate from text and map identity")
+	}
+	changed := append([]int(nil), pa...)
+	changed[2]++
+	if positionMapHash(pa) == positionMapHash(changed) {
+		t.Fatal("changed map was not detected")
+	}
+}
+
+func TestCanonicalFields(t *testing.T) {
+	if hashFields([]byte("a"), []byte("bc")) == hashFields([]byte("ab"), []byte("c")) {
+		t.Fatal("field boundaries were lost")
+	}
+	fields := [][]byte{
+		[]byte("passage-v1"), []byte("doc"), []byte("revision"), []byte("transform"),
+		[]byte("raw-utf8-byte"), []byte("norm-hash"), []byte("map-hash"),
+		[]byte("0"), []byte("4"), []byte("text"),
+	}
+	expected := hashFields(fields...)
+	for i := range fields {
+		mutated := append([][]byte(nil), fields...)
+		mutated[i] = append(append([]byte(nil), fields[i]...), 'x')
+		if hashFields(mutated...) == expected {
+			t.Fatalf("field %d was not committed", i)
+		}
+	}
+}
+
+func TestRFCSnapshot(t *testing.T) {
+	raw, err := os.ReadFile("rfc768.txt")
+	if err != nil {
+		t.Fatal("fetch the pinned RFC snapshot before the full test suite:", err)
+	}
+	if len(raw) != 5896 || fmt.Sprintf("%x", sha256.Sum256(raw)) != "7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0" {
+		t.Fatal("wrong RFC snapshot")
+	}
+	norm, pos := normalize(raw)
+	if len(norm) != 4363 || fmt.Sprintf("%x", sha256.Sum256(norm)) != "d219c24e04725edf3482db8077b5293d120ee6b0d8739094b4cd0a4ed84d65b2" {
+		t.Fatal("wrong normalized artifact")
+	}
+	if fmt.Sprintf("%x", positionMapHash(pos)) != "dd4286d8178114e725c9f88db2d9a6b30e3f3167b8ee7f133c2953498f6e8bfc" {
+		t.Fatal("wrong source map")
+	}
+	for _, tc := range []struct {
+		anchor string
+		s, e   int
+	}{{"this user datagram", 2398, 2416}, {"the minimum value of the length", 2472, 2503},
+		{"eight", 2507, 2512}, {"in octets", 2384, 2393}} {
+		s, e, status := bind(norm, pos, tc.anchor)
+		if status != "OK" || s != tc.s || e != tc.e || string(raw[s:e]) != tc.anchor {
+			t.Fatalf("wrong RFC quote for %q", tc.anchor)
+		}
 	}
 }
 ```
 
 </details>
 
-Архівний приклад виводу для зазначеної копії RFC; інші байти або перенесення рядків змінять координати:
+Відтворений вивід поточної програми для зафіксованих байтів RFC наведено нижче. Усі інтервали з позначкою `raw` адресують вихідний файл, не нормалізований текст; хеші повні. За іншого файла `main` не друкує цього успішного результату. `TEXT_ATOMS_BOUND` і надалі означає лише чотири текстові опори, не повноту загального контракту.
 
 <details>
 <summary>Дані або результат прикладу</summary>
 
 ```text
-== A: повне твердження
-  subject  "this user datagram"               [2398, 2416) -> this user datagram
-  relation "the minimum value of the length"  [2472, 2503) -> the minimum value of the length
-  value    "eight"                            [2507, 2512) -> 8
-  unit     "in octets"                        [2384, 2393) -> By
-  Comp = 1.00 -> GROUNDED
+raw bytes=5896 sha256=7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0
+normalized bytes=4363 sha256=d219c24e04725edf3482db8077b5293d120ee6b0d8739094b4cd0a4ed84d65b2
+mapping uint64be-array-v1 entries=4363 sha256=dd4286d8178114e725c9f88db2d9a6b30e3f3167b8ee7f133c2953498f6e8bfc
+passage raw[0,5896) id=26335d2404420b8020e4bd66e2cfb4c3dc01ad1239ab804793a89cd6b39d9dc2
+== A: чотири текстові якорі
+  subject  "this user datagram"               raw[2398, 2416) -> this user datagram
+  relation "the minimum value of the length"  raw[2472, 2503) -> the minimum value of the length
+  value    "eight"                            raw[2507, 2512) -> 8
+  unit     "in octets"                        raw[2384, 2393) -> By
+  Comp_text = 1.00 -> TEXT_ATOMS_BOUND
 == B: вигадана одиниця
-  subject  "this user datagram"               [2398, 2416) -> this user datagram
-  relation "the minimum value of the length"  [2472, 2503) -> the minimum value of the length
-  value    "eight"                            [2507, 2512) -> 8
+  subject  "this user datagram"               raw[2398, 2416) -> this user datagram
+  relation "the minimum value of the length"  raw[2472, 2503) -> the minimum value of the length
+  value    "eight"                            raw[2507, 2512) -> 8
   unit     "in bits"                          NOT_FOUND
-  Comp = 0.70 -> INCOMPLETE_CLAIM
+  Comp_text = 0.70 -> INCOMPLETE_CLAIM
 == C: надто короткий якір
-  subject  "this user datagram"               [2398, 2416) -> this user datagram
+  subject  "this user datagram"               raw[2398, 2416) -> this user datagram
   relation "length"                           AMBIGUOUS_SPAN
-  value    "eight"                            [2507, 2512) -> 8
-  unit     "in octets"                        [2384, 2393) -> By
-  Comp = 0.80 -> INCOMPLETE_CLAIM
+  value    "eight"                            raw[2507, 2512) -> 8
+  unit     "in octets"                        raw[2384, 2393) -> By
+  Comp_text = 0.80 -> INCOMPLETE_CLAIM
 ```
 
 </details>
 
 
-Твердження A прив'язано повністю: значення *eight* нормалізовано до числа 8, одиницю *octets* до коду `By`, і кожен атом має власний діапазон байтів. Твердження B відтворює типову помилку генерації: модель «знала», що довжину часто вимірюють у бітах, але таких слів у документі немає, тому одиниця не прив'язана, повнота дорівнює 0,70, і твердження відхилено. Твердження C показує протилежну помилку: якір *length* дослівно присутній, але трапляється в документі чотири рази, і зв'язувач не може вибрати, яке входження є доказом. Обидва відхилення детерміновані й не залежать від того, наскільки впевнено звучала відповідь моделі.
+Приклад A демонструє прив'язку чотирьох текстових елементів: *eight* нормалізується до 8, *octets* до `By`. У B відсутній якір одиниці дає частку 0,70; у C короткий *length* неоднозначний. Інтеграційний тест звіряє точні сирі зрізи та хеші знімка й перетворень. Це перевірка відтворення опор, не решти контексту або логічного висновку.
 
 Межі прикладу такі. Словник числівників і одиниць тут мінімальний; промисловий зв'язувач використовує повні таблиці числівників і довідник одиниць. Програма шукає якорі в усьому документі; реальний зв'язувач шукає їх у межах знайденого фрагмента, що зменшує кількість неоднозначностей. Нарешті, прив'язка доводить, що всі атоми дослівно присутні, але ще не доводить, що текст підтримує саме те твердження, про яке питали. Це завдання етапу перевірки, описаного нижче.
 
 > [!NOTE]
 > **Чотири інваріанти побайтового криптографічного зв'язування цитат за стандартом автора**
-> 1. Збереження напіввідкритих інтервалів фізичних координат $[s, e)$ нормалізованого бінарного потоку для кожного атома вилученого твердження.
+> 1. Збереження напіввідкритих інтервалів $[s,e)$ з явною ідентичністю джерела та координатного простору; для нормалізованого подання потрібне відображення до незмінних сирих байтів.
 > 2. Формування криптографічного ідентифікатора пасажу `passage-id` через незворотний хеш FIPS 180-4 SHA-256 від повного кортежу параметрів контексту.
 > 3. Детермінована нормалізація числових величин та одиниць вимірювання за міжнародними стандартами SI та UCUM без втрати розмірності.
 > 4. Миттєве відхилення кандидата при будь-якому розходженні контрольної суми без спроб евристичного підбору наближених збігів.
@@ -516,25 +749,33 @@ func TestGroundingCompleteness(testCase *testing.T) {
 
 У структурі доказового твердження типізація елементарних компонентів слугує основою для подальшого автоматичного логічного та математичного аналізу в символьному ядрі експертної системи. Якщо система трактує вилучені фрагменти як нетипізовані текстові рядки, виникає нерозв'язна проблема семантичної несумісності: числові значення втрачають фізичний зміст, що унеможливлює розрахунки інваріантів, а різні форми запису однієї величини («8 октетів» і «64 біти») сприймаються як суперечливі факти. Наївний рядковий пошук або розбір регулярними виразами виявляється безсилим проти зміни розмірностей чи модальностей. Зв'язувач перевіряє не лише наявність якоря, а й тип атома. Автором введено **онтологічну класифікацію чотирьох базових категорій матеріальних атомів знань** (`CH19-S06-01`):
 
-1. **Кількісний атом**: число обов'язково пов'язане з одиницею вимірювання. Тут діє сформульоване автором **правило обов'язкової нормалізації фізичних одиниць вимірювання за UCUM / SI** (`CH19-S06-02`): будь-яка вилучена фізична константа підлягає обов'язковій канонічній нормалізації за міжнародною системою SI або уніфікованим кодом UCUM (*Unified Code for Units of Measure*) [[6]](#src-6) (де, наприклад, байт кодується як `By`), а вилучення числа без прив'язки одиниці безумовно відхиляється на рівні JSON-схеми.
+1. **Кількісний атом**: фізична величина потребує одиниці вимірювання. Авторське **правило обов'язкової нормалізації фізичних одиниць за UCUM / SI** (`CH19-S06-02`) вимагає канонічного подання за SI або UCUM (*Unified Code for Units of Measure*) [[6]](#src-6), наприклад `By` для байта. Фізичне число з утраченим атомом одиниці відхиляється схемою. Для безрозмірної величини контракт має явно підтверджувати такий тип і його канонічне подання; невідома або пропущена одиниця не стає безрозмірністю за замовчуванням. Якщо буквальної одиниці в джерелі немає за правилами цього типу, походження класифікації фіксується посиланням на схему, без вигаданого текстового спану.
 2. **Ідентифікатор**: складене позначення документа чи об'єкта (RFC 768, ISO 26262, MIL-STD-1553B), яке перевіряють шаблоном формату.
 3. **Модальність**: ступінь нормативності (MUST, SHALL, SHOULD, MAY) за правилами з [Глави 14](ch14-requirements-detection-and-formalization.md). Для дорегуляторних нормативних корпусів, створених до прийняття конвенції RFC 2119 (як-от RFC 768 1980 року), автором розроблено **концепцію дефінітивної модальності** (`CH19-S06-03`: `DEFINITIONAL`): специфікаційні визначення фіксуються з визначальною модальністю, що має силу аксіоми для рушія логічного виведення.
 4. **Межі чинності**: редакція документа, діапазон температур, режим роботи, у яких твердження діє.
+
+Це чотири базові категорії типізації, не чотири універсальні колонки й не визначення всього $`A_m(C;\Gamma)`$. Заперечення, квантори, умови та винятки мають окремі очікувані екземпляри за контрактом; кожна з кількох умов повинна бути врахована. Група може бути явно незастосовною лише за підтвердженим контрактом і джерельним контекстом, а невідомість лишається причиною недопуску. Байтовий зв'язувач перевіряє опори, тоді як належність одиниці саме цій величині, роль умови й логічний зв'язок між атомами перевіряються семантично.
 
 При цьому в системі діє суворий **інженерний інваріант типобезпечного зіставлення величин** (`CH19-S06-04`: *Type-Safe Equality Invariant*): дві фізичні величини можуть зіставлятися на еквівалентність виключно після приведення до єдиної базової розмірності в типізованому просторі одиниць (наприклад, 8 октетів та 64 біти приводяться до канонічного значення 8 `By`), а спроба прямого рядкового зіставлення констант без перевірки одиниць безумовно блокується.
 
 ## 7. Модель походження: від файлу до атома
 
-Криптографічна модель походження даних (*provenance model*) є стрижнем аудиту та юридичної неспростовності фактів у доказових експертних системах. Якщо посилання на першоджерело обмежується лише текстовою назвою нормативного документа (наприклад, посиланням на «RFC 768»), виникає критична вразливість фальсифікації та десинхронізації: оновлення версії стандарту, невідстежувані виправлення опечаток чи зміна алгоритму нормалізації пробілів призводять до того, що система посилається на неіснуючі або змінені фрагменти. Наївне збереження номерів рядків чи номерів сторінок зазнає краху при зміні форматування або перекомпіляції документа. У доказовій архітектурі зв'язок між первинним файлом та атомом знання фіксується як криптографічний ланцюжок незмінних перетворень на базі розробленої автором **криптографічної графової моделі походження атома від первинного файлу на базі PROV-O** (`CH19-S07-01`)[[7]](#src-7).
+Модель походження в експертній системі повинна визначати не лише документ, а й точні байти, до яких належить кожне зміщення. У знімку RFC 768 слово `eight` займає сирий інтервал `[2507,2512)`, але після `ascii-ws-fold-v1` — `[1594,1599)`: однакові числа не можна переносити між цими просторами. Без ідентичності носія правильно знайдений якір стає неправильною цитатою. Авторська **криптографічна графова модель походження атома на базі PROV-O** (`CH19-S07-01`) [[7]](#src-7) розділяє незмінний вхід, нормалізований артефакт, відтворювану карту й адресований пасаж.
+
+У цьому прикладі пасажем є весь сирий UTF-8-файл `[0,5896)`, як і в Go-пошуку §5.2; розбиття на частини тут не реалізовано. Діапазони `raw-utf8-byte` належать артефакту з `document_sha256`, а `normalized-utf8-byte` — артефакту з окремим хешем нормалізації. Карта `pos` зберігається під час обчислення й може бути відтворена з зафіксованих байтів та версії функції. Для перевірки її ідентичності записи серіалізуються як послідовність беззнакових 64-бітних зміщень big-endian без заголовка (`uint64be-array-v1`) і хешуються окремо.
 
 ```mermaid
 flowchart LR
     accTitle: Походження атома знань від файлу RFC 768
-    accDescr: Текстовий файл RFC 768 проходить нормалізацію й розбиття на фрагменти, а атом-значення спирається на точний діапазон байтів фрагмента; політика доступу й зріз корпусу також пов'язані з фрагментом.
+    accDescr: Слово eight має нормалізований інтервал від 1594 до 1599, який карта позицій відображає на сирі байти від 2507 до 2512. Джерело, нормалізований текст і карта мають окремі хеші; пасаж прикладу охоплює весь сирий файл.
 
-    D0["<b>Файл rfc768.txt</b><br/>sha256: 7dc8880e..."] -->|"нормалізація v2.1"| D2["<b>Нормалізований текст</b><br/>власний хеш"]
-    D2 -->|"розбиття на фрагменти v7"| P["<b>Фрагмент: розділ Fields</b><br/>passage-id"]
-    P --> S["<b>Діапазон байтів [2507, 2512)</b>"]
+    D0["<b>Сирий UTF-8: 5896 байтів</b><br/>sha256: 7dc8880e..."] -->|"ascii-ws-fold-v1"| D2["<b>Нормалізовані 4363 байти</b><br/>sha256: d219c24e..."]
+    D0 --> P["<b>Пасаж: raw [0,5896)</b><br/>passage-id: 26335d24..."]
+    D2 --> NS["<b>Нормалізований інтервал</b><br/>[1594,1599)"]
+    D2 --> MAP["<b>Карта pos</b><br/>sha256: dd4286d8..."]
+    NS --> MAP
+    MAP --> S["<b>Сирий інтервал</b><br/>[2507,2512)"]
+    P --> S
     S --> A["<b>Атом: value = 8</b>"]
 
     POL["<b>Ревізія політики доступу</b>"] -.->|"дозволено для"| P
@@ -545,37 +786,39 @@ flowchart LR
     classDef atom fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
     classDef gov fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92;
 
-    class D0,D2,P art;
-    class S span;
+    class D0,D2,P,MAP art;
+    class NS,S span;
     class A atom;
     class POL,CORP gov;
 ```
 
-Для гарантування абсолютної відтворюваності ідентифікатор фрагмента обчислюється криптографічною хеш-функцією $H$ від повного кортежу параметрів контексту:
+Щоб перевірювач міг відхилити підміну байтів або їхнього координатного простору, авторський ідентифікатор пасажу зв'язує ці дані одним 256-бітним відбитком. Для відтворюваного навчального профілю `passage-v1` задано рівно десять полів у наведеному порядку; це конкретизація прикладу, не затверджений продуктовий ABI:
 
 ```math
-\text{passage-id} = H(\text{document-id} \,\|\, \text{revision} \,\|\, \text{transform-chain} \,\|\, \text{byte-start} \,\|\, \text{byte-end} \,\|\, \text{bytes})
+\text{passage-id}=
+H\!\left(\operatorname{Canon}(v,d,r,t,q,h_n,h_m,s,e,B[s:e])\right).
 ```
 
 де:
-- $`\text{passage-id}`$ — 256-бітний криптографічний хеш-ідентифікатор фрагмента знань (зазвичай шістнадцятковий рядок завдовжки 64 символи);
-- $H$ — сертифікована детермінована криптографічна хеш-функція з високою стійкістю до колізій (FIPS 180-4 SHA-256);
-- $`\text{document-id}`$ — канонічний ідентифікатор нормативного документа (наприклад, стійкий URN `urn:ietf:rfc:768`);
-- $`\text{revision}`$ — незмінний хеш ревізії репозиторію git або офіційний цифровий підпис видання стандарту;
-- $`\text{transform-chain}`$ — формалізований дескриптор послідовності застосованих кроків препроцесингу та нормалізації тексту (наприклад, `norm:v2.1|chunk:fields_v7`);
-- $`\text{byte-start}, \text{byte-end}`$ — точні напіввідкриті координати зміщення в байтах $[s, e)$ у нормалізованому двійковому потоці ($0 \le s < e$);
-- $`\text{bytes}`$ — фактична двійкова послідовність байтів фрагмента;
-- $`\|`$ — однозначне канонічне кодування полів (наприклад, довжинно-префіксне TLV чи Protocol Buffers), що унеможливлює колізії склеювання меж полів.
+- $`\text{passage-id}`$ — 256 бітів, поданих 64 малими шістнадцятковими символами; $H$ — SHA-256 за FIPS 180-4. Стандарт алгоритму не означає сертифікації конкретної Go-реалізації;
+- $v$ — ASCII-рядок версії `passage-v1`; $d$ — UTF-8-ідентифікатор `urn:ietf:rfc:768`;
+- $r$ — 64-символьний SHA-256 саме сирого носія координат. У цьому текстовому профілі він ідентифікує цифровий знімок, а не підтверджує офіційну редакцію або підпис видавця;
+- $t$ — точний ASCII-дескриптор `ascii-ws-fold-v1`; $q$ — ASCII-ідентифікатор простору `raw-utf8-byte`;
+- $`h_n`$ та $`h_m`$ — 64-символьні SHA-256 нормалізованих байтів і серіалізованої карти відповідно;
+- $B$ — незмінна послідовність сирих байтів; $s,e$ — цілі байтові зміщення з умовою $`0\le s<e\le\mathrm{len}(B)`$. Для канонічного пакета числа кодуються найкоротшими десятковими ASCII-рядками без знака й початкових нулів, окрім самого `0`; останнє поле містить саме сирий зріз, не якір і не його перефразування;
+- $`\operatorname{Canon}`$ — для кожного з десяти полів спочатку 8 байтів беззнакової довжини big-endian, потім незмінні байти поля. Порядок фіксований версією; звичайне склеювання без довжин не допускається. Цьому правилу відповідає `hashFields`.
 
 **Практичне застосування та інженерні висновки:**
-1. Розрахунок виконується автоматично під час фонової індексації знань та валідується під час виконання запиту.
-2. **Критерій верифікації цілісності:**
-   - Якщо повторно розрахований хеш $`H' = \text{passage-id}`$: **НЕСПРОСТОВНЕ ДЖЕРЕЛО (VERIFIED / Green Gate)**. Повна побайтова автентичність фрагмента підтверджена;
-   - Якщо $`H' \ne \text{passage-id}`$: **КОРУПЦІЯ ДАНИХ АБО ДЕСИНХРОНІЗАЦІЯ (TAMPER_DETECTED / Red Gate / Fail-Closed)**. Фіксується розходження версій чи несанкціонована зміна тексту; фрагмент негайно видаляється з оперативного кешу, генерується сигнал аудиту, а запит перемикається на первинне сховище оригіналу.
+1. До хешування перевіряються схема, межі, ідентичність носія й карта; під час запиту результат порівнюється з очікуваним ідентифікатором із довіреного маніфесту baseline. Збіг означає лише `INTEGRITY_MATCH` відносно цієї опори за припущення стійкості SHA-256 до колізій. Він не доводить авторитетності джерела, повноти контракту або `ENTAILED`. Самі `hashFields` і `positionMapHash` обчислюють відбитки, не перевіряють довіреності зовнішніх метаданих.
+2. Невідомий простір, недоступна карта, непідтверджена опора або розбіжність блокує використання пасажу з явною причиною. Для розбіжності хеша зберігається `TAMPER_DETECTED`: кандидат відхиляється, сумнівна кешована копія ізолюється й подія аудиту реєструється. Перечитування первинного сховища дає лише нового кандидата для всіх перевірок, не автоматично активований факт.
+3. У відтвореному знімку нормалізований артефакт має 4363 байти, карта — 4363 записи по 8 байтів, тобто 34904 байти. Сирі байти, нормалізовані байти й серіалізована карта разом становлять 45163 байти корисних даних, без накладних витрат і робочих буферів; це розрахунок розміру, не вимір RSS. Карта не поміщається у сценарний буфер 32 КіБ: потрібно збільшити буфер або організувати перевірюване блокове/потокове відтворення, а не обрізати індекси.
+4. Для $s=0$, $e=5896$ пакет десяти полів має 6228 байтів і дає `26335d2404420b8020e4bd66e2cfb4c3dc01ad1239ab804793a89cd6b39d9dc2`. Подальше рішення — допустити перевірку конкретних сирих зрізів лише після звірення маніфесту; не випускати відповідь. Наприклад, нормалізовані `[1594,1599)` відображаються на сирі `[2507,2512)` із цитатою `eight`. Зміна пробілів може зберегти нормалізований текст, але змінює ідентичність сирого джерела й може змінити карту; навіть однакові текст і карта не дозволяють ігнорувати хеш сирого носія.
+
+Пряме зрізання й декодування тут обмежено текстовим UTF-8-профілем. Для PDF та інших контейнерів потрібні окремі ідентичності контейнера й видобутого тексту, версія екстрактора та перевірена карта до об'єкта/сторінки; сирі PDF-зміщення не є текстовими зміщеннями. Цей приклад не закриває міжглавне питання П-13 і не реалізує контейнерний екстрактор.
 
 ## 8. Проміжне представлення твердження з доказом
 
-Проміжне представлення твердження з доказом (*evidence claim intermediate representation*, Claim-IR) виступає строгим типізованим контрактом між недетермінованим виходом мовної моделі та детермінованим ядром логічного виведення. Відсутність такого проміжного представлення призводить до неконтрольованого змішування сирих текстових гіпотез із затвердженими фактами, позбавляючи систему можливості провести покроковий аудит та розділити етап фізичної прив'язки від семантичної верифікації. Наївна передача згенерованого тексту напряму в рушій пояснень унеможливлює машинну верифікацію повноти доказів. Для твердження A це представлення фіксує всі зміщення байтів, цитати та статуси перевірки у вигляді валідованого JSON-документа (діапазони байтів напіввідкриті: кінець не входить до діапазону):
+Проміжне представлення твердження з доказом (*evidence claim intermediate representation*, Claim-IR) розділяє кандидат, контракт і результати різних перевірок. Нижче наведено ілюстративний формат для A після відтворення знімка: сирі цитати, обидва координатні простори й хеші узгоджено з кодом. Це не затверджений продуктовий ABI; модальність і решта контексту не атестовані, а `TEXT_ATOMS_BOUND` означає тільки чотири текстові опори. Усі діапазони напіввідкриті:
 
 <details>
 <summary>Структуровані дані JSON</summary>
@@ -584,6 +827,9 @@ flowchart LR
 {
   "claim_id": "claim:rfc768:udp-min-length",
   "contract_ref": "query-contract.v1#q-120",
+  "material_contract_ref": "example.quantity-definition.v1",
+  "binding_scope": "four_text_anchors_only",
+  "context_binding_status": "NOT_CHECKED",
   "statement": {
     "subject": "UDP datagram",
     "relation": "minimum_length",
@@ -593,18 +839,30 @@ flowchart LR
   },
   "provenance": {
     "document_urn": "urn:ietf:rfc:768",
-    "document_sha256_prefix": "7dc8880e1ecef9c3",
+    "document_sha256": "7dc8880e1ecef9c3f9da0db4b876a16e96bfa4f0953cc9d977d414f8f680c2f0",
+    "coordinate_space": "raw-utf8-byte",
+    "normalization": {
+      "id": "ascii-ws-fold-v1",
+      "coordinate_space": "normalized-utf8-byte",
+      "sha256": "d219c24e04725edf3482db8077b5293d120ee6b0d8739094b4cd0a4ed84d65b2",
+      "mapping_format": "uint64be-array-v1",
+      "mapping_sha256": "dd4286d8178114e725c9f88db2d9a6b30e3f3167b8ee7f133c2953498f6e8bfc"
+    },
+    "passage": {
+      "bytes": [0, 5896],
+      "id": "26335d2404420b8020e4bd66e2cfb4c3dc01ad1239ab804793a89cd6b39d9dc2"
+    },
     "atoms": {
-      "subject":  {"bytes": [2398, 2416], "quote": "this user datagram"},
-      "relation": {"bytes": [2472, 2503], "quote": "the minimum value of the length"},
-      "value":    {"bytes": [2507, 2512], "quote": "eight"},
-      "unit":     {"bytes": [2384, 2393], "quote": "in octets"}
+      "subject":  {"bytes": [2398, 2416], "normalized_bytes": [1492, 1510], "quote": "this user datagram"},
+      "relation": {"bytes": [2472, 2503], "normalized_bytes": [1559, 1590], "quote": "the minimum value of the length"},
+      "value":    {"bytes": [2507, 2512], "normalized_bytes": [1594, 1599], "quote": "eight"},
+      "unit":     {"bytes": [2384, 2393], "normalized_bytes": [1479, 1488], "quote": "in octets"}
     }
   },
-  "grounding_status": "ALL_ATOMS_BOUND",
+  "grounding_status": "TEXT_ATOMS_BOUND",
   "verification": {
     "verdict": "NOT_ENOUGH_EVIDENCE",
-    "method": "grounding_only",
+    "method": "not_executed",
     "semantic_review": "required",
     "unsupported_atoms": []
   }
@@ -614,7 +872,7 @@ flowchart LR
 </details>
 
 
-Зразок відокремлює повну прив'язку від невиконаної семантичної перевірки. Тут реалізовано **інженерний інваріант дисоціації фізичної прив'язки від семантичного слідування** (`CH19-S08-02`): успішне побайтове зв'язування всіх матеріальних атомів є необхідною передумовою верифікації, але воно суворо відокремлене від логічного вердикту семантичного слідування, що унеможливлює автоматичне присвоєння статусу `ENTAILED` лише на основі фізичної наявності слів у тексті (порожній список непідтверджених якорів не означає `ENTAILED`, оскільки код зв'язувача не перевірив ролей і логічного висновку). Префікс хеша наведено для читання; машинний комплект потребує повного SHA-256 та незмінного артефакту. Після предметної рецензії або перевірки підтримуваною формальною моделлю вердикт записують разом із методом і версією перевірювача. При цьому діє авторське **правило роздільного збереження статистичної впевненості та формального вердикту перевірки** (`CH19-S08-03`): ймовірнісна впевненість нейромережевих модулів зберігається як окремий діагностичний параметр телеметрії й категорично не підміняє дискретний вердикт символьного перевірювача.
+У `atoms.bytes` збережено сирі зміщення, у `normalized_bytes` — зміщення в окремо гешованому поданні. `quote` містить точний сирий зріз, тоді як друкований якір зв'язувача може мати стиснуті пробіли. Зразок не видає неперевірений контекст за `GROUNDED`. Авторський **інженерний інваріант дисоціації фізичної прив'язки від семантичного слідування** (`CH19-S08-02`) зберігає окремий обов'язок доведення навіть після перевірки всіх опор. Порожній `unsupported_atoms` не є ні повнотою схеми, ні `ENTAILED`; високий модельний бал також не заповнює прогалин. Це підтримує авторське **правило роздільного збереження статистичної впевненості та формального вердикту** (`CH19-S08-03`).
 
 Для безпечного візуального подання результату верифікації інженеру в операторських терміналах та аналітичних консолях автором розроблено **квадрантний патерн епістемічної картки висновку** (`CH19-S08-04`), що виключає когнітивне перевантаження та запобігає маскуванню галюцинацій суцільним текстом.
 
@@ -634,16 +892,20 @@ flowchart LR
 
 Приклад з UDP показує, навіщо потрібен окремий етап. Припустімо, інженер запитав не про датаграму, а про *заголовок*: «Яка довжина заголовка UDP?» Речення з RFC 768 прив'язується так само успішно, але відношення в ньому інше: йдеться про мінімальну довжину всієї датаграми, яка включає заголовок і дані. Етап виявлення має помітити цю розбіжність, а відповідь треба вивести з іншого доказу. Тут автором впроваджено **архітектурний патерн багатокрокового символьного силогізму над детермінованими атомами** (`CH19-S09-02`): схема формату заголовка в RFC 768 вилучає факт про чотири поля по 16 бітів (порт джерела, порт призначення, довжина, контрольна сума), а детерміноване ядро виведення застосовує арифметичне правило ($`4 \times 16 = 64\,\text{біти} = 8\,\text{октетів}`$), виключаючи розрахунки всередині мовної моделі. Речення про мінімальну довжину датаграми слугує незалежним силогістичним підтвердженням: датаграма без корисних даних складається лише із заголовка.
 
-У доказовій архітектурі автором розроблено **чотиризначну логічну схему семантичної верифікації доказів** (`CH19-S09-01`), згідно з якою вердикт перевірки має одне з чотирьох строго визначених значень: твердження випливає з доказу (`ENTAILED`), доказ підтримує лише частину твердження (`PARTIAL`), доказ суперечить твердженню (`CONTRADICTED`) або доказу недостатньо (`NOT_ENOUGH_EVIDENCE`). Лише статус `ENTAILED` веде до генерації відповіді; решта три статуси переводять систему в режим обґрунтованої відмови, структуру якої формує рушій пояснень із [Глави 20](ch20-explanation-engine.md).
+У доказовій архітектурі автором розроблено **чотиризначну логічну схему семантичної верифікації доказів** (`CH19-S09-01`), згідно з якою вердикт перевірки має одне з чотирьох строго визначених значень: твердження випливає з доказу (`ENTAILED`), доказ підтримує лише частину твердження (`PARTIAL`), доказ суперечить твердженню (`CONTRADICTED`) або доказу недостатньо (`NOT_ENOUGH_EVIDENCE`). Лише статус `ENTAILED` веде до безумовного схвалення повної відповіді (`ACCEPT`). Для статусу `PARTIAL` діють **два експліцитні операційні режими**, узгоджені з канонічним словником вердиктів у [Главі 16 §1.1](ch16-expert-systems-architecture.md#11-канонічний-словник-вердиктів-рантайму-та-межі-повноважень):
+- **(а) Для неподільних safety-critical (ASIL) транзакцій:** неповне покриття доказами детерміновано переводить систему в режим захисної відмови (`REFUSAL_INSUFFICIENT_DATA`), структуру якої формує рушій пояснень із [Глави 20](ch20-explanation-engine.md);
+- **(б) Для дорадчих інженерних запитів (клас QM):** формується кваліфікований статус `QUALIFIED_PARTIAL` (`PARTIAL`), за якого операторові повертається верифікована підмножина фактів разом із явним переліком непідтверджених прогалин, що вимагають ручної кваліфікації.
+
+Статуси `CONTRADICTED` і `NOT_ENOUGH_EVIDENCE` в обох режимах викликають мотивовану відмову (`REFUSAL`).
 
 ```mermaid
 flowchart TD
     accTitle: Чотиризначний шлюз перевірки доказу твердження
-    accDescr: Лише статус ENTAILED веде до формування доказової відповіді, тоді як PARTIAL, CONTRADICTED та NOT_ENOUGH_EVIDENCE переходять у стан безпечної відмови з поясненням.
+    accDescr: Статус ENTAILED веде до схваленої відповіді, PARTIAL розгалужується за профілем безпеки на REFUSAL_INSUFFICIENT_DATA (ASIL) або QUALIFIED_PARTIAL (QM), а CONTRADICTED та NOT_ENOUGH_EVIDENCE переходять у стан безпечної відмови.
 
     V{"<b>Семантичний вердикт</b>"}
     V -->|"ENTAILED<br/>(повне слідування)"| OK["<b>Схвалена доказова відповідь</b><br/>Твердження + точна цитата + хеш першоджерела"]
-    V -->|"PARTIAL<br/>(часткове підтвердження)"| REF1["<b>Обґрунтована відмова</b><br/>Бракує підтвердження винятків або умов"]
+    V -->|"PARTIAL<br/>(часткове підтвердження)"| REF1["<b>ASIL: REFUSAL_INSUFFICIENT_DATA</b><br/><b>QM: QUALIFIED_PARTIAL</b> (верифікована частина + явні лакуни)"]
     V -->|"CONTRADICTED<br/>(пряма суперечність)"| REF2["<b>Обґрунтована відмова</b><br/>Конфлікт норм: першоджерело забороняє висновок"]
     V -->|"NOT_ENOUGH_EVIDENCE<br/>(брак фактів)"| REF3["<b>Обґрунтована відмова</b><br/>Твердження відсутнє в чинних нормативах"]
 
@@ -782,7 +1044,7 @@ stateDiagram-v2
 - **Микола Федчик:**
   *«Пане Персі, у загальних бенчмарках штучного інтелекту 80% повноти — це солідний академічний результат, але в сертифікації функціональної безпеки це 20% невизначеної поведінки!<br/>
   Якщо інженерний припис містить атом предмета, дії, величини, одиниці вимірювання та граничних умов, відсутність хоча б одного атома (наприклад, одиниці вимірювання: 8 октетів замість 8 бітів чи 8 слів) перетворює пораду на джерело аварії.<br/>
-  У відповідь автором обґрунтовано **концепцію чесної демаркації доведеного та часткового знання** (`PARTIAL` Diagnostic Marker vs Aggregate Accuracy, `CH19-S13-02`): статус `PARTIAL` у розробленому автором шлюзі не є сліпим відхиленням — система видає операторові частково доведений пакет із чітким діагностичним маркером: "Підтверджено: мінімальна довжина = 8. Не підтверджено в першоджерелі: одиниця вимірювання. Потрібна ручна кваліфікація".<br/>
+  У відповідь автором обґрунтовано **концепцію чесної демаркації доведеного та часткового знання** (`PARTIAL` Diagnostic Marker vs Aggregate Accuracy, `CH19-S13-02`): відповідно до канонічного словника вердиктів у [Главі 16 §1.1](ch16-expert-systems-architecture.md#11-канонічний-словник-вердиктів-рантайму-та-межі-повноважень), для неподільних safety-critical транзакцій (ASIL) неповне покриття доказами викликає захисну відмову `REFUSAL_INSUFFICIENT_DATA`, а для дорадчих інженерних запитів (QM) вердикт `PARTIAL` транслюється у статус `QUALIFIED_PARTIAL` — система видає операторові верифіковану підмножину фактів із чітким переліком непідтверджених лакун: "Підтверджено: мінімальна довжина = 8. Не підтверджено в першоджерелі: одиниця вимірювання. Потрібна ручна кваліфікація".<br/>
   Автор замінює небезпечну ілюзію повної відповіді на математично чесну демаркацію доведеного та недоведеного. Краще змусити інженера уточнити одиницю вимірювання за 3 секунди, ніж дати йому правдоподібне хибне число, яке спалить мережевий буфер комутатора».*
 
 **Діалог з Келвіном Гуу: наскрізний ретрівер REALM та дискретні кортежі байтової кастодії**
@@ -794,7 +1056,7 @@ stateDiagram-v2
   *«Пане Келвіне Гуу, наскрізне навчання REALM є видатним проривом для відкритого пошуку інформації, але в інженерії доказових систем діє авторська **концепція юридичної недійсності латентної семантики без фізичної кастодії байтів** (`CH19-S13-03`): диференційовна "смислова суть" є юридично недійсною без фізичного підтвердження!<br/>
   Нейронний ретрівер може повернути правильне число, але він математично неспроможний довести, що це число випливає саме з нормативного пункту стандарту, а не було сфабриковане внутрішніми вагами моделі або витягнуте з нечинної ревізії документа.<br/>
   Якщо в офіційному тексті стандарту змінюється хоча б один байт, його криптографічний хеш SHA-256 стає недійсним.<br/>
-  Розроблений автором чотириетапний конвеєр перевіряє не просто семантичну подібність, а неподільний зв'язок: предикат `MinimumLength(UDP, 8, octet)` визнається істинним лише тоді, коли його токени проєктуються на точні байтові координати RFC 768 з повнотою $`\mathrm{Comp}(C) = 1{,}00`$. Автор не довіряє прихованим шарам нейромережі вирішення питань функціональної безпеки — архітектура перетворює кожен крок на машиноперевірюваний юридичний факт».*
+  Розроблений автором конвеєр не підміняє доказ семантичною подібністю: `MinimumLength(UDP, 8, octet)` потребує повного контракту, перевіреного контексту, байтових опор і окремого доказу слідування. Навіть $`\mathrm{Comp}(C;\Gamma)=1`$ є лише необхідною передумовою, а не підтвердженням істинності чи юридичної чинності саме по собі».*
 
 **Продовження діалогу з Келвіном Гуу: композиційні твердження з розрізнених пасажів та єдиний байтовий спан**
 
@@ -803,17 +1065,17 @@ stateDiagram-v2
 
 - **Микола Федчик:**
   *«Пане Келвіне, запропонований автором детермінований зв'язувач ніколи не вимагав, щоб усі атоми належали одному суцільному байтовому діапазону!<br/>
-  Тут реалізовано авторську **модель композиційного силогізму над множиною дискретних байтових спанів** (`CH19-S13-04`): кортеж доказу твердження $`\mathcal{E}`$ є множиною незалежних спанів, де кожне поле твердження (Subject, Predicate, Value, Unit) має власні початкові й кінцеві байти $`[S_i, E_i]`$, які можуть знаходитися в різних абзацах, таблицях чи різних додатках стандарту.<br/>
-  Метрика повноти $`\mathrm{Comp}(C)`$ розраховується як відношення валідованих полів до загальної кількості обов'язкових полів онтологічного контракту. А синтез композиційного висновку (наприклад, обчислення розміру корисного навантаження як різниці загальної довжини та розміру заголовка) покладається не на приховані векторні простори ретрівера, а на формальні правила предикатної дедукції над верифікованими фактами.<br/>
+  Авторська **модель композиційного силогізму над множиною дискретних байтових спанів** (`CH19-S13-04`) передбачає повний набір опор для кожного очікуваного текстового атома за $\Gamma$, включно з умовами й винятками, а не лише Subject, Predicate, Value та Unit. Інтервали $`[S_i,E_i)`$ напіввідкриті; індекс $i$ нумерує спани з ідентичністю артефакту та координатного простору. Підстави контекстних метаданих зберігаються окремо.<br/>
+  Метрика $`\mathrm{Comp}(C;\Gamma)`$ є зваженою часткою повністю прив'язаних очікуваних текстових атомів за підтвердженого контексту. Логічні зв'язки між розрізненими спанами вона не доводить: композиційний висновок, наприклад різницю загальної довжини й довжини заголовка, має перевірити формальне правило над підтвердженими фактами.<br/>
   Таким чином, композиційність досягається через прозорий символьний силогізм, де кожен базовий факт має власну байтову прописку, а не через непрозору дифузію уваги в нейромережі».*
 
 **Синтез та науковий вердикт глави:**  
 Перетворення запитання на доказ є строго детермінованим процесом демаркації: семантична нормалізація запобігає евристичним аваріям через протокол `CLARIFICATION`, а побайтова прив'язка тверджень до першоджерела унеможливлює змішування параметричних галюцинацій нейромереж із нормативними інженерними знаннями.
 
 ## Висновки
-Знайденого фрагмента тексту недостатньо для відповіді. Між пошуком і відповіддю працюють чотири етапи: виявлення відношення, вилучення твердження, прив'язка кожного атома до байтів першоджерела й перевірка того, що доказ підтримує твердження. Мовна модель пропонує твердження з дослівними якорями, а детермінований код вирішує, чи прийняти запропоноване твердження.
+У доказовій експертній системі знайдений фрагмент тексту стає підставою відповіді лише після перевірки повного контракту твердження, його контексту, текстових опор і слідування. Між пошуком і відповіддю розділено виявлення відношення, вилучення кандидата, прив'язку й семантичну перевірку: якорі моделі не визначають власного знаменника, а успіх зв'язувача не замінює доказ.
 
-Глава показала це на реальному тексті RFC 768. Програма мовою Go прив'язала твердження про мінімальну довжину UDP-датаграми до чотирьох діапазонів байтів, нормалізувала число, записане словом *eight*, і одиницю *octets*, і відхилила два хибні варіанти: з вигаданою одиницею (повнота 0,70) і з неоднозначним якорем (повнота 0,80). Розбір запитання про довжину заголовка показав, що успішна прив'язка ще не означає правильної відповіді: відповідь треба вивести ланцюжком із факту про формат заголовка й арифметичного правила.
+Навчальний Go-приклад для RFC 768 обмежено чотирма текстовими полями, нормалізацією *eight* у 8 та *octets* у `By`. Його `Comp_text` і `TEXT_ATOMS_BOUND` не є повнотою довільної норми. Відтворено точні сирі й нормалізовані координати, карту та канонічний хеш пасажу; окремо перевірено відмову за втрати floating-point точності. Для умовного правила 25 А за 12 В потрібні також опори напруги, а композиційна відповідь про заголовок додатково потребує перевіреного арифметичного правила.
 
 Межі підходу теж визначено. Прив'язка доводить присутність атомів у тексті, а не правильність тлумачення; перевірка слідування спирається на детерміновані правила, а модель текстового слідування дає лише сигнал. Мінімальні словники числівників і одиниць у прикладі треба замінити повними довідниками. Регресійне тестування за критичними зрізами й процедура просування захищають якість у часі, але потребують еталонних наборів і експертного перегляду. [Глава 20](ch20-explanation-engine.md) переходить від перевірки твердження до пояснення: як експертна система обґрунтовує рішення, відмову й межі своєї компетентності.
 
@@ -836,8 +1098,9 @@ stateDiagram-v2
 | Прив'язка | Grounding | Зв'язок кожного атома твердження з діапазоном байтів першоджерела |
 | Якір | Anchor | Дослівний фрагмент тексту, на який спирається атом твердження |
 | Детермінований зв'язувач | Deterministic span binder | Програма, що шукає якорі в байтах документа й перевіряє їхню однозначність |
-| Матеріальний атом | Material atom | Складова твердження, без якої твердження змінює зміст: предмет, відношення, значення, одиниця, обмеження |
-| Повнота прив'язки | Grounding completeness | Зважена частка матеріальних атомів, однозначно прив'язаних до джерела |
+| Матеріальний атом | Material atom | Очікуваний контрактом екземпляр складової змісту, зокрема модальності, умови чи винятку; не лише одне з чотирьох полів |
+| Контракт матеріальних атомів | Material atom contract | Схвалені тип і версія схеми, очікувані текстові екземпляри, кратність груп та підстави контексту; невідомість не означає незастосовності |
+| Повнота прив'язки | Grounding completeness | Зважена частка повністю прив'язаних очікуваних текстових атомів за визначеного контракту й підтвердженого контексту; не семантичний вердикт |
 | Текстове слідування | Textual entailment | Відношення, за якого гіпотеза випливає з тексту |
 | Проміжне представлення твердження | Evidence claim IR | Структура, що містить твердження, атоми, їхні діапазони байтів і вердикти |
 | Критичний зріз | Critical slice | Підмножина еталонного набору, на якій помилки найнебезпечніші |

@@ -36,7 +36,7 @@ ROOT = Path(__file__).resolve().parent.parent / "ExpertSystem"
 REQ_ROOT = ROOT / "requirements"
 LEVEL_DIRS = {"L1": "L1-stakeholder", "L2": "L2-system", "L3": "L3-component"}
 PARENT_LEVEL = {"L2": "L1", "L3": "L2"}
-MANDATORY = ["Вимога", "Джерело", "Батьківська вимога", "Метод верифікації", "Статус"]
+MANDATORY = ["Вимога", "Джерело", "Батьківська вимога", "Метод верифікації", "Пріоритет", "Статус"]
 METHODS = ("Тест", "Аналіз", "Інспекція", "Демонстрація")
 BANNED = [
     (re.compile(r"екосистем|ecosystem", re.I), "banned word 'екосистема'"),
