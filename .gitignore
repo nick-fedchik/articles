@@ -9,3 +9,11 @@ scripts/
 *.cff
 *.json
 
+!scripts/
+scripts/*
+!scripts/inspect_review_progress.py
+!scripts/tests/
+scripts/tests/*
+!scripts/tests/test_inspect_review_progress.py
+!ExpertSystem/requirements/ch01-10-review-progress.json
+
