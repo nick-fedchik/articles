@@ -11909,7 +11909,7 @@
     {
       "number": 39,
       "file": "ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md",
-      "input_sha256": "388cca2788350eef3a86e1481686e527dd02a79d56f06d257bb33cfe2765f98b",
+      "input_sha256": "e3dce5015e6d033319e3b5c746035db25af7a5c672337f4fa143abb9acf6c00f",
       "title": "Глава 39. Активний експерт-тестувальник: попперівська фальсифікація, нормативний комплаєнс (ASPICE/ISO 26262/ISO 21434) та автономне проєктування випробувань",
       "h2_titles": [
         "Анотація",
@@ -12014,9 +12014,9 @@
         1324
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T10:42:26Z",
+        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -12086,6 +12086,70 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T10:42:26Z",
+          "input_sha256": "388cca2788350eef3a86e1481686e527dd02a79d56f06d257bb33cfe2765f98b",
+          "h2_titles": [
+            "Анотація",
+            "1. Драма комплаєнс-інженерії: чому ручні методи вичерпали себе",
+            "2. Зсув парадигми: від пасивного довідника до інтерактивного гіда життєвого циклу продукту",
+            "3. Математичний апарат попперівської фальсифікації інженерних гіпотез",
+            "4. Автоматизація генерації артефактів TARA, SAR та DFAR через доменні правила",
+            "5. Розв'язання фундаментального протиріччя: функціональна безпека проти кібербезпеки",
+            "6. Нейро-символьний тандем тестувальника та автономна генерація тест-програм",
+            "7. Інженерний та гуманістичний вимір: людина в циклі керування (Human-in-the-Loop)",
+            "8. Програмна реалізація ядра активного аудитора TARA та директив безпеки на Go",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            21,
+            60,
+            166,
+            317,
+            420,
+            455,
+            582,
+            690,
+            1256,
+            1277,
+            1298,
+            1324
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1390
+            ],
+            "h2_line_numbers": [
+              13,
+              21,
+              60,
+              166,
+              317,
+              418,
+              453,
+              580,
+              688,
+              1254,
+              1291,
+              1312,
+              1328,
+              1349,
+              1375
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
         }
       ]
     },

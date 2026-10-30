@@ -262,7 +262,7 @@ $$\mathcal{F}(\mathcal{H}, \mathcal{K}) = \lbrace \nu_k \in \mathcal{K} \mid \ma
 - **Розташування в книзі:** Підрозділ 3.2, рядки 179–207.
 - **Наукова форма (`SCIENTIFIC_FORM`):** `RULE`. Регламент маршрутизації та керування потоком верифікації в CI/CD.
 - **Рівень оригінальності та перевірка на плагіат (`ORIGINALITY_LEVEL`):** `[L1: PURE_ORIGINAL]`. Авторське правило диспетчеризації: якщо $`\mathcal{F} \neq \emptyset`$, емітується токен відмови $`\mathrm{Refusal}(\rho)`$ Ed25519 із блокуванням ECU-прошивки; якщо $`\mathcal{F} = \emptyset`$, видається сертифікат проходження нормативного шлюзу та допуск до HIL-тестування.
-- **Поточний статус у книзі (`BOOK_STATUS`):** `[EXPLICIT_COMPLETE]`. Включає опис керування рантаймом, апаратний сайзинг ($`t_{\mathrm{eval}} \le 1{,}0\,\text{мс}`$, BRAM $`< 512\,\text{КБ}`$) та числовий приклад з ASIL-D ADC ($`\Delta \mathrm{SPFM} = 9{,}0\%`$).
+- **Поточний статус у книзі (`BOOK_STATUS`):** `[EXPLICIT_COMPLETE]`. Включає опис керування рантаймом, апаратний сайзинг ($`t_{\mathrm{eval}} \le 1{,}0\,\text{мс}`$, BRAM $`< 512\,\text{КБ}`$) та умовний числовий приклад: повна FMEDA з $`\mathrm{SPFM} = 0{,}90`$ за застосовного порога $`0{,}99`$ дає дефіцит 9 відсоткових пунктів; діагностичне покриття не підміняє SPFM.
 - **Канонічне формулювання:**
 
 $$\mathrm{Verdict} = \begin{cases} \mathbf{FALSIFIED} \ (\mathrm{Refusal}(\rho), \mathrm{SHA256}(\mathrm{Quote})), & \text{якщо } \mathcal{F}(\mathcal{H}, \mathcal{K}) \ne \emptyset \\ \mathbf{PROVISIONALLY\_CORROBORATED}, & \text{якщо } \mathcal{F}(\mathcal{H}, \mathcal{K}) = \emptyset \end{cases}$$
@@ -344,10 +344,10 @@ $$\mathrm{Threat} = \langle \mathrm{Asset}, \ \mathrm{Property}, \ \mathrm{Damag
 
 #### [ID: CH39-S04-03] Розрахункова модель метрики одноточкових відмов (SPFM)
 - **Розташування в книзі:** Пункт 4.2.1, рядки 291–298.
-- **Наукова форма (`SCIENTIFIC_FORM`):** `MATH_MODEL` / `METRIC`. Нормативна метрика надійності апаратури за ISO 26262-5.
+- **Наукова форма (`SCIENTIFIC_FORM`):** `MATH_MODEL` / `METRIC`. Нормативна метрика надійності апаратури за ISO 26262-5, застосовна лише за підтвердженого пункту й профілю.
 - **Рівень оригінальності та перевірка на плагіат (`ORIGINALITY_LEVEL`):** `[L4: CLASSICAL_NEEDS_CITATION]`. Формула стандарту ISO 26262:2018 Part 5 Clause 8.
 - **Поточний статус у книзі (`BOOK_STATUS`):** `[EXPLICIT_COMPLETE]`.
-- **Канонічне формулювання:**
+- **Канонічне формулювання:** Поріг застосовується лише якщо підтверджено застосовність функції й чинний пункт профілю визначає ASIL-D:
 
 $$\mathrm{SPFM} = \frac{\sum (\lambda_s + \lambda_{\mathrm{spf\_mitigated}})}{\sum \lambda} \ge 0{,}99$$
 
@@ -355,10 +355,10 @@ $$\mathrm{SPFM} = \frac{\sum (\lambda_s + \lambda_{\mathrm{spf\_mitigated}})}{\s
 
 #### [ID: CH39-S04-04] Розрахункова модель метрики латентних відмов (LFM)
 - **Розташування в книзі:** Пункт 4.2.2, рядки 299–306.
-- **Наукова форма (`SCIENTIFIC_FORM`):** `MATH_MODEL` / `METRIC`. Нормативна метрика стійкості до прихованих багатоточкових відмов за ISO 26262-5.
+- **Наукова форма (`SCIENTIFIC_FORM`):** `MATH_MODEL` / `METRIC`. Нормативна метрика стійкості до прихованих багатоточкових відмов за ISO 26262-5, застосовна лише за підтвердженого пункту й профілю.
 - **Рівень оригінальності та перевірка на плагіат (`ORIGINALITY_LEVEL`):** `[L4: CLASSICAL_NEEDS_CITATION]`. Формула стандарту ISO 26262:2018 Part 5 Clause 8.
 - **Поточний статус у книзі (`BOOK_STATUS`):** `[EXPLICIT_COMPLETE]`.
-- **Канонічне формулювання:**
+- **Канонічне формулювання:** Поріг застосовується лише якщо підтверджено застосовність функції й чинний пункт профілю визначає ASIL-D:
 
 $$\mathrm{LFM} = \frac{\sum (\lambda_s + \lambda_{\mathrm{mpf,det}})}{\sum (\lambda - \lambda_{\mathrm{spf}})} \ge 0{,}90$$
 

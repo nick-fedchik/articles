@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T10:33:46Z.
+Стан UTC: 2026-10-30T10:42:26Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -46,7 +46,7 @@
 | [36](../../ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md) | 1511 | 44 | 41 | 40 | 31 | 27 | 79 | 16 | 39 | Не перевірено; лише пошуковий маршрут |
 | [37](../../ExpertSystem/ch37-input-information-assessment-and-algorithmic-skepticism.md) | 1225 | 16 | 44 | 16 | 23 | 17 | 91 | 36 | 26 | Не перевірено; лише пошуковий маршрут |
 | [38](../../ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | 893 | 51 | 43 | 26 | 24 | 40 | 40 | 6 | 17 | §2–2.2: заземлення; пряма вимога підпису й реєстр |
-| [39](../../ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md) | 1339 | 28 | 80 | 37 | 56 | 23 | 52 | 4 | 12 | Не перевірено; лише пошуковий маршрут |
+| [39](../../ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md) | 1339 | 28 | 81 | 37 | 55 | 23 | 53 | 4 | 12 | Не перевірено; лише пошуковий маршрут |
 | [40](../../ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) | 993 | 38 | 24 | 20 | 56 | 70 | 61 | 73 | 34 | §2.1–2.2 та §5.2.2–5.2.3, діаграма, висновок і глосарій |
 
 ## Наступний пакет

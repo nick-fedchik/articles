@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T10:33:46Z",
-  "baseline_commit": "4913f3704cf83525a11afd83f58483dbb255eb82",
+  "at": "2026-10-30T10:42:26Z",
+  "baseline_commit": "82aa39084b7e361c30e53290017e4b678e426719",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -46131,7 +46131,7 @@
     },
     {
       "path": "ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md",
-      "sha256": "388cca2788350eef3a86e1481686e527dd02a79d56f06d257bb33cfe2765f98b",
+      "sha256": "e3dce5015e6d033319e3b5c746035db25af7a5c672337f4fa143abb9acf6c00f",
       "line_count": 1339,
       "chapter": 39,
       "scan_kind": "lexical_routing_only",
@@ -46245,7 +46245,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 80,
+          "matching_line_count": 81,
           "candidate_line_ranges": [
             [
               9,
@@ -46318,6 +46318,10 @@
             [
               264,
               264
+            ],
+            [
+              266,
+              266
             ],
             [
               309,
@@ -46645,7 +46649,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 56,
+          "matching_line_count": 55,
           "candidate_line_ranges": [
             [
               1,
@@ -46742,10 +46746,6 @@
             [
               354,
               354
-            ],
-            [
-              362,
-              362
             ],
             [
               370,
@@ -46933,7 +46933,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 52,
+          "matching_line_count": 53,
           "candidate_line_ranges": [
             [
               1,
@@ -46986,6 +46986,10 @@
             [
               161,
               161
+            ],
+            [
+              266,
+              266
             ],
             [
               296,
@@ -96018,7 +96022,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch39-registry.md",
-      "sha256": "00838f24e02153973ebf2c8244e1872881e70620dedc4a65a5bcfdd1333da425",
+      "sha256": "23b7bb316b9ead11e43ec6e3c5d7a37749d6fe6786a113df1dc5447dcf49aa1d",
       "line_count": 805,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -96308,7 +96312,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 64,
+          "matching_line_count": 65,
           "candidate_line_ranges": [
             [
               3,
@@ -96412,11 +96416,15 @@
             ],
             [
               264,
-              265
+              264
             ],
             [
               347,
               348
+            ],
+            [
+              350,
+              350
             ],
             [
               354,
@@ -96425,6 +96433,10 @@
             [
               358,
               359
+            ],
+            [
+              361,
+              361
             ],
             [
               395,
@@ -106990,7 +107002,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L1-stakeholder/ch39-L1-stakeholder.md",
-      "sha256": "4b9efb4844daa072df68960c74ad406bfa230bbdfda8df33c2855970881ecf13",
+      "sha256": "ce15e7901997111d624b0a64186092855fd1ed00b20d875594ae80e5bea06d34",
       "line_count": 134,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -120975,7 +120987,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L2-system/ch39-L2-system.md",
-      "sha256": "820838bfe2feb1850e955ab4537440abd3d5440e0ffb107bb78ffc2ef0b85ae9",
+      "sha256": "6a03b1bbb332edf190bd9c0d4c2fd76adda1a6b36feb9e926c509716c23f980f",
       "line_count": 208,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -121001,7 +121013,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 6,
+          "matching_line_count": 7,
           "candidate_line_ranges": [
             [
               55,
@@ -121010,6 +121022,10 @@
             [
               64,
               64
+            ],
+            [
+              73,
+              73
             ],
             [
               100,
@@ -138083,28 +138099,37 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch30-safety-cybersecurity-co-engineering.md",
-      "before_sha256": "da5f9fdc21ddac6c9c5817ad24e60563fcadb5ddb87539fbf8455fe947ea92c8",
-      "after_sha256": "e1d5ba08b69152ce73c2b671372a506fa04ca5740be5328d3383ee7cee4b78ce",
-      "at": "2026-10-30T10:33:46Z",
+      "path": "ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md",
+      "before_sha256": "388cca2788350eef3a86e1481686e527dd02a79d56f06d257bb33cfe2765f98b",
+      "after_sha256": "e3dce5015e6d033319e3b5c746035db25af7a5c672337f4fa143abb9acf6c00f",
+      "at": "2026-10-30T10:42:26Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/registry/ch30-registry.md",
-      "before_sha256": "5a1f6668bf41ed0d8256f2817eb854355e460ae4f3a4aa43e69692937019c055",
-      "after_sha256": "f8d4f5f10574ff82f980a6e9aaecf9036cb3f2bf38142c1e7792a3715bb4b6dc",
-      "at": "2026-10-30T10:33:46Z",
+      "path": "ExpertSystem/registry/ch39-registry.md",
+      "before_sha256": "00838f24e02153973ebf2c8244e1872881e70620dedc4a65a5bcfdd1333da425",
+      "after_sha256": "23b7bb316b9ead11e43ec6e3c5d7a37749d6fe6786a113df1dc5447dcf49aa1d",
+      "at": "2026-10-30T10:42:26Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/requirements/L2-system/ch30-L2-system.md",
-      "before_sha256": "584920233f21088f50bb5d11cf07366791f5e418db4313903ad1bc1462363145",
-      "after_sha256": "8dd15737c3631a28f2b26a8f9c4578227786b3bb605d5041b659a770d0150c50",
-      "at": "2026-10-30T10:33:46Z",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch39-L1-stakeholder.md",
+      "before_sha256": "4b9efb4844daa072df68960c74ad406bfa230bbdfda8df33c2855970881ecf13",
+      "after_sha256": "ce15e7901997111d624b0a64186092855fd1ed00b20d875594ae80e5bea06d34",
+      "at": "2026-10-30T10:42:26Z",
+      "by": "main-editor",
+      "reason": "Formula macro compatibility correction; no full scientific rereading",
+      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
+    },
+    {
+      "path": "ExpertSystem/requirements/L2-system/ch39-L2-system.md",
+      "before_sha256": "820838bfe2feb1850e955ab4537440abd3d5440e0ffb107bb78ffc2ef0b85ae9",
+      "after_sha256": "6a03b1bbb332edf190bd9c0d4c2fd76adda1a6b36feb9e926c509716c23f980f",
+      "at": "2026-10-30T10:42:26Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
