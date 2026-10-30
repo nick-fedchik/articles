@@ -24,9 +24,9 @@ This repository contains books and articles by **Mykola Fedchyk** (Ukrainian: М
 4. **[Military Cybernetics of the Early 21st Century: Control Systems, Cyber-Physical Complexes and Evidence-Based Intelligence](MilTech/README.md)**  
    Control theory and the Ukrainian school of military cybernetics, weapon control systems, navigation without global navigation satellite systems (GNSS), swarm robotics, tactical, operational and strategic command levels, military expert systems and hardware root of trust. The book relies on open sources only.  
    Structure: 4 parts, 12 chapters.
-5. **[Epistemic Circuit Theory (Epistemic Schematics): Foundations, Conservation Laws, and Active Devices of Truth Inference](Epistemic_Circuit_Theory/README.md)**  
-   Fundamental physical-cybernetic quantities of evidence propagation (epistemic potential, current, resistance, impedance, and Joule loss of certainty), Fedchyk's three conservation laws (Kirchhoff for truth), non-Boolean fuzzy and four-valued Belnap bilattice algebra, passive/reactive and unique components (SI dimensionality prism, cryptographic custody lock), the epistemic triode/transistor for deontic switching, multi-stage linear-complexity cascades, and operational units (relativistic adders, dual-tensor multipliers, guard-banded comparators).  
-   Structure: 8 chapters.
+5. **[Epistemic Computational Circuit Theory: Mathematical Invariants of Provenance, Metrology, and Deterministic Inference](Epistemic_Circuit_Theory/README.md)**  
+   Four-component epistemic state tensors (cryptographic byte-level provenance, Clifford dual numbers for JCGM GUM uncertainty, Belnap four-valued bilattice, and SI dimensionality lattice), topological invariants of provenance conservation and variance propagation, non-Boolean Hamacher t-norm and Łukasiewicz threshold algebras, temporal Beta-integrators and inter-domain Galois lattice morphisms (FCA + 1-WL), three-terminal deontic gates for Pollock defeat separation, multi-stage linear-complexity cascades with compile-time amortization, operational units (Einstein–Hamacher adders, dual-tensor multipliers, ISO 14253-1 guard-banded comparators), and Popperian scientific critique with applicability limits.  
+   Structure: 9 chapters.
 
 ### Articles
 
@@ -135,9 +135,9 @@ Copyright © 2026 Mykola Fedchyk.
 4. **[Військова кібернетика початку XXI століття: системи управління, кіберфізичні комплекси та доказовий інтелект](MilTech/README.md)**  
    Теорія керування й українська школа військової кібернетики, системи керування озброєнням, навігація без глобальних навігаційних супутникових систем (GNSS), ройова робототехніка, тактичний, оперативний і стратегічний рівні управління, військові експертні системи та апаратний корінь довіри. Книга спирається лише на відкриті джерела.  
    Структура: 4 частини, 12 розділів.
-5. **[Теорія епістемічних ланцюгів (Епістемічна схемотехніка): Фундаментальні закони, небулева алгебра та активні прилади виведення істини](Epistemic_Circuit_Theory/README.md)**  
-   Фундаментальні фізико-кібернетичні величини поширення доказів (епістемічний потенціал, струм, опір, імпеданс і джоулеві втрати визначеності), три закони збереження Федчика (аналоги законів Кірхгофа для істинності), небулева нечітка логіка та чотиризначна бірешітка Белнапа, реактивні й унікальні прилади (розмірнісна призма SI, криптографічний надпровідний замок кастодії), епістемічний тріод/транзистор для деонтичного комутування, багатокаскадні схеми лінійної складності та функціональні операційні вузли (релятивістські суматори, дуальні мультиплікатори, гістерезисні компаратори).  
-   Структура: 8 глав.
+5. **[Теорія епістемічних обчислювальних схем: Математичні інваріанти кастодії, метрології та детермінованого виведення](Epistemic_Circuit_Theory/README.md)**  
+   Чотирикомпонентні епістемічні тензори стану (криптографічна побайтова кастодія, дуальні числа Кліффорда для невизначеності за JCGM GUM, чотиризначна бірешітка Белнапа та решітка розмірностей SI), топологічні інваріанти збереження кастодії й поширення дисперсій, небулева алгебра Т-норми Хамахера та порогової логіки Лукасевича, темпоральні Бета-інтегратори й міждоменні морфізми решіток Галуа (FCA + 1-WL), тритермінальні деонтичні вентилі для розділення контраргументів Поллока, багатокаскадні схеми лінійної складності з амортизацією компіляцією, функціональні операційні вузли (нелінійні суматори, дуальні мультиплікатори, інтервальні компаратори із захисною смугою ISO 14253-1) та попперівська наукова критика з межами застосовності.  
+   Структура: 9 глав.
 
 ### Статті
 
