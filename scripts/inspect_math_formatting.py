@@ -55,7 +55,7 @@ def strip_code_and_valid_backtick_math(line: str) -> str:
 
     def _repl_code(m: re.Match) -> str:
         inner = m.group(1)
-        if inner.startswith("$") and inner.endswith("$") and len(inner) >= 2:
+        if inner.startswith("$") and not inner.startswith("$$") and inner.endswith("$") and len(inner) >= 2:
             return m.group(0)
         return "CODE_SPAN_OK"
 

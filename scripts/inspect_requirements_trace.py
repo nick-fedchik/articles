@@ -54,8 +54,15 @@ BANNED = [
 REQ_HEAD = re.compile(r"^## (REQ-(L[123])-(\d\d)-(\d+))[ \t]*$", re.M)
 FIELD = re.compile(r"^- \*\*([^*]+):\*\* (.*)$", re.M)
 REF = re.compile(r"REQ-L[123]-\d\d-\d+")
-LINK = re.compile(r"\]\(([^)]+\.md)\)")
+LINK = re.compile(r"\]\(([^)]+\.md)(?:#[^)]*)?\)")
 SECTION = re.compile(r"§(\d+(?:\.\d+)*)\s*«([^»]+)»")
+
+
+def source_references(source):
+    matches = list(LINK.finditer(source))
+    for index, match in enumerate(matches):
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(source)
+        yield match.group(1), SECTION.findall(source[match.end():end])
 
 
 def norm(text):
@@ -201,13 +208,13 @@ def main():
             errors.append(f"{rid}: unknown verification method {method!r}")
 
         source = f.get("Джерело", "")
-        for link in LINK.findall(source):
+        for link, sections in source_references(source):
             target = (r["path"].parent / link).resolve()
             if not target.exists():
                 errors.append(f"{rid}: source link {link} does not exist")
             elif check_sections:
                 heads = chapter_headings(target)
-                for num, title in SECTION.findall(source.split(link, 1)[1].split("](", 1)[0]):
+                for num, title in sections:
                     got = heads.get(num)
                     want = norm(title)
                     if not got:

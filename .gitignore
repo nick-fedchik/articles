@@ -16,4 +16,10 @@ scripts/*
 scripts/tests/*
 !scripts/tests/test_inspect_review_progress.py
 !ExpertSystem/requirements/ch01-10-review-progress.json
+!scripts/inspect_render_syntax.mjs
+!scripts/tests/test_technical_inspectors.py
+!scripts/render-validation/
+scripts/render-validation/*
+!scripts/render-validation/package.json
+!scripts/render-validation/package-lock.json
 

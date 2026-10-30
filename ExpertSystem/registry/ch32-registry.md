@@ -674,7 +674,7 @@ $$\hat{y}(i_1, \dots, i_N) = \mathbf{v}_1^{\mathsf{T}} \mathbf{G}_2(i_2) \cdots 
 #### [ID: CH32-S11-07] Модель залежних типів Мартіна-Льофа для продукційних правил знань та концепція Proof-Carrying Code (П. Мартін-Льоф, Дж. Некула)
 - **Розташування в книзі:** Підрозділ 11.4.
 - **Наукова форма (`SCIENTIFIC_FORM`):** `CONCEPT` / `THEORY`. Конструктивна типізація правил через залежний добуток $\Pi$ та залежну суму $\Sigma$.
-- **Рівень оригінальності та перевірка на плагіат (`ORIGINALITY_LEVEL`):** `[L4: CLASSICAL_NEEDS_CITATION]`. Пер Мартін-Льоф (1984), Джордж Некула (1997). Процитовано першоджерела [[35]](#src-35), [[36]](#src-36).
+- **Рівень оригінальності та перевірка на плагіат (`ORIGINALITY_LEVEL`):** `[L4: CLASSICAL_NEEDS_CITATION]`. Пер Мартін-Льоф (1984), Джордж Некула (1997). Процитовано першоджерела [[35]](../ch32-high-performance-knowledge-packs-mmap-and-harvesting.md#src-35), [[36]](../ch32-high-performance-knowledge-packs-mmap-and-harvesting.md#src-36).
 - **Поточний статус у книзі (`BOOK_STATUS`):** `[EXPLICIT_COMPLETE]`.
 - **Канонічне формулювання:** Ізоморфізм Каррі–Говарда–Ламбека проєктує кожне правило як тип $`\Pi (x : \mathrm{State}),\; \mathrm{Pre}(x) \to \Sigma (y : \mathrm{Action}),\; \mathrm{Safe}(x, y)`$.
 
