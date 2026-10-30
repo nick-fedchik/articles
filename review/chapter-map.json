@@ -4928,7 +4928,7 @@
     {
       "number": 20,
       "file": "ExpertSystem/ch20-explanation-engine.md",
-      "input_sha256": "ac7e142efdfd83df4ebb70830cd547015d00de6cb66e399cde16661e8d010725",
+      "input_sha256": "30a464f2e9865597358529ac3955ee8d0789db69d0f63c8a13b30cc58e19b9c2",
       "title": "Глава 20. Рушій пояснень: рішення, відмова та межі компетентності",
       "h2_titles": [
         "Анотація",
@@ -5040,9 +5040,9 @@
         882
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T08:30:45Z",
+        "evidence": "review/reports/consistency-initial-package.md",
+        "scope": "Current structure/hash only; historical reading not reaccepted"
       },
       "structural_history": [
         {
@@ -5117,6 +5117,75 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T08:30:45Z",
+          "input_sha256": "ac7e142efdfd83df4ebb70830cd547015d00de6cb66e399cde16661e8d010725",
+          "h2_titles": [
+            "Анотація",
+            "1. Пояснення як окремий інженерний артефакт",
+            "2. Типологія пояснювальних запитів (HOW, WHY, WHY NOT, WHAT IF, WHAT MUST CHANGE)",
+            "3. Граф доведення та трасування висновків",
+            "4. Обчислення відмов WHY NOT: мінімальний конфлікт та алгоритм QuickXPlain",
+            "5. Контрфактичні сценарії WHAT IF та пошук допустимих дій WHAT MUST CHANGE",
+            "6. Захист від витоку конфіденційної інформації через пояснення",
+            "7. Межі компетентності, алгоритмічний скепсис та самоперевірка",
+            "8. Природномовна вербалізація поверх перевіреного дерева доведення",
+            "9. Протокол верифікації вірності та консистентності пояснення",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            31,
+            99,
+            151,
+            311,
+            554,
+            594,
+            626,
+            663,
+            790,
+            842,
+            849,
+            869,
+            882
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h1_line": 1,
+            "h2_lines": [
+              13,
+              31,
+              99,
+              151,
+              311,
+              554,
+              594,
+              626,
+              663,
+              790,
+              840,
+              890,
+              897,
+              907,
+              927,
+              942
+            ],
+            "heading_scan_line_range": [
+              1,
+              956
+            ],
+            "heading_scan_mode": "Прочитано всі H1/H2 поза блоками fenced code; решту тексту після рядка 100 не рецензовано.",
+            "dependency_citation_scope": "Прямі посилання лише з прочитаних рядків 1–100; це не повний граф посилань глави.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-initial-package.md"
         }
       ]
     },
@@ -9350,7 +9419,7 @@
     {
       "number": 34,
       "file": "ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md",
-      "input_sha256": "40f6eed718420bf7c6a542ea79eb83f98df221886e1579dbaaad011bff356c13",
+      "input_sha256": "c77b7b0fdf03a3d4d2226abba358fc86ba091485b8b5b3365e2f46507373a62a",
       "title": "Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення",
       "h2_titles": [
         "Анотація",
@@ -9438,26 +9507,26 @@
         "full_text_reviewed": false
       },
       "source_task": "MAP-04",
-      "current_source_line_count": 1319,
+      "current_source_line_count": 1327,
       "current_h2_line_numbers": [
-        16,
-        28,
-        69,
-        149,
-        239,
-        332,
-        409,
-        629,
-        765,
-        1253,
-        1263,
-        1281,
-        1301
+        13,
+        25,
+        66,
+        146,
+        236,
+        329,
+        417,
+        637,
+        773,
+        1261,
+        1271,
+        1289,
+        1309
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T08:30:45Z",
+        "evidence": "review/reports/consistency-initial-package.md",
+        "scope": "Current structure/hash only; historical reading not reaccepted"
       },
       "structural_history": [
         {
@@ -9527,6 +9596,70 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T08:30:45Z",
+          "input_sha256": "40f6eed718420bf7c6a542ea79eb83f98df221886e1579dbaaad011bff356c13",
+          "h2_titles": [
+            "Анотація",
+            "1. Проблема неповноти знань та епістемічна дилема експертних систем",
+            "2. Епістемічна тріада класичної логіки в архітектурі системи",
+            "3. Детерміністичний багатоходовий реляційний аналіз",
+            "4. Автономний майнінг асоціативних правил (AMIE PCA)",
+            "5. Символьне абдуктивне виведення робочих гіпотез",
+            "6. Сократівський діалог та змішана ініціатива",
+            "7. Крос-доменна генералізація знань",
+            "8. Програмна реалізація: повний Go-модуль реляційного пошуку, абдукції та сократівського опитувача",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            16,
+            28,
+            69,
+            149,
+            239,
+            332,
+            409,
+            629,
+            765,
+            1253,
+            1263,
+            1281,
+            1301
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1366
+            ],
+            "h2_line_numbers": [
+              13,
+              25,
+              66,
+              146,
+              236,
+              329,
+              406,
+              626,
+              762,
+              1250,
+              1286,
+              1296,
+              1310,
+              1328,
+              1348
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-initial-package.md"
         }
       ]
     },
@@ -10104,7 +10237,7 @@
     {
       "number": 38,
       "file": "ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md",
-      "input_sha256": "b5ade29727ae60db8b103606880bd3f406f450d1ef4bcc1e0288b22e5f5e3d28",
+      "input_sha256": "19143775c034569aacd1d21289806a827fb0fd40765c77b10beb3a08e33de160",
       "title": "Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей",
       "h2_titles": [
         "Анотація",
@@ -10190,25 +10323,25 @@
         "full_text_reviewed": false
       },
       "source_task": "MAP-04",
-      "current_source_line_count": 891,
+      "current_source_line_count": 893,
       "current_h2_line_numbers": [
         13,
         21,
         158,
-        320,
-        464,
-        499,
-        524,
-        559,
-        815,
-        828,
-        847,
-        869
+        322,
+        466,
+        501,
+        526,
+        561,
+        817,
+        830,
+        849,
+        871
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T08:30:45Z",
+        "evidence": "review/reports/consistency-initial-package.md",
+        "scope": "Current structure/hash only; historical reading not reaccepted"
       },
       "structural_history": [
         {
@@ -10275,6 +10408,67 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T08:30:45Z",
+          "input_sha256": "b5ade29727ae60db8b103606880bd3f406f450d1ef4bcc1e0288b22e5f5e3d28",
+          "h2_titles": [
+            "Анотація",
+            "1. Анатомія машинної галюцинації: чому мовна модель не здатна вилікувати себе сама",
+            "2. Детермінована доказова терапія: дворівневий шлюз нульових галюцинацій",
+            "3. Епістемічний дефіцит: відкритий світ і шлюз безпечної відмови",
+            "4. Абдуктивні замикання за Пірсом: подолання неповноти без конфабуляцій",
+            "5. Предикатне екранування нейромереж: предикатні щити",
+            "6. Зворотне лікування моделей: навчання та машинне забування на верифікованих знаннях",
+            "7. Програмна реалізація мовою Go: модуль `antihallucination`",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            21,
+            158,
+            320,
+            464,
+            499,
+            524,
+            559,
+            815,
+            828,
+            847,
+            869
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              944
+            ],
+            "h2_line_numbers": [
+              13,
+              21,
+              158,
+              320,
+              464,
+              499,
+              524,
+              559,
+              815,
+              854,
+              867,
+              881,
+              900,
+              922
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-initial-package.md"
         }
       ]
     },
@@ -10464,7 +10658,7 @@
     {
       "number": 40,
       "file": "ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md",
-      "input_sha256": "c43c0907e5c5993e773d0bc3b8e4131e4e41baf29ba7c5f0107a6b7abc931331",
+      "input_sha256": "7211be2f9571b2bcbbda4b7387955ea46956c78d0739be2d898dd803f1a4e96b",
       "title": "Глава 40. Розподілена архітектура доказової експертної системи: епістемічна SOA, семантична маршрутизація, ієрархія пам'яті та багатоджерельний дефезитивний арбітраж",
       "h2_titles": [
         "Анотація",
@@ -10597,9 +10791,9 @@
         975
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T08:30:45Z",
+        "evidence": "review/reports/consistency-initial-package.md",
+        "scope": "Current structure/hash only; historical reading not reaccepted"
       },
       "structural_history": [
         {
@@ -10672,6 +10866,73 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T08:30:45Z",
+          "input_sha256": "c43c0907e5c5993e773d0bc3b8e4131e4e41baf29ba7c5f0107a6b7abc931331",
+          "h2_titles": [
+            "Анотація",
+            "1. Синтез монографії: від локальної моделі до референсного архітектурного прототипу",
+            "2. Епістемічна сервіс-орієнтована архітектура (Epistemic SOA) та тонкі клієнти",
+            "3. Семантичний брокер, препроцесор дискурсу та маршрутизація за змістом",
+            "4. Теоретична модель багаторівневої ієрархії пам'яті та подвійної буферизації",
+            "5. Багатоджерельна дефезитивна агрегація знань (ASPIC+ / Dung)",
+            "6. Розподілений тріаж дефіцитів знань: кластеризація SimHash, захист від виродження та автономний WAL-буфер",
+            "7. Незмінний журнал рішень (Immutable Decision Ledger) на Merkle-деревах",
+            "8. Інженерна матриця вибору технологій та масштабування за бюджетом проєкту",
+            "9. Холодна готовність динамічного реєстру знань (Tabula Rasa), чистота діагностичних доказів та субмілісекундний фонотактично-ентропійний санітайзер входу",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            12,
+            20,
+            95,
+            136,
+            204,
+            377,
+            505,
+            613,
+            761,
+            773,
+            904,
+            919,
+            946,
+            975
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1046
+            ],
+            "h2_line_numbers": [
+              12,
+              20,
+              95,
+              136,
+              204,
+              377,
+              505,
+              613,
+              759,
+              771,
+              902,
+              939,
+              954,
+              972,
+              999,
+              1028
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-initial-package.md"
         }
       ]
     }

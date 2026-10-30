@@ -18,6 +18,7 @@ scripts/tests/*
 !ExpertSystem/requirements/ch01-10-review-progress.json
 !scripts/inspect_render_syntax.mjs
 !scripts/tests/test_technical_inspectors.py
+!scripts/tests/test_consistency_contracts.py
 !scripts/render-validation/
 scripts/render-validation/*
 !scripts/render-validation/package.json
