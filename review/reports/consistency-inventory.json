@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T16:59:56Z",
-  "baseline_commit": "4b0e612c78030133814cc3ad4f1b0e4132d94988",
+  "at": "2026-10-30T17:05:57Z",
+  "baseline_commit": "1a7cae6dac32926f7d7575d729d9116dd94187cf",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -138197,26 +138197,7 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [
-    {
-      "path": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
-      "before_sha256": "2e628780f9d68aaa1c6f24391775747b878705486261a8878643820a273f57ae",
-      "after_sha256": "c68b8384f7697fc58dfa878611f1dc74b4fcc96b2753997304bf6425e014321b",
-      "at": "2026-10-30T16:59:56Z",
-      "by": "main-editor",
-      "reason": "C4 CH31 RFC 5321 source check and registry reconciliation; full chapter and ISO-source review remain open",
-      "evidence": "review/reports/consistency-norm02-ch31.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch31-registry.md",
-      "before_sha256": "a478d24817dd4b422672e27dda2ef98868322ff153c7109020a79e3b6dadd590",
-      "after_sha256": "43438cce55bb84a347ab4811b5133bfd1bfaa01b4c9bf8752715286e8ef513a3",
-      "at": "2026-10-30T16:59:56Z",
-      "by": "main-editor",
-      "reason": "C4 CH31 RFC 5321 source check and registry reconciliation; full chapter and ISO-source review remain open",
-      "evidence": "review/reports/consistency-norm02-ch31.md"
-    }
-  ],
+  "input_transitions_from_current_baseline": [],
   "engine_and_links": {
     "math": {
       "total": 17619,
