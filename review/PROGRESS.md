@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T14:49:55Z
+Generated UTC: 2026-10-30T14:53:47Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -175,7 +175,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 37: [Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність](../ExpertSystem/ch37-input-information-assessment-and-algorithmic-skepticism.md) | `7b62bfcc54d845a5602fd0666a1b75ca8c122ee4121f1a4e6c683a7da8703d62` | stale |
 | 38: [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](../ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | `6183bfec5cf692233e1ec49f30b2bcc6447c71e69af47f279d6f6b1c337a3ef9` | stale |
 | 39: [Глава 39. Активний експерт-тестувальник: попперівська фальсифікація, нормативний комплаєнс (ASPICE/ISO 26262/ISO 21434) та автономне проєктування випробувань](../ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md) | `c4238c5d5b52fd0cb2301287e580ad94146618f6e68f0ea97efd58b3b3c30e86` | stale |
-| 40: [Глава 40. Розподілена архітектура доказової експертної системи: епістемічна SOA, семантична маршрутизація, ієрархія пам'яті та багатоджерельний дефезитивний арбітраж](../ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) | `4d7610f2eadf4b89da825aca8767ad57494d201f6b7c2a14db5ed6916f17a09e` | stale |
+| 40: [Глава 40. Розподілена архітектура доказової експертної системи: епістемічна SOA, семантична маршрутизація, ієрархія пам'яті та багатоджерельний дефезитивний арбітраж](../ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) | `65380b85564a231ef01d6fd938e6b7678f530942e10e2c0f054787ba3403ad6b` | stale |
 
 ## Companion Inventory
 

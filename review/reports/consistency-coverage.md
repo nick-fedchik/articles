@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T14:49:49Z.
+Стан UTC: 2026-10-30T14:53:42Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -47,7 +47,7 @@
 | [37](../../ExpertSystem/ch37-input-information-assessment-and-algorithmic-skepticism.md) | 1225 | 18 | 44 | 16 | 23 | 18 | 91 | 36 | 26 | Не перевірено; лише пошуковий маршрут |
 | [38](../../ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | 893 | 51 | 43 | 26 | 24 | 40 | 40 | 6 | 19 | §3.2: authorial risk weight separated from SIL/ASIL, automotive profile example |
 | [39](../../ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md) | 1339 | 28 | 81 | 37 | 55 | 23 | 54 | 4 | 12 | Не перевірено; лише пошуковий маршрут |
-| [40](../../ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) | 994 | 38 | 25 | 20 | 57 | 71 | 61 | 73 | 35 | §5.2.1: authorial Conf thresholds; ASIL-D ACCEPT remains formal-proof-only |
+| [40](../../ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) | 996 | 38 | 26 | 20 | 56 | 71 | 61 | 76 | 35 | §5.2.1: authorial Conf thresholds; ASIL-D ACCEPT remains formal-proof-only |
 
 ## Наступний пакет
 
