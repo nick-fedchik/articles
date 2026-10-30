@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T18:12:02Z",
-  "baseline_commit": "374e56a7b54f8464ad790b7e2c92ba856567b0ca",
+  "at": "2026-10-30T18:38:20Z",
+  "baseline_commit": "e3a2ae4193934e62d0e53c2e2f57e6eb73b3103c",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -689,7 +689,7 @@
     },
     {
       "path": "ExpertSystem/PRO_ET_CONTRA.md",
-      "sha256": "d3d630371cebe15aa4abeb58c48118d8da940332e2677e6df4c0d65d390a2377",
+      "sha256": "a70092745544e312564951b5e8a7abd2f31bc5bbaa3b5428cf7587325ceb0bd5",
       "line_count": 2079,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -2273,7 +2273,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 129,
+          "matching_line_count": 130,
           "candidate_line_ranges": [
             [
               69,
@@ -2630,6 +2630,10 @@
             [
               1601,
               1601
+            ],
+            [
+              1603,
+              1603
             ],
             [
               1605,
@@ -35597,8 +35601,8 @@
     },
     {
       "path": "ExpertSystem/ch29-neuro-symbolic-architecture.md",
-      "sha256": "214e45683f5b4909898655633c1bc5b513b008c75b2895bc7ca6ede634a724a8",
-      "line_count": 875,
+      "sha256": "36eefc32835f92da674e8b8c7ef54f4b04eca9b305d2545789bd719b913d27d5",
+      "line_count": 877,
       "chapter": 29,
       "scan_kind": "lexical_routing_only",
       "full_text_reviewed": false,
@@ -35883,7 +35887,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 13,
+          "matching_line_count": 14,
           "candidate_line_ranges": [
             [
               13,
@@ -35932,6 +35936,10 @@
             [
               835,
               835
+            ],
+            [
+              872,
+              872
             ]
           ]
         },
@@ -36256,7 +36264,7 @@
           ]
         }
       },
-      "locally_checked_slice": "§1: autoregressive argmax objective and symbol glossary"
+      "locally_checked_slice": "Full C4 reread: CH29 intro/§4.1 and PRO_ET_CONTRA §29.3–29.4; project-budget timings, catalogue metadata only; exact clauses/measurements unverified"
     },
     {
       "path": "ExpertSystem/ch30-safety-cybersecurity-co-engineering.md",
@@ -69583,7 +69591,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch18-registry.md",
-      "sha256": "abc96cb6135dac7149563919471fcc71cbe87a6b0d480bf90074df82e94622a3",
+      "sha256": "28b70adf664c40876f1ea92ef880e7d394baedcf12cb8bf56085cf392262b716",
       "line_count": 1025,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -82644,15 +82652,15 @@
     },
     {
       "path": "ExpertSystem/registry/ch29-registry.md",
-      "sha256": "652db9c54e069a7ffe51c64f9e60a589491a3b5b42c403a4b876d741774ec13c",
-      "line_count": 880,
+      "sha256": "42d7fae15444c155f3c778eccf00cc6b79ae84c980aa8191ee1cbcf675869f3f",
+      "line_count": 881,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
       "full_text_reviewed": false,
       "axes": {
         "C1": {
           "review_status": "not_completed",
-          "matching_line_count": 46,
+          "matching_line_count": 45,
           "candidate_line_ranges": [
             [
               29,
@@ -82799,32 +82807,28 @@
               738
             ],
             [
-              770,
-              770
+              769,
+              769
             ],
             [
-              772,
-              772
+              771,
+              771
             ],
             [
-              794,
-              794
+              793,
+              793
             ],
             [
-              809,
-              809
+              808,
+              808
             ],
             [
-              819,
-              819
+              837,
+              838
             ],
             [
-              836,
-              837
-            ],
-            [
-              876,
-              877
+              877,
+              878
             ]
           ]
         },
@@ -82921,22 +82925,22 @@
               746
             ],
             [
-              770,
-              770
+              769,
+              769
             ],
             [
-              848,
-              848
+              849,
+              849
             ],
             [
-              874,
-              874
+              875,
+              875
             ]
           ]
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 25,
+          "matching_line_count": 27,
           "candidate_line_ranges": [
             [
               108,
@@ -82959,8 +82963,12 @@
               270
             ],
             [
-              276,
+              275,
               276
+            ],
+            [
+              278,
+              278
             ],
             [
               343,
@@ -83027,26 +83035,30 @@
               726
             ],
             [
-              752,
-              752
-            ],
-            [
               761,
               761
             ],
             [
-              878,
-              878
+              837,
+              837
+            ],
+            [
+              879,
+              879
             ]
           ]
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 31,
+          "matching_line_count": 34,
           "candidate_line_ranges": [
             [
-              40,
-              40
+              20,
+              20
+            ],
+            [
+              45,
+              45
             ],
             [
               56,
@@ -83074,7 +83086,11 @@
             ],
             [
               276,
-              276
+              277
+            ],
+            [
+              279,
+              279
             ],
             [
               327,
@@ -83125,38 +83141,42 @@
               738
             ],
             [
-              749,
-              749
-            ],
-            [
               751,
               752
             ],
             [
-              754,
+              755,
               755
             ],
             [
-              819,
-              819
+              762,
+              762
             ],
             [
-              824,
-              824
+              811,
+              811
             ],
             [
-              864,
-              864
+              820,
+              820
             ],
             [
-              876,
-              876
+              825,
+              825
+            ],
+            [
+              865,
+              865
+            ],
+            [
+              877,
+              877
             ]
           ]
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 61,
+          "matching_line_count": 64,
           "candidate_line_ranges": [
             [
               32,
@@ -83199,12 +83219,8 @@
               254
             ],
             [
-              276,
-              276
-            ],
-            [
               278,
-              278
+              279
             ],
             [
               335,
@@ -83339,46 +83355,50 @@
               738
             ],
             [
-              770,
-              770
+              761,
+              763
             ],
             [
-              772,
-              772
+              769,
+              769
             ],
             [
-              794,
-              794
+              771,
+              771
             ],
             [
-              835,
-              835
+              793,
+              793
             ],
             [
-              846,
-              846
+              836,
+              836
             ],
             [
-              848,
-              848
+              847,
+              847
             ],
             [
-              864,
-              864
+              849,
+              849
             ],
             [
-              876,
-              877
+              865,
+              865
             ],
             [
-              880,
-              880
+              877,
+              878
+            ],
+            [
+              881,
+              881
             ]
           ]
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 52,
+          "matching_line_count": 47,
           "candidate_line_ranges": [
             [
               28,
@@ -83431,6 +83451,10 @@
             [
               213,
               213
+            ],
+            [
+              276,
+              276
             ],
             [
               316,
@@ -83533,48 +83557,28 @@
               751
             ],
             [
-              755,
-              755
+              769,
+              769
             ],
             [
-              757,
-              757
+              785,
+              785
             ],
             [
-              760,
-              761
+              798,
+              799
             ],
             [
-              764,
-              764
+              836,
+              836
             ],
             [
-              770,
-              770
+              851,
+              851
             ],
             [
-              786,
-              786
-            ],
-            [
-              799,
-              800
-            ],
-            [
-              819,
-              819
-            ],
-            [
-              835,
-              835
-            ],
-            [
-              850,
-              850
-            ],
-            [
-              853,
-              853
+              854,
+              854
             ]
           ]
         },
@@ -83619,8 +83623,8 @@
               696
             ],
             [
-              849,
-              849
+              850,
+              850
             ]
           ]
         },
@@ -83763,10 +83767,6 @@
             [
               276,
               276
-            ],
-            [
-              278,
-              278
             ],
             [
               284,
@@ -84025,56 +84025,60 @@
               752
             ],
             [
+              755,
+              755
+            ],
+            [
               760,
               760
             ],
             [
-              770,
-              770
+              769,
+              769
             ],
             [
-              786,
-              786
+              785,
+              785
             ],
             [
-              800,
-              800
+              799,
+              799
             ],
             [
-              831,
-              831
+              832,
+              832
             ],
             [
-              833,
-              833
+              834,
+              834
             ],
             [
-              835,
-              836
+              836,
+              837
             ],
             [
-              838,
-              838
+              839,
+              839
             ],
             [
-              853,
-              853
+              854,
+              854
             ],
             [
-              862,
-              862
+              863,
+              863
             ],
             [
-              864,
-              864
+              865,
+              865
             ],
             [
-              872,
-              872
+              873,
+              873
             ],
             [
-              880,
-              880
+              881,
+              881
             ]
           ]
         }
@@ -138242,28 +138246,46 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch18-execution-infrastructure.md",
-      "before_sha256": "54546d074635dc7937baece91de60f007541a0d3f8802627babb15446142ca7a",
-      "after_sha256": "0e7a6fb71aeadcb08a460e2038253d76253388a88fabc447f996af95a487177a",
-      "at": "2026-10-30T18:12:02Z",
+      "path": "ExpertSystem/PRO_ET_CONTRA.md",
+      "before_sha256": "d3d630371cebe15aa4abeb58c48118d8da940332e2677e6df4c0d65d390a2377",
+      "after_sha256": "a70092745544e312564951b5e8a7abd2f31bc5bbaa3b5428cf7587325ceb0bd5",
+      "at": "2026-10-30T18:38:20Z",
       "by": "main-editor",
-      "reason": "Full C4 reread of CH18: Air-Gap is conditional profile, not a standards/class mandate; thermal throttling is product-risk conditional; exact ISO/IEC clauses unavailable",
-      "evidence": "review/reports/consistency-c4-normative-priority.md"
+      "reason": "Bounded CH29 C4 review of chapter and companion dialogue; CH18 bibliography inventory reconciliation",
+      "evidence": "review/reports/consistency-c4-followup.md"
+    },
+    {
+      "path": "ExpertSystem/ch29-neuro-symbolic-architecture.md",
+      "before_sha256": "214e45683f5b4909898655633c1bc5b513b008c75b2895bc7ca6ede634a724a8",
+      "after_sha256": "36eefc32835f92da674e8b8c7ef54f4b04eca9b305d2545789bd719b913d27d5",
+      "at": "2026-10-30T18:38:20Z",
+      "by": "main-editor",
+      "reason": "Bounded CH29 C4 review of chapter and companion dialogue; CH18 bibliography inventory reconciliation",
+      "evidence": "review/reports/consistency-c4-followup.md"
     },
     {
       "path": "ExpertSystem/registry/ch18-registry.md",
-      "before_sha256": "4a9a1d8fa60966003857272bb6288beec8e0c354ffb7eb09c5c9c68de3dda70d",
-      "after_sha256": "abc96cb6135dac7149563919471fcc71cbe87a6b0d480bf90074df82e94622a3",
-      "at": "2026-10-30T18:12:02Z",
+      "before_sha256": "abc96cb6135dac7149563919471fcc71cbe87a6b0d480bf90074df82e94622a3",
+      "after_sha256": "28b70adf664c40876f1ea92ef880e7d394baedcf12cb8bf56085cf392262b716",
+      "at": "2026-10-30T18:38:20Z",
       "by": "main-editor",
-      "reason": "Full C4 reread of CH18: Air-Gap is conditional profile, not a standards/class mandate; thermal throttling is product-risk conditional; exact ISO/IEC clauses unavailable",
-      "evidence": "review/reports/consistency-c4-normative-priority.md"
+      "reason": "Bounded CH29 C4 review of chapter and companion dialogue; CH18 bibliography inventory reconciliation",
+      "evidence": "review/reports/consistency-c4-followup.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch29-registry.md",
+      "before_sha256": "652db9c54e069a7ffe51c64f9e60a589491a3b5b42c403a4b876d741774ec13c",
+      "after_sha256": "42d7fae15444c155f3c778eccf00cc6b79ae84c980aa8191ee1cbcf675869f3f",
+      "at": "2026-10-30T18:38:20Z",
+      "by": "main-editor",
+      "reason": "Bounded CH29 C4 review of chapter and companion dialogue; CH18 bibliography inventory reconciliation",
+      "evidence": "review/reports/consistency-c4-followup.md"
     }
   ],
   "engine_and_links": {
     "math": {
-      "total": 17624,
-      "passed": 17624,
+      "total": 17618,
+      "passed": 17618,
       "failed": 0
     },
     "mermaid": {
@@ -138272,13 +138294,13 @@
       "failed": 0
     },
     "links": {
-      "total": 6300,
-      "passed": 6251,
+      "total": 6308,
+      "passed": 6259,
       "failed": 0,
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17624,
+      "checked_math_expressions": 17618,
       "failed": 0,
       "observations": [
         {
