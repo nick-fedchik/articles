@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T14:28:10Z
+Generated UTC: 2026-10-30T14:31:37Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -149,13 +149,13 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `b462c982fd083eca0411e82b5134ef56e958ebb985791fffcc5092e4b06c695a` | stale |
 | 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `967fe369f7080dfda14279e45c4694fe0a55b3297e1d67b8d29333cb94b9da89` | stale |
 | 13: [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](../ExpertSystem/ch13-language-variability-vs-determinism.md) | `373d9be70d54521876340fec2e079f19b626e702e24f7374348cbbf86b9323e5` | stale |
-| 14: [Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів](../ExpertSystem/ch14-requirements-detection-and-formalization.md) | `71d65378c2da336a04faa97f1c8d3872d863bfed698e9eceec9ffdbc45aa7f27` | stale |
+| 14: [Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів](../ExpertSystem/ch14-requirements-detection-and-formalization.md) | `0540ea7cf9e8b396f437bf5d23c8041808c223b4c715c079ca1d220959c257ea` | stale |
 | 15: [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](../ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | `40245b03943fe7955329fdce77631240627d164ff87f8bcfd26ea1f85fc83109` | stale |
 | 16: [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](../ExpertSystem/ch16-expert-systems-architecture.md) | `3e6e3381415acbe9708123c275eaf0734378ac65e06b5632a1724fa23a9d7b49` | stale |
 | 17: [Глава 17. Технологічний стек: критерії вибору інструментів, мов програмування та рушіїв правил](../ExpertSystem/ch17-implementation-stack.md) | `593bcc6c3bdb138b805d67bd40ce355efafb53ca4c8dbee4808b0e6a7786fcc1` | stale |
-| 18: [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](../ExpertSystem/ch18-execution-infrastructure.md) | `b8261fcd2ae0117cd86f222af580009edc637ff049f282bbe294363284f192b2` | stale |
+| 18: [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](../ExpertSystem/ch18-execution-infrastructure.md) | `54546d074635dc7937baece91de60f007541a0d3f8802627babb15446142ca7a` | stale |
 | 19: [Глава 19. Від запитання до доказу: пошук, прив'язка та перевірка твердження](../ExpertSystem/ch19-from-question-to-evidence.md) | `fb11f36b8e26d5464948de74a0c2b29557a68b70d09d8e749d10992cd7f71416` | stale |
-| 20: [Глава 20. Рушій пояснень: рішення, відмова та межі компетентності](../ExpertSystem/ch20-explanation-engine.md) | `30a464f2e9865597358529ac3955ee8d0789db69d0f63c8a13b30cc58e19b9c2` | stale |
+| 20: [Глава 20. Рушій пояснень: рішення, відмова та межі компетентності](../ExpertSystem/ch20-explanation-engine.md) | `6615caafd5d427fdbef5a9d5ab78788c0a4820ce6f2fd0046954c657c3ca0170` | stale |
 | 21: [Глава 21. Від рекомендації до дії: контроль повноважень і безпечне виконання у виробничому середовищі](../ExpertSystem/ch21-from-recommendation-to-action.md) | `eaf7692fa3e91c0e70c113b0f7d307d927fc51bed8161c3d6d47d3787d37497e` | stale |
 | 22: [Глава 22. Кібернетичний цикл керування: сенсори, периферія та зворотний зв'язок](../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | `c685125cc94c13687db1bee85b06d652a4cccaed5c779737fb80051b34ab90ec` | stale |
 | 23: [Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил](../ExpertSystem/ch23-knowledge-base-verification.md) | `8bec232fa0152ec65c5ca275845a25b9e5864d7da5ea8265a1dbf9c864acacff` | stale |

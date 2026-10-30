@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:28:04Z",
-  "baseline_commit": "da3c2e67f468c0fa9d5b6fe92fa16a3b81d380d7",
+  "at": "2026-10-30T14:31:32Z",
+  "baseline_commit": "5d26208e83345ffb62001af182b5bf084720ec86",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -21720,7 +21720,7 @@
     },
     {
       "path": "ExpertSystem/ch14-requirements-detection-and-formalization.md",
-      "sha256": "71d65378c2da336a04faa97f1c8d3872d863bfed698e9eceec9ffdbc45aa7f27",
+      "sha256": "0540ea7cf9e8b396f437bf5d23c8041808c223b4c715c079ca1d220959c257ea",
       "line_count": 1063,
       "chapter": 14,
       "scan_kind": "lexical_routing_only",
@@ -26068,7 +26068,7 @@
     },
     {
       "path": "ExpertSystem/ch18-execution-infrastructure.md",
-      "sha256": "b8261fcd2ae0117cd86f222af580009edc637ff049f282bbe294363284f192b2",
+      "sha256": "54546d074635dc7937baece91de60f007541a0d3f8802627babb15446142ca7a",
       "line_count": 1610,
       "chapter": 18,
       "scan_kind": "lexical_routing_only",
@@ -26282,7 +26282,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 47,
+          "matching_line_count": 46,
           "candidate_line_ranges": [
             [
               61,
@@ -26299,10 +26299,6 @@
             [
               289,
               289
-            ],
-            [
-              305,
-              305
             ],
             [
               360,
@@ -28578,7 +28574,7 @@
     },
     {
       "path": "ExpertSystem/ch20-explanation-engine.md",
-      "sha256": "30a464f2e9865597358529ac3955ee8d0789db69d0f63c8a13b30cc58e19b9c2",
+      "sha256": "6615caafd5d427fdbef5a9d5ab78788c0a4820ce6f2fd0046954c657c3ca0170",
       "line_count": 896,
       "chapter": 20,
       "scan_kind": "lexical_routing_only",
@@ -28706,7 +28702,7 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 67,
+          "matching_line_count": 66,
           "candidate_line_ranges": [
             [
               4,
@@ -28815,10 +28811,6 @@
             [
               326,
               326
-            ],
-            [
-              362,
-              362
             ],
             [
               367,
@@ -138359,19 +138351,37 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch10-knowledge-acquisition-systems.md",
-      "before_sha256": "f78f1519d802c6c6bcdea52da5dea78a9b4675a896825c59a6c6265a8eee1eee",
-      "after_sha256": "7c0ba057432aafce8d1c35df29c986c7c86c21ba473199f904c7e20d2250ceca",
-      "at": "2026-10-30T14:28:04Z",
+      "path": "ExpertSystem/ch14-requirements-detection-and-formalization.md",
+      "before_sha256": "71d65378c2da336a04faa97f1c8d3872d863bfed698e9eceec9ffdbc45aa7f27",
+      "after_sha256": "0540ea7cf9e8b396f437bf5d23c8041808c223b4c715c079ca1d220959c257ea",
+      "at": "2026-10-30T14:31:32Z",
       "by": "main-editor",
-      "reason": "Bounded C6 arithmetic reconciliation: CH10 reports 862+876=1738 but incompatible coverage percentages and 618/1492 restored-total claims; preserve as unresolved pending source ledger",
-      "evidence": "review/reports/consistency-c6-ch01-10.md"
+      "reason": "Bounded C6 corrections: remove unsupported CH14 >40% parser-error rate; mark CH18 GPU 5 ms/zero-copy as assumptions; bound CH20 QuickXPlain call-count estimates, not measured deadlines or bus guarantees",
+      "evidence": "review/reports/consistency-c6-ch11-20.md"
+    },
+    {
+      "path": "ExpertSystem/ch18-execution-infrastructure.md",
+      "before_sha256": "b8261fcd2ae0117cd86f222af580009edc637ff049f282bbe294363284f192b2",
+      "after_sha256": "54546d074635dc7937baece91de60f007541a0d3f8802627babb15446142ca7a",
+      "at": "2026-10-30T14:31:32Z",
+      "by": "main-editor",
+      "reason": "Bounded C6 corrections: remove unsupported CH14 >40% parser-error rate; mark CH18 GPU 5 ms/zero-copy as assumptions; bound CH20 QuickXPlain call-count estimates, not measured deadlines or bus guarantees",
+      "evidence": "review/reports/consistency-c6-ch11-20.md"
+    },
+    {
+      "path": "ExpertSystem/ch20-explanation-engine.md",
+      "before_sha256": "30a464f2e9865597358529ac3955ee8d0789db69d0f63c8a13b30cc58e19b9c2",
+      "after_sha256": "6615caafd5d427fdbef5a9d5ab78788c0a4820ce6f2fd0046954c657c3ca0170",
+      "at": "2026-10-30T14:31:32Z",
+      "by": "main-editor",
+      "reason": "Bounded C6 corrections: remove unsupported CH14 >40% parser-error rate; mark CH18 GPU 5 ms/zero-copy as assumptions; bound CH20 QuickXPlain call-count estimates, not measured deadlines or bus guarantees",
+      "evidence": "review/reports/consistency-c6-ch11-20.md"
     }
   ],
   "engine_and_links": {
     "math": {
-      "total": 17696,
-      "passed": 17696,
+      "total": 17693,
+      "passed": 17693,
       "failed": 0
     },
     "mermaid": {
@@ -138386,7 +138396,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17696,
+      "checked_math_expressions": 17693,
       "failed": 0,
       "observations": [
         {

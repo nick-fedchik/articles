@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T14:28:04Z.
+Стан UTC: 2026-10-30T14:31:32Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -25,9 +25,9 @@
 | [15](../../ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | 1740 | 66 | 16 | 48 | 90 | 101 | 69 | 56 | 34 | §1: heterogeneous KB sources framed as authorial architecture for applicable projects |
 | [16](../../ExpertSystem/ch16-expert-systems-architecture.md) | 939 | 18 | 28 | 10 | 28 | 7 | 32 | 54 | 31 | §1.1: канонічний контракт вердиктів і повноважень |
 | [17](../../ExpertSystem/ch17-implementation-stack.md) | 891 | 2 | 11 | 25 | 13 | 50 | 47 | 35 | 8 | Bounded C4 review; no specific contradiction accepted |
-| [18](../../ExpertSystem/ch18-execution-infrastructure.md) | 1610 | 9 | 22 | 18 | 47 | 179 | 121 | 50 | 19 | §4: deployment profiles selected by policy and applicability |
+| [18](../../ExpertSystem/ch18-execution-infrastructure.md) | 1610 | 9 | 22 | 18 | 46 | 179 | 121 | 50 | 19 | §4: deployment profiles selected by policy and applicability |
 | [19](../../ExpertSystem/ch19-from-question-to-evidence.md) | 1082 | 38 | 24 | 10 | 31 | 50 | 15 | 24 | 14 | Bounded C4 scan; no specific normative overreach accepted |
-| [20](../../ExpertSystem/ch20-explanation-engine.md) | 896 | 7 | 22 | 67 | 20 | 26 | 40 | 18 | 6 | Bounded C4 scan; attribution/genealogy requires separate S3 review |
+| [20](../../ExpertSystem/ch20-explanation-engine.md) | 896 | 7 | 22 | 66 | 20 | 26 | 40 | 18 | 6 | Bounded C4 scan; attribution/genealogy requires separate S3 review |
 | [21](../../ExpertSystem/ch21-from-recommendation-to-action.md) | 819 | 13 | 17 | 4 | 6 | 6 | 48 | 25 | 11 | Action gateway framed as authorial architecture; A0-A4 are not certification levels |
 | [22](../../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | 1112 | 12 | 14 | 28 | 13 | 53 | 79 | 42 | 11 | Bounded C4 search; no unsupported 5 us hardware limit found |
 | [23](../../ExpertSystem/ch23-knowledge-base-verification.md) | 1136 | 12 | 9 | 53 | 17 | 15 | 23 | 46 | 13 | §9: distance operator notation; full mathematical claim not reviewed |
