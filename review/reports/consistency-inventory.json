@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T16:40:17Z",
-  "baseline_commit": "9cb5f5494694a4a73b5da79d0e3f202a1bd10722",
+  "at": "2026-10-30T16:47:37Z",
+  "baseline_commit": "b793289e8679dc41c85315dac55f90c08a334739",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -138205,80 +138205,7 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [
-    {
-      "path": "ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md",
-      "before_sha256": "5dcf444bd437109aaad9b24f03f7044ecef8ac3867014b7ce87e013926accfa5",
-      "after_sha256": "e4b7800020a916c41c59c538b4ccf6731ec1d5ba891c9c6a52386fbc45a6d0a2",
-      "at": "2026-10-30T16:40:17Z",
-      "by": "main-editor",
-      "reason": "C8 bounded CH31-40 scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md",
-      "before_sha256": "cbf117401b1dbcc207ac6de6834a4861f7366a28544731e7c2c5a0958930545a",
-      "after_sha256": "e840163e39b4d4195f7cfd365b1071be563c833b86582982afb41e825f3df0f8",
-      "at": "2026-10-30T16:40:17Z",
-      "by": "main-editor",
-      "reason": "C8 bounded CH31-40 scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md",
-      "before_sha256": "c4238c5d5b52fd0cb2301287e580ad94146618f6e68f0ea97efd58b3b3c30e86",
-      "after_sha256": "36249747a599e0a7095a2b75fbcdf8bd23a53d74f563fe74861516be197e4b52",
-      "at": "2026-10-30T16:40:17Z",
-      "by": "main-editor",
-      "reason": "C8 bounded CH31-40 scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md",
-      "before_sha256": "65380b85564a231ef01d6fd938e6b7678f530942e10e2c0f054787ba3403ad6b",
-      "after_sha256": "a67fd740225bfd571904d441ae5ff1b3387f79d54a47ef25f738a5665b0d4776",
-      "at": "2026-10-30T16:40:17Z",
-      "by": "main-editor",
-      "reason": "C8 bounded CH31-40 scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch32-registry.md",
-      "before_sha256": "4d94d9c98abab017d3f2c7aa5a09a6b59ccb71a98b9a27481375366555e4ed37",
-      "after_sha256": "47dbdde5f1ed2a33ee377790406b12d2214d575ce053a862ad3ceed3acf156ae",
-      "at": "2026-10-30T16:40:17Z",
-      "by": "main-editor",
-      "reason": "C8 bounded CH31-40 scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch34-registry.md",
-      "before_sha256": "b6475b1046af434a5fb1f5e4027a4a2fc8bb1e48915817386bb558a523dabb57",
-      "after_sha256": "28e7fbf805e33ab36f300d2dc16b84844a4fcf0d2bc69c04c9a0cdb943fe019c",
-      "at": "2026-10-30T16:40:17Z",
-      "by": "main-editor",
-      "reason": "C8 bounded CH31-40 scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch39-registry.md",
-      "before_sha256": "669e96975681b5838d85648a598665a35ff94ae59ebadfa1ddbf23996f498feb",
-      "after_sha256": "d46f028ff2bc20c7bd897c103422499d6ddb4caf75fb6c339781c2296290bf6c",
-      "at": "2026-10-30T16:40:17Z",
-      "by": "main-editor",
-      "reason": "C8 bounded CH31-40 scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch40-registry.md",
-      "before_sha256": "e5efdcc8562998869f3831c93a3e9af8b8528cb596f660c30e8aae34c2997d40",
-      "after_sha256": "0c1e11a54353c85d511f31a123f4e804af908f8d1e0abac1649ec00c0563ce97",
-      "at": "2026-10-30T16:40:17Z",
-      "by": "main-editor",
-      "reason": "C8 bounded CH31-40 scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch31-40.md"
-    }
-  ],
+  "input_transitions_from_current_baseline": [],
   "engine_and_links": {
     "math": {
       "total": 17619,
