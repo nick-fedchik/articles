@@ -3946,7 +3946,7 @@
     {
       "number": 14,
       "file": "ExpertSystem/ch14-requirements-detection-and-formalization.md",
-      "input_sha256": "da42bac3f50c81dcb6df4a32d17562a3a857f3080be7b673c6a1c566cbbe5498",
+      "input_sha256": "71d65378c2da336a04faa97f1c8d3872d863bfed698e9eceec9ffdbc45aa7f27",
       "title": "Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів",
       "h2_titles": [
         "Анотація",
@@ -4071,8 +4071,8 @@
       ],
       "current_source_line_count": 1063,
       "revalidation": {
-        "at": "2026-10-30T08:46:09Z",
-        "evidence": "review/reports/consistency-c4-normative-priority.md",
+        "at": "2026-10-30T11:09:32Z",
+        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
         "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
@@ -4277,13 +4277,79 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/consistency-c4-normative-priority.md"
+        },
+        {
+          "at": "2026-10-30T11:09:32Z",
+          "input_sha256": "da42bac3f50c81dcb6df4a32d17562a3a857f3080be7b673c6a1c566cbbe5498",
+          "h2_titles": [
+            "Анотація",
+            "1. Деонтична модальність та критерії демаркації нормативних вимог",
+            "2. Шаблони EARS: структурна стандартизація інженерних вимог",
+            "3. Математична формалізація: від шаблонів до формальної логіки",
+            "4. Метрики та автоматизований аудит якості вимог (Requirements Smells)",
+            "5. Програмна реалізація: детермінований конвеєр аналізу на Go",
+            "6. Практичний кейс: аудит системи керування батареєю (BMS) за ISO 26262",
+            "7. Проміжне подання вимог (IR): уніфікований контракт верифікатора",
+            "8. Інверсний аудит: дебагер-компілятор чернеток стандартів та технічних завдань (Normative Standard Linter)",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            11,
+            47,
+            184,
+            283,
+            477,
+            553,
+            790,
+            902,
+            932,
+            971,
+            982,
+            1009,
+            1038
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h1_line": 1,
+            "h2_lines": [
+              11,
+              47,
+              174,
+              273,
+              467,
+              543,
+              780,
+              892,
+              922,
+              961,
+              1014,
+              1025,
+              1038,
+              1065,
+              1094
+            ],
+            "heading_scan_line_range": [
+              1,
+              1119
+            ],
+            "heading_scan_mode": "Прочитано всі H1/H2 поза блоками fenced code; решту тексту після рядка 100 не рецензовано.",
+            "dependency_citation_scope": "Прямі посилання лише з прочитаних рядків 1–100; це не повний граф посилань глави.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
         }
       ]
     },
     {
       "number": 15,
       "file": "ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md",
-      "input_sha256": "f5f6575164d8ab1f3736d0af4ff99fdcd64e269d0492066381fde3f0ff3c76c8",
+      "input_sha256": "40245b03943fe7955329fdce77631240627d164ff87f8bcfd26ea1f85fc83109",
       "title": "Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати",
       "h2_titles": [
         "Анотація",
@@ -4420,9 +4486,9 @@
         1708
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T11:09:32Z",
+        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -4512,13 +4578,97 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T11:09:32Z",
+          "input_sha256": "f5f6575164d8ab1f3736d0af4ff99fdcd64e269d0492066381fde3f0ff3c76c8",
+          "h2_titles": [
+            "Анотація",
+            "1. Класифікація джерел інженерних знань",
+            "2. Інваріант доказовості: побайтова адресація першоджерел",
+            "3. Конвеєр екстракції: від байтового потоку до кандидатів у факти",
+            "4. Вилучення динаміки: трансляція специфікацій у скінченні автомати",
+            "5. Формальні граматики: ABNF-екстракція та компіляція синтаксичних дерев",
+            "6. Нормалізація структурованих параметрів та фізичних величин",
+            "7. Деонтичні винятки та умови скасування норм (Defeaters)",
+            "8. Версійність інженерних документів: заміщення, оновлення та виправлення",
+            "9. Архітектура сховища бази знань: мультимодельний підхід",
+            "10. Шлюз допуску фактів: верифікація та попперівський фільтр",
+            "11. Практичний цикл онтологічного моделювання: Protégé та ROBOT",
+            "12. Сертифікат доведення: машиноперевірюване обґрунтування висновку",
+            "13. Запозичення методів Process Mining та аналізу інженерних процесів",
+            "14. Порівняльний аналіз: доказова база знань проти класичного RAG",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            11,
+            27,
+            85,
+            116,
+            699,
+            850,
+            908,
+            948,
+            982,
+            1077,
+            1234,
+            1437,
+            1505,
+            1545,
+            1557,
+            1597,
+            1625,
+            1663,
+            1708
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h1_line": 1,
+            "h2_lines": [
+              11,
+              27,
+              85,
+              116,
+              688,
+              839,
+              897,
+              937,
+              971,
+              1066,
+              1221,
+              1424,
+              1492,
+              1532,
+              1544,
+              1584,
+              1637,
+              1665,
+              1677,
+              1715,
+              1760
+            ],
+            "heading_scan_line_range": [
+              1,
+              1805
+            ],
+            "heading_scan_mode": "Прочитано всі H1/H2 поза блоками fenced code; решту тексту після рядка 100 не рецензовано.",
+            "dependency_citation_scope": "Прямі посилання лише з прочитаних рядків 1–100; це не повний граф посилань глави.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
         }
       ]
     },
     {
       "number": 16,
       "file": "ExpertSystem/ch16-expert-systems-architecture.md",
-      "input_sha256": "5dd7568a8a8a661230ff754599a2839d9d32cf5378e0325c605d6113bd7da353",
+      "input_sha256": "3e6e3381415acbe9708123c275eaf0734378ac65e06b5632a1724fa23a9d7b49",
       "title": "Глава 16. Архітектура експертної системи: від формального знання до доказового рішення",
       "h2_titles": [
         "Анотація",
@@ -4706,9 +4856,9 @@
       ],
       "current_source_line_count": 939,
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T11:09:32Z",
+        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -4795,6 +4945,87 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T11:09:32Z",
+          "input_sha256": "5dd7568a8a8a661230ff754599a2839d9d32cf5378e0325c605d6113bd7da353",
+          "h2_titles": [
+            "Анотація",
+            "1. Архітектурне ядро і межі відповідальності",
+            "2. Операційне знання в інженерному сенсі",
+            "3. Фізичні форми та типологія сховищ знань",
+            "4. Обмеження векторних сховищ та відокремлення семантичного пошуку від канонічної істини",
+            "5. Референсна архітектура: шлях наповнення і шлях читання",
+            "6. Життєвий цикл запиту: від запитання до доказового пакета",
+            "7. Системи підтримання істинності та інвалідація висновків при зміні фактів",
+            "8. Узгоджений контекст читання й повторення рішення",
+            "9. Контракти даних між підсистемами",
+            "10. Режими прихованих відмов та механізми протидії",
+            "11. Калібрування якості та регресійний контроль",
+            "12. Версіонування та походження рішень",
+            "13. Сім архітектурних правил доказової системи",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            27,
+            94,
+            109,
+            172,
+            204,
+            281,
+            325,
+            527,
+            547,
+            595,
+            619,
+            717,
+            822,
+            834,
+            843,
+            867,
+            910
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h1_line": 1,
+            "h2_lines": [
+              13,
+              27,
+              94,
+              109,
+              172,
+              204,
+              281,
+              325,
+              527,
+              547,
+              595,
+              619,
+              715,
+              818,
+              830,
+              870,
+              879,
+              888,
+              912,
+              955
+            ],
+            "heading_scan_line_range": [
+              1,
+              992
+            ],
+            "heading_scan_mode": "Прочитано всі H1/H2 поза блоками fenced code; решту тексту після рядка 100 не рецензовано.",
+            "dependency_citation_scope": "Прямі посилання лише з прочитаних рядків 1–100; це не повний граф посилань глави.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
         }
       ]
     },

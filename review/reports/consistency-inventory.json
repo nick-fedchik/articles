@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T11:00:15Z",
-  "baseline_commit": "f2d77fae8318838f7de6ac8b683468ca4b74007a",
+  "at": "2026-10-30T11:09:32Z",
+  "baseline_commit": "9f72b8dee514207db73a1452a59486b293998bf9",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -21712,7 +21712,7 @@
     },
     {
       "path": "ExpertSystem/ch14-requirements-detection-and-formalization.md",
-      "sha256": "da42bac3f50c81dcb6df4a32d17562a3a857f3080be7b673c6a1c566cbbe5498",
+      "sha256": "71d65378c2da336a04faa97f1c8d3872d863bfed698e9eceec9ffdbc45aa7f27",
       "line_count": 1063,
       "chapter": 14,
       "scan_kind": "lexical_routing_only",
@@ -21844,7 +21844,7 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 39,
+          "matching_line_count": 40,
           "candidate_line_ranges": [
             [
               9,
@@ -21873,6 +21873,10 @@
             [
               123,
               123
+            ],
+            [
+              137,
+              137
             ],
             [
               239,
@@ -22666,7 +22670,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 16,
+          "matching_line_count": 17,
           "candidate_line_ranges": [
             [
               13,
@@ -22675,6 +22679,10 @@
             [
               15,
               15
+            ],
+            [
+              49,
+              49
             ],
             [
               92,
@@ -22731,7 +22739,7 @@
     },
     {
       "path": "ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md",
-      "sha256": "f5f6575164d8ab1f3736d0af4ff99fdcd64e269d0492066381fde3f0ff3c76c8",
+      "sha256": "40245b03943fe7955329fdce77631240627d164ff87f8bcfd26ea1f85fc83109",
       "line_count": 1740,
       "chapter": 15,
       "scan_kind": "lexical_routing_only",
@@ -24389,8 +24397,12 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 33,
+          "matching_line_count": 34,
           "candidate_line_ranges": [
+            [
+              29,
+              29
+            ],
             [
               83,
               83
@@ -24522,11 +24534,11 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "§1: heterogeneous KB sources framed as authorial architecture for applicable projects"
     },
     {
       "path": "ExpertSystem/ch16-expert-systems-architecture.md",
-      "sha256": "5dd7568a8a8a661230ff754599a2839d9d32cf5378e0325c605d6113bd7da353",
+      "sha256": "3e6e3381415acbe9708123c275eaf0734378ac65e06b5632a1724fa23a9d7b49",
       "line_count": 939,
       "chapter": 16,
       "scan_kind": "lexical_routing_only",
@@ -24736,7 +24748,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 27,
+          "matching_line_count": 28,
           "candidate_line_ranges": [
             [
               3,
@@ -24745,6 +24757,10 @@
             [
               29,
               29
+            ],
+            [
+              62,
+              62
             ],
             [
               71,
@@ -25192,7 +25208,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 30,
+          "matching_line_count": 31,
           "candidate_line_ranges": [
             [
               29,
@@ -25201,6 +25217,10 @@
             [
               37,
               37
+            ],
+            [
+              62,
+              62
             ],
             [
               81,
@@ -26036,7 +26056,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "Bounded C4 review; no specific contradiction accepted"
     },
     {
       "path": "ExpertSystem/ch18-execution-infrastructure.md",
@@ -65638,7 +65658,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch15-registry.md",
-      "sha256": "f4192a1ff7e6ee510da8e2decc8dd9cb5c9924f5800df9c8a3a8f472dac6b80d",
+      "sha256": "78981e300fa90e0996702faa389174a1a0fdb56bae818cd8effc2c3a1dbb4f53",
       "line_count": 1018,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -66888,7 +66908,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 141,
+          "matching_line_count": 142,
           "candidate_line_ranges": [
             [
               1,
@@ -66936,7 +66956,7 @@
             ],
             [
               144,
-              145
+              146
             ],
             [
               152,
@@ -67381,7 +67401,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch16-registry.md",
-      "sha256": "448835d4ef67f51e5ab36a9c566f3d6e24f1eadacda78cf7c39c8786f88a993f",
+      "sha256": "511cf62c94535e59ab054b0469767d35a995488c86c984e95479a5069cc7a4fb",
       "line_count": 948,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -67931,7 +67951,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 130,
+          "matching_line_count": 131,
           "candidate_line_ranges": [
             [
               1,
@@ -67984,6 +68004,10 @@
             [
               131,
               131
+            ],
+            [
+              133,
+              133
             ],
             [
               142,
@@ -138163,28 +138187,46 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch13-language-variability-vs-determinism.md",
-      "before_sha256": "542febd82501ddad11dfc2fb396c97aeeaafa2a7d657508e8365ce6534eaea01",
-      "after_sha256": "373d9be70d54521876340fec2e079f19b626e702e24f7374348cbbf86b9323e5",
-      "at": "2026-10-30T11:00:15Z",
+      "path": "ExpertSystem/ch14-requirements-detection-and-formalization.md",
+      "before_sha256": "da42bac3f50c81dcb6df4a32d17562a3a857f3080be7b673c6a1c566cbbe5498",
+      "after_sha256": "71d65378c2da336a04faa97f1c8d3872d863bfed698e9eceec9ffdbc45aa7f27",
+      "at": "2026-10-30T11:09:32Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/registry/ch13-registry.md",
-      "before_sha256": "b729de1ada2a7285dd3b5678fad51fda807d1f04f01f58f71af1156e9b7b1713",
-      "after_sha256": "8e837bb006ed5b8001274eda36f3c6eda7f221233d767c3a2ac82f082494edf9",
-      "at": "2026-10-30T11:00:15Z",
+      "path": "ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md",
+      "before_sha256": "f5f6575164d8ab1f3736d0af4ff99fdcd64e269d0492066381fde3f0ff3c76c8",
+      "after_sha256": "40245b03943fe7955329fdce77631240627d164ff87f8bcfd26ea1f85fc83109",
+      "at": "2026-10-30T11:09:32Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/requirements/L3-component/ch13-L3-component.md",
-      "before_sha256": "68d73abd06d2498e1a1abc0b061c9d224d8ce8b49a1226bdc36cea814b681884",
-      "after_sha256": "505d3778392d9cde06729029d53e34948b48327a03799af7216f5c1dece00528",
-      "at": "2026-10-30T11:00:15Z",
+      "path": "ExpertSystem/ch16-expert-systems-architecture.md",
+      "before_sha256": "5dd7568a8a8a661230ff754599a2839d9d32cf5378e0325c605d6113bd7da353",
+      "after_sha256": "3e6e3381415acbe9708123c275eaf0734378ac65e06b5632a1724fa23a9d7b49",
+      "at": "2026-10-30T11:09:32Z",
+      "by": "main-editor",
+      "reason": "Formula macro compatibility correction; no full scientific rereading",
+      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch15-registry.md",
+      "before_sha256": "f4192a1ff7e6ee510da8e2decc8dd9cb5c9924f5800df9c8a3a8f472dac6b80d",
+      "after_sha256": "78981e300fa90e0996702faa389174a1a0fdb56bae818cd8effc2c3a1dbb4f53",
+      "at": "2026-10-30T11:09:32Z",
+      "by": "main-editor",
+      "reason": "Formula macro compatibility correction; no full scientific rereading",
+      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch16-registry.md",
+      "before_sha256": "448835d4ef67f51e5ab36a9c566f3d6e24f1eadacda78cf7c39c8786f88a993f",
+      "after_sha256": "511cf62c94535e59ab054b0469767d35a995488c86c984e95479a5069cc7a4fb",
+      "at": "2026-10-30T11:09:32Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
