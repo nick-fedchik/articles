@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:41:02Z",
-  "baseline_commit": "d069c867df2c2831960f1c8892d72e62025da001",
+  "at": "2026-10-30T14:44:10Z",
+  "baseline_commit": "0f4a0e1c97760c9d91af57fd2a5eaec62271861c",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -17564,7 +17564,7 @@
     },
     {
       "path": "ExpertSystem/ch10-knowledge-acquisition-systems.md",
-      "sha256": "7c0ba057432aafce8d1c35df29c986c7c86c21ba473199f904c7e20d2250ceca",
+      "sha256": "edec719c8a82ed703bcb97ffe4bf9bbb2fb1fc06315e92e894969d900e2e4566",
       "line_count": 1658,
       "chapter": 10,
       "scan_kind": "lexical_routing_only",
@@ -17758,7 +17758,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 59,
+          "matching_line_count": 58,
           "candidate_line_ranges": [
             [
               33,
@@ -17895,10 +17895,6 @@
             [
               767,
               767
-            ],
-            [
-              790,
-              790
             ],
             [
               873,
@@ -18552,7 +18548,7 @@
         },
         "C7": {
           "review_status": "not_completed",
-          "matching_line_count": 116,
+          "matching_line_count": 117,
           "candidate_line_ranges": [
             [
               9,
@@ -18745,6 +18741,10 @@
             [
               794,
               794
+            ],
+            [
+              798,
+              798
             ],
             [
               827,
@@ -59364,7 +59364,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch10-registry.md",
-      "sha256": "b162f5da0bb05b56474994a26cd936107072618537500bc856595bec9b984f5b",
+      "sha256": "40cb54945045402e7656b8fb4527cb7c53fae2b7128e1c0556c122a4d9b7e7d6",
       "line_count": 1157,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -59582,7 +59582,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 50,
+          "matching_line_count": 51,
           "candidate_line_ranges": [
             [
               45,
@@ -59683,6 +59683,10 @@
             [
               574,
               574
+            ],
+            [
+              592,
+              592
             ],
             [
               595,
@@ -138363,49 +138367,22 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md",
-      "before_sha256": "dacdc54b3ba4a44b0f6c3025e609a32b356171a4b488c2f32a767dd1b1e5b218",
-      "after_sha256": "a98e1f582a1da0ca65e27dc710c30595f53b6493b2b4657bacb41a5df3ea9176",
-      "at": "2026-10-30T14:41:02Z",
+      "path": "ExpertSystem/ch10-knowledge-acquisition-systems.md",
+      "before_sha256": "7c0ba057432aafce8d1c35df29c986c7c86c21ba473199f904c7e20d2250ceca",
+      "after_sha256": "edec719c8a82ed703bcb97ffe4bf9bbb2fb1fc06315e92e894969d900e2e4566",
+      "at": "2026-10-30T14:44:10Z",
       "by": "main-editor",
-      "reason": "Bounded C6 corrections: relabel CH36 empirical zero-error rates as confidence bounds, remove CH39 unsupported 60-70% statistic, and fix CH40 decimal-unit refill arithmetic",
-      "evidence": "review/reports/consistency-c6-ch31-40.md"
+      "reason": "Bounded C7 correction: classify CH10 300-second revocation threshold as profile SLO for active derivatives, not a normative standard limit; distinguish immutable historical audit from serving-copy cleanup",
+      "evidence": "review/reports/consistency-c7-ch01-10.md"
     },
     {
-      "path": "ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md",
-      "before_sha256": "e3dce5015e6d033319e3b5c746035db25af7a5c672337f4fa143abb9acf6c00f",
-      "after_sha256": "c4238c5d5b52fd0cb2301287e580ad94146618f6e68f0ea97efd58b3b3c30e86",
-      "at": "2026-10-30T14:41:02Z",
+      "path": "ExpertSystem/registry/ch10-registry.md",
+      "before_sha256": "b162f5da0bb05b56474994a26cd936107072618537500bc856595bec9b984f5b",
+      "after_sha256": "40cb54945045402e7656b8fb4527cb7c53fae2b7128e1c0556c122a4d9b7e7d6",
+      "at": "2026-10-30T14:44:10Z",
       "by": "main-editor",
-      "reason": "Bounded C6 corrections: relabel CH36 empirical zero-error rates as confidence bounds, remove CH39 unsupported 60-70% statistic, and fix CH40 decimal-unit refill arithmetic",
-      "evidence": "review/reports/consistency-c6-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md",
-      "before_sha256": "5ba98b6e35b00424279860e5635acc77a2fbda77bc92489aec59010e6871e399",
-      "after_sha256": "4d7610f2eadf4b89da825aca8767ad57494d201f6b7c2a14db5ed6916f17a09e",
-      "at": "2026-10-30T14:41:02Z",
-      "by": "main-editor",
-      "reason": "Bounded C6 corrections: relabel CH36 empirical zero-error rates as confidence bounds, remove CH39 unsupported 60-70% statistic, and fix CH40 decimal-unit refill arithmetic",
-      "evidence": "review/reports/consistency-c6-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch36-registry.md",
-      "before_sha256": "7ef15c1e9a0c797911af7d81750fdf153bfce915e59c100bbcac85741daeedcd",
-      "after_sha256": "e96e957cf01119d66fbfd4c8873150ef8c68b879d1d44eb713a866e8d20099d6",
-      "at": "2026-10-30T14:41:02Z",
-      "by": "main-editor",
-      "reason": "Bounded C6 corrections: relabel CH36 empirical zero-error rates as confidence bounds, remove CH39 unsupported 60-70% statistic, and fix CH40 decimal-unit refill arithmetic",
-      "evidence": "review/reports/consistency-c6-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch39-registry.md",
-      "before_sha256": "23b7bb316b9ead11e43ec6e3c5d7a37749d6fe6786a113df1dc5447dcf49aa1d",
-      "after_sha256": "669e96975681b5838d85648a598665a35ff94ae59ebadfa1ddbf23996f498feb",
-      "at": "2026-10-30T14:41:02Z",
-      "by": "main-editor",
-      "reason": "Bounded C6 corrections: relabel CH36 empirical zero-error rates as confidence bounds, remove CH39 unsupported 60-70% statistic, and fix CH40 decimal-unit refill arithmetic",
-      "evidence": "review/reports/consistency-c6-ch31-40.md"
+      "reason": "Bounded C7 correction: classify CH10 300-second revocation threshold as profile SLO for active derivatives, not a normative standard limit; distinguish immutable historical audit from serving-copy cleanup",
+      "evidence": "review/reports/consistency-c7-ch01-10.md"
     }
   ],
   "engine_and_links": {
