@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T14:44:15Z
+Generated UTC: 2026-10-30T14:47:11Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -150,7 +150,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `967fe369f7080dfda14279e45c4694fe0a55b3297e1d67b8d29333cb94b9da89` | stale |
 | 13: [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](../ExpertSystem/ch13-language-variability-vs-determinism.md) | `373d9be70d54521876340fec2e079f19b626e702e24f7374348cbbf86b9323e5` | stale |
 | 14: [Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів](../ExpertSystem/ch14-requirements-detection-and-formalization.md) | `0540ea7cf9e8b396f437bf5d23c8041808c223b4c715c079ca1d220959c257ea` | stale |
-| 15: [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](../ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | `40245b03943fe7955329fdce77631240627d164ff87f8bcfd26ea1f85fc83109` | stale |
+| 15: [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](../ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | `278d603207f81856c2143447c165cee90aecde52351d1ba96eb30cee00c20978` | stale |
 | 16: [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](../ExpertSystem/ch16-expert-systems-architecture.md) | `3e6e3381415acbe9708123c275eaf0734378ac65e06b5632a1724fa23a9d7b49` | stale |
 | 17: [Глава 17. Технологічний стек: критерії вибору інструментів, мов програмування та рушіїв правил](../ExpertSystem/ch17-implementation-stack.md) | `593bcc6c3bdb138b805d67bd40ce355efafb53ca4c8dbee4808b0e6a7786fcc1` | stale |
 | 18: [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](../ExpertSystem/ch18-execution-infrastructure.md) | `54546d074635dc7937baece91de60f007541a0d3f8802627babb15446142ca7a` | stale |

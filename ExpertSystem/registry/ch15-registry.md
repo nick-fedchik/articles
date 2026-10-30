@@ -584,7 +584,7 @@ $$\mathcal{Q} = \langle \text{Parameter}, \text{Operator}, \text{Value}_{\text{n
   * *Класичний базис:* Метадані RFC Editor (Obsoletes, Updates, Errata) [2, 15, 16, 17, 18].
   * *Авторський внесок М. Федчика:* Формалізація спрямованого графа спадкоємності, що строго розмежовує повне заміщення, часткове секційне оновлення, перевірені виправлення та застарілість.
 - **Поточний статус у книзі (`BOOK_STATUS`):** `[EXPLICIT_COMPLETE]`. Описано в тексті та подано діаграмою Mermaid історії RFC 821 $\to$ RFC 2821 $\to$ RFC 5321 $\to$ RFC 7504.
-- **Канонічне формулювання:** Топологія еволюції інженерного корпусу формалізується орієнтованим ациклічним графом спадкоємності $`\mathcal{G}_{\mathrm{lineage}} = \langle \mathcal{D}, \mathcal{E}_{\mathrm{rel}} \rangle`$, де множина ребер $`\mathcal{E}_{\mathrm{rel}}`$ диференціює чотири семантично несумісні типи транзитивних переходів:
+- **Канонічне формулювання:** Топологія еволюції інженерного корпусу формалізується орієнтованим ациклічним графом спадкоємності $`\mathcal{G}_{\mathrm{lineage}} = \langle \mathcal{D}, \mathcal{E}_{\mathrm{rel}} \rangle`$, де множина ребер $`\mathcal{E}_{\mathrm{rel}}`$ диференціює чотири семантично несумісні типи транзитивних переходів; оцінювання обмежено документами незмінного знімка та його cutoff, тому пізні події не переписують історичний статус:
 
 $$\mathcal{E}_{\mathrm{rel}} \subseteq \mathcal{D} \times \{ \mathrm{Obsoletes}, \mathrm{Updates}, \mathrm{Errata}, \mathrm{Deprecates} \} \times \mathcal{D}$$
 
@@ -600,7 +600,7 @@ $$\mathcal{E}_{\mathrm{rel}} \subseteq \mathcal{D} \times \{ \mathrm{Obsoletes},
 
 $$\mathrm{Status}(P, V) = \begin{cases} \mathrm{Obsolete}, & \text{якщо } \exists D \in \mathrm{Lineage}(V) : \mathrm{Revokes}(D, P), \\ \mathrm{Deprecated}, & \text{інакше, якщо } \exists D \in \mathrm{Lineage}(V) : \mathrm{Deprecates}(D, P), \\ \mathrm{Active}, & \text{інакше, якщо } \exists D \in \mathrm{Lineage}(V) : \mathrm{Defines}(D, P), \\ \mathrm{Unknown}, & \text{в інших випадках}. \end{cases}$$
 
-  Правило допускається до використання в доведеннях виключно за умови $`\mathrm{Status}(P, V) = \mathrm{Active}`$.
+  $`\mathrm{Lineage}(V)`$ містить лише документи цільового знімка, записані до його transaction-time cutoff; правило допускається до використання в доведеннях лише за $`\mathrm{Status}(P, V) = \mathrm{Active}`$, а пізніше відкликання змінює статус тільки в новому знімку.
 - **Рекомендація для вставки/оновлення книги:** Зберегти як базовий предикат валідації чинності.
 
 #### [ID: CH15-S08-03] Інженерне правило карантину скасованих норм (`E_OBSOLETE_RULE_USAGE`)

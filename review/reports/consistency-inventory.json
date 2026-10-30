@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:44:10Z",
-  "baseline_commit": "0f4a0e1c97760c9d91af57fd2a5eaec62271861c",
+  "at": "2026-10-30T14:47:05Z",
+  "baseline_commit": "3a38dbd84367ae95d0e312683ac6adf2851aafd5",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -22747,7 +22747,7 @@
     },
     {
       "path": "ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md",
-      "sha256": "40245b03943fe7955329fdce77631240627d164ff87f8bcfd26ea1f85fc83109",
+      "sha256": "278d603207f81856c2143447c165cee90aecde52351d1ba96eb30cee00c20978",
       "line_count": 1740,
       "chapter": 15,
       "scan_kind": "lexical_routing_only",
@@ -24199,7 +24199,7 @@
         },
         "C7": {
           "review_status": "not_completed",
-          "matching_line_count": 56,
+          "matching_line_count": 57,
           "candidate_line_ranges": [
             [
               9,
@@ -24280,6 +24280,10 @@
             [
               1035,
               1035
+            ],
+            [
+              1038,
+              1038
             ],
             [
               1040,
@@ -65762,7 +65766,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch15-registry.md",
-      "sha256": "78981e300fa90e0996702faa389174a1a0fdb56bae818cd8effc2c3a1dbb4f53",
+      "sha256": "53b37a8faa68ca230bbc26478a48c2d6a4558596a8ba3ab47832884c485dce20",
       "line_count": 1018,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -66886,7 +66890,7 @@
         },
         "C7": {
           "review_status": "not_completed",
-          "matching_line_count": 34,
+          "matching_line_count": 35,
           "candidate_line_ranges": [
             [
               53,
@@ -66929,7 +66933,7 @@
               596
             ],
             [
-              604,
+              603,
               604
             ],
             [
@@ -138367,28 +138371,28 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch10-knowledge-acquisition-systems.md",
-      "before_sha256": "7c0ba057432aafce8d1c35df29c986c7c86c21ba473199f904c7e20d2250ceca",
-      "after_sha256": "edec719c8a82ed703bcb97ffe4bf9bbb2fb1fc06315e92e894969d900e2e4566",
-      "at": "2026-10-30T14:44:10Z",
+      "path": "ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md",
+      "before_sha256": "40245b03943fe7955329fdce77631240627d164ff87f8bcfd26ea1f85fc83109",
+      "after_sha256": "278d603207f81856c2143447c165cee90aecde52351d1ba96eb30cee00c20978",
+      "at": "2026-10-30T14:47:05Z",
       "by": "main-editor",
-      "reason": "Bounded C7 correction: classify CH10 300-second revocation threshold as profile SLO for active derivatives, not a normative standard limit; distinguish immutable historical audit from serving-copy cleanup",
-      "evidence": "review/reports/consistency-c7-ch01-10.md"
+      "reason": "Bounded C7 correction: restrict CH15 Lineage(V) to documents present before the immutable snapshot transaction-time cutoff, so later revocations cannot rewrite historical status",
+      "evidence": "review/reports/consistency-c7-ch11-20.md"
     },
     {
-      "path": "ExpertSystem/registry/ch10-registry.md",
-      "before_sha256": "b162f5da0bb05b56474994a26cd936107072618537500bc856595bec9b984f5b",
-      "after_sha256": "40cb54945045402e7656b8fb4527cb7c53fae2b7128e1c0556c122a4d9b7e7d6",
-      "at": "2026-10-30T14:44:10Z",
+      "path": "ExpertSystem/registry/ch15-registry.md",
+      "before_sha256": "78981e300fa90e0996702faa389174a1a0fdb56bae818cd8effc2c3a1dbb4f53",
+      "after_sha256": "53b37a8faa68ca230bbc26478a48c2d6a4558596a8ba3ab47832884c485dce20",
+      "at": "2026-10-30T14:47:05Z",
       "by": "main-editor",
-      "reason": "Bounded C7 correction: classify CH10 300-second revocation threshold as profile SLO for active derivatives, not a normative standard limit; distinguish immutable historical audit from serving-copy cleanup",
-      "evidence": "review/reports/consistency-c7-ch01-10.md"
+      "reason": "Bounded C7 correction: restrict CH15 Lineage(V) to documents present before the immutable snapshot transaction-time cutoff, so later revocations cannot rewrite historical status",
+      "evidence": "review/reports/consistency-c7-ch11-20.md"
     }
   ],
   "engine_and_links": {
     "math": {
-      "total": 17691,
-      "passed": 17691,
+      "total": 17693,
+      "passed": 17693,
       "failed": 0
     },
     "mermaid": {
@@ -138403,7 +138407,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17691,
+      "checked_math_expressions": 17693,
       "failed": 0,
       "observations": [
         {
