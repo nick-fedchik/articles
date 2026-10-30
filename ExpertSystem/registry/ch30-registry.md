@@ -269,7 +269,7 @@ $$\text{SafetyImpact}_{\text{TARA}}(\text{Threat}) = \begin{cases} \text{Severe}
 $$F_{\mathrm{attack}} = t_{\mathrm{elapsed}} + e_{\mathrm{expertise}} + k_{\mathrm{knowledge}} + w_{\mathrm{window}} + q_{\mathrm{equipment}}$$
 
   де $`t_{\mathrm{elapsed}} \in [0, 19]`$, $`e_{\mathrm{expertise}} \in [0, 8]`$, $`k_{\mathrm{knowledge}} \in [0, 7]`$, $`w_{\mathrm{window}} \in [0, 10]`$, $`q_{\mathrm{equipment}} \in [0, 9]`$.
-- **Рекомендація для вставки/оновлення книги:** Зберігати як авторський приклад до звірення шкал із офіційним пунктом стандарту.
+- **Рекомендація для вставки/оновлення книги:** Зберігати як авторський приклад; проміжні значення факторів не інтерполюються, а за відсутності явного рівня профілю оцінка повертає `REFUSAL`. Точні шкали потребують звірення з офіційним пунктом стандарту.
 
 #### [ID: CH30-S02-06] Порогове правило навчального профілю здійсненності атаки
 - **Розташування в книзі:** Пункт 2.1.1, рядки 252–257.
@@ -288,7 +288,7 @@ $$F_{\mathrm{attack}} = t_{\mathrm{elapsed}} + e_{\mathrm{expertise}} + k_{\math
 
 $$\mathrm{SecurityMitigationGate}(A) = \left(F_{\mathrm{attack}} \ge 20\right) \lor \left(\mathrm{Mitigation}(A) = \text{Verified}\right)$$
 
-- **Рекомендація для вставки/оновлення книги:** Не інтерпретувати як повну формулу статусу `G_safe`.
+- **Рекомендація для вставки/оновлення книги:** Не інтерпретувати як повну формулу статусу `G_safe` чи селектор контрзаходів; функція не замінює вибір за задокументованими категоріями ASIL/CAL у REQ-L2-30-09.
 
 #### [ID: CH30-S02-08] Принцип неповноти screening gate для закриття цілі безпеки
 - **Розташування в книзі:** Пункт 2.1.2, рядки 265–268; блок `[!NOTE 2]`, рядок 273.
@@ -355,7 +355,7 @@ $$\text{FHTI} = \text{FDTI} + \text{FRTI} \le \text{FTTI}$$
 
 $$\text{ARTI} = \text{ATDI} + \text{ATRI}$$
 
-  де $`\text{ARTI}`$ — загальний інтервал часу реакції на атаку (Attack Response Time Interval); $`\text{ATDI}`$ — час розпізнавання аномалії системою IDS/IPS; $`\text{ATRI}`$ — час активації захисних бар'єрів (ізоляція порту, активація резервної шини).
+  де $`\text{ARTI}`$ — загальний інтервал часу реакції на атаку (Attack Response Time Interval); $`\text{ATDI}`$ — час розпізнавання аномалії системою IDS/IPS, включно з виміряним найгіршим часом автентифікації кадру, коли її вимагає профіль; $`\text{ATRI}`$ — час активації захисних бар'єрів (ізоляція порту, активація резервної шини). Ціль $`t_{\mathrm{verify}} = 180\,\mu\text{с}`$ не є виміряним WCET або per-frame timeout.
 - **Рекомендація для вставки/оновлення книги:** Зберегти без змін.
 
 #### [ID: CH30-S02-15] Головний інваріант ко-інженерної часової безпеки
@@ -365,7 +365,7 @@ $$\text{ARTI} = \text{ATDI} + \text{ATRI}$$
 - **Поточний статус у книзі (`BOOK_STATUS`):** `[EXPLICIT_COMPLETE]`. Оформлено у виділеному формульному блоці (рядок 330).
 - **Канонічне формулювання:**
 
-$$\forall \text{Threat } t \text{ impacting Hazard } H : \quad \text{ARTI}(t) + \text{FRTI}(H) < \text{FTTI}(H)$$
+$$\forall \text{Threat } t \text{ impacting Hazard } H : \quad \text{ARTI}(t) + \text{FRTI}(H) \le \text{FTTI}(H) - \Delta t_{\mathrm{margin}}, \quad \Delta t_{\mathrm{margin}} > 0$$
 
 - **Рекомендація для вставки/оновлення книги:** Зберегти як центральний інженерний інваріант глави 30.
 

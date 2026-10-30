@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T10:22:55Z",
-  "baseline_commit": "c130c32ecc35000e5fc9c344521ce0c22b3756d6",
+  "at": "2026-10-30T10:33:46Z",
+  "baseline_commit": "4913f3704cf83525a11afd83f58483dbb255eb82",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -36180,7 +36180,7 @@
     },
     {
       "path": "ExpertSystem/ch30-safety-cybersecurity-co-engineering.md",
-      "sha256": "da5f9fdc21ddac6c9c5817ad24e60563fcadb5ddb87539fbf8455fe947ea92c8",
+      "sha256": "e1d5ba08b69152ce73c2b671372a506fa04ca5740be5328d3383ee7cee4b78ce",
       "line_count": 1220,
       "chapter": 30,
       "scan_kind": "lexical_routing_only",
@@ -36250,7 +36250,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 10,
+          "matching_line_count": 12,
           "candidate_line_ranges": [
             [
               5,
@@ -36271,6 +36271,14 @@
             [
               165,
               165
+            ],
+            [
+              274,
+              274
+            ],
+            [
+              307,
+              307
             ],
             [
               874,
@@ -36632,7 +36640,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 13,
+          "matching_line_count": 14,
           "candidate_line_ranges": [
             [
               83,
@@ -36645,6 +36653,10 @@
             [
               309,
               309
+            ],
+            [
+              351,
+              351
             ],
             [
               593,
@@ -83899,7 +83911,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch30-registry.md",
-      "sha256": "5a1f6668bf41ed0d8256f2817eb854355e460ae4f3a4aa43e69692937019c055",
+      "sha256": "f8d4f5f10574ff82f980a6e9aaecf9036cb3f2bf38142c1e7792a3715bb4b6dc",
       "line_count": 953,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -83973,7 +83985,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 4,
+          "matching_line_count": 5,
           "candidate_line_ranges": [
             [
               198,
@@ -83982,6 +83994,10 @@
             [
               200,
               200
+            ],
+            [
+              272,
+              272
             ],
             [
               625,
@@ -84125,7 +84141,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 64,
+          "matching_line_count": 65,
           "candidate_line_ranges": [
             [
               8,
@@ -84198,6 +84214,10 @@
             [
               285,
               285
+            ],
+            [
+              291,
+              291
             ],
             [
               298,
@@ -84359,11 +84379,15 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 7,
+          "matching_line_count": 8,
           "candidate_line_ranges": [
             [
               321,
               322
+            ],
+            [
+              358,
+              358
             ],
             [
               518,
@@ -84389,7 +84413,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 80,
+          "matching_line_count": 81,
           "candidate_line_ranges": [
             [
               23,
@@ -84494,6 +84518,10 @@
             [
               346,
               346
+            ],
+            [
+              358,
+              358
             ],
             [
               368,
@@ -117997,7 +118025,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L2-system/ch30-L2-system.md",
-      "sha256": "584920233f21088f50bb5d11cf07366791f5e418db4313903ad1bc1462363145",
+      "sha256": "8dd15737c3631a28f2b26a8f9c4578227786b3bb605d5041b659a770d0150c50",
       "line_count": 177,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -138055,46 +138083,28 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/authorial-contributions-registry.md",
-      "before_sha256": "0e4f0ff573b3a1c57047ea4453a124914fd3e19cb2157a9914a1d45d20cdd113",
-      "after_sha256": "c00f604d5cfbb0d2d2fa2252f7538be93e2760ebbf92561b1021fc5ce3fa69c4",
-      "at": "2026-10-30T10:22:55Z",
+      "path": "ExpertSystem/ch30-safety-cybersecurity-co-engineering.md",
+      "before_sha256": "da5f9fdc21ddac6c9c5817ad24e60563fcadb5ddb87539fbf8455fe947ea92c8",
+      "after_sha256": "e1d5ba08b69152ce73c2b671372a506fa04ca5740be5328d3383ee7cee4b78ce",
+      "at": "2026-10-30T10:33:46Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
-      "before_sha256": "a39a5057657c8a736a89948d15bb1bd70abdbde9f9871e19553bc32b2a4def11",
-      "after_sha256": "cb4c1bd5b4a4000fce3cfdcfe53d5be1b13cdc973828c21e62a35a3ba8b702a5",
-      "at": "2026-10-30T10:22:55Z",
+      "path": "ExpertSystem/registry/ch30-registry.md",
+      "before_sha256": "5a1f6668bf41ed0d8256f2817eb854355e460ae4f3a4aa43e69692937019c055",
+      "after_sha256": "f8d4f5f10574ff82f980a6e9aaecf9036cb3f2bf38142c1e7792a3715bb4b6dc",
+      "at": "2026-10-30T10:33:46Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/refinements/book-refinement-backlog.md",
-      "before_sha256": "72e52dc0691a783222bcfa6123e2dbc4bb77e2e9626e10a2aca862b5bf924398",
-      "after_sha256": "177aac029c756a3020347a94340df2ed2bd96555e931d8a429e595da4fa6db81",
-      "at": "2026-10-30T10:22:55Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch31-registry.md",
-      "before_sha256": "5042246bd105eb652ec0a033a8e8415108075c146356c2d01e361810fc9dca30",
-      "after_sha256": "fcf878a9db2e285e62bd64d4eb1812040d04d205ed4868cdc301abfa27b8e677",
-      "at": "2026-10-30T10:22:55Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L3-component/ch31-L3-component.md",
-      "before_sha256": "b49f3bc7c1d03220dae06886b5cb152cb9709f19bcb2e39338a309791830e06d",
-      "after_sha256": "d25e7766b77c77c9bf181e8dc7760e8f68673f65c743704ab3721eef3938d0ec",
-      "at": "2026-10-30T10:22:55Z",
+      "path": "ExpertSystem/requirements/L2-system/ch30-L2-system.md",
+      "before_sha256": "584920233f21088f50bb5d11cf07366791f5e418db4313903ad1bc1462363145",
+      "after_sha256": "8dd15737c3631a28f2b26a8f9c4578227786b3bb605d5041b659a770d0150c50",
+      "at": "2026-10-30T10:33:46Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
@@ -138102,8 +138112,8 @@
   ],
   "engine_and_links": {
     "math": {
-      "total": 17714,
-      "passed": 17714,
+      "total": 17717,
+      "passed": 17717,
       "failed": 0
     },
     "mermaid": {
@@ -138118,7 +138128,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17714,
+      "checked_math_expressions": 17717,
       "failed": 0,
       "observations": [
         {
