@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T14:16:33Z.
+Стан UTC: 2026-10-30T14:20:15Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -28,7 +28,7 @@
 | [18](../../ExpertSystem/ch18-execution-infrastructure.md) | 1610 | 9 | 22 | 18 | 47 | 179 | 121 | 50 | 19 | §4: deployment profiles selected by policy and applicability |
 | [19](../../ExpertSystem/ch19-from-question-to-evidence.md) | 1082 | 38 | 24 | 10 | 31 | 50 | 15 | 24 | 14 | Bounded C4 scan; no specific normative overreach accepted |
 | [20](../../ExpertSystem/ch20-explanation-engine.md) | 896 | 7 | 22 | 67 | 20 | 26 | 40 | 18 | 6 | Bounded C4 scan; attribution/genealogy requires separate S3 review |
-| [21](../../ExpertSystem/ch21-from-recommendation-to-action.md) | 819 | 13 | 17 | 4 | 6 | 4 | 47 | 25 | 11 | Action gateway framed as authorial architecture; A0-A4 are not certification levels |
+| [21](../../ExpertSystem/ch21-from-recommendation-to-action.md) | 819 | 13 | 17 | 4 | 6 | 6 | 48 | 25 | 11 | Action gateway framed as authorial architecture; A0-A4 are not certification levels |
 | [22](../../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | 1112 | 12 | 14 | 28 | 13 | 53 | 79 | 42 | 11 | Bounded C4 search; no unsupported 5 us hardware limit found |
 | [23](../../ExpertSystem/ch23-knowledge-base-verification.md) | 1136 | 12 | 9 | 53 | 17 | 15 | 23 | 46 | 13 | §9: distance operator notation; full mathematical claim not reviewed |
 | [24](../../ExpertSystem/ch24-system-diagnosis.md) | 1039 | 3 | 49 | 47 | 3 | 3 | 21 | 16 | 11 | Bounded C4 scan; attribution/genealogy requires separate S3 review |

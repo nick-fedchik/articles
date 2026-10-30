@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T14:16:39Z
+Generated UTC: 2026-10-30T14:20:22Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -156,7 +156,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 18: [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](../ExpertSystem/ch18-execution-infrastructure.md) | `b8261fcd2ae0117cd86f222af580009edc637ff049f282bbe294363284f192b2` | stale |
 | 19: [Глава 19. Від запитання до доказу: пошук, прив'язка та перевірка твердження](../ExpertSystem/ch19-from-question-to-evidence.md) | `fb11f36b8e26d5464948de74a0c2b29557a68b70d09d8e749d10992cd7f71416` | stale |
 | 20: [Глава 20. Рушій пояснень: рішення, відмова та межі компетентності](../ExpertSystem/ch20-explanation-engine.md) | `30a464f2e9865597358529ac3955ee8d0789db69d0f63c8a13b30cc58e19b9c2` | stale |
-| 21: [Глава 21. Від рекомендації до дії: контроль повноважень і безпечне виконання у виробничому середовищі](../ExpertSystem/ch21-from-recommendation-to-action.md) | `85f5af13d568bebba8fedf06f24977a8656127783e08f692cadea4542ea7238c` | stale |
+| 21: [Глава 21. Від рекомендації до дії: контроль повноважень і безпечне виконання у виробничому середовищі](../ExpertSystem/ch21-from-recommendation-to-action.md) | `eaf7692fa3e91c0e70c113b0f7d307d927fc51bed8161c3d6d47d3787d37497e` | stale |
 | 22: [Глава 22. Кібернетичний цикл керування: сенсори, периферія та зворотний зв'язок](../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | `c685125cc94c13687db1bee85b06d652a4cccaed5c779737fb80051b34ab90ec` | stale |
 | 23: [Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил](../ExpertSystem/ch23-knowledge-base-verification.md) | `8bec232fa0152ec65c5ca275845a25b9e5864d7da5ea8265a1dbf9c864acacff` | stale |
 | 24: [Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти](../ExpertSystem/ch24-system-diagnosis.md) | `5afbb333e5af0e12e798106436f004c11e9df6d135dc3efab936cbbb974d133e` | stale |

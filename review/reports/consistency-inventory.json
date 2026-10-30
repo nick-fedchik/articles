@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:16:33Z",
-  "baseline_commit": "7811651619446d995852f2233115cc077dd6e577",
+  "at": "2026-10-30T14:20:15Z",
+  "baseline_commit": "d4d3dc0fa824f57aaea84517c2449d3bf2be23ac",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -29393,7 +29393,7 @@
     },
     {
       "path": "ExpertSystem/ch21-from-recommendation-to-action.md",
-      "sha256": "85f5af13d568bebba8fedf06f24977a8656127783e08f692cadea4542ea7238c",
+      "sha256": "eaf7692fa3e91c0e70c113b0f7d307d927fc51bed8161c3d6d47d3787d37497e",
       "line_count": 819,
       "chapter": 21,
       "scan_kind": "lexical_routing_only",
@@ -29565,7 +29565,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 4,
+          "matching_line_count": 6,
           "candidate_line_ranges": [
             [
               23,
@@ -29580,14 +29580,22 @@
               246
             ],
             [
+              701,
+              701
+            ],
+            [
               708,
               708
+            ],
+            [
+              710,
+              710
             ]
           ]
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 47,
+          "matching_line_count": 48,
           "candidate_line_ranges": [
             [
               5,
@@ -29712,6 +29720,10 @@
             [
               692,
               692
+            ],
+            [
+              701,
+              701
             ],
             [
               708,
@@ -73412,7 +73424,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch21-registry.md",
-      "sha256": "21e09ed47f05ae0d46c0b5ccb6430f92010e9b7cfae12014bb6a2cd3fb1694e1",
+      "sha256": "633861abe29ed5e7be9d1d1118b98574bfe3a1793c69cdc326f803b5dfb67d23",
       "line_count": 938,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -73512,7 +73524,7 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 10,
+          "matching_line_count": 9,
           "candidate_line_ranges": [
             [
               8,
@@ -73537,10 +73549,6 @@
             [
               526,
               526
-            ],
-            [
-              710,
-              710
             ],
             [
               723,
@@ -74018,7 +74026,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 102,
+          "matching_line_count": 103,
           "candidate_line_ranges": [
             [
               1,
@@ -74027,6 +74035,10 @@
             [
               9,
               9
+            ],
+            [
+              32,
+              32
             ],
             [
               54,
@@ -138328,27 +138340,27 @@
   "input_transitions_from_current_baseline": [
     {
       "path": "ExpertSystem/ch21-from-recommendation-to-action.md",
-      "before_sha256": "f922f3d8d696f6e317270676ffdec13da818137215d4ba6f4d1436f61c71ca5f",
-      "after_sha256": "85f5af13d568bebba8fedf06f24977a8656127783e08f692cadea4542ea7238c",
-      "at": "2026-10-30T14:16:33Z",
+      "before_sha256": "85f5af13d568bebba8fedf06f24977a8656127783e08f692cadea4542ea7238c",
+      "after_sha256": "eaf7692fa3e91c0e70c113b0f7d307d927fc51bed8161c3d6d47d3787d37497e",
+      "at": "2026-10-30T14:20:15Z",
       "by": "main-editor",
-      "reason": "Bounded C5 correction in CH21 replacing universal <5 ms interlock claim with profile-specific evidence requirements",
+      "reason": "Bounded C5 corrections in CH21: interlock timing is profile-specific; nanosecond estimates and physical outcome are not guarantees",
       "evidence": "review/reports/consistency-c5-ch21-30.md"
     },
     {
       "path": "ExpertSystem/registry/ch21-registry.md",
-      "before_sha256": "965ca2b7621fd00a5dcabfc8e9695bdf7f21ff284e4d85934628a1510abc7c70",
-      "after_sha256": "21e09ed47f05ae0d46c0b5ccb6430f92010e9b7cfae12014bb6a2cd3fb1694e1",
-      "at": "2026-10-30T14:16:33Z",
+      "before_sha256": "21e09ed47f05ae0d46c0b5ccb6430f92010e9b7cfae12014bb6a2cd3fb1694e1",
+      "after_sha256": "633861abe29ed5e7be9d1d1118b98574bfe3a1793c69cdc326f803b5dfb67d23",
+      "at": "2026-10-30T14:20:15Z",
       "by": "main-editor",
-      "reason": "Bounded C5 correction in CH21 replacing universal <5 ms interlock claim with profile-specific evidence requirements",
+      "reason": "Bounded C5 corrections in CH21: interlock timing is profile-specific; nanosecond estimates and physical outcome are not guarantees",
       "evidence": "review/reports/consistency-c5-ch21-30.md"
     }
   ],
   "engine_and_links": {
     "math": {
-      "total": 17712,
-      "passed": 17712,
+      "total": 17701,
+      "passed": 17701,
       "failed": 0
     },
     "mermaid": {
@@ -138363,7 +138375,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17712,
+      "checked_math_expressions": 17701,
       "failed": 0,
       "observations": [
         {
