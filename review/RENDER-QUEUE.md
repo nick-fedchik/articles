@@ -27,6 +27,7 @@
 | V-15 | [Глава 34](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md), §5.3 та [діалог §34.2](../ExpertSystem/PRO_ET_CONTRA.md#342-продовження-діалогу-з-джудеєю-перлом-модельна-достатність-гіпотези-та-межі-причинного-висновку) | Контрприклади та MathJax пройшли; критерій обмежено модельним слідуванням | Відображення парних SAT/UNSAT-перевірок на GitHub | Очікує сесії S7 |
 | V-16 | [Глава 38](../ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md), §2: діаграма байтового заземлення | Mermaid розібрано; кінцевий вузол позначає кандидата, не допущений факт | Відображення підписів і меж наступної верифікації | Очікує сесії S7 |
 | V-17 | [Глава 40](../ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md), §2.2: контракт відображення клієнта | MathJax пройшов; цілісність відділено від актуальності й дозволу | Візуальне читання формули та уточнених обмежень | Очікує сесії S7 |
+| V-18 | [Глави 14](../ExpertSystem/ch14-requirements-detection-and-formalization.md) і [40](../ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md), §1.2, §5.2: нормативний ранг і схема арбітражу | MathJax/Mermaid пройшли; схема показує перевірку застосовності та Fail-Closed | Перевірити читабельність формули профільного рангу й оновленої гілки Mermaid на GitHub | Очікує сесії S7 |
 
 ## 2. Правила виконання
 

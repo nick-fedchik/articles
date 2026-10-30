@@ -3,6 +3,17 @@ import unittest
 
 
 class ModelBoundaryTests(unittest.TestCase):
+    def test_modal_strength_does_not_resolve_unknown_applicability(self):
+        def resolve(applicability, priority):
+            if applicability != "both_applicable" or priority is None:
+                return "REFUSAL_NORMATIVE_CONFLICT"
+            return "higher_priority_rule"
+
+        self.assertEqual(resolve("unknown", 1), "REFUSAL_NORMATIVE_CONFLICT")
+        self.assertEqual(resolve("one_inapplicable", 1), "REFUSAL_NORMATIVE_CONFLICT")
+        self.assertEqual(resolve("both_applicable", None), "REFUSAL_NORMATIVE_CONFLICT")
+        self.assertEqual(resolve("both_applicable", 1), "higher_priority_rule")
+
     def test_fixed_frame_requires_a_write_set_bound(self):
         frame_bytes = 128
         illustrative_header_bytes = 32

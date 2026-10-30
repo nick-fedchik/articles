@@ -3494,7 +3494,7 @@
     {
       "number": 14,
       "file": "ExpertSystem/ch14-requirements-detection-and-formalization.md",
-      "input_sha256": "0dc03edaa3221cef69b7b68602f0743d9f7acaaf6cea8b72aaf90ba50a95b928",
+      "input_sha256": "da42bac3f50c81dcb6df4a32d17562a3a857f3080be7b673c6a1c566cbbe5498",
       "title": "Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів",
       "h2_titles": [
         "Анотація",
@@ -3605,23 +3605,23 @@
       "current_h2_line_numbers": [
         11,
         47,
-        180,
-        279,
-        473,
-        549,
-        786,
-        898,
-        928,
-        967,
-        978,
-        1005,
-        1034
+        184,
+        283,
+        477,
+        553,
+        790,
+        902,
+        932,
+        971,
+        982,
+        1009,
+        1038
       ],
-      "current_source_line_count": 1059,
+      "current_source_line_count": 1063,
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T08:46:09Z",
+        "evidence": "review/reports/consistency-c4-normative-priority.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -3759,6 +3759,72 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/technical-preparation.md"
+        },
+        {
+          "at": "2026-10-30T08:46:09Z",
+          "input_sha256": "0dc03edaa3221cef69b7b68602f0743d9f7acaaf6cea8b72aaf90ba50a95b928",
+          "h2_titles": [
+            "Анотація",
+            "1. Деонтична модальність та критерії демаркації нормативних вимог",
+            "2. Шаблони EARS: структурна стандартизація інженерних вимог",
+            "3. Математична формалізація: від шаблонів до формальної логіки",
+            "4. Метрики та автоматизований аудит якості вимог (Requirements Smells)",
+            "5. Програмна реалізація: детермінований конвеєр аналізу на Go",
+            "6. Практичний кейс: аудит системи керування батареєю (BMS) за ISO 26262",
+            "7. Проміжне подання вимог (IR): уніфікований контракт верифікатора",
+            "8. Інверсний аудит: дебагер-компілятор чернеток стандартів та технічних завдань (Normative Standard Linter)",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            11,
+            47,
+            180,
+            279,
+            473,
+            549,
+            786,
+            898,
+            928,
+            967,
+            978,
+            1005,
+            1034
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h1_line": 1,
+            "h2_lines": [
+              11,
+              47,
+              174,
+              273,
+              467,
+              543,
+              780,
+              892,
+              922,
+              961,
+              1014,
+              1025,
+              1038,
+              1065,
+              1094
+            ],
+            "heading_scan_line_range": [
+              1,
+              1119
+            ],
+            "heading_scan_mode": "Прочитано всі H1/H2 поза блоками fenced code; решту тексту після рядка 100 не рецензовано.",
+            "dependency_citation_scope": "Прямі посилання лише з прочитаних рядків 1–100; це не повний граф посилань глави.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-c4-normative-priority.md"
         }
       ]
     },
@@ -8719,7 +8785,7 @@
     {
       "number": 31,
       "file": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
-      "input_sha256": "3dc61a04f026f9b2e4948af3d184d1c467c949661327522beadd885a2bb15acb",
+      "input_sha256": "cb2393280692863c3f680e81b5cd2852ab2e1b52b5862770fbc7ec7626be42df",
       "title": "Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність",
       "h2_titles": [
         "Анотація",
@@ -8809,27 +8875,27 @@
         ]
       },
       "source_task": "MAP-04",
-      "current_source_line_count": 1354,
+      "current_source_line_count": 1357,
       "current_h2_line_numbers": [
         13,
         24,
         90,
         204,
         321,
-        631,
-        799,
-        930,
-        954,
-        1217,
-        1255,
-        1262,
-        1297,
-        1327
+        634,
+        802,
+        933,
+        957,
+        1220,
+        1258,
+        1265,
+        1300,
+        1330
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T08:46:09Z",
+        "evidence": "review/reports/consistency-c4-normative-priority.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -8906,6 +8972,77 @@
             ]
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T08:46:09Z",
+          "input_sha256": "3dc61a04f026f9b2e4948af3d184d1c467c949661327522beadd885a2bb15acb",
+          "h2_titles": [
+            "Анотація",
+            "1. Чому однокроковий пошук не дає нормативного висновку",
+            "2. Поняття, судження й висновок",
+            "3. Ієрархія предикатів і семантика субсумції",
+            "4. Тризначна логіка Кліні та спростувачі Поллока",
+            "5. Дослідження міждокументних конфліктів: еволюція протоколу TCP",
+            "6. Умовні запитання з кількома кроками",
+            "7. Перегляд сліду виведення",
+            "8. Навчальний крок виведення на Go",
+            "9. Сучасні засоби й видобування знань для ієрархій і винятків",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            24,
+            90,
+            204,
+            321,
+            631,
+            799,
+            930,
+            954,
+            1217,
+            1255,
+            1262,
+            1297,
+            1327
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1402
+            ],
+            "h2_line_numbers": [
+              13,
+              24,
+              90,
+              204,
+              321,
+              631,
+              799,
+              930,
+              954,
+              1217,
+              1255,
+              1289,
+              1296,
+              1310,
+              1345,
+              1375
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false,
+            "heading_scan_line_range": [
+              1,
+              1402
+            ]
+          },
+          "evidence": "review/reports/consistency-c4-normative-priority.md"
         }
       ]
     },
@@ -10658,7 +10795,7 @@
     {
       "number": 40,
       "file": "ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md",
-      "input_sha256": "7211be2f9571b2bcbbda4b7387955ea46956c78d0739be2d898dd803f1a4e96b",
+      "input_sha256": "9bab603662832c7deb1e0ab7294b7951df29cd6a418d044299b1cf8e406ab939",
       "title": "Глава 40. Розподілена архітектура доказової експертної системи: епістемічна SOA, семантична маршрутизація, ієрархія пам'яті та багатоджерельний дефезитивний арбітраж",
       "h2_titles": [
         "Анотація",
@@ -10791,9 +10928,9 @@
         975
       ],
       "revalidation": {
-        "at": "2026-10-30T08:30:45Z",
-        "evidence": "review/reports/consistency-initial-package.md",
-        "scope": "Current structure/hash only; historical reading not reaccepted"
+        "at": "2026-10-30T08:46:09Z",
+        "evidence": "review/reports/consistency-c4-normative-priority.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -10933,6 +11070,73 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/consistency-initial-package.md"
+        },
+        {
+          "at": "2026-10-30T08:46:09Z",
+          "input_sha256": "7211be2f9571b2bcbbda4b7387955ea46956c78d0739be2d898dd803f1a4e96b",
+          "h2_titles": [
+            "Анотація",
+            "1. Синтез монографії: від локальної моделі до референсного архітектурного прототипу",
+            "2. Епістемічна сервіс-орієнтована архітектура (Epistemic SOA) та тонкі клієнти",
+            "3. Семантичний брокер, препроцесор дискурсу та маршрутизація за змістом",
+            "4. Теоретична модель багаторівневої ієрархії пам'яті та подвійної буферизації",
+            "5. Багатоджерельна дефезитивна агрегація знань (ASPIC+ / Dung)",
+            "6. Розподілений тріаж дефіцитів знань: кластеризація SimHash, захист від виродження та автономний WAL-буфер",
+            "7. Незмінний журнал рішень (Immutable Decision Ledger) на Merkle-деревах",
+            "8. Інженерна матриця вибору технологій та масштабування за бюджетом проєкту",
+            "9. Холодна готовність динамічного реєстру знань (Tabula Rasa), чистота діагностичних доказів та субмілісекундний фонотактично-ентропійний санітайзер входу",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            12,
+            20,
+            95,
+            136,
+            204,
+            377,
+            505,
+            613,
+            761,
+            773,
+            904,
+            919,
+            946,
+            975
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1046
+            ],
+            "h2_line_numbers": [
+              12,
+              20,
+              95,
+              136,
+              204,
+              377,
+              505,
+              613,
+              759,
+              771,
+              902,
+              939,
+              954,
+              972,
+              999,
+              1028
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-c4-normative-priority.md"
         }
       ]
     }
