@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T14:31:37Z
+Generated UTC: 2026-10-30T14:36:26Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -164,8 +164,8 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 26: [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](../ExpertSystem/ch26-continual-learning.md) | `b837a181e31894da34a8a48cbb151eddefef391d1b82bb4918d119626f74bdba` | stale |
 | 27: [Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів](../ExpertSystem/ch27-safety-case-gsn-synthesis.md) | `b18deeba757f054f2c277dcc5655e7015e4b431e0b0b2f214874b87ea12b6f88` | stale |
 | 28: [Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза](../ExpertSystem/ch28-dual-mode-expert-systems.md) | `4a3caeb63878c00da4f9b8c381d6a45246155511e6433556282fd49eba9592c0` | stale |
-| 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `a7e9a1140b1a1c74f96174460f759fcf23a8847aa635f5422a51206184b57584` | stale |
-| 30: [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | `e1d5ba08b69152ce73c2b671372a506fa04ca5740be5328d3383ee7cee4b78ce` | stale |
+| 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `5811cb50ad276b16b6f5596be90fc56e79feab67c06ae747f826d681c96f51e3` | stale |
+| 30: [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | `f0274ff2c6ed58293cf0de48b81587ba719338c888ebd22747e47257f837fa59` | stale |
 | 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `2e628780f9d68aaa1c6f24391775747b878705486261a8878643820a273f57ae` | stale |
 | 32: [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | `5dcf444bd437109aaad9b24f03f7044ecef8ac3867014b7ce87e013926accfa5` | stale |
 | 33: [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](../ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md) | `b5cecff90780fc9333b85ff77b44f62b83aa2ec98f7236be1bace2f1006fdf36` | stale |
