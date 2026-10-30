@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T13:44:44Z",
-  "baseline_commit": "0fef1c3a0e7a1a42380bbf23391c8df383aa4ecd",
+  "at": "2026-10-30T13:48:58Z",
+  "baseline_commit": "425e5fb84984cd678aca24a53cc7b95e121a526a",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -30851,7 +30851,7 @@
     },
     {
       "path": "ExpertSystem/ch23-knowledge-base-verification.md",
-      "sha256": "f4dc0156461675914c062b970d230772ab9c16896edc61d5806323787188b128",
+      "sha256": "8bec232fa0152ec65c5ca275845a25b9e5864d7da5ea8265a1dbf9c864acacff",
       "line_count": 1136,
       "chapter": 23,
       "scan_kind": "lexical_routing_only",
@@ -30913,8 +30913,12 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 8,
+          "matching_line_count": 9,
           "candidate_line_ranges": [
+            [
+              224,
+              224
+            ],
             [
               282,
               282
@@ -75470,7 +75474,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch23-registry.md",
-      "sha256": "839d4d84f6e39caa6caa1b8865d68411d51c62fee3a6b7d634cf4501e5497ff1",
+      "sha256": "6d8d492d980253209f6f4fdf4579a3ea41abe5c582201ae4354d1723883d7d35",
       "line_count": 1211,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -138313,7 +138317,26 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [],
+  "input_transitions_from_current_baseline": [
+    {
+      "path": "ExpertSystem/ch23-knowledge-base-verification.md",
+      "before_sha256": "f4dc0156461675914c062b970d230772ab9c16896edc61d5806323787188b128",
+      "after_sha256": "8bec232fa0152ec65c5ca275845a25b9e5864d7da5ea8265a1dbf9c864acacff",
+      "at": "2026-10-30T13:48:58Z",
+      "by": "main-editor",
+      "reason": "Bounded C2 correction in CH23 limiting ALLOW to release-policy gate; action authority remains separate",
+      "evidence": "review/reports/consistency-c2-ch21-30.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch23-registry.md",
+      "before_sha256": "839d4d84f6e39caa6caa1b8865d68411d51c62fee3a6b7d634cf4501e5497ff1",
+      "after_sha256": "6d8d492d980253209f6f4fdf4579a3ea41abe5c582201ae4354d1723883d7d35",
+      "at": "2026-10-30T13:48:58Z",
+      "by": "main-editor",
+      "reason": "Bounded C2 correction in CH23 limiting ALLOW to release-policy gate; action authority remains separate",
+      "evidence": "review/reports/consistency-c2-ch21-30.md"
+    }
+  ],
   "engine_and_links": {
     "math": {
       "total": 17717,
@@ -138326,8 +138349,8 @@
       "failed": 0
     },
     "links": {
-      "total": 6302,
-      "passed": 6253,
+      "total": 6303,
+      "passed": 6254,
       "failed": 0,
       "skipped": 49
     },
