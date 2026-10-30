@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:11:14Z",
-  "baseline_commit": "1ec42023d7c136259b670eb0cde77234a81a4b70",
+  "at": "2026-10-30T14:16:33Z",
+  "baseline_commit": "7811651619446d995852f2233115cc077dd6e577",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -29393,7 +29393,7 @@
     },
     {
       "path": "ExpertSystem/ch21-from-recommendation-to-action.md",
-      "sha256": "f922f3d8d696f6e317270676ffdec13da818137215d4ba6f4d1436f61c71ca5f",
+      "sha256": "85f5af13d568bebba8fedf06f24977a8656127783e08f692cadea4542ea7238c",
       "line_count": 819,
       "chapter": 21,
       "scan_kind": "lexical_routing_only",
@@ -73412,7 +73412,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch21-registry.md",
-      "sha256": "965ca2b7621fd00a5dcabfc8e9695bdf7f21ff284e4d85934628a1510abc7c70",
+      "sha256": "21e09ed47f05ae0d46c0b5ccb6430f92010e9b7cfae12014bb6a2cd3fb1694e1",
       "line_count": 938,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -138327,19 +138327,28 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch12-linguistic-analysis-and-local-models.md",
-      "before_sha256": "fd685e02cb0d520b07ea16efc1ba99af24ecc45c6084b76f9ced0d3715cd7c2f",
-      "after_sha256": "967fe369f7080dfda14279e45c4694fe0a55b3297e1d67b8d29333cb94b9da89",
-      "at": "2026-10-30T14:11:14Z",
+      "path": "ExpertSystem/ch21-from-recommendation-to-action.md",
+      "before_sha256": "f922f3d8d696f6e317270676ffdec13da818137215d4ba6f4d1436f61c71ca5f",
+      "after_sha256": "85f5af13d568bebba8fedf06f24977a8656127783e08f692cadea4542ea7238c",
+      "at": "2026-10-30T14:16:33Z",
       "by": "main-editor",
-      "reason": "Bounded C5 correction in CH12 replacing unsupported 1,000-page latency guarantee with an explicit conditional calculation",
-      "evidence": "review/reports/consistency-c5-ch11-20.md"
+      "reason": "Bounded C5 correction in CH21 replacing universal <5 ms interlock claim with profile-specific evidence requirements",
+      "evidence": "review/reports/consistency-c5-ch21-30.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch21-registry.md",
+      "before_sha256": "965ca2b7621fd00a5dcabfc8e9695bdf7f21ff284e4d85934628a1510abc7c70",
+      "after_sha256": "21e09ed47f05ae0d46c0b5ccb6430f92010e9b7cfae12014bb6a2cd3fb1694e1",
+      "at": "2026-10-30T14:16:33Z",
+      "by": "main-editor",
+      "reason": "Bounded C5 correction in CH21 replacing universal <5 ms interlock claim with profile-specific evidence requirements",
+      "evidence": "review/reports/consistency-c5-ch21-30.md"
     }
   ],
   "engine_and_links": {
     "math": {
-      "total": 17714,
-      "passed": 17714,
+      "total": 17712,
+      "passed": 17712,
       "failed": 0
     },
     "mermaid": {
@@ -138354,7 +138363,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17714,
+      "checked_math_expressions": 17712,
       "failed": 0,
       "observations": [
         {
