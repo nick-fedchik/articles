@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T16:47:37Z",
-  "baseline_commit": "b793289e8679dc41c85315dac55f90c08a334739",
+  "at": "2026-10-30T16:54:04Z",
+  "baseline_commit": "05f3eef6bf05e3b3172c27782f833d88921f7fea",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -134486,7 +134486,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L3-component/ch30-L3-component.md",
-      "sha256": "bad15f9945a5d37d1b0ec69d14b7159651a4de0228f9c380be272ff18a97698b",
+      "sha256": "204a8679a849774a917fb5e603696e10c89ea98594821d212c370906e9ad134f",
       "line_count": 195,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -138205,7 +138205,17 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [],
+  "input_transitions_from_current_baseline": [
+    {
+      "path": "ExpertSystem/requirements/L3-component/ch30-L3-component.md",
+      "before_sha256": "bad15f9945a5d37d1b0ec69d14b7159651a4de0228f9c380be272ff18a97698b",
+      "after_sha256": "204a8679a849774a917fb5e603696e10c89ea98594821d212c370906e9ad134f",
+      "at": "2026-10-30T16:54:04Z",
+      "by": "main-editor",
+      "reason": "C4 CH30 per-frame authentication deadline clarified as profile parameter; no external ISO verification or scientific acceptance",
+      "evidence": "review/reports/consistency-norm02-ch30.md"
+    }
+  ],
   "engine_and_links": {
     "math": {
       "total": 17619,
