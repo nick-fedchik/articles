@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T14:53:47Z
+Generated UTC: 2026-10-30T15:15:48Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -137,14 +137,14 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | Chapter / Title | SHA256 Snapshot | Scientific Review (Recorded) |
 |---|---|---|
 | 01: [Глава 1. Вступ до експертних систем: від хаосу до керованих знань](../ExpertSystem/ch01-introduction-to-expert-systems.md) | `ee1e9a8d6d7a4c5f20f8b301a63405645562bb2ce9156a340537ce19305eff43` | stale |
-| 02: [Глава 2. Філософія для інженера: що машина має право називати знанням](../ExpertSystem/ch02-epistemology-of-machine-knowledge.md) | `323ef2b80b8eb0dc4a9f9bf590336e7544dbb9c3e9ac806ad65bc49e341f7e2a` | stale |
-| 03: [Глава 3. Чим експертна система відрізняється від інформаційно-довідкової системи](../ExpertSystem/ch03-beyond-reference-information-systems.md) | `56b7a50a2cdc7047fcf8b8e21aa418560489baac73541641c27e69be9d6b79c7` | stale |
-| 04: [Глава 4. Еволюція експертних систем: від теореми Байєса до доказових рішень ШІ](../ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md) | `09d601ebf72593878898354a1e089ecbe3fed8e276d4c6d7df4e548e111b35d6` | stale |
+| 02: [Глава 2. Філософія для інженера: що машина має право називати знанням](../ExpertSystem/ch02-epistemology-of-machine-knowledge.md) | `91ea40894bdd8f2718787635b3b4d9854fadfd31ce6fcddc532116c065b367d8` | stale |
+| 03: [Глава 3. Чим експертна система відрізняється від інформаційно-довідкової системи](../ExpertSystem/ch03-beyond-reference-information-systems.md) | `53582f708eea8f8a210326e55fa25d2438c54936001f8f6d4a0e4c0034f9e48d` | stale |
+| 04: [Глава 4. Еволюція експертних систем: від теореми Байєса до доказових рішень ШІ](../ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md) | `e3314893617b0e0427f036f4e807fbf75a3fbc3caa4ccfb02d9e7bf1d608e88c` | stale |
 | 05: [Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять](../ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md) | `5c9ee9d7cadb1162f4beb60be4a9a7d8e364c35c29073ad80f8c05ac51cda5ee` | stale |
-| 06: [Глава 6. Прикладна математика експертних систем: правила, ймовірності, графи та причинність](../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | `60c6d9eab3441cb5c1d0be60b7f4d061f07674a5c78d494965f799c589940015` | stale |
-| 07: [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](../ExpertSystem/ch07-knowledge-base-typology.md) | `570e9d100930bfbda094e499d00c202885504052ec941fcf2eb132bd064d8c37` | stale |
+| 06: [Глава 6. Прикладна математика експертних систем: правила, ймовірності, графи та причинність](../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | `147c45e957834834a3fd40eb3bbaf267f276b7a387d0589b4b8f8d4d61ab063a` | stale |
+| 07: [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](../ExpertSystem/ch07-knowledge-base-typology.md) | `0e70da25234cb185ac4074690aeb36c00b41056ad79440d7a8cd9fb72c8e05df` | stale |
 | 08: [Глава 8. Інженерні артефакти як дані експертної системи](../ExpertSystem/ch08-engineering-artifacts-as-data.md) | `4675a5fb956b8951e4df07f6a4cd1034d4cb7fb0a6d7319f23e13d0d57ed4dfc` | stale |
-| 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `0586635713b7dbb0cd347a15142d7642b4d896f6f5cad718eac47d677e39c8f3` | stale |
+| 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `a86e658019c42c626d48fb3d6b5dae426175b3d8bb14ace425b48d2367218a76` | stale |
 | 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `edec719c8a82ed703bcb97ffe4bf9bbb2fb1fc06315e92e894969d900e2e4566` | stale |
 | 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `b462c982fd083eca0411e82b5134ef56e958ebb985791fffcc5092e4b06c695a` | stale |
 | 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `967fe369f7080dfda14279e45c4694fe0a55b3297e1d67b8d29333cb94b9da89` | stale |
