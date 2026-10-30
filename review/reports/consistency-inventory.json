@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:36:20Z",
-  "baseline_commit": "b1ce23c02da19eb41bbe5fc1af9a346238170c93",
+  "at": "2026-10-30T14:41:02Z",
+  "baseline_commit": "d069c867df2c2831960f1c8892d72e62025da001",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -43002,7 +43002,7 @@
     },
     {
       "path": "ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md",
-      "sha256": "dacdc54b3ba4a44b0f6c3025e609a32b356171a4b488c2f32a767dd1b1e5b218",
+      "sha256": "a98e1f582a1da0ca65e27dc710c30595f53b6493b2b4657bacb41a5df3ea9176",
       "line_count": 1511,
       "chapter": 36,
       "scan_kind": "lexical_routing_only",
@@ -43712,7 +43712,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 80,
+          "matching_line_count": 81,
           "candidate_line_ranges": [
             [
               15,
@@ -43824,7 +43824,7 @@
             ],
             [
               466,
-              466
+              467
             ],
             [
               472,
@@ -44068,7 +44068,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 39,
+          "matching_line_count": 41,
           "candidate_line_ranges": [
             [
               15,
@@ -44121,6 +44121,14 @@
             [
               455,
               455
+            ],
+            [
+              457,
+              457
+            ],
+            [
+              467,
+              467
             ],
             [
               475,
@@ -46251,7 +46259,7 @@
     },
     {
       "path": "ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md",
-      "sha256": "e3dce5015e6d033319e3b5c746035db25af7a5c672337f4fa143abb9acf6c00f",
+      "sha256": "c4238c5d5b52fd0cb2301287e580ad94146618f6e68f0ea97efd58b3b3c30e86",
       "line_count": 1339,
       "chapter": 39,
       "scan_kind": "lexical_routing_only",
@@ -47053,7 +47061,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 53,
+          "matching_line_count": 54,
           "candidate_line_ranges": [
             [
               1,
@@ -47078,6 +47086,10 @@
             [
               26,
               26
+            ],
+            [
+              48,
+              48
             ],
             [
               50,
@@ -47322,7 +47334,7 @@
     },
     {
       "path": "ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md",
-      "sha256": "5ba98b6e35b00424279860e5635acc77a2fbda77bc92489aec59010e6871e399",
+      "sha256": "4d7610f2eadf4b89da825aca8767ad57494d201f6b7c2a14db5ed6916f17a09e",
       "line_count": 994,
       "chapter": 40,
       "scan_kind": "lexical_routing_only",
@@ -47850,7 +47862,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 70,
+          "matching_line_count": 71,
           "candidate_line_ranges": [
             [
               1,
@@ -47957,7 +47969,7 @@
               326
             ],
             [
-              331,
+              330,
               331
             ],
             [
@@ -92369,7 +92381,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch36-registry.md",
-      "sha256": "7ef15c1e9a0c797911af7d81750fdf153bfce915e59c100bbcac85741daeedcd",
+      "sha256": "e96e957cf01119d66fbfd4c8873150ef8c68b879d1d44eb713a866e8d20099d6",
       "line_count": 685,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -92807,7 +92819,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 64,
+          "matching_line_count": 66,
           "candidate_line_ranges": [
             [
               8,
@@ -92888,6 +92900,10 @@
             [
               315,
               315
+            ],
+            [
+              326,
+              326
             ],
             [
               328,
@@ -93030,6 +93046,10 @@
               618
             ],
             [
+              649,
+              649
+            ],
+            [
               673,
               673
             ],
@@ -93083,7 +93103,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 107,
+          "matching_line_count": 108,
           "candidate_line_ranges": [
             [
               1,
@@ -93238,7 +93258,7 @@
               329
             ],
             [
-              332,
+              331,
               333
             ],
             [
@@ -96226,7 +96246,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch39-registry.md",
-      "sha256": "23b7bb316b9ead11e43ec6e3c5d7a37749d6fe6786a113df1dc5447dcf49aa1d",
+      "sha256": "669e96975681b5838d85648a598665a35ff94ae59ebadfa1ddbf23996f498feb",
       "line_count": 805,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -138343,46 +138363,55 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch29-neuro-symbolic-architecture.md",
-      "before_sha256": "a7e9a1140b1a1c74f96174460f759fcf23a8847aa635f5422a51206184b57584",
-      "after_sha256": "5811cb50ad276b16b6f5596be90fc56e79feab67c06ae747f826d681c96f51e3",
-      "at": "2026-10-30T14:36:20Z",
+      "path": "ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md",
+      "before_sha256": "dacdc54b3ba4a44b0f6c3025e609a32b356171a4b488c2f32a767dd1b1e5b218",
+      "after_sha256": "a98e1f582a1da0ca65e27dc710c30595f53b6493b2b4657bacb41a5df3ea9176",
+      "at": "2026-10-30T14:41:02Z",
       "by": "main-editor",
-      "reason": "Bounded C6 source and registry corrections: translate CH29 effect size as up-to-36% decrease per primary-source abstract; bound CH30 universal cyber-capability claim and mark inaccessible ExploitGym citation unverified",
-      "evidence": "review/reports/consistency-c6-ch21-30.md"
+      "reason": "Bounded C6 corrections: relabel CH36 empirical zero-error rates as confidence bounds, remove CH39 unsupported 60-70% statistic, and fix CH40 decimal-unit refill arithmetic",
+      "evidence": "review/reports/consistency-c6-ch31-40.md"
     },
     {
-      "path": "ExpertSystem/ch30-safety-cybersecurity-co-engineering.md",
-      "before_sha256": "e1d5ba08b69152ce73c2b671372a506fa04ca5740be5328d3383ee7cee4b78ce",
-      "after_sha256": "f0274ff2c6ed58293cf0de48b81587ba719338c888ebd22747e47257f837fa59",
-      "at": "2026-10-30T14:36:20Z",
+      "path": "ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md",
+      "before_sha256": "e3dce5015e6d033319e3b5c746035db25af7a5c672337f4fa143abb9acf6c00f",
+      "after_sha256": "c4238c5d5b52fd0cb2301287e580ad94146618f6e68f0ea97efd58b3b3c30e86",
+      "at": "2026-10-30T14:41:02Z",
       "by": "main-editor",
-      "reason": "Bounded C6 source and registry corrections: translate CH29 effect size as up-to-36% decrease per primary-source abstract; bound CH30 universal cyber-capability claim and mark inaccessible ExploitGym citation unverified",
-      "evidence": "review/reports/consistency-c6-ch21-30.md"
+      "reason": "Bounded C6 corrections: relabel CH36 empirical zero-error rates as confidence bounds, remove CH39 unsupported 60-70% statistic, and fix CH40 decimal-unit refill arithmetic",
+      "evidence": "review/reports/consistency-c6-ch31-40.md"
     },
     {
-      "path": "ExpertSystem/registry/ch29-registry.md",
-      "before_sha256": "e27fa2cba73717a08a510207ddf6ea3a9047e2e197bf1de594a435021a5b8060",
-      "after_sha256": "83a8a91af4e5b749929dbe40142bed599f8f79f4522a88857cd6dd533b9b3e2d",
-      "at": "2026-10-30T14:36:20Z",
+      "path": "ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md",
+      "before_sha256": "5ba98b6e35b00424279860e5635acc77a2fbda77bc92489aec59010e6871e399",
+      "after_sha256": "4d7610f2eadf4b89da825aca8767ad57494d201f6b7c2a14db5ed6916f17a09e",
+      "at": "2026-10-30T14:41:02Z",
       "by": "main-editor",
-      "reason": "Bounded C6 source and registry corrections: translate CH29 effect size as up-to-36% decrease per primary-source abstract; bound CH30 universal cyber-capability claim and mark inaccessible ExploitGym citation unverified",
-      "evidence": "review/reports/consistency-c6-ch21-30.md"
+      "reason": "Bounded C6 corrections: relabel CH36 empirical zero-error rates as confidence bounds, remove CH39 unsupported 60-70% statistic, and fix CH40 decimal-unit refill arithmetic",
+      "evidence": "review/reports/consistency-c6-ch31-40.md"
     },
     {
-      "path": "ExpertSystem/registry/ch30-registry.md",
-      "before_sha256": "f8d4f5f10574ff82f980a6e9aaecf9036cb3f2bf38142c1e7792a3715bb4b6dc",
-      "after_sha256": "c3f09409bba1b985deb7275c4e735ae333d06ed48e35b51bf58afca6289c81f2",
-      "at": "2026-10-30T14:36:20Z",
+      "path": "ExpertSystem/registry/ch36-registry.md",
+      "before_sha256": "7ef15c1e9a0c797911af7d81750fdf153bfce915e59c100bbcac85741daeedcd",
+      "after_sha256": "e96e957cf01119d66fbfd4c8873150ef8c68b879d1d44eb713a866e8d20099d6",
+      "at": "2026-10-30T14:41:02Z",
       "by": "main-editor",
-      "reason": "Bounded C6 source and registry corrections: translate CH29 effect size as up-to-36% decrease per primary-source abstract; bound CH30 universal cyber-capability claim and mark inaccessible ExploitGym citation unverified",
-      "evidence": "review/reports/consistency-c6-ch21-30.md"
+      "reason": "Bounded C6 corrections: relabel CH36 empirical zero-error rates as confidence bounds, remove CH39 unsupported 60-70% statistic, and fix CH40 decimal-unit refill arithmetic",
+      "evidence": "review/reports/consistency-c6-ch31-40.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch39-registry.md",
+      "before_sha256": "23b7bb316b9ead11e43ec6e3c5d7a37749d6fe6786a113df1dc5447dcf49aa1d",
+      "after_sha256": "669e96975681b5838d85648a598665a35ff94ae59ebadfa1ddbf23996f498feb",
+      "at": "2026-10-30T14:41:02Z",
+      "by": "main-editor",
+      "reason": "Bounded C6 corrections: relabel CH36 empirical zero-error rates as confidence bounds, remove CH39 unsupported 60-70% statistic, and fix CH40 decimal-unit refill arithmetic",
+      "evidence": "review/reports/consistency-c6-ch31-40.md"
     }
   ],
   "engine_and_links": {
     "math": {
-      "total": 17693,
-      "passed": 17693,
+      "total": 17691,
+      "passed": 17691,
       "failed": 0
     },
     "mermaid": {
@@ -138397,7 +138426,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17693,
+      "checked_math_expressions": 17691,
       "failed": 0,
       "observations": [
         {
