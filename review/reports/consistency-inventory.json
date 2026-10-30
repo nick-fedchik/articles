@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T13:08:13Z",
-  "baseline_commit": "3c00f9ce752dda3d973d4876e282ae1fc4602fcc",
+  "at": "2026-10-30T13:18:28Z",
+  "baseline_commit": "25408b61bac032596fd389c9ddf45bdaea7c9fb4",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -138281,53 +138281,7 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [
-    {
-      "path": "ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md",
-      "before_sha256": "19143775c034569aacd1d21289806a827fb0fd40765c77b10beb3a08e33de160",
-      "after_sha256": "6183bfec5cf692233e1ec49f30b2bcc6447c71e69af47f279d6f6b1c337a3ef9",
-      "at": "2026-10-30T13:08:13Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md",
-      "before_sha256": "9bab603662832c7deb1e0ab7294b7951df29cd6a418d044299b1cf8e406ab939",
-      "after_sha256": "5ba98b6e35b00424279860e5635acc77a2fbda77bc92489aec59010e6871e399",
-      "at": "2026-10-30T13:08:13Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch40-registry.md",
-      "before_sha256": "d6c32a3af6be0ed16050d11defb8e75c56393fd51f0803b8c64073e8f3a73ef0",
-      "after_sha256": "10bdd4dc851e4552d277a59ba5f6ffff0d24121b3edb59a84e5d8f73aa12017a",
-      "at": "2026-10-30T13:08:13Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L2-system/ch40-L2-system.md",
-      "before_sha256": "979bf1bee517f04682199115cb6d65c14ef745e76a22a71a9fbfdbda3eb4a11a",
-      "after_sha256": "c9e01f8b0c92159796d1ee05bb2f7832de2f8b1170ead4fa5284addfa0e4b8b8",
-      "at": "2026-10-30T13:08:13Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L3-component/ch40-L3-component.md",
-      "before_sha256": "0d7681e46a33f2e401b2efe3d44c51fbe2e7499bc076cb528df2cf4bc1743301",
-      "after_sha256": "524293560aa6336922a6e6135b642599a931638eed0cbcc2e3b97316373362cf",
-      "at": "2026-10-30T13:08:13Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    }
-  ],
+  "input_transitions_from_current_baseline": [],
   "engine_and_links": {
     "math": {
       "total": 17714,
