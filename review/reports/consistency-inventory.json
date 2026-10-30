@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:47:05Z",
-  "baseline_commit": "3a38dbd84367ae95d0e312683ac6adf2851aafd5",
+  "at": "2026-10-30T14:49:49Z",
+  "baseline_commit": "8dc7876c47c5a0b3c6852a1140aebd62c2d0c507",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -138369,26 +138369,7 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [
-    {
-      "path": "ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md",
-      "before_sha256": "40245b03943fe7955329fdce77631240627d164ff87f8bcfd26ea1f85fc83109",
-      "after_sha256": "278d603207f81856c2143447c165cee90aecde52351d1ba96eb30cee00c20978",
-      "at": "2026-10-30T14:47:05Z",
-      "by": "main-editor",
-      "reason": "Bounded C7 correction: restrict CH15 Lineage(V) to documents present before the immutable snapshot transaction-time cutoff, so later revocations cannot rewrite historical status",
-      "evidence": "review/reports/consistency-c7-ch11-20.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch15-registry.md",
-      "before_sha256": "78981e300fa90e0996702faa389174a1a0fdb56bae818cd8effc2c3a1dbb4f53",
-      "after_sha256": "53b37a8faa68ca230bbc26478a48c2d6a4558596a8ba3ab47832884c485dce20",
-      "at": "2026-10-30T14:47:05Z",
-      "by": "main-editor",
-      "reason": "Bounded C7 correction: restrict CH15 Lineage(V) to documents present before the immutable snapshot transaction-time cutoff, so later revocations cannot rewrite historical status",
-      "evidence": "review/reports/consistency-c7-ch11-20.md"
-    }
-  ],
+  "input_transitions_from_current_baseline": [],
   "engine_and_links": {
     "math": {
       "total": 17693,
