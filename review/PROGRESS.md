@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T14:24:20Z
+Generated UTC: 2026-10-30T14:28:10Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -145,7 +145,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 07: [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](../ExpertSystem/ch07-knowledge-base-typology.md) | `570e9d100930bfbda094e499d00c202885504052ec941fcf2eb132bd064d8c37` | stale |
 | 08: [Глава 8. Інженерні артефакти як дані експертної системи](../ExpertSystem/ch08-engineering-artifacts-as-data.md) | `4675a5fb956b8951e4df07f6a4cd1034d4cb7fb0a6d7319f23e13d0d57ed4dfc` | stale |
 | 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `0586635713b7dbb0cd347a15142d7642b4d896f6f5cad718eac47d677e39c8f3` | stale |
-| 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `f78f1519d802c6c6bcdea52da5dea78a9b4675a896825c59a6c6265a8eee1eee` | stale |
+| 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `7c0ba057432aafce8d1c35df29c986c7c86c21ba473199f904c7e20d2250ceca` | stale |
 | 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `b462c982fd083eca0411e82b5134ef56e958ebb985791fffcc5092e4b06c695a` | stale |
 | 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `967fe369f7080dfda14279e45c4694fe0a55b3297e1d67b8d29333cb94b9da89` | stale |
 | 13: [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](../ExpertSystem/ch13-language-variability-vs-determinism.md) | `373d9be70d54521876340fec2e079f19b626e702e24f7374348cbbf86b9323e5` | stale |

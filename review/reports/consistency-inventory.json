@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:24:14Z",
-  "baseline_commit": "a2e4c17b1a6c990fbe3421ef6cd7bfa87a534126",
+  "at": "2026-10-30T14:28:04Z",
+  "baseline_commit": "da3c2e67f468c0fa9d5b6fe92fa16a3b81d380d7",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -17564,7 +17564,7 @@
     },
     {
       "path": "ExpertSystem/ch10-knowledge-acquisition-systems.md",
-      "sha256": "f78f1519d802c6c6bcdea52da5dea78a9b4675a896825c59a6c6265a8eee1eee",
+      "sha256": "7c0ba057432aafce8d1c35df29c986c7c86c21ba473199f904c7e20d2250ceca",
       "line_count": 1658,
       "chapter": 10,
       "scan_kind": "lexical_routing_only",
@@ -17572,7 +17572,7 @@
       "axes": {
         "C1": {
           "review_status": "not_completed",
-          "matching_line_count": 22,
+          "matching_line_count": 21,
           "candidate_line_ranges": [
             [
               130,
@@ -17609,10 +17609,6 @@
             [
               555,
               555
-            ],
-            [
-              571,
-              571
             ],
             [
               576,
@@ -17662,7 +17658,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 9,
+          "matching_line_count": 10,
           "candidate_line_ranges": [
             [
               97,
@@ -17687,6 +17683,10 @@
             [
               545,
               545
+            ],
+            [
+              571,
+              571
             ],
             [
               575,
@@ -17992,7 +17992,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 66,
+          "matching_line_count": 65,
           "candidate_line_ranges": [
             [
               13,
@@ -18049,10 +18049,6 @@
             [
               558,
               558
-            ],
-            [
-              571,
-              571
             ],
             [
               576,
@@ -138363,28 +138359,19 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md",
-      "before_sha256": "daa046e6df9fd63ebaef3037194e7bc8a17ccea45287cd0502ff6af0542fb19d",
-      "after_sha256": "dacdc54b3ba4a44b0f6c3025e609a32b356171a4b488c2f32a767dd1b1e5b218",
-      "at": "2026-10-30T14:24:14Z",
+      "path": "ExpertSystem/ch10-knowledge-acquisition-systems.md",
+      "before_sha256": "f78f1519d802c6c6bcdea52da5dea78a9b4675a896825c59a6c6265a8eee1eee",
+      "after_sha256": "7c0ba057432aafce8d1c35df29c986c7c86c21ba473199f904c7e20d2250ceca",
+      "at": "2026-10-30T14:28:04Z",
       "by": "main-editor",
-      "reason": "Bounded C5 correction in CH36 distinguishing simplified 2x-rule floor from full three-state condition coverage; 300 ms is a conditional estimate",
-      "evidence": "review/reports/consistency-c5-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch36-registry.md",
-      "before_sha256": "400bd30a2bb464f64bf77ad804adda1e7af558990acd50ee0fcc967207558d02",
-      "after_sha256": "7ef15c1e9a0c797911af7d81750fdf153bfce915e59c100bbcac85741daeedcd",
-      "at": "2026-10-30T14:24:14Z",
-      "by": "main-editor",
-      "reason": "Bounded C5 correction in CH36 distinguishing simplified 2x-rule floor from full three-state condition coverage; 300 ms is a conditional estimate",
-      "evidence": "review/reports/consistency-c5-ch31-40.md"
+      "reason": "Bounded C6 arithmetic reconciliation: CH10 reports 862+876=1738 but incompatible coverage percentages and 618/1492 restored-total claims; preserve as unresolved pending source ledger",
+      "evidence": "review/reports/consistency-c6-ch01-10.md"
     }
   ],
   "engine_and_links": {
     "math": {
-      "total": 17694,
-      "passed": 17694,
+      "total": 17696,
+      "passed": 17696,
       "failed": 0
     },
     "mermaid": {
@@ -138399,7 +138386,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17694,
+      "checked_math_expressions": 17696,
       "failed": 0,
       "observations": [
         {
