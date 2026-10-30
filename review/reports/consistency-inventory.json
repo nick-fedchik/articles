@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:07:51Z",
-  "baseline_commit": "c3c526bd0ab365d3a0e77deff47ac4d734fd6239",
+  "at": "2026-10-30T14:11:14Z",
+  "baseline_commit": "1ec42023d7c136259b670eb0cde77234a81a4b70",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -19778,7 +19778,7 @@
     },
     {
       "path": "ExpertSystem/ch12-linguistic-analysis-and-local-models.md",
-      "sha256": "fd685e02cb0d520b07ea16efc1ba99af24ecc45c6084b76f9ced0d3715cd7c2f",
+      "sha256": "967fe369f7080dfda14279e45c4694fe0a55b3297e1d67b8d29333cb94b9da89",
       "line_count": 1254,
       "chapter": 12,
       "scan_kind": "lexical_routing_only",
@@ -20222,7 +20222,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 90,
+          "matching_line_count": 89,
           "candidate_line_ranges": [
             [
               13,
@@ -20263,10 +20263,6 @@
             [
               66,
               66
-            ],
-            [
-              142,
-              142
             ],
             [
               181,
@@ -20564,7 +20560,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 72,
+          "matching_line_count": 73,
           "candidate_line_ranges": [
             [
               9,
@@ -20589,6 +20585,10 @@
             [
               127,
               127
+            ],
+            [
+              142,
+              142
             ],
             [
               144,
@@ -138325,11 +138325,21 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [],
+  "input_transitions_from_current_baseline": [
+    {
+      "path": "ExpertSystem/ch12-linguistic-analysis-and-local-models.md",
+      "before_sha256": "fd685e02cb0d520b07ea16efc1ba99af24ecc45c6084b76f9ced0d3715cd7c2f",
+      "after_sha256": "967fe369f7080dfda14279e45c4694fe0a55b3297e1d67b8d29333cb94b9da89",
+      "at": "2026-10-30T14:11:14Z",
+      "by": "main-editor",
+      "reason": "Bounded C5 correction in CH12 replacing unsupported 1,000-page latency guarantee with an explicit conditional calculation",
+      "evidence": "review/reports/consistency-c5-ch11-20.md"
+    }
+  ],
   "engine_and_links": {
     "math": {
-      "total": 17711,
-      "passed": 17711,
+      "total": 17714,
+      "passed": 17714,
       "failed": 0
     },
     "mermaid": {
@@ -138344,7 +138354,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17711,
+      "checked_math_expressions": 17714,
       "failed": 0,
       "observations": [
         {

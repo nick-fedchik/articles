@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T14:07:51Z.
+Стан UTC: 2026-10-30T14:11:14Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -19,7 +19,7 @@
 | [09](../../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | 1193 | 22 | 5 | 7 | 26 | 13 | 26 | 26 | 19 | C4 search of standard scope; no specific correction accepted |
 | [10](../../ExpertSystem/ch10-knowledge-acquisition-systems.md) | 1658 | 22 | 9 | 13 | 59 | 66 | 95 | 116 | 37 | §1.1: artifact strata classify function, not legal precedence |
 | [11](../../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | 659 | 1 | 31 | 15 | 16 | 5 | 51 | 5 | 31 | §5/§10: conditional falsification protocol and project-specific risk threshold |
-| [12](../../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | 1254 | 34 | 18 | 9 | 51 | 90 | 72 | 42 | 24 | §6/§10: authorial confidence parameter and separate retrieval/release gates |
+| [12](../../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | 1254 | 34 | 18 | 9 | 51 | 89 | 73 | 42 | 24 | §6/§10: authorial confidence parameter and separate retrieval/release gates |
 | [13](../../ExpertSystem/ch13-language-variability-vs-determinism.md) | 818 | 5 | 17 | 9 | 45 | 17 | 40 | 6 | 12 | §1.3: authorial RRF k and candidate-only Exact-ID bypass |
 | [14](../../ExpertSystem/ch14-requirements-detection-and-formalization.md) | 1063 | 25 | 5 | 40 | 132 | 18 | 37 | 13 | 17 | §1.2–1.2.1: застосовність, профільний ранг і Fail-Closed |
 | [15](../../ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | 1740 | 66 | 16 | 48 | 90 | 101 | 69 | 56 | 34 | §1: heterogeneous KB sources framed as authorial architecture for applicable projects |

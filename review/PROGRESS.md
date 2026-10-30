@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T14:07:56Z
+Generated UTC: 2026-10-30T14:11:20Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -147,7 +147,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `0586635713b7dbb0cd347a15142d7642b4d896f6f5cad718eac47d677e39c8f3` | stale |
 | 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `f78f1519d802c6c6bcdea52da5dea78a9b4675a896825c59a6c6265a8eee1eee` | stale |
 | 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `b462c982fd083eca0411e82b5134ef56e958ebb985791fffcc5092e4b06c695a` | stale |
-| 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `fd685e02cb0d520b07ea16efc1ba99af24ecc45c6084b76f9ced0d3715cd7c2f` | stale |
+| 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `967fe369f7080dfda14279e45c4694fe0a55b3297e1d67b8d29333cb94b9da89` | stale |
 | 13: [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](../ExpertSystem/ch13-language-variability-vs-determinism.md) | `373d9be70d54521876340fec2e079f19b626e702e24f7374348cbbf86b9323e5` | stale |
 | 14: [Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів](../ExpertSystem/ch14-requirements-detection-and-formalization.md) | `71d65378c2da336a04faa97f1c8d3872d863bfed698e9eceec9ffdbc45aa7f27` | stale |
 | 15: [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](../ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | `40245b03943fe7955329fdce77631240627d164ff87f8bcfd26ea1f85fc83109` | stale |
