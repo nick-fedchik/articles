@@ -12581,7 +12581,7 @@
     {
       "number": 38,
       "file": "ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md",
-      "input_sha256": "19143775c034569aacd1d21289806a827fb0fd40765c77b10beb3a08e33de160",
+      "input_sha256": "6183bfec5cf692233e1ec49f30b2bcc6447c71e69af47f279d6f6b1c337a3ef9",
       "title": "Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей",
       "h2_titles": [
         "Анотація",
@@ -12683,9 +12683,9 @@
         871
       ],
       "revalidation": {
-        "at": "2026-10-30T08:30:45Z",
-        "evidence": "review/reports/consistency-initial-package.md",
-        "scope": "Current structure/hash only; historical reading not reaccepted"
+        "at": "2026-10-30T13:08:13Z",
+        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -12813,6 +12813,67 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/consistency-initial-package.md"
+        },
+        {
+          "at": "2026-10-30T13:08:13Z",
+          "input_sha256": "19143775c034569aacd1d21289806a827fb0fd40765c77b10beb3a08e33de160",
+          "h2_titles": [
+            "Анотація",
+            "1. Анатомія машинної галюцинації: чому мовна модель не здатна вилікувати себе сама",
+            "2. Детермінована доказова терапія: дворівневий шлюз нульових галюцинацій",
+            "3. Епістемічний дефіцит: відкритий світ і шлюз безпечної відмови",
+            "4. Абдуктивні замикання за Пірсом: подолання неповноти без конфабуляцій",
+            "5. Предикатне екранування нейромереж: предикатні щити",
+            "6. Зворотне лікування моделей: навчання та машинне забування на верифікованих знаннях",
+            "7. Програмна реалізація мовою Go: модуль `antihallucination`",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            21,
+            158,
+            322,
+            466,
+            501,
+            526,
+            561,
+            817,
+            830,
+            849,
+            871
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              944
+            ],
+            "h2_line_numbers": [
+              13,
+              21,
+              158,
+              320,
+              464,
+              499,
+              524,
+              559,
+              815,
+              854,
+              867,
+              881,
+              900,
+              922
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
         }
       ]
     },
@@ -13066,7 +13127,7 @@
     {
       "number": 40,
       "file": "ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md",
-      "input_sha256": "9bab603662832c7deb1e0ab7294b7951df29cd6a418d044299b1cf8e406ab939",
+      "input_sha256": "5ba98b6e35b00424279860e5635acc77a2fbda77bc92489aec59010e6871e399",
       "title": "Глава 40. Розподілена архітектура доказової експертної системи: епістемічна SOA, семантична маршрутизація, ієрархія пам'яті та багатоджерельний дефезитивний арбітраж",
       "h2_titles": [
         "Анотація",
@@ -13181,7 +13242,7 @@
         "full_text_reviewed": false
       },
       "source_task": "MAP-04",
-      "current_source_line_count": 993,
+      "current_source_line_count": 994,
       "current_h2_line_numbers": [
         12,
         20,
@@ -13189,18 +13250,18 @@
         136,
         204,
         377,
-        505,
-        613,
-        761,
-        773,
-        904,
-        919,
-        946,
-        975
+        506,
+        614,
+        762,
+        774,
+        905,
+        920,
+        947,
+        976
       ],
       "revalidation": {
-        "at": "2026-10-30T08:46:09Z",
-        "evidence": "review/reports/consistency-c4-normative-priority.md",
+        "at": "2026-10-30T13:08:13Z",
+        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
         "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
@@ -13408,6 +13469,73 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/consistency-c4-normative-priority.md"
+        },
+        {
+          "at": "2026-10-30T13:08:13Z",
+          "input_sha256": "9bab603662832c7deb1e0ab7294b7951df29cd6a418d044299b1cf8e406ab939",
+          "h2_titles": [
+            "Анотація",
+            "1. Синтез монографії: від локальної моделі до референсного архітектурного прототипу",
+            "2. Епістемічна сервіс-орієнтована архітектура (Epistemic SOA) та тонкі клієнти",
+            "3. Семантичний брокер, препроцесор дискурсу та маршрутизація за змістом",
+            "4. Теоретична модель багаторівневої ієрархії пам'яті та подвійної буферизації",
+            "5. Багатоджерельна дефезитивна агрегація знань (ASPIC+ / Dung)",
+            "6. Розподілений тріаж дефіцитів знань: кластеризація SimHash, захист від виродження та автономний WAL-буфер",
+            "7. Незмінний журнал рішень (Immutable Decision Ledger) на Merkle-деревах",
+            "8. Інженерна матриця вибору технологій та масштабування за бюджетом проєкту",
+            "9. Холодна готовність динамічного реєстру знань (Tabula Rasa), чистота діагностичних доказів та субмілісекундний фонотактично-ентропійний санітайзер входу",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            12,
+            20,
+            95,
+            136,
+            204,
+            377,
+            505,
+            613,
+            761,
+            773,
+            904,
+            919,
+            946,
+            975
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1046
+            ],
+            "h2_line_numbers": [
+              12,
+              20,
+              95,
+              136,
+              204,
+              377,
+              505,
+              613,
+              759,
+              771,
+              902,
+              939,
+              954,
+              972,
+              999,
+              1028
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
         }
       ]
     }
