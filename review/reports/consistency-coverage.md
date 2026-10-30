@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T13:36:35Z.
+Стан UTC: 2026-10-30T13:42:34Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -13,7 +13,7 @@
 | [03](../../ExpertSystem/ch03-beyond-reference-information-systems.md) | 801 | 13 | 22 | 45 | 32 | 22 | 47 | 39 | 18 | Annotation/§2 MC/DC recommendation versus internal 100% release rule |
 | [04](../../ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md) | 1651 | 18 | 50 | 51 | 60 | 30 | 75 | 51 | 65 | C4 search of standards scope; no specific correction accepted |
 | [05](../../ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md) | 882 | 27 | 25 | 25 | 25 | 73 | 42 | 71 | 22 | §4.6: absent modal marker is not proof of informative status |
-| [06](../../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | 2267 | 3 | 57 | 96 | 59 | 20 | 80 | 45 | 44 | §7.5 and NOTE: tau_K threshold reframed as authorial profile, not ASIL default |
+| [06](../../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | 2267 | 3 | 59 | 96 | 59 | 20 | 80 | 46 | 44 | §7.5 and NOTE: tau_K threshold reframed as authorial profile, not ASIL default |
 | [07](../../ExpertSystem/ch07-knowledge-base-typology.md) | 1495 | 5 | 23 | 41 | 33 | 21 | 25 | 78 | 24 | C4 search of standard scope; no specific correction accepted |
 | [08](../../ExpertSystem/ch08-engineering-artifacts-as-data.md) | 1294 | 16 | 16 | 7 | 18 | 26 | 38 | 47 | 22 | §2 tau_trace authorial profile and §6 Coverage necessary/not-sufficient condition |
 | [09](../../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | 1193 | 22 | 5 | 7 | 26 | 13 | 26 | 26 | 19 | C4 search of standard scope; no specific correction accepted |

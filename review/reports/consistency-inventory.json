@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T13:36:35Z",
-  "baseline_commit": "81a64db383d956aa73d7fe443fd95aa261bdde7e",
+  "at": "2026-10-30T13:42:34Z",
+  "baseline_commit": "35e9a45814856af270ba7bf70c8a813142b25358",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -13560,7 +13560,7 @@
     },
     {
       "path": "ExpertSystem/ch06-applied-mathematics-for-expert-systems.md",
-      "sha256": "8588465e80c50364483549b336fd12f35a39687190d11b33dee7787fd2d768a3",
+      "sha256": "60c6d9eab3441cb5c1d0be60b7f4d061f07674a5c78d494965f799c589940015",
       "line_count": 2267,
       "chapter": 6,
       "scan_kind": "lexical_routing_only",
@@ -13586,7 +13586,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 57,
+          "matching_line_count": 59,
           "candidate_line_ranges": [
             [
               36,
@@ -13607,6 +13607,14 @@
             [
               438,
               438
+            ],
+            [
+              493,
+              493
+            ],
+            [
+              511,
+              511
             ],
             [
               538,
@@ -14768,7 +14776,7 @@
         },
         "C7": {
           "review_status": "not_completed",
-          "matching_line_count": 45,
+          "matching_line_count": 46,
           "candidate_line_ranges": [
             [
               1,
@@ -14837,6 +14845,10 @@
             [
               361,
               361
+            ],
+            [
+              493,
+              493
             ],
             [
               495,
@@ -54648,7 +54660,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch06-registry.md",
-      "sha256": "0758d2021d2de1af0bd35eead10a7f7129c848efa799e491f43361bc115c43e4",
+      "sha256": "7c174ddf2153155ebf97b7aa2b3df9a6db6042d7cc29251b913b203347fb5d4a",
       "line_count": 1343,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -54678,7 +54690,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 30,
+          "matching_line_count": 31,
           "candidate_line_ranges": [
             [
               36,
@@ -54711,6 +54723,10 @@
             [
               332,
               332
+            ],
+            [
+              355,
+              355
             ],
             [
               364,
@@ -138299,82 +138315,28 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
-      "before_sha256": "cb4c1bd5b4a4000fce3cfdcfe53d5be1b13cdc973828c21e62a35a3ba8b702a5",
-      "after_sha256": "2e628780f9d68aaa1c6f24391775747b878705486261a8878643820a273f57ae",
-      "at": "2026-10-30T13:36:35Z",
+      "path": "ExpertSystem/ch06-applied-mathematics-for-expert-systems.md",
+      "before_sha256": "8588465e80c50364483549b336fd12f35a39687190d11b33dee7787fd2d768a3",
+      "after_sha256": "60c6d9eab3441cb5c1d0be60b7f4d061f07674a5c78d494965f799c589940015",
+      "at": "2026-10-30T13:42:34Z",
       "by": "main-editor",
-      "reason": "Bounded C1 corrections in CH31, CH33, CH36, and CH37; full scientific review remains open",
-      "evidence": "review/reports/consistency-c1-ch31-40.md"
+      "reason": "Bounded C2 correction in CH06 separating deduction from execution authority; full review remains open",
+      "evidence": "review/reports/consistency-c2-ch01-10.md"
     },
     {
-      "path": "ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md",
-      "before_sha256": "e5bb619ecd10f316bd089b7f0faa138866453c038bbae873a69e6a9128d84eb8",
-      "after_sha256": "b5cecff90780fc9333b85ff77b44f62b83aa2ec98f7236be1bace2f1006fdf36",
-      "at": "2026-10-30T13:36:35Z",
+      "path": "ExpertSystem/registry/ch06-registry.md",
+      "before_sha256": "0758d2021d2de1af0bd35eead10a7f7129c848efa799e491f43361bc115c43e4",
+      "after_sha256": "7c174ddf2153155ebf97b7aa2b3df9a6db6042d7cc29251b913b203347fb5d4a",
+      "at": "2026-10-30T13:42:34Z",
       "by": "main-editor",
-      "reason": "Bounded C1 corrections in CH31, CH33, CH36, and CH37; full scientific review remains open",
-      "evidence": "review/reports/consistency-c1-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md",
-      "before_sha256": "a94082660f6f12f896ed10a6be92f90171c0b4d63b9bc1b7ad8b362b9459b4b0",
-      "after_sha256": "daa046e6df9fd63ebaef3037194e7bc8a17ccea45287cd0502ff6af0542fb19d",
-      "at": "2026-10-30T13:36:35Z",
-      "by": "main-editor",
-      "reason": "Bounded C1 corrections in CH31, CH33, CH36, and CH37; full scientific review remains open",
-      "evidence": "review/reports/consistency-c1-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/ch37-input-information-assessment-and-algorithmic-skepticism.md",
-      "before_sha256": "e57b0d900b6f710472935e9b98f3153fc34241b6ecbfda21c46ab46606bcb3fd",
-      "after_sha256": "7b62bfcc54d845a5602fd0666a1b75ca8c122ee4121f1a4e6c683a7da8703d62",
-      "at": "2026-10-30T13:36:35Z",
-      "by": "main-editor",
-      "reason": "Bounded C1 corrections in CH31, CH33, CH36, and CH37; full scientific review remains open",
-      "evidence": "review/reports/consistency-c1-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch31-registry.md",
-      "before_sha256": "fcf878a9db2e285e62bd64d4eb1812040d04d205ed4868cdc301abfa27b8e677",
-      "after_sha256": "a478d24817dd4b422672e27dda2ef98868322ff153c7109020a79e3b6dadd590",
-      "at": "2026-10-30T13:36:35Z",
-      "by": "main-editor",
-      "reason": "Bounded C1 corrections in CH31, CH33, CH36, and CH37; full scientific review remains open",
-      "evidence": "review/reports/consistency-c1-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch33-registry.md",
-      "before_sha256": "f917e7f0a41127f6370d397001f55aaa6407d8d8ce7560925d85b6ac53d28fec",
-      "after_sha256": "dbcb77d2cf1d6c81592461a842d7cb10f0e727a6b8cf956674673fbecda70ea3",
-      "at": "2026-10-30T13:36:35Z",
-      "by": "main-editor",
-      "reason": "Bounded C1 corrections in CH31, CH33, CH36, and CH37; full scientific review remains open",
-      "evidence": "review/reports/consistency-c1-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch36-registry.md",
-      "before_sha256": "6a2cf2be202d345a894164bc9f224f4408015df860c4028db07c5c67908c3d6a",
-      "after_sha256": "400bd30a2bb464f64bf77ad804adda1e7af558990acd50ee0fcc967207558d02",
-      "at": "2026-10-30T13:36:35Z",
-      "by": "main-editor",
-      "reason": "Bounded C1 corrections in CH31, CH33, CH36, and CH37; full scientific review remains open",
-      "evidence": "review/reports/consistency-c1-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch37-registry.md",
-      "before_sha256": "43335d9a2fd40b1a2d74bef04dbc7696b8561b7cede8c48311ba309d550ca479",
-      "after_sha256": "581c42990f5294720c2f1d86b141d4b2699d8d25ca6eeb18cf8b0d7496995925",
-      "at": "2026-10-30T13:36:35Z",
-      "by": "main-editor",
-      "reason": "Bounded C1 corrections in CH31, CH33, CH36, and CH37; full scientific review remains open",
-      "evidence": "review/reports/consistency-c1-ch31-40.md"
+      "reason": "Bounded C2 correction in CH06 separating deduction from execution authority; full review remains open",
+      "evidence": "review/reports/consistency-c2-ch01-10.md"
     }
   ],
   "engine_and_links": {
     "math": {
-      "total": 17713,
-      "passed": 17713,
+      "total": 17717,
+      "passed": 17717,
       "failed": 0
     },
     "mermaid": {
@@ -138389,7 +138351,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17713,
+      "checked_math_expressions": 17717,
       "failed": 0,
       "observations": [
         {
