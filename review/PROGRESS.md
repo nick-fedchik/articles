@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T15:15:48Z
+Generated UTC: 2026-10-30T15:47:16Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -146,9 +146,9 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 08: [Глава 8. Інженерні артефакти як дані експертної системи](../ExpertSystem/ch08-engineering-artifacts-as-data.md) | `4675a5fb956b8951e4df07f6a4cd1034d4cb7fb0a6d7319f23e13d0d57ed4dfc` | stale |
 | 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `a86e658019c42c626d48fb3d6b5dae426175b3d8bb14ace425b48d2367218a76` | stale |
 | 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `edec719c8a82ed703bcb97ffe4bf9bbb2fb1fc06315e92e894969d900e2e4566` | stale |
-| 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `b462c982fd083eca0411e82b5134ef56e958ebb985791fffcc5092e4b06c695a` | stale |
-| 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `967fe369f7080dfda14279e45c4694fe0a55b3297e1d67b8d29333cb94b9da89` | stale |
-| 13: [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](../ExpertSystem/ch13-language-variability-vs-determinism.md) | `373d9be70d54521876340fec2e079f19b626e702e24f7374348cbbf86b9323e5` | stale |
+| 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `a71accd4d8c25dee30eb2151c9f07c22e68450b80b436a9e05531d909cc34df6` | stale |
+| 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `f845fbd45ba24f8d079a7dc67f01a434f58a18d2911ebab8a37b7294a64c0472` | stale |
+| 13: [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](../ExpertSystem/ch13-language-variability-vs-determinism.md) | `1a350d310a994a6e1c61e340a78d498cbaee8080e861f0ca94d503bf1d21816f` | stale |
 | 14: [Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів](../ExpertSystem/ch14-requirements-detection-and-formalization.md) | `0540ea7cf9e8b396f437bf5d23c8041808c223b4c715c079ca1d220959c257ea` | stale |
 | 15: [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](../ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | `278d603207f81856c2143447c165cee90aecde52351d1ba96eb30cee00c20978` | stale |
 | 16: [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](../ExpertSystem/ch16-expert-systems-architecture.md) | `3e6e3381415acbe9708123c275eaf0734378ac65e06b5632a1724fa23a9d7b49` | stale |
