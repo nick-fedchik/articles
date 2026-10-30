@@ -11048,7 +11048,7 @@
     {
       "number": 32,
       "file": "ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md",
-      "input_sha256": "b5340f60fcb1f870e5e6784f60fa067926284c1e3cb12c1b84588dd32e73b952",
+      "input_sha256": "5dcf444bd437109aaad9b24f03f7044ecef8ac3867014b7ce87e013926accfa5",
       "title": "Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять",
       "h2_titles": [
         "Анотація",
@@ -11190,9 +11190,9 @@
         2665
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T11:44:50Z",
+        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -11352,13 +11352,90 @@
             ]
           },
           "evidence": "review/reports/technical-preparation.md"
+        },
+        {
+          "at": "2026-10-30T11:44:50Z",
+          "input_sha256": "b5340f60fcb1f870e5e6784f60fa067926284c1e3cb12c1b84588dd32e73b952",
+          "h2_titles": [
+            "Анотація",
+            "1. Пакет знань: як база знань стає артефактом випуску",
+            "2. Вибір сховища: порівнювати однакову роботу",
+            "3. Анатомія нульової десеріалізації: системні механізми `mmap(2)`",
+            "4. Специфікація бінарного формату ZNAV-INDEX v2",
+            "5. Алгоритм безвтратного інвертованого кластерування фактів",
+            "6. Паралельний стрімінговий конвеєр компіляції та побітова відтворюваність",
+            "7. Неперервне нейро-символьне збагачення бази знань",
+            "8. Інженерія знаннєвої щільності: індекс $`\\mathrm{KDI}`$ та епістемічне профілювання",
+            "9. Еталонна реалізація читача mmap-індексу на Go",
+            "10. Шардування незмінного пакета знань",
+            "11. Кеш-когерентний бінарний граф онтології (CSR) для миттєвої рефлексії меж знань на ARM64 (UMA) та FPGA",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            21,
+            200,
+            376,
+            566,
+            616,
+            808,
+            1203,
+            1256,
+            1351,
+            1636,
+            2323,
+            2549,
+            2562,
+            2618,
+            2665
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              2765
+            ],
+            "h2_line_numbers": [
+              13,
+              21,
+              200,
+              376,
+              566,
+              616,
+              808,
+              1203,
+              1256,
+              1351,
+              1636,
+              2323,
+              2549,
+              2585,
+              2598,
+              2622,
+              2678,
+              2725
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано. Розмітку математики в H2 збережено дослівно.",
+            "full_text_reviewed": false,
+            "heading_scan_line_range": [
+              1,
+              2765
+            ]
+          },
+          "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
         }
       ]
     },
     {
       "number": 33,
       "file": "ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md",
-      "input_sha256": "2bab2b033b2e6dcf141eda0514151149a67b6110ddcc506dedcde022cebbe4ea",
+      "input_sha256": "e5bb619ecd10f316bd089b7f0faa138866453c038bbae873a69e6a9128d84eb8",
       "title": "Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок",
       "h2_titles": [
         "Анотація",
@@ -11474,9 +11551,9 @@
         1555
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T11:44:50Z",
+        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -11549,6 +11626,73 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T11:44:50Z",
+          "input_sha256": "2bab2b033b2e6dcf141eda0514151149a67b6110ddcc506dedcde022cebbe4ea",
+          "h2_titles": [
+            "Анотація",
+            "1. Експертна система як постачальник знань і вчитель сторонніх систем",
+            "2. Постачання знань обробникам фізичних сигналів та сенсорної інформації",
+            "3. Навчання сторонніх систем: символьна дистиляція та верифікований курікулум",
+            "4. Формати, способи та технології міжсистемного обміну знаннями",
+            "5. Умови, правила збереження семантики та онтологічне узгодження",
+            "6. Розмежування доступу та безпека знань: решітка міток і селективне розкриття",
+            "7. Підтвердження фактів (Fact Attestation) та захист від отруєння знань",
+            "8. Зворотний зв'язок (Feedback Loop) та донавчання експертної системи",
+            "9. Програмна реалізація мовою Go: модуль xchange",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            21,
+            58,
+            120,
+            208,
+            329,
+            392,
+            502,
+            602,
+            628,
+            1499,
+            1511,
+            1532,
+            1555
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1634
+            ],
+            "h2_line_numbers": [
+              13,
+              21,
+              58,
+              120,
+              208,
+              329,
+              392,
+              502,
+              602,
+              628,
+              1499,
+              1533,
+              1545,
+              1559,
+              1580,
+              1603
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
         }
       ]
     },

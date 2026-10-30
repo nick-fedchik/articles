@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T11:22:44Z",
-  "baseline_commit": "8339b940a8c93b7a11288085742db665f1db75fd",
+  "at": "2026-10-30T11:44:50Z",
+  "baseline_commit": "af5243efc37e43e9821b6420ef26bc5c9f7e9f61",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -37934,7 +37934,7 @@
     },
     {
       "path": "ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md",
-      "sha256": "b5340f60fcb1f870e5e6784f60fa067926284c1e3cb12c1b84588dd32e73b952",
+      "sha256": "5dcf444bd437109aaad9b24f03f7044ecef8ac3867014b7ce87e013926accfa5",
       "line_count": 2705,
       "chapter": 32,
       "scan_kind": "lexical_routing_only",
@@ -38300,7 +38300,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 15,
+          "matching_line_count": 16,
           "candidate_line_ranges": [
             [
               9,
@@ -38323,7 +38323,7 @@
               1250
             ],
             [
-              1338,
+              1337,
               1338
             ],
             [
@@ -38424,7 +38424,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 54,
+          "matching_line_count": 53,
           "candidate_line_ranges": [
             [
               15,
@@ -38585,10 +38585,6 @@
             [
               2439,
               2439
-            ],
-            [
-              2444,
-              2444
             ],
             [
               2446,
@@ -40208,8 +40204,12 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 19,
+          "matching_line_count": 22,
           "candidate_line_ranges": [
+            [
+              15,
+              15
+            ],
             [
               17,
               17
@@ -40263,8 +40263,16 @@
               1316
             ],
             [
+              1336,
+              1336
+            ],
+            [
               2395,
               2395
+            ],
+            [
+              2439,
+              2439
             ],
             [
               2456,
@@ -40289,11 +40297,11 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "§8.2/§11.3: recall screen and SVD bound do not establish completeness/certification"
     },
     {
       "path": "ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md",
-      "sha256": "2bab2b033b2e6dcf141eda0514151149a67b6110ddcc506dedcde022cebbe4ea",
+      "sha256": "e5bb619ecd10f316bd089b7f0faa138866453c038bbae873a69e6a9128d84eb8",
       "line_count": 1586,
       "chapter": 33,
       "scan_kind": "lexical_routing_only",
@@ -40507,8 +40515,12 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 12,
+          "matching_line_count": 13,
           "candidate_line_ranges": [
+            [
+              27,
+              27
+            ],
             [
               85,
               85
@@ -40671,23 +40683,15 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 21,
+          "matching_line_count": 18,
           "candidate_line_ranges": [
             [
               15,
               15
             ],
             [
-              17,
-              17
-            ],
-            [
               25,
               25
-            ],
-            [
-              27,
-              27
             ],
             [
               34,
@@ -40744,10 +40748,6 @@
             [
               1460,
               1460
-            ],
-            [
-              1500,
-              1500
             ],
             [
               1504,
@@ -41183,11 +41183,15 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 27,
+          "matching_line_count": 28,
           "candidate_line_ranges": [
             [
               15,
               15
+            ],
+            [
+              17,
+              17
             ],
             [
               25,
@@ -41292,7 +41296,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "§1/§6.3: rule evaluator and signed proof receipt are not certification authority"
     },
     {
       "path": "ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md",
@@ -86769,7 +86773,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch32-registry.md",
-      "sha256": "62c406d894cafe6e05a83d6bc980291fba0e92136dd462fdb865e0bc74bae677",
+      "sha256": "4d94d9c98abab017d3f2c7aa5a09a6b59ccb71a98b9a27481375366555e4ed37",
       "line_count": 856,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -86777,7 +86781,7 @@
       "axes": {
         "C1": {
           "review_status": "not_completed",
-          "matching_line_count": 44,
+          "matching_line_count": 43,
           "candidate_line_ranges": [
             [
               3,
@@ -86930,10 +86934,6 @@
             [
               836,
               836
-            ],
-            [
-              848,
-              848
             ]
           ]
         },
@@ -87117,7 +87117,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 146,
+          "matching_line_count": 145,
           "candidate_line_ranges": [
             [
               3,
@@ -87554,16 +87554,12 @@
             [
               839,
               839
-            ],
-            [
-              848,
-              848
             ]
           ]
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 48,
+          "matching_line_count": 49,
           "candidate_line_ranges": [
             [
               20,
@@ -87728,6 +87724,10 @@
             [
               823,
               823
+            ],
+            [
+              848,
+              848
             ],
             [
               854,
@@ -87911,7 +87911,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 124,
+          "matching_line_count": 129,
           "candidate_line_ranges": [
             [
               1,
@@ -87920,6 +87920,10 @@
             [
               8,
               8
+            ],
+            [
+              20,
+              20
             ],
             [
               30,
@@ -87935,7 +87939,7 @@
             ],
             [
               53,
-              53
+              54
             ],
             [
               61,
@@ -88170,6 +88174,10 @@
               502
             ],
             [
+              508,
+              508
+            ],
+            [
               518,
               518
             ],
@@ -88258,7 +88266,7 @@
               666
             ],
             [
-              672,
+              671,
               672
             ],
             [
@@ -88292,6 +88300,10 @@
             [
               766,
               766
+            ],
+            [
+              780,
+              780
             ],
             [
               790,
@@ -88348,7 +88360,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch33-registry.md",
-      "sha256": "4ccf7352e24e0143cf318f605219dd47dde51413d65056219f08cca9b068b277",
+      "sha256": "f917e7f0a41127f6370d397001f55aaa6407d8d8ce7560925d85b6ac53d28fec",
       "line_count": 1107,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -88550,7 +88562,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 23,
+          "matching_line_count": 21,
           "candidate_line_ranges": [
             [
               22,
@@ -88570,11 +88582,7 @@
             ],
             [
               71,
-              72
-            ],
-            [
-              85,
-              85
+              71
             ],
             [
               168,
@@ -118762,7 +118770,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L2-system/ch32-L2-system.md",
-      "sha256": "f5031df9fc062c9c29925d5574f52631ebecec133bd96d16ab816213d1b19b5d",
+      "sha256": "280d8780550352c8c65562991607fce69828c0f43c2fae87a9c68cbc8ca0ab5a",
       "line_count": 186,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -118804,7 +118812,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 19,
+          "matching_line_count": 21,
           "candidate_line_ranges": [
             [
               23,
@@ -118821,6 +118829,10 @@
             [
               50,
               50
+            ],
+            [
+              55,
+              55
             ],
             [
               59,
@@ -118859,6 +118871,10 @@
               131
             ],
             [
+              136,
+              136
+            ],
+            [
               140,
               140
             ],
@@ -118886,7 +118902,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 25,
+          "matching_line_count": 24,
           "candidate_line_ranges": [
             [
               3,
@@ -118933,7 +118949,7 @@
               101
             ],
             [
-              109,
+              110,
               110
             ],
             [
@@ -119016,7 +119032,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 19,
+          "matching_line_count": 20,
           "candidate_line_ranges": [
             [
               23,
@@ -119057,6 +119073,10 @@
             [
               104,
               104
+            ],
+            [
+              109,
+              109
             ],
             [
               113,
@@ -135151,7 +135171,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L3-component/ch32-L3-component.md",
-      "sha256": "53f9013ecda83f011e44d6b68078ec64392bf280f78c4f0b94cc0910ae4b1fb1",
+      "sha256": "ba4b732484f39ff81c24272e14ecd1cfefaddcd935cc537b0d2331b0d45c572e",
       "line_count": 224,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -138235,19 +138255,55 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch28-dual-mode-expert-systems.md",
-      "before_sha256": "1d9fd20552d6be926d80dc40063e81ae838bcaead8587a49494056670d8af64d",
-      "after_sha256": "4a3caeb63878c00da4f9b8c381d6a45246155511e6433556282fd49eba9592c0",
-      "at": "2026-10-30T11:22:44Z",
+      "path": "ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md",
+      "before_sha256": "b5340f60fcb1f870e5e6784f60fa067926284c1e3cb12c1b84588dd32e73b952",
+      "after_sha256": "5dcf444bd437109aaad9b24f03f7044ecef8ac3867014b7ce87e013926accfa5",
+      "at": "2026-10-30T11:44:50Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/requirements/L3-component/ch28-L3-component.md",
-      "before_sha256": "dadb9a99748071e3ee04c42fd918a3746baa58b4f0fcc71a96031f3836325bb6",
-      "after_sha256": "223941c1c9f8f7066c2bd3902ef8d4e1572b43da5b46abe3e3276b36e184b8b1",
-      "at": "2026-10-30T11:22:44Z",
+      "path": "ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md",
+      "before_sha256": "2bab2b033b2e6dcf141eda0514151149a67b6110ddcc506dedcde022cebbe4ea",
+      "after_sha256": "e5bb619ecd10f316bd089b7f0faa138866453c038bbae873a69e6a9128d84eb8",
+      "at": "2026-10-30T11:44:50Z",
+      "by": "main-editor",
+      "reason": "Formula macro compatibility correction; no full scientific rereading",
+      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch32-registry.md",
+      "before_sha256": "62c406d894cafe6e05a83d6bc980291fba0e92136dd462fdb865e0bc74bae677",
+      "after_sha256": "4d94d9c98abab017d3f2c7aa5a09a6b59ccb71a98b9a27481375366555e4ed37",
+      "at": "2026-10-30T11:44:50Z",
+      "by": "main-editor",
+      "reason": "Formula macro compatibility correction; no full scientific rereading",
+      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch33-registry.md",
+      "before_sha256": "4ccf7352e24e0143cf318f605219dd47dde51413d65056219f08cca9b068b277",
+      "after_sha256": "f917e7f0a41127f6370d397001f55aaa6407d8d8ce7560925d85b6ac53d28fec",
+      "at": "2026-10-30T11:44:50Z",
+      "by": "main-editor",
+      "reason": "Formula macro compatibility correction; no full scientific rereading",
+      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
+    },
+    {
+      "path": "ExpertSystem/requirements/L2-system/ch32-L2-system.md",
+      "before_sha256": "f5031df9fc062c9c29925d5574f52631ebecec133bd96d16ab816213d1b19b5d",
+      "after_sha256": "280d8780550352c8c65562991607fce69828c0f43c2fae87a9c68cbc8ca0ab5a",
+      "at": "2026-10-30T11:44:50Z",
+      "by": "main-editor",
+      "reason": "Formula macro compatibility correction; no full scientific rereading",
+      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
+    },
+    {
+      "path": "ExpertSystem/requirements/L3-component/ch32-L3-component.md",
+      "before_sha256": "53f9013ecda83f011e44d6b68078ec64392bf280f78c4f0b94cc0910ae4b1fb1",
+      "after_sha256": "ba4b732484f39ff81c24272e14ecd1cfefaddcd935cc537b0d2331b0d45c572e",
+      "at": "2026-10-30T11:44:50Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
