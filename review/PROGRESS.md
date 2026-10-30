@@ -1,11 +1,11 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T08:46:15Z
+Generated UTC: 2026-10-30T09:58:28Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
 Counts describe recorded execution, not scientific truth or verified book quality.
-Registered: 40/40 chapter records; 16 companions; 102 tasks; 0 recorded completed.
+Registered: 40/40 chapter records; 16 companions; 103 tasks; 0 recorded completed.
 
 ## Findings
 
@@ -129,7 +129,8 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | CONS-01 | main-editor | paused | All-book thematic consistency routing and initial bounded checks | Historical result has changed inputs/outputs; no automatic reacceptance. | Three root groups locally corrected; residual C1-C8 dependencies explicit in review/reports/consistency-initial-package.md | Revalidate the original scope or continue the C4 residual noted in review/reports/consistency-c4-normative-priority.md |
 | CORR-01 | main-editor | paused | Bounded profile, hypothesis, grounding and authority corrections | Historical result has changed inputs/outputs; no automatic reacceptance. | Three root groups locally corrected; residual C1-C8 dependencies explicit in review/reports/consistency-initial-package.md | Revalidate the original scope or continue the C4 residual noted in review/reports/consistency-c4-normative-priority.md |
 | NORM-01 | main-editor | paused | Bounded C4 applicability and modality correction package | C4 local slice recorded; this is not full reading or scientific acceptance. | Static source-class tiers and modal-only undercutting were bounded by applicability and profile precedence; see review/reports/consistency-c4-normative-priority.md | Local direct dependencies were corrected and checked; full C4 review, external sources and CH30 remain open. |
-| NORM-02 | main-editor | pending | Continue all-book C4 reading and dependency checks | C4 local slice recorded; this is not full reading or scientific acceptance. | Static source-class tiers and modal-only undercutting were bounded by applicability and profile precedence; see review/reports/consistency-c4-normative-priority.md | Begin with full CH31 review and CH30 normative examples, then verify found repetitions in the remaining chapters. |
+| NORM-02 | main-editor | pending | Continue all-book C4 reading and dependency checks | No work was accepted on the previous inputs; hashes rebased before start. | Bounded local C4 corrections in CH05/10/14/18/29/30/31/34/40. Full chapter reviews, official sources, and CH31 registry count 74/71 remain open; see review/reports/consistency-c4-normative-priority.md | Complete full CH31 review; recalculate its registry taxonomy; verify CH30 standard clauses; continue C4 through all remaining chapters. |
+| MATH-01 | main-editor | paused | Correct the reported GitHub macro discrepancy and add an observed-only regression | Active Ukrainian formula sources and validator corrected; local checks passed. | MathJax accepted operatorname while the author observed a GitHub rejection; this does not establish a complete GitHub macro policy. | Actual GitHub rendering remains deferred to S7; translations remain frozen. |
 
 ## All 40 Chapters
 
@@ -139,12 +140,12 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 02: [Глава 2. Філософія для інженера: що машина має право називати знанням](../ExpertSystem/ch02-epistemology-of-machine-knowledge.md) | `323ef2b80b8eb0dc4a9f9bf590336e7544dbb9c3e9ac806ad65bc49e341f7e2a` | stale |
 | 03: [Глава 3. Чим експертна система відрізняється від інформаційно-довідкової системи](../ExpertSystem/ch03-beyond-reference-information-systems.md) | `56b7a50a2cdc7047fcf8b8e21aa418560489baac73541641c27e69be9d6b79c7` | stale |
 | 04: [Глава 4. Еволюція експертних систем: від теореми Байєса до доказових рішень ШІ](../ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md) | `09d601ebf72593878898354a1e089ecbe3fed8e276d4c6d7df4e548e111b35d6` | stale |
-| 05: [Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять](../ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md) | `b2d9456a2e010907b80f6d7bca6e4e5fc95005ca89ae08e9ee42a35fb6d3a048` | stale |
+| 05: [Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять](../ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md) | `5c9ee9d7cadb1162f4beb60be4a9a7d8e364c35c29073ad80f8c05ac51cda5ee` | stale |
 | 06: [Глава 6. Прикладна математика експертних систем: правила, ймовірності, графи та причинність](../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | `d140a6fba5fa1f6a36d3985425055137e83bb7a9a438a47594cc698c3fa748e4` | stale |
 | 07: [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](../ExpertSystem/ch07-knowledge-base-typology.md) | `570e9d100930bfbda094e499d00c202885504052ec941fcf2eb132bd064d8c37` | stale |
 | 08: [Глава 8. Інженерні артефакти як дані експертної системи](../ExpertSystem/ch08-engineering-artifacts-as-data.md) | `676b38535555e97ffeaabf068ec94949a45a41d00c7822708662be5393fc45a8` | stale |
 | 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `0586635713b7dbb0cd347a15142d7642b4d896f6f5cad718eac47d677e39c8f3` | stale |
-| 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `331de690b81941a2afd1a1feb1647abb3bd2c0ac1abe26f5bc0a2e4dc88fd2f9` | stale |
+| 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `f78f1519d802c6c6bcdea52da5dea78a9b4675a896825c59a6c6265a8eee1eee` | stale |
 | 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `b462c982fd083eca0411e82b5134ef56e958ebb985791fffcc5092e4b06c695a` | stale |
 | 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `fd685e02cb0d520b07ea16efc1ba99af24ecc45c6084b76f9ced0d3715cd7c2f` | stale |
 | 13: [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](../ExpertSystem/ch13-language-variability-vs-determinism.md) | `542febd82501ddad11dfc2fb396c97aeeaafa2a7d657508e8365ce6534eaea01` | stale |
@@ -152,23 +153,23 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 15: [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](../ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | `f5f6575164d8ab1f3736d0af4ff99fdcd64e269d0492066381fde3f0ff3c76c8` | stale |
 | 16: [Глава 16. Архітектура експертної системи: від формального знання до доказового рішення](../ExpertSystem/ch16-expert-systems-architecture.md) | `5dd7568a8a8a661230ff754599a2839d9d32cf5378e0325c605d6113bd7da353` | stale |
 | 17: [Глава 17. Технологічний стек: критерії вибору інструментів, мов програмування та рушіїв правил](../ExpertSystem/ch17-implementation-stack.md) | `593bcc6c3bdb138b805d67bd40ce355efafb53ca4c8dbee4808b0e6a7786fcc1` | stale |
-| 18: [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](../ExpertSystem/ch18-execution-infrastructure.md) | `b05cb42b304cf3b0f2fb504bdd80af271e3ab6be6a589982a11053e9fd5635d1` | stale |
-| 19: [Глава 19. Від запитання до доказу: пошук, прив'язка та перевірка твердження](../ExpertSystem/ch19-from-question-to-evidence.md) | `521dbcb1c615d6df776693235a1bdeb5cec7046d58cf63dd8b5cc1fccd4d1293` | stale |
+| 18: [Глава 18. Інфраструктура виконання: локальні моделі, апаратні прискорювачі, Edge та On-Premise](../ExpertSystem/ch18-execution-infrastructure.md) | `b8261fcd2ae0117cd86f222af580009edc637ff049f282bbe294363284f192b2` | stale |
+| 19: [Глава 19. Від запитання до доказу: пошук, прив'язка та перевірка твердження](../ExpertSystem/ch19-from-question-to-evidence.md) | `fb11f36b8e26d5464948de74a0c2b29557a68b70d09d8e749d10992cd7f71416` | stale |
 | 20: [Глава 20. Рушій пояснень: рішення, відмова та межі компетентності](../ExpertSystem/ch20-explanation-engine.md) | `30a464f2e9865597358529ac3955ee8d0789db69d0f63c8a13b30cc58e19b9c2` | stale |
 | 21: [Глава 21. Від рекомендації до дії: контроль повноважень і безпечне виконання у виробничому середовищі](../ExpertSystem/ch21-from-recommendation-to-action.md) | `f922f3d8d696f6e317270676ffdec13da818137215d4ba6f4d1436f61c71ca5f` | stale |
 | 22: [Глава 22. Кібернетичний цикл керування: сенсори, периферія та зворотний зв'язок](../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | `c685125cc94c13687db1bee85b06d652a4cccaed5c779737fb80051b34ab90ec` | stale |
-| 23: [Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил](../ExpertSystem/ch23-knowledge-base-verification.md) | `7be296e4396c9c28b9a4d8acba54677bc5fef94fe7c9ab76ace4f4712e185bc0` | stale |
+| 23: [Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил](../ExpertSystem/ch23-knowledge-base-verification.md) | `e711ae814ad9676a13b7b6ef5428e8b6d98f01be6ecc802e84e74b00e6fe4487` | stale |
 | 24: [Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти](../ExpertSystem/ch24-system-diagnosis.md) | `96671807449b892f81b40a46180fee92105c52b8b7ca422600ad0666120997ca` | stale |
 | 25: [Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій](../ExpertSystem/ch25-how-expert-systems-learn.md) | `132943422f24a7f7302c307fd54d3af28310185a90b0e1ca917f4fb0c600ffe3` | stale |
 | 26: [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](../ExpertSystem/ch26-continual-learning.md) | `b837a181e31894da34a8a48cbb151eddefef391d1b82bb4918d119626f74bdba` | stale |
 | 27: [Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів](../ExpertSystem/ch27-safety-case-gsn-synthesis.md) | `b18deeba757f054f2c277dcc5655e7015e4b431e0b0b2f214874b87ea12b6f88` | stale |
 | 28: [Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза](../ExpertSystem/ch28-dual-mode-expert-systems.md) | `1d9fd20552d6be926d80dc40063e81ae838bcaead8587a49494056670d8af64d` | stale |
-| 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `5466fbffa8fb0fce1b050826c6745af64481d671d426b0b8cd3f5e4fb911a658` | stale |
-| 30: [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | `9e54f24452e79e28b535186990b58499da266486b0f2f81226182900d5e36678` | stale |
-| 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `cb2393280692863c3f680e81b5cd2852ab2e1b52b5862770fbc7ec7626be42df` | stale |
+| 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `a7e9a1140b1a1c74f96174460f759fcf23a8847aa635f5422a51206184b57584` | stale |
+| 30: [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | `da5f9fdc21ddac6c9c5817ad24e60563fcadb5ddb87539fbf8455fe947ea92c8` | stale |
+| 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `a39a5057657c8a736a89948d15bb1bd70abdbde9f9871e19553bc32b2a4def11` | stale |
 | 32: [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | `b5340f60fcb1f870e5e6784f60fa067926284c1e3cb12c1b84588dd32e73b952` | stale |
 | 33: [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](../ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md) | `2bab2b033b2e6dcf141eda0514151149a67b6110ddcc506dedcde022cebbe4ea` | stale |
-| 34: [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | `c77b7b0fdf03a3d4d2226abba358fc86ba091485b8b5b3365e2f46507373a62a` | stale |
+| 34: [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | `1e6c1102b246f029df68264f869e903cd1c299e9f9554db8649b4b7b04f2d130` | stale |
 | 35: [Глава 35. Реактивна експертна система: події, відкликання й адаптація знань](../ExpertSystem/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md) | `96a52069ab3cbf02de924d4d3bf4b85d3a2fd13356fb7c05d53d3b188f09de4f` | stale |
 | 36: [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](../ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md) | `a94082660f6f12f896ed10a6be92f90171c0b4d63b9bc1b7ad8b362b9459b4b0` | stale |
 | 37: [Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність](../ExpertSystem/ch37-input-information-assessment-and-algorithmic-skepticism.md) | `e57b0d900b6f710472935e9b98f3153fc34241b6ecbfda21c46ab46606bcb3fd` | stale |
@@ -197,7 +198,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 
 ## Next Action
 
-Begin with full CH31 review and CH30 normative examples, then verify found repetitions in the remaining chapters.
+Complete full CH31 review; recalculate its registry taxonomy; verify CH30 standard clauses; continue C4 through all remaining chapters.
 Record permanent output path/SHA256 and acceptance.by/at/evidence in execution.json only after review.
 Keep task inputs separate from outputs. Changed inputs invalidate old results even after inventory refresh.
 Run `PYTHONDONTWRITEBYTECODE=1 python3 review/check_execution.py report` from the repository root.

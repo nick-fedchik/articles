@@ -242,18 +242,25 @@
       "remark-parse": "11.0.0",
       "unified": "11.0.5"
     },
-    "mathjax_packages": [
-      "base",
-      "ams",
-      "newcommand",
-      "configmacros",
-      "textmacros",
-      "boldsymbol",
-      "color"
-    ],
-    "mermaid_security": "strict"
+    "mermaid_security": "strict",
+    "mathjax_package_config": {
+      "removed": [
+        "noundefined",
+        "autoload",
+        "require"
+      ],
+      "added": [
+        "boldsymbol",
+        "color"
+      ],
+      "effective_default_packages_enumerated": false,
+      "github_configuration_checked": false
+    }
   },
-  "engine_controls": "PASS",
+  "engine_controls": {
+    "result": "PASS",
+    "evidence": "The original controls() assertions completed before report serialization; per-case counts were not recorded."
+  },
   "engine_and_links": {
     "math": {
       "total": 17814,
@@ -1447,5 +1454,10 @@
     "10 Go groups without embedded test blocks not executed",
     "One C fragment requires project types",
     "Python compilation only; specialized declarative languages not executed"
-  ]
+  ],
+  "metadata_erratum": {
+    "recorded_at": "2026-10-30",
+    "reason": "The former mathjax_packages array was a hard-coded list not passed to MathJax. Only the package add/remove deltas above are established by the runner source.",
+    "github_rendering": "NOT_CHECKED; local MathJax success is not a GitHub render result."
+  }
 }
