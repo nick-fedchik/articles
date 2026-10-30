@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:05:30Z",
-  "baseline_commit": "31652ec29a82e7718741175d8df054d6bf7b6972",
+  "at": "2026-10-30T14:07:51Z",
+  "baseline_commit": "c3c526bd0ab365d3a0e77deff47ac4d734fd6239",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -138325,26 +138325,7 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [
-    {
-      "path": "ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md",
-      "before_sha256": "1e6c1102b246f029df68264f869e903cd1c299e9f9554db8649b4b7b04f2d130",
-      "after_sha256": "cbf117401b1dbcc207ac6de6834a4861f7366a28544731e7c2c5a0958930545a",
-      "at": "2026-10-30T14:05:30Z",
-      "by": "main-editor",
-      "reason": "Bounded C3 corrections in CH34 separating model-relative candidates from physical causality; full review remains open",
-      "evidence": "review/reports/consistency-c3-ch31-40.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch34-registry.md",
-      "before_sha256": "c9099da06cf26777d2c226a4fb68850d52aa71963ad7dba744d6d15ef614967c",
-      "after_sha256": "b6475b1046af434a5fb1f5e4027a4a2fc8bb1e48915817386bb558a523dabb57",
-      "at": "2026-10-30T14:05:30Z",
-      "by": "main-editor",
-      "reason": "Bounded C3 corrections in CH34 separating model-relative candidates from physical causality; full review remains open",
-      "evidence": "review/reports/consistency-c3-ch31-40.md"
-    }
-  ],
+  "input_transitions_from_current_baseline": [],
   "engine_and_links": {
     "math": {
       "total": 17711,
