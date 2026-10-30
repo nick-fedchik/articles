@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T11:09:32Z",
-  "baseline_commit": "9f72b8dee514207db73a1452a59486b293998bf9",
+  "at": "2026-10-30T11:15:50Z",
+  "baseline_commit": "9aa3379313e807d04cbd77d87c3e9e065b3e7887",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -29908,7 +29908,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "Action gateway framed as authorial architecture; A0-A4 are not certification levels"
     },
     {
       "path": "ExpertSystem/ch22-cybernetics-edge-to-backend.md",
@@ -30839,8 +30839,8 @@
     },
     {
       "path": "ExpertSystem/ch23-knowledge-base-verification.md",
-      "sha256": "e711ae814ad9676a13b7b6ef5428e8b6d98f01be6ecc802e84e74b00e6fe4487",
-      "line_count": 1135,
+      "sha256": "f4dc0156461675914c062b970d230772ab9c16896edc61d5806323787188b128",
+      "line_count": 1136,
       "chapter": 23,
       "scan_kind": "lexical_routing_only",
       "full_text_reviewed": false,
@@ -30870,32 +30870,32 @@
               143
             ],
             [
-              961,
-              961
+              962,
+              962
             ],
             [
-              964,
-              964
+              965,
+              965
             ],
             [
-              999,
-              999
+              1000,
+              1000
             ],
             [
-              1024,
-              1024
+              1025,
+              1025
             ],
             [
-              1031,
-              1031
+              1032,
+              1032
             ],
             [
-              1046,
-              1046
+              1047,
+              1047
             ],
             [
-              1081,
-              1081
+              1082,
+              1082
             ]
           ]
         },
@@ -30904,36 +30904,36 @@
           "matching_line_count": 8,
           "candidate_line_ranges": [
             [
-              281,
-              281
+              282,
+              282
             ],
             [
-              284,
-              284
+              285,
+              285
             ],
             [
-              539,
-              539
+              540,
+              540
             ],
             [
-              615,
-              615
+              616,
+              616
             ],
             [
-              620,
-              620
+              621,
+              621
             ],
             [
-              784,
-              784
+              785,
+              785
             ],
             [
-              786,
-              786
+              787,
+              787
             ],
             [
-              798,
-              798
+              799,
+              799
             ]
           ]
         },
@@ -30978,160 +30978,160 @@
               258
             ],
             [
-              282,
-              282
+              283,
+              283
             ],
             [
-              291,
-              292
+              292,
+              293
             ],
             [
-              467,
-              467
+              468,
+              468
             ],
             [
-              516,
-              516
+              517,
+              517
             ],
             [
-              518,
-              518
+              519,
+              519
             ],
             [
-              520,
-              520
+              521,
+              521
             ],
             [
-              522,
-              522
+              523,
+              523
             ],
             [
-              525,
-              525
+              526,
+              526
             ],
             [
-              532,
-              532
+              533,
+              533
             ],
             [
-              603,
-              603
+              604,
+              604
             ],
             [
-              624,
-              624
+              625,
+              625
             ],
             [
-              640,
-              640
+              641,
+              641
             ],
             [
-              642,
-              642
+              643,
+              643
             ],
             [
-              668,
-              668
+              669,
+              669
             ],
             [
-              675,
-              675
+              676,
+              676
             ],
             [
-              689,
-              689
+              690,
+              690
             ],
             [
-              694,
-              694
+              695,
+              695
             ],
             [
-              700,
-              700
+              701,
+              701
             ],
             [
-              722,
-              722
+              723,
+              723
             ],
             [
-              726,
-              726
+              727,
+              727
             ],
             [
-              728,
-              729
+              729,
+              730
             ],
             [
-              749,
-              749
+              750,
+              750
             ],
             [
-              784,
-              784
+              785,
+              785
             ],
             [
-              793,
-              793
+              794,
+              794
             ],
             [
-              802,
-              802
+              803,
+              803
             ],
             [
-              816,
-              816
+              817,
+              817
             ],
             [
-              907,
-              907
+              908,
+              908
             ],
             [
-              929,
-              929
+              930,
+              930
             ],
             [
-              939,
-              939
+              940,
+              940
             ],
             [
-              955,
-              955
+              956,
+              956
             ],
             [
-              957,
-              957
+              958,
+              958
             ],
             [
-              1039,
-              1039
+              1040,
+              1040
             ],
             [
-              1041,
-              1042
+              1042,
+              1043
             ],
             [
-              1050,
-              1050
+              1051,
+              1051
             ],
             [
-              1052,
-              1052
+              1053,
+              1053
             ],
             [
-              1068,
-              1068
+              1069,
+              1069
             ],
             [
-              1096,
-              1096
+              1097,
+              1097
             ],
             [
-              1098,
-              1099
+              1099,
+              1100
             ],
             [
-              1119,
-              1119
+              1120,
+              1120
             ]
           ]
         },
@@ -31148,56 +31148,60 @@
               262
             ],
             [
-              279,
-              280
+              278,
+              278
             ],
             [
-              640,
-              640
+              281,
+              281
             ],
             [
-              793,
-              793
+              641,
+              641
             ],
             [
-              851,
-              852
+              794,
+              794
             ],
             [
-              860,
-              860
+              852,
+              853
             ],
             [
-              893,
-              893
+              861,
+              861
             ],
             [
-              945,
-              945
+              894,
+              894
             ],
             [
-              947,
-              947
+              946,
+              946
             ],
             [
-              971,
-              971
+              948,
+              948
             ],
             [
-              981,
-              981
+              972,
+              972
             ],
             [
-              999,
-              999
+              982,
+              982
             ],
             [
-              1016,
-              1016
+              1000,
+              1000
             ],
             [
-              1129,
-              1129
+              1017,
+              1017
+            ],
+            [
+              1130,
+              1130
             ]
           ]
         },
@@ -31218,44 +31222,44 @@
               143
             ],
             [
-              786,
-              786
+              787,
+              787
             ],
             [
-              827,
-              827
+              828,
+              828
             ],
             [
-              933,
-              933
+              934,
+              934
             ],
             [
-              961,
-              961
+              962,
+              962
             ],
             [
-              973,
-              973
+              974,
+              974
             ],
             [
-              978,
-              978
+              979,
+              979
             ],
             [
-              990,
-              990
+              991,
+              991
             ],
             [
-              999,
-              999
+              1000,
+              1000
             ],
             [
-              1020,
-              1020
+              1021,
+              1021
             ],
             [
-              1024,
-              1025
+              1025,
+              1026
             ]
           ]
         },
@@ -31276,76 +31280,76 @@
               199
             ],
             [
-              610,
-              610
+              611,
+              611
             ],
             [
-              751,
-              751
+              752,
+              752
             ],
             [
-              770,
-              770
+              771,
+              771
             ],
             [
-              784,
-              784
+              785,
+              785
             ],
             [
-              786,
-              786
+              787,
+              787
             ],
             [
-              865,
-              865
+              866,
+              866
             ],
             [
-              881,
-              881
+              882,
+              882
             ],
             [
-              931,
-              931
+              932,
+              932
             ],
             [
-              945,
-              945
+              946,
+              946
             ],
             [
-              955,
-              955
+              956,
+              956
             ],
             [
-              960,
-              960
+              961,
+              961
             ],
             [
-              971,
-              971
+              972,
+              972
             ],
             [
-              1001,
-              1001
+              1002,
+              1002
             ],
             [
-              1020,
-              1020
+              1021,
+              1021
             ],
             [
-              1024,
-              1024
+              1025,
+              1025
             ],
             [
-              1057,
-              1057
+              1058,
+              1058
             ],
             [
-              1078,
-              1078
+              1079,
+              1079
             ],
             [
-              1092,
-              1092
+              1093,
+              1093
             ]
           ]
         },
@@ -31410,130 +31414,130 @@
               262
             ],
             [
-              297,
-              297
+              298,
+              298
             ],
             [
-              299,
-              299
+              300,
+              300
             ],
             [
-              322,
-              322
+              323,
+              323
             ],
             [
-              532,
-              532
+              533,
+              533
             ],
             [
-              640,
-              640
+              641,
+              641
             ],
             [
-              642,
-              642
+              643,
+              643
             ],
             [
-              702,
-              702
+              703,
+              703
             ],
             [
-              745,
-              745
+              746,
+              746
             ],
             [
-              802,
-              802
+              803,
+              803
             ],
             [
-              810,
-              810
+              811,
+              811
             ],
             [
-              814,
-              814
+              815,
+              815
             ],
             [
-              816,
-              816
+              817,
+              817
             ],
             [
-              826,
-              826
+              827,
+              827
             ],
             [
-              829,
-              831
+              830,
+              832
             ],
             [
-              858,
-              858
+              859,
+              859
             ],
             [
-              873,
-              873
+              874,
+              874
             ],
             [
-              879,
-              879
+              880,
+              880
             ],
             [
-              890,
-              890
+              891,
+              891
             ],
             [
-              895,
-              895
+              896,
+              896
             ],
             [
-              897,
-              897
+              898,
+              898
             ],
             [
-              929,
-              929
+              930,
+              930
             ],
             [
-              938,
-              938
+              939,
+              939
             ],
             [
-              973,
-              973
+              974,
+              974
             ],
             [
-              978,
-              978
+              979,
+              979
             ],
             [
-              1006,
-              1006
+              1007,
+              1007
             ],
             [
-              1031,
-              1031
+              1032,
+              1032
             ],
             [
-              1035,
-              1035
+              1036,
+              1036
             ],
             [
-              1075,
-              1075
+              1076,
+              1076
             ],
             [
-              1079,
-              1079
+              1080,
+              1080
             ],
             [
-              1128,
-              1128
+              1129,
+              1129
             ]
           ]
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 10,
+          "matching_line_count": 13,
           "candidate_line_ranges": [
             [
               33,
@@ -31548,32 +31552,40 @@
               262
             ],
             [
+              278,
+              278
+            ],
+            [
               280,
-              280
+              281
             ],
             [
-              291,
-              291
+              283,
+              283
             ],
             [
-              322,
-              322
+              292,
+              292
             ],
             [
-              640,
-              640
+              323,
+              323
             ],
             [
-              642,
-              642
+              641,
+              641
             ],
             [
-              751,
-              751
+              643,
+              643
             ],
             [
-              797,
-              797
+              752,
+              752
+            ],
+            [
+              798,
+              798
             ]
           ]
         }
@@ -32209,7 +32221,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "Bounded C4 scan; attribution/genealogy requires separate S3 review"
     },
     {
       "path": "ExpertSystem/ch25-how-expert-systems-learn.md",
@@ -75398,7 +75410,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch23-registry.md",
-      "sha256": "7d32664dcb6c3d145bbbef51db9a4732aa6ba5ac349ab42cf5ee06ef2fd6ce31",
+      "sha256": "839d4d84f6e39caa6caa1b8865d68411d51c62fee3a6b7d634cf4501e5497ff1",
       "line_count": 1211,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -75736,12 +75748,8 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 33,
+          "matching_line_count": 31,
           "candidate_line_ranges": [
-            [
-              28,
-              28
-            ],
             [
               36,
               36
@@ -75767,11 +75775,11 @@
               414
             ],
             [
-              434,
-              434
+              433,
+              433
             ],
             [
-              436,
+              437,
               437
             ],
             [
@@ -76192,7 +76200,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 166,
+          "matching_line_count": 174,
           "candidate_line_ranges": [
             [
               1,
@@ -76205,6 +76213,10 @@
             [
               21,
               21
+            ],
+            [
+              28,
+              28
             ],
             [
               44,
@@ -76415,8 +76427,16 @@
               422
             ],
             [
-              434,
+              431,
+              431
+            ],
+            [
+              433,
               434
+            ],
+            [
+              436,
+              437
             ],
             [
               442,
@@ -76749,6 +76769,10 @@
             [
               1099,
               1099
+            ],
+            [
+              1132,
+              1134
             ],
             [
               1144,
@@ -138187,46 +138211,19 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch14-requirements-detection-and-formalization.md",
-      "before_sha256": "da42bac3f50c81dcb6df4a32d17562a3a857f3080be7b673c6a1c566cbbe5498",
-      "after_sha256": "71d65378c2da336a04faa97f1c8d3872d863bfed698e9eceec9ffdbc45aa7f27",
-      "at": "2026-10-30T11:09:32Z",
+      "path": "ExpertSystem/ch23-knowledge-base-verification.md",
+      "before_sha256": "e711ae814ad9676a13b7b6ef5428e8b6d98f01be6ecc802e84e74b00e6fe4487",
+      "after_sha256": "f4dc0156461675914c062b970d230772ab9c16896edc61d5806323787188b128",
+      "at": "2026-10-30T11:15:50Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md",
-      "before_sha256": "f5f6575164d8ab1f3736d0af4ff99fdcd64e269d0492066381fde3f0ff3c76c8",
-      "after_sha256": "40245b03943fe7955329fdce77631240627d164ff87f8bcfd26ea1f85fc83109",
-      "at": "2026-10-30T11:09:32Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/ch16-expert-systems-architecture.md",
-      "before_sha256": "5dd7568a8a8a661230ff754599a2839d9d32cf5378e0325c605d6113bd7da353",
-      "after_sha256": "3e6e3381415acbe9708123c275eaf0734378ac65e06b5632a1724fa23a9d7b49",
-      "at": "2026-10-30T11:09:32Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch15-registry.md",
-      "before_sha256": "f4192a1ff7e6ee510da8e2decc8dd9cb5c9924f5800df9c8a3a8f472dac6b80d",
-      "after_sha256": "78981e300fa90e0996702faa389174a1a0fdb56bae818cd8effc2c3a1dbb4f53",
-      "at": "2026-10-30T11:09:32Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch16-registry.md",
-      "before_sha256": "448835d4ef67f51e5ab36a9c566f3d6e24f1eadacda78cf7c39c8786f88a993f",
-      "after_sha256": "511cf62c94535e59ab054b0469767d35a995488c86c984e95479a5069cc7a4fb",
-      "at": "2026-10-30T11:09:32Z",
+      "path": "ExpertSystem/registry/ch23-registry.md",
+      "before_sha256": "7d32664dcb6c3d145bbbef51db9a4732aa6ba5ac349ab42cf5ee06ef2fd6ce31",
+      "after_sha256": "839d4d84f6e39caa6caa1b8865d68411d51c62fee3a6b7d634cf4501e5497ff1",
+      "at": "2026-10-30T11:15:50Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
@@ -138234,8 +138231,8 @@
   ],
   "engine_and_links": {
     "math": {
-      "total": 17719,
-      "passed": 17719,
+      "total": 17715,
+      "passed": 17715,
       "failed": 0
     },
     "mermaid": {
@@ -138250,7 +138247,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17719,
+      "checked_math_expressions": 17715,
       "failed": 0,
       "observations": [
         {

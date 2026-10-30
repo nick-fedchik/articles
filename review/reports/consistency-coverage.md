@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T11:09:32Z.
+Стан UTC: 2026-10-30T11:15:50Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -28,10 +28,10 @@
 | [18](../../ExpertSystem/ch18-execution-infrastructure.md) | 1610 | 9 | 22 | 18 | 47 | 179 | 121 | 50 | 19 | §4: deployment profiles selected by policy and applicability |
 | [19](../../ExpertSystem/ch19-from-question-to-evidence.md) | 1082 | 38 | 24 | 10 | 31 | 50 | 15 | 24 | 14 | §12: canonical hashing function notation |
 | [20](../../ExpertSystem/ch20-explanation-engine.md) | 896 | 7 | 22 | 67 | 20 | 26 | 40 | 18 | 6 | §3.1–3.1.4: профіль, прапорці та відкат |
-| [21](../../ExpertSystem/ch21-from-recommendation-to-action.md) | 819 | 13 | 17 | 4 | 6 | 4 | 47 | 25 | 11 | Не перевірено; лише пошуковий маршрут |
+| [21](../../ExpertSystem/ch21-from-recommendation-to-action.md) | 819 | 13 | 17 | 4 | 6 | 4 | 47 | 25 | 11 | Action gateway framed as authorial architecture; A0-A4 are not certification levels |
 | [22](../../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | 1112 | 12 | 14 | 28 | 13 | 53 | 79 | 42 | 11 | §10.1.2: опорний профіль; прямий запис реєстру |
-| [23](../../ExpertSystem/ch23-knowledge-base-verification.md) | 1135 | 12 | 8 | 53 | 17 | 15 | 23 | 46 | 10 | §9: distance operator notation; full mathematical claim not reviewed |
-| [24](../../ExpertSystem/ch24-system-diagnosis.md) | 1039 | 3 | 48 | 47 | 3 | 3 | 22 | 16 | 12 | Не перевірено; лише пошуковий маршрут |
+| [23](../../ExpertSystem/ch23-knowledge-base-verification.md) | 1136 | 12 | 8 | 53 | 17 | 15 | 23 | 46 | 13 | §9: distance operator notation; full mathematical claim not reviewed |
+| [24](../../ExpertSystem/ch24-system-diagnosis.md) | 1039 | 3 | 48 | 47 | 3 | 3 | 22 | 16 | 12 | Bounded C4 scan; attribution/genealogy requires separate S3 review |
 | [25](../../ExpertSystem/ch25-how-expert-systems-learn.md) | 1325 | 7 | 15 | 24 | 28 | 31 | 58 | 126 | 19 | Не перевірено; лише пошуковий маршрут |
 | [26](../../ExpertSystem/ch26-continual-learning.md) | 1058 | 1 | 14 | 24 | 10 | 15 | 63 | 34 | 11 | Не перевірено; лише пошуковий маршрут |
 | [27](../../ExpertSystem/ch27-safety-case-gsn-synthesis.md) | 813 | 23 | 17 | 8 | 10 | 9 | 21 | 35 | 8 | Не перевірено; лише пошуковий маршрут |
