@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T17:36:45Z",
-  "baseline_commit": "c5abf529799e5510a1536a546e41d9a7a98fbdaa",
+  "at": "2026-10-30T17:47:37Z",
+  "baseline_commit": "ba923608b71a9659cedeef53a9b2728cd53495a2",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -17544,7 +17544,7 @@
     },
     {
       "path": "ExpertSystem/ch10-knowledge-acquisition-systems.md",
-      "sha256": "edec719c8a82ed703bcb97ffe4bf9bbb2fb1fc06315e92e894969d900e2e4566",
+      "sha256": "72db6a6993e16b8abd70475980ece77b821c32671c5ec25b8429ce0408042ff2",
       "line_count": 1658,
       "chapter": 10,
       "scan_kind": "lexical_routing_only",
@@ -17738,7 +17738,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 58,
+          "matching_line_count": 61,
           "candidate_line_ranges": [
             [
               33,
@@ -17937,8 +17937,12 @@
               1425
             ],
             [
-              1449,
+              1448,
               1449
+            ],
+            [
+              1452,
+              1452
             ],
             [
               1463,
@@ -17947,6 +17951,10 @@
             [
               1484,
               1484
+            ],
+            [
+              1505,
+              1505
             ],
             [
               1513,
@@ -17968,7 +17976,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 65,
+          "matching_line_count": 64,
           "candidate_line_ranges": [
             [
               13,
@@ -18173,10 +18181,6 @@
             [
               1497,
               1497
-            ],
-            [
-              1505,
-              1505
             ]
           ]
         },
@@ -18966,7 +18970,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 37,
+          "matching_line_count": 38,
           "candidate_line_ranges": [
             [
               33,
@@ -19081,6 +19085,10 @@
               1401
             ],
             [
+              1418,
+              1418
+            ],
+            [
               1422,
               1422
             ],
@@ -19111,7 +19119,7 @@
           ]
         }
       },
-      "locally_checked_slice": "§1.1: artifact strata classify function, not legal precedence"
+      "locally_checked_slice": "Full C4 reread: §1.1 artifact provenance; §23.1 scope-gated conflict review; §24.1 KDI routes, not normative status"
     },
     {
       "path": "ExpertSystem/ch11-knowledge-elicitation-from-experts.md",
@@ -59308,7 +59316,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch10-registry.md",
-      "sha256": "40cb54945045402e7656b8fb4527cb7c53fae2b7128e1c0556c122a4d9b7e7d6",
+      "sha256": "2567b548c28afef6e989b816ba63aa574337dd343155c5c1bfc22b98a29d1a83",
       "line_count": 1157,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -59526,7 +59534,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 51,
+          "matching_line_count": 54,
           "candidate_line_ranges": [
             [
               45,
@@ -59669,8 +59677,16 @@
               922
             ],
             [
+              966,
+              967
+            ],
+            [
               999,
               999
+            ],
+            [
+              1002,
+              1002
             ],
             [
               1014,
@@ -59720,7 +59736,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 40,
+          "matching_line_count": 39,
           "candidate_line_ranges": [
             [
               30,
@@ -59857,10 +59873,6 @@
             [
               974,
               974
-            ],
-            [
-              1002,
-              1002
             ],
             [
               1142,
@@ -60410,7 +60422,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 171,
+          "matching_line_count": 172,
           "candidate_line_ranges": [
             [
               1,
@@ -60927,6 +60939,10 @@
             [
               920,
               920
+            ],
+            [
+              922,
+              922
             ],
             [
               932,
@@ -110532,7 +110548,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L2-system/ch10-L2-system.md",
-      "sha256": "b2da8b37d99f83266c43ff9080caa1166b3597ac7f63c4afbb67a284567a32f6",
+      "sha256": "2e3df47ad61e9c374921e8f7934cc615fffbffc8aaedcbeeb89400a1bec492ba",
       "line_count": 385,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -110569,7 +110585,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 47,
+          "matching_line_count": 48,
           "candidate_line_ranges": [
             [
               23,
@@ -110666,6 +110682,10 @@
             [
               194,
               194
+            ],
+            [
+              199,
+              199
             ],
             [
               203,
@@ -125584,7 +125604,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L3-component/ch10-L3-component.md",
-      "sha256": "da430dada4401eb227f876179823c64af01921a404735804aa90b52e8f5dc39c",
+      "sha256": "db87b9e4392915882d41b0048300d9f6fa03f1e19a7c1e29dcd10844152acea8",
       "line_count": 871,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -125654,8 +125674,12 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 107,
+          "matching_line_count": 108,
           "candidate_line_ranges": [
+            [
+              19,
+              19
+            ],
             [
               23,
               23
@@ -138198,22 +138222,40 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md",
-      "before_sha256": "5c9ee9d7cadb1162f4beb60be4a9a7d8e364c35c29073ad80f8c05ac51cda5ee",
-      "after_sha256": "b8f705877cdc1838e12c83252ff7486a1517c1bae3ccf46901222db43deebcb1",
-      "at": "2026-10-30T17:36:45Z",
+      "path": "ExpertSystem/ch10-knowledge-acquisition-systems.md",
+      "before_sha256": "edec719c8a82ed703bcb97ffe4bf9bbb2fb1fc06315e92e894969d900e2e4566",
+      "after_sha256": "72db6a6993e16b8abd70475980ece77b821c32671c5ec25b8429ce0408042ff2",
+      "at": "2026-10-30T17:47:37Z",
       "by": "main-editor",
-      "reason": "Full C4 reread of CH05 and conditionalized Enterprise/Division/Project precedence; S3 remains stale and external policies are unverified",
-      "evidence": "review/reports/consistency-norm02-ch01-09.md"
+      "reason": "Full C4 reread of CH10: density is routing only; low-density candidates are retained and normative conflicts require source/applicability review",
+      "evidence": "review/reports/consistency-norm02-ch10-13.md"
     },
     {
-      "path": "ExpertSystem/registry/ch05-registry.md",
-      "before_sha256": "7293c18ac901dd6e80fbfb586313225a0dd86c7f9b6e7aaed8555cfe9888847b",
-      "after_sha256": "913f4457f2cd1b70f581ec8801a13d7aab496d051114a0b8de6954bf8af1b6de",
-      "at": "2026-10-30T17:36:45Z",
+      "path": "ExpertSystem/registry/ch10-registry.md",
+      "before_sha256": "40cb54945045402e7656b8fb4527cb7c53fae2b7128e1c0556c122a4d9b7e7d6",
+      "after_sha256": "2567b548c28afef6e989b816ba63aa574337dd343155c5c1bfc22b98a29d1a83",
+      "at": "2026-10-30T17:47:37Z",
       "by": "main-editor",
-      "reason": "Full C4 reread of CH05 and conditionalized Enterprise/Division/Project precedence; S3 remains stale and external policies are unverified",
-      "evidence": "review/reports/consistency-norm02-ch01-09.md"
+      "reason": "Full C4 reread of CH10: density is routing only; low-density candidates are retained and normative conflicts require source/applicability review",
+      "evidence": "review/reports/consistency-norm02-ch10-13.md"
+    },
+    {
+      "path": "ExpertSystem/requirements/L2-system/ch10-L2-system.md",
+      "before_sha256": "b2da8b37d99f83266c43ff9080caa1166b3597ac7f63c4afbb67a284567a32f6",
+      "after_sha256": "2e3df47ad61e9c374921e8f7934cc615fffbffc8aaedcbeeb89400a1bec492ba",
+      "at": "2026-10-30T17:47:37Z",
+      "by": "main-editor",
+      "reason": "Full C4 reread of CH10: density is routing only; low-density candidates are retained and normative conflicts require source/applicability review",
+      "evidence": "review/reports/consistency-norm02-ch10-13.md"
+    },
+    {
+      "path": "ExpertSystem/requirements/L3-component/ch10-L3-component.md",
+      "before_sha256": "da430dada4401eb227f876179823c64af01921a404735804aa90b52e8f5dc39c",
+      "after_sha256": "db87b9e4392915882d41b0048300d9f6fa03f1e19a7c1e29dcd10844152acea8",
+      "at": "2026-10-30T17:47:37Z",
+      "by": "main-editor",
+      "reason": "Full C4 reread of CH10: density is routing only; low-density candidates are retained and normative conflicts require source/applicability review",
+      "evidence": "review/reports/consistency-norm02-ch10-13.md"
     }
   ],
   "engine_and_links": {
