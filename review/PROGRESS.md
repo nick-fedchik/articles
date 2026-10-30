@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T17:27:21Z
+Generated UTC: 2026-10-30T17:36:51Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -140,7 +140,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 02: [Глава 2. Філософія для інженера: що машина має право називати знанням](../ExpertSystem/ch02-epistemology-of-machine-knowledge.md) | `91ea40894bdd8f2718787635b3b4d9854fadfd31ce6fcddc532116c065b367d8` | stale |
 | 03: [Глава 3. Чим експертна система відрізняється від інформаційно-довідкової системи](../ExpertSystem/ch03-beyond-reference-information-systems.md) | `53582f708eea8f8a210326e55fa25d2438c54936001f8f6d4a0e4c0034f9e48d` | stale |
 | 04: [Глава 4. Еволюція експертних систем: від теореми Байєса до доказових рішень ШІ](../ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md) | `e3314893617b0e0427f036f4e807fbf75a3fbc3caa4ccfb02d9e7bf1d608e88c` | stale |
-| 05: [Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять](../ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md) | `5c9ee9d7cadb1162f4beb60be4a9a7d8e364c35c29073ad80f8c05ac51cda5ee` | stale |
+| 05: [Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять](../ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md) | `b8f705877cdc1838e12c83252ff7486a1517c1bae3ccf46901222db43deebcb1` | stale |
 | 06: [Глава 6. Прикладна математика експертних систем: правила, ймовірності, графи та причинність](../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | `147c45e957834834a3fd40eb3bbaf267f276b7a387d0589b4b8f8d4d61ab063a` | stale |
 | 07: [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](../ExpertSystem/ch07-knowledge-base-typology.md) | `0e70da25234cb185ac4074690aeb36c00b41056ad79440d7a8cd9fb72c8e05df` | stale |
 | 08: [Глава 8. Інженерні артефакти як дані експертної системи](../ExpertSystem/ch08-engineering-artifacts-as-data.md) | `4675a5fb956b8951e4df07f6a4cd1034d4cb7fb0a6d7319f23e13d0d57ed4dfc` | stale |

@@ -1245,7 +1245,7 @@
     {
       "number": 5,
       "file": "ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md",
-      "input_sha256": "5c9ee9d7cadb1162f4beb60be4a9a7d8e364c35c29073ad80f8c05ac51cda5ee",
+      "input_sha256": "b8f705877cdc1838e12c83252ff7486a1517c1bae3ccf46901222db43deebcb1",
       "title": "Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять",
       "h2_titles": [
         "Анотація",
@@ -1385,18 +1385,18 @@
         19,
         35,
         84,
-        136,
-        410,
-        736,
-        750,
-        782,
-        835,
-        860
+        138,
+        412,
+        738,
+        752,
+        784,
+        837,
+        862
       ],
-      "current_source_line_count": 882,
+      "current_source_line_count": 884,
       "revalidation": {
-        "at": "2026-10-30T09:58:23Z",
-        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
+        "at": "2026-10-30T17:33:05Z",
+        "evidence": "review/reports/consistency-norm02-ch01-09.md",
         "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
@@ -1535,6 +1535,72 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
+        },
+        {
+          "at": "2026-10-30T17:33:05Z",
+          "input_sha256": "5c9ee9d7cadb1162f4beb60be4a9a7d8e364c35c29073ad80f8c05ac51cda5ee",
+          "h2_titles": [
+            "Анотація",
+            "1. Пам'ять інженерних рішень: від неструктурованого тексту до версійного прецеденту",
+            "2. Тріада довіри: концептуальна синергія експертної системи, доказу та пам'яті",
+            "3. Перший компонент тріади: демаркація експертної системи та генеративного чат-бота",
+            "4. Другий компонент тріади: трансформація рекомендацій ШІ в доказові артефакти",
+            "5. Третій компонент тріади: корпоративна пам'ять R&D як реляційний граф",
+            "6. Галузева специфіка тріади довіри у критичних доменах",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            11,
+            19,
+            35,
+            84,
+            136,
+            410,
+            736,
+            750,
+            782,
+            835,
+            860
+          ],
+          "reading_scope": {
+            "text_read_ranges": [
+              [
+                1,
+                100
+              ]
+            ],
+            "repeated_text_read_ranges": [],
+            "h1_lines": [
+              1
+            ],
+            "h2_lines": [
+              11,
+              19,
+              35,
+              84,
+              136,
+              400,
+              717,
+              731,
+              781,
+              813,
+              822,
+              875,
+              900
+            ],
+            "headings_scan_range": [
+              1,
+              922
+            ],
+            "fenced_code_excluded_from_headings": true,
+            "h2_text_policy": "Дослівний текст після префікса H2; вбудовані HTML-якорі збережено.",
+            "dependency_scope": "Явні посилання лише з рядків 1–100; inferred означає понятійний зв'язок за прочитаними початками, не цитату. Повноту всіх посилань глави не перевірено.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-norm02-ch01-09.md"
         }
       ]
     },
