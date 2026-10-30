@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T13:42:34Z",
-  "baseline_commit": "35e9a45814856af270ba7bf70c8a813142b25358",
+  "at": "2026-10-30T13:44:44Z",
+  "baseline_commit": "0fef1c3a0e7a1a42380bbf23391c8df383aa4ecd",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -138313,26 +138313,7 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [
-    {
-      "path": "ExpertSystem/ch06-applied-mathematics-for-expert-systems.md",
-      "before_sha256": "8588465e80c50364483549b336fd12f35a39687190d11b33dee7787fd2d768a3",
-      "after_sha256": "60c6d9eab3441cb5c1d0be60b7f4d061f07674a5c78d494965f799c589940015",
-      "at": "2026-10-30T13:42:34Z",
-      "by": "main-editor",
-      "reason": "Bounded C2 correction in CH06 separating deduction from execution authority; full review remains open",
-      "evidence": "review/reports/consistency-c2-ch01-10.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch06-registry.md",
-      "before_sha256": "0758d2021d2de1af0bd35eead10a7f7129c848efa799e491f43361bc115c43e4",
-      "after_sha256": "7c174ddf2153155ebf97b7aa2b3df9a6db6042d7cc29251b913b203347fb5d4a",
-      "at": "2026-10-30T13:42:34Z",
-      "by": "main-editor",
-      "reason": "Bounded C2 correction in CH06 separating deduction from execution authority; full review remains open",
-      "evidence": "review/reports/consistency-c2-ch01-10.md"
-    }
-  ],
+  "input_transitions_from_current_baseline": [],
   "engine_and_links": {
     "math": {
       "total": 17717,
