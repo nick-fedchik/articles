@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T11:15:50Z.
+Стан UTC: 2026-10-30T11:22:44Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -26,16 +26,16 @@
 | [16](../../ExpertSystem/ch16-expert-systems-architecture.md) | 939 | 18 | 28 | 10 | 28 | 7 | 32 | 54 | 31 | §1.1: канонічний контракт вердиктів і повноважень |
 | [17](../../ExpertSystem/ch17-implementation-stack.md) | 891 | 2 | 11 | 25 | 13 | 50 | 47 | 35 | 8 | Bounded C4 review; no specific contradiction accepted |
 | [18](../../ExpertSystem/ch18-execution-infrastructure.md) | 1610 | 9 | 22 | 18 | 47 | 179 | 121 | 50 | 19 | §4: deployment profiles selected by policy and applicability |
-| [19](../../ExpertSystem/ch19-from-question-to-evidence.md) | 1082 | 38 | 24 | 10 | 31 | 50 | 15 | 24 | 14 | §12: canonical hashing function notation |
-| [20](../../ExpertSystem/ch20-explanation-engine.md) | 896 | 7 | 22 | 67 | 20 | 26 | 40 | 18 | 6 | §3.1–3.1.4: профіль, прапорці та відкат |
+| [19](../../ExpertSystem/ch19-from-question-to-evidence.md) | 1082 | 38 | 24 | 10 | 31 | 50 | 15 | 24 | 14 | Bounded C4 scan; no specific normative overreach accepted |
+| [20](../../ExpertSystem/ch20-explanation-engine.md) | 896 | 7 | 22 | 67 | 20 | 26 | 40 | 18 | 6 | Bounded C4 scan; attribution/genealogy requires separate S3 review |
 | [21](../../ExpertSystem/ch21-from-recommendation-to-action.md) | 819 | 13 | 17 | 4 | 6 | 4 | 47 | 25 | 11 | Action gateway framed as authorial architecture; A0-A4 are not certification levels |
-| [22](../../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | 1112 | 12 | 14 | 28 | 13 | 53 | 79 | 42 | 11 | §10.1.2: опорний профіль; прямий запис реєстру |
+| [22](../../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | 1112 | 12 | 14 | 28 | 13 | 53 | 79 | 42 | 11 | Bounded C4 search; no unsupported 5 us hardware limit found |
 | [23](../../ExpertSystem/ch23-knowledge-base-verification.md) | 1136 | 12 | 8 | 53 | 17 | 15 | 23 | 46 | 13 | §9: distance operator notation; full mathematical claim not reviewed |
 | [24](../../ExpertSystem/ch24-system-diagnosis.md) | 1039 | 3 | 48 | 47 | 3 | 3 | 22 | 16 | 12 | Bounded C4 scan; attribution/genealogy requires separate S3 review |
-| [25](../../ExpertSystem/ch25-how-expert-systems-learn.md) | 1325 | 7 | 15 | 24 | 28 | 31 | 58 | 126 | 19 | Не перевірено; лише пошуковий маршрут |
-| [26](../../ExpertSystem/ch26-continual-learning.md) | 1058 | 1 | 14 | 24 | 10 | 15 | 63 | 34 | 11 | Не перевірено; лише пошуковий маршрут |
-| [27](../../ExpertSystem/ch27-safety-case-gsn-synthesis.md) | 813 | 23 | 17 | 8 | 10 | 9 | 21 | 35 | 8 | Не перевірено; лише пошуковий маршрут |
-| [28](../../ExpertSystem/ch28-dual-mode-expert-systems.md) | 985 | 9 | 87 | 36 | 16 | 18 | 31 | 24 | 12 | Не перевірено; лише пошуковий маршрут |
+| [25](../../ExpertSystem/ch25-how-expert-systems-learn.md) | 1325 | 7 | 15 | 24 | 28 | 31 | 58 | 126 | 19 | Bounded C4 review: authorial policy thresholds caveated; full S3 review open |
+| [26](../../ExpertSystem/ch26-continual-learning.md) | 1058 | 1 | 14 | 24 | 10 | 15 | 63 | 34 | 11 | Bounded C4 scan; no specific contradiction accepted |
+| [27](../../ExpertSystem/ch27-safety-case-gsn-synthesis.md) | 813 | 23 | 17 | 8 | 10 | 9 | 21 | 35 | 8 | §4.3: READY_FOR_BASELINE explicitly not certification |
+| [28](../../ExpertSystem/ch28-dual-mode-expert-systems.md) | 985 | 9 | 87 | 36 | 15 | 22 | 32 | 24 | 12 | §9.2 Simplex tau_switch values are illustrative profile targets; WCET/HIL required |
 | [29](../../ExpertSystem/ch29-neuro-symbolic-architecture.md) | 875 | 23 | 29 | 20 | 16 | 41 | 22 | 11 | 5 | §1: autoregressive argmax objective and symbol glossary |
 | [30](../../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | 1220 | 15 | 12 | 26 | 63 | 14 | 86 | 17 | 10 | §2.1.1–2.1.3: profile attribution, worked-example arithmetic, screening-gate scope |
 | [31](../../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | 1357 | 12 | 20 | 14 | 53 | 20 | 36 | 12 | 16 | §4.5.3: ModalityMust caveat/rule/NOTE and direct L1-L3/registry; rest not accepted |

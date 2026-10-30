@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T11:15:50Z",
-  "baseline_commit": "9aa3379313e807d04cbd77d87c3e9e065b3e7887",
+  "at": "2026-10-30T11:22:44Z",
+  "baseline_commit": "8339b940a8c93b7a11288085742db665f1db75fd",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -28566,7 +28566,7 @@
           ]
         }
       },
-      "locally_checked_slice": "§12: canonical hashing function notation"
+      "locally_checked_slice": "Bounded C4 scan; no specific normative overreach accepted"
     },
     {
       "path": "ExpertSystem/ch20-explanation-engine.md",
@@ -29377,7 +29377,7 @@
           ]
         }
       },
-      "locally_checked_slice": "§3.1–3.1.4: профіль, прапорці та відкат"
+      "locally_checked_slice": "Bounded C4 scan; attribution/genealogy requires separate S3 review"
     },
     {
       "path": "ExpertSystem/ch21-from-recommendation-to-action.md",
@@ -30835,7 +30835,7 @@
           ]
         }
       },
-      "locally_checked_slice": "§10.1.2: опорний профіль; прямий запис реєстру"
+      "locally_checked_slice": "Bounded C4 search; no unsupported 5 us hardware limit found"
     },
     {
       "path": "ExpertSystem/ch23-knowledge-base-verification.md",
@@ -33424,7 +33424,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "Bounded C4 review: authorial policy thresholds caveated; full S3 review open"
     },
     {
       "path": "ExpertSystem/ch26-continual-learning.md",
@@ -34151,7 +34151,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "Bounded C4 scan; no specific contradiction accepted"
     },
     {
       "path": "ExpertSystem/ch27-safety-case-gsn-synthesis.md",
@@ -34674,11 +34674,11 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "§4.3: READY_FOR_BASELINE explicitly not certification"
     },
     {
       "path": "ExpertSystem/ch28-dual-mode-expert-systems.md",
-      "sha256": "1d9fd20552d6be926d80dc40063e81ae838bcaead8587a49494056670d8af64d",
+      "sha256": "4a3caeb63878c00da4f9b8c381d6a45246155511e6433556282fd49eba9592c0",
       "line_count": 985,
       "chapter": 28,
       "scan_kind": "lexical_routing_only",
@@ -35152,7 +35152,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 16,
+          "matching_line_count": 15,
           "candidate_line_ranges": [
             [
               9,
@@ -35211,10 +35211,6 @@
               694
             ],
             [
-              790,
-              790
-            ],
-            [
               845,
               845
             ]
@@ -35222,7 +35218,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 18,
+          "matching_line_count": 22,
           "candidate_line_ranges": [
             [
               78,
@@ -35273,8 +35269,24 @@
               759
             ],
             [
+              783,
+              783
+            ],
+            [
+              788,
+              788
+            ],
+            [
               792,
               792
+            ],
+            [
+              800,
+              800
+            ],
+            [
+              806,
+              806
             ],
             [
               808,
@@ -35292,7 +35304,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 31,
+          "matching_line_count": 32,
           "candidate_line_ranges": [
             [
               15,
@@ -35385,6 +35397,10 @@
             [
               790,
               791
+            ],
+            [
+              796,
+              796
             ],
             [
               828,
@@ -35557,7 +35573,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "§9.2 Simplex tau_switch values are illustrative profile targets; WCET/HIL required"
     },
     {
       "path": "ExpertSystem/ch29-neuro-symbolic-architecture.md",
@@ -133894,7 +133910,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L3-component/ch28-L3-component.md",
-      "sha256": "dadb9a99748071e3ee04c42fd918a3746baa58b4f0fcc71a96031f3836325bb6",
+      "sha256": "223941c1c9f8f7066c2bd3902ef8d4e1572b43da5b46abe3e3276b36e184b8b1",
       "line_count": 195,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -134045,17 +134061,21 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 1,
+          "matching_line_count": 2,
           "candidate_line_ranges": [
             [
               64,
               64
+            ],
+            [
+              163,
+              163
             ]
           ]
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 5,
+          "matching_line_count": 6,
           "candidate_line_ranges": [
             [
               7,
@@ -134068,6 +134088,10 @@
             [
               148,
               148
+            ],
+            [
+              163,
+              163
             ],
             [
               166,
@@ -138211,19 +138235,19 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch23-knowledge-base-verification.md",
-      "before_sha256": "e711ae814ad9676a13b7b6ef5428e8b6d98f01be6ecc802e84e74b00e6fe4487",
-      "after_sha256": "f4dc0156461675914c062b970d230772ab9c16896edc61d5806323787188b128",
-      "at": "2026-10-30T11:15:50Z",
+      "path": "ExpertSystem/ch28-dual-mode-expert-systems.md",
+      "before_sha256": "1d9fd20552d6be926d80dc40063e81ae838bcaead8587a49494056670d8af64d",
+      "after_sha256": "4a3caeb63878c00da4f9b8c381d6a45246155511e6433556282fd49eba9592c0",
+      "at": "2026-10-30T11:22:44Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/registry/ch23-registry.md",
-      "before_sha256": "7d32664dcb6c3d145bbbef51db9a4732aa6ba5ac349ab42cf5ee06ef2fd6ce31",
-      "after_sha256": "839d4d84f6e39caa6caa1b8865d68411d51c62fee3a6b7d634cf4501e5497ff1",
-      "at": "2026-10-30T11:15:50Z",
+      "path": "ExpertSystem/requirements/L3-component/ch28-L3-component.md",
+      "before_sha256": "dadb9a99748071e3ee04c42fd918a3746baa58b4f0fcc71a96031f3836325bb6",
+      "after_sha256": "223941c1c9f8f7066c2bd3902ef8d4e1572b43da5b46abe3e3276b36e184b8b1",
+      "at": "2026-10-30T11:22:44Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"

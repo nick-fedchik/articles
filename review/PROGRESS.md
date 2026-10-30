@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T11:15:56Z
+Generated UTC: 2026-10-30T11:22:49Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -163,7 +163,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 25: [Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій](../ExpertSystem/ch25-how-expert-systems-learn.md) | `132943422f24a7f7302c307fd54d3af28310185a90b0e1ca917f4fb0c600ffe3` | stale |
 | 26: [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](../ExpertSystem/ch26-continual-learning.md) | `b837a181e31894da34a8a48cbb151eddefef391d1b82bb4918d119626f74bdba` | stale |
 | 27: [Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів](../ExpertSystem/ch27-safety-case-gsn-synthesis.md) | `b18deeba757f054f2c277dcc5655e7015e4b431e0b0b2f214874b87ea12b6f88` | stale |
-| 28: [Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза](../ExpertSystem/ch28-dual-mode-expert-systems.md) | `1d9fd20552d6be926d80dc40063e81ae838bcaead8587a49494056670d8af64d` | stale |
+| 28: [Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза](../ExpertSystem/ch28-dual-mode-expert-systems.md) | `4a3caeb63878c00da4f9b8c381d6a45246155511e6433556282fd49eba9592c0` | stale |
 | 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `a7e9a1140b1a1c74f96174460f759fcf23a8847aa635f5422a51206184b57584` | stale |
 | 30: [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | `e1d5ba08b69152ce73c2b671372a506fa04ca5740be5328d3383ee7cee4b78ce` | stale |
 | 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `cb4c1bd5b4a4000fce3cfdcfe53d5be1b13cdc973828c21e62a35a3ba8b702a5` | stale |
