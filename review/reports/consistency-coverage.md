@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T09:58:23Z.
+Стан UTC: 2026-10-30T10:22:55Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -38,7 +38,7 @@
 | [28](../../ExpertSystem/ch28-dual-mode-expert-systems.md) | 985 | 9 | 87 | 36 | 16 | 18 | 31 | 24 | 12 | Не перевірено; лише пошуковий маршрут |
 | [29](../../ExpertSystem/ch29-neuro-symbolic-architecture.md) | 875 | 23 | 29 | 20 | 16 | 41 | 22 | 11 | 5 | §1: autoregressive argmax objective and symbol glossary |
 | [30](../../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | 1220 | 15 | 10 | 26 | 63 | 13 | 86 | 17 | 10 | §2.1.1–2.1.3: profile attribution, worked-example arithmetic, screening-gate scope |
-| [31](../../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | 1357 | 12 | 19 | 14 | 53 | 20 | 36 | 12 | 15 | §4.5.3: ModalityMust caveat/rule/NOTE and direct L1-L3/registry; rest not accepted |
+| [31](../../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | 1357 | 12 | 20 | 14 | 53 | 20 | 36 | 12 | 16 | §4.5.3: ModalityMust caveat/rule/NOTE and direct L1-L3/registry; rest not accepted |
 | [32](../../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | 2705 | 92 | 15 | 16 | 54 | 271 | 82 | 101 | 19 | Не перевірено; лише пошуковий маршрут |
 | [33](../../ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md) | 1586 | 59 | 12 | 29 | 21 | 24 | 49 | 34 | 27 | Не перевірено; лише пошуковий маршрут |
 | [34](../../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | 1327 | 17 | 65 | 22 | 36 | 26 | 44 | 8 | 14 | §6.4 NOTE 3 and REQ-L2-34-22: profile-gated Lex precedence |

@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T09:58:23Z",
-  "baseline_commit": "54e17f0bfa2eb3579a4548761b199627309cf8cc",
+  "at": "2026-10-30T10:22:55Z",
+  "baseline_commit": "c130c32ecc35000e5fc9c344521ce0c22b3756d6",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -7342,7 +7342,7 @@
     },
     {
       "path": "ExpertSystem/authorial-contributions-registry.md",
-      "sha256": "0e4f0ff573b3a1c57047ea4453a124914fd3e19cb2157a9914a1d45d20cdd113",
+      "sha256": "c00f604d5cfbb0d2d2fa2252f7538be93e2760ebbf92561b1021fc5ce3fa69c4",
       "line_count": 188,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -37107,7 +37107,7 @@
     },
     {
       "path": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
-      "sha256": "a39a5057657c8a736a89948d15bb1bd70abdbde9f9871e19553bc32b2a4def11",
+      "sha256": "cb4c1bd5b4a4000fce3cfdcfe53d5be1b13cdc973828c21e62a35a3ba8b702a5",
       "line_count": 1357,
       "chapter": 31,
       "scan_kind": "lexical_routing_only",
@@ -37169,7 +37169,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 19,
+          "matching_line_count": 20,
           "candidate_line_ranges": [
             [
               474,
@@ -37194,6 +37194,10 @@
             [
               522,
               522
+            ],
+            [
+              541,
+              541
             ],
             [
               547,
@@ -37769,7 +37773,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 15,
+          "matching_line_count": 16,
           "candidate_line_ranges": [
             [
               314,
@@ -37790,6 +37794,10 @@
             [
               534,
               534
+            ],
+            [
+              541,
+              541
             ],
             [
               564,
@@ -85210,8 +85218,8 @@
     },
     {
       "path": "ExpertSystem/registry/ch31-registry.md",
-      "sha256": "5042246bd105eb652ec0a033a8e8415108075c146356c2d01e361810fc9dca30",
-      "line_count": 926,
+      "sha256": "fcf878a9db2e285e62bd64d4eb1812040d04d205ed4868cdc301abfa27b8e677",
+      "line_count": 928,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
       "full_text_reviewed": false,
@@ -85297,14 +85305,14 @@
               888
             ],
             [
-              919,
-              919
+              921,
+              921
             ]
           ]
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 19,
+          "matching_line_count": 20,
           "candidate_line_ranges": [
             [
               39,
@@ -85329,6 +85337,10 @@
             [
               434,
               434
+            ],
+            [
+              463,
+              463
             ],
             [
               465,
@@ -85444,7 +85456,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 87,
+          "matching_line_count": 88,
           "candidate_line_ranges": [
             [
               20,
@@ -85589,6 +85601,10 @@
             [
               461,
               461
+            ],
+            [
+              463,
+              463
             ],
             [
               474,
@@ -85743,16 +85759,16 @@
               873
             ],
             [
-              906,
-              906
+              908,
+              908
             ],
             [
-              916,
-              917
+              918,
+              919
             ],
             [
-              920,
-              920
+              922,
+              922
             ]
           ]
         },
@@ -85832,7 +85848,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 54,
+          "matching_line_count": 53,
           "candidate_line_ranges": [
             [
               24,
@@ -86003,10 +86019,6 @@
               840
             ],
             [
-              844,
-              844
-            ],
-            [
               873,
               873
             ],
@@ -86023,12 +86035,12 @@
               889
             ],
             [
-              920,
-              920
+              922,
+              922
             ],
             [
-              923,
-              923
+              925,
+              925
             ]
           ]
         },
@@ -86331,6 +86343,10 @@
               461
             ],
             [
+              463,
+              463
+            ],
+            [
               472,
               472
             ],
@@ -86583,20 +86599,20 @@
               892
             ],
             [
-              904,
-              906
+              907,
+              908
             ],
             [
-              914,
-              914
+              916,
+              916
             ],
             [
-              920,
-              920
+              922,
+              922
             ],
             [
-              924,
-              924
+              926,
+              926
             ]
           ]
         }
@@ -134608,7 +134624,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L3-component/ch31-L3-component.md",
-      "sha256": "b49f3bc7c1d03220dae06886b5cb152cb9709f19bcb2e39338a309791830e06d",
+      "sha256": "d25e7766b77c77c9bf181e8dc7760e8f68673f65c743704ab3721eef3938d0ec",
       "line_count": 242,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -134666,7 +134682,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 29,
+          "matching_line_count": 30,
           "candidate_line_ranges": [
             [
               23,
@@ -134717,7 +134733,7 @@
               122
             ],
             [
-              128,
+              127,
               128
             ],
             [
@@ -134834,7 +134850,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 27,
+          "matching_line_count": 28,
           "candidate_line_ranges": [
             [
               23,
@@ -134883,6 +134899,10 @@
             [
               122,
               122
+            ],
+            [
+              127,
+              127
             ],
             [
               131,
@@ -138035,244 +138055,46 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md",
-      "before_sha256": "b2d9456a2e010907b80f6d7bca6e4e5fc95005ca89ae08e9ee42a35fb6d3a048",
-      "after_sha256": "5c9ee9d7cadb1162f4beb60be4a9a7d8e364c35c29073ad80f8c05ac51cda5ee",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/ch10-knowledge-acquisition-systems.md",
-      "before_sha256": "331de690b81941a2afd1a1feb1647abb3bd2c0ac1abe26f5bc0a2e4dc88fd2f9",
-      "after_sha256": "f78f1519d802c6c6bcdea52da5dea78a9b4675a896825c59a6c6265a8eee1eee",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/ch18-execution-infrastructure.md",
-      "before_sha256": "b05cb42b304cf3b0f2fb504bdd80af271e3ab6be6a589982a11053e9fd5635d1",
-      "after_sha256": "b8261fcd2ae0117cd86f222af580009edc637ff049f282bbe294363284f192b2",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/ch19-from-question-to-evidence.md",
-      "before_sha256": "521dbcb1c615d6df776693235a1bdeb5cec7046d58cf63dd8b5cc1fccd4d1293",
-      "after_sha256": "fb11f36b8e26d5464948de74a0c2b29557a68b70d09d8e749d10992cd7f71416",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/ch23-knowledge-base-verification.md",
-      "before_sha256": "7be296e4396c9c28b9a4d8acba54677bc5fef94fe7c9ab76ace4f4712e185bc0",
-      "after_sha256": "e711ae814ad9676a13b7b6ef5428e8b6d98f01be6ecc802e84e74b00e6fe4487",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/ch29-neuro-symbolic-architecture.md",
-      "before_sha256": "5466fbffa8fb0fce1b050826c6745af64481d671d426b0b8cd3f5e4fb911a658",
-      "after_sha256": "a7e9a1140b1a1c74f96174460f759fcf23a8847aa635f5422a51206184b57584",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/ch30-safety-cybersecurity-co-engineering.md",
-      "before_sha256": "9e54f24452e79e28b535186990b58499da266486b0f2f81226182900d5e36678",
-      "after_sha256": "da5f9fdc21ddac6c9c5817ad24e60563fcadb5ddb87539fbf8455fe947ea92c8",
-      "at": "2026-10-30T09:58:23Z",
+      "path": "ExpertSystem/authorial-contributions-registry.md",
+      "before_sha256": "0e4f0ff573b3a1c57047ea4453a124914fd3e19cb2157a9914a1d45d20cdd113",
+      "after_sha256": "c00f604d5cfbb0d2d2fa2252f7538be93e2760ebbf92561b1021fc5ce3fa69c4",
+      "at": "2026-10-30T10:22:55Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
       "path": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
-      "before_sha256": "cb2393280692863c3f680e81b5cd2852ab2e1b52b5862770fbc7ec7626be42df",
-      "after_sha256": "a39a5057657c8a736a89948d15bb1bd70abdbde9f9871e19553bc32b2a4def11",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md",
-      "before_sha256": "c77b7b0fdf03a3d4d2226abba358fc86ba091485b8b5b3365e2f46507373a62a",
-      "after_sha256": "1e6c1102b246f029df68264f869e903cd1c299e9f9554db8649b4b7b04f2d130",
-      "at": "2026-10-30T09:58:23Z",
+      "before_sha256": "a39a5057657c8a736a89948d15bb1bd70abdbde9f9871e19553bc32b2a4def11",
+      "after_sha256": "cb4c1bd5b4a4000fce3cfdcfe53d5be1b13cdc973828c21e62a35a3ba8b702a5",
+      "at": "2026-10-30T10:22:55Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
       "path": "ExpertSystem/refinements/book-refinement-backlog.md",
-      "before_sha256": "2937ad55f5fe49f25835e9a27a988b0476ce335b27677e1e8fa0a3417f31e0c5",
-      "after_sha256": "72e52dc0691a783222bcfa6123e2dbc4bb77e2e9626e10a2aca862b5bf924398",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/refinements/registry-applied-2026-10-28.md",
-      "before_sha256": "9497d44e9226163215e3a7af9d03fd4f79ae91ae04e8c4e49185580a70227cb5",
-      "after_sha256": "1b993d2d33464b80e1ee550edd3a2b5b7cfa88983601214d835d6058161fe781",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch03-registry.md",
-      "before_sha256": "f53ca15f8fcff9b12bb93b1458df58fa54702e3cebd9420aa7ed36d8d35ea4d1",
-      "after_sha256": "af535e08e8a7cbde35b5312979e920c7e3483c5968337d9126064d9e1a23b5a2",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch05-registry.md",
-      "before_sha256": "ee6e720b42974e457dcddc2ba2f757f2c4b04a1422fa20db2e997fa661dd554d",
-      "after_sha256": "7293c18ac901dd6e80fbfb586313225a0dd86c7f9b6e7aaed8555cfe9888847b",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch10-registry.md",
-      "before_sha256": "6e87cc447f40e7a888761156dbe7bc516167486cc19e0c766d5e2a5d7bafa602",
-      "after_sha256": "b162f5da0bb05b56474994a26cd936107072618537500bc856595bec9b984f5b",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch18-registry.md",
-      "before_sha256": "8d7a98620a4be7573a4e6e3e7e4f9ad53e169f91b2ee7df1d497842081e479bb",
-      "after_sha256": "4a9a1d8fa60966003857272bb6288beec8e0c354ffb7eb09c5c9c68de3dda70d",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch29-registry.md",
-      "before_sha256": "492ef5b9efdf2396e74424fc2c687d28f713a350ae552d29bcdb953441161170",
-      "after_sha256": "e27fa2cba73717a08a510207ddf6ea3a9047e2e197bf1de594a435021a5b8060",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/registry/ch30-registry.md",
-      "before_sha256": "754748e3c50283b04bc039985480b324c2f5e1ed4b82c92783c242b91edee465",
-      "after_sha256": "5a1f6668bf41ed0d8256f2817eb854355e460ae4f3a4aa43e69692937019c055",
-      "at": "2026-10-30T09:58:23Z",
+      "before_sha256": "72e52dc0691a783222bcfa6123e2dbc4bb77e2e9626e10a2aca862b5bf924398",
+      "after_sha256": "177aac029c756a3020347a94340df2ed2bd96555e931d8a429e595da4fa6db81",
+      "at": "2026-10-30T10:22:55Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
       "path": "ExpertSystem/registry/ch31-registry.md",
-      "before_sha256": "4b989541063454e687dcfa6af61953272442cc29865971fe6b28a540857c6667",
-      "after_sha256": "5042246bd105eb652ec0a033a8e8415108075c146356c2d01e361810fc9dca30",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L1-stakeholder/ch18-L1-stakeholder.md",
-      "before_sha256": "c1138e10ffa3ce19659e96d001cac94cdfca13095fd75d7b7ea97af1afadfa1d",
-      "after_sha256": "177fd2f3bd0d1094f6b979c4a9b4e20b6504199b6da5dee98f0184db8a9fe9a5",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L1-stakeholder/ch31-L1-stakeholder.md",
-      "before_sha256": "53ccd1d99ad14585d6d1c0585b4b5319c876848c7cc9676e3b88d92994d5eda0",
-      "after_sha256": "f22f95488680762bab99099c7688f5c1737c0d77f1d1b020c48c441b1fe22e07",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L2-system/ch18-L2-system.md",
-      "before_sha256": "c646093696247c73ad152bec092035b24b3fddaa1aba99a44ff0ca942c348154",
-      "after_sha256": "92d4e5188c283c18f4db7b870fccfd42eaa586c8180edd9c33ee9b8e8e56e0ee",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L2-system/ch30-L2-system.md",
-      "before_sha256": "9ba51067f795b50152e31d9603dcffdf7e8741a4cbea4e0ed5e05ed308495d60",
-      "after_sha256": "584920233f21088f50bb5d11cf07366791f5e418db4313903ad1bc1462363145",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L2-system/ch31-L2-system.md",
-      "before_sha256": "2fc625bb4861e9939737780e698ceeaf982aa69f8b0594a891564c73a5b9ff3f",
-      "after_sha256": "a9a84e8e1cda6bdda95c87961694e224036051b73f5a9f643d6313dac265e4e5",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L2-system/ch34-L2-system.md",
-      "before_sha256": "f7bf5e61676829ab0b4ed7ff849fd7c473811ed038075352222f3efd25c37f03",
-      "after_sha256": "a3b90ec8e72940dd6e6f3302407b3d96d90720743185dcb711e02718c0c5131b",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L3-component/ch18-L3-component.md",
-      "before_sha256": "c99876b1a6d4d6b819fdfc1d3574deadc0184ea9583fff1e55583264b81400df",
-      "after_sha256": "ac8dec19485ef79cc9907056c428822398910b16de0e2c9b7143b490853dbce0",
-      "at": "2026-10-30T09:58:23Z",
-      "by": "main-editor",
-      "reason": "Formula macro compatibility correction; no full scientific rereading",
-      "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
-    },
-    {
-      "path": "ExpertSystem/requirements/L3-component/ch30-L3-component.md",
-      "before_sha256": "a201d014b3dc9181403d9188a67ce4a819911bba2ff28b40143c7c89b1cb468b",
-      "after_sha256": "bad15f9945a5d37d1b0ec69d14b7159651a4de0228f9c380be272ff18a97698b",
-      "at": "2026-10-30T09:58:23Z",
+      "before_sha256": "5042246bd105eb652ec0a033a8e8415108075c146356c2d01e361810fc9dca30",
+      "after_sha256": "fcf878a9db2e285e62bd64d4eb1812040d04d205ed4868cdc301abfa27b8e677",
+      "at": "2026-10-30T10:22:55Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
       "path": "ExpertSystem/requirements/L3-component/ch31-L3-component.md",
-      "before_sha256": "c6e122e8834d3eec3adda28adb8bacd0aa3c9941c5d44793ad0fa810ddd573b3",
-      "after_sha256": "b49f3bc7c1d03220dae06886b5cb152cb9709f19bcb2e39338a309791830e06d",
-      "at": "2026-10-30T09:58:23Z",
+      "before_sha256": "b49f3bc7c1d03220dae06886b5cb152cb9709f19bcb2e39338a309791830e06d",
+      "after_sha256": "d25e7766b77c77c9bf181e8dc7760e8f68673f65c743704ab3721eef3938d0ec",
+      "at": "2026-10-30T10:22:55Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
@@ -138290,8 +138112,8 @@
       "failed": 0
     },
     "links": {
-      "total": 6297,
-      "passed": 6248,
+      "total": 6301,
+      "passed": 6252,
       "failed": 0,
       "skipped": 49
     },

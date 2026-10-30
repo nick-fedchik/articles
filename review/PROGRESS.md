@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T09:58:28Z
+Generated UTC: 2026-10-30T10:23:01Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -129,7 +129,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | CONS-01 | main-editor | paused | All-book thematic consistency routing and initial bounded checks | Historical result has changed inputs/outputs; no automatic reacceptance. | Three root groups locally corrected; residual C1-C8 dependencies explicit in review/reports/consistency-initial-package.md | Revalidate the original scope or continue the C4 residual noted in review/reports/consistency-c4-normative-priority.md |
 | CORR-01 | main-editor | paused | Bounded profile, hypothesis, grounding and authority corrections | Historical result has changed inputs/outputs; no automatic reacceptance. | Three root groups locally corrected; residual C1-C8 dependencies explicit in review/reports/consistency-initial-package.md | Revalidate the original scope or continue the C4 residual noted in review/reports/consistency-c4-normative-priority.md |
 | NORM-01 | main-editor | paused | Bounded C4 applicability and modality correction package | C4 local slice recorded; this is not full reading or scientific acceptance. | Static source-class tiers and modal-only undercutting were bounded by applicability and profile precedence; see review/reports/consistency-c4-normative-priority.md | Local direct dependencies were corrected and checked; full C4 review, external sources and CH30 remain open. |
-| NORM-02 | main-editor | pending | Continue all-book C4 reading and dependency checks | No work was accepted on the previous inputs; hashes rebased before start. | Bounded local C4 corrections in CH05/10/14/18/29/30/31/34/40. Full chapter reviews, official sources, and CH31 registry count 74/71 remain open; see review/reports/consistency-c4-normative-priority.md | Complete full CH31 review; recalculate its registry taxonomy; verify CH30 standard clauses; continue C4 through all remaining chapters. |
+| NORM-02 | main-editor | running | Continue all-book C4 reading and dependency checks | CH31 registry totals, Status precedence, and ISO 26262 source anchors reconciled; continuing C4. | CH31: 74 unique records, 78 scientific-form assignments, 4 multi-class records; originality/status tables reconciled; first-match Status precedence and ISO 26262 anchors synchronized. Full scientific review and external source gaps remain open; see review/reports/consistency-norm02-ch31.md | Continue CH30 profile applicability and unresolved TARA conditions, then resume C4 dependency checks across remaining chapters. |
 | MATH-01 | main-editor | paused | Correct the reported GitHub macro discrepancy and add an observed-only regression | Active Ukrainian formula sources and validator corrected; local checks passed. | MathJax accepted operatorname while the author observed a GitHub rejection; this does not establish a complete GitHub macro policy. | Actual GitHub rendering remains deferred to S7; translations remain frozen. |
 
 ## All 40 Chapters
@@ -166,7 +166,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 28: [Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза](../ExpertSystem/ch28-dual-mode-expert-systems.md) | `1d9fd20552d6be926d80dc40063e81ae838bcaead8587a49494056670d8af64d` | stale |
 | 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `a7e9a1140b1a1c74f96174460f759fcf23a8847aa635f5422a51206184b57584` | stale |
 | 30: [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | `da5f9fdc21ddac6c9c5817ad24e60563fcadb5ddb87539fbf8455fe947ea92c8` | stale |
-| 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `a39a5057657c8a736a89948d15bb1bd70abdbde9f9871e19553bc32b2a4def11` | stale |
+| 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `cb4c1bd5b4a4000fce3cfdcfe53d5be1b13cdc973828c21e62a35a3ba8b702a5` | stale |
 | 32: [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | `b5340f60fcb1f870e5e6784f60fa067926284c1e3cb12c1b84588dd32e73b952` | stale |
 | 33: [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](../ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md) | `2bab2b033b2e6dcf141eda0514151149a67b6110ddcc506dedcde022cebbe4ea` | stale |
 | 34: [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | `1e6c1102b246f029df68264f869e903cd1c299e9f9554db8649b4b7b04f2d130` | stale |
@@ -198,7 +198,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 
 ## Next Action
 
-Complete full CH31 review; recalculate its registry taxonomy; verify CH30 standard clauses; continue C4 through all remaining chapters.
+Continue CH30 profile applicability and unresolved TARA conditions, then resume C4 dependency checks across remaining chapters.
 Record permanent output path/SHA256 and acceptance.by/at/evidence in execution.json only after review.
 Keep task inputs separate from outputs. Changed inputs invalidate old results even after inventory refresh.
 Run `PYTHONDONTWRITEBYTECODE=1 python3 review/check_execution.py report` from the repository root.
