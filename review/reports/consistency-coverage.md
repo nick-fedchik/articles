@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T17:16:56Z.
+Стан UTC: 2026-10-30T17:27:15Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -38,7 +38,7 @@
 | [28](../../ExpertSystem/ch28-dual-mode-expert-systems.md) | 985 | 9 | 87 | 36 | 15 | 22 | 32 | 24 | 12 | §9.2 Simplex tau_switch values are illustrative profile targets; WCET/HIL required |
 | [29](../../ExpertSystem/ch29-neuro-symbolic-architecture.md) | 875 | 22 | 29 | 18 | 13 | 40 | 22 | 11 | 5 | §1: autoregressive argmax objective and symbol glossary |
 | [30](../../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | 1220 | 15 | 12 | 26 | 62 | 14 | 86 | 17 | 10 | §2.1.1–2.1.3: profile attribution, worked-example arithmetic, screening-gate scope |
-| [31](../../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | 1357 | 12 | 20 | 14 | 52 | 20 | 36 | 12 | 16 | §4.5.3: ModalityMust caveat/rule/NOTE and direct L1-L3/registry; rest not accepted |
+| [31](../../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | 1357 | 12 | 20 | 13 | 52 | 19 | 36 | 12 | 16 | §4.5.3: ModalityMust caveat/rule/NOTE and direct L1-L3/registry; rest not accepted |
 | [32](../../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | 2705 | 92 | 17 | 18 | 53 | 271 | 82 | 102 | 22 | §8.2/§11.3: recall screen and SVD bound do not establish completeness/certification |
 | [33](../../ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md) | 1586 | 59 | 13 | 29 | 18 | 24 | 49 | 34 | 28 | §1/§6.3: rule evaluator and signed proof receipt are not certification authority |
 | [34](../../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | 1328 | 17 | 65 | 27 | 34 | 26 | 41 | 8 | 12 | §6.4 NOTE 3 and REQ-L2-34-22: profile-gated Lex precedence |
@@ -51,4 +51,4 @@
 
 ## Наступний пакет
 
-C4 продовжується: повне читання CH31 і локальних нормативних прикладів CH30, потім перевірка прямих повторів у решті глав. C1/C2/C3 з першого пакета й усі інші осі залишаються відкритими.
+C4 продовжується з локальних нормативних прикладів CH30 та перевірки прямих повторів у решті глав. Повне C4-читання CH31 і уточнення ModalityMust виконано, але S3 для CH31 лишається stale; C1/C2/C3 з першого пакета й усі інші осі залишаються відкритими.

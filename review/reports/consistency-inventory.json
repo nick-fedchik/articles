@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T17:16:56Z",
-  "baseline_commit": "b51c5fa6dd1a2879b4b60c082657ad7b65226fa1",
+  "at": "2026-10-30T17:27:15Z",
+  "baseline_commit": "7c429ac7db6cae237556cbc0e605b15444f4fc84",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -37171,7 +37171,7 @@
     },
     {
       "path": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
-      "sha256": "c68b8384f7697fc58dfa878611f1dc74b4fcc96b2753997304bf6425e014321b",
+      "sha256": "9366c6f1733f2f55203e001d53b962dbf179f72a6a5155c0613fe385a2392f46",
       "line_count": 1357,
       "chapter": 31,
       "scan_kind": "lexical_routing_only",
@@ -37315,7 +37315,7 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 14,
+          "matching_line_count": 13,
           "candidate_line_ranges": [
             [
               5,
@@ -37340,10 +37340,6 @@
             [
               564,
               564
-            ],
-            [
-              567,
-              567
             ],
             [
               652,
@@ -37575,7 +37571,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 20,
+          "matching_line_count": 19,
           "candidate_line_ranges": [
             [
               176,
@@ -37600,10 +37596,6 @@
             [
               532,
               532
-            ],
-            [
-              567,
-              567
             ],
             [
               626,
@@ -85366,7 +85358,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch31-registry.md",
-      "sha256": "43438cce55bb84a347ab4811b5133bfd1bfaa01b4c9bf8752715286e8ef513a3",
+      "sha256": "04a3909ba1cca3e7c86b0449aa910244a247aab0a882ac5dbe4ae5f72fdd8990",
       "line_count": 929,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -85550,7 +85542,7 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 14,
+          "matching_line_count": 13,
           "candidate_line_ranges": [
             [
               43,
@@ -85575,10 +85567,6 @@
             [
               444,
               444
-            ],
-            [
-              491,
-              491
             ],
             [
               505,
@@ -105081,7 +105069,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L1-stakeholder/ch31-L1-stakeholder.md",
-      "sha256": "f22f95488680762bab99099c7688f5c1737c0d77f1d1b020c48c441b1fe22e07",
+      "sha256": "36ba554e5424431f0a8eaaad17233f5a70c70ad1d28094c884736485242fd909",
       "line_count": 160,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -118359,7 +118347,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L2-system/ch31-L2-system.md",
-      "sha256": "a9a84e8e1cda6bdda95c87961694e224036051b73f5a9f643d6313dac265e4e5",
+      "sha256": "203e7e10aa85ff6d699df1586ff866f9a678bf7b2e31161e2b26cc154cdbb637",
       "line_count": 234,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -134764,7 +134752,7 @@
     },
     {
       "path": "ExpertSystem/requirements/L3-component/ch31-L3-component.md",
-      "sha256": "d25e7766b77c77c9bf181e8dc7760e8f68673f65c743704ab3721eef3938d0ec",
+      "sha256": "fe14b515cf1827f70d42f0d070baef7a8424cd2dc6b9bc566b4457362734009b",
       "line_count": 242,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -134812,13 +134800,8 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 1,
-          "candidate_line_ranges": [
-            [
-              136,
-              136
-            ]
-          ]
+          "matching_line_count": 0,
+          "candidate_line_ranges": []
         },
         "C4": {
           "review_status": "not_completed",
@@ -138197,11 +138180,57 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [],
+  "input_transitions_from_current_baseline": [
+    {
+      "path": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
+      "before_sha256": "c68b8384f7697fc58dfa878611f1dc74b4fcc96b2753997304bf6425e014321b",
+      "after_sha256": "9366c6f1733f2f55203e001d53b962dbf179f72a6a5155c0613fe385a2392f46",
+      "at": "2026-10-30T17:27:15Z",
+      "by": "main-editor",
+      "reason": "Full C4 reread of CH31 and goal-scoped ModalityMust correction; S3 remains stale and external ISO text is unverified",
+      "evidence": "review/reports/consistency-norm02-ch31.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch31-registry.md",
+      "before_sha256": "43438cce55bb84a347ab4811b5133bfd1bfaa01b4c9bf8752715286e8ef513a3",
+      "after_sha256": "04a3909ba1cca3e7c86b0449aa910244a247aab0a882ac5dbe4ae5f72fdd8990",
+      "at": "2026-10-30T17:27:15Z",
+      "by": "main-editor",
+      "reason": "Full C4 reread of CH31 and goal-scoped ModalityMust correction; S3 remains stale and external ISO text is unverified",
+      "evidence": "review/reports/consistency-norm02-ch31.md"
+    },
+    {
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch31-L1-stakeholder.md",
+      "before_sha256": "f22f95488680762bab99099c7688f5c1737c0d77f1d1b020c48c441b1fe22e07",
+      "after_sha256": "36ba554e5424431f0a8eaaad17233f5a70c70ad1d28094c884736485242fd909",
+      "at": "2026-10-30T17:27:15Z",
+      "by": "main-editor",
+      "reason": "Full C4 reread of CH31 and goal-scoped ModalityMust correction; S3 remains stale and external ISO text is unverified",
+      "evidence": "review/reports/consistency-norm02-ch31.md"
+    },
+    {
+      "path": "ExpertSystem/requirements/L2-system/ch31-L2-system.md",
+      "before_sha256": "a9a84e8e1cda6bdda95c87961694e224036051b73f5a9f643d6313dac265e4e5",
+      "after_sha256": "203e7e10aa85ff6d699df1586ff866f9a678bf7b2e31161e2b26cc154cdbb637",
+      "at": "2026-10-30T17:27:15Z",
+      "by": "main-editor",
+      "reason": "Full C4 reread of CH31 and goal-scoped ModalityMust correction; S3 remains stale and external ISO text is unverified",
+      "evidence": "review/reports/consistency-norm02-ch31.md"
+    },
+    {
+      "path": "ExpertSystem/requirements/L3-component/ch31-L3-component.md",
+      "before_sha256": "d25e7766b77c77c9bf181e8dc7760e8f68673f65c743704ab3721eef3938d0ec",
+      "after_sha256": "fe14b515cf1827f70d42f0d070baef7a8424cd2dc6b9bc566b4457362734009b",
+      "at": "2026-10-30T17:27:15Z",
+      "by": "main-editor",
+      "reason": "Full C4 reread of CH31 and goal-scoped ModalityMust correction; S3 remains stale and external ISO text is unverified",
+      "evidence": "review/reports/consistency-norm02-ch31.md"
+    }
+  ],
   "engine_and_links": {
     "math": {
-      "total": 17619,
-      "passed": 17619,
+      "total": 17624,
+      "passed": 17624,
       "failed": 0
     },
     "mermaid": {
@@ -138216,7 +138245,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17619,
+      "checked_math_expressions": 17624,
       "failed": 0,
       "observations": [
         {
