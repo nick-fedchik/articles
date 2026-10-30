@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T16:20:25Z
+Generated UTC: 2026-10-30T16:40:22Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -167,15 +167,15 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `214e45683f5b4909898655633c1bc5b513b008c75b2895bc7ca6ede634a724a8` | stale |
 | 30: [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | `f0274ff2c6ed58293cf0de48b81587ba719338c888ebd22747e47257f837fa59` | stale |
 | 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `2e628780f9d68aaa1c6f24391775747b878705486261a8878643820a273f57ae` | stale |
-| 32: [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | `5dcf444bd437109aaad9b24f03f7044ecef8ac3867014b7ce87e013926accfa5` | stale |
+| 32: [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | `e4b7800020a916c41c59c538b4ccf6731ec1d5ba891c9c6a52386fbc45a6d0a2` | stale |
 | 33: [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](../ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md) | `b5cecff90780fc9333b85ff77b44f62b83aa2ec98f7236be1bace2f1006fdf36` | stale |
-| 34: [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | `cbf117401b1dbcc207ac6de6834a4861f7366a28544731e7c2c5a0958930545a` | stale |
+| 34: [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | `e840163e39b4d4195f7cfd365b1071be563c833b86582982afb41e825f3df0f8` | stale |
 | 35: [Глава 35. Реактивна експертна система: події, відкликання й адаптація знань](../ExpertSystem/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md) | `96a52069ab3cbf02de924d4d3bf4b85d3a2fd13356fb7c05d53d3b188f09de4f` | stale |
 | 36: [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](../ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md) | `a98e1f582a1da0ca65e27dc710c30595f53b6493b2b4657bacb41a5df3ea9176` | stale |
 | 37: [Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність](../ExpertSystem/ch37-input-information-assessment-and-algorithmic-skepticism.md) | `7b62bfcc54d845a5602fd0666a1b75ca8c122ee4121f1a4e6c683a7da8703d62` | stale |
 | 38: [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](../ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | `6183bfec5cf692233e1ec49f30b2bcc6447c71e69af47f279d6f6b1c337a3ef9` | stale |
-| 39: [Глава 39. Активний експерт-тестувальник: попперівська фальсифікація, нормативний комплаєнс (ASPICE/ISO 26262/ISO 21434) та автономне проєктування випробувань](../ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md) | `c4238c5d5b52fd0cb2301287e580ad94146618f6e68f0ea97efd58b3b3c30e86` | stale |
-| 40: [Глава 40. Розподілена архітектура доказової експертної системи: епістемічна SOA, семантична маршрутизація, ієрархія пам'яті та багатоджерельний дефезитивний арбітраж](../ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) | `65380b85564a231ef01d6fd938e6b7678f530942e10e2c0f054787ba3403ad6b` | stale |
+| 39: [Глава 39. Активний експерт-тестувальник: попперівська фальсифікація, нормативний комплаєнс (ASPICE/ISO 26262/ISO 21434) та автономне проєктування випробувань](../ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md) | `36249747a599e0a7095a2b75fbcdf8bd23a53d74f563fe74861516be197e4b52` | stale |
+| 40: [Глава 40. Розподілена архітектура доказової експертної системи: епістемічна SOA, семантична маршрутизація, ієрархія пам'яті та багатоджерельний дефезитивний арбітраж](../ExpertSystem/ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md) | `a67fd740225bfd571904d441ae5ff1b3387f79d54a47ef25f738a5665b0d4776` | stale |
 
 ## Companion Inventory
 
