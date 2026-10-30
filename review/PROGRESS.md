@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T16:54:10Z
+Generated UTC: 2026-10-30T17:00:02Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -166,7 +166,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 28: [Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза](../ExpertSystem/ch28-dual-mode-expert-systems.md) | `4a3caeb63878c00da4f9b8c381d6a45246155511e6433556282fd49eba9592c0` | stale |
 | 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `214e45683f5b4909898655633c1bc5b513b008c75b2895bc7ca6ede634a724a8` | stale |
 | 30: [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | `f0274ff2c6ed58293cf0de48b81587ba719338c888ebd22747e47257f837fa59` | stale |
-| 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `2e628780f9d68aaa1c6f24391775747b878705486261a8878643820a273f57ae` | stale |
+| 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `c68b8384f7697fc58dfa878611f1dc74b4fcc96b2753997304bf6425e014321b` | stale |
 | 32: [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | `e4b7800020a916c41c59c538b4ccf6731ec1d5ba891c9c6a52386fbc45a6d0a2` | stale |
 | 33: [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](../ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md) | `b5cecff90780fc9333b85ff77b44f62b83aa2ec98f7236be1bace2f1006fdf36` | stale |
 | 34: [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | `e840163e39b4d4195f7cfd365b1071be563c833b86582982afb41e825f3df0f8` | stale |

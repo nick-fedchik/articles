@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T16:54:04Z",
-  "baseline_commit": "05f3eef6bf05e3b3172c27782f833d88921f7fea",
+  "at": "2026-10-30T16:59:56Z",
+  "baseline_commit": "4b0e612c78030133814cc3ad4f1b0e4132d94988",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -37171,7 +37171,7 @@
     },
     {
       "path": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
-      "sha256": "2e628780f9d68aaa1c6f24391775747b878705486261a8878643820a273f57ae",
+      "sha256": "c68b8384f7697fc58dfa878611f1dc74b4fcc96b2753997304bf6425e014321b",
       "line_count": 1357,
       "chapter": 31,
       "scan_kind": "lexical_routing_only",
@@ -37373,7 +37373,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 53,
+          "matching_line_count": 52,
           "candidate_line_ranges": [
             [
               3,
@@ -37426,6 +37426,10 @@
             [
               192,
               192
+            ],
+            [
+              196,
+              196
             ],
             [
               293,
@@ -37488,16 +37492,8 @@
               629
             ],
             [
-              807,
-              807
-            ],
-            [
               817,
               817
-            ],
-            [
-              820,
-              820
             ],
             [
               822,
@@ -37544,8 +37540,8 @@
               911
             ],
             [
-              945,
-              945
+              942,
+              942
             ],
             [
               1058,
@@ -85370,7 +85366,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch31-registry.md",
-      "sha256": "a478d24817dd4b422672e27dda2ef98868322ff153c7109020a79e3b6dadd590",
+      "sha256": "43438cce55bb84a347ab4811b5133bfd1bfaa01b4c9bf8752715286e8ef513a3",
       "line_count": 929,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -85612,7 +85608,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 88,
+          "matching_line_count": 87,
           "candidate_line_ranges": [
             [
               20,
@@ -85829,10 +85825,6 @@
             [
               601,
               601
-            ],
-            [
-              604,
-              604
             ],
             [
               606,
@@ -138207,13 +138199,22 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/requirements/L3-component/ch30-L3-component.md",
-      "before_sha256": "bad15f9945a5d37d1b0ec69d14b7159651a4de0228f9c380be272ff18a97698b",
-      "after_sha256": "204a8679a849774a917fb5e603696e10c89ea98594821d212c370906e9ad134f",
-      "at": "2026-10-30T16:54:04Z",
+      "path": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
+      "before_sha256": "2e628780f9d68aaa1c6f24391775747b878705486261a8878643820a273f57ae",
+      "after_sha256": "c68b8384f7697fc58dfa878611f1dc74b4fcc96b2753997304bf6425e014321b",
+      "at": "2026-10-30T16:59:56Z",
       "by": "main-editor",
-      "reason": "C4 CH30 per-frame authentication deadline clarified as profile parameter; no external ISO verification or scientific acceptance",
-      "evidence": "review/reports/consistency-norm02-ch30.md"
+      "reason": "C4 CH31 RFC 5321 source check and registry reconciliation; full chapter and ISO-source review remain open",
+      "evidence": "review/reports/consistency-norm02-ch31.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch31-registry.md",
+      "before_sha256": "a478d24817dd4b422672e27dda2ef98868322ff153c7109020a79e3b6dadd590",
+      "after_sha256": "43438cce55bb84a347ab4811b5133bfd1bfaa01b4c9bf8752715286e8ef513a3",
+      "at": "2026-10-30T16:59:56Z",
+      "by": "main-editor",
+      "reason": "C4 CH31 RFC 5321 source check and registry reconciliation; full chapter and ISO-source review remain open",
+      "evidence": "review/reports/consistency-norm02-ch31.md"
     }
   ],
   "engine_and_links": {
