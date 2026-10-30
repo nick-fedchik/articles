@@ -14,7 +14,7 @@
 > [ar](translations/ar/) · [az](translations/az/) · [bg](translations/bg/) · [ca](translations/ca/) · [cs](translations/cs/) · [da](translations/da/) · [de](translations/de/) · [el](translations/el/) · [en](translations/en/) · [es](translations/es/) · [et](translations/et/) · [fa](translations/fa/) · [fi](translations/fi/) · [fr](translations/fr/) · [ga](translations/ga/) · [he](translations/he/) · [hi](translations/hi/) · [hr](translations/hr/) · [hu](translations/hu/) · [hy](translations/hy/) · [id](translations/id/) · [it](translations/it/) · [ja](translations/ja/) · [ka](translations/ka/) · [kk](translations/kk/) · [ko](translations/ko/) · [lb](translations/lb/) · [lt](translations/lt/) · [lv](translations/lv/) · [ms](translations/ms/) · [mt](translations/mt/) · [nl](translations/nl/) · [no](translations/no/) · [pl](translations/pl/) · [pt](translations/pt/) · [ro](translations/ro/) · [sk](translations/sk/) · [sl](translations/sl/) · [sr](translations/sr/) · [sv](translations/sv/) · [th](translations/th/) · [tr](translations/tr/) · [uz](translations/uz/) · [vi](translations/vi/) · [zh](translations/zh/) · [zh-TW](translations/zh-TW/).  
 > Full translations of the monograph are available in **[English](translations/en/)** and **[German](translations/de/)** (coverage is being actively supplemented and expanded). See the [Multilingual Architecture Guide](translations/README.md) for architectural and translation standards.
 
-[Діалоги Pro et Contra до всіх 40 глав](PRO_ET_CONTRA.md) винесено в окремий збірник змодельованих дискусій.
+Змодельовані дискусії Pro et Contra вилучено за рішенням автора; вони не входять до поточного видання.
 
 ## Про книгу
 
