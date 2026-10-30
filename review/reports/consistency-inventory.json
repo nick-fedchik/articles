@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T10:42:26Z",
-  "baseline_commit": "82aa39084b7e361c30e53290017e4b678e426719",
+  "at": "2026-10-30T10:54:35Z",
+  "baseline_commit": "edfbaf86a2a216dcf4b66d2b763dc6d80aa82655",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -8404,7 +8404,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "§2 standard applicability and domain framing; bounded excerpt"
     },
     {
       "path": "ExpertSystem/ch02-epistemology-of-machine-knowledge.md",
@@ -9847,7 +9847,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "C4 search of normative applicability; no specific correction accepted"
     },
     {
       "path": "ExpertSystem/ch03-beyond-reference-information-systems.md",
@@ -10810,7 +10810,7 @@
           ]
         }
       },
-      "locally_checked_slice": "Registry formula §2, source-sensitive mathematical expression"
+      "locally_checked_slice": "Annotation/§2 MC/DC recommendation versus internal 100% release rule"
     },
     {
       "path": "ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md",
@@ -12329,7 +12329,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "C4 search of standards scope; no specific correction accepted"
     },
     {
       "path": "ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md",
@@ -13560,7 +13560,7 @@
     },
     {
       "path": "ExpertSystem/ch06-applied-mathematics-for-expert-systems.md",
-      "sha256": "d140a6fba5fa1f6a36d3985425055137e83bb7a9a438a47594cc698c3fa748e4",
+      "sha256": "8588465e80c50364483549b336fd12f35a39687190d11b33dee7787fd2d768a3",
       "line_count": 2267,
       "chapter": 6,
       "scan_kind": "lexical_routing_only",
@@ -14146,7 +14146,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 60,
+          "matching_line_count": 59,
           "candidate_line_ranges": [
             [
               17,
@@ -14254,7 +14254,7 @@
             ],
             [
               1138,
-              1139
+              1138
             ],
             [
               1247,
@@ -14950,7 +14950,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 42,
+          "matching_line_count": 44,
           "candidate_line_ranges": [
             [
               23,
@@ -15053,8 +15053,16 @@
               1007
             ],
             [
+              1138,
+              1138
+            ],
+            [
               1244,
               1244
+            ],
+            [
+              1247,
+              1247
             ],
             [
               1272,
@@ -15123,7 +15131,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "§7.5 and NOTE: tau_K threshold reframed as authorial profile, not ASIL default"
     },
     {
       "path": "ExpertSystem/ch07-knowledge-base-typology.md",
@@ -16138,11 +16146,11 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "C4 search of standard scope; no specific correction accepted"
     },
     {
       "path": "ExpertSystem/ch08-engineering-artifacts-as-data.md",
-      "sha256": "676b38535555e97ffeaabf068ec94949a45a41d00c7822708662be5393fc45a8",
+      "sha256": "4675a5fb956b8951e4df07f6a4cd1034d4cb7fb0a6d7319f23e13d0d57ed4dfc",
       "line_count": 1294,
       "chapter": 8,
       "scan_kind": "lexical_routing_only",
@@ -16312,7 +16320,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 19,
+          "matching_line_count": 18,
           "candidate_line_ranges": [
             [
               30,
@@ -16339,7 +16347,7 @@
               124
             ],
             [
-              234,
+              235,
               235
             ],
             [
@@ -16832,7 +16840,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 21,
+          "matching_line_count": 22,
           "candidate_line_ranges": [
             [
               19,
@@ -16845,6 +16853,10 @@
             [
               33,
               33
+            ],
+            [
+              44,
+              44
             ],
             [
               50,
@@ -16875,8 +16887,8 @@
               177
             ],
             [
-              235,
-              235
+              234,
+              234
             ],
             [
               364,
@@ -16921,7 +16933,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "§2 tau_trace authorial profile and §6 Coverage necessary/not-sufficient condition"
     },
     {
       "path": "ExpertSystem/ch09-engineering-knowledge-graph-traceability.md",
@@ -17536,7 +17548,7 @@
           ]
         }
       },
-      "locally_checked_slice": null
+      "locally_checked_slice": "C4 search of standard scope; no specific correction accepted"
     },
     {
       "path": "ExpertSystem/ch10-knowledge-acquisition-systems.md",
@@ -54544,7 +54556,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch06-registry.md",
-      "sha256": "5806c3e23d5a5bb27bd4fae975fb98db319fc4f67c995e77dd98e582ce5e221c",
+      "sha256": "0758d2021d2de1af0bd35eead10a7f7129c848efa799e491f43361bc115c43e4",
       "line_count": 1343,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -55065,8 +55077,8 @@
               684
             ],
             [
-              714,
-              714
+              711,
+              711
             ],
             [
               725,
@@ -55630,7 +55642,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 179,
+          "matching_line_count": 182,
           "candidate_line_ranges": [
             [
               1,
@@ -55949,12 +55961,24 @@
               705
             ],
             [
+              711,
+              711
+            ],
+            [
+              714,
+              714
+            ],
+            [
               717,
               717
             ],
             [
               720,
               720
+            ],
+            [
+              725,
+              725
             ],
             [
               736,
@@ -57434,7 +57458,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch08-registry.md",
-      "sha256": "fe55294a2989458d68efdfeafca1c91dc8e8ce95437ec68fffe3eb43cd48b2e1",
+      "sha256": "09efb9f5a8e07bdc4c771c6c148c625e4eefbf5be1e1abef15b7eab09510c72e",
       "line_count": 947,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -57556,7 +57580,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 17,
+          "matching_line_count": 16,
           "candidate_line_ranges": [
             [
               99,
@@ -57577,10 +57601,6 @@
             [
               252,
               252
-            ],
-            [
-              265,
-              265
             ],
             [
               268,
@@ -58008,7 +58028,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 169,
+          "matching_line_count": 172,
           "candidate_line_ranges": [
             [
               1,
@@ -58053,6 +58073,10 @@
             [
               85,
               86
+            ],
+            [
+              92,
+              92
             ],
             [
               97,
@@ -58135,7 +58159,11 @@
               257
             ],
             [
-              268,
+              265,
+              265
+            ],
+            [
+              267,
               270
             ],
             [
@@ -138099,37 +138127,37 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md",
-      "before_sha256": "388cca2788350eef3a86e1481686e527dd02a79d56f06d257bb33cfe2765f98b",
-      "after_sha256": "e3dce5015e6d033319e3b5c746035db25af7a5c672337f4fa143abb9acf6c00f",
-      "at": "2026-10-30T10:42:26Z",
+      "path": "ExpertSystem/ch06-applied-mathematics-for-expert-systems.md",
+      "before_sha256": "d140a6fba5fa1f6a36d3985425055137e83bb7a9a438a47594cc698c3fa748e4",
+      "after_sha256": "8588465e80c50364483549b336fd12f35a39687190d11b33dee7787fd2d768a3",
+      "at": "2026-10-30T10:54:35Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/registry/ch39-registry.md",
-      "before_sha256": "00838f24e02153973ebf2c8244e1872881e70620dedc4a65a5bcfdd1333da425",
-      "after_sha256": "23b7bb316b9ead11e43ec6e3c5d7a37749d6fe6786a113df1dc5447dcf49aa1d",
-      "at": "2026-10-30T10:42:26Z",
+      "path": "ExpertSystem/ch08-engineering-artifacts-as-data.md",
+      "before_sha256": "676b38535555e97ffeaabf068ec94949a45a41d00c7822708662be5393fc45a8",
+      "after_sha256": "4675a5fb956b8951e4df07f6a4cd1034d4cb7fb0a6d7319f23e13d0d57ed4dfc",
+      "at": "2026-10-30T10:54:35Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/requirements/L1-stakeholder/ch39-L1-stakeholder.md",
-      "before_sha256": "4b9efb4844daa072df68960c74ad406bfa230bbdfda8df33c2855970881ecf13",
-      "after_sha256": "ce15e7901997111d624b0a64186092855fd1ed00b20d875594ae80e5bea06d34",
-      "at": "2026-10-30T10:42:26Z",
+      "path": "ExpertSystem/registry/ch06-registry.md",
+      "before_sha256": "5806c3e23d5a5bb27bd4fae975fb98db319fc4f67c995e77dd98e582ce5e221c",
+      "after_sha256": "0758d2021d2de1af0bd35eead10a7f7129c848efa799e491f43361bc115c43e4",
+      "at": "2026-10-30T10:54:35Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
     },
     {
-      "path": "ExpertSystem/requirements/L2-system/ch39-L2-system.md",
-      "before_sha256": "820838bfe2feb1850e955ab4537440abd3d5440e0ffb107bb78ffc2ef0b85ae9",
-      "after_sha256": "6a03b1bbb332edf190bd9c0d4c2fd76adda1a6b36feb9e926c509716c23f980f",
-      "at": "2026-10-30T10:42:26Z",
+      "path": "ExpertSystem/registry/ch08-registry.md",
+      "before_sha256": "fe55294a2989458d68efdfeafca1c91dc8e8ce95437ec68fffe3eb43cd48b2e1",
+      "after_sha256": "09efb9f5a8e07bdc4c771c6c148c625e4eefbf5be1e1abef15b7eab09510c72e",
+      "at": "2026-10-30T10:54:35Z",
       "by": "main-editor",
       "reason": "Formula macro compatibility correction; no full scientific rereading",
       "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
@@ -138137,8 +138165,8 @@
   ],
   "engine_and_links": {
     "math": {
-      "total": 17717,
-      "passed": 17717,
+      "total": 17719,
+      "passed": 17719,
       "failed": 0
     },
     "mermaid": {
@@ -138153,7 +138181,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17717,
+      "checked_math_expressions": 17719,
       "failed": 0,
       "observations": [
         {

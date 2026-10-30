@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T10:42:26Z.
+Стан UTC: 2026-10-30T10:54:35Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -8,15 +8,15 @@
 
 | Глава | Рядків | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | Фактично перевірений локальний уривок |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
-| [01](../../ExpertSystem/ch01-introduction-to-expert-systems.md) | 651 | 30 | 25 | 21 | 19 | 25 | 50 | 13 | 22 | Не перевірено; лише пошуковий маршрут |
-| [02](../../ExpertSystem/ch02-epistemology-of-machine-knowledge.md) | 1461 | 27 | 34 | 51 | 78 | 27 | 46 | 59 | 48 | Не перевірено; лише пошуковий маршрут |
-| [03](../../ExpertSystem/ch03-beyond-reference-information-systems.md) | 801 | 13 | 22 | 45 | 32 | 22 | 47 | 39 | 18 | Registry formula §2, source-sensitive mathematical expression |
-| [04](../../ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md) | 1651 | 18 | 50 | 51 | 60 | 30 | 75 | 51 | 65 | Не перевірено; лише пошуковий маршрут |
+| [01](../../ExpertSystem/ch01-introduction-to-expert-systems.md) | 651 | 30 | 25 | 21 | 19 | 25 | 50 | 13 | 22 | §2 standard applicability and domain framing; bounded excerpt |
+| [02](../../ExpertSystem/ch02-epistemology-of-machine-knowledge.md) | 1461 | 27 | 34 | 51 | 78 | 27 | 46 | 59 | 48 | C4 search of normative applicability; no specific correction accepted |
+| [03](../../ExpertSystem/ch03-beyond-reference-information-systems.md) | 801 | 13 | 22 | 45 | 32 | 22 | 47 | 39 | 18 | Annotation/§2 MC/DC recommendation versus internal 100% release rule |
+| [04](../../ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md) | 1651 | 18 | 50 | 51 | 60 | 30 | 75 | 51 | 65 | C4 search of standards scope; no specific correction accepted |
 | [05](../../ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md) | 882 | 27 | 25 | 25 | 25 | 73 | 42 | 71 | 22 | §4.6: absent modal marker is not proof of informative status |
-| [06](../../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | 2267 | 3 | 57 | 96 | 60 | 20 | 80 | 45 | 42 | Не перевірено; лише пошуковий маршрут |
-| [07](../../ExpertSystem/ch07-knowledge-base-typology.md) | 1495 | 5 | 23 | 41 | 33 | 21 | 25 | 78 | 24 | Не перевірено; лише пошуковий маршрут |
-| [08](../../ExpertSystem/ch08-engineering-artifacts-as-data.md) | 1294 | 16 | 16 | 7 | 19 | 26 | 38 | 47 | 21 | Не перевірено; лише пошуковий маршрут |
-| [09](../../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | 1193 | 22 | 5 | 7 | 26 | 13 | 26 | 26 | 19 | Не перевірено; лише пошуковий маршрут |
+| [06](../../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | 2267 | 3 | 57 | 96 | 59 | 20 | 80 | 45 | 44 | §7.5 and NOTE: tau_K threshold reframed as authorial profile, not ASIL default |
+| [07](../../ExpertSystem/ch07-knowledge-base-typology.md) | 1495 | 5 | 23 | 41 | 33 | 21 | 25 | 78 | 24 | C4 search of standard scope; no specific correction accepted |
+| [08](../../ExpertSystem/ch08-engineering-artifacts-as-data.md) | 1294 | 16 | 16 | 7 | 18 | 26 | 38 | 47 | 22 | §2 tau_trace authorial profile and §6 Coverage necessary/not-sufficient condition |
+| [09](../../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | 1193 | 22 | 5 | 7 | 26 | 13 | 26 | 26 | 19 | C4 search of standard scope; no specific correction accepted |
 | [10](../../ExpertSystem/ch10-knowledge-acquisition-systems.md) | 1658 | 22 | 9 | 13 | 59 | 66 | 95 | 116 | 37 | §1.1: artifact strata classify function, not legal precedence |
 | [11](../../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | 659 | 1 | 31 | 15 | 16 | 5 | 51 | 5 | 31 | Не перевірено; лише пошуковий маршрут |
 | [12](../../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | 1254 | 34 | 18 | 9 | 51 | 90 | 72 | 42 | 24 | Не перевірено; лише пошуковий маршрут |
