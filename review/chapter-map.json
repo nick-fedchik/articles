@@ -10642,7 +10642,7 @@
     {
       "number": 31,
       "file": "ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md",
-      "input_sha256": "cb4c1bd5b4a4000fce3cfdcfe53d5be1b13cdc973828c21e62a35a3ba8b702a5",
+      "input_sha256": "2e628780f9d68aaa1c6f24391775747b878705486261a8878643820a273f57ae",
       "title": "Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність",
       "h2_titles": [
         "Анотація",
@@ -10750,8 +10750,8 @@
         1330
       ],
       "revalidation": {
-        "at": "2026-10-30T10:20:54Z",
-        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
+        "at": "2026-10-30T13:34:05Z",
+        "evidence": "review/reports/consistency-c1-ch31-40.md",
         "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
@@ -11042,6 +11042,77 @@
             ]
           },
           "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
+        },
+        {
+          "at": "2026-10-30T13:34:05Z",
+          "input_sha256": "cb4c1bd5b4a4000fce3cfdcfe53d5be1b13cdc973828c21e62a35a3ba8b702a5",
+          "h2_titles": [
+            "Анотація",
+            "1. Чому однокроковий пошук не дає нормативного висновку",
+            "2. Поняття, судження й висновок",
+            "3. Ієрархія предикатів і семантика субсумції",
+            "4. Тризначна логіка Кліні та спростувачі Поллока",
+            "5. Дослідження міждокументних конфліктів: еволюція протоколу TCP",
+            "6. Умовні запитання з кількома кроками",
+            "7. Перегляд сліду виведення",
+            "8. Навчальний крок виведення на Go",
+            "9. Сучасні засоби й видобування знань для ієрархій і винятків",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            24,
+            90,
+            204,
+            321,
+            634,
+            802,
+            933,
+            957,
+            1220,
+            1258,
+            1265,
+            1300,
+            1330
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1402
+            ],
+            "h2_line_numbers": [
+              13,
+              24,
+              90,
+              204,
+              321,
+              631,
+              799,
+              930,
+              954,
+              1217,
+              1255,
+              1289,
+              1296,
+              1310,
+              1345,
+              1375
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false,
+            "heading_scan_line_range": [
+              1,
+              1402
+            ]
+          },
+          "evidence": "review/reports/consistency-c1-ch31-40.md"
         }
       ]
     },
@@ -11435,7 +11506,7 @@
     {
       "number": 33,
       "file": "ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md",
-      "input_sha256": "e5bb619ecd10f316bd089b7f0faa138866453c038bbae873a69e6a9128d84eb8",
+      "input_sha256": "b5cecff90780fc9333b85ff77b44f62b83aa2ec98f7236be1bace2f1006fdf36",
       "title": "Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок",
       "h2_titles": [
         "Анотація",
@@ -11551,8 +11622,8 @@
         1555
       ],
       "revalidation": {
-        "at": "2026-10-30T11:44:50Z",
-        "evidence": "review/reports/math-rendering-discrepancy-ch29.md",
+        "at": "2026-10-30T13:34:05Z",
+        "evidence": "review/reports/consistency-c1-ch31-40.md",
         "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
@@ -11693,6 +11764,73 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/math-rendering-discrepancy-ch29.md"
+        },
+        {
+          "at": "2026-10-30T13:34:05Z",
+          "input_sha256": "e5bb619ecd10f316bd089b7f0faa138866453c038bbae873a69e6a9128d84eb8",
+          "h2_titles": [
+            "Анотація",
+            "1. Експертна система як постачальник знань і вчитель сторонніх систем",
+            "2. Постачання знань обробникам фізичних сигналів та сенсорної інформації",
+            "3. Навчання сторонніх систем: символьна дистиляція та верифікований курікулум",
+            "4. Формати, способи та технології міжсистемного обміну знаннями",
+            "5. Умови, правила збереження семантики та онтологічне узгодження",
+            "6. Розмежування доступу та безпека знань: решітка міток і селективне розкриття",
+            "7. Підтвердження фактів (Fact Attestation) та захист від отруєння знань",
+            "8. Зворотний зв'язок (Feedback Loop) та донавчання експертної системи",
+            "9. Програмна реалізація мовою Go: модуль xchange",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            21,
+            58,
+            120,
+            208,
+            329,
+            392,
+            502,
+            602,
+            628,
+            1499,
+            1511,
+            1532,
+            1555
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1634
+            ],
+            "h2_line_numbers": [
+              13,
+              21,
+              58,
+              120,
+              208,
+              329,
+              392,
+              502,
+              602,
+              628,
+              1499,
+              1533,
+              1545,
+              1559,
+              1580,
+              1603
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-c1-ch31-40.md"
         }
       ]
     },
@@ -12200,7 +12338,7 @@
     {
       "number": 36,
       "file": "ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md",
-      "input_sha256": "a94082660f6f12f896ed10a6be92f90171c0b4d63b9bc1b7ad8b362b9459b4b0",
+      "input_sha256": "daa046e6df9fd63ebaef3037194e7bc8a17ccea45287cd0502ff6af0542fb19d",
       "title": "Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей",
       "h2_titles": [
         "Анотація",
@@ -12306,9 +12444,9 @@
         1486
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T13:34:05Z",
+        "evidence": "review/reports/consistency-c1-ch31-40.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -12378,13 +12516,77 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T13:34:05Z",
+          "input_sha256": "a94082660f6f12f896ed10a6be92f90171c0b4d63b9bc1b7ad8b362b9459b4b0",
+          "h2_titles": [
+            "Анотація",
+            "1. Методологічний розрив у верифікації систем знань",
+            "2. Концептуальна модель: Чотирирівнева піраміда тестування знань",
+            "3. Рівень 1: Knowledge Unit Testing (KUT) — Тестування атомів знань",
+            "4. Рівень 2: Knowledge Integration Testing (KIT) — Решітки виведення та дефітери",
+            "5. Рівні 3 і 4: наскрізні перевірки та варіативне калібрування",
+            "6. Тестові контракти для різних способів виведення",
+            "7. Стигмергічне закриття прогалин знань (`KnowledgeGapSpool`)",
+            "8. Програмна реалізація мовою Go",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            23,
+            77,
+            121,
+            232,
+            274,
+            710,
+            737,
+            811,
+            1422,
+            1438,
+            1463,
+            1486
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1556
+            ],
+            "h2_line_numbers": [
+              13,
+              23,
+              77,
+              121,
+              232,
+              274,
+              710,
+              737,
+              811,
+              1422,
+              1454,
+              1470,
+              1483,
+              1508,
+              1531
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-c1-ch31-40.md"
         }
       ]
     },
     {
       "number": 37,
       "file": "ExpertSystem/ch37-input-information-assessment-and-algorithmic-skepticism.md",
-      "input_sha256": "e57b0d900b6f710472935e9b98f3153fc34241b6ecbfda21c46ab46606bcb3fd",
+      "input_sha256": "7b62bfcc54d845a5602fd0666a1b75ca8c122ee4121f1a4e6c683a7da8703d62",
       "title": "Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність",
       "h2_titles": [
         "Анотація",
@@ -12494,9 +12696,9 @@
         1183
       ],
       "revalidation": {
-        "at": "2026-10-30T07:58:13Z",
-        "evidence": "review/reports/technical-preparation.md",
-        "scope": "Technical hash/heading inventory refresh only; historical reading is not reaccepted."
+        "at": "2026-10-30T13:34:05Z",
+        "evidence": "review/reports/consistency-c1-ch31-40.md",
+        "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
         {
@@ -12575,6 +12777,79 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/pro-et-contra-relocation.md"
+        },
+        {
+          "at": "2026-10-30T13:34:05Z",
+          "input_sha256": "e57b0d900b6f710472935e9b98f3153fc34241b6ecbfda21c46ab46606bcb3fd",
+          "h2_titles": [
+            "Анотація",
+            "1. Від повідомлення до знання",
+            "2. Дев'ять аналітичних традицій: метод, свідчення й межі перенесення",
+            "3. Правоохоронна аналітика: зв'язок не дорівнює доказу вини",
+            "4. Кіберзахист: від спрацювання детектора до підтвердженого інциденту",
+            "5. Текст, звук, радіохвилі та зображення: контракт первинного спостереження",
+            "6. Категорії достовірності: багатовісна таксономія",
+            "7. Ймовірнісна оцінка: сила свідчення, залежність і невизначеність",
+            "8. Експертний скепсис як алгоритм",
+            "9. Реальний час і пакетна обробка без перегляду кожного повідомлення",
+            "10. Аналітичні програми: що вони дають доказовій ЕС",
+            "11. Навчальний алгоритм: інтервал, копії та відкладене рішення",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            11,
+            17,
+            78,
+            147,
+            169,
+            198,
+            244,
+            383,
+            532,
+            632,
+            847,
+            907,
+            1122,
+            1130,
+            1146,
+            1183
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1270
+            ],
+            "h2_line_numbers": [
+              11,
+              17,
+              78,
+              147,
+              169,
+              198,
+              244,
+              383,
+              532,
+              632,
+              847,
+              907,
+              1122,
+              1159,
+              1167,
+              1175,
+              1191,
+              1228
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-c1-ch31-40.md"
         }
       ]
     },
