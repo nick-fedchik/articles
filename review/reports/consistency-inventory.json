@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T13:55:14Z",
-  "baseline_commit": "219d745557e5ae9bde491aa2147039f39b0deab3",
+  "at": "2026-10-30T13:57:58Z",
+  "baseline_commit": "b45b12104e4bf13336fd7729ce8746472ed7a98a",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -31610,7 +31610,7 @@
     },
     {
       "path": "ExpertSystem/ch24-system-diagnosis.md",
-      "sha256": "96671807449b892f81b40a46180fee92105c52b8b7ca422600ad0666120997ca",
+      "sha256": "5afbb333e5af0e12e798106436f004c11e9df6d135dc3efab936cbbb974d133e",
       "line_count": 1039,
       "chapter": 24,
       "scan_kind": "lexical_routing_only",
@@ -31636,8 +31636,12 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 48,
+          "matching_line_count": 49,
           "candidate_line_ranges": [
+            [
+              13,
+              13
+            ],
             [
               19,
               19
@@ -32020,12 +32024,8 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 22,
+          "matching_line_count": 21,
           "candidate_line_ranges": [
-            [
-              13,
-              13
-            ],
             [
               108,
               108
@@ -32184,12 +32184,8 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 12,
+          "matching_line_count": 11,
           "candidate_line_ranges": [
-            [
-              13,
-              13
-            ],
             [
               15,
               15
@@ -76889,7 +76885,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch24-registry.md",
-      "sha256": "d4c402e285a1a0c7f5295c8529c7a7f4ff6f8edc67f27bb37eef6bc3ffd280ea",
+      "sha256": "c4756f8183629a1f07183b1b62c6897dc1213846a53ff4113af11605a8b42a53",
       "line_count": 1021,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -77085,7 +77081,7 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 50,
+          "matching_line_count": 51,
           "candidate_line_ranges": [
             [
               3,
@@ -77110,6 +77106,10 @@
             [
               83,
               83
+            ],
+            [
+              88,
+              88
             ],
             [
               96,
@@ -77565,11 +77565,15 @@
         },
         "C7": {
           "review_status": "not_completed",
-          "matching_line_count": 16,
+          "matching_line_count": 17,
           "candidate_line_ranges": [
             [
               27,
               27
+            ],
+            [
+              88,
+              88
             ],
             [
               173,
@@ -138317,7 +138321,26 @@
       "locally_checked_slice": null
     }
   ],
-  "input_transitions_from_current_baseline": [],
+  "input_transitions_from_current_baseline": [
+    {
+      "path": "ExpertSystem/ch24-system-diagnosis.md",
+      "before_sha256": "96671807449b892f81b40a46180fee92105c52b8b7ca422600ad0666120997ca",
+      "after_sha256": "5afbb333e5af0e12e798106436f004c11e9df6d135dc3efab936cbbb974d133e",
+      "at": "2026-10-30T13:57:58Z",
+      "by": "main-editor",
+      "reason": "Bounded C3 correction in CH24 narrowing model-consistency to causal-candidate status; full review remains open",
+      "evidence": "review/reports/consistency-c3-ch21-30.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch24-registry.md",
+      "before_sha256": "d4c402e285a1a0c7f5295c8529c7a7f4ff6f8edc67f27bb37eef6bc3ffd280ea",
+      "after_sha256": "c4756f8183629a1f07183b1b62c6897dc1213846a53ff4113af11605a8b42a53",
+      "at": "2026-10-30T13:57:58Z",
+      "by": "main-editor",
+      "reason": "Bounded C3 correction in CH24 narrowing model-consistency to causal-candidate status; full review remains open",
+      "evidence": "review/reports/consistency-c3-ch21-30.md"
+    }
+  ],
   "engine_and_links": {
     "math": {
       "total": 17717,

@@ -1,6 +1,6 @@
 # Початкове покриття наскрізної узгодженості
 
-Стан UTC: 2026-10-30T13:55:14Z.
+Стан UTC: 2026-10-30T13:57:58Z.
 
 Числа C1–C8 є кількістю рядків із пошуковими збігами, не перевірених тверджень. Нуль не означає відсутності поняття. Усі 40 глав і всі осі залишаються без повного змістового приймання.
 
@@ -31,7 +31,7 @@
 | [21](../../ExpertSystem/ch21-from-recommendation-to-action.md) | 819 | 13 | 17 | 4 | 6 | 4 | 47 | 25 | 11 | Action gateway framed as authorial architecture; A0-A4 are not certification levels |
 | [22](../../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | 1112 | 12 | 14 | 28 | 13 | 53 | 79 | 42 | 11 | Bounded C4 search; no unsupported 5 us hardware limit found |
 | [23](../../ExpertSystem/ch23-knowledge-base-verification.md) | 1136 | 12 | 9 | 53 | 17 | 15 | 23 | 46 | 13 | §9: distance operator notation; full mathematical claim not reviewed |
-| [24](../../ExpertSystem/ch24-system-diagnosis.md) | 1039 | 3 | 48 | 47 | 3 | 3 | 22 | 16 | 12 | Bounded C4 scan; attribution/genealogy requires separate S3 review |
+| [24](../../ExpertSystem/ch24-system-diagnosis.md) | 1039 | 3 | 49 | 47 | 3 | 3 | 21 | 16 | 11 | Bounded C4 scan; attribution/genealogy requires separate S3 review |
 | [25](../../ExpertSystem/ch25-how-expert-systems-learn.md) | 1325 | 7 | 15 | 24 | 28 | 31 | 58 | 126 | 19 | Bounded C4 review: authorial policy thresholds caveated; full S3 review open |
 | [26](../../ExpertSystem/ch26-continual-learning.md) | 1058 | 1 | 14 | 24 | 10 | 15 | 63 | 34 | 11 | Bounded C4 scan; no specific contradiction accepted |
 | [27](../../ExpertSystem/ch27-safety-case-gsn-synthesis.md) | 813 | 23 | 17 | 8 | 10 | 9 | 21 | 35 | 8 | §4.3: READY_FOR_BASELINE explicitly not certification |

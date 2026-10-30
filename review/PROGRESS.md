@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T13:55:20Z
+Generated UTC: 2026-10-30T13:58:03Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -159,7 +159,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 21: [Глава 21. Від рекомендації до дії: контроль повноважень і безпечне виконання у виробничому середовищі](../ExpertSystem/ch21-from-recommendation-to-action.md) | `f922f3d8d696f6e317270676ffdec13da818137215d4ba6f4d1436f61c71ca5f` | stale |
 | 22: [Глава 22. Кібернетичний цикл керування: сенсори, периферія та зворотний зв'язок](../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | `c685125cc94c13687db1bee85b06d652a4cccaed5c779737fb80051b34ab90ec` | stale |
 | 23: [Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил](../ExpertSystem/ch23-knowledge-base-verification.md) | `8bec232fa0152ec65c5ca275845a25b9e5864d7da5ea8265a1dbf9c864acacff` | stale |
-| 24: [Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти](../ExpertSystem/ch24-system-diagnosis.md) | `96671807449b892f81b40a46180fee92105c52b8b7ca422600ad0666120997ca` | stale |
+| 24: [Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти](../ExpertSystem/ch24-system-diagnosis.md) | `5afbb333e5af0e12e798106436f004c11e9df6d135dc3efab936cbbb974d133e` | stale |
 | 25: [Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій](../ExpertSystem/ch25-how-expert-systems-learn.md) | `132943422f24a7f7302c307fd54d3af28310185a90b0e1ca917f4fb0c600ffe3` | stale |
 | 26: [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](../ExpertSystem/ch26-continual-learning.md) | `b837a181e31894da34a8a48cbb151eddefef391d1b82bb4918d119626f74bdba` | stale |
 | 27: [Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів](../ExpertSystem/ch27-safety-case-gsn-synthesis.md) | `b18deeba757f054f2c277dcc5655e7015e4b431e0b0b2f214874b87ea12b6f88` | stale |
