@@ -13,7 +13,10 @@
 
 ## Перевірки
 
-- Math formatting після локальних змін: пройшов. Повний render/buzzword/structural/trace/scoped-leakage і 31 unit test після підключення звіту очікують виконання.
+- Renderer: 17 715/17 715 MathJax, 320/320 Mermaid, 6 252 локальні посилання пройшли, 49 перекладних посилань пропущено, 0 помилок.
+- Buzzword, math formatting і structural hierarchy пройшли; requirements trace: L1 487, L2 943, L3 1 177, 0 помилок і 0 попереджень.
+- Scoped project-leakage scan пройшов для дев'яти змінених CH32/33-файлів; repo-wide скан має blocker у незміненому користувацькому `TASK-TST-008-srr-benchmark.md`.
+- Набір unit tests: 31 passed, 0 failed.
 - Repo-wide leakage scan має відомий блокер в незміненому користувацькому `TASK-TST-008-srr-benchmark.md`; зміни обмежено українським оригіналом і прямими реєстрами/вимогами.
 
 ## Межі
