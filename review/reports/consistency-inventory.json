@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T15:47:10Z",
-  "baseline_commit": "455087ff56f365ffa9b86354bbb26f0ceaae5da5",
+  "at": "2026-10-30T16:20:20Z",
+  "baseline_commit": "c911e9f5ea9bf39b966e6359a1499ccc495d1b05",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -689,7 +689,7 @@
     },
     {
       "path": "ExpertSystem/PRO_ET_CONTRA.md",
-      "sha256": "734a7bfb20af97fa5dc661b5d8b60895797a511c74f41e71a36218b835d761eb",
+      "sha256": "d3d630371cebe15aa4abeb58c48118d8da940332e2677e6df4c0d65d390a2377",
       "line_count": 2079,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -959,7 +959,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 81,
+          "matching_line_count": 82,
           "candidate_line_ranges": [
             [
               69,
@@ -1138,6 +1138,10 @@
               1563
             ],
             [
+              1591,
+              1591
+            ],
+            [
               1605,
               1605
             ],
@@ -1281,7 +1285,7 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 139,
+          "matching_line_count": 138,
           "candidate_line_ranges": [
             [
               92,
@@ -1658,10 +1662,6 @@
             [
               1603,
               1603
-            ],
-            [
-              1631,
-              1631
             ],
             [
               1639,
@@ -2273,7 +2273,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 130,
+          "matching_line_count": 129,
           "candidate_line_ranges": [
             [
               69,
@@ -2636,10 +2636,6 @@
               1605
             ],
             [
-              1633,
-              1633
-            ],
-            [
               1669,
               1669
             ],
@@ -2779,7 +2775,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 240,
+          "matching_line_count": 237,
           "candidate_line_ranges": [
             [
               3,
@@ -3410,10 +3406,6 @@
               1585
             ],
             [
-              1589,
-              1589
-            ],
-            [
               1597,
               1597
             ],
@@ -3444,14 +3436,6 @@
             [
               1627,
               1627
-            ],
-            [
-              1631,
-              1631
-            ],
-            [
-              1633,
-              1633
             ],
             [
               1639,
@@ -4127,7 +4111,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 129,
+          "matching_line_count": 128,
           "candidate_line_ranges": [
             [
               74,
@@ -4484,10 +4468,6 @@
             [
               1561,
               1561
-            ],
-            [
-              1591,
-              1591
             ],
             [
               1647,
@@ -31594,7 +31574,7 @@
     },
     {
       "path": "ExpertSystem/ch24-system-diagnosis.md",
-      "sha256": "5afbb333e5af0e12e798106436f004c11e9df6d135dc3efab936cbbb974d133e",
+      "sha256": "87d386a9014ee2c3323ff3a71793ce68004e604b9005c2a8b379ea80e69abf60",
       "line_count": 1039,
       "chapter": 24,
       "scan_kind": "lexical_routing_only",
@@ -31620,7 +31600,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 49,
+          "matching_line_count": 51,
           "candidate_line_ranges": [
             [
               13,
@@ -31677,6 +31657,10 @@
             [
               322,
               322
+            ],
+            [
+              326,
+              326
             ],
             [
               332,
@@ -31777,6 +31761,10 @@
             [
               957,
               957
+            ],
+            [
+              969,
+              969
             ],
             [
               984,
@@ -32098,7 +32086,7 @@
         },
         "C7": {
           "review_status": "not_completed",
-          "matching_line_count": 16,
+          "matching_line_count": 17,
           "candidate_line_ranges": [
             [
               4,
@@ -32161,6 +32149,10 @@
               966
             ],
             [
+              969,
+              969
+            ],
+            [
               973,
               973
             ]
@@ -32168,7 +32160,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 11,
+          "matching_line_count": 12,
           "candidate_line_ranges": [
             [
               15,
@@ -32185,6 +32177,10 @@
             [
               324,
               324
+            ],
+            [
+              326,
+              326
             ],
             [
               351,
@@ -32221,7 +32217,7 @@
     },
     {
       "path": "ExpertSystem/ch25-how-expert-systems-learn.md",
-      "sha256": "132943422f24a7f7302c307fd54d3af28310185a90b0e1ca917f4fb0c600ffe3",
+      "sha256": "8af6a1e48cfc44a854f9e0e008720e9b5c2999bf86035b8dbb89cb7115e30b2d",
       "line_count": 1325,
       "chapter": 25,
       "scan_kind": "lexical_routing_only",
@@ -32263,7 +32259,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 15,
+          "matching_line_count": 14,
           "candidate_line_ranges": [
             [
               125,
@@ -32280,10 +32276,6 @@
             [
               584,
               584
-            ],
-            [
-              626,
-              626
             ],
             [
               748,
@@ -32647,7 +32639,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 58,
+          "matching_line_count": 57,
           "candidate_line_ranges": [
             [
               15,
@@ -32720,10 +32712,6 @@
             [
               486,
               486
-            ],
-            [
-              626,
-              626
             ],
             [
               628,
@@ -33339,7 +33327,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 19,
+          "matching_line_count": 21,
           "candidate_line_ranges": [
             [
               17,
@@ -33374,12 +33362,20 @@
               286
             ],
             [
+              371,
+              371
+            ],
+            [
               405,
               405
             ],
             [
               449,
               449
+            ],
+            [
+              626,
+              626
             ],
             [
               678,
@@ -33424,7 +33420,7 @@
     },
     {
       "path": "ExpertSystem/ch26-continual-learning.md",
-      "sha256": "b837a181e31894da34a8a48cbb151eddefef391d1b82bb4918d119626f74bdba",
+      "sha256": "89b73323e2682ff465ea5922e2d0d831355eb46581a15ff019a6e908d8c1ecaf",
       "line_count": 1058,
       "chapter": 26,
       "scan_kind": "lexical_routing_only",
@@ -34098,7 +34094,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 11,
+          "matching_line_count": 12,
           "candidate_line_ranges": [
             [
               15,
@@ -34107,6 +34103,10 @@
             [
               21,
               21
+            ],
+            [
+              211,
+              211
             ],
             [
               262,
@@ -35573,7 +35573,7 @@
     },
     {
       "path": "ExpertSystem/ch29-neuro-symbolic-architecture.md",
-      "sha256": "5811cb50ad276b16b6f5596be90fc56e79feab67c06ae747f826d681c96f51e3",
+      "sha256": "214e45683f5b4909898655633c1bc5b513b008c75b2895bc7ca6ede634a724a8",
       "line_count": 875,
       "chapter": 29,
       "scan_kind": "lexical_routing_only",
@@ -35581,7 +35581,7 @@
       "axes": {
         "C1": {
           "review_status": "not_completed",
-          "matching_line_count": 23,
+          "matching_line_count": 22,
           "candidate_line_ranges": [
             [
               13,
@@ -35650,10 +35650,6 @@
             [
               658,
               659
-            ],
-            [
-              678,
-              678
             ],
             [
               702,
@@ -35785,12 +35781,8 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 20,
+          "matching_line_count": 18,
           "candidate_line_ranges": [
-            [
-              47,
-              47
-            ],
             [
               53,
               53
@@ -35832,10 +35824,6 @@
               377
             ],
             [
-              660,
-              660
-            ],
-            [
               695,
               695
             ],
@@ -35871,7 +35859,7 @@
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 16,
+          "matching_line_count": 13,
           "candidate_line_ranges": [
             [
               13,
@@ -35887,7 +35875,7 @@
             ],
             [
               46,
-              47
+              46
             ],
             [
               199,
@@ -35902,12 +35890,8 @@
               241
             ],
             [
-              660,
+              661,
               661
-            ],
-            [
-              678,
-              678
             ],
             [
               681,
@@ -35929,7 +35913,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 41,
+          "matching_line_count": 40,
           "candidate_line_ranges": [
             [
               9,
@@ -36057,7 +36041,7 @@
             ],
             [
               677,
-              678
+              677
             ],
             [
               702,
@@ -36090,8 +36074,8 @@
               21
             ],
             [
-              47,
-              47
+              51,
+              51
             ],
             [
               55,
@@ -36230,8 +36214,8 @@
               23
             ],
             [
-              47,
-              47
+              51,
+              51
             ],
             [
               194,
@@ -76913,7 +76897,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch24-registry.md",
-      "sha256": "c4756f8183629a1f07183b1b62c6897dc1213846a53ff4113af11605a8b42a53",
+      "sha256": "3dbeefa767cb8cb28173c0f63fb319f76aa0ee80ca37f8e4a997f0157a4b05c3",
       "line_count": 1021,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -76935,7 +76919,7 @@
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 48,
+          "matching_line_count": 49,
           "candidate_line_ranges": [
             [
               26,
@@ -77086,6 +77070,10 @@
               855
             ],
             [
+              874,
+              874
+            ],
+            [
               961,
               961
             ],
@@ -77176,12 +77164,12 @@
               284
             ],
             [
-              339,
-              339
+              342,
+              342
             ],
             [
-              342,
-              345
+              344,
+              344
             ],
             [
               416,
@@ -77260,8 +77248,12 @@
               854
             ],
             [
+              871,
+              871
+            ],
+            [
               874,
-              874
+              875
             ],
             [
               884,
@@ -77282,6 +77274,10 @@
             [
               961,
               961
+            ],
+            [
+              975,
+              975
             ],
             [
               1001,
@@ -77593,7 +77589,7 @@
         },
         "C7": {
           "review_status": "not_completed",
-          "matching_line_count": 17,
+          "matching_line_count": 18,
           "candidate_line_ranges": [
             [
               27,
@@ -77638,6 +77634,10 @@
             [
               746,
               746
+            ],
+            [
+              874,
+              874
             ],
             [
               899,
@@ -78148,7 +78148,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch25-registry.md",
-      "sha256": "a409470d2d0ba83ac63aa250a83c078bb4ab2298807d6323653796cde8238db1",
+      "sha256": "0fba9bf20476b017f1174d060730e5616bb6193064a3a406e2580ecfa3401260",
       "line_count": 1010,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -78208,7 +78208,7 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 26,
+          "matching_line_count": 25,
           "candidate_line_ranges": [
             [
               45,
@@ -78233,10 +78233,6 @@
             [
               312,
               312
-            ],
-            [
-              416,
-              416
             ],
             [
               623,
@@ -78641,8 +78637,8 @@
               331
             ],
             [
-              416,
-              416
+              413,
+              413
             ],
             [
               418,
@@ -78679,10 +78675,6 @@
             [
               518,
               518
-            ],
-            [
-              521,
-              521
             ],
             [
               534,
@@ -78777,19 +78769,19 @@
               956
             ],
             [
-              968,
+              967,
               968
             ],
             [
               978,
-              978
+              979
             ],
             [
               981,
               981
             ],
             [
-              983,
+              984,
               984
             ],
             [
@@ -79018,7 +79010,7 @@
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 163,
+          "matching_line_count": 162,
           "candidate_line_ranges": [
             [
               1,
@@ -79202,7 +79194,7 @@
             ],
             [
               416,
-              418
+              416
             ],
             [
               424,
@@ -79249,7 +79241,7 @@
               517
             ],
             [
-              524,
+              523,
               525
             ],
             [
@@ -79479,7 +79471,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch26-registry.md",
-      "sha256": "860e3d883bd43839f6747f1538d143458ea907dfca8930b25b74924f193e9add",
+      "sha256": "c007578d1e0bfba964cbdfb77f6f44ad95d2f147bbfc0c4d66a8a787504e18a5",
       "line_count": 1059,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -80360,12 +80352,8 @@
               191
             ],
             [
-              203,
+              202,
               203
-            ],
-            [
-              209,
-              209
             ],
             [
               216,
@@ -82648,8 +82636,8 @@
     },
     {
       "path": "ExpertSystem/registry/ch29-registry.md",
-      "sha256": "83a8a91af4e5b749929dbe40142bed599f8f79f4522a88857cd6dd533b9b3e2d",
-      "line_count": 883,
+      "sha256": "652db9c54e069a7ffe51c64f9e60a589491a3b5b42c403a4b876d741774ec13c",
+      "line_count": 880,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
       "full_text_reviewed": false,
@@ -82787,54 +82775,54 @@
               637
             ],
             [
-              675,
-              675
+              672,
+              672
             ],
             [
-              707,
-              707
+              704,
+              704
             ],
             [
-              736,
-              736
+              733,
+              733
             ],
             [
-              741,
-              741
+              738,
+              738
             ],
             [
-              773,
-              773
+              770,
+              770
             ],
             [
-              775,
-              775
+              772,
+              772
             ],
             [
-              797,
-              797
+              794,
+              794
             ],
             [
-              812,
-              812
+              809,
+              809
             ],
             [
-              822,
-              822
+              819,
+              819
             ],
             [
-              839,
-              840
+              836,
+              837
             ],
             [
-              879,
-              880
+              876,
+              877
             ]
           ]
         },
         "C2": {
           "review_status": "not_completed",
-          "matching_line_count": 23,
+          "matching_line_count": 25,
           "candidate_line_ranges": [
             [
               77,
@@ -82905,47 +82893,43 @@
               625
             ],
             [
+              721,
+              721
+            ],
+            [
               724,
               724
             ],
             [
-              727,
-              727
+              738,
+              738
             ],
             [
               741,
               741
             ],
             [
-              773,
-              773
+              746,
+              746
             ],
             [
-              851,
-              851
+              770,
+              770
             ],
             [
-              877,
-              877
+              848,
+              848
+            ],
+            [
+              874,
+              874
             ]
           ]
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 29,
+          "matching_line_count": 25,
           "candidate_line_ranges": [
-            [
-              84,
-              84
-            ],
-            [
-              89,
-              89
-            ],
-            [
-              98,
-              98
-            ],
             [
               108,
               108
@@ -83019,42 +83003,38 @@
               656
             ],
             [
-              677,
-              677
+              674,
+              674
             ],
             [
-              717,
-              717
+              714,
+              714
+            ],
+            [
+              723,
+              723
             ],
             [
               726,
               726
             ],
             [
-              729,
-              729
+              752,
+              752
             ],
             [
-              755,
-              755
+              761,
+              761
             ],
             [
-              764,
-              764
-            ],
-            [
-              877,
-              877
-            ],
-            [
-              881,
-              881
+              878,
+              878
             ]
           ]
         },
         "C4": {
           "review_status": "not_completed",
-          "matching_line_count": 37,
+          "matching_line_count": 31,
           "candidate_line_ranges": [
             [
               40,
@@ -83071,14 +83051,6 @@
             [
               77,
               77
-            ],
-            [
-              89,
-              89
-            ],
-            [
-              98,
-              99
             ],
             [
               156,
@@ -83109,10 +83081,6 @@
               435
             ],
             [
-              449,
-              449
-            ],
-            [
               464,
               464
             ],
@@ -83129,31 +83097,31 @@
               662
             ],
             [
-              665,
-              665
+              674,
+              674
             ],
             [
-              677,
-              677
+              694,
+              694
             ],
             [
-              697,
-              697
+              696,
+              696
             ],
             [
-              699,
-              699
+              704,
+              704
             ],
             [
-              707,
-              707
+              738,
+              738
             ],
             [
-              741,
-              741
+              749,
+              749
             ],
             [
-              752,
+              751,
               752
             ],
             [
@@ -83161,28 +83129,20 @@
               755
             ],
             [
-              757,
-              758
+              819,
+              819
             ],
             [
-              822,
-              822
+              824,
+              824
             ],
             [
-              827,
-              827
+              864,
+              864
             ],
             [
-              867,
-              867
-            ],
-            [
-              877,
-              877
-            ],
-            [
-              879,
-              879
+              876,
+              876
             ]
           ]
         },
@@ -83347,64 +83307,64 @@
               638
             ],
             [
-              675,
-              675
+              672,
+              672
             ],
             [
-              715,
-              715
+              712,
+              712
             ],
             [
-              725,
-              725
+              722,
+              722
+            ],
+            [
+              733,
+              733
             ],
             [
               736,
               736
             ],
             [
-              739,
-              739
+              738,
+              738
             ],
             [
-              741,
-              741
+              770,
+              770
             ],
             [
-              773,
-              773
+              772,
+              772
             ],
             [
-              775,
-              775
+              794,
+              794
             ],
             [
-              797,
-              797
+              835,
+              835
             ],
             [
-              838,
-              838
+              846,
+              846
             ],
             [
-              849,
-              849
+              848,
+              848
             ],
             [
-              851,
-              851
+              864,
+              864
             ],
             [
-              867,
-              867
+              876,
+              877
             ],
             [
-              879,
+              880,
               880
-            ],
-            [
-              883,
-              883
             ]
           ]
         },
@@ -83429,16 +83389,8 @@
               77
             ],
             [
-              89,
-              89
-            ],
-            [
               98,
               98
-            ],
-            [
-              100,
-              100
             ],
             [
               106,
@@ -83495,6 +83447,10 @@
             [
               434,
               434
+            ],
+            [
+              445,
+              445
             ],
             [
               457,
@@ -83561,62 +83517,62 @@
               656
             ],
             [
-              687,
-              687
+              684,
+              684
             ],
             [
-              754,
-              754
+              751,
+              751
             ],
             [
-              758,
-              758
+              755,
+              755
+            ],
+            [
+              757,
+              757
             ],
             [
               760,
-              760
+              761
             ],
             [
-              763,
+              764,
               764
             ],
             [
-              767,
-              767
+              770,
+              770
             ],
             [
-              773,
-              773
+              786,
+              786
             ],
             [
-              789,
-              789
+              799,
+              800
             ],
             [
-              802,
-              802
+              819,
+              819
             ],
             [
-              822,
-              822
+              835,
+              835
             ],
             [
-              838,
-              838
+              850,
+              850
             ],
             [
               853,
               853
-            ],
-            [
-              856,
-              856
             ]
           ]
         },
         "C7": {
           "review_status": "not_completed",
-          "matching_line_count": 8,
+          "matching_line_count": 10,
           "candidate_line_ranges": [
             [
               327,
@@ -83635,26 +83591,34 @@
               654
             ],
             [
+              659,
+              659
+            ],
+            [
               662,
               662
             ],
             [
-              667,
-              667
+              664,
+              664
             ],
             [
-              697,
-              697
+              694,
+              694
             ],
             [
-              699,
-              699
+              696,
+              696
+            ],
+            [
+              849,
+              849
             ]
           ]
         },
         "C8": {
           "review_status": "not_completed",
-          "matching_line_count": 123,
+          "matching_line_count": 126,
           "candidate_line_ranges": [
             [
               1,
@@ -83685,12 +83649,8 @@
               82
             ],
             [
-              85,
+              84,
               86
-            ],
-            [
-              89,
-              89
             ],
             [
               96,
@@ -83698,11 +83658,7 @@
             ],
             [
               98,
-              98
-            ],
-            [
-              100,
-              100
+              99
             ],
             [
               106,
@@ -83885,6 +83841,10 @@
               441
             ],
             [
+              445,
+              445
+            ],
+            [
               448,
               449
             ],
@@ -83993,116 +83953,120 @@
               656
             ],
             [
-              662,
+              661,
               662
             ],
             [
-              673,
-              673
+              670,
+              670
             ],
             [
-              675,
-              675
+              672,
+              672
             ],
             [
-              683,
-              683
+              680,
+              680
             ],
             [
-              685,
-              685
+              682,
+              682
             ],
             [
-              693,
-              693
+              690,
+              690
             ],
             [
-              698,
-              700
+              695,
+              697
             ],
             [
-              705,
-              705
+              702,
+              702
             ],
             [
-              715,
-              715
+              712,
+              712
+            ],
+            [
+              717,
+              717
             ],
             [
               720,
               720
             ],
             [
-              723,
-              723
+              727,
+              727
             ],
             [
-              730,
-              730
+              733,
+              733
             ],
             [
-              736,
+              735,
               736
             ],
             [
-              738,
-              739
+              744,
+              744
             ],
             [
-              747,
-              747
+              752,
+              752
             ],
             [
-              755,
-              755
+              760,
+              760
             ],
             [
-              763,
-              763
+              770,
+              770
             ],
             [
-              773,
-              773
+              786,
+              786
             ],
             [
-              789,
-              789
+              800,
+              800
             ],
             [
-              834,
-              834
+              831,
+              831
             ],
             [
-              836,
+              833,
+              833
+            ],
+            [
+              835,
               836
             ],
             [
               838,
-              839
+              838
             ],
             [
-              841,
-              841
+              853,
+              853
             ],
             [
-              856,
-              856
+              862,
+              862
             ],
             [
-              865,
-              865
+              864,
+              864
             ],
             [
-              867,
-              867
+              872,
+              872
             ],
             [
-              875,
-              875
-            ],
-            [
-              883,
-              883
+              880,
+              880
             ]
           ]
         }
@@ -84111,7 +84075,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch30-registry.md",
-      "sha256": "c3f09409bba1b985deb7275c4e735ae333d06ed48e35b51bf58afca6289c81f2",
+      "sha256": "0f97259682a7d3db61c53da4f511408b7f0eef8918bae4ffe80a00f15cfb2ebd",
       "line_count": 953,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -84613,7 +84577,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 81,
+          "matching_line_count": 80,
           "candidate_line_ranges": [
             [
               23,
@@ -84834,10 +84798,6 @@
             [
               781,
               781
-            ],
-            [
-              789,
-              789
             ],
             [
               824,
@@ -138367,64 +138327,100 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch11-knowledge-elicitation-from-experts.md",
-      "before_sha256": "b462c982fd083eca0411e82b5134ef56e958ebb985791fffcc5092e4b06c695a",
-      "after_sha256": "a71accd4d8c25dee30eb2151c9f07c22e68450b80b436a9e05531d909cc34df6",
-      "at": "2026-10-30T15:47:10Z",
+      "path": "ExpertSystem/PRO_ET_CONTRA.md",
+      "before_sha256": "734a7bfb20af97fa5dc661b5d8b60895797a511c74f41e71a36218b835d761eb",
+      "after_sha256": "d3d630371cebe15aa4abeb58c48118d8da940332e2677e6df4c0d65d390a2377",
+      "at": "2026-10-30T16:20:20Z",
       "by": "main-editor",
-      "reason": "C8 bounded scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch11-20.md"
+      "reason": "C8 bounded CH21-30 scientific-form review and direct registry synchronization; no full scientific acceptance",
+      "evidence": "review/reports/consistency-c8-ch21-30.md"
     },
     {
-      "path": "ExpertSystem/ch12-linguistic-analysis-and-local-models.md",
-      "before_sha256": "967fe369f7080dfda14279e45c4694fe0a55b3297e1d67b8d29333cb94b9da89",
-      "after_sha256": "f845fbd45ba24f8d079a7dc67f01a434f58a18d2911ebab8a37b7294a64c0472",
-      "at": "2026-10-30T15:47:10Z",
+      "path": "ExpertSystem/ch24-system-diagnosis.md",
+      "before_sha256": "5afbb333e5af0e12e798106436f004c11e9df6d135dc3efab936cbbb974d133e",
+      "after_sha256": "87d386a9014ee2c3323ff3a71793ce68004e604b9005c2a8b379ea80e69abf60",
+      "at": "2026-10-30T16:20:20Z",
       "by": "main-editor",
-      "reason": "C8 bounded scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch11-20.md"
+      "reason": "C8 bounded CH21-30 scientific-form review and direct registry synchronization; no full scientific acceptance",
+      "evidence": "review/reports/consistency-c8-ch21-30.md"
     },
     {
-      "path": "ExpertSystem/ch13-language-variability-vs-determinism.md",
-      "before_sha256": "373d9be70d54521876340fec2e079f19b626e702e24f7374348cbbf86b9323e5",
-      "after_sha256": "1a350d310a994a6e1c61e340a78d498cbaee8080e861f0ca94d503bf1d21816f",
-      "at": "2026-10-30T15:47:10Z",
+      "path": "ExpertSystem/ch25-how-expert-systems-learn.md",
+      "before_sha256": "132943422f24a7f7302c307fd54d3af28310185a90b0e1ca917f4fb0c600ffe3",
+      "after_sha256": "8af6a1e48cfc44a854f9e0e008720e9b5c2999bf86035b8dbb89cb7115e30b2d",
+      "at": "2026-10-30T16:20:20Z",
       "by": "main-editor",
-      "reason": "C8 bounded scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch11-20.md"
+      "reason": "C8 bounded CH21-30 scientific-form review and direct registry synchronization; no full scientific acceptance",
+      "evidence": "review/reports/consistency-c8-ch21-30.md"
     },
     {
-      "path": "ExpertSystem/registry/ch11-registry.md",
-      "before_sha256": "9019f4cb11a171c6c3bda0807a2d335b1f3e2a95a4d23fa2708623021faf389e",
-      "after_sha256": "f000882c875f61e6ffc612d90992f93e4cf6efc0e5ce2407258dcbaa2728d9db",
-      "at": "2026-10-30T15:47:10Z",
+      "path": "ExpertSystem/ch26-continual-learning.md",
+      "before_sha256": "b837a181e31894da34a8a48cbb151eddefef391d1b82bb4918d119626f74bdba",
+      "after_sha256": "89b73323e2682ff465ea5922e2d0d831355eb46581a15ff019a6e908d8c1ecaf",
+      "at": "2026-10-30T16:20:20Z",
       "by": "main-editor",
-      "reason": "C8 bounded scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch11-20.md"
+      "reason": "C8 bounded CH21-30 scientific-form review and direct registry synchronization; no full scientific acceptance",
+      "evidence": "review/reports/consistency-c8-ch21-30.md"
     },
     {
-      "path": "ExpertSystem/registry/ch12-registry.md",
-      "before_sha256": "7f5e531b26ac1477de6df83be828852ba13deba19b4a3389ac7199914a720293",
-      "after_sha256": "7f30f911cb951f542c151d3a264a5b84edd431f0b7392b61ae6e86487c673b15",
-      "at": "2026-10-30T15:47:10Z",
+      "path": "ExpertSystem/ch29-neuro-symbolic-architecture.md",
+      "before_sha256": "5811cb50ad276b16b6f5596be90fc56e79feab67c06ae747f826d681c96f51e3",
+      "after_sha256": "214e45683f5b4909898655633c1bc5b513b008c75b2895bc7ca6ede634a724a8",
+      "at": "2026-10-30T16:20:20Z",
       "by": "main-editor",
-      "reason": "C8 bounded scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch11-20.md"
+      "reason": "C8 bounded CH21-30 scientific-form review and direct registry synchronization; no full scientific acceptance",
+      "evidence": "review/reports/consistency-c8-ch21-30.md"
     },
     {
-      "path": "ExpertSystem/registry/ch13-registry.md",
-      "before_sha256": "8e837bb006ed5b8001274eda36f3c6eda7f221233d767c3a2ac82f082494edf9",
-      "after_sha256": "19cd6988017540855a8adc589ae1723214195e33cfa470dfc1bca2fabb4aed31",
-      "at": "2026-10-30T15:47:10Z",
+      "path": "ExpertSystem/registry/ch24-registry.md",
+      "before_sha256": "c4756f8183629a1f07183b1b62c6897dc1213846a53ff4113af11605a8b42a53",
+      "after_sha256": "3dbeefa767cb8cb28173c0f63fb319f76aa0ee80ca37f8e4a997f0157a4b05c3",
+      "at": "2026-10-30T16:20:20Z",
       "by": "main-editor",
-      "reason": "C8 bounded scientific-form review and direct registry synchronization; no full scientific acceptance",
-      "evidence": "review/reports/consistency-c8-ch11-20.md"
+      "reason": "C8 bounded CH21-30 scientific-form review and direct registry synchronization; no full scientific acceptance",
+      "evidence": "review/reports/consistency-c8-ch21-30.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch25-registry.md",
+      "before_sha256": "a409470d2d0ba83ac63aa250a83c078bb4ab2298807d6323653796cde8238db1",
+      "after_sha256": "0fba9bf20476b017f1174d060730e5616bb6193064a3a406e2580ecfa3401260",
+      "at": "2026-10-30T16:20:20Z",
+      "by": "main-editor",
+      "reason": "C8 bounded CH21-30 scientific-form review and direct registry synchronization; no full scientific acceptance",
+      "evidence": "review/reports/consistency-c8-ch21-30.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch26-registry.md",
+      "before_sha256": "860e3d883bd43839f6747f1538d143458ea907dfca8930b25b74924f193e9add",
+      "after_sha256": "c007578d1e0bfba964cbdfb77f6f44ad95d2f147bbfc0c4d66a8a787504e18a5",
+      "at": "2026-10-30T16:20:20Z",
+      "by": "main-editor",
+      "reason": "C8 bounded CH21-30 scientific-form review and direct registry synchronization; no full scientific acceptance",
+      "evidence": "review/reports/consistency-c8-ch21-30.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch29-registry.md",
+      "before_sha256": "83a8a91af4e5b749929dbe40142bed599f8f79f4522a88857cd6dd533b9b3e2d",
+      "after_sha256": "652db9c54e069a7ffe51c64f9e60a589491a3b5b42c403a4b876d741774ec13c",
+      "at": "2026-10-30T16:20:20Z",
+      "by": "main-editor",
+      "reason": "C8 bounded CH21-30 scientific-form review and direct registry synchronization; no full scientific acceptance",
+      "evidence": "review/reports/consistency-c8-ch21-30.md"
+    },
+    {
+      "path": "ExpertSystem/registry/ch30-registry.md",
+      "before_sha256": "c3f09409bba1b985deb7275c4e735ae333d06ed48e35b51bf58afca6289c81f2",
+      "after_sha256": "0f97259682a7d3db61c53da4f511408b7f0eef8918bae4ffe80a00f15cfb2ebd",
+      "at": "2026-10-30T16:20:20Z",
+      "by": "main-editor",
+      "reason": "C8 bounded CH21-30 scientific-form review and direct registry synchronization; no full scientific acceptance",
+      "evidence": "review/reports/consistency-c8-ch21-30.md"
     }
   ],
   "engine_and_links": {
     "math": {
-      "total": 17674,
-      "passed": 17674,
+      "total": 17661,
+      "passed": 17661,
       "failed": 0
     },
     "mermaid": {
@@ -138433,13 +138429,13 @@
       "failed": 0
     },
     "links": {
-      "total": 6303,
-      "passed": 6254,
+      "total": 6302,
+      "passed": 6253,
       "failed": 0,
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17674,
+      "checked_math_expressions": 17661,
       "failed": 0,
       "observations": [
         {

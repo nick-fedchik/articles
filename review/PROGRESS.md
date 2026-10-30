@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T15:47:16Z
+Generated UTC: 2026-10-30T16:20:25Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -159,12 +159,12 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 21: [Глава 21. Від рекомендації до дії: контроль повноважень і безпечне виконання у виробничому середовищі](../ExpertSystem/ch21-from-recommendation-to-action.md) | `eaf7692fa3e91c0e70c113b0f7d307d927fc51bed8161c3d6d47d3787d37497e` | stale |
 | 22: [Глава 22. Кібернетичний цикл керування: сенсори, периферія та зворотний зв'язок](../ExpertSystem/ch22-cybernetics-edge-to-backend.md) | `c685125cc94c13687db1bee85b06d652a4cccaed5c779737fb80051b34ab90ec` | stale |
 | 23: [Глава 23. Верифікація бази знань: як перевірити несуперечливість, повноту та надійність правил](../ExpertSystem/ch23-knowledge-base-verification.md) | `8bec232fa0152ec65c5ca275845a25b9e5864d7da5ea8265a1dbf9c864acacff` | stale |
-| 24: [Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти](../ExpertSystem/ch24-system-diagnosis.md) | `5afbb333e5af0e12e798106436f004c11e9df6d135dc3efab936cbbb974d133e` | stale |
-| 25: [Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій](../ExpertSystem/ch25-how-expert-systems-learn.md) | `132943422f24a7f7302c307fd54d3af28310185a90b0e1ca917f4fb0c600ffe3` | stale |
-| 26: [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](../ExpertSystem/ch26-continual-learning.md) | `b837a181e31894da34a8a48cbb151eddefef391d1b82bb4918d119626f74bdba` | stale |
+| 24: [Глава 24. Технічна діагностика: як не сплутати симптом із першопричиною в умовах неповноти](../ExpertSystem/ch24-system-diagnosis.md) | `87d386a9014ee2c3323ff3a71793ce68004e604b9005c2a8b379ea80e69abf60` | stale |
+| 25: [Глава 25. Як навчати експертну систему: екзаменаційні матриці, аудит знань та контроль регресій](../ExpertSystem/ch25-how-expert-systems-learn.md) | `8af6a1e48cfc44a854f9e0e008720e9b5c2999bf86035b8dbb89cb7115e30b2d` | stale |
+| 26: [Глава 26. Неперервне навчання (Continual Learning) на досвіді та подолання зсуву системного журналу](../ExpertSystem/ch26-continual-learning.md) | `89b73323e2682ff465ea5922e2d0d831355eb46581a15ff019a6e908d8c1ecaf` | stale |
 | 27: [Глава 27. Обґрунтування безпеки: синтез і перевірка аргументів](../ExpertSystem/ch27-safety-case-gsn-synthesis.md) | `b18deeba757f054f2c277dcc5655e7015e4b431e0b0b2f214874b87ea12b6f88` | stale |
 | 28: [Глава 28. Дворежимні експертні системи: строгий висновок і дорадча гіпотеза](../ExpertSystem/ch28-dual-mode-expert-systems.md) | `4a3caeb63878c00da4f9b8c381d6a45246155511e6433556282fd49eba9592c0` | stale |
-| 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `5811cb50ad276b16b6f5596be90fc56e79feab67c06ae747f826d681c96f51e3` | stale |
+| 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `214e45683f5b4909898655633c1bc5b513b008c75b2895bc7ca6ede634a724a8` | stale |
 | 30: [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | `f0274ff2c6ed58293cf0de48b81587ba719338c888ebd22747e47257f837fa59` | stale |
 | 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `2e628780f9d68aaa1c6f24391775747b878705486261a8878643820a273f57ae` | stale |
 | 32: [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | `5dcf444bd437109aaad9b24f03f7044ecef8ac3867014b7ce87e013926accfa5` | stale |
