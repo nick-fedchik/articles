@@ -1,6 +1,6 @@
 # Execution Progress
 
-Generated UTC: 2026-10-30T14:20:22Z
+Generated UTC: 2026-10-30T14:24:20Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -171,7 +171,7 @@ No execution-integrity issues detected. Scientific review remains unverified.
 | 33: [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](../ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md) | `b5cecff90780fc9333b85ff77b44f62b83aa2ec98f7236be1bace2f1006fdf36` | stale |
 | 34: [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | `cbf117401b1dbcc207ac6de6834a4861f7366a28544731e7c2c5a0958930545a` | stale |
 | 35: [Глава 35. Реактивна експертна система: події, відкликання й адаптація знань](../ExpertSystem/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md) | `96a52069ab3cbf02de924d4d3bf4b85d3a2fd13356fb7c05d53d3b188f09de4f` | stale |
-| 36: [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](../ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md) | `daa046e6df9fd63ebaef3037194e7bc8a17ccea45287cd0502ff6af0542fb19d` | stale |
+| 36: [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](../ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md) | `dacdc54b3ba4a44b0f6c3025e609a32b356171a4b488c2f32a767dd1b1e5b218` | stale |
 | 37: [Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність](../ExpertSystem/ch37-input-information-assessment-and-algorithmic-skepticism.md) | `7b62bfcc54d845a5602fd0666a1b75ca8c122ee4121f1a4e6c683a7da8703d62` | stale |
 | 38: [Глава 38. Машинні галюцинації та дефіцит знань: доказовий контроль відповідей](../ExpertSystem/ch38-curing-machine-hallucinations-and-knowledge-deficits.md) | `6183bfec5cf692233e1ec49f30b2bcc6447c71e69af47f279d6f6b1c337a3ef9` | stale |
 | 39: [Глава 39. Активний експерт-тестувальник: попперівська фальсифікація, нормативний комплаєнс (ASPICE/ISO 26262/ISO 21434) та автономне проєктування випробувань](../ExpertSystem/ch39-active-compliance-auditor-and-popperian-testing.md) | `e3dce5015e6d033319e3b5c746035db25af7a5c672337f4fa143abb9acf6c00f` | stale |

@@ -13106,7 +13106,7 @@
     {
       "number": 36,
       "file": "ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md",
-      "input_sha256": "daa046e6df9fd63ebaef3037194e7bc8a17ccea45287cd0502ff6af0542fb19d",
+      "input_sha256": "dacdc54b3ba4a44b0f6c3025e609a32b356171a4b488c2f32a767dd1b1e5b218",
       "title": "Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей",
       "h2_titles": [
         "Анотація",
@@ -13212,8 +13212,8 @@
         1486
       ],
       "revalidation": {
-        "at": "2026-10-30T13:34:05Z",
-        "evidence": "review/reports/consistency-c1-ch31-40.md",
+        "at": "2026-10-30T14:24:14Z",
+        "evidence": "review/reports/consistency-c5-ch31-40.md",
         "scope": "Hash and heading inventory only; no full reading accepted"
       },
       "structural_history": [
@@ -13348,6 +13348,70 @@
             "full_text_reviewed": false
           },
           "evidence": "review/reports/consistency-c1-ch31-40.md"
+        },
+        {
+          "at": "2026-10-30T14:24:14Z",
+          "input_sha256": "daa046e6df9fd63ebaef3037194e7bc8a17ccea45287cd0502ff6af0542fb19d",
+          "h2_titles": [
+            "Анотація",
+            "1. Методологічний розрив у верифікації систем знань",
+            "2. Концептуальна модель: Чотирирівнева піраміда тестування знань",
+            "3. Рівень 1: Knowledge Unit Testing (KUT) — Тестування атомів знань",
+            "4. Рівень 2: Knowledge Integration Testing (KIT) — Решітки виведення та дефітери",
+            "5. Рівні 3 і 4: наскрізні перевірки та варіативне калібрування",
+            "6. Тестові контракти для різних способів виведення",
+            "7. Стигмергічне закриття прогалин знань (`KnowledgeGapSpool`)",
+            "8. Програмна реалізація мовою Go",
+            "Висновки",
+            "Словник",
+            "Абревіатури",
+            "Джерела"
+          ],
+          "current_h2_line_numbers": [
+            13,
+            23,
+            77,
+            121,
+            232,
+            274,
+            710,
+            737,
+            811,
+            1422,
+            1438,
+            1463,
+            1486
+          ],
+          "reading_scope": {
+            "opening_line_range": [
+              1,
+              100
+            ],
+            "h2_scan_line_range": [
+              1,
+              1556
+            ],
+            "h2_line_numbers": [
+              13,
+              23,
+              77,
+              121,
+              232,
+              274,
+              710,
+              737,
+              811,
+              1422,
+              1454,
+              1470,
+              1483,
+              1508,
+              1531
+            ],
+            "method": "Прочитано рядки 1–100, включно з H1, вступом та анотацією; далі прочитано лише всі H2 поза огородженими блоками коду. Явні посилання враховано лише з рядків 1–100; решту тексту й першоджерела не рецензовано.",
+            "full_text_reviewed": false
+          },
+          "evidence": "review/reports/consistency-c5-ch31-40.md"
         }
       ]
     },

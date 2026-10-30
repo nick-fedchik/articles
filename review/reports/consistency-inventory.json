@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-30T14:20:15Z",
-  "baseline_commit": "d4d3dc0fa824f57aaea84517c2449d3bf2be23ac",
+  "at": "2026-10-30T14:24:14Z",
+  "baseline_commit": "a2e4c17b1a6c990fbe3421ef6cd7bfa87a534126",
   "scope": "All 40 Ukrainian chapters and 176 direct companion/registry/requirement files",
   "stage_s4": "in_progress_not_accepted",
   "patterns": {
@@ -43018,7 +43018,7 @@
     },
     {
       "path": "ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md",
-      "sha256": "daa046e6df9fd63ebaef3037194e7bc8a17ccea45287cd0502ff6af0542fb19d",
+      "sha256": "dacdc54b3ba4a44b0f6c3025e609a32b356171a4b488c2f32a767dd1b1e5b218",
       "line_count": 1511,
       "chapter": 36,
       "scan_kind": "lexical_routing_only",
@@ -43338,7 +43338,7 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 40,
+          "matching_line_count": 41,
           "candidate_line_ranges": [
             [
               41,
@@ -43379,6 +43379,10 @@
             [
               181,
               181
+            ],
+            [
+              183,
+              183
             ],
             [
               283,
@@ -43610,7 +43614,7 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 27,
+          "matching_line_count": 28,
           "candidate_line_ranges": [
             [
               71,
@@ -43623,6 +43627,10 @@
             [
               110,
               110
+            ],
+            [
+              183,
+              183
             ],
             [
               243,
@@ -43720,7 +43728,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 79,
+          "matching_line_count": 80,
           "candidate_line_ranges": [
             [
               15,
@@ -43761,6 +43769,10 @@
             [
               176,
               176
+            ],
+            [
+              183,
+              183
             ],
             [
               185,
@@ -92377,7 +92389,7 @@
     },
     {
       "path": "ExpertSystem/registry/ch36-registry.md",
-      "sha256": "400bd30a2bb464f64bf77ad804adda1e7af558990acd50ee0fcc967207558d02",
+      "sha256": "7ef15c1e9a0c797911af7d81750fdf153bfce915e59c100bbcac85741daeedcd",
       "line_count": 685,
       "chapter": null,
       "scan_kind": "lexical_routing_only",
@@ -92525,7 +92537,7 @@
         },
         "C3": {
           "review_status": "not_completed",
-          "matching_line_count": 30,
+          "matching_line_count": 31,
           "candidate_line_ranges": [
             [
               21,
@@ -92573,7 +92585,7 @@
             ],
             [
               172,
-              172
+              173
             ],
             [
               282,
@@ -92737,11 +92749,19 @@
         },
         "C5": {
           "review_status": "not_completed",
-          "matching_line_count": 20,
+          "matching_line_count": 22,
           "candidate_line_ranges": [
             [
               42,
               42
+            ],
+            [
+              173,
+              173
+            ],
+            [
+              176,
+              176
             ],
             [
               212,
@@ -92807,7 +92827,7 @@
         },
         "C6": {
           "review_status": "not_completed",
-          "matching_line_count": 63,
+          "matching_line_count": 64,
           "candidate_line_ranges": [
             [
               8,
@@ -92856,6 +92876,10 @@
             [
               165,
               165
+            ],
+            [
+              176,
+              176
             ],
             [
               193,
@@ -138339,28 +138363,28 @@
   ],
   "input_transitions_from_current_baseline": [
     {
-      "path": "ExpertSystem/ch21-from-recommendation-to-action.md",
-      "before_sha256": "85f5af13d568bebba8fedf06f24977a8656127783e08f692cadea4542ea7238c",
-      "after_sha256": "eaf7692fa3e91c0e70c113b0f7d307d927fc51bed8161c3d6d47d3787d37497e",
-      "at": "2026-10-30T14:20:15Z",
+      "path": "ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md",
+      "before_sha256": "daa046e6df9fd63ebaef3037194e7bc8a17ccea45287cd0502ff6af0542fb19d",
+      "after_sha256": "dacdc54b3ba4a44b0f6c3025e609a32b356171a4b488c2f32a767dd1b1e5b218",
+      "at": "2026-10-30T14:24:14Z",
       "by": "main-editor",
-      "reason": "Bounded C5 corrections in CH21: interlock timing is profile-specific; nanosecond estimates and physical outcome are not guarantees",
-      "evidence": "review/reports/consistency-c5-ch21-30.md"
+      "reason": "Bounded C5 correction in CH36 distinguishing simplified 2x-rule floor from full three-state condition coverage; 300 ms is a conditional estimate",
+      "evidence": "review/reports/consistency-c5-ch31-40.md"
     },
     {
-      "path": "ExpertSystem/registry/ch21-registry.md",
-      "before_sha256": "21e09ed47f05ae0d46c0b5ccb6430f92010e9b7cfae12014bb6a2cd3fb1694e1",
-      "after_sha256": "633861abe29ed5e7be9d1d1118b98574bfe3a1793c69cdc326f803b5dfb67d23",
-      "at": "2026-10-30T14:20:15Z",
+      "path": "ExpertSystem/registry/ch36-registry.md",
+      "before_sha256": "400bd30a2bb464f64bf77ad804adda1e7af558990acd50ee0fcc967207558d02",
+      "after_sha256": "7ef15c1e9a0c797911af7d81750fdf153bfce915e59c100bbcac85741daeedcd",
+      "at": "2026-10-30T14:24:14Z",
       "by": "main-editor",
-      "reason": "Bounded C5 corrections in CH21: interlock timing is profile-specific; nanosecond estimates and physical outcome are not guarantees",
-      "evidence": "review/reports/consistency-c5-ch21-30.md"
+      "reason": "Bounded C5 correction in CH36 distinguishing simplified 2x-rule floor from full three-state condition coverage; 300 ms is a conditional estimate",
+      "evidence": "review/reports/consistency-c5-ch31-40.md"
     }
   ],
   "engine_and_links": {
     "math": {
-      "total": 17701,
-      "passed": 17701,
+      "total": 17694,
+      "passed": 17694,
       "failed": 0
     },
     "mermaid": {
@@ -138375,7 +138399,7 @@
       "skipped": 49
     },
     "github_observed_macro_restrictions": {
-      "checked_math_expressions": 17701,
+      "checked_math_expressions": 17694,
       "failed": 0,
       "observations": [
         {
