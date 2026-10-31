@@ -44,6 +44,9 @@
 | V-31 | [Глава 12](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md), об'єкти 12.1–12.45 | MathJax, 11 Mermaid-схем, JSON, 74 арифметичні/логічні контролі й посилання пройшли | Читабельність R-12, формул допуску й нумерації | Очікує сесії S7 |
 | V-32 | [Глава 23](../ExpertSystem/ch23-knowledge-base-verification.md), об'єкти 23.1–23.38 | MathJax, 6 Mermaid-схем, Go-програма/тести, Python/NumPy й посилання пройшли; Z3 недоступний | Відображення інваріантів, таблиць перевірок і межі ризику | Очікує сесії S7 |
 | V-33 | [Глава 34](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md), об'єкти 34.1–34.46 | MathJax, 6 Mermaid-схем, JSON, Go/Python-контролі й посилання пройшли після узгодження прикладу S1/M1; Z3 пропущено | Відображення парних SAT/UNSAT-формул і діаграми уточнення без тематичного стрибка | Очікує сесії S7 |
+| V-34 | [Глава 13](../ExpertSystem/ch13-language-variability-vs-determinism.md), об'єкти 13.1–13.27 | MathJax, 8 Mermaid-схем, Go-програма/тести/vet і контрприклади пройшли | Відображення R-13, типізованих фреймів і нумерації | Очікує сесії S7 |
+| V-35 | [Глава 24](../ExpertSystem/ch24-system-diagnosis.md), об'єкти 24.1–24.38 | MathJax, 6 Mermaid-схем, Go-програма/4 тести/vet і 52 контроли пройшли | Відображення часових інтервалів, конфліктів і діагностичних ваг | Очікує сесії S7 |
+| V-36 | [Глава 35](../ExpertSystem/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md), об'єкти 35.1–35.36 | MathJax, 6 Mermaid-схем, Go-тести/race/vet і 74 контроли пройшли; архівний реєстр збережено | Відображення моделей подій, адаптації та енергетичних знаменників | Очікує сесії S7 |
 
 ## 2. Правила виконання
 
