@@ -50,6 +50,9 @@
 | V-37 | [Глава 14](../ExpertSystem/ch14-requirements-detection-and-formalization.md), об'єкти 14.1–14.33 | MathJax, 6 Mermaid-схем, Go-програма/3 тести/12 підвипадків, vet і 25 контролів пройшли | Відображення профільного рангу, модальностей і формалізації R-14 | Очікує сесії S7 |
 | V-38 | [Глава 25](../ExpertSystem/ch25-how-expert-systems-learn.md), об'єкти 25.1–25.47 | MathJax, 6 Mermaid-схем, 2 Python-лістинги/8 тестів і посилання пройшли | Відображення конвеєра навчання, порогів і довірчих меж | Очікує сесії S7 |
 | V-39 | [Глава 36](../ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md), об'єкти 36.1–36.51 | MathJax, 9 Mermaid-схем, усі 3 Go-блоки/9 тестів/vet і 38 контролів пройшли | Відображення KTP, статистичних меж, таблиць і розрахунків | Очікує сесії S7 |
+| V-40 | [Глава 15](../ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md), об'єкти 15.1–15.42 | MathJax, 12 Mermaid-схем, Go-програма/3 тести/8 підвипадків/vet, 5 JSON і 67 контролів пройшли | Відображення FCA, координат джерела й економічного прикладу | Очікує сесії S7 |
+| V-41 | [Глава 26](../ExpertSystem/ch26-continual-learning.md), об'єкти 26.1–26.35 | MathJax, 7 Mermaid-схем, 2 Python-лістинги/18 тестів і посилання пройшли | Відображення CUSUM, AGM, replay й оцінок кандидатів | Очікує сесії S7 |
+| V-42 | [Глава 37](../ExpertSystem/ch37-input-information-assessment-and-algorithmic-skepticism.md), об'єкти 37.1–37.32 | MathJax, 6 Mermaid-схем, Go-тест/8 підвипадків/vet і 28 контролів пройшли; §7.3 збережено | Відображення інтервальних оцінок, походження й нумерації; пропущені посилання не прийняті | Очікує сесії S7 |
 
 ## 2. Правила виконання
 
