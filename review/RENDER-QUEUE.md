@@ -47,6 +47,9 @@
 | V-34 | [Глава 13](../ExpertSystem/ch13-language-variability-vs-determinism.md), об'єкти 13.1–13.27 | MathJax, 8 Mermaid-схем, Go-програма/тести/vet і контрприклади пройшли | Відображення R-13, типізованих фреймів і нумерації | Очікує сесії S7 |
 | V-35 | [Глава 24](../ExpertSystem/ch24-system-diagnosis.md), об'єкти 24.1–24.38 | MathJax, 6 Mermaid-схем, Go-програма/4 тести/vet і 52 контроли пройшли | Відображення часових інтервалів, конфліктів і діагностичних ваг | Очікує сесії S7 |
 | V-36 | [Глава 35](../ExpertSystem/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md), об'єкти 35.1–35.36 | MathJax, 6 Mermaid-схем, Go-тести/race/vet і 74 контроли пройшли; архівний реєстр збережено | Відображення моделей подій, адаптації та енергетичних знаменників | Очікує сесії S7 |
+| V-37 | [Глава 14](../ExpertSystem/ch14-requirements-detection-and-formalization.md), об'єкти 14.1–14.33 | MathJax, 6 Mermaid-схем, Go-програма/3 тести/12 підвипадків, vet і 25 контролів пройшли | Відображення профільного рангу, модальностей і формалізації R-14 | Очікує сесії S7 |
+| V-38 | [Глава 25](../ExpertSystem/ch25-how-expert-systems-learn.md), об'єкти 25.1–25.47 | MathJax, 6 Mermaid-схем, 2 Python-лістинги/8 тестів і посилання пройшли | Відображення конвеєра навчання, порогів і довірчих меж | Очікує сесії S7 |
+| V-39 | [Глава 36](../ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md), об'єкти 36.1–36.51 | MathJax, 9 Mermaid-схем, усі 3 Go-блоки/9 тестів/vet і 38 контролів пройшли | Відображення KTP, статистичних меж, таблиць і розрахунків | Очікує сесії S7 |
 
 ## 2. Правила виконання
 
