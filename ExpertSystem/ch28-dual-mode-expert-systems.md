@@ -438,8 +438,8 @@ sequenceDiagram
 ```math
 \mathrm{route}(q,m)=
 \begin{cases}
-    ext{строга відповідь}, & \text{якщо } \mathrm{Strict}(q)\neq\bot,\\
-    ext{лише відмова}, & \text{якщо } \mathrm{Strict}(q)=\bot\ \land\ m=\text{strict},\\
+\\text{строга відповідь}, & \text{якщо } \mathrm{Strict}(q)\neq\bot,\\
+\\text{лише відмова}, & \text{якщо } \mathrm{Strict}(q)=\bot\ \land\ m=\text{strict},\\
 \mathrm{hypothesis}(c^{*}), & \text{якщо } S(q)\ne\varnothing\ \land\ C_{\mathrm{val}}\ne\varnothing\ \land\ J(q,c^{*})\ge\theta,\\
 \text{запит до експерта}, & \text{інакше},
 \end{cases}
