@@ -105,3 +105,16 @@ go test -run 'TestAdaptive|TestCache|TestVersion|TestLedger'
 ```
 
 Реалізації: [адаптивний перерахунок](horn.go), [версійний журнал і кеш](horn_cache.go), [нові генератори](horn_adaptive_study.go). Первинні дані: [перерахунок](testdata/adaptive-study/adaptive.csv), [події журналу](testdata/adaptive-study/cache-events.csv), [парні запити](testdata/adaptive-study/cache-queries.csv). Отримано як покращення, так і регресії; протокол містить повну ціну оновлень, не лише час вдалого звернення до кешу.
+
+## 8. Явне заперечення, винятки й пріоритети
+
+[Погоджений нормативний контракт](NORMATIVE-EXPERIMENTS.md) відокремлює чотиризначні свідчення від рішень про допуск. Виконавець зберігає протилежні приписи, використовує лише явні пріоритети й не дозволяє невідомому або суперечливому застосовному винятку дати автоматичний дозвіл.
+
+```sh
+GOMAXPROCS=2 go run ./cmd/normativestudy -solver minisat
+go test -run 'TestExplicitNegation|TestException|TestNorm|TestPriority|TestSigned|TestContradicted|TestAbsent|TestNew'
+```
+
+Реалізації: [модель і виконавець](normative.go), [незалежний еталон та перевірювач](normative_reference.go), [SAT-оракул](normative_sat.go), [консервативний контекстний кеш](normative_cache.go). Первинні дані: [1448 семантичних оцінювань](testdata/normative-study/semantics.csv), [2048 перевірок контексту кешу](testdata/normative-study/context-cache.csv).
+
+Це не повний ASPIC+ і не автоматична заборона всіх висновків із суперечливими предками. Точні межі, наївний небезпечний контрприклад і результати всіх еталонів наведено у протоколі.
