@@ -94,3 +94,14 @@ go test -run 'TestHorn|TestEnergyMinimum|TestNonzeroCohomology|TestHarmonicPoten
 ```
 
 Первинні дані: [пошук](testdata/field-study/search.csv), [оновлення](testdata/field-study/updates.csv). [Допис до дискусії](../draft-discussion-01-inference-field-and-graph-currents.md#discussion-followup-2026-11-02) фіксує негативний результат для дифузійного планувальника та залежність користі інкрементальності від топології.
+
+## 7. Адаптивні оновлення та кеш сертифікатів
+
+[Наступний протокол](ADAPTIVE-EXPERIMENTS.md) перевіряє обмежений попередній обхід залежностей і повторне використання структури доказу після зміни знімка. Політика налаштовується на одних графах і фіксується перед контрольними. Кожний кешований доказ заново прив'язується до поточної теорії та перевіряється звичайним перевірювачем.
+
+```sh
+GOMAXPROCS=2 go run ./cmd/adaptivestudy
+go test -run 'TestAdaptive|TestCache|TestVersion|TestLedger'
+```
+
+Реалізації: [адаптивний перерахунок](horn.go), [версійний журнал і кеш](horn_cache.go), [нові генератори](horn_adaptive_study.go). Первинні дані: [перерахунок](testdata/adaptive-study/adaptive.csv), [події журналу](testdata/adaptive-study/cache-events.csv), [парні запити](testdata/adaptive-study/cache-queries.csv). Отримано як покращення, так і регресії; протокол містить повну ціну оновлень, не лише час вдалого звернення до кешу.

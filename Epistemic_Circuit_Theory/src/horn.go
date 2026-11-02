@@ -104,16 +104,32 @@ func (p *HornProgram) validate(snapshot HornSnapshot, query int) error {
 
 func (p *HornProgram) BaseVolume() int { return p.atoms + len(p.rules) + p.edges }
 
+func (p *HornProgram) Rule(index int) (HornRule, error) {
+	if p == nil || index < 0 || index >= len(p.rules) {
+		return HornRule{}, errors.New("Horn: invalid rule index")
+	}
+	rule := p.rules[index]
+	rule.Premises = append([]int(nil), rule.Premises...)
+	return rule, nil
+}
+
 func (p *HornProgram) FullClosure(snapshot HornSnapshot) ([]bool, error) {
 	if err := p.validate(snapshot, 0); err != nil {
 		return nil, err
 	}
+	known, _ := p.fullClosure(snapshot)
+	return known, nil
+}
+
+func (p *HornProgram) fullClosure(snapshot HornSnapshot) ([]bool, int) {
 	known := append([]bool(nil), snapshot.Facts...)
+	inspected := 0
 	for _, atom := range p.topology {
 		if known[atom] {
 			continue
 		}
 		for _, index := range p.producers[atom] {
+			inspected++
 			if !snapshot.Enabled[index] {
 				continue
 			}
@@ -131,7 +147,7 @@ func (p *HornProgram) FullClosure(snapshot HornSnapshot) ([]bool, error) {
 			}
 		}
 	}
-	return known, nil
+	return known, inspected
 }
 
 func (p *HornProgram) VerifyProof(snapshot HornSnapshot, query int, proof HornProof) error {
@@ -222,7 +238,9 @@ type HornState struct {
 }
 
 type HornUpdateStats struct {
-	AffectedAtoms, InspectedRules int
+	AffectedAtoms, InspectedRules    int
+	DiscoveryVisits, RecomputedAtoms int
+	Mode                             string
 }
 
 func NewHornState(p *HornProgram, snapshot HornSnapshot) (*HornState, error) {
@@ -241,9 +259,24 @@ func (s *HornState) Snapshot() HornSnapshot { return cloneHornSnapshot(s.snapsho
 func (s *HornState) Known() []bool          { return append([]bool(nil), s.known...) }
 
 func (s *HornState) Update(update HornUpdate) (HornUpdateStats, error) {
+	return s.update(update, "incremental", 0)
+}
+
+func (s *HornState) UpdateFull(update HornUpdate) (HornUpdateStats, error) {
+	return s.update(update, "full", 0)
+}
+
+func (s *HornState) UpdateAdaptive(update HornUpdate, discoveryFraction float64) (HornUpdateStats, error) {
+	if !finite(discoveryFraction) || discoveryFraction <= 0 || discoveryFraction > 1 {
+		return HornUpdateStats{}, errors.New("Horn adaptive: discovery fraction must be in (0,1]")
+	}
+	return s.update(update, "adaptive", discoveryFraction)
+}
+
+func (s *HornState) validateUpdate(update HornUpdate) error {
 	if s == nil || s.program == nil || s.snapshot.Revision == math.MaxUint64 ||
 		len(update.Facts)+len(update.Rules) == 0 {
-		return HornUpdateStats{}, errors.New("Horn update: invalid state, empty update or revision overflow")
+		return errors.New("Horn update: invalid state, empty update or revision overflow")
 	}
 	for _, batch := range []struct {
 		changes []HornChange
@@ -252,35 +285,78 @@ func (s *HornState) Update(update HornUpdate) (HornUpdateStats, error) {
 		seen := map[int]bool{}
 		for _, change := range batch.changes {
 			if change.Index < 0 || change.Index >= batch.limit || seen[change.Index] {
-				return HornUpdateStats{}, errors.New("Horn update: invalid or duplicate index")
+				return errors.New("Horn update: invalid or duplicate index")
 			}
 			seen[change.Index] = true
 		}
 	}
-	p := s.program
-	affected := make([]bool, p.atoms)
-	queue := []int{}
-	add := func(atom int) {
-		if !affected[atom] {
-			affected[atom] = true
-			queue = append(queue, atom)
-		}
+	return nil
+}
+
+func (s *HornState) update(update HornUpdate, mode string, fraction float64) (HornUpdateStats, error) {
+	if err := s.validateUpdate(update); err != nil {
+		return HornUpdateStats{}, err
 	}
+	p := s.program
 	for _, change := range update.Facts {
 		s.snapshot.Facts[change.Index] = change.Present
-		add(change.Index)
 	}
 	for _, change := range update.Rules {
 		s.snapshot.Enabled[change.Index] = change.Present
-		add(p.rules[change.Index].Conclusion)
 	}
 	s.snapshot.Revision++
-	for at := 0; at < len(queue); at++ {
-		for _, index := range p.consumers[queue[at]] {
-			add(p.rules[index].Conclusion)
+	stats := HornUpdateStats{Mode: mode}
+	full := func() (HornUpdateStats, error) {
+		s.known, stats.InspectedRules = p.fullClosure(s.snapshot)
+		stats.AffectedAtoms, stats.RecomputedAtoms = -1, p.atoms
+		if mode == "adaptive" {
+			stats.Mode = "adaptive-full"
+		}
+		return stats, nil
+	}
+	if mode == "full" {
+		return full()
+	}
+	limit := math.MaxInt
+	if mode == "adaptive" {
+		limit = max(1, int(fraction*float64(p.atoms+p.edges)))
+		stats.Mode = "adaptive-incremental"
+	}
+	affected := make([]bool, p.atoms)
+	queue := []int{}
+	add := func(atom int) bool {
+		if !affected[atom] {
+			if stats.DiscoveryVisits >= limit {
+				return false
+			}
+			stats.DiscoveryVisits++
+			affected[atom] = true
+			queue = append(queue, atom)
+		}
+		return true
+	}
+	for _, change := range update.Facts {
+		if !add(change.Index) {
+			return full()
 		}
 	}
-	stats := HornUpdateStats{AffectedAtoms: len(queue)}
+	for _, change := range update.Rules {
+		if !add(p.rules[change.Index].Conclusion) {
+			return full()
+		}
+	}
+	for at := 0; at < len(queue); at++ {
+		for _, index := range p.consumers[queue[at]] {
+			if stats.DiscoveryVisits >= limit {
+				return full()
+			}
+			stats.DiscoveryVisits++
+			if !add(p.rules[index].Conclusion) {
+				return full()
+			}
+		}
+	}
+	stats.AffectedAtoms, stats.RecomputedAtoms = len(queue), len(queue)
 	for _, atom := range p.topology {
 		if !affected[atom] {
 			continue
