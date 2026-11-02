@@ -274,14 +274,21 @@ func (s *HornState) UpdateAdaptive(update HornUpdate, discoveryFraction float64)
 }
 
 func (s *HornState) validateUpdate(update HornUpdate) error {
-	if s == nil || s.program == nil || s.snapshot.Revision == math.MaxUint64 ||
+	if s == nil {
+		return errors.New("Horn update: invalid state, empty update or revision overflow")
+	}
+	return validateHornUpdate(s.program, s.snapshot, update)
+}
+
+func validateHornUpdate(program *HornProgram, snapshot HornSnapshot, update HornUpdate) error {
+	if program == nil || snapshot.Revision == math.MaxUint64 ||
 		len(update.Facts)+len(update.Rules) == 0 {
 		return errors.New("Horn update: invalid state, empty update or revision overflow")
 	}
 	for _, batch := range []struct {
 		changes []HornChange
 		limit   int
-	}{{update.Facts, s.program.atoms}, {update.Rules, len(s.program.rules)}} {
+	}{{update.Facts, program.atoms}, {update.Rules, len(program.rules)}} {
 		seen := map[int]bool{}
 		for _, change := range batch.changes {
 			if change.Index < 0 || change.Index >= batch.limit || seen[change.Index] {
