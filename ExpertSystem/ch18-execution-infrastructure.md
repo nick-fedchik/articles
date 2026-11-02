@@ -1949,7 +1949,7 @@ flowchart LR
 40. <a id="src-40"></a>RISC-V International. [*Ratified Specifications*](https://riscv.org/specifications/ratified/).
 41. <a id="src-41"></a>SQLite. [*SQLite FTS5 Extension*](https://www.sqlite.org/fts5.html). Документація SQLite.
 42. <a id="src-42"></a>NVIDIA. [*Jetson AGX Orin Series Thermal Design Guide*](https://developer.nvidia.com/embedded/learn/jetson-agx-orin-devkit-user-guide). Technical Whitepaper, 2024.
-43. <a id="src-43"></a>NVIDIA. [*Jetson Linux Developer Guide: Power Management and nvpmodel*](https://docs.nvidia.com/jetson/archives/r36.2/DeveloperGuide/text/SD/PlatformPowerAndPerformance/JetsonOrinNanoSeriesJetsonOrinNxSeriesAndJetsonAgxOrinSeries.html). JetPack 6.2 Documentation, 2025.
+43. <a id="src-43"></a>NVIDIA. [*Jetson Linux Developer Guide: Power Management and nvpmodel*](https://docs.nvidia.com/jetson/archives/r36.2/DeveloperGuide/SD/PlatformPowerAndPerformance/JetsonOrinNanoSeriesJetsonOrinNxSeriesAndJetsonAgxOrinSeries.html). JetPack 6.2 Documentation, 2025.
 44. <a id="src-44"></a>ISO/IEC. [*ISO/IEC 27001:2022. Information security, cybersecurity and privacy protection — Information security management systems — Requirements*](https://www.iso.org/standard/27001). 2022.
 45. <a id="src-45"></a>Intel Corporation. [*Intel Resource Director Technology (Intel RDT) Architecture Specification*](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-resource-director-technology-architecture.html). Reference Guide, 2023.
 46. <a id="src-46"></a>Reinhard Wilhelm та ін. [*The Worst-Case Execution Time Problem — Overview of Methods and Survey of Tools*](https://doi.org/10.1145/1347375.1347389). *ACM Transactions on Embedded Computing Systems*, 7(3), 36:1–36:53, 2008.

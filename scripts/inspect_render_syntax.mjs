@@ -192,13 +192,22 @@ const controlResults = await controls();
 if (process.argv.includes('--self-test')) process.exit(0);
 
 const book = path.join(root, 'ExpertSystem');
-const files = fs.readdirSync(book).filter(name => name.endsWith('.md') && name !== 'AGENTS.md').map(name => path.join(book, name));
-for (const directory of ['registry', 'requirements/L1-stakeholder', 'requirements/L2-system', 'requirements/L3-component']) {
-  const folder = path.join(book, directory);
-  files.push(...fs.readdirSync(folder).filter(name => name.endsWith('.md')).map(name => path.join(folder, name)));
+const requestedFiles = process.argv.slice(2).filter(argument => !argument.startsWith('--'));
+const files = requestedFiles.length
+  ? requestedFiles.map(file => path.resolve(root, file))
+  : fs.readdirSync(book).filter(name => name.endsWith('.md') && name !== 'AGENTS.md').map(name => path.join(book, name));
+if (!requestedFiles.length) {
+  for (const folder of [
+    path.join(root, 'framework', 'registry'),
+    path.join(root, 'framework', 'requirements', 'L1-stakeholder'),
+    path.join(root, 'framework', 'requirements', 'L2-system'),
+    path.join(root, 'framework', 'requirements', 'L3-component'),
+  ]) {
+    files.push(...fs.readdirSync(folder).filter(name => name.endsWith('.md')).map(name => path.join(folder, name)));
+  }
+  assert.equal(files.filter(file => path.dirname(file) === book && /^ch\d\d-/.test(path.basename(file))).length, 40);
 }
 files.sort();
-assert.equal(files.filter(file => path.dirname(file) === book && /^ch\d\d-/.test(path.basename(file))).length, 40);
 const inventory = new Map();
 for (const file of files) {
   const text = fs.readFileSync(file, 'utf8');
@@ -219,9 +228,7 @@ if (process.argv.includes('--fix-links')) {
       else if (/^#src-\d+\]$/.test(link.url)) replacement = link.url.slice(0, -1);
       else if (/^#src-\d+$/.test(link.url)) {
         let number = null;
-        if (path.basename(file) === 'PRO_ET_CONTRA.md') {
-          number = record.chapterSections.filter(section => section.offset < link.start).at(-1)?.number;
-        } else if (path.dirname(file) === path.join(book, 'registry')) {
+        if (path.dirname(file) === path.join(root, 'framework', 'registry')) {
           number = Number(path.basename(file).match(/^ch(\d\d)-/)?.[1]);
         }
         if (number) {

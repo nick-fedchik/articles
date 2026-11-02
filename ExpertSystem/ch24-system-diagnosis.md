@@ -5,7 +5,7 @@
 > **Наступна глава:** [Глава 20. Рушій пояснень: рішення, відмова та межі компетентності](ch20-explanation-engine.md)
 > **Зміст книги:** [README.md](README.md)
 > **Автор:** [Микола Мартинович Федчик](about-the-author.md)
-> **Передумови й маршрут:** множини, логічне «якщо, то», умовна ймовірність; потрібні означення нагадано в тексті. Від простого прикладу холодного старту до пошуку конфліктів і планування перевірок; практикум: [Лабораторна робота №4](LABS.md).
+> **Передумови й маршрут:** множини, логічне «якщо, то», умовна ймовірність; потрібні означення нагадано в тексті. Від простого прикладу холодного старту до пошуку конфліктів і планування перевірок; практикум: [Лабораторна робота №4](learning/LABS.md).
 > **Очікувані результати:** розрізняти симптом, діагноз і першопричину; описувати спостереження з часом, одиницями й якістю; будувати діагнози на основі моделі за Райтером через конфлікти й мінімальні множини покриття; ранжувати діагнози ймовірностями з урахуванням надійності датчиків; обирати наступну перевірку за цінністю інформації з урахуванням чутливості й специфічності перевірки, вартістю, ризиком і втратою доказу; відрізняти спостереження від втручання; визначати, які результати засобів аналізу журналів, детекторів аномалій і причинного виявлення є спостереженнями чи кандидатами, а не діагнозом; відмовлятися від діагнозу, коли даних недостатньо.
 
 ## Анотація
@@ -1352,7 +1352,7 @@ xychart-beta
 3. <a id="src-3"></a>Johan de Kleer. [*An Assumption-Based TMS*](https://doi.org/10.1016/0004-3702(86)90080-9). *Artificial Intelligence*, 28(2), 127–162, 1986.
 4. <a id="src-4"></a>Russell Greiner, Barbara A. Smith, Ralph W. Wilkerson. [*A Correction to the Algorithm in Reiter's Theory of Diagnosis*](https://doi.org/10.1016/0004-3702(89)90079-9). *Artificial Intelligence*, 41(1), 79–88, 1989.
 5. <a id="src-5"></a>W. Eddy (ред.). [*RFC 9293: Transmission Control Protocol (TCP)*](https://www.rfc-editor.org/info/rfc9293). IETF, 2022.
-6. <a id="src-6"></a>Glenn W. Brier. [*Verification of Forecasts Expressed in Terms of Probability*](https://doi.org/10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2). *Monthly Weather Review*, 78(1), 1–3, 1950.
+6. <a id="src-6"></a>Glenn W. Brier. [*Verification of Forecasts Expressed in Terms of Probability*](https://doi.org/10.1175/1520-0493%281950%29078%3C0001:VOFEIT%3E2.0.CO;2). *Monthly Weather Review*, 78(1), 1–3, 1950.
 7. <a id="src-7"></a>Finn V. Jensen, Thomas D. Nielsen. [*Bayesian Networks and Decision Graphs*](https://doi.org/10.1007/978-0-387-68282-2). 2nd edition, Springer, 2007.
 8. <a id="src-8"></a>Agnar Aamodt, Enric Plaza. [*Case-Based Reasoning: Foundational Issues, Methodological Variations, and System Approaches*](https://doi.org/10.3233/AIC-1994-7104). *AI Communications*, 7(1), 39–59, 1994.
 9. <a id="src-9"></a>NASA Office of Safety and Mission Assurance. [*Fault Tree Handbook with Aerospace Applications*](https://extapps.ksc.nasa.gov/Reliability/Documents/Fault_Tree_Handbook_with_Aerospace_Applications_August_2002.pdf). Version 1.1, 2002.

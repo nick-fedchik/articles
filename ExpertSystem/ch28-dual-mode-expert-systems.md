@@ -5,7 +5,7 @@
 > **Наступна глава:** [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md)
 > **Зміст книги:** [README.md](README.md)
 > **Автор:** [Микола Мартинович Федчик](about-the-author.md)
-> **Передумови й маршрут:** множини, логічне «і», правило «якщо — то» та читання функцій Python; Datalog, автомати й часові бюджети пояснено перед застосуванням. Практикум: [лабораторна робота №3](LABS.md).
+> **Передумови й маршрут:** множини, логічне «і», правило «якщо — то» та читання функцій Python; Datalog, автомати й часові бюджети пояснено перед застосуванням. Практикум: [лабораторна робота №3](learning/LABS.md).
 > **Очікувані результати:** формально відокремлювати строгий результат від дорадчих гіпотез; будувати строге ядро на правилах Горна з обчисленням найменшої нерухомої точки й стратифікованим запереченням; повертати контрприклад замість голого «ні» для кванторів над скінченними доменами; знаходити деонтичні колізії в нормативних текстах; розрізняти дедукцію, індукцію й абдукцію за Пірсом і застосовувати редукцію до першопричини; формувати гіпотези за прецедентами з критеріями переведення у факт; перетворювати відмову на кандидата для бази знань без обходу фахового перегляду; маршрутизувати запит без строгої відповіді й без достатньо схожого прецедента до уповноваженого експерта й повертати відповідь експерта як підтверджений прецедент.
 
 ## Анотація
@@ -489,6 +489,8 @@ c^{*}\in\arg\max_{c\in C_{\mathrm{val}}} J(q,c)\quad(C_{\mathrm{val}}\ne\varnoth
 
 Записи `hypotheses` та `expert_request` навмисно скорочені для перевірки маршруту: вони не містять усіх полів паспорта (28.2) й таблиці 28.16. Зокрема метод і повний набір спостережень не серіалізовано в гіпотезі, а цитати та чернетка відповіді не зібрані в експертний пакет. Це межа реалізації, не дозвіл опускати ці поля в робочій системі. Порядок `CASES` у прикладі є стабільним порядком ідентифікаторів для розв'язання рівності балів.
 
+У навчальному наборі `max_text_line_octets=1000` стосується саме рядка текстового повідомлення за RFC 5321 §4.5.3.1.6 і включає CRLF. RFC окремо обмежує рядок SMTP-команди 512 октетами (§4.5.3.1.4); об'єднувати ці межі під загальною назвою «рядок SMTP» некоректно [[6]](#src-6).
+
 <details>
 <summary>Приклад мовою Python: строгий, дорадчий і експертний маршрути</summary>
 
@@ -503,7 +505,7 @@ import math
 
 
 FACTS = {  # (суб'єкт, відношення, значення) -> цитата першоджерела
-    ("SMTP", "max_line_octets", "1000"): "RFC 5321, 4.5.3.1.6",
+    ("SMTP", "max_text_line_octets", "1000"): "RFC 5321, 4.5.3.1.6",
     ("MAIL", "precedes", "RCPT"): "RFC 5321, 3.3",
     ("RCPT", "precedes", "DATA"): "RFC 5321, 3.3",
     ("HELO", "documented_reply", "250"): "RFC 5321, 4.3.2",
@@ -672,8 +674,8 @@ def test_dual_mode(known):
     assert extended(known, "x", "y", set(), mode="advisory")["route"] == "expert"
     low = extended(known, "port-25", "timeout_cause", {"timeout", "lab-network"}, mode="advisory")
     assert low["route"] == "expert" and low["expert_request"]["nearest_case"]
-    assert extended(known, "SMTP", "max_line_octets", set())["route"] == "strict"
-    hit = extended(known, "SMTP", "max_line_octets", CASES[0][0], mode="advisory")
+    assert extended(known, "SMTP", "max_text_line_octets", set())["route"] == "strict"
+    hit = extended(known, "SMTP", "max_text_line_octets", CASES[0][0], mode="advisory")
     assert hit["route"] == "strict" and hit["hypotheses"] == []
     symptoms = {"timeout", "port-25", "connect", "office-network"}
     baseline = copy.deepcopy(known)
@@ -699,7 +701,7 @@ test_dual_mode(known)
 test_promotion(known)
 print(f"1. Найменша нерухома точка: {len(known)} фактів після {rounds} раундів")
 print("2. Строго: MAIL must_precede ->", strict(known, "MAIL", "must_precede")["values"])
-print("3. Строго: довжина рядка SMTP ->", strict(known, "SMTP", "max_line_octets")["values"])
+print("3. Строго: довжина текстового рядка SMTP ->", strict(known, "SMTP", "max_text_line_octets")["values"])
 print("4. Строго: тайм-аут на порту 25 ->", strict(known, "port-25", "timeout_cause"))
 reply = extended(known, "port-25", "timeout_cause", {"timeout", "port-25", "connect", "office-network"}, mode="advisory")
 print("5. Дорадчо:", reply["route"], "+", reply["hypotheses"])
@@ -1190,7 +1192,7 @@ stateDiagram-v2
 10. <a id="src-10"></a>Keltoum Benlaharche, Zakaria Laboudi, Nabila Nouaouria, Djamel Eddine Zegour. [*An ontology driven question answering system for fatawa retrieval*](https://doi.org/10.11591/ijeecs.v23.i2.pp980-992). *Indonesian Journal of Electrical Engineering and Computer Science*, 23(2), 980–992, 2021.
 11. <a id="src-11"></a>Учасники Soufflé. [*Soufflé Documentation*](https://souffle-lang.github.io/docs.html). Документація мови логічного програмування в стилі Datalog.
 12. <a id="src-12"></a>Martin Gebser, Roland Kaminski, Benjamin Kaufmann, Torsten Schaub. [*Multi-shot ASP Solving with clingo*](https://potassco.org/clingo/). *Theory and Practice of Logic Programming*, 19(1), 27–82, 2019.
-13. <a id="src-13"></a>Lui Sha. [*Using Simplicity to Control Complexity*](https://doi.org/10.1109/52.936213). *IEEE Software*, 18(4), 20–28, 2001.
+13. <a id="src-13"></a>Lui Sha. [*Using Simplicity to Control Complexity*](https://doi.org/10.1109/ms.2001.936213). *IEEE Software*, 18(4), 20–28, 2001.
 
 ---
 

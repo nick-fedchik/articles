@@ -3072,7 +3072,7 @@ W=\left\lceil\frac{\lvert M\rvert}{64}\right\rceil,\qquad S_{\mathrm{record}}=16
 32. <a id="src-32"></a>Raymond Reiter. [*On Closed World Data Bases*](https://doi.org/10.1007/978-1-4684-3384-5_3). In H. Gallaire & J. Minker (Eds.), *Logic and Data Bases*, 55–76. Plenum Press, New York, 1978.
 33. <a id="src-33"></a>National Institute of Standards and Technology. [*FIPS 204: Module-Lattice-Based Digital Signature Standard (ML-DSA)*](https://doi.org/10.6028/NIST.FIPS.204). NIST, 2024.
 34. <a id="src-34"></a>David McGrew, Michael Curcio, Scott Fluhrer. [*RFC 8554: Leighton-Micali Hash-Based Signatures*](https://www.rfc-editor.org/rfc/rfc8554). IETF, 2019.
-35. <a id="src-35"></a>Per Martin-Löf. [*Intuitionistic Type Theory*](https://archive.org/details/martin-lof-1984). Bibliopolis, Naples, 1984.
+35. <a id="src-35"></a>Per Martin-Löf. [*Intuitionistic Type Theory*](https://bibliopolis.it/shop/intuitionistic-type-theory/). Bibliopolis, Naples, 1984.
 36. <a id="src-36"></a>George C. Necula. [*Proof-Carrying Code*](https://doi.org/10.1145/263699.263712). *Proceedings of the 24th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages (POPL '97)*, 106–119, 1997.
 37. <a id="src-37"></a>Ivan V. Oseledets. [*Tensor-Train Decomposition*](https://doi.org/10.1137/090752286). *SIAM Journal on Scientific Computing*, 33(5), 2295–2317, 2011.
 

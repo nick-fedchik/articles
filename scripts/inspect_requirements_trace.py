@@ -2,7 +2,7 @@
 """
 Requirements Traceability Inspector for the ExpertSystem monograph.
 
-Checks the requirement tree in ExpertSystem/requirements (L1 stakeholder,
+Checks the requirement tree in framework/requirements (L1 stakeholder,
 L2 system, L3 component) against the conventions of the tree:
 
   ERRORS (exit code 1):
@@ -32,8 +32,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent / "ExpertSystem"
-REQ_ROOT = ROOT / "requirements"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+REQ_ROOT = REPO_ROOT / "framework" / "requirements"
 LEVEL_DIRS = {"L1": "L1-stakeholder", "L2": "L2-system", "L3": "L3-component"}
 PARENT_LEVEL = {"L2": "L1", "L3": "L2"}
 MANDATORY = ["Вимога", "Джерело", "Батьківська вимога", "Метод верифікації", "Пріоритет", "Статус"]
