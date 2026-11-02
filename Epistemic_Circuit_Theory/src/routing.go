@@ -22,7 +22,6 @@ func SelectCandidates(candidates []Candidate, minScore, margin float64) (Route, 
 		return Route{}, errors.New("routing: score threshold and margin must be in [0,1]")
 	}
 	seen := map[string]bool{}
-	bestLower := 0.0
 	for _, c := range candidates {
 		key := c.ID + "\x00" + c.Version
 		if strings.TrimSpace(c.ID) == "" || strings.TrimSpace(c.Version) == "" ||
@@ -31,6 +30,13 @@ func SelectCandidates(candidates []Candidate, minScore, margin float64) (Route, 
 			return Route{}, errors.New("routing: invalid or duplicate candidate")
 		}
 		seen[key] = true
+	}
+	return selectValidatedCandidates(candidates, minScore, margin), nil
+}
+
+func selectValidatedCandidates(candidates []Candidate, minScore, margin float64) Route {
+	bestLower := 0.0
+	for _, c := range candidates {
 		bestLower = math.Max(bestLower, math.Max(0, c.Score-c.Radius))
 	}
 	out := Route{Disposition: "REFUSE"}
@@ -56,7 +62,7 @@ func SelectCandidates(candidates []Candidate, minScore, margin float64) (Route, 
 			out.Disposition = "DIRECT"
 		}
 	}
-	return out, nil
+	return out
 }
 
 type LogitSummary struct {

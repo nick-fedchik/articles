@@ -41,6 +41,14 @@ func CompileRules(rules []Rule) (*RuleBank, error) {
 }
 
 func (bank *RuleBank) Evaluate(fact Fact, dst []State) error {
+	return bank.evaluate(fact, dst, true)
+}
+
+func (bank *RuleBank) EvaluateBranching(fact Fact, dst []State) error {
+	return bank.evaluate(fact, dst, false)
+}
+
+func (bank *RuleBank) evaluate(fact Fact, dst []State, lut bool) error {
 	if bank == nil || len(bank.modal) == 0 {
 		return errors.New("rule bank: uninitialized")
 	}
@@ -66,12 +74,16 @@ func (bank *RuleBank) Evaluate(fact Fact, dst []State) error {
 		if fact.Age > bank.maxAge[i] {
 			fresh = False
 		}
-		dst[i] = lookupPriority(lookupPriority(bind, bound), lookupPriority(fresh, bank.modal[i]))
+		dst[i] = combineRuleStates(bind, bound, fresh, bank.modal[i], lut)
 	}
 	return nil
 }
 
 func evaluateValidatedRule(rule Rule, fact Fact) State {
+	return evaluateValidatedRuleUsing(rule, fact, false)
+}
+
+func evaluateValidatedRuleUsing(rule Rule, fact Fact, lut bool) State {
 	bind := bindRoles(rule.Pattern, fact.Roles)
 	bound := True
 	if rule.Sort != fact.Sort {
@@ -85,5 +97,12 @@ func evaluateValidatedRule(rule Rule, fact Fact) State {
 	if fact.Age > rule.MaxAge {
 		fresh = False
 	}
-	return priority(priority(bind, bound), priority(fresh, rule.Modal))
+	return combineRuleStates(bind, bound, fresh, rule.Modal, lut)
+}
+
+func combineRuleStates(bind, bound, fresh, modal State, lut bool) State {
+	if lut {
+		return lookupPriority(lookupPriority(bind, bound), lookupPriority(fresh, modal))
+	}
+	return priority(priority(bind, bound), priority(fresh, modal))
 }

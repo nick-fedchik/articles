@@ -143,9 +143,46 @@ func Compile(root *Expr, sources []Source) (*Program, error) {
 
 func (p *Program) Nodes() int { return len(p.code) }
 
+// ScratchBytes excludes immutable program metadata and the returned source list.
+func (p *Program) ScratchBytes() int64 {
+	if p == nil {
+		return 0
+	}
+	return int64(len(p.code)) * (int64((len(p.sources)+63)/64)*8 + 1)
+}
+
+func (p *Program) WithSourceWeight(id, version string, weight float64) (*Program, error) {
+	if p == nil || len(p.code) == 0 {
+		return nil, errors.New("reweight: uninitialized program")
+	}
+	copyProgram := *p
+	copyProgram.sources = append([]Source(nil), p.sources...)
+	found := false
+	for i := range copyProgram.sources {
+		if copyProgram.sources[i].ID == id && copyProgram.sources[i].Version == version {
+			copyProgram.sources[i].Weight = weight
+			if err := copyProgram.sources[i].validate(); err != nil {
+				return nil, err
+			}
+			found = true
+		}
+	}
+	if !found {
+		return nil, errors.New("reweight: unknown source identity")
+	}
+	return &copyProgram, nil
+}
+
 func (p *Program) Evaluate(inputs []State) (Result, error) {
+	return p.EvaluateWithBudget(inputs, 64<<20)
+}
+
+func (p *Program) EvaluateWithBudget(inputs []State, maxScratchBytes int64) (Result, error) {
 	if p == nil || len(p.code) == 0 {
 		return Result{}, errors.New("evaluate: uninitialized program")
+	}
+	if maxScratchBytes < 0 || p.ScratchBytes() > maxScratchBytes {
+		return Result{}, errors.New("evaluate: scratch memory budget exceeded before allocation")
 	}
 	if len(inputs) != len(p.sourceIndex) {
 		return Result{}, errors.New("evaluate: input count mismatch")
