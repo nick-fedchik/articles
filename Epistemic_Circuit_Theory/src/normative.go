@@ -107,24 +107,11 @@ func CompileNormative(theory NormTheory) (*NormProgram, error) {
 		return nil, errors.New("normative: finite model size limits exceeded")
 	}
 	p := &NormProgram{theory: NormTheory{Atoms: theory.Atoms}, byID: map[string]int{}, actions: map[string]bool{}}
-	signedRules := []HornRule{}
-	for _, rule := range theory.Evidence {
-		if !rule.Conclusion.valid(theory.Atoms) {
-			return nil, errors.New("normative: evidence conclusion outside atom range")
-		}
-		copyRule := rule
-		copyRule.Premises = slices.Clone(rule.Premises)
-		indices := make([]int, len(rule.Premises))
-		for i, literal := range rule.Premises {
-			if !literal.valid(theory.Atoms) {
-				return nil, errors.New("normative: evidence premise outside atom range")
-			}
-			indices[i] = literal.code()
-		}
-		p.theory.Evidence = append(p.theory.Evidence, copyRule)
-		signedRules = append(signedRules, HornRule{rule.ID, rule.Version, indices, rule.Conclusion.code()})
+	signedRules, copiedRules, err := signedHornRules(theory.Atoms, theory.Evidence)
+	if err != nil {
+		return nil, err
 	}
-	var err error
+	p.theory.Evidence = copiedRules
 	p.signed, err = CompileHorn(2*theory.Atoms, signedRules)
 	if err != nil {
 		return nil, fmt.Errorf("normative signed fragment: %w", err)
