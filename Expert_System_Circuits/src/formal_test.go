@@ -60,10 +60,10 @@ func TestSATUnavailableIsNotAProof(t *testing.T) {
 	if _, _, err := c.solve(ctx, "missing-solver"); !errors.Is(err, context.Canceled) {
 		t.Fatal("cancellation lost")
 	}
-	if _, _, err := c.solve(context.Background(), "/nonexistent/teos-solver"); err == nil {
+	if _, _, err := c.solve(context.Background(), "/nonexistent/sat-solver"); err == nil {
 		t.Fatal("missing external solver accepted")
 	}
-	check, err := VerifyGraphSAT(context.Background(), "/nonexistent/teos-solver", &Expr{Op: Input}, fixtureSources(t, 1))
+	check, err := VerifyGraphSAT(context.Background(), "/nonexistent/sat-solver", &Expr{Op: Input}, fixtureSources(t, 1))
 	if err == nil || check.Equivalent {
 		t.Fatal("solver failure produced a success-shaped equivalence claim")
 	}

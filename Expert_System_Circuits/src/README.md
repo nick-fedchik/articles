@@ -1,8 +1,8 @@
-# Відтворювана доказова реалізація ТЕОС
+# Відтворювана доказова реалізація СТЕС
 
 ## 1. Призначення та межі
 
-Цей самостійний Go-модуль перевіряє обмежені гіпотези з [меморандумів 01–08](../README.md) і власне ядро ТЕОС із [меморандуму 10](../ch07-epu-compilation-and-fpga-hardware.md), а не реалізує промислову експертну систему. Потрібен Go 1.23 або новіший; зовнішніх Go-бібліотек, приватного корпусу й мережі для звичайних тестів не потрібно. Зовнішня SAT-перевірка виконується за наявності MiniSat; без нього відповідний тест явно пропускається, а окрема команда формального циклу повертає помилку. Навчальні дані створено безпосередньо для цих перевірок; вони не є незалежним природномовним контрольним корпусом.
+Цей самостійний Go-модуль перевіряє обмежені гіпотези з [меморандумів 01–08](../README.md) і власне ядро СТЕС із [меморандуму 10](../ch07-epu-compilation-and-fpga-hardware.md), а не реалізує промислову експертну систему. Потрібен Go 1.23 або новіший; зовнішніх Go-бібліотек, приватного корпусу й мережі для звичайних тестів не потрібно. Зовнішня SAT-перевірка виконується за наявності MiniSat; без нього відповідний тест явно пропускається, а окрема команда формального циклу повертає помилку. Навчальні дані створено безпосередньо для цих перевірок; вони не є незалежним природномовним контрольним корпусом.
 
 Код не керує обладнанням, не сертифікує систему за стандартами безпеки й не встановлює істинність джерела. Байтовий геш засвідчує лише відповідність байтів очікуваному гешу.
 
@@ -140,56 +140,56 @@ go test -run 'TestProvenance|TestInterning|TestWeightOnly|TestConcurrentWeight'
 
 Обхід активних предків мав найменшу медіану у 20 із 24 груп; у чотирьох групах із 256 джерелами й суперечливими входами виграв dense. Інтернування зменшувало пам'ять повторюваних множин, але погіршувало час; це не універсальна заміна щільного або розрідженого подання. Попередній `Program.Evaluate` не змінювався.
 
-## 10. Власне ядро ТЕОС: кількості, композиція та апаратні бюджети
+## 10. Власне ядро СТЕС: кількості, композиція та апаратні бюджети
 
 Цей цикл перевіряє саме твердження глав 02–03, а не перевагу Horn-пошуку або кешу. **Джерело поточного наукового статусу — [меморандум 10](../ch07-epu-compilation-and-fpga-hardware.md)**; математичні перевірки не потребують природномовного корпусу. Результати отримано за допомогою ШІ, не незалежним рецензуванням.
 
-[teosquant](teosquant/quant.go) обчислює означену політику ослаблення, тотожність генератора, коваріаційний приклад і контрприклади універсальним втратам. [teoscompose](teoscompose/compose.go) задає обмежений операторний міст: походження, явно припущені листи, розгалуження, злиття однієї пропозиції, AND/NOT, інтервал і окремий нормативний порт. Це не повна семантика всіх операторів ТЕОС. [teoshardware](teoshardware/README.md) розраховує скінченні слова, геометрію пам'яті, передавання, моделі SHA-256 і функціональний предикат над попередньо перевіреним знімком. Код не змінює чинних нормативних вердиктів або режиму кешування.
+[quant](quant/quant.go) обчислює означену політику ослаблення, тотожність генератора, коваріаційний приклад і контрприклади універсальним втратам. [compose](compose/compose.go) задає обмежений операторний міст: походження, явно припущені листи, розгалуження, злиття однієї пропозиції, AND/NOT, інтервал і окремий нормативний порт. Це не повна семантика всіх операторів СТЕС. [hardware](hardware/README.md) розраховує скінченні слова, геометрію пам'яті, передавання, моделі SHA-256 і функціональний предикат над попередньо перевіреним знімком. Код не змінює чинних нормативних вердиктів або режиму кешування.
 
-Нові еталони: [quantities.json](testdata/teos-native/quantities.json), [composition.json](testdata/teos-native/composition.json), [hardware.json](testdata/teos-native/hardware.json). Історичні свідчення не перезаписані. Для повторення з `src` без зміни еталонів:
+Нові еталони: [quantities.json](testdata/native/quantities.json), [composition.json](testdata/native/composition.json), [hardware.json](testdata/native/hardware.json). Історичні свідчення не перезаписані. Для повторення з `src` без зміни еталонів:
 
 ```sh
-mkdir -p .teos-report-build .teos-report-cache
-export GOTMPDIR="$PWD/.teos-report-build" TMPDIR="$PWD/.teos-report-build"
-export GOCACHE="$PWD/.teos-report-cache"
-go run ./cmd/teosquant | cmp - testdata/teos-native/quantities.json
-go run ./cmd/teoscompose | cmp - testdata/teos-native/composition.json
-go run ./cmd/teoshardware -states=4096 -bus-bits=64 -hz=100000000 -leaves=1024 | cmp - testdata/teos-native/hardware.json
-go test -count=1 -race -cover ./teosquant ./cmd/teosquant ./teoscompose ./cmd/teoscompose ./teoshardware ./cmd/teoshardware
-go vet ./teosquant ./cmd/teosquant ./teoscompose ./cmd/teoscompose ./teoshardware ./cmd/teoshardware
+mkdir -p .report-build .report-cache
+export GOTMPDIR="$PWD/.report-build" TMPDIR="$PWD/.report-build"
+export GOCACHE="$PWD/.report-cache"
+go run ./cmd/quant | cmp - testdata/native/quantities.json
+go run ./cmd/compose | cmp - testdata/native/composition.json
+go run ./cmd/hardware -states=4096 -bus-bits=64 -hz=100000000 -leaves=1024 | cmp - testdata/native/hardware.json
+go test -count=1 -race -cover ./quant ./cmd/quant ./compose ./cmd/compose ./hardware ./cmd/hardware
+go vet ./quant ./cmd/quant ./compose ./cmd/compose ./hardware ./cmd/hardware
 ```
 
 Точні SHA-256, припущення та інтерпретації наведено в меморандумі. JSON детерміновані, без поточного часу й хостових тривалостей. Це **синтетичні/аналітичні розрахунки**, не емпірична істинність, калібрування чи ресурсні звіти FPGA. Для цього ядра не виконано RTL-синтез, post-route timing, HIL, WCET або сертифікаційну оцінку; один такт відлічується лише від готового довіреного знімка за ще не підтвердженої часової умови.
 
 ## 11. Попередньо зареєстрований цикл шлюзу допуску (H1–H5)
 
-Цей цикл перевіряє звужену тезу ТЕОС — перевірюваний шлюз допуску з контрактом метаданих — за [протоколом](PREREGISTRATION-2026-11-03.md), опублікованим до дослідів. Аналіз, рішення й обмеження наведено в [меморандумі 11](../ch06-verified-admission-gate-and-fault-injection.md), статуси — у [реєстрі ECT-37…ECT-47](../ch06-verified-admission-gate-and-fault-injection.md). Результати отримано автором за допомогою ШІ; це не незалежне рецензування.
+Цей цикл перевіряє звужену тезу СТЕС — перевірюваний шлюз допуску з контрактом метаданих — за [протоколом](PREREGISTRATION-2026-11-03.md), опублікованим до дослідів. Аналіз, рішення й обмеження наведено в [меморандумі 11](../ch06-verified-admission-gate-and-fault-injection.md), статуси — у [реєстрі ECT-37…ECT-47](../ch06-verified-admission-gate-and-fault-injection.md). Результати отримано автором за допомогою ШІ; це не незалежне рецензування.
 
-- [teoskernel](teoskernel/kernel.go) і [CLI](cmd/teoskernel/main.go) — мінімальне ядро $K$ (з обмеженням `relevantAtom` та чистою підтримкою `Clean` за теоремою В.7): `Evaluate`, незалежний декларативний перевірник нерухомої точки `Verify`, перевірка властивості безпечного допуску `CheckSafety`, обмежено вичерпний перебір (`136 422 300` випадків, `1 776 564` `ALLOW`, `269 291 472` підробок відхилено) і фазинг.
+- [kernel](kernel/kernel.go) і [CLI](cmd/kernel/main.go) — мінімальне ядро $K$ (з обмеженням `relevantAtom` та чистою підтримкою `Clean` за теоремою В.7): `Evaluate`, незалежний декларативний перевірник нерухомої точки `Verify`, перевірка властивості безпечного допуску `CheckSafety`, обмежено вичерпний перебір (`136 422 300` випадків, `1 776 564` `ALLOW`, `269 291 472` підробок відхилено) і фазинг.
 - [formal/kernel](formal/kernel/README.md) — формальна модель ядра з явними правилами `EvRule`, рівняннями нерухомої точки замикання й чистої підтримки (`verifyCert`) та механізованим доведенням коректності в Lean 4.35.0 без `sorry`; відповідність Go-коду не механізована.
-- [teosbaseline](teosbaseline/README.md) і [CLI](cmd/teosbaseline/main.go) — порівняння з наївним і звичайними шлюзами (H3) та інжекція одинадцяти модельних класів помилок (`F01..F11`) і позамодельного `X11` (H4) зі стратифікованими межами Клоппера — Пірсона (`0,00583` в активних інжектованих класах, `0,00179` у всіх модельних сценаріях, `196 / 519` у `X11`).
-- [rtl/teosgate](rtl/teosgate/README.md) і генератор векторів [teosgatevectors](cmd/teosgatevectors/main.go) — 9-умовний Verilog-посткомпаратор `PrevalidatedGate` над попередньо перевіреним знімком, симуляція (`58 627` векторів, 0 розбіжностей), мутації (`8/8`), синтез і трасування для iCE40 (H5: `104,50–110,57 МГц` для префіксного `p2` із `teos_csa64` на `iCE40HX8K` проти `< 60 МГц` для прямого `p0` та `< 40 МГц` на `iCE40UP5K`).
+- [baseline](baseline/README.md) і [CLI](cmd/baseline/main.go) — порівняння з наївним і звичайними шлюзами (H3) та інжекція одинадцяти модельних класів помилок (`F01..F11`) і позамодельного `X11` (H4) зі стратифікованими межами Клоппера — Пірсона (`0,00583` в активних інжектованих класах, `0,00179` у всіх модельних сценаріях, `196 / 519` у `X11`).
+- [rtl/gate](rtl/gate/README.md) і генератор векторів [gatevectors](cmd/gatevectors/main.go) — 9-умовний Verilog-посткомпаратор `PrevalidatedGate` над попередньо перевіреним знімком, симуляція (`58 627` векторів, 0 розбіжностей), мутації (`8/8`), синтез і трасування для iCE40 (H5: `104,50–110,57 МГц` для префіксного `p2` із `csa64` на `iCE40HX8K` проти `< 60 МГц` для прямого `p0` та `< 40 МГц` на `iCE40UP5K`).
 
 Команди нижче не перезаписують опублікованих даних: вони порівнюють stdout з еталонами або пишуть у новий каталог.
 
 ```sh
-mkdir -p .teos-repro/build
-export GOTMPDIR="$PWD/.teos-repro/build" TMPDIR="$PWD/.teos-repro/build"
-go test -race -count=1 ./teoskernel ./teosbaseline ./cmd/teosgatevectors
-go run ./cmd/teoskernel | cmp - testdata/teos-kernel/example.json
-go run ./cmd/teoskernel -mode exhaustive -norms 1 -conditions 2 -exceptions | cmp - testdata/teos-kernel/exhaustive-norms1-conditions2-exceptions.json
-go run ./cmd/teosbaseline -out .teos-repro/baseline && cmp .teos-repro/baseline/results.json testdata/teos-baseline/results.json
-(cd rtl/teosgate && make clean && make -j8 summary RESULTS=build/repro)   # потрібні Yosys, Icarus Verilog, Verilator, nextpnr-ice40
+mkdir -p .repro/build
+export GOTMPDIR="$PWD/.repro/build" TMPDIR="$PWD/.repro/build"
+go test -race -count=1 ./kernel ./baseline ./cmd/gatevectors
+go run ./cmd/kernel | cmp - testdata/kernel/example.json
+go run ./cmd/kernel -mode exhaustive -norms 1 -conditions 2 -exceptions | cmp - testdata/kernel/exhaustive-norms1-conditions2-exceptions.json
+go run ./cmd/baseline -out .repro/baseline && cmp .repro/baseline/results.json testdata/baseline/results.json
+(cd rtl/gate && make clean && make -j8 summary RESULTS=build/repro)   # потрібні Yosys, Icarus Verilog, Verilator, nextpnr-ice40
 ```
 
 Більші домени ядра (`-norms 2 -conditions 2`, `-norms 2 -conditions 1 -exceptions`) тривають близько 6 і 25 хвилин. Перевірку Lean описано в [README формальної моделі](formal/kernel/README.md). SHA-256 усіх опублікованих файлів наведено в меморандумі 11. Частоти RTL є оцінками nextpnr, а не вимірюванням кристала; HIL, WCET і фахової STPA-валідації не виконано.
 
 ## 12. Досліди № 01 та № 02: трирівнева модель міркування
 
-Ці досліди перевіряють уточнену постановку ТЕОС: перехід від змісту питання до змісту відповіді через типізовані оператори. Попередньо зареєстровані протоколи ([дослід № 01](PREREGISTRATION-2026-11-03-three-level-inference.md) і [дослід № 02](../ch03-forward-forecast-and-backward-diagnosis.md)) фіксують задачі, припущення та ручні очікування до написання коду; результати наведено у [звіті № 01](../ch03-forward-forecast-and-backward-diagnosis.md) та [звіті № 02](../ch03-forward-forecast-and-backward-diagnosis.md). Пакет [teosreason](teosreason/reason.go) використовує `evidence.State` і `teoscompose.IntervalGuard` без змін і не змінює попередніх пакетів.
+Ці досліди перевіряють уточнену постановку СТЕС: перехід від змісту питання до змісту відповіді через типізовані оператори. Попередньо зареєстровані протоколи ([дослід № 01](PREREGISTRATION-2026-11-03-three-level-inference.md) і [дослід № 02](../ch03-forward-forecast-and-backward-diagnosis.md)) фіксують задачі, припущення та ручні очікування до написання коду; результати наведено у [звіті № 01](../ch03-forward-forecast-and-backward-diagnosis.md) та [звіті № 02](../ch03-forward-forecast-and-backward-diagnosis.md). Пакет [reason](reason/reason.go) використовує `evidence.State` і `compose.IntervalGuard` без змін і не змінює попередніх пакетів.
 
 ```sh
-go test -race -count=1 ./teosreason ./cmd/teosreason
-go run ./cmd/teosreason -scenario S1           # випадок 1 (діагностика перегріву): S1 … S8
-go run ./cmd/teosreason -case 2 -scenario S1   # випадок 2 (прогноз графіка поставок): S1 … S8
+go test -race -count=1 ./reason ./cmd/reason
+go run ./cmd/reason -scenario S1           # випадок 1 (діагностика перегріву): S1 … S8
+go run ./cmd/reason -case 2 -scenario S1   # випадок 2 (прогноз графіка поставок): S1 … S8
 ```

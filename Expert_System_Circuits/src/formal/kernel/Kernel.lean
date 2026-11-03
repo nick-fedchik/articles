@@ -1,5 +1,5 @@
 /-
-  Mechanized model of the TEOS admission kernel K (src/teoskernel) and a
+  Mechanized model of the СТЕС admission kernel K (src/kernel) and a
   machine-checked proof of its end-to-end ALLOW soundness and exactness
   theorems (`soundness`, `allow_iff_P`, `allow_prohibitions_defeated_by_permit`).
 
@@ -15,11 +15,11 @@
   * `cleanWitness`: an ALLOW verdict requires at least one applicable,
     undefeated permit rule whose condition literals are all cleanly supported;
   * the status switch and decision switch of `evidence.(*NormProgram).evaluatePolicy`,
-    the interval-guard convention of `teoscompose.IntervalGuard`, freshness,
+    the interval-guard convention of `compose.IntervalGuard`, freshness,
     provenance, and the kernel verdict downgrade.
 -/
 
-namespace TeosKernel
+namespace GateKernel
 
 structure B4 where
   pos : Bool
@@ -134,7 +134,7 @@ structure Fact where
   time : Int
 deriving DecidableEq, Repr
 
-/-- teoscompose.IntervalGuard: unit mismatch U, disjoint F, overlap BOTH, contained T. -/
+/-- compose.IntervalGuard: unit mismatch U, disjoint F, overlap BOTH, contained T. -/
 def guardState (g : Guard) (m : Meas) : B4 :=
   if m.unit ≠ g.unit then B4.U
   else if m.hi < g.lo ∨ m.lo > g.hi then B4.F
@@ -981,4 +981,4 @@ theorem allow_iff_P (S : Spec) (I : Input) (hwf : ∀ m ∈ I.meas, m.lo ≤ m.h
     verdict S I = .allow ↔ P S I :=
   ⟨allow_sound S I, allow_complete S I hwf⟩
 
-end TeosKernel
+end GateKernel

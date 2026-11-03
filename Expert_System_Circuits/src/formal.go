@@ -66,7 +66,7 @@ func (c *cnf) solve(ctx context.Context, solver string) (bool, []bool, error) {
 	if err := ctx.Err(); err != nil {
 		return false, nil, err
 	}
-	dir, err := os.MkdirTemp("", "teos-sat-")
+	dir, err := os.MkdirTemp("", "circuit-sat-")
 	if err != nil {
 		return false, nil, err
 	}

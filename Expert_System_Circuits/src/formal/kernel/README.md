@@ -1,6 +1,6 @@
-# Механізована перевірка ядра K шлюзу допуску ТЕОС
+# Механізована перевірка ядра K шлюзу допуску СТЕС
 
-Цей каталог містить абстрактну модель ядра $K$ із пакета `src/teoskernel` і доведення її наскрізної коректності в Lean 4. Модель потрібна, щоб перевірити не окремий приклад, а логіку вердикту `ALLOW` для будь-яких скінченних специфікацій і вхідних знімків.
+Цей каталог містить абстрактну модель ядра $K$ із пакета `src/kernel` і доведення її наскрізної коректності в Lean 4. Модель потрібна, щоб перевірити не окремий приклад, а логіку вердикту `ALLOW` для будь-яких скінченних специфікацій і вхідних знімків.
 
 ## Що доведено
 
@@ -46,15 +46,15 @@ ELAN_HOME=~/.local/elan TMPDIR=~/.local/elan-tmp ./elan-init -y --no-modify-path
 
 cd Expert_System_Circuits/src/formal/kernel
 ELAN_HOME=~/.local/elan ~/.local/elan/bin/lean Kernel.lean          # без виводу, код 0
-(cat Kernel.lean; echo '#print axioms TeosKernel.soundness') | \
+(cat Kernel.lean; echo '#print axioms GateKernel.soundness') | \
   ELAN_HOME=~/.local/elan ~/.local/elan/bin/lean --stdin
-# 'TeosKernel.soundness' depends on axioms: [propext, Classical.choice, Quot.sound]
+# 'GateKernel.soundness' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
 Окрема перевірка Go-реалізації:
 
 ```sh
 cd Expert_System_Circuits/src
-go test ./teoskernel -race
-go run ./cmd/teoskernel -mode exhaustive -norms 2 -conditions 1 -exceptions
+go test ./kernel -race
+go run ./cmd/kernel -mode exhaustive -norms 2 -conditions 1 -exceptions
 ```
