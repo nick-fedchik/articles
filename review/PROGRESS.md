@@ -167,9 +167,9 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 | 29: [Глава 29. Нейро-символьна архітектура: мовні моделі та перевірка доказових підстав](../ExpertSystem/ch29-neuro-symbolic-architecture.md) | `175fc4a2782b7e28341d0ae11704eae04565721c66fec7db7b4fc777d3ee5b9d` | stale |
 | 30: [Глава 30. Спільне проєктування функціональної безпеки та кібербезпеки](../ExpertSystem/ch30-safety-cybersecurity-co-engineering.md) | `ef53ee52b068693bc2fea2c7653deb00d16aabc7d86ba4d69e80fa2cbcf825d8` | stale |
 | 31: [Глава 31. Виведення за нормами: ієрархії предикатів, винятки та чинність](../ExpertSystem/ch31-syllogistic-reasoning-and-relation-lattices.md) | `0b04d6ba30f0ebb4777aa71497b8af8825b7ae3fef5162f1f41ddf89414bfeb0` | stale |
-| 32: [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | `34a2fbad4c6bf117e7d4dcf01bb5ca89ddbf84a40dc82a38f624739e08f3c23c` | stale |
+| 32: [Глава 32. Незмінні пакети знань: побайтовий допуск, індекси та відображення в пам'ять](../ExpertSystem/ch32-high-performance-knowledge-packs-mmap-and-harvesting.md) | `229c6c5947637e8e583a86a42d1c81d096b633f1852c33088f73479d7d865a60` | stale |
 | 33: [Глава 33. Міжсистемний обмін знаннями: постачання правил стороннім системам, навчання моделей і захищений зворотний зв'язок](../ExpertSystem/ch33-inter-system-knowledge-exchange-and-model-teaching.md) | `63066e8a2fb5e9e1fe0a394fc944f0bdb4668bf15d9e30648f8220bf461ea8e3` | stale |
-| 34: [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | `084c69007e6e601c4d3513ce46224dd517315a9a1775f424c746657f6ef8ff7a` | stale |
+| 34: [Глава 34. Прогалини знань: реляційний пошук, абдукція та діалог уточнення](../ExpertSystem/ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md) | `60386edc24bb30137bce437d9000619e81801bd50d4a91e6614f07a96d60f931` | stale |
 | 35: [Глава 35. Реактивна експертна система: події, відкликання й адаптація знань](../ExpertSystem/ch35-self-organizing-expert-systems-synergetics-and-npu-runtime.md) | `f754b5230e36b35d253c2342e4d1693afa14f09a156d5c175d7deb891a6d2a10` | stale |
 | 36: [Глава 36. Піраміда тестування знань: правила, взаємодії та стійкість відповідей](../ExpertSystem/ch36-knowledge-testing-pyramid-and-variational-calibration.md) | `69f036206dad0b4d51889c6ef74f58c04533e16cbd5e8014bec96afd41b8b202` | stale |
 | 37: [Глава 37. Оцінювання вхідної інформації: джерела, свідчення та невизначеність](../ExpertSystem/ch37-input-information-assessment-and-algorithmic-skepticism.md) | `c6de28d34b8e01b20309f70b35703fb52af1ac8f17b30ded77092fe37c918e5f` | stale |
@@ -205,7 +205,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 
 ## Next Action
 
-Proceed to the next unresolved C4/S4 source-verification item after the CH12 corrections. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
+Proceed with the remaining C4/S4 source checks: Bell–LaPadula MTR-2547, ExploitGym's mismatched 2025 citation, and the Rushby 2020 report. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. Scientific acceptance remains stale for all 40 chapters; GitHub rendering is deferred to S7.
 
 ## Точкова правка Глави 2 — 2026-11-03
 
@@ -254,3 +254,9 @@ Proceed to the next unresolved C4/S4 source-verification item after the CH12 cor
 - **Було:** `csubj` у формулі 12.4 сполучався з називним відмінком і автоматично давав роль агента; `octet` і `bit/s` потрапляли до переліку одиниць СІ.
 - **Стало:** клаузальний підмет `csubj` не отримує морфологічного відмінка й повертає `Unmapped`; таблиця відокремлює інформаційні одиниці від фізичних одиниць СІ. Восьму координату EIW-512 визначено як профільне розширення, а не розмірність СІ; L3-вимоги й реєстр синхронізовано.
 - **Перевірки:** форматування MathJax пройшло для п'яти Markdown-файлів; structural hierarchy, buzzword, leakage, traceability (0 errors/warnings) і scoped `git diff --check` пройшли. Для глави, реєстру й L3-вимог: 589/589 формул, 11/11 діаграм і 296/296 посилань; окреме сканування звіту позначило п'ять валідних GitHub `#L...` фрагментів як відсутні локальні якорі. Повний acceptance і S7 залишаються відкритими; статус глави — `stale`.
+
+## C5 і джерельний triage — 2026-11-03
+
+- **C5:** у CH32 уточнено Bloom-фільтр як попередній, а не остаточний пошук; позитивний результат веде до точного пошуку. Непідтверджену гарантію «один такт L1» вилучено з глосарія та авторського внеску в реєстрі; L3-вимога тепер дозволяє хибнопозитивні відповіді. Перерахунок 65 атрибутів підтвердив 2 слова маски й 32 байти дескриптора; обробка маски лишається $O(W)$.
+- **Посилання:** у CH34 виправлено запис Plaza за Crossref-метаданими; три інші спірні джерела лишилися відкритими.
+- **Snapshot preflight:** 39 із 40 хешів глав збіглися з інвентарем; CH09 — єдина невідповідність. Це контроль знімків, не наукове приймання: статуси всіх 40 глав залишаються `stale`, доки кожну не перечитано за чинним протоколом.
