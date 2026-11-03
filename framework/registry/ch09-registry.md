@@ -17,7 +17,7 @@
 
 ## 1. Поточна структура та індекс формул
 
-**Джерело:** [ch09-engineering-knowledge-graph-traceability.md](../../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) · **Рядків:** 1264 · **SHA-256:** `9dd7f5756647b62fc3b72fed675ce1efa7a9a7d1da04f07d6af27d17415c8fff`\
+**Джерело:** [ch09-engineering-knowledge-graph-traceability.md](../../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) · **Рядків:** 1264 · **SHA-256:** `abc2ba3c1598f9d7e438c43153f940bd3841ce4da4e98c9faa47e0a4c97399ae`\
 **Математичний звіт:** [перевірка відповідної групи глав](../../review/reports/mathematical-review-ch01-ch13.md).
 
 Карта відтворює заголовки й підписи формул саме цього знімка глави. Номери формул входять до спільної послідовності об’єктів глави, тому пропуски в ряду формул можуть належати іншим пронумерованим об’єктам. Наявність підпису не є самостійним доказом правильності формули.
