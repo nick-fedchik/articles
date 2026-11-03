@@ -1,6 +1,6 @@
 # Execution Progress
 
-Updated UTC: 2026-11-03T07:41:54Z
+Updated UTC: 2026-11-03T07:51:49Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -139,7 +139,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 | 01: [Глава 1. Вступ до експертних систем: від хаосу до керованих знань](../ExpertSystem/ch01-introduction-to-expert-systems.md) | `2f9a042071a9d9265963b7df89ac6f0463bc66adcf24b2e173ad98bc610999c5` | stale |
 | 02: [Глава 2. Філософія для інженера: що машина має право називати знанням](../ExpertSystem/ch02-epistemology-of-machine-knowledge.md) | `25b061080fa42bb5238a0abad962936c2c4da2ac96b98c5b90afc561f91b9545` | stale |
 | 03: [Глава 3. Чим експертна система відрізняється від інформаційно-довідкової системи](../ExpertSystem/ch03-beyond-reference-information-systems.md) | `fa5bad2d685f33a250189572e847cb52ca08e6feaf86a9b98ce619ade4936eb7` | stale |
-| 04: [Глава 4. Еволюція експертних систем: від теореми Байєса до доказових рішень ШІ](../ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md) | `e2aa3f6f077ff2c720e33f1486bbd89fa7d346e7d183ff5811c05956c641903f` | stale |
+| 04: [Глава 4. Еволюція експертних систем: від теореми Байєса до доказових рішень ШІ](../ExpertSystem/ch04-evolution-from-bayes-to-evidence-ai.md) | `c963251207d2568c38ed0ad4ac2e43357f4132369c7c10461699da231716d1a0` | stale |
 | 05: [Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять](../ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md) | `2e4b45e2f00d2cb3db88f218cd38c5bf6e0edc65a82629bc248d99b88199cc48` | stale |
 | 06: [Глава 6. Прикладна математика експертних систем: правила, ймовірності, графи та причинність](../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | `220186d2bd17df4dc4fe01298937dac1374deb70fcdddc679735085e2bc6585f` | stale |
 | 07: [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](../ExpertSystem/ch07-knowledge-base-typology.md) | `81b94f9bc2bccb0453a9985491f94b004d674da48fba359a7bd2bfeb57e71e0d` | stale |
@@ -205,7 +205,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 
 ## Next Action
 
-Proceed to the next confirmed internal finding in CH04: relabel the weighted-sum calculation as MCDA or implement actual AHP, choosing the minimal correction that matches the current example. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
+Proceed to the next confirmed internal finding in CH07: make the OntoClean inventory explicitly distinguish rigidity from anti-rigidity and include dependence as the fourth meta-property. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
 
 ## Точкова правка Глави 2 — 2026-11-03
 
@@ -213,3 +213,10 @@ Proceed to the next confirmed internal finding in CH04: relabel the weighted-sum
 - **Стало:** для обмеженої ґратки явно визначено $`\bigsqcup \emptyset = \bot_L`$, але операційно порожній набір доказів блокує видачу. Формула 2.27 тепер фіксує лише умовну несумісність $`\mathcal{S}`$ та $`\mathcal{A}`$; WCET є окремим інваріантом. Старий якір підрозділу збережено.
 - **Перевірки:** реєстр глави 2 і квитанцію огляду синхронізовано зі знімком на 1 538 рядків. Повний локальний рендер/посилання пройшли: 210 файлів, 14 521 формула, 318 діаграм, 6 085 локальних посилань; 49 посилань перекладів пропущено. MathJax, структура, buzzword і leakage-перевірки пройшли. Код не змінювався; Go-приклади глави виконано в попередньому пакеті.
 - **Межі:** локальна правка не є повним науковим чи зовнішнім прийманням; статус глави 2 у науковому реєстрі лишено `stale` до окремого приймання. Перевірка браузерного/GitHub-відображення залишається в S7.
+
+## Уточнення методу в Главі 4 — 2026-11-03
+
+- **Було:** §7.1 називав нормовану зважену суму «Trade-Off Matrix, AHP», хоча ваги задавалися напряму й матриця попарних порівнянь не будувалася.
+- **Стало:** підрозділ і залежні джерельні описи називають метод зваженою сумою критеріїв; текст прямо відрізняє його від AHP. Формулу, таблицю, sensitivity-приклад та окремий шлюз обов'язкових умов не змінено; старий anchor підрозділу збережено.
+- **Перевірки:** реєстр і L2/L3 посилання синхронізовано зі знімком глави (1 767 рядків; SHA-256 у таблиці вище). Локальна перевірка: 210 файлів, 14 521 формула, 318 Mermaid-діаграм; 6 086 локальних посилань пройшли, 49 перекладних пропущено; 0 trace errors/warnings; 9 регресійних тестів інспекторів пройшли.
+- **Межі:** це корекція назви методу, не повний структурний або науковий acceptance. Вісім попередніх структурних зауважень і S7-візуалізація залишаються відкритими.
