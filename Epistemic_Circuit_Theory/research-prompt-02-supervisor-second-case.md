@@ -2,7 +2,7 @@
 
 > **Автор досліджуваного задуму:** Микола Мартинович Федчик  
 > **Дата завдання:** 3 листопада 2026 року  
-> **Статус:** завдання для наукового керівника виконано; обраний другий випадок, протокол досліду № 02 і промпт для дослідника № 03 зафіксовано в [протоколі другого досліду](research-prompt-03-second-case-protocol.md). Сам другий дослід ще не виконано.  
+> **Статус:** завдання для наукового керівника виконано; обраний другий випадок, протокол досліду № 02 і промпт для дослідника № 03 зафіксовано в [протоколі другого досліду](research-prompt-03-second-case-protocol.md), а результати виконання — у [звіті про дослід № 02](research-report-02-second-case-supply-forecast.md).  
 > **Контекст:** [дискусія № 02](draft-discussion-02-inference-state-operators-and-semantic-transformations.md), [промпт для дослідника № 01](research-prompt-01-three-level-inference-model.md), [звіт про дослід № 01](research-report-01-three-level-inference-model.md), [протокол досліду № 01](src/PREREGISTRATION-2026-11-03-three-level-inference.md).
 
 ## 1. Роль і мета

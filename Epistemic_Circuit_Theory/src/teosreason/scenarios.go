@@ -33,8 +33,8 @@ func ProtocolModel() Model {
 	}
 }
 
-func WhyOverheat() Query     { return Query{Why, A("overheat", "d")} }
-func WhetherOverheat() Query { return Query{Whether, A("overheat", "d")} }
+func WhyOverheat() Query     { return Query{Kind: Why, Target: A("overheat", "d")} }
+func WhetherOverheat() Query { return Query{Kind: Whether, Target: A("overheat", "d")} }
 
 // Temperature converts one interval reading with ObserveInterval and panics
 // only on programmer error in fixed scenario data.
@@ -151,16 +151,39 @@ func (r Renaming) key(k string, atoms map[string]Atom) string {
 }
 
 func (r Renaming) Input(q Query, m Model, obs []Observation) (Query, Model, []Observation) {
-	q2 := Query{q.Kind, r.Atom(q.Target)}
+	q2 := Query{Kind: q.Kind, Target: r.Atom(q.Target)}
 	m2 := Model{Active: map[string]bool{}}
+	if m.Premise.Pred != "" {
+		m2.Premise = r.Atom(m.Premise)
+	}
 	for k, v := range m.Active {
 		m2.Active[r.s(k)] = v
 	}
 	for _, s := range m.Schemes {
 		m2.Schemes = append(m2.Schemes, Scheme{r.s(s.ID), r.Atom(s.Hypothesis), r.Atom(s.Effect), s.PerReportingRoot})
 	}
+	for _, d := range m.Derived {
+		m2.Derived = append(m2.Derived, r.Atom(d))
+	}
 	for _, x := range m.Rules {
-		m2.Rules = append(m2.Rules, Rule{r.s(x.ID), r.Atom(x.If), r.Atom(x.Then), x.Expected, x.Strength, r.ss(x.Requires), x.ExcludeRootVar})
+		var ps []Premise
+		for _, p := range x.Premises {
+			ps = append(ps, Premise{Atom: r.Atom(p.Atom), Expected: p.Expected})
+		}
+		var ifAtom Atom
+		if x.If.Pred != "" {
+			ifAtom = r.Atom(x.If)
+		}
+		m2.Rules = append(m2.Rules, Rule{
+			ID:             r.s(x.ID),
+			If:             ifAtom,
+			Premises:       ps,
+			Then:           r.Atom(x.Then),
+			Expected:       x.Expected,
+			Strength:       x.Strength,
+			Requires:       r.ss(x.Requires),
+			ExcludeRootVar: x.ExcludeRootVar,
+		})
 	}
 	var o2 []Observation
 	for _, o := range obs {
@@ -178,6 +201,12 @@ func (r Renaming) Answer(a Answer) Answer {
 			atoms[l.Atom.Key()] = l.Atom
 		}
 	}
+	for _, d := range a.Derived {
+		atoms[d.Atom.Key()] = d.Atom
+		for _, l := range d.Links {
+			atoms[l.Atom.Key()] = l.Atom
+		}
+	}
 	keys := func(xs []string) []string {
 		if xs == nil {
 			return nil
@@ -189,8 +218,12 @@ func (r Renaming) Answer(a Answer) Answer {
 		return out
 	}
 	b := a
+	if a.Premise.Pred != "" {
+		b.Premise = r.Atom(a.Premise)
+	}
 	b.Target = r.Atom(a.Target)
 	b.PresuppositionRoots = r.ss(a.PresuppositionRoots)
+	b.TargetRoots = r.ss(a.TargetRoots)
 	b.Hypotheses = nil
 	for _, h := range a.Hypotheses {
 		h2 := h
@@ -209,13 +242,35 @@ func (r Renaming) Answer(a Answer) Answer {
 		}
 		b.Hypotheses = append(b.Hypotheses, h2)
 	}
+	b.Derived = nil
+	for _, d := range a.Derived {
+		d2 := d
+		d2.Atom = r.Atom(d.Atom)
+		d2.Roots = r.ss(d.Roots)
+		d2.DerivedBy, d2.TypicalSupport, d2.Conflicts, d2.Unmet = r.ss(d.DerivedBy), r.ss(d.TypicalSupport), r.ss(d.Conflicts), r.ss(d.Unmet)
+		d2.Links = nil
+		for _, l := range d.Links {
+			l2 := l
+			l2.Hypothesis = r.key(l.Hypothesis, atoms)
+			l2.Rule = r.s(l.Rule)
+			l2.Atom = r.Atom(l.Atom)
+			l2.ExcludedRoots, l2.Assumptions, l2.Roots = r.ss(l.ExcludedRoots), r.ss(l.Assumptions), r.ss(l.Roots)
+			d2.Links = append(d2.Links, l2)
+		}
+		b.Derived = append(b.Derived, d2)
+	}
 	b.Compatible, b.Excluded, b.Contested = keys(a.Compatible), keys(a.Excluded), keys(a.Contested)
+	b.ActiveRules, b.BlockedRules, b.ContestedRules = r.ss(a.ActiveRules), r.ss(a.BlockedRules), r.ss(a.ContestedRules)
 	if a.Direction != "" {
 		b.Direction = r.key(a.Direction, atoms)
 	}
 	b.NextChecks = nil
 	for _, c := range a.NextChecks {
 		b.NextChecks = append(b.NextChecks, Check{r.key(c.Hypothesis, atoms), r.s(c.Rule), r.Atom(c.Atom), c.Expected, r.ss(c.ExcludedRoots)})
+	}
+	b.MissingFacts = nil
+	for _, mf := range a.MissingFacts {
+		b.MissingFacts = append(b.MissingFacts, r.renameKeyText(mf))
 	}
 	b.UnusedObservations = nil
 	for _, u := range a.UnusedObservations {
@@ -262,7 +317,10 @@ func sortedCopy(xs []string) []string {
 // Canonical sorts every set-valued field so answers compare as sets.
 func Canonical(a Answer) Answer {
 	b := a
-	for _, xs := range []*[]string{&b.PresuppositionRoots, &b.Compatible, &b.Excluded, &b.Contested, &b.UnusedObservations, &b.Assumptions} {
+	for _, xs := range []*[]string{
+		&b.PresuppositionRoots, &b.TargetRoots, &b.Compatible, &b.Excluded, &b.Contested,
+		&b.ActiveRules, &b.BlockedRules, &b.ContestedRules, &b.MissingFacts, &b.UnusedObservations, &b.Assumptions,
+	} {
 		*xs = sortedCopy(*xs)
 	}
 	hs := append([]HypothesisResult(nil), a.Hypotheses...)
@@ -282,6 +340,25 @@ func Canonical(a Answer) Answer {
 	}
 	sort.Slice(hs, func(i, j int) bool { return hs[i].Hypothesis.Key() < hs[j].Hypothesis.Key() })
 	b.Hypotheses = hs
+
+	ds := append([]DerivedResult(nil), a.Derived...)
+	for i := range ds {
+		d := &ds[i]
+		for _, xs := range []*[]string{&d.Roots, &d.DerivedBy, &d.TypicalSupport, &d.Conflicts, &d.Unmet} {
+			*xs = sortedCopy(*xs)
+		}
+		d.Links = append([]Link(nil), d.Links...)
+		for j := range d.Links {
+			l := &d.Links[j]
+			l.Roots, l.ExcludedRoots, l.Assumptions = sortedCopy(l.Roots), sortedCopy(l.ExcludedRoots), sortedCopy(l.Assumptions)
+		}
+		sort.Slice(d.Links, func(i, j int) bool {
+			return d.Links[i].Rule+"|"+d.Links[i].Atom.Key() < d.Links[j].Rule+"|"+d.Links[j].Atom.Key()
+		})
+	}
+	sort.Slice(ds, func(i, j int) bool { return ds[i].Atom.Key() < ds[j].Atom.Key() })
+	b.Derived = ds
+
 	cs := append([]Check(nil), a.NextChecks...)
 	sort.Slice(cs, func(i, j int) bool {
 		return cs[i].Hypothesis+"|"+cs[i].Rule+"|"+cs[i].Atom.Key() < cs[j].Hypothesis+"|"+cs[j].Rule+"|"+cs[j].Atom.Key()

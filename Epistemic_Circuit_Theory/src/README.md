@@ -184,11 +184,12 @@ go run ./cmd/teosbaseline -out .teos-repro/baseline && cmp .teos-repro/baseline/
 
 Більші домени ядра (`-norms 2 -conditions 2`, `-norms 2 -conditions 1 -exceptions`) тривають близько 6 і 25 хвилин. Перевірку Lean описано в [README формальної моделі](formal/kernel/README.md). SHA-256 усіх опублікованих файлів наведено в меморандумі 11. Частоти RTL є оцінками nextpnr, а не вимірюванням кристала; HIL, WCET і фахової STPA-валідації не виконано.
 
-## 12. Дослід № 01: трирівнева модель одного міркування
+## 12. Досліди № 01 та № 02: трирівнева модель міркування
 
-Цей дослід перевіряє уточнену постановку ТЕОС: перехід від змісту питання до змісту відповіді через типізовані оператори. Попередньо зареєстрований [протокол](PREREGISTRATION-2026-11-03-three-level-inference.md) фіксує задачу, припущення та ручні очікування до написання коду; результати наведено у [звіті](../research-report-01-three-level-inference-model.md). Пакет [teosreason](teosreason/reason.go) використовує `evidence.State` і `teoscompose.IntervalGuard` без змін і не змінює попередніх пакетів.
+Ці досліди перевіряють уточнену постановку ТЕОС: перехід від змісту питання до змісту відповіді через типізовані оператори. Попередньо зареєстровані протоколи ([дослід № 01](PREREGISTRATION-2026-11-03-three-level-inference.md) і [дослід № 02](../research-prompt-03-second-case-protocol.md)) фіксують задачі, припущення та ручні очікування до написання коду; результати наведено у [звіті № 01](../research-report-01-three-level-inference-model.md) та [звіті № 02](../research-report-02-second-case-supply-forecast.md). Пакет [teosreason](teosreason/reason.go) використовує `evidence.State` і `teoscompose.IntervalGuard` без змін і не змінює попередніх пакетів.
 
 ```sh
 go test -race -count=1 ./teosreason ./cmd/teosreason
-go run ./cmd/teosreason -scenario S1   # повна траса; інші сценарії: S2 … S8
+go run ./cmd/teosreason -scenario S1           # випадок 1 (діагностика перегріву): S1 … S8
+go run ./cmd/teosreason -case 2 -scenario S1   # випадок 2 (прогноз графіка поставок): S1 … S8
 ```
