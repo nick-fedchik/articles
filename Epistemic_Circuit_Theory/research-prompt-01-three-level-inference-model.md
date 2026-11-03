@@ -2,7 +2,7 @@
 
 > **Автор досліджуваного задуму:** Микола Мартинович Федчик  
 > **Дата завдання:** 3 листопада 2026 року  
-> **Статус:** пропозиція наступного дослідного кроку; завдання підготовлено за участі ШІ, дослід за ним ще не виконано.  
+> **Статус:** завдання підготовлено за участі ШІ; дослід виконано, результати — у [звіті про дослід № 01](research-report-01-three-level-inference-model.md).  
 > **Контекст:** [дискусія №02](draft-discussion-02-inference-state-operators-and-semantic-transformations.md), особливо [погоджена трирівнева постановка](draft-discussion-02-inference-state-operators-and-semantic-transformations.md#three-level-synthesis).
 
 ## 1. Роль і мета
