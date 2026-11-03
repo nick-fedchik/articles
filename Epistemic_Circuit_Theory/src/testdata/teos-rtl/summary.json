@@ -1,0 +1,1363 @@
+{
+  "hypothesis": "H5 (PREREGISTRATION-2026-11-03.md): register-to-register one-tick PREVALIDATED gate predicate",
+  "reference": "teoshardware.PrevalidatedGate (src/teoshardware/calculate.go), vectors by cmd/teosgatevectors",
+  "tool_versions": [
+    "go version go1.27.1 linux/amd64",
+    "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "Icarus Verilog version 12.0 (stable) ()",
+    "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+    "\"nextpnr-ice40\" -- Next Generation Place and Route (Version 0.9-3)",
+    "fpga-icestorm 0~20250207git7fbf8c0+dfsg1-1build1",
+    "Python 3.14.4"
+  ],
+  "target_frequency_mhz": 100.0,
+  "interpretation": [
+    "Fmax is nextpnr-ice40 post-route static timing estimate (tool model), not a silicon or HIL measurement.",
+    "One-tick claim at f on a device holds only if post-route Fmax >= f; reported per seed.",
+    "Excluded: SHA-256/custody verification, bus transfer of the word, actuation, serial loading time.",
+    "The pin wrapper (462-bit serial shift loader) adds 462 FFs and routing pressure; it is not the gate.",
+    "Pins are unconstrained (--pcf-allow-unconstrained): placer chooses IO locations."
+  ],
+  "word_bits": 462,
+  "result_bits": 10,
+  "vectors": {
+    "vectors": 58627,
+    "allow": 5486,
+    "refuse": 53141,
+    "classes": {
+      "exhaustive": 27648,
+      "evidence_all_codes": 256,
+      "boundary_timestamp": 19,
+      "boundary_signed_compare": 144,
+      "boundary_revision_bit": 64,
+      "boundary_revision_extreme": 4,
+      "rounding_edge": 15,
+      "rounding_edge_negative_limit": 15,
+      "single_bit_flip": 462,
+      "random_uniform": 10000,
+      "random_near_pass": 10000,
+      "random_narrow": 10000
+    },
+    "reason_counts": {
+      "custody_not_validated": 18802,
+      "validation_binding_invalid": 30833,
+      "si_mismatch": 18828,
+      "numeric_invalid": 18756,
+      "norm_blocked": 28291,
+      "evidence_not_pro_only": 34799,
+      "policy_revision_mismatch": 30572,
+      "timestamp_invalid_or_stale": 29423,
+      "guard_band_exceeds_limit": 21474
+    }
+  },
+  "simulation": {
+    "iverilog": {
+      "one_tick": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "one_tick_prefix": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "pipelined": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "top_variant0": {
+        "checked": 512,
+        "mismatches": 0
+      },
+      "top_variant1": {
+        "checked": 512,
+        "mismatches": 0
+      },
+      "top_variant2": {
+        "checked": 512,
+        "mismatches": 0
+      }
+    },
+    "verilator": {
+      "one_tick": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "one_tick_prefix": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "pipelined": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "top_variant0": {
+        "checked": 512,
+        "mismatches": 0
+      },
+      "top_variant1": {
+        "checked": 512,
+        "mismatches": 0
+      },
+      "top_variant2": {
+        "checked": 512,
+        "mismatches": 0
+      }
+    }
+  },
+  "simulation_total_mismatches": 0,
+  "lint": {
+    "lines": [
+      "verilator lint VARIANT=0 exit 0",
+      "verilator lint VARIANT=1 exit 0",
+      "verilator lint VARIANT=2 exit 0"
+    ],
+    "warnings": 0
+  },
+  "mutation_adequacy": [
+    {
+      "mutant": "drop_future_timestamp_guard",
+      "mismatches": 1694,
+      "status": "killed"
+    },
+    {
+      "mutant": "evidence_low_bits_only",
+      "mismatches": 11770,
+      "status": "killed"
+    },
+    {
+      "mutant": "ignore_undercut",
+      "mismatches": 9431,
+      "status": "killed"
+    },
+    {
+      "mutant": "policy_ignored",
+      "mismatches": 30572,
+      "status": "killed"
+    },
+    {
+      "mutant": "revision_31_bits",
+      "mismatches": 3,
+      "status": "killed"
+    },
+    {
+      "mutant": "stale_age_strict",
+      "mismatches": 11074,
+      "status": "killed"
+    },
+    {
+      "mutant": "threshold_equality",
+      "mismatches": 12318,
+      "status": "killed"
+    },
+    {
+      "mutant": "unsigned_guard_band",
+      "mismatches": 12601,
+      "status": "killed"
+    }
+  ],
+  "yosys_synth_ice40_top_with_wrapper": {
+    "p0": {
+      "SB_LUT4": 440,
+      "flip_flops": 934,
+      "SB_CARRY": 191,
+      "cells": {
+        "$scopeinfo": 2,
+        "SB_CARRY": 191,
+        "SB_DFF": 10,
+        "SB_DFFE": 924,
+        "SB_LUT4": 440
+      }
+    },
+    "p1": {
+      "SB_LUT4": 434,
+      "flip_flops": 1071,
+      "SB_CARRY": 191,
+      "cells": {
+        "$scopeinfo": 1,
+        "SB_CARRY": 191,
+        "SB_DFF": 147,
+        "SB_DFFE": 924,
+        "SB_LUT4": 434
+      }
+    },
+    "p2": {
+      "SB_LUT4": 567,
+      "flip_flops": 934,
+      "SB_CARRY": 0,
+      "cells": {
+        "$scopeinfo": 5,
+        "SB_DFF": 10,
+        "SB_DFFE": 924,
+        "SB_LUT4": 567
+      }
+    }
+  },
+  "yosys_synth_ice40_gate_only_no_pnr": {
+    "direct": {
+      "SB_LUT4": 446,
+      "flip_flops": 472,
+      "SB_CARRY": 191,
+      "cells": {
+        "$scopeinfo": 1,
+        "SB_CARRY": 191,
+        "SB_DFF": 10,
+        "SB_DFFE": 462,
+        "SB_LUT4": 446
+      }
+    },
+    "prefix": {
+      "SB_LUT4": 566,
+      "flip_flops": 472,
+      "SB_CARRY": 0,
+      "cells": {
+        "$scopeinfo": 4,
+        "SB_DFF": 10,
+        "SB_DFFE": 462,
+        "SB_LUT4": 566
+      }
+    },
+    "pipe": {
+      "SB_LUT4": 432,
+      "flip_flops": 609,
+      "SB_CARRY": 191,
+      "cells": {
+        "SB_CARRY": 191,
+        "SB_DFF": 147,
+        "SB_DFFE": 462,
+        "SB_LUT4": 432
+      }
+    }
+  },
+  "nextpnr_aggregate": [
+    {
+      "device": "iCE40UP5K",
+      "package": "sg48",
+      "variant": "one_tick_direct",
+      "latency_cycles": 1,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 22.54,
+      "fmax_mhz_median": 23.32,
+      "fmax_mhz_max": 23.8,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1373,
+      "lc_available": 5280,
+      "io_used": 14,
+      "io_available": 96
+    },
+    {
+      "device": "iCE40UP5K",
+      "package": "sg48",
+      "variant": "pipelined_2stage",
+      "latency_cycles": 2,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 28.97,
+      "fmax_mhz_median": 30.41,
+      "fmax_mhz_max": 30.41,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1430,
+      "lc_available": 5280,
+      "io_used": 14,
+      "io_available": 96
+    },
+    {
+      "device": "iCE40UP5K",
+      "package": "sg48",
+      "variant": "one_tick_prefix",
+      "latency_cycles": 1,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 33.01,
+      "fmax_mhz_median": 34.36,
+      "fmax_mhz_max": 35.63,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1498,
+      "lc_available": 5280,
+      "io_used": 14,
+      "io_available": 96
+    },
+    {
+      "device": "iCE40HX8K",
+      "package": "ct256",
+      "variant": "one_tick_direct",
+      "latency_cycles": 1,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 55.63,
+      "fmax_mhz_median": 58.67,
+      "fmax_mhz_max": 61.52,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1373,
+      "lc_available": 7680,
+      "io_used": 14,
+      "io_available": 256
+    },
+    {
+      "device": "iCE40HX8K",
+      "package": "ct256",
+      "variant": "pipelined_2stage",
+      "latency_cycles": 2,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 71.0,
+      "fmax_mhz_median": 71.39,
+      "fmax_mhz_max": 74.64,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1430,
+      "lc_available": 7680,
+      "io_used": 14,
+      "io_available": 256
+    },
+    {
+      "device": "iCE40HX8K",
+      "package": "ct256",
+      "variant": "one_tick_prefix",
+      "latency_cycles": 1,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 91.05,
+      "fmax_mhz_median": 94.67,
+      "fmax_mhz_max": 97.38,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1498,
+      "lc_available": 7680,
+      "io_used": 14,
+      "io_available": 256
+    }
+  ],
+  "nextpnr_runs": [
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p0",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 58.67,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1373
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_318_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 129,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 6.804,
+          "logic": 9.366,
+          "setup": 0.335
+        },
+        "total_ns": 17.045
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p0",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 61.52,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1373
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 113,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 6.825,
+          "logic": 8.554,
+          "setup": 0.335
+        },
+        "total_ns": 16.254
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p0",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 57.21,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1373
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_318_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 133,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 7.175,
+          "logic": 9.429,
+          "setup": 0.335
+        },
+        "total_ns": 17.479
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p0",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 60.38,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1373
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 127,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 6.489,
+          "logic": 9.198,
+          "setup": 0.335
+        },
+        "total_ns": 16.562
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p0",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 55.63,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1373
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 7.546,
+          "logic": 9.555,
+          "setup": 0.335
+        },
+        "total_ns": 17.976
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p1",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 71.0,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1430
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 4.277,
+          "logic": 8.799,
+          "setup": 0.468
+        },
+        "total_ns": 14.084
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p1",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 74.64,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1430
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 3.591,
+          "logic": 8.799,
+          "setup": 0.468
+        },
+        "total_ns": 13.398
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p1",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 71.0,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1430
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 4.277,
+          "logic": 8.799,
+          "setup": 0.468
+        },
+        "total_ns": 14.084
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p1",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 71.39,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1430
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.max_age_s1_SB_DFF_Q_63_DFFLC",
+        "sink": "genblk1.g_pipe.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 4.333,
+          "logic": 8.799,
+          "setup": 0.335
+        },
+        "total_ns": 14.007
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p1",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 74.64,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1430
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 3.591,
+          "logic": 8.799,
+          "setup": 0.468
+        },
+        "total_ns": 13.398
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p2",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 94.67,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1498
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_183_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 17,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 7.077,
+          "logic": 2.548,
+          "setup": 0.398
+        },
+        "total_ns": 10.563
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p2",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 91.22,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1498
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_244_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 19,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 7.35,
+          "logic": 2.653,
+          "setup": 0.419
+        },
+        "total_ns": 10.962
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p2",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 95.62,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1498
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_228_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 17,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 7.077,
+          "logic": 2.422,
+          "setup": 0.419
+        },
+        "total_ns": 10.458
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p2",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 97.38,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1498
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_145_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 19,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 6.664,
+          "logic": 2.667,
+          "setup": 0.398
+        },
+        "total_ns": 10.269
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p2",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 91.05,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1498
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_163_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 17,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 7.504,
+          "logic": 2.541,
+          "setup": 0.398
+        },
+        "total_ns": 10.983
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p0",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 22.54,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1373
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_317_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 131,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 20.454,
+          "logic": 21.699,
+          "setup": 0.824
+        },
+        "total_ns": 44.367
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p0",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 23.43,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1373
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 113,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 19.925,
+          "logic": 20.534,
+          "setup": 0.824
+        },
+        "total_ns": 42.673
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p0",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 23.32,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1373
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 131,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 17.967,
+          "logic": 22.692,
+          "setup": 0.824
+        },
+        "total_ns": 42.873
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p0",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 23.8,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1373
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 113,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 19.277,
+          "logic": 20.534,
+          "setup": 0.824
+        },
+        "total_ns": 42.025
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p0",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 23.25,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1373
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 131,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 18.112,
+          "logic": 22.692,
+          "setup": 0.824
+        },
+        "total_ns": 43.018
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p1",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 30.41,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1430
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 10.393,
+          "logic": 19.871,
+          "setup": 1.234
+        },
+        "total_ns": 32.888
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p1",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 28.97,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1430
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 12.022,
+          "logic": 19.871,
+          "setup": 1.234
+        },
+        "total_ns": 34.517
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p1",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 29.43,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1430
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 11.479,
+          "logic": 19.871,
+          "setup": 1.234
+        },
+        "total_ns": 33.974
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p1",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 30.41,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1430
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 10.393,
+          "logic": 19.871,
+          "setup": 1.234
+        },
+        "total_ns": 32.888
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p1",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 30.41,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1430
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 10.393,
+          "logic": 19.871,
+          "setup": 1.234
+        },
+        "total_ns": 32.888
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p2",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 33.55,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1498
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_59_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.result_q_SB_DFF_Q_DFFLC",
+        "steps": 19,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 19.422,
+          "logic": 7.759,
+          "setup": 1.234
+        },
+        "total_ns": 29.805
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p2",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 34.36,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1498
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_247_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 19,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 18.879,
+          "logic": 7.654,
+          "setup": 1.181
+        },
+        "total_ns": 29.104
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p2",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 33.01,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1498
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_247_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 19,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 20.07,
+          "logic": 7.654,
+          "setup": 1.181
+        },
+        "total_ns": 30.295
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p2",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 35.22,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1498
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_125_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 19,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 18.774,
+          "logic": 7.402,
+          "setup": 0.824
+        },
+        "total_ns": 28.39
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p2",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 35.63,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1498
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_175_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 17,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 17.976,
+          "logic": 7.547,
+          "setup": 1.155
+        },
+        "total_ns": 28.068
+      }
+    }
+  ]
+}

@@ -160,3 +160,26 @@ go vet ./teosquant ./cmd/teosquant ./teoscompose ./cmd/teoscompose ./teoshardwar
 ```
 
 Точні SHA-256, припущення та інтерпретації наведено в меморандумі. JSON детерміновані, без поточного часу й хостових тривалостей. Це **синтетичні/аналітичні розрахунки**, не емпірична істинність, калібрування чи ресурсні звіти FPGA. Для цього ядра не виконано RTL-синтез, post-route timing, HIL, WCET або сертифікаційну оцінку; один такт відлічується лише від готового довіреного знімка за ще не підтвердженої часової умови.
+
+## 11. Попередньо зареєстрований цикл шлюзу допуску (H1–H5)
+
+Цей цикл перевіряє звужену тезу ТЕОС — перевірюваний шлюз допуску з контрактом метаданих — за [протоколом](PREREGISTRATION-2026-11-03.md), опублікованим до дослідів. Аналіз, рішення й обмеження наведено в [меморандумі 11](../memo-11-critical-analysis-idea-theory-technology-results.md), статуси — у [реєстрі ECT-37…ECT-47](../claims-and-evidence.md#6-попередньо-зареєстрований-цикл-шлюзу-допуску-h1h5). Результати отримано автором за допомогою ШІ; це не незалежне рецензування.
+
+- [teoskernel](teoskernel/kernel.go) і [CLI](cmd/teoskernel/main.go) — мінімальне ядро $K$: `Evaluate`, незалежний `Verify`, перевірка властивості безпечного допуску `CheckSafety`, обмежено вичерпний перебір і фазинг.
+- [formal/kernel](formal/kernel/README.md) — абстрактна модель ядра та доведення коректності в Lean 4.35.0 без `sorry`; відповідність Go-коду не механізована.
+- [teosbaseline](teosbaseline/README.md) і [CLI](cmd/teosbaseline/main.go) — порівняння з наївним і звичайними шлюзами (H3) та інжекція десяти класів помилок (H4) на синтетичному випадку.
+- [rtl/teosgate](rtl/teosgate/README.md) і генератор векторів [teosgatevectors](cmd/teosgatevectors/main.go) — Verilog-предикат над попередньо перевіреним знімком, симуляція, мутації, синтез і трасування для iCE40 (H5).
+
+Команди нижче не перезаписують опублікованих даних: вони порівнюють stdout з еталонами або пишуть у новий каталог.
+
+```sh
+mkdir -p .teos-repro/build
+export GOTMPDIR="$PWD/.teos-repro/build" TMPDIR="$PWD/.teos-repro/build"
+go test -race -count=1 ./teoskernel ./teosbaseline ./cmd/teosgatevectors
+go run ./cmd/teoskernel | cmp - testdata/teos-kernel/example.json
+go run ./cmd/teoskernel -mode exhaustive -norms 1 -conditions 2 -exceptions | cmp - testdata/teos-kernel/exhaustive-norms1-conditions2-exceptions.json
+go run ./cmd/teosbaseline -out .teos-repro/baseline && cmp .teos-repro/baseline/results.json testdata/teos-baseline/results.json
+(cd rtl/teosgate && make clean && make -j8 summary RESULTS=build/repro)   # потрібні Yosys, Icarus Verilog, Verilator, nextpnr-ice40
+```
+
+Більші домени ядра (`-norms 2 -conditions 2`, `-norms 2 -conditions 1 -exceptions`) тривають близько 6 і 25 хвилин. Перевірку Lean описано в [README формальної моделі](formal/kernel/README.md). SHA-256 усіх опублікованих файлів наведено в меморандумі 11. Частоти RTL є оцінками nextpnr, а не вимірюванням кристала; HIL, WCET і фахової STPA-валідації не виконано.

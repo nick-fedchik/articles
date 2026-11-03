@@ -1,0 +1,21 @@
+{
+  "Bounds": {
+    "MaxNorms": 1,
+    "MaxConditions": 2,
+    "Exceptions": true
+  },
+  "Theories": 1540,
+  "Cases": 1198120,
+  "Verdicts": {
+    "ALLOW": 4480,
+    "DEFER_CONFLICT": 291746,
+    "DEFER_NO_BASIS": 635040,
+    "DEFER_UNKNOWN": 220824,
+    "DENY": 46030
+  },
+  "AllowWithSafetyOK": 4480,
+  "Counterexamples": null,
+  "ForgeriesAttempted": 2387280,
+  "ForgeriesRejected": 2387280,
+  "PFalseCases": 1193640
+}

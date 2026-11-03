@@ -1,0 +1,81 @@
+# Tool versions
+go version go1.27.1 linux/amd64
+Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)
+Icarus Verilog version 12.0 (stable) ()
+Verilator 5.032 2025-01-01 rev (Debian 5.032-1)
+"nextpnr-ice40" -- Next Generation Place and Route (Version 0.9-3)
+fpga-icestorm 0~20250207git7fbf8c0+dfsg1-1build1
+Python 3.14.4
+# Key result lines
+[iverilog] RESULT one_tick checked=58627 mismatches=0 allow=5486
+[iverilog] RESULT one_tick_prefix checked=58627 mismatches=0
+[iverilog] RESULT pipelined checked=58627 mismatches=0
+[iverilog] RESULT top_variant0 checked=512 mismatches=0
+[iverilog] RESULT top_variant1 checked=512 mismatches=0
+[iverilog] RESULT top_variant2 checked=512 mismatches=0
+[verilator] RESULT one_tick checked=58627 mismatches=0 allow=5486
+[verilator] RESULT one_tick_prefix checked=58627 mismatches=0
+[verilator] RESULT pipelined checked=58627 mismatches=0
+[verilator] RESULT top_variant0 checked=512 mismatches=0
+[verilator] RESULT top_variant1 checked=512 mismatches=0
+[verilator] RESULT top_variant2 checked=512 mismatches=0
+[lint] verilator lint VARIANT=0 exit 0
+[lint] verilator lint VARIANT=1 exit 0
+[lint] verilator lint VARIANT=2 exit 0
+[lint] %Warning count: 0
+[mutant] MUTANT drop_future_timestamp_guard mismatches=1694 killed
+[mutant] MUTANT evidence_low_bits_only mismatches=11770 killed
+[mutant] MUTANT ignore_undercut mismatches=9431 killed
+[mutant] MUTANT policy_ignored mismatches=30572 killed
+[mutant] MUTANT revision_31_bits mismatches=3 killed
+[mutant] MUTANT stale_age_strict mismatches=11074 killed
+[mutant] MUTANT threshold_equality mismatches=12318 killed
+[mutant] MUTANT unsigned_guard_band mismatches=12601 killed
+[nextpnr hx8k-ct256 p0 seed 1] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 58.67 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p0 seed 1] Info: 	         ICESTORM_LC:    1373/   7680    17%
+[nextpnr hx8k-ct256 p0 seed 1] Info: 	               SB_IO:      14/    256     5%
+[nextpnr hx8k-ct256 p0 seed 1] Info: 	               SB_GB:       3/      8    37%
+[nextpnr hx8k-ct256 p0 seed 2] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 61.52 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p0 seed 3] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 57.21 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p0 seed 4] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 60.38 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p0 seed 5] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 55.63 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p1 seed 1] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 71.00 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p1 seed 1] Info: 	         ICESTORM_LC:    1430/   7680    18%
+[nextpnr hx8k-ct256 p1 seed 1] Info: 	               SB_IO:      14/    256     5%
+[nextpnr hx8k-ct256 p1 seed 1] Info: 	               SB_GB:       3/      8    37%
+[nextpnr hx8k-ct256 p1 seed 2] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 74.64 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p1 seed 3] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 71.00 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p1 seed 4] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 71.39 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p1 seed 5] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 74.64 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p2 seed 1] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 94.67 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p2 seed 1] Info: 	         ICESTORM_LC:    1498/   7680    19%
+[nextpnr hx8k-ct256 p2 seed 1] Info: 	               SB_IO:      14/    256     5%
+[nextpnr hx8k-ct256 p2 seed 1] Info: 	               SB_GB:       3/      8    37%
+[nextpnr hx8k-ct256 p2 seed 2] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 91.22 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p2 seed 3] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 95.62 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p2 seed 4] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 97.38 MHz (FAIL at 100.00 MHz)
+[nextpnr hx8k-ct256 p2 seed 5] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 91.05 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p0 seed 1] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 22.54 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p0 seed 1] Info: 	         ICESTORM_LC:    1373/   5280    26%
+[nextpnr up5k-sg48 p0 seed 1] Info: 	               SB_IO:      14/     96    14%
+[nextpnr up5k-sg48 p0 seed 1] Info: 	               SB_GB:       3/      8    37%
+[nextpnr up5k-sg48 p0 seed 2] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 23.43 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p0 seed 3] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 23.32 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p0 seed 4] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 23.80 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p0 seed 5] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 23.25 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p1 seed 1] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 30.41 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p1 seed 1] Info: 	         ICESTORM_LC:    1430/   5280    27%
+[nextpnr up5k-sg48 p1 seed 1] Info: 	               SB_IO:      14/     96    14%
+[nextpnr up5k-sg48 p1 seed 1] Info: 	               SB_GB:       3/      8    37%
+[nextpnr up5k-sg48 p1 seed 2] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 28.97 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p1 seed 3] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 29.43 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p1 seed 4] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 30.41 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p1 seed 5] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 30.41 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p2 seed 1] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 33.55 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p2 seed 1] Info: 	         ICESTORM_LC:    1498/   5280    28%
+[nextpnr up5k-sg48 p2 seed 1] Info: 	               SB_IO:      14/     96    14%
+[nextpnr up5k-sg48 p2 seed 1] Info: 	               SB_GB:       3/      8    37%
+[nextpnr up5k-sg48 p2 seed 2] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 34.36 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p2 seed 3] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 33.01 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p2 seed 4] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 35.22 MHz (FAIL at 100.00 MHz)
+[nextpnr up5k-sg48 p2 seed 5] Warning: Max frequency for clock 'clk$SB_IO_IN_$glb_clk': 35.63 MHz (FAIL at 100.00 MHz)
