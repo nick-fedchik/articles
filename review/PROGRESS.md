@@ -1,6 +1,6 @@
 # Execution Progress
 
-Updated UTC: 2026-11-03T08:18:56Z
+Updated UTC: 2026-11-03T09:03:35Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -143,7 +143,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 | 05: [Глава 5. Тріада довіри: експертна система, доказова рекомендація та корпоративна пам'ять](../ExpertSystem/ch05-triad-of-trust-and-corporate-memory.md) | `2e4b45e2f00d2cb3db88f218cd38c5bf6e0edc65a82629bc248d99b88199cc48` | stale |
 | 06: [Глава 6. Прикладна математика експертних систем: правила, ймовірності, графи та причинність](../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | `220186d2bd17df4dc4fe01298937dac1374deb70fcdddc679735085e2bc6585f` | stale |
 | 07: [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](../ExpertSystem/ch07-knowledge-base-typology.md) | `499bcc78c7f163a0dd728cdb6078931f748c932d5900c26d08c65b2110cfd44c` | stale |
-| 08: [Глава 8. Інженерні артефакти як дані експертної системи](../ExpertSystem/ch08-engineering-artifacts-as-data.md) | `421f528c46300a6088bbfc41e7d027b78a99c8ccd980b8a5d98f22e7c5155296` | stale |
+| 08: [Глава 8. Інженерні артефакти як дані експертної системи](../ExpertSystem/ch08-engineering-artifacts-as-data.md) | `0c8a71942f3e912d9edf363d6cf6a5033d96d1e8d9640dcc5dd259f64c8886eb` | stale |
 | 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `b896988767449bfd2f8063ac42ef66e58d4ddfe962c0ac33d29e772c6d3a9166` | stale |
 | 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `a0562ca1247d2faa7c983cd59748c46c8b205901f02c8e4cd8c114cd79002c2d` | stale |
 | 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `e78a5beb9ee2d50a845dcedfad00bb56a706f35ef5f87d862d39c02b1d5d2841` | stale |
@@ -205,7 +205,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 
 ## Next Action
 
-Proceed to the next confirmed internal finding in CH08: distinguish invalid provenance from unavailable evidence and operational errors while preserving fail-closed behavior. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
+Proceed to the next confirmed internal finding in CH09: restore numbered headings in the conclusion without changing existing anchors or cross-references. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
 
 ## Точкова правка Глави 2 — 2026-11-03
 
@@ -227,3 +227,10 @@ Proceed to the next confirmed internal finding in CH08: distinguish invalid prov
 - **Стало:** перелік явно визначає чотири мета-властивості OntoClean: ригідність (із антиригідністю як її значенням), тотожність, єдність і залежність. Реєстр і звіт синхронізовано; надмірне ототожнення втрати ознаки з фізичним руйнуванням також звужено.
 - **Перевірки:** поточний SHA-256 глави оновлено в реєстрі та inventory. Повний локальний рендер пройшов: 210 файлів, 14 521 формула, 318 Mermaid-діаграм, 6 086 локальних посилань; 49 посилань перекладів пропущено. MathJax, структура, buzzword, leakage і трасування вимог пройшли; 9 регресійних тестів інспекторів пройшли.
 - **Межі:** формулювання обмежено мета-властивостями в методології, на яку посилається [[12]](../ExpertSystem/ch07-knowledge-base-typology.md#src-12). Повний текст статті недоступний у цьому проході (ACM 403; локальної копії не знайдено), тому незалежну повнотекстову верифікацію не заявлено. Науковий статус глави та S7 лишаються `stale`/відкладеними.
+
+## Розмежування статусів перевірки походження в Главі 8 — 2026-11-03
+
+- **Було:** `verify_claim_provenance` повертав однакове `False` для невірного хешу чи цитати, відсутнього артефакту та помилки читання.
+- **Стало:** код повертає типізований `ProvenanceResult` зі станами `MATCH`, `INVALID`, `UNAVAILABLE`, `ERROR`; лише `MATCH` веде до наступних перевірок. Додано таблицю операційних дій і шість тестів у пам'яті для кожного класу результату.
+- **Перевірки:** шість поведінкових тестів Python пройшли на поточних фрагментах. Повний локальний рендер: 210 файлів, 14 518 формул, 318 діаграм, 6 087 локальних посилань; 49 посилань перекладів пропущено. MathJax, структура, buzzword, leakage і трасування вимог пройшли; 9 регресійних тестів інспекторів пройшли.
+- **Межі:** використано фіктивне сховище в пам'яті, не виробничий маніфест чи об'єктне сховище. Статус `MATCH` підтверджує збіг зі знімком, не істинність джерела або твердження; ширша наукова рецензія глави не завершена.

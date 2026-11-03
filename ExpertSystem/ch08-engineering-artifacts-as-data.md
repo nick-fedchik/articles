@@ -5,7 +5,7 @@
 > **Наступна глава:** [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](ch09-engineering-knowledge-graph-traceability.md)
 > **Зміст книги:** [README.md](README.md)
 > **Автор:** [Микола Мартинович Федчик](about-the-author.md)\
-> **Попередня підготовка:** поняття вимоги, версії, факту й джерела з попередніх глав. Поля об'єкта, правила перевірки й походження фрагмента пояснюються в тексті; практикум наведено в [лабораторних роботах](LABS.md).\
+> **Попередня підготовка:** поняття вимоги, версії, факту й джерела з попередніх глав. Поля об'єкта, правила перевірки й походження фрагмента пояснюються в тексті; практикум наведено в [лабораторних роботах](learning/LABS.md).\
 > **Очікувані результати:** описати вимогу, план чи ризик як версійований об'єкт даних; оцінити, скільки структури зберігає формат файла; пройти шлях від файла до фрагмента з походженням, перевіркою якості, векторним представленням і міткою доступу; обирати між правилом, компактною моделлю й великою мовною моделлю за виміряним результатом.
 
 ## Анотація
@@ -558,41 +558,156 @@ flowchart TB
 
 </details>
 
-Наступний фрагмент є схемою перевірки дослівної непорожньої цитати UTF-8, а не самостійною програмою: об'єкт `claim` і сховище `artifact_store` мають бути надані реалізацією, а поля макета заповнені з реального файла. Очікуваний хеш у канонічному нижньому регістрі має походити з довіреного маніфесту ревізії: хеш, наданий разом із довільно підміненим файлом, не доводить його автентичності. Перевірка відхиляє некоректні межі до зрізання; відсутність даних, відома помилка сховища чи декодування не стають успіхом:
+Наступний фрагмент є схемою перевірки дослівної непорожньої цитати UTF-8, а не самостійною програмою: об'єкт `claim` і сховище `artifact_store` мають бути надані реалізацією, а поля макета заповнені з реального файла. Очікуваний хеш у канонічному нижньому регістрі має походити з довіреного маніфесту ревізії: хеш, наданий разом із довільно підміненим файлом, не доводить його автентичності. Результат типізований: `MATCH` підтверджує збіг цитати з довіреним знімком, `INVALID` означає дефект або невідповідність даних, `UNAVAILABLE` — відсутній артефакт, а `ERROR` — помилку інфраструктури. Лише `MATCH` дозволяє перейти до окремих перевірок твердження:
+
+<details>
+<summary>Схема функції з типізованими результатами перевірки походження</summary>
 
 ```python
 import hashlib
+from enum import Enum
+from typing import NamedTuple
 
 
-def verify_claim_provenance(claim) -> bool:
+class ProvenanceStatus(Enum):
+    MATCH = "MATCH"
+    INVALID = "INVALID"
+    UNAVAILABLE = "UNAVAILABLE"
+    ERROR = "ERROR"
+
+
+class ProvenanceResult(NamedTuple):
+    status: ProvenanceStatus
+    reason: str
+
+
+def verify_claim_provenance(claim, artifact_store) -> ProvenanceResult:
+    def result(status, reason):
+        return ProvenanceResult(status, reason)
+
     try:
-        digest = claim.provenance.file_sha256
-        span = claim.provenance.byte_span
+        provenance = claim.provenance
         text = claim.text_payload
-        if not isinstance(digest, str) or len(digest) != 64:
-            return False
-        if any(symbol not in '0123456789abcdef' for symbol in digest):
-            return False
-        if not isinstance(span, (list, tuple)) or len(span) != 2:
-            return False
-        start, end = span
-        if type(start) is not int or type(end) is not int:
-            return False
-        if not isinstance(text, str) or not text:
-            return False
+        digest = provenance.file_sha256
+        span = provenance.byte_span
+    except AttributeError:
+        return result(ProvenanceStatus.INVALID, "missing_or_malformed_provenance")
+    except OSError:
+        return result(ProvenanceStatus.ERROR, "claim_metadata_read_error")
+
+    if not isinstance(digest, str) or len(digest) != 64:
+        return result(ProvenanceStatus.INVALID, "malformed_sha256")
+    if any(symbol not in '0123456789abcdef' for symbol in digest):
+        return result(ProvenanceStatus.INVALID, "noncanonical_sha256")
+    if not isinstance(span, (list, tuple)) or len(span) != 2:
+        return result(ProvenanceStatus.INVALID, "malformed_byte_span")
+    start, end = span
+    if type(start) is not int or type(end) is not int:
+        return result(ProvenanceStatus.INVALID, "noninteger_byte_span")
+    if not isinstance(text, str) or not text:
+        return result(ProvenanceStatus.INVALID, "empty_or_nontext_quote")
+
+    try:
         raw_bytes = artifact_store.read_bytes(digest)
-        if not isinstance(raw_bytes, bytes):
-            return False
-        if not 0 <= start < end <= len(raw_bytes):
-            return False
-        if hashlib.sha256(raw_bytes).hexdigest() != digest:
-            return False
-        return raw_bytes[start:end].decode('utf-8') == text
-    except (AttributeError, OSError, KeyError, TypeError, ValueError):
-        return False
+    except (FileNotFoundError, KeyError):
+        return result(ProvenanceStatus.UNAVAILABLE, "artifact_not_found")
+    except (AttributeError, OSError, TypeError, ValueError):
+        return result(ProvenanceStatus.ERROR, "artifact_store_read_error")
+
+    if not isinstance(raw_bytes, bytes):
+        return result(ProvenanceStatus.ERROR, "artifact_store_contract_error")
+    if not 0 <= start < end <= len(raw_bytes):
+        return result(ProvenanceStatus.INVALID, "byte_span_out_of_bounds")
+    if hashlib.sha256(raw_bytes).hexdigest() != digest:
+        return result(ProvenanceStatus.INVALID, "artifact_digest_mismatch")
+
+    try:
+        decoded_quote = raw_bytes[start:end].decode('utf-8')
+    except UnicodeDecodeError:
+        return result(ProvenanceStatus.INVALID, "quote_span_not_utf8")
+    if decoded_quote != text:
+        return result(ProvenanceStatus.INVALID, "quote_text_mismatch")
+    return result(ProvenanceStatus.MATCH, "citation_matches_trusted_snapshot")
 ```
 
-Така перевірка підтверджує відповідність цитати зафіксованому знімку: заміна «100 ms» на «10 ms» за незмінних довіреного хешу й координат поверне `False`. Це необхідна перевірка цілісності цитування, а не доказ істинності твердження, повноти контексту або юридичної неспростовності. Підписи, повноваження підписанта й чинність джерела перевіряються окремо.
+</details>
+
+**Очікувані результати контрольних випадків:**
+
+| Випадок | Результат | Наступна дія |
+|---|---|---|
+| Хеш, межі або текст цитати некоректні чи не збігаються | `INVALID` | Відхилити цитату й записати причину |
+| Артефакт за довіреним хешем відсутній у сховищі | `UNAVAILABLE` | Запросити джерело, повторити читання або ескалувати |
+| Сховище не налаштоване, має помилку доступу чи порушує контракт типу | `ERROR` | Зафіксувати операційну помилку, сповістити оператора й заблокувати видачу |
+| Хеш, межі й декодований зріз збігаються | `MATCH` | Продовжити незалежні перевірки застосовності та логічного випливання |
+
+Адаптер `artifact_store.read_bytes(digest)` повертає байти, а `KeyError` чи `FileNotFoundError` означають відсутній об'єкт; інші помилки читання трактуються як `ERROR`. Наведені контрольні перевірки розрізняють усі чотири результати. Тести використовують лише фіктивне сховище в пам'яті; вони не засвідчують доступність, автентичність або повноту реального реєстру артефактів:
+
+<details>
+<summary>Unit-тести чотирьох результатів перевірки походження</summary>
+
+```python
+import hashlib
+import unittest
+from types import SimpleNamespace
+
+
+class MemoryStore:
+    def __init__(self, objects):
+        self.objects = objects
+
+    def read_bytes(self, digest):
+        return self.objects[digest]
+
+
+class FailingStore:
+    def read_bytes(self, digest):
+        raise OSError("storage unavailable")
+
+
+class ProvenanceTests(unittest.TestCase):
+    def setUp(self):
+        self.raw = b"100 ms"
+        self.digest = hashlib.sha256(self.raw).hexdigest()
+        self.store = MemoryStore({self.digest: self.raw})
+        self.claim = SimpleNamespace(
+            provenance=SimpleNamespace(file_sha256=self.digest, byte_span=(0, len(self.raw))),
+            text_payload="100 ms",
+        )
+
+    def test_matching_quote(self):
+        self.assertEqual(verify_claim_provenance(self.claim, self.store).status,
+                         ProvenanceStatus.MATCH)
+
+    def test_mismatching_quote_is_invalid(self):
+        self.claim.text_payload = "10 ms"
+        self.assertEqual(verify_claim_provenance(self.claim, self.store).status,
+                         ProvenanceStatus.INVALID)
+
+    def test_out_of_bounds_span_is_invalid(self):
+        self.claim.provenance.byte_span = (0, len(self.raw) + 1)
+        self.assertEqual(verify_claim_provenance(self.claim, self.store).status,
+                         ProvenanceStatus.INVALID)
+
+    def test_missing_provenance_is_invalid(self):
+        self.claim.provenance = None
+        self.assertEqual(verify_claim_provenance(self.claim, self.store).status,
+                         ProvenanceStatus.INVALID)
+
+    def test_missing_artifact_is_unavailable(self):
+        self.assertEqual(verify_claim_provenance(self.claim, MemoryStore({})).status,
+                         ProvenanceStatus.UNAVAILABLE)
+
+    def test_storage_error_is_not_invalid_evidence(self):
+        self.assertEqual(verify_claim_provenance(self.claim, FailingStore()).status,
+                         ProvenanceStatus.ERROR)
+```
+
+</details>
+
+Для запуску обидва Python-фрагменти зберігають в одному модулі; перевірки виконують командою `python3 -m unittest -v`. У виробничій реалізації статус `ERROR` також має потрапити до операційного журналу, а жоден статус, крім `MATCH`, не повинен розблоковувати відповідь.
+
+Так, заміна «100 ms» на «10 ms» за незмінних довіреного хешу й координат поверне `INVALID` з причиною `quote_text_mismatch`. Відсутній артефакт не маскується як невідповідність, а помилка читання не перетворюється на звичайну невдачу перевірки. Непередбачені винятки не перехоплюються цим фрагментом і мають бути зафіксовані обробником операційної межі; жоден статус, крім `MATCH`, не дозволяє видавати відповідь. Це необхідна перевірка цілісності цитування, а не доказ істинності твердження, повноти контексту або юридичної неспростовності. Підписи, повноваження підписанта й чинність джерела перевіряються окремо.
 
 > [!NOTE]
 > **Авторська модель п'яти вимірів криптографічного заземлення артефактів (Byte-Level Source Map)**
