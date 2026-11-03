@@ -1,6 +1,6 @@
 # Execution Progress
 
-Updated UTC: 2026-11-03T09:25:13Z
+Updated UTC: 2026-11-03T10:13:03Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -145,7 +145,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 | 07: [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](../ExpertSystem/ch07-knowledge-base-typology.md) | `499bcc78c7f163a0dd728cdb6078931f748c932d5900c26d08c65b2110cfd44c` | stale |
 | 08: [Глава 8. Інженерні артефакти як дані експертної системи](../ExpertSystem/ch08-engineering-artifacts-as-data.md) | `0c8a71942f3e912d9edf363d6cf6a5033d96d1e8d9640dcc5dd259f64c8886eb` | stale |
 | 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `9dd7f5756647b62fc3b72fed675ce1efa7a9a7d1da04f07d6af27d17415c8fff` | stale |
-| 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `a0562ca1247d2faa7c983cd59748c46c8b205901f02c8e4cd8c114cd79002c2d` | stale |
+| 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `ec13c0ad4df93b3a85f2964d68236c0f7cf4e0ee153fb6a76e0cb85a7e01cbc2` | stale |
 | 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `e78a5beb9ee2d50a845dcedfad00bb56a706f35ef5f87d862d39c02b1d5d2841` | stale |
 | 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `3e660b605b272a1c2ddf9534eda94307ff1ba881ca8a43afff1da7ba52bf32c5` | stale |
 | 13: [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](../ExpertSystem/ch13-language-variability-vs-determinism.md) | `c6eaca840e71e604d2a9afa86d929341cc34d4d322ffa46f1edf3257575caa10` | stale |
@@ -205,7 +205,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 
 ## Next Action
 
-Proceed to the next confirmed internal finding in CH10: resolve the ambiguous `ZKP` abbreviation and define the missing branch for `n_h=1<N_h` in the stratified standard-error formula. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
+Proceed to the next confirmed internal finding in CH12: correct the SI-unit label for octet/bit-per-second and separate clausal `csubj` relations from nominative case mapping. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
 
 ## Точкова правка Глави 2 — 2026-11-03
 
@@ -241,3 +241,10 @@ Proceed to the next confirmed internal finding in CH10: resolve the ambiguous `Z
 - **Стало:** H3 отримали номери 8.1 і 8.2, H4 — 8.2.1–8.2.3; H2 `Висновки` лишився ненумерованим. Старі автоякорі збережено явними ID.
 - **Перевірки:** індекс CH09 у реєстрі та хеш у цій таблиці відповідають heading-only коміту. У робочій копії була окрема зміна практикум-посилання `LABS.md` → `learning/LABS.md`; її не включено до цього пакета відповідно до обраного обсягу.
 - **Межі:** повне наукове приймання не заявляється; S7-візуалізація залишається відкладеною.
+
+## Уточнення скорочення та стратифікованої похибки в Главі 10 — 2026-11-03
+
+- **Було:** `ZKP` у заголовку §3.9 позначало двійковий пакет знань, хоча в главі це ж скорочення означає zero-knowledge proof. У формулі 10.49 не було визначено випадку `n_h=1<N_h`, де вибіркова дисперсія не оцінюється.
+- **Стало:** §3.9 називає двійковий пакет повною назвою, зберігаючи старий якір; `ZKP` залишено лише для доказу з нульовим розголошенням. Формула 10.49 повертає `UNAVAILABLE` для одиночного спостереження в неповністю обстеженій страті, не підміняючи невизначеність нулем; повна одноелементна страта має нульовий внесок.
+- **Залежні записи:** L2/L3 вимагають блокувати рішення, що потребує числової похибки, поки немає достатньої вибірки або перепису; реєстр, S24-04 та звіт синхронізовано.
+- **Межі:** арифметичне визначення й межовий випадок уточнено; реальне калібрування корпусу, зовнішнє джерельне приймання та промислова реалізація залишаються відкритими.
