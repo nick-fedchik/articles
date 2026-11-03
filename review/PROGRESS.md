@@ -147,7 +147,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 | 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `9dd7f5756647b62fc3b72fed675ce1efa7a9a7d1da04f07d6af27d17415c8fff` | stale |
 | 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `ec13c0ad4df93b3a85f2964d68236c0f7cf4e0ee153fb6a76e0cb85a7e01cbc2` | stale |
 | 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `e78a5beb9ee2d50a845dcedfad00bb56a706f35ef5f87d862d39c02b1d5d2841` | stale |
-| 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `3e660b605b272a1c2ddf9534eda94307ff1ba881ca8a43afff1da7ba52bf32c5` | stale |
+| 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `3073fa204b7857801d926b5f21bd4dcd8f88885a8443621722e5396a293941b1` | stale |
 | 13: [Глава 13. Варіативність природної мови проти детермінізму: компіляція сенсу запитання](../ExpertSystem/ch13-language-variability-vs-determinism.md) | `c6eaca840e71e604d2a9afa86d929341cc34d4d322ffa46f1edf3257575caa10` | stale |
 | 14: [Глава 14. Виявлення вимог і модальностей: від нормативного тексту до інваріантів](../ExpertSystem/ch14-requirements-detection-and-formalization.md) | `6a96e9fb7ee0b745b39a97293f44555d90bf7315163bea816cd23e9c201aa6a9` | stale |
 | 15: [Глава 15. Вилучення знань і побудова бази знань: факти, граматики та автомати](../ExpertSystem/ch15-knowledge-extraction-and-kb-construction.md) | `5592d74f413fd9b0e41336a30a02cf142984d4d7b057ba9b389aa8976fe1789b` | stale |
@@ -205,7 +205,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 
 ## Next Action
 
-Proceed to the next confirmed internal finding in CH12: correct the SI-unit label for octet/bit-per-second and separate clausal `csubj` relations from nominative case mapping. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
+Proceed to the next unresolved C4/S4 source-verification item after the CH12 corrections. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
 
 ## Точкова правка Глави 2 — 2026-11-03
 
@@ -248,3 +248,9 @@ Proceed to the next confirmed internal finding in CH12: correct the SI-unit labe
 - **Стало:** §3.9 називає двійковий пакет повною назвою, зберігаючи старий якір; `ZKP` залишено лише для доказу з нульовим розголошенням. Формула 10.49 повертає `UNAVAILABLE` для одиночного спостереження в неповністю обстеженій страті, не підміняючи невизначеність нулем; повна одноелементна страта має нульовий внесок.
 - **Залежні записи:** L2/L3 вимагають блокувати рішення, що потребує числової похибки, поки немає достатньої вибірки або перепису; реєстр, S24-04 та звіт синхронізовано.
 - **Межі:** арифметичне визначення й межовий випадок уточнено; реальне калібрування корпусу, зовнішнє джерельне приймання та промислова реалізація залишаються відкритими.
+
+## Уточнення відмінків і розмірностей у Главі 12 — 2026-11-03
+
+- **Було:** `csubj` у формулі 12.4 сполучався з називним відмінком і автоматично давав роль агента; `octet` і `bit/s` потрапляли до переліку одиниць СІ.
+- **Стало:** клаузальний підмет `csubj` не отримує морфологічного відмінка й повертає `Unmapped`; таблиця відокремлює інформаційні одиниці від фізичних одиниць СІ. Восьму координату EIW-512 визначено як профільне розширення, а не розмірність СІ; L3-вимоги й реєстр синхронізовано.
+- **Перевірки:** форматування MathJax пройшло для п'яти Markdown-файлів; structural hierarchy, buzzword, leakage, traceability (0 errors/warnings) і scoped `git diff --check` пройшли. Для глави, реєстру й L3-вимог: 589/589 формул, 11/11 діаграм і 296/296 посилань; окреме сканування звіту позначило п'ять валідних GitHub `#L...` фрагментів як відсутні локальні якорі. Повний acceptance і S7 залишаються відкритими; статус глави — `stale`.
