@@ -1,6 +1,6 @@
 # Execution Progress
 
-Updated UTC: 2026-11-03T09:03:35Z
+Updated UTC: 2026-11-03T09:25:13Z
 Baseline: `804d4772a0ea239a5ccd9e08f19f6a321ceb9a3a`. One process: chapters 01-40.
 
 On-demand check only; no background watchdog. Overdue is suspicion, not a process diagnosis.
@@ -144,7 +144,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 | 06: [Глава 6. Прикладна математика експертних систем: правила, ймовірності, графи та причинність](../ExpertSystem/ch06-applied-mathematics-for-expert-systems.md) | `220186d2bd17df4dc4fe01298937dac1374deb70fcdddc679735085e2bc6585f` | stale |
 | 07: [Глава 7. Типологія баз знань: правила, онтології, прецеденти та вектори](../ExpertSystem/ch07-knowledge-base-typology.md) | `499bcc78c7f163a0dd728cdb6078931f748c932d5900c26d08c65b2110cfd44c` | stale |
 | 08: [Глава 8. Інженерні артефакти як дані експертної системи](../ExpertSystem/ch08-engineering-artifacts-as-data.md) | `0c8a71942f3e912d9edf363d6cf6a5033d96d1e8d9640dcc5dd259f64c8886eb` | stale |
-| 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `b896988767449bfd2f8063ac42ef66e58d4ddfe962c0ac33d29e772c6d3a9166` | stale |
+| 09: [Глава 9. Інженерний граф знань: простежуваність від вимог до апаратури](../ExpertSystem/ch09-engineering-knowledge-graph-traceability.md) | `9dd7f5756647b62fc3b72fed675ce1efa7a9a7d1da04f07d6af27d17415c8fff` | stale |
 | 10: [Глава 10. Системи здобуття знань: джерела, допуск і життєвий цикл](../ExpertSystem/ch10-knowledge-acquisition-systems.md) | `a0562ca1247d2faa7c983cd59748c46c8b205901f02c8e4cd8c114cd79002c2d` | stale |
 | 11: [Глава 11. Вилучення знань у експертів: інтерв'ювання, когнітивні карти та формалізація досвіду](../ExpertSystem/ch11-knowledge-elicitation-from-experts.md) | `e78a5beb9ee2d50a845dcedfad00bb56a706f35ef5f87d862d39c02b1d5d2841` | stale |
 | 12: [Глава 12. Лінгвістичний аналіз і локальні моделі: збереження змісту та джерела](../ExpertSystem/ch12-linguistic-analysis-and-local-models.md) | `3e660b605b272a1c2ddf9534eda94307ff1ba881ca8a43afff1da7ba52bf32c5` | stale |
@@ -205,7 +205,7 @@ The execution ledger is stale: `check_execution.py check` reports a source snaps
 
 ## Next Action
 
-Proceed to the next confirmed internal finding in CH09: restore numbered headings in the conclusion without changing existing anchors or cross-references. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
+Proceed to the next confirmed internal finding in CH10: resolve the ambiguous `ZKP` abbreviation and define the missing branch for `n_h=1<N_h` in the stratified standard-error formula. Keep the four identity-unconfirmed bibliography links, transport errors, and inaccessible standard clauses explicitly open. Do not reconcile stale `execution.json` task inputs without rerunning their scopes. GitHub rendering remains the separately deferred S7 review.
 
 ## Точкова правка Глави 2 — 2026-11-03
 
@@ -234,3 +234,10 @@ Proceed to the next confirmed internal finding in CH09: restore numbered heading
 - **Стало:** код повертає типізований `ProvenanceResult` зі станами `MATCH`, `INVALID`, `UNAVAILABLE`, `ERROR`; лише `MATCH` веде до наступних перевірок. Додано таблицю операційних дій і шість тестів у пам'яті для кожного класу результату.
 - **Перевірки:** шість поведінкових тестів Python пройшли на поточних фрагментах. Повний локальний рендер: 210 файлів, 14 518 формул, 318 діаграм, 6 087 локальних посилань; 49 посилань перекладів пропущено. MathJax, структура, buzzword, leakage і трасування вимог пройшли; 9 регресійних тестів інспекторів пройшли.
 - **Межі:** використано фіктивне сховище в пам'яті, не виробничий маніфест чи об'єктне сховище. Статус `MATCH` підтверджує збіг зі знімком, не істинність джерела або твердження; ширша наукова рецензія глави не завершена.
+
+## Нумерація висновків у Главі 9 — 2026-11-03
+
+- **Було:** два H3-заголовки у висновках були ненумеровані, а їхні три H4-підрозділи мали лише локальні номери 1–3.
+- **Стало:** H3 отримали номери 8.1 і 8.2, H4 — 8.2.1–8.2.3; H2 `Висновки` лишився ненумерованим. Старі автоякорі збережено явними ID.
+- **Перевірки:** індекс CH09 у реєстрі та хеш у цій таблиці відповідають heading-only коміту. У робочій копії була окрема зміна практикум-посилання `LABS.md` → `learning/LABS.md`; її не включено до цього пакета відповідно до обраного обсягу.
+- **Межі:** повне наукове приймання не заявляється; S7-візуалізація залишається відкладеною.
