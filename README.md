@@ -14,7 +14,7 @@ This repository contains books and articles by **Mykola Fedchyk** (Ukrainian: М
 
 1. **[Architecture of Evidence-Based Expert Systems: From Formal Ontologies to Neuro-Symbolic AI](ExpertSystem/README.md)**  
    Epistemic foundations, mathematical models and zero-copy knowledge packs, input skepticism and knowledge elicitation, core architecture and deterministic inference, verification and safety cases, dual-mode neuro-symbolic abduction, and runtime cybernetics with distributed epistemic SOA.  
-   Structure: 7 parts, 40 chapters · [Authorial Contributions Registry (40 documents)](ExpertSystem/authorial-contributions-registry.md) · [Multilingual editions (45 languages)](ExpertSystem/translations/README.md).
+   Structure: 7 parts, 40 chapters · [Authorial Contributions Registry (40 documents)](framework/authorial-contributions-registry.md) · [Multilingual editions (45 languages)](ExpertSystem/translations/README.md).
 2. **[Managing Complex Engineering Projects and Programmes: From Work Breakdown Structure to Digital Thread and Evidence-Based Release](Project_Management/book/README.md)**  
    Work breakdown structure (WBS) and hybrid planning for hardware and software, baselines and change control, event-driven management and metrics, earned value and Monte Carlo schedule forecasting, continuous compliance, release evidence, product, programme and portfolio management, the project management office (PMO) and AI assistants.  
    Structure: 6 parts, 18 chapters, 3 appendices.
@@ -24,9 +24,9 @@ This repository contains books and articles by **Mykola Fedchyk** (Ukrainian: М
 4. **[Military Cybernetics of the Early 21st Century: Control Systems, Cyber-Physical Complexes and Evidence-Based Intelligence](MilTech/README.md)**  
    Control theory and the Ukrainian school of military cybernetics, weapon control systems, navigation without global navigation satellite systems (GNSS), swarm robotics, tactical, operational and strategic command levels, military expert systems and hardware root of trust. The book relies on open sources only.  
    Structure: 4 parts, 12 chapters.
-5. **[Epistemic Computational Circuit Theory: Mathematical Invariants of Provenance, Metrology, and Deterministic Inference](Epistemic_Circuit_Theory/README.md)**  
-   Four-component epistemic state tensors (cryptographic byte-level provenance, Clifford dual numbers for JCGM GUM uncertainty, Belnap four-valued bilattice, and SI dimensionality lattice), topological invariants of provenance conservation and variance propagation, non-Boolean Hamacher t-norm and Łukasiewicz threshold algebras, temporal Beta-integrators and inter-domain Galois lattice morphisms (FCA + 1-WL), three-terminal deontic gates for Pollock defeat separation, multi-stage linear-complexity cascades with compile-time amortization, operational units (Einstein–Hamacher adders, dual-tensor multipliers, ISO 14253-1 guard-banded comparators), and Popperian scientific critique with applicability limits.  
-   Structure: 9 chapters.
+5. **[Circuit Design of Expert Systems: From Four-Valued Evidence Logic and Rule DAGs to Verified Admission Gates and FPGA Execution](Expert_System_Circuits/README.md)**  
+   A textbook on building deterministic, traceable expert systems as finite acyclic circuits of operational gates over statement state records (Belnap four-valued logic, primary-source sets with reconvergent fan-out deduplication, interval comparators, and SHA-256 source custody). Covers three-tier architecture, forward multi-step consequence forecasting and backward diagnostic reasoning on a unified operator core, two-pass clean alternative proofs (`CleanProof`) and opposition-cone caching, normative rules with exceptions (*lex specialis*) and Goodhart-safe minimum repair synthesis, a Lean 4 mechanized action admission gate tested under 11 fault-injection classes, and compilation to loop-free EPU assembly and single-cycle FPGA comparators with Carry-Save Adder prefix trees (`104.5–110.6 MHz` on `iCE40HX8K`).  
+   Structure: 7 chapters, executable Go/Lean/Verilog codebase (`src/`).
 
 ### Articles
 
@@ -125,7 +125,7 @@ Copyright © 2026 Mykola Fedchyk.
 
 1. **[Архітектура доказових експертних систем: від формальних онтологій до нейро-символьного ШІ](ExpertSystem/README.md)**  
    Епістемічний фундамент, математичні моделі та незмінні пакети знань, оцінювання входу й здобуття знань, архітектура ядра та детерміноване виведення, верифікація й обґрунтування безпеки, дворежимна нейро-символьна абдукція, інфраструктура виконання та розподілена епістемічна SOA.  
-   Структура: 7 частин, 40 глав · [Зведений реєстр авторського наукового доробку (40 документів)](ExpertSystem/authorial-contributions-registry.md) · [Багатомовні видання (45 мов світу)](ExpertSystem/translations/README.md).
+   Структура: 7 частин, 40 глав · [Зведений реєстр авторського наукового доробку (40 документів)](framework/authorial-contributions-registry.md) · [Багатомовні видання (45 мов світу)](ExpertSystem/translations/README.md).
 2. **[Керування складними інженерними проєктами та програмами: від структури робіт до цифрової нитки й доказового релізу](Project_Management/book/README.md)**  
    Структура декомпозиції робіт (WBS) і гібридне планування апаратної та програмної розробки, базові версії та контроль змін, подійно-орієнтоване управління й метрики, освоєний обсяг і прогноз строків методом Монте-Карло, безперервний комплаєнс, докази релізу, продуктовий, програмний і портфельний менеджмент, проєктний офіс (PMO) та ШІ-асистенти.  
    Структура: 6 частин, 18 глав, 3 додатки.
@@ -135,9 +135,9 @@ Copyright © 2026 Mykola Fedchyk.
 4. **[Військова кібернетика початку XXI століття: системи управління, кіберфізичні комплекси та доказовий інтелект](MilTech/README.md)**  
    Теорія керування й українська школа військової кібернетики, системи керування озброєнням, навігація без глобальних навігаційних супутникових систем (GNSS), ройова робототехніка, тактичний, оперативний і стратегічний рівні управління, військові експертні системи та апаратний корінь довіри. Книга спирається лише на відкриті джерела.  
    Структура: 4 частини, 12 розділів.
-5. **[Теорія епістемічних обчислювальних схем: Математичні інваріанти кастодії, метрології та детермінованого виведення](Epistemic_Circuit_Theory/README.md)**  
-   Чотирикомпонентні епістемічні тензори стану (криптографічна побайтова кастодія, дуальні числа Кліффорда для невизначеності за JCGM GUM, чотиризначна бірешітка Белнапа та решітка розмірностей SI), топологічні інваріанти збереження кастодії й поширення дисперсій, небулева алгебра Т-норми Хамахера та порогової логіки Лукасевича, темпоральні Бета-інтегратори й міждоменні морфізми решіток Галуа (FCA + 1-WL), тритермінальні деонтичні вентилі для розділення контраргументів Поллока, багатокаскадні схеми лінійної складності з амортизацією компіляцією, функціональні операційні вузли (нелінійні суматори, дуальні мультиплікатори, інтервальні компаратори із захисною смугою ISO 14253-1) та попперівська наукова критика з межами застосовності.  
-   Структура: 9 глав.
+5. **[Схемотехніка експертних систем (СТЕС): від чотиризначної логіки свідчень і графів правил до верифікованого шлюзу допуску та ПЛІС](Expert_System_Circuits/README.md)**  
+   Підручник із побудови детермінованих доказових експертних систем у вигляді скінченних ациклічних схем операційних вентилів над пакетами стану тверджень (чотиризначна решітка Белнапа, множини першоджерел із дедуплікацією повторного сходження гілок, інтервальні компаратори та кастодія SHA-256). Охоплює трирівневу ієрархію реалізації, прямий багатоступеневий прогноз наслідків і зворотну діагностику на єдиному ядрі операторів, двопрохідні чисті доведення (`CleanProof`) та кешування з конусом заперечень, нормативні схеми з винятками (*lex specialis*) і синтез безпечних ремонтів без втручань Гудхарта, механізований у Lean 4 шлюз допуску дії з випробуванням інжекцією помилок, а також компіляцію у безцикловий асемблер EPU та однотактовий компаратор на ПЛІС із деревами збереження переносу (`104,5–110,6 МГц` на `iCE40HX8K`).  
+   Структура: 7 глав, виконувана база Go/Lean/Verilog (`src/`).
 
 ### Статті
 
