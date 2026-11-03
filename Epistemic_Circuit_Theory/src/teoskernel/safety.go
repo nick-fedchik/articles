@@ -10,7 +10,7 @@ import (
 // Clause names of the safety property P for ALLOW.
 const (
 	ClauseWellFormed      = "P0_WELL_FORMED"
-	ClausePositive        = "P1_POSITIVE_SUPPORT"
+	ClausePositive        = "P1_POSITIVE_CLEAN_SUPPORT"
 	ClauseProhibition     = "P2_NO_UNDEFEATED_PROHIBITION"
 	ClauseDetermined      = "P3_DETERMINED_CONDITIONS_AND_EXCEPTIONS"
 	ClauseInterval        = "P4_INTERVAL_SAME_UNIT_WITHIN_BOUNDS"
@@ -55,28 +55,37 @@ func dominates(theory evidence.NormTheory, higher, lower string) bool {
 // (s, in), without any certificate. It returns the violated clauses; an empty
 // result means P holds. P is:
 //
-//	P1 some permit r for the action has every condition literal exactly TRUE
-//	   (positive and no negative support in the least closure), exception
+//	P1 some permit r for the action has every condition literal cleanly
+//	   supported (positive and no negative support in the least closure, and
+//	   derived without any conflicting BOTH ancestor in Clean), exception
 //	   absent or exactly FALSE, and no applicable rule strictly above r;
 //	P2 every applicable prohibition (condition TRUE, exception FALSE) is
-//	   strictly dominated by an applicable permit (hence by an applicable rule);
+//	   strictly dominated by an applicable rule (and, since CompileNormative
+//	   enforces a strict priority order on finite rules, by an applicable
+//	   permit);
 //	P3 every rule has condition FALSE, or exception TRUE, or condition TRUE and
 //	   exception FALSE: no unknown or conflicting condition or exception;
 //	P4 every guard has a measurement, and every measurement of its quantity
 //	   has the identical unit and Low >= guard.Low, High <= guard.High;
-//	P5 every fact and measurement time t satisfies Now-MaxAge <= t <= Now;
-//	P6 every fact and measurement has a nonempty source set included in
-//	   TrustedSources.
+//	P5 every relevant fact (on an atom referenced by a guard, evidence rule, or
+//	   norm) and every measurement time t satisfies Now-MaxAge <= t <= Now;
+//	P6 every relevant fact and every measurement has a nonempty source set
+//	   included in TrustedSources.
 func CheckSafety(s Spec, in Input) []string {
-	if _, err := compile(s); err != nil {
+	if _, _, err := compile(s); err != nil {
 		return []string{ClauseWellFormed}
 	}
 	if err := validateInput(s, in); err != nil {
 		return []string{ClauseWellFormed}
 	}
+	return checkSafetyValidated(s, in)
+}
+
+func checkSafetyValidated(s Spec, in Input) []string {
 	var violated []string
 	atoms, _ := referenceAtoms(s, in)
 	closure := leastClosure(s.Theory, atoms)
+	clean := leastClean(s.Theory, atoms, closure)
 	applicable := map[string]bool{}
 	for _, rule := range s.Theory.Norms {
 		condition, exception := ruleValues(closure, rule)
@@ -96,9 +105,16 @@ func CheckSafety(s Spec, in Input) []string {
 	witness := false
 	for _, rule := range s.Theory.Norms {
 		if rule.Effect == evidence.Permit && applicable[rule.ID] && !defeated(rule.ID, false) {
-			witness = true
+			allClean := true
+			for _, l := range rule.Conditions {
+				positive, _ := literalBits(clean, l)
+				allClean = allClean && positive
+			}
+			if allClean {
+				witness = true
+			}
 		}
-		if rule.Effect == evidence.Prohibit && applicable[rule.ID] && !defeated(rule.ID, true) {
+		if rule.Effect == evidence.Prohibit && applicable[rule.ID] && (!defeated(rule.ID, false) || !defeated(rule.ID, true)) {
 			violated = append(violated, fmt.Sprintf("%s:%s", ClauseProhibition, rule.ID))
 		}
 	}
@@ -128,7 +144,9 @@ func CheckSafety(s Spec, in Input) []string {
 		}
 	}
 	for i, f := range in.Facts {
-		check("fact", i, f.Sources, f.Time)
+		if relevantAtom(s, f.Literal.Atom) {
+			check("fact", i, f.Sources, f.Time)
+		}
 	}
 	for i, m := range in.Measurements {
 		check("measurement", i, m.Sources, m.Time)

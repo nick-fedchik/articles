@@ -1,5 +1,8 @@
 // Combinational PREVALIDATED gate predicate. Bit-exact port of
 // teoshardware.PrevalidatedGate (src/teoshardware/calculate.go); no policy added.
+// Implements ONLY the 9-condition postcondition comparator over pre-computed
+// flags, revisions, timestamps, and fixed-point bounds — NOT the Horn/normative
+// closure engine of kernel K, and NOT a custody/SHA-256 validator.
 // Word layout (LSB first) matches cmd/teosgatevectors Layout:
 //   [0] custody_validated  [1] binding_valid  [2] si_match  [3] numeric_valid
 //   [4] norm_permitted     [5] undercut       [13:6] evidence_code (uint8)
@@ -8,7 +11,6 @@
 //   [205:142] timestamp_ticks [269:206] now_ticks [333:270] max_age_ticks (uint64)
 //   [397:334] prevalidated_upper_bound_raw [461:398] limit_raw (int64, two's complement)
 // result[0] = allow; result[i+1] = reason i failed, in Go check order.
-// Not a custody/SHA-256 validator: inputs must already be bound by trusted validation.
 `timescale 1ns/1ps
 `default_nettype none
 module teos_gate_core (
@@ -32,7 +34,9 @@ module teos_gate_core (
     wire signed [63:0] upper_raw  = word[397:334];
     wire signed [63:0] limit_raw  = word[461:398];
 
-    // Now - Timestamp is only meaningful when Timestamp <= Now (Go guards with &&).
+    // Direct 1:1 transcription of calculate.go: Now - Timestamp followed by
+    // (timestamp <= now) && (age <= max_age) synthesizes to two cascaded 64-bit
+    // SB_CARRY chains in p0; teos_gate_core_prefix (p2) eliminates this cascade.
     wire [63:0] age = now - timestamp;
 
     wire [8:0] ok;

@@ -237,6 +237,10 @@ func Classes() []Class {
 				return aged(r, w, r.IntN(3) < 2, func() int64 { return Now + durationIn(r, 500*time.Millisecond, time.Hour) },
 					"future-measurement", "future-authorization")
 			}},
+		{Name: "F11_UNREFERENCED_SPAM", UCA: "UCA-1/UCA-6", InModel: true,
+			Description: "stale, future or unverified spam facts injected on an unreferenced telemetry atom alongside a faithful observation",
+			world:       baseWorld,
+			build:       unreferencedSpam},
 		{Name: "X11_OOM_TRUSTED_BIAS", UCA: "UCA-1/UCA-3", InModel: false,
 			Description: "OUT OF MODEL: fresh trusted sensor reports a narrow interval that excludes the true pressure (bias below truth)",
 			world: func(r *rand.Rand) World {
@@ -306,6 +310,32 @@ func untrusted(r *rand.Rand, w World) (World, teoskernel.Input, string) {
 	i := findFact(in, AtomAuthorized)
 	in.Facts[i] = fact(AtomAuthorized, true, SourceGateway, in.Facts[i].Time)
 	return w, in, "untrusted-authorization"
+}
+
+// unreferencedSpam builds the F11 observation: a faithful observation of all
+// case-relevant atoms (0..6) polluted with stale, future, or unverified spam
+// facts on AtomUnreferencedNoise (atom 7, not referenced by any guard, evidence
+// rule, or norm). This tests F-01 (relevantAtom scoping vs global poisoning).
+func unreferencedSpam(r *rand.Rand, w World) (World, teoskernel.Input, string) {
+	in := Faithful(r, w)
+	switch r.IntN(3) {
+	case 0:
+		stale := Now - durationIn(r, 2500*time.Millisecond, 120*time.Second)
+		in.Facts = append(in.Facts, fact(AtomUnreferencedNoise, bernoulli(r, 0.5), SourceGateway, stale))
+		return w, in, "stale-unreferenced"
+	case 1:
+		fresh := Now - durationIn(r, 0, time.Second)
+		in.Facts = append(in.Facts, fact(AtomUnreferencedNoise, bernoulli(r, 0.5), SourceLLM, fresh))
+		return w, in, "untrusted-unreferenced"
+	default:
+		stale := Now - durationIn(r, 2500*time.Millisecond, 120*time.Second)
+		future := Now + durationIn(r, 500*time.Millisecond, time.Hour)
+		in.Facts = append(in.Facts,
+			fact(AtomUnreferencedNoise, true, SourceLLM, stale),
+			fact(AtomUnreferencedNoise, false, SourceGateway, future),
+		)
+		return w, in, "contradictory-stale-unreferenced"
+	}
 }
 
 func classSeed(seed uint64, class, index int) *rand.Rand {

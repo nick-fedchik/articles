@@ -24,16 +24,17 @@ type classInfo struct {
 }
 
 type output struct {
-	Protocol  string
-	Seed      uint64
-	Faults    int
-	Controls  int
-	Arms      map[string]string
-	SpecLines map[string]int
-	Classes   []classInfo
-	Rows      []teosbaseline.Row
-	Summary   teosbaseline.Summary
-	Notes     []string
+	Protocol          string
+	Seed              uint64
+	Faults            int
+	Controls          int
+	Arms              map[string]string
+	SpecLines         map[string]int
+	SharedEngineLines map[string]int
+	Classes           []classInfo
+	Rows              []teosbaseline.Row
+	Summary           teosbaseline.Summary
+	Notes             []string
 }
 
 var armDescriptions = map[string]string{
@@ -98,6 +99,9 @@ func run() error {
 		Notes: []string{
 			"Ground truth P = teoskernel.CheckSafety; arm C is correct w.r.t. P by construction (ALLOW<=>P).",
 			"Physical ground truth = World.Safe on the hidden synthetic world; in-model classes keep trusted sources honest and honest intervals containing the truth.",
+			"F-01/F-02: teoskernel scopes freshness/provenance to rule-referenced atoms (tested in F11_UNREFERENCED_SPAM) and requires clean non-conflicting derivation support Clean (Theorem B.7).",
+			"F-06: SpecLines counts per-case specification lines between markers; SharedEngineLines reports the shared teoskernel TCB and conventional support lines.",
+			"F-08: H4 stratifies total-refusal fault classes (Allow == 0, conditional risk per ALLOW Undefined 0/0, bounded per scenario n=1000) from active-permit fault classes (Allow > 0: F07_NORM_PRIORITY_CONFLICT, F11_UNREFERENCED_SPAM).",
 			"Scenarios within a class are generated from one distribution and are not independent real-world trials; bounds describe the synthetic generator only.",
 			"STPA-lite, classes and arms were written with AI assistance and without a domain expert; this is not industry validation.",
 		}}
@@ -105,6 +109,9 @@ func run() error {
 		if out.SpecLines[arm], err = teosbaseline.SpecLines(arm); err != nil {
 			return err
 		}
+	}
+	if out.SharedEngineLines, err = teosbaseline.SharedEngineLines(); err != nil {
+		return err
 	}
 	for _, c := range teosbaseline.Classes() {
 		out.Classes = append(out.Classes, classInfo{c.Name, c.UCA, c.Description, c.InModel})

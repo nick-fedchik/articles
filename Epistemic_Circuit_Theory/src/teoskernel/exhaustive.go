@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"runtime"
+	"slices"
 	"sync"
 	"time"
 
@@ -204,8 +205,23 @@ func Exhaustive(b Bounds) (Report, error) {
 			local := Report{Verdicts: map[evidence.NormDecision]int{}}
 			var localErr error
 			for i := range jobs {
+				s := specs[i]
+				program, cleanProg, err := compile(s)
+				if err != nil {
+					if localErr == nil {
+						localErr = fmt.Errorf("spec %d: %w", i, err)
+					}
+					continue
+				}
+				specDigest, err := digest(s)
+				if err != nil {
+					if localErr == nil {
+						localErr = fmt.Errorf("spec %d: %w", i, err)
+					}
+					continue
+				}
 				for _, in := range inputs {
-					if err := checkCase(specs[i], in, &local); err != nil && localErr == nil {
+					if err := checkCaseCompiled(s, in, program, cleanProg, specDigest, &local); err != nil && localErr == nil {
 						localErr = fmt.Errorf("spec %d: %w", i, err)
 					}
 				}
@@ -237,17 +253,17 @@ func Exhaustive(b Bounds) (Report, error) {
 	return report, firstErr
 }
 
-func checkCase(s Spec, in Input, r *Report) error {
-	c, err := Evaluate(s, in)
+func checkCaseCompiled(s Spec, in Input, program *evidence.NormProgram, cleanProg *evidence.CleanProgram, specDigest [32]byte, r *Report) error {
+	c, err := evaluateCompiledWithDigest(s, in, program, cleanProg, specDigest)
 	if err != nil {
 		return err
 	}
 	r.Cases++
 	r.Verdicts[c.Verdict]++
-	if err := Verify(s, in, c); err != nil {
+	if err := verifyCompiled(s, in, c, program, specDigest); err != nil {
 		return fmt.Errorf("honest certificate rejected: %w", err)
 	}
-	violated := CheckSafety(s, in)
+	violated := checkSafetyValidated(s, in)
 	if len(violated) > 0 {
 		r.PFalseCases++
 	}
@@ -264,13 +280,14 @@ func checkCase(s Spec, in Input, r *Report) error {
 	forged := c
 	forged.Verdict = Allow
 	r.ForgeriesAttempted++
-	if Verify(s, in, forged) != nil {
+	if verifyCompiled(s, in, forged, program, specDigest) != nil {
 		r.ForgeriesRejected++
 	}
 	forged.Norm.Result.Decision = Allow
 	forged.Fresh, forged.Verified, forged.Contained, forged.Violations = true, true, true, nil
+	forged.Clean = slices.Clone(forged.Norm.Closure)
 	r.ForgeriesAttempted++
-	if Verify(s, in, forged) != nil {
+	if verifyCompiled(s, in, forged, program, specDigest) != nil {
 		r.ForgeriesRejected++
 	}
 	return nil

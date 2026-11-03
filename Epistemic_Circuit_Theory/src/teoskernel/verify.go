@@ -11,8 +11,18 @@ import (
 )
 
 // The functions in this file deliberately avoid the Evaluate code path: the
-// guard comparison, freshness arithmetic, evidence closure and verdict mapping
-// are recomputed from the definitions of K.
+// guard comparison, freshness arithmetic, evidence closure, clean-support
+// fixpoint and verdict mapping are recomputed from the definitions of K.
+//
+// Shared TCB note (F-10): Verify and Evaluate share the static theory compiler
+// compile(s) (which validates spec invariants and invokes
+// evidence.CompileNormative) and NormProgram.Verify (which checks the normative
+// policy observations and SHA-256 digests). All dynamic semantics—pre-closure
+// atom and guard assignments, the least signed closure, the clean-support
+// fixpoint Clean (Theorem B.7), freshness via arbitrary-precision big.Int
+// arithmetic, provenance, interval containment, and the final verdict
+// downgrade—are recomputed independently below without calling Evaluate or
+// CleanProgram.EvaluateClean.
 
 func referenceAtoms(s Spec, in Input) ([]evidence.State, []evidence.State) {
 	atoms := make([]evidence.State, s.Theory.Atoms)
@@ -102,6 +112,80 @@ func leastClosure(theory evidence.NormTheory, facts []evidence.State) []evidence
 	return closure
 }
 
+// leastClean is the naive least fixpoint of clean support (Theorem B.7): a
+// signed literal l is cleanly supported iff literalValue(closure, l) == True
+// (purely supported in closure with no opposite support) and either l is
+// directly supported in facts or derived by an evidence rule whose premises are
+// all cleanly supported.
+func leastClean(theory evidence.NormTheory, facts, closure []evidence.State) []evidence.State {
+	clean := make([]evidence.State, theory.Atoms)
+	for a := 0; a < theory.Atoms; a++ {
+		if closure[a] == evidence.True && facts[a]&evidence.True != 0 {
+			clean[a] |= evidence.True
+		}
+		if closure[a] == evidence.False && facts[a]&evidence.False != 0 {
+			clean[a] |= evidence.False
+		}
+	}
+	for changed := true; changed; {
+		changed = false
+		for _, rule := range theory.Evidence {
+			if literalValue(closure, rule.Conclusion) != evidence.True {
+				continue
+			}
+			holds := true
+			for _, premise := range rule.Premises {
+				positive, _ := literalBits(clean, premise)
+				holds = holds && positive
+			}
+			if !holds {
+				continue
+			}
+			bit := evidence.True
+			if rule.Conclusion.Negative {
+				bit = evidence.False
+			}
+			if clean[rule.Conclusion.Atom]&bit == 0 {
+				clean[rule.Conclusion.Atom] |= bit
+				changed = true
+			}
+		}
+	}
+	return clean
+}
+
+func referenceCleanWitness(s Spec, closure, clean []evidence.State) bool {
+	applicable := map[string]bool{}
+	for _, rule := range s.Theory.Norms {
+		condition, exception := ruleValues(closure, rule)
+		applicable[rule.ID] = condition == evidence.True && exception == evidence.False
+	}
+	for _, rule := range s.Theory.Norms {
+		if rule.Effect != evidence.Permit || !applicable[rule.ID] {
+			continue
+		}
+		defeated := false
+		for _, h := range s.Theory.Norms {
+			if applicable[h.ID] && dominates(s.Theory, h.ID, rule.ID) {
+				defeated = true
+				break
+			}
+		}
+		if defeated {
+			continue
+		}
+		allClean := true
+		for _, l := range rule.Conditions {
+			positive, _ := literalBits(clean, l)
+			allClean = allClean && positive
+		}
+		if allClean {
+			return true
+		}
+	}
+	return false
+}
+
 func freshBig(now, t int64, maxAge time.Duration) bool {
 	n, ts := big.NewInt(now), big.NewInt(t)
 	lower := new(big.Int).Sub(n, big.NewInt(int64(maxAge)))
@@ -109,12 +193,12 @@ func freshBig(now, t int64, maxAge time.Duration) bool {
 }
 
 type postconditions struct {
-	fresh, verified, contained, outOfBounds, boundary bool
-	violations                                        []string
+	fresh, verified, contained, outOfBounds, boundary, cleanWitness bool
+	violations                                                      []string
 }
 
-func referencePostconditions(s Spec, in Input) postconditions {
-	p := postconditions{fresh: true, verified: true, contained: true}
+func referencePostconditions(s Spec, in Input, closure, clean []evidence.State, normDecision evidence.NormDecision) postconditions {
+	p := postconditions{fresh: true, verified: true, contained: true, cleanWitness: true}
 	check := func(kind string, index int, sources []string, t int64) {
 		if !freshBig(in.Now, t, s.MaxAge) {
 			p.fresh = false
@@ -126,7 +210,9 @@ func referencePostconditions(s Spec, in Input) postconditions {
 		}
 	}
 	for i, f := range in.Facts {
-		check("fact", i, f.Sources, f.Time)
+		if relevantAtom(s, f.Literal.Atom) {
+			check("fact", i, f.Sources, f.Time)
+		}
 	}
 	for i, m := range in.Measurements {
 		check("measurement", i, m.Sources, m.Time)
@@ -151,21 +237,29 @@ func referencePostconditions(s Spec, in Input) postconditions {
 			p.violations = append(p.violations, fmt.Sprintf("%s:guard:%d", codeMissing, gi))
 		}
 	}
+	if normDecision == Allow && !referenceCleanWitness(s, closure, clean) {
+		p.cleanWitness = false
+		p.violations = append(p.violations, codeConflictDependent)
+	}
 	return p
 }
 
 // Verify accepts c only if every recorded intermediate result equals the
 // independently recomputed semantics of K for (s, in).
 func Verify(s Spec, in Input, c Certificate) error {
-	program, err := compile(s)
+	program, _, err := compile(s)
 	if err != nil {
-		return err
-	}
-	if err := validateInput(s, in); err != nil {
 		return err
 	}
 	specDigest, err := digest(s)
 	if err != nil {
+		return err
+	}
+	return verifyCompiled(s, in, c, program, specDigest)
+}
+
+func verifyCompiled(s Spec, in Input, c Certificate, program *evidence.NormProgram, specDigest [32]byte) error {
+	if err := validateInput(s, in); err != nil {
 		return err
 	}
 	inputDigest, err := digest(in)
@@ -190,17 +284,22 @@ func Verify(s Spec, in Input, c Certificate) error {
 	if err := program.Verify(world, s.Action, c.Norm); err != nil {
 		return fmt.Errorf("teoskernel certificate: %w", err)
 	}
-	if !slices.Equal(leastClosure(s.Theory, atoms), c.Norm.Closure) {
+	closure := leastClosure(s.Theory, atoms)
+	if !slices.Equal(closure, c.Norm.Closure) {
 		return errors.New("teoskernel certificate: closure is not the least fixpoint")
 	}
-	p := referencePostconditions(s, in)
+	clean := leastClean(s.Theory, atoms, closure)
+	if !slices.Equal(clean, c.Clean) {
+		return errors.New("teoskernel certificate: clean support is not the least fixpoint")
+	}
+	p := referencePostconditions(s, in, closure, clean, c.Norm.Result.Decision)
 	if p.fresh != c.Fresh || p.verified != c.Verified || p.contained != c.Contained || !slices.Equal(p.violations, c.Violations) {
 		return errors.New("teoskernel certificate: admission postcondition mismatch")
 	}
 	verdict := c.Norm.Result.Decision
 	if verdict == Allow && p.outOfBounds {
 		verdict = Deny
-	} else if verdict == Allow && p.boundary {
+	} else if verdict == Allow && (p.boundary || !p.cleanWitness) {
 		verdict = Conflict
 	} else if verdict == Allow && (!p.fresh || !p.verified || !p.contained) {
 		verdict = Unknown

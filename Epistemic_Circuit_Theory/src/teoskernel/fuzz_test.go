@@ -1,6 +1,7 @@
 package teoskernel
 
 import (
+	"slices"
 	"testing"
 	"time"
 
@@ -112,6 +113,7 @@ func FuzzKernelSoundness(f *testing.F) {
 			forged := cloneCertificate(c)
 			forged.Verdict, forged.Norm.Result.Decision = Allow, Allow
 			forged.Fresh, forged.Verified, forged.Contained, forged.Violations = true, true, true, nil
+			forged.Clean = slices.Clone(forged.Norm.Closure)
 			if Verify(spec, in, forged) == nil {
 				t.Fatal("forged ALLOW accepted")
 			}

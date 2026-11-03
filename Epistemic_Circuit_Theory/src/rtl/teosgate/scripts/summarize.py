@@ -38,8 +38,11 @@ def results(path):
 
 
 def yosys_cells(path):
+    text = read(path)
+    if "=== design hierarchy ===" in text:
+        text = text.split("=== design hierarchy ===")[-1]
     cells = {}
-    for match in re.finditer(r"^\s+(SB_\w+|\$\w+)\s+(\d+)\s*$", read(path), re.M):
+    for match in re.finditer(r"^\s+(SB_\w+|\$\w+)\s+(\d+)\s*$", text, re.M):
         cells[match.group(1)] = int(match.group(2))
     lut = cells.get("SB_LUT4", 0)
     ff = sum(v for k, v in cells.items() if k.startswith("SB_DFF"))
@@ -140,10 +143,31 @@ def main():
         "interpretation": [
             "Fmax is nextpnr-ice40 post-route static timing estimate (tool model), not a silicon or HIL measurement.",
             "One-tick claim at f on a device holds only if post-route Fmax >= f; reported per seed.",
-            "Excluded: SHA-256/custody verification, bus transfer of the word, actuation, serial loading time.",
-            "The pin wrapper (462-bit serial shift loader) adds 462 FFs and routing pressure; it is not the gate.",
+            "RTL implements PrevalidatedGate (the 9-condition postcondition comparator over pre-computed flags), NOT the Horn/normative closure engine of kernel K.",
+            "Excluded: kernel K Horn/defeasible/normative closure, SHA-256/custody verification, bus transfer of the word, actuation, serial loading time.",
+            "The pin wrapper (462-bit serial shift loader in teos_gate_top) adds 462 FFs (934 FFs in top_with_wrapper vs 472 FFs in gate_only for one-tick variants; 1071 vs 609 FFs for pipelined_2stage) and routing pressure; it is not the gate.",
             "Pins are unconstrained (--pcf-allow-unconstrained): placer chooses IO locations.",
         ],
+        "scope_and_wrapper_overhead": {
+            "implemented_function": "teoshardware.PrevalidatedGate (9-condition postcondition comparator over pre-computed flags, revisions, timestamps, and signed fixed-point bounds)",
+            "not_implemented_in_rtl": [
+                "Kernel K Horn/defeasible/normative closure engine (EvaluateKernel)",
+                "SHA-256 and Ed25519 custody/signature verification",
+                "Bus transfer and 462-clock serial shift-register loading time",
+                "Physical actuator transport and response time",
+            ],
+            "flip_flop_breakdown": {
+                "serial_shift_wrapper_ffs": 462,
+                "gate_word_input_ffs": 462,
+                "gate_result_output_ffs": 10,
+                "one_tick_direct_gate_only_ffs": gate_only["direct"]["flip_flops"],
+                "one_tick_direct_top_with_wrapper_ffs": synth["p0"]["flip_flops"],
+                "one_tick_prefix_gate_only_ffs": gate_only["prefix"]["flip_flops"],
+                "one_tick_prefix_top_with_wrapper_ffs": synth["p2"]["flip_flops"],
+                "pipelined_2stage_gate_only_ffs": gate_only["pipe"]["flip_flops"],
+                "pipelined_2stage_top_with_wrapper_ffs": synth["p1"]["flip_flops"],
+            },
+        },
         "word_bits": 462, "result_bits": 10,
         "vectors": vectors,
         "simulation": sim, "simulation_total_mismatches": total_mismatches,
@@ -164,6 +188,10 @@ def main():
         print(f'{row["device"]:10} {row["variant"]:18} Fmax {row["fmax_mhz_min"]:.2f}/{row["fmax_mhz_median"]:.2f}/'
               f'{row["fmax_mhz_max"]:.2f} MHz  meets {args.freq:g}: {row["seeds_meeting_target"]}/{len(row["seeds"])}  '
               f'LC {row["lc_used"]}/{row["lc_available"]}  IO {row["io_used"]}/{row["io_available"]}')
+    for gname, tvar in (("direct", "p0"), ("prefix", "p2"), ("pipe", "p1")):
+        g, t = gate_only[gname], synth[tvar]
+        print(f'cells {gname:6} gate_only: LUT4={g["SB_LUT4"]} FF={g["flip_flops"]} CARRY={g["SB_CARRY"]} | '
+              f'top_with_wrapper ({tvar}): LUT4={t["SB_LUT4"]} FF={t["flip_flops"]} (+{t["flip_flops"] - g["flip_flops"]} wrapper FFs) CARRY={t["SB_CARRY"]}')
     print(f"simulation mismatches total: {total_mismatches}")
 
 

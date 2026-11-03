@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	evidence "github.com/nick-fedchik/articles/Epistemic_Circuit_Theory/src"
 	"github.com/nick-fedchik/articles/Epistemic_Circuit_Theory/src/teoskernel"
 )
 
@@ -181,12 +182,79 @@ func TestArmDocumentedBehaviour(t *testing.T) {
 	}
 }
 
+func TestUnreferencedSpamAndCleanProof(t *testing.T) {
+	e := NewEvaluator()
+	base := Faithful(classSeed(9, 0, 0), World{Pressure: 5, Authorized: true, Demand: true})
+
+	// F-01: stale and unverified spam on AtomUnreferencedNoise must not block B1 or C,
+	// whereas B0's unscoped flag freshness check denies stale unreferenced telemetry.
+	spammed := base
+	spammed.Facts = slices.Clone(base.Facts)
+	spammed.Facts = append(spammed.Facts,
+		fact(AtomUnreferencedNoise, true, SourceLLM, Now-int64(30*time.Second)),
+		fact(AtomUnreferencedNoise, false, SourceGateway, Now+int64(5*time.Second)),
+	)
+	if violated := teoskernel.CheckSafety(CaseSpec(), spammed); len(violated) != 0 {
+		t.Fatalf("unreferenced spam must not violate P: %v", violated)
+	}
+	for _, arm := range []string{"B1", "C"} {
+		if o, err := e.Run(arm, spammed); err != nil || o.Decision != Allow {
+			t.Fatalf("arm %s must ignore unreferenced spam, got %v (%v)", arm, o, err)
+		}
+	}
+	if o, err := e.Run("B0", spammed); err != nil || o.Decision != Deny {
+		t.Fatalf("B0 unscoped freshness expected to deny stale unreferenced fact, got %v (%v)", o, err)
+	}
+
+	// F-02: transitive conflict taint in CleanProof.
+	// 1) In CaseSpec (as in F04_CONTRARY), contradicted AtomLock (Both) derives positive
+	// support for AtomInterlock in closure, but Clean[AtomLock] and Clean[AtomInterlock]
+	// have no clean positive support.
+	lockContrary := base
+	lockContrary.Facts = slices.Clone(base.Facts)
+	lockContrary.Facts = append(lockContrary.Facts, fact(AtomLock, true, SourcePLC, Now))
+	outC, cert, err := ArmC(CaseSpec(), lockContrary)
+	if err != nil || outC.Decision != Defer {
+		t.Fatalf("expected C to defer on contradicted lock, got %v (%v)", outC, err)
+	}
+	if cert.Clean[AtomLock] != evidence.Unknown || cert.Clean[AtomInterlock]&evidence.True != 0 {
+		t.Fatalf("expected no clean positive support on contradicted lock/interlock: %+v", cert.Clean)
+	}
+
+	// 2) If an evidence rule derives a permit condition (AtomDemand) from a contradicted
+	// premise (AtomUnreferencedNoise == Both) without direct clean support, raw closure
+	// has Closure[AtomDemand] == True (Norm.Result.Decision == ALLOW), but Clean[AtomDemand]
+	// is Unknown and ArmC downgrades to Defer (DEFER_CONFLICT).
+	spec := CaseSpec()
+	spec.Theory.Evidence = append(slices.Clone(spec.Theory.Evidence), evidence.SignedRule{
+		ID: "telemetry_implies_demand", Version: "1",
+		Premises:   []evidence.SignedLiteral{{Atom: AtomUnreferencedNoise}},
+		Conclusion: evidence.SignedLiteral{Atom: AtomDemand},
+	})
+	tainted := base
+	tainted.Facts = slices.Clone(base.Facts)
+	removeFact(&tainted, AtomDemand)
+	tainted.Facts = append(tainted.Facts,
+		fact(AtomUnreferencedNoise, true, SourcePLC, Now),
+		fact(AtomUnreferencedNoise, false, SourceDCS, Now),
+	)
+	taintedOut, taintedCert, err := ArmC(spec, tainted)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if taintedCert.Norm.Result.Decision != teoskernel.Allow || taintedCert.Clean[AtomDemand] != evidence.Unknown ||
+		taintedOut.Decision != Defer || taintedOut.Raw != string(teoskernel.Conflict) {
+		t.Fatalf("expected CleanProof to downgrade conflict-derived permit to DEFER_CONFLICT: out=%+v cert=%+v",
+			taintedOut, taintedCert)
+	}
+}
+
 func TestGenerateDeterministicAndEvaluate(t *testing.T) {
 	a, b := Generate(7, 40, 10), Generate(7, 40, 10)
 	if !reflect.DeepEqual(a, b) {
 		t.Fatal("generator not deterministic")
 	}
-	if want := 40 + 11*50; len(a) != want {
+	if want := 40 + 12*50; len(a) != want {
 		t.Fatalf("scenario count %d want %d", len(a), want)
 	}
 	records, err := Evaluate(a)
@@ -194,7 +262,7 @@ func TestGenerateDeterministicAndEvaluate(t *testing.T) {
 		t.Fatal(err)
 	}
 	rows := Aggregate(records)
-	if len(rows) != (1+2*11)*len(Arms) {
+	if len(rows) != (1+2*12)*len(Arms) {
 		t.Fatalf("rows %d", len(rows))
 	}
 	for _, r := range rows {
@@ -208,15 +276,22 @@ func TestGenerateDeterministicAndEvaluate(t *testing.T) {
 			t.Fatalf("binary arm deferred: %+v", r)
 		}
 	}
-	// Every faulted in-model scenario except F07 violates P by construction.
+	// Every faulted in-model scenario except F07 and F11 violates P by construction.
 	for _, r := range records {
-		if r.Group() == "fault" && r.Class != "F07_NORM_PRIORITY_CONFLICT" && r.Class != "X11_OOM_TRUSTED_BIAS" && r.PHolds {
+		if r.Group() == "fault" && r.Class != "F07_NORM_PRIORITY_CONFLICT" &&
+			r.Class != "F11_UNREFERENCED_SPAM" && r.Class != "X11_OOM_TRUSTED_BIAS" && r.PHolds {
 			t.Fatalf("faulted scenario satisfies P: %+v", r)
 		}
 	}
 	s := Summarize(rows)
-	if len(s.H3) != 10 || len(s.H4) != 2 || len(s.OutOfModel) != 1 {
-		t.Fatalf("summary shape %d %d %d", len(s.H3), len(s.H4), len(s.OutOfModel))
+	if len(s.H3) != 11 || len(s.H4) != 4 || len(s.H4ByClass) != 13 || len(s.OutOfModel) != 1 {
+		t.Fatalf("summary shape %d %d %d %d", len(s.H3), len(s.H4), len(s.H4ByClass), len(s.OutOfModel))
+	}
+	if s.H4[0].Classes != 11 || s.H4[0].ClassesWithAllow != 2 || s.H4[0].ClassesZeroAllow != 9 {
+		t.Fatalf("unexpected H4 class stratification: %+v", s.H4[0])
+	}
+	if !s.H4[2].UnsafePhysPerAllow.Defined || s.H4[3].UnsafePhysPerAllow.Defined {
+		t.Fatalf("expected active-permit scope defined and total-refusal scope undefined: %+v %+v", s.H4[2], s.H4[3])
 	}
 }
 
@@ -229,6 +304,10 @@ func TestSpecLinesAndAuditLog(t *testing.T) {
 	}
 	if _, err := SpecLines("Z"); err == nil {
 		t.Fatal("unknown arm")
+	}
+	shared, err := SharedEngineLines()
+	if err != nil || shared["teoskernel_total"] <= 0 || shared["conventional_units"] <= 0 || shared["conventional_support"] <= 0 {
+		t.Fatalf("shared engine lines: %v %v", shared, err)
 	}
 	var log AuditLog
 	first := log.Append(map[string]any{"x": 1})

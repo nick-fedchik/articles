@@ -13,6 +13,7 @@ import (
 func cloneCertificate(c Certificate) Certificate {
 	c.Atoms = slices.Clone(c.Atoms)
 	c.Guards = slices.Clone(c.Guards)
+	c.Clean = slices.Clone(c.Clean)
 	c.Violations = slices.Clone(c.Violations)
 	c.Norm.Closure = slices.Clone(c.Norm.Closure)
 	c.Norm.Result.Rules = slices.Clone(c.Norm.Result.Rules)
@@ -40,7 +41,9 @@ func TestExampleAllowsAndSatisfiesP(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if c.Verdict != Allow || len(c.Violations) != 0 || !slices.Equal(c.Norm.Closure, []evidence.State{evidence.True, evidence.True, evidence.False, evidence.False}) {
+	if c.Verdict != Allow || len(c.Violations) != 0 ||
+		!slices.Equal(c.Norm.Closure, []evidence.State{evidence.True, evidence.True, evidence.False, evidence.False}) ||
+		!slices.Equal(c.Clean, []evidence.State{evidence.True, evidence.True, evidence.False, evidence.False}) {
 		t.Fatalf("unexpected certificate %+v", c)
 	}
 	if err := Verify(spec, input, c); err != nil {
@@ -48,6 +51,113 @@ func TestExampleAllowsAndSatisfiesP(t *testing.T) {
 	}
 	if violated := CheckSafety(spec, input); len(violated) != 0 {
 		t.Fatal(violated)
+	}
+}
+
+func TestUnreferencedNoiseFactDoesNotBlockAllow(t *testing.T) {
+	spec, input := Example()
+	// Add atom 4, which is not referenced by any guard, evidence rule, or norm.
+	spec.Theory.Atoms = 5
+	input.Facts = append(input.Facts,
+		Fact{
+			Literal: evidence.SignedLiteral{Atom: 4},
+			Sources: []string{"untrusted-spam"},
+			Time:    input.Now - int64(time.Hour),
+		},
+		Fact{
+			Literal: evidence.SignedLiteral{Atom: 4, Negative: true},
+			Sources: nil,
+			Time:    input.Now + int64(time.Hour),
+		},
+	)
+	c, err := Evaluate(spec, input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if c.Verdict != Allow || !c.Fresh || !c.Verified || len(c.Violations) != 0 {
+		t.Fatalf("unreferenced noise fact blocked ALLOW: verdict=%s fresh=%v verified=%v violations=%v",
+			c.Verdict, c.Fresh, c.Verified, c.Violations)
+	}
+	if err := Verify(spec, input, c); err != nil {
+		t.Fatal(err)
+	}
+	if violated := CheckSafety(spec, input); len(violated) != 0 {
+		t.Fatalf("expected P to hold with unreferenced noise fact, got %v", violated)
+	}
+}
+
+func TestCleanProofBlocksTaintedDerivation(t *testing.T) {
+	const now = int64(1_793_700_000_000_000_000)
+	// Atom 0: guard, Atom 1: contested sensor (BOTH), Atom 2: derived safety flag (1+ -> 2+),
+	// Atom 3: independent backup sensor.
+	spec := Spec{
+		Action: "open_valve",
+		Theory: evidence.NormTheory{
+			Atoms: 4,
+			Evidence: []evidence.SignedRule{
+				{ID: "primary_derives_safe", Version: "1",
+					Premises: []evidence.SignedLiteral{{Atom: 1}}, Conclusion: evidence.SignedLiteral{Atom: 2}},
+			},
+			Norms: []evidence.NormRule{
+				{ID: "permit_if_safe", Version: "1", Action: "open_valve", Effect: evidence.Permit,
+					Conditions: []evidence.SignedLiteral{{Atom: 0}, {Atom: 2}}},
+			},
+		},
+		Guards:         []Guard{{Atom: 0, Quantity: "pressure", Unit: "bar", Low: 0, High: 8}},
+		TrustedSources: []string{"plc-a", "plc-b"},
+		MaxAge:         2 * time.Second,
+	}
+	input := Input{
+		Now: now,
+		Facts: []Fact{
+			{Literal: evidence.SignedLiteral{Atom: 1}, Sources: []string{"plc-a"}, Time: now},
+			{Literal: evidence.SignedLiteral{Atom: 1, Negative: true}, Sources: []string{"plc-b"}, Time: now},
+		},
+		Measurements: []Measurement{
+			{Quantity: "pressure", Unit: "bar", Low: 5, High: 6, Sources: []string{"plc-a"}, Time: now},
+		},
+	}
+	c, err := Evaluate(spec, input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Closure[1] is Both and Closure[2] is True, so Norm.Result.Decision is ALLOW,
+	// but Clean[2] is Unknown, so K must downgrade Verdict to DEFER_CONFLICT!
+	if c.Norm.Result.Decision != Allow {
+		t.Fatalf("expected raw normative decision ALLOW, got %s", c.Norm.Result.Decision)
+	}
+	if c.Clean[2] != evidence.Unknown {
+		t.Fatalf("expected Clean[2] == Unknown on tainted proof, got %v", c.Clean[2])
+	}
+	if c.Verdict != Conflict || !slices.Contains(c.Violations, codeConflictDependent) {
+		t.Fatalf("expected DEFER_CONFLICT with %s, got %s (%v)", codeConflictDependent, c.Verdict, c.Violations)
+	}
+	if err := Verify(spec, input, c); err != nil {
+		t.Fatal(err)
+	}
+	violated := CheckSafety(spec, input)
+	if !slices.Equal(violated, []string{ClausePositive}) {
+		t.Fatalf("expected CheckSafety violation [%s], got %v", ClausePositive, violated)
+	}
+
+	// Adding an independent clean derivation (3+ -> 2+ with Atom 3 = True) restores Clean[2] = True and ALLOW.
+	spec.Theory.Evidence = append(spec.Theory.Evidence, evidence.SignedRule{
+		ID: "backup_derives_safe", Version: "1",
+		Premises: []evidence.SignedLiteral{{Atom: 3}}, Conclusion: evidence.SignedLiteral{Atom: 2},
+	})
+	input.Facts = append(input.Facts, Fact{
+		Literal: evidence.SignedLiteral{Atom: 3}, Sources: []string{"plc-a"}, Time: now,
+	})
+	cClean, err := Evaluate(spec, input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if cClean.Clean[2] != evidence.True || cClean.Verdict != Allow || len(cClean.Violations) != 0 {
+		t.Fatalf("expected clean alternative proof to restore ALLOW, got Clean[2]=%v Verdict=%s Violations=%v",
+			cClean.Clean[2], cClean.Verdict, cClean.Violations)
+	}
+	if violated := CheckSafety(spec, input); len(violated) != 0 {
+		t.Fatalf("expected P to hold with clean alternative proof, got %v", violated)
 	}
 }
 
@@ -130,6 +240,9 @@ func TestVerifierRejectsForgedCertificates(t *testing.T) {
 			}
 			if s != honest.Norm.Closure[i] {
 				mutations = append(mutations, func(c *Certificate) { c.Norm.Closure[i] = s })
+			}
+			if s != honest.Clean[i] {
+				mutations = append(mutations, func(c *Certificate) { c.Clean[i] = s })
 			}
 		}
 	}

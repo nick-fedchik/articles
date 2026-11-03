@@ -34,7 +34,9 @@ import (
 	"github.com/nick-fedchik/articles/Epistemic_Circuit_Theory/src/teoskernel"
 )
 
-// Atom indices of the case theory.
+// Atom indices of the case theory. AtomUnreferencedNoise is an unreferenced
+// telemetry channel that does not appear in any guard, evidence rule, or norm
+// of CaseSpec (used by F11_UNREFERENCED_SPAM to test F-01 relevantAtom scoping).
 const (
 	AtomPressureOK = iota
 	AtomAuthorized
@@ -43,6 +45,7 @@ const (
 	AtomDemand
 	AtomHotWork
 	AtomGasTest
+	AtomUnreferencedNoise
 	atomCount
 )
 
@@ -66,7 +69,7 @@ const (
 
 // AtomNames maps atom indices to names used by the conventional arms.
 var AtomNames = [atomCount]string{"pressure_ok", "operator_authorized", "maintenance_lock",
-	"interlock_engaged", "process_demand", "hot_work_active", "gas_test_passed"}
+	"interlock_engaged", "process_demand", "hot_work_active", "gas_test_passed", "unreferenced_telemetry"}
 
 // TrustedSources is the set of identities verified upstream.
 func TrustedSources() []string {

@@ -23,13 +23,19 @@
 // Kernel K. Facts are joined into a four-valued pre-closure assignment; each
 // guard atom receives the join of IntervalGuard states of all measurements of
 // its quantity (UNKNOWN when none). The existing normative layer computes the
-// signed evidence closure and the policy decision D. Admission postconditions
-// are: every input item is fresh (Now-MaxAge <= t <= Now) and carries a
+// signed evidence closure and the policy decision D, and the clean-support
+// fixpoint Clean (Theorem B.7) tracks literals derivable without touching any
+// conflicting (BOTH) ancestor. Admission postconditions are: every relevant
+// input item (guard measurement or fact on an atom referenced by a guard,
+// evidence rule, or norm) is fresh (Now-MaxAge <= t <= Now) and carries a
 // nonempty set of sources included in TrustedSources; every guard has at least
 // one measurement and every measurement of a guarded quantity has the guard
-// unit and lies inside the closed window. The verdict equals D unless D is
-// ALLOW and a postcondition fails: then it is DENY (some interval disjoint),
-// else DEFER_CONFLICT (some partial overlap), else DEFER_UNKNOWN.
+// unit and lies inside the closed window; and for ALLOW, at least one
+// applicable, undefeated permit rule has all condition literals cleanly
+// supported in Clean. The verdict equals D unless D is ALLOW and a
+// postcondition fails: then it is DENY (some interval disjoint), else
+// DEFER_CONFLICT (some partial overlap or conflict-dependent proof), else
+// DEFER_UNKNOWN.
 //
 // Soundness theorem (paper proof, Lean 4 proof of an abstract model in
 // src/formal/kernel, bounded exhaustive check in Exhaustive): for every
@@ -114,7 +120,11 @@ type Certificate struct {
 	// Atoms is the four-valued assignment before the evidence closure.
 	Atoms []evidence.State
 	// Guards is the joined interval-guard state per declared guard.
-	Guards     []evidence.State
+	Guards []evidence.State
+	// Clean is the four-valued clean-support fixpoint (Theorem B.7): bit True
+	// means (atom, +) is cleanly supported without any BOTH ancestor, bit False
+	// means (atom, -) is cleanly supported.
+	Clean      []evidence.State
 	Norm       evidence.NormCertificate
 	Fresh      bool
 	Verified   bool
@@ -130,12 +140,13 @@ const (
 
 // Violation codes of the admission postconditions.
 const (
-	codeStale      = "STALE"
-	codeUnverified = "UNVERIFIED_SOURCE"
-	codeUnit       = "UNIT_MISMATCH"
-	codeOutOfBound = "GUARD_OUT_OF_BOUNDS"
-	codeBoundary   = "GUARD_BOUNDARY"
-	codeMissing    = "GUARD_MISSING"
+	codeStale             = "STALE"
+	codeUnverified        = "UNVERIFIED_SOURCE"
+	codeUnit              = "UNIT_MISMATCH"
+	codeOutOfBound        = "GUARD_OUT_OF_BOUNDS"
+	codeBoundary          = "GUARD_BOUNDARY"
+	codeMissing           = "GUARD_MISSING"
+	codeConflictDependent = "CONFLICT_DEPENDENT_PROOF"
 )
 
 func finite(v float64) bool { return !math.IsNaN(v) && !math.IsInf(v, 0) }
@@ -214,10 +225,44 @@ type item struct {
 	time    int64
 }
 
-func items(in Input) []item {
+// relevantAtom reports whether atom appears in any guard, evidence rule, or
+// norm condition/exception of s. Unreferenced atoms outside the theory's rules
+// and guards do not affect Fresh or Verified admission postconditions.
+func relevantAtom(s Spec, atom int) bool {
+	for _, g := range s.Guards {
+		if g.Atom == atom {
+			return true
+		}
+	}
+	for _, r := range s.Theory.Evidence {
+		if r.Conclusion.Atom == atom {
+			return true
+		}
+		for _, p := range r.Premises {
+			if p.Atom == atom {
+				return true
+			}
+		}
+	}
+	for _, r := range s.Theory.Norms {
+		for _, c := range r.Conditions {
+			if c.Atom == atom {
+				return true
+			}
+		}
+		if r.Exception != nil && r.Exception.Atom == atom {
+			return true
+		}
+	}
+	return false
+}
+
+func items(s Spec, in Input) []item {
 	out := []item{}
 	for i, f := range in.Facts {
-		out = append(out, item{"fact", i, f.Sources, f.Time})
+		if relevantAtom(s, f.Literal.Atom) {
+			out = append(out, item{"fact", i, f.Sources, f.Time})
+		}
 	}
 	for i, m := range in.Measurements {
 		out = append(out, item{"measurement", i, m.Sources, m.Time})
@@ -225,26 +270,95 @@ func items(in Input) []item {
 	return out
 }
 
-func compile(s Spec) (*evidence.NormProgram, error) {
-	if err := validateSpec(s); err != nil {
+func cleanLiteral(clean []evidence.State, l evidence.SignedLiteral) bool {
+	if l.Negative {
+		return clean[l.Atom]&evidence.False != 0
+	}
+	return clean[l.Atom]&evidence.True != 0
+}
+
+func computeClean(cleanProg *evidence.CleanProgram, s Spec, atoms []evidence.State) ([]evidence.State, error) {
+	enabled := make([]bool, len(s.Theory.Evidence))
+	for i := range enabled {
+		enabled[i] = true
+	}
+	cert, _, err := cleanProg.EvaluateClean(
+		evidence.SignedWorld{Revision: 1, Facts: atoms, Enabled: enabled},
+		evidence.SignedLiteral{Atom: 0},
+	)
+	if err != nil {
 		return nil, err
 	}
-	return evidence.CompileNormative(s.Theory)
+	clean := make([]evidence.State, s.Theory.Atoms)
+	for a := range clean {
+		if cert.Clean[2*a] {
+			clean[a] |= evidence.True
+		}
+		if cert.Clean[2*a+1] {
+			clean[a] |= evidence.False
+		}
+	}
+	return clean, nil
+}
+
+func hasCleanPermitWitness(s Spec, clean []evidence.State, norm evidence.NormCertificate) bool {
+	obsByID := make(map[string]evidence.NormObservation, len(norm.Result.Rules))
+	for _, obs := range norm.Result.Rules {
+		obsByID[obs.ID] = obs
+	}
+	for _, r := range s.Theory.Norms {
+		obs, ok := obsByID[r.ID]
+		if !ok || r.Effect != evidence.Permit || obs.Status != "APPLICABLE" || len(obs.DominatedBy) != 0 {
+			continue
+		}
+		allClean := true
+		for _, l := range r.Conditions {
+			if !cleanLiteral(clean, l) {
+				allClean = false
+				break
+			}
+		}
+		if allClean {
+			return true
+		}
+	}
+	return false
+}
+
+func compile(s Spec) (*evidence.NormProgram, *evidence.CleanProgram, error) {
+	if err := validateSpec(s); err != nil {
+		return nil, nil, err
+	}
+	normProg, err := evidence.CompileNormative(s.Theory)
+	if err != nil {
+		return nil, nil, err
+	}
+	cleanProg, err := evidence.CompileCleanSupport(s.Theory.Atoms, s.Theory.Evidence)
+	if err != nil {
+		return nil, nil, err
+	}
+	return normProg, cleanProg, nil
 }
 
 // Evaluate computes K(S, I) and returns a certificate that Verify accepts.
 func Evaluate(s Spec, in Input) (Certificate, error) {
-	program, err := compile(s)
+	program, cleanProg, err := compile(s)
 	if err != nil {
 		return Certificate{}, err
 	}
+	specDigest, err := digest(s)
+	if err != nil {
+		return Certificate{}, err
+	}
+	return evaluateCompiledWithDigest(s, in, program, cleanProg, specDigest)
+}
+
+func evaluateCompiledWithDigest(s Spec, in Input, program *evidence.NormProgram, cleanProg *evidence.CleanProgram, specDigest [32]byte) (Certificate, error) {
 	if err := validateInput(s, in); err != nil {
 		return Certificate{}, err
 	}
-	c := Certificate{Fresh: true, Verified: true, Contained: true}
-	if c.SpecDigest, err = digest(s); err != nil {
-		return Certificate{}, err
-	}
+	var err error
+	c := Certificate{SpecDigest: specDigest, Fresh: true, Verified: true, Contained: true}
 	if c.InputDigest, err = digest(in); err != nil {
 		return Certificate{}, err
 	}
@@ -260,7 +374,7 @@ func Evaluate(s Spec, in Input) (Certificate, error) {
 	for _, id := range s.TrustedSources {
 		trusted[id] = true
 	}
-	for _, it := range items(in) {
+	for _, it := range items(s, in) {
 		if !fresh(in.Now, it.time, s.MaxAge) {
 			c.Fresh = false
 			c.Violations = append(c.Violations, fmt.Sprintf("%s:%s:%d", codeStale, it.kind, it.index))
@@ -319,18 +433,26 @@ func Evaluate(s Spec, in Input) (Certificate, error) {
 	if c.Norm, err = program.Evaluate(world, s.Action); err != nil {
 		return Certificate{}, err
 	}
+	if c.Clean, err = computeClean(cleanProg, s, c.Atoms); err != nil {
+		return Certificate{}, err
+	}
+	cleanWitness := true
+	if c.Norm.Result.Decision == Allow && !hasCleanPermitWitness(s, c.Clean, c.Norm) {
+		cleanWitness = false
+		c.Violations = append(c.Violations, codeConflictDependent)
+	}
 	c.Verdict = c.Norm.Result.Decision
 	if c.Verdict == Allow {
 		switch {
 		case outOfBounds:
 			c.Verdict = Deny
-		case boundary:
+		case boundary || !cleanWitness:
 			c.Verdict = Conflict
 		case !c.Fresh || !c.Verified || !c.Contained:
 			c.Verdict = Unknown
 		}
 	}
-	if err := Verify(s, in, c); err != nil {
+	if err := verifyCompiled(s, in, c, program, c.SpecDigest); err != nil {
 		return Certificate{}, fmt.Errorf("teoskernel: self-check failed: %w", err)
 	}
 	return c, nil

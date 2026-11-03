@@ -200,6 +200,9 @@ func armB1(in teoskernel.Input, log *AuditLog, convert bool) Outcome {
 			}
 		}
 		for i, f := range in.Facts {
+			if f.Literal.Atom >= AtomUnreferencedNoise {
+				continue
+			}
 			if !freshTime(in.Now, f.Time) {
 				return Defer, fmt.Sprintf("SC-1 stale fact %d", i)
 			}

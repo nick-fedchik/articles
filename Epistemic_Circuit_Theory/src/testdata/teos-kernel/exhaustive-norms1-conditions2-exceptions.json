@@ -7,15 +7,15 @@
   "Theories": 1540,
   "Cases": 1198120,
   "Verdicts": {
-    "ALLOW": 4480,
-    "DEFER_CONFLICT": 291746,
+    "ALLOW": 6448,
+    "DEFER_CONFLICT": 292082,
     "DEFER_NO_BASIS": 635040,
-    "DEFER_UNKNOWN": 220824,
+    "DEFER_UNKNOWN": 218520,
     "DENY": 46030
   },
-  "AllowWithSafetyOK": 4480,
+  "AllowWithSafetyOK": 6448,
   "Counterexamples": null,
-  "ForgeriesAttempted": 2387280,
-  "ForgeriesRejected": 2387280,
-  "PFalseCases": 1193640
+  "ForgeriesAttempted": 2383344,
+  "ForgeriesRejected": 2383344,
+  "PFalseCases": 1191672
 }
