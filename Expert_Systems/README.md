@@ -41,43 +41,45 @@
 
 ## 3. Наскрізний зміст усіх 30 глав підручника
 
-Наскрізний зміст поєднує три томи, а після анотації кожної глави розташовано її власний зміст із посиланнями на розділи, підрозділи та завершальні частини. Назви розділів і підрозділів у главах є описовими: без формул, абревіатур і дублювання термінів перекладами. Потрібні спеціалізовані назви й позначення збережено в основному тексті; старі якорі перейменованих розділів залишаються чинними.
+Наскрізний зміст поєднує три томи, а після анотації кожної глави розташовано її власний зміст із посиланнями на розділи, підрозділи та завершальні частини. Назви глав, розділів і підрозділів є описовими: без формул, абревіатур і дублювання термінів перекладами. Потрібні спеціалізовані назви й позначення збережено в основному тексті.
+
+Файли глав мають короткі назви з незмінним номером глави. Актуальні адреси наведено нижче; попередні якорі заголовків збережено в перейменованих файлах. Зовнішні посилання зі старими іменами файлів потребують оновлення адреси — збереження якоря саме по собі не перенаправляє старий шлях.
 
 ### [Том 1. Основи експертних систем: логіка, продукційні правила, схемотехніка міркувань та класичні машини виведення](Volume-1/README.md)
 
-- **[Глава 1. Природа експертних систем: передумови, базові поняття та навчальний маршрут](Volume-1/ch01-nature-and-taxonomy-of-expert-systems.md)**
-- **[Глава 2. Логічний фундамент представлення знань: числення висловлювань, предикати першого порядку та хорнівські диз'юнкти](Volume-1/ch02-logical-foundations-propositions-predicates-horn.md)**
-- **[Глава 3. Неповнота, суперечливість та походження фактів: логіка Кліні K3, двобітова решітка Белнапа B4 та ідемпотентна алгебра першоджерел](Volume-1/ch03-multi-valued-logics-kleene-belnap-provenance.md)**
-- **[Глава 4. Моделі продукційних правил і промисловий стандарт таблиць рішень OMG DMN / FEEL](Volume-1/ch04-production-rules-and-dmn-decision-tables.md)**
-- **[Глава 5. Пряме виведення (Forward Chaining), оператор безпосередніх наслідків TP та топологічне розшарування ациклічних схем](Volume-1/ch05-forward-chaining-datalog-and-circuit-evaluation.md)**
-- **[Глава 6. Високошвидкісні продукційні мережі на CPU: алгоритм Rete, конфліктний набір (Agenda) та сучасна архітектура Phreak](Volume-1/ch06-rete-network-agenda-and-phreak-algorithm.md)**
-- **[Глава 7. Зворотне виведення (Backward Chaining), дерева AND-OR та інтерактивні діалогові опитувачі](Volume-1/ch07-backward-chaining-and-interactive-dialogue-systems.md)**
-- **[Глава 8. Підтримка істинності обґрунтувань (JTMS / ATMS), чисті доведення (CleanProof) та інкрементальне кешування](Volume-1/ch08-truth-maintenance-systems-clean-proofs-and-caching.md)**
-- **[Глава 9. Програмування в обмеженнях (CSP), набори відповідей (ASP) і автоматизоване планування (PDDL): конфігуратори, узгодженість дуг AC-3 та оптимізаційний пошук](Volume-1/ch09-constraint-satisfaction-problems-and-configurators.md)**
-- **[Глава 10. Підсистема пояснень (How / Why / Why-Not), ядра конфліктів QuickXPlain та зворотний синтез безпечних ремонтів FindRepair](Volume-1/ch10-explanation-engine-quickxplain-and-safe-repairs.md)**
+- **[Глава 1. Передумови та основні поняття експертних систем](Volume-1/ch01-expert-systems-foundations.md)**
+- **[Глава 2. Логічні основи подання знань](Volume-1/ch02-logical-foundations.md)**
+- **[Глава 3. Неповні дані, суперечності та походження фактів](Volume-1/ch03-incomplete-and-conflicting-data.md)**
+- **[Глава 4. Продукційні правила й таблиці рішень](Volume-1/ch04-production-rules-and-decision-tables.md)**
+- **[Глава 5. Пряме виведення та організація обчислень](Volume-1/ch05-forward-inference-and-execution.md)**
+- **[Глава 6. Продукційні мережі та керування активаціями правил](Volume-1/ch06-production-networks.md)**
+- **[Глава 7. Зворотне виведення та консультаційний діалог](Volume-1/ch07-backward-inference-and-dialogue.md)**
+- **[Глава 8. Підтримка висновків і залежностей](Volume-1/ch08-truth-maintenance-and-dependencies.md)**
+- **[Глава 9. Обмеження, конфігурування та планування](Volume-1/ch09-constraints-and-planning.md)**
+- **[Глава 10. Пояснення рішень і пошук допустимих змін](Volume-1/ch10-explanations-and-repairs.md)**
 
 ### [Том 2. Програмна інженерія знань: ізольовані корпуси, онтології, невизначеність, модельно-орієнтована діагностика, прогностика та верифікація](Volume-2/README.md)
 
-- **[Глава 11. Інженерія здобуття знань та закони замкненого корпусу: когнітивні інтерв'ю, узгодженість Коена, закони Ціпфа — Гіпса та офлайн-морфологія (WFST / DAWG)](Volume-2/ch11-knowledge-elicitation-zipf-heaps-and-offline-morphology.md)**
-- **[Глава 12. Подання знань: від фреймів і семантичних мереж до формальних онтологій (OWL 2, SHACL) та формального аналізу понять (FCA)](Volume-2/ch12-knowledge-representation-frames-to-ontologies-owl-shacl-fca.md)**
-- **[Глава 13. Інженерія знань за допомогою мовних моделей: видобування фактів і правил, побудова графа знань та перевірка видобутого](Volume-2/ch13-llm-assisted-knowledge-engineering-and-extraction-validation.md)**
-- **[Глава 14. Інженерні графи знань (EKG): бітемпоральна трасованість, інституційна пам'ять і паспорти рішень, аналіз радіуса впливу змін та матричне прискорення графових запитів](Volume-2/ch14-engineering-knowledge-graphs-traceability-and-gpu-closure.md)**
-- **[Глава 15. Деонтична логіка норм (MUST / SHOULD / MAY), нормативні винятки (lex specialis) та формальна теорія аргументації (Dung AF, ASPIC+)](Volume-2/ch15-deontic-logic-normative-exceptions-and-argumentation.md)**
-- **[Глава 16. Міркування в умовах невизначеності: байєсівські мережі, теорія свідчень Демпстера — Шафера та нечіткий висновок Мамдані / Такагі — Сугено](Volume-2/ch16-uncertainty-bayes-dempster-shafer-and-fuzzy-inference.md)**
-- **[Глава 17. Міркування на основі прецедентів (Case-Based Reasoning, CBR) та структурний причинно-наслідковий аналіз Перла](Volume-2/ch17-case-based-reasoning-and-pearl-causal-inference.md)**
-- **[Глава 18. Модельно-орієнтована діагностика систем (Model-Based Diagnosis Рейтера): мінімальні конфлікти, покриваючі множини та послідовний вибір тестів](Volume-2/ch18-model-based-diagnosis-reiter-hitting-sets.md)**
-- **[Глава 19. Формальна верифікація баз знань (SAT / SMT), темпоральна логіка LTL та піраміда тестування правил](Volume-2/ch19-formal-verification-smt-ltl-and-testing-pyramid.md)**
-- **[Глава 20. Предиктивні експертні системи: інтервальна алгебра Аллена, сигнальна логіка STL, деградація ресурсу (RUL) та конформне калібрування (ECE / ACI)](Volume-2/ch20-predictive-expert-systems-allen-stl-rul-and-conformal.md)**
+- **[Глава 11. Здобуття знань від експертів і текстових корпусів](Volume-2/ch11-knowledge-acquisition.md)**
+- **[Глава 12. Моделі подання знань та онтології](Volume-2/ch12-knowledge-representation.md)**
+- **[Глава 13. Мовні моделі в підготовці та перевірці знань](Volume-2/ch13-language-models-in-knowledge-engineering.md)**
+- **[Глава 14. Графи знань, трасованість та організаційна пам'ять](Volume-2/ch14-knowledge-graphs-and-traceability.md)**
+- **[Глава 15. Нормативні правила та аргументація](Volume-2/ch15-normative-reasoning-and-argumentation.md)**
+- **[Глава 16. Невизначеність і способи оцінювання висновків](Volume-2/ch16-uncertainty-and-inference.md)**
+- **[Глава 17. Міркування за прецедентами та причинні пояснення](Volume-2/ch17-case-based-and-causal-reasoning.md)**
+- **[Глава 18. Діагностика на основі моделі об'єкта](Volume-2/ch18-model-based-diagnosis.md)**
+- **[Глава 19. Формальна перевірка й тестування баз знань](Volume-2/ch19-formal-verification-and-testing.md)**
+- **[Глава 20. Часові моделі, прогнозування та калібрування](Volume-2/ch20-temporal-models-and-prediction.md)**
 
 ### [Том 3. Нейро-символьні, ізольовані, критичні до безпеки та високопродуктивні експертні системи](Volume-3/README.md)
 
-- **[Глава 21. Архітектура нейро-символьних та ізольованих експертних систем: двосистемне мислення, модель контрольованих каналів та межа «Релевантність — Допустимість»](Volume-3/ch21-neuro-symbolic-and-isolated-air-gapped-architectures.md)**
-- **[Глава 22. Інженерна лінгвістика та Zero-Shot видобування знань: двоенкодерні архітектури видобування сутностей і відношень, граматичне декодування GBNF та валентні фрейми](Volume-3/ch22-engineering-linguistics-knowledgator-biencoders-and-gbnf.md)**
-- **[Глава 23. Гібридний інформаційно-графовий пошук, антонімічна стійкість та верифікація логічного слідування з першоджерела](Volume-3/ch23-hybrid-search-antonym-resilience-and-entailment-verification.md)**
-- **[Глава 24. Детермінований реляційний аналіз, абдуктивний пошук прогалин, числення епістемічного боргу та синтез нових правил](Volume-3/ch24-relational-rule-mining-abduction-and-epistemic-debt.md)**
-- **[Глава 25. Еволюція та безперервне навчання експертних систем: дистиляція знань у LoRA / DPO, детектування дрейфу та захист від забування](Volume-3/ch25-continual-learning-lora-dpo-drift-and-regression-gates.md)**
-- **[Глава 26. Від прогнозу й рекомендації до безпечної дії: перформативна стійкість, транзакційні саги, реактивні черги JTMS та кіберфізичні щити](Volume-3/ch26-from-prediction-to-safe-action-performative-shields-and-jtms.md)**
-- **[Глава 27. Формально верифікований шлюз допуску в Lean 4, випробування інжекцією помилок та автоматизований синтез Safety Case (GSN)](Volume-3/ch27-lean4-verified-gate-fault-injection-and-safety-case-gsn.md)**
-- **[Глава 28. Апаратні прискорювачі ШІ та логіки (NPU, тензорні прискорювачі, FPGA): безцикловий асемблер EPU, WPMaxSAT, однотактові компаратори та бінарні пакети Zero-Copy mmap](Volume-3/ch28-npu-fpga-accelerators-epu-assembler-and-zero-copy-mmap.md)**
-- **[Глава 29. Міжсистемний обмін знаннями, криптографічні дельта-пакети для ізольованих мереж та мандатний захист потоків](Volume-3/ch29-inter-system-knowledge-exchange-air-gap-deltas-and-mandatory-security.md)**
-- **[Глава 30. Розподілені кластерні архітектури експертних систем (SOA): шардінг графів знань, рандеву-маршрутизація та кворумна консистентність](Volume-3/ch30-distributed-cluster-architectures-soa-sharding-and-quorums.md)**
+- **[Глава 21. Архітектура нейро-символьних та ізольованих систем](Volume-3/ch21-neuro-symbolic-and-isolated-systems.md)**
+- **[Глава 22. Мовне опрацювання та структуроване видобування знань](Volume-3/ch22-linguistic-processing-and-knowledge-extraction.md)**
+- **[Глава 23. Пошук знань і перевірка підстав тверджень](Volume-3/ch23-knowledge-search-and-evidence.md)**
+- **[Глава 24. Виявлення прогалин і синтез нових правил](Volume-3/ch24-knowledge-gaps-and-rule-synthesis.md)**
+- **[Глава 25. Оновлення знань і безперервне навчання](Volume-3/ch25-knowledge-updates-and-learning.md)**
+- **[Глава 26. Від рекомендації до контрольованої дії](Volume-3/ch26-controlled-actions.md)**
+- **[Глава 27. Доведення коректності та обґрунтування безпеки](Volume-3/ch27-correctness-and-safety-assurance.md)**
+- **[Глава 28. Апаратне прискорення та подання знань у пам'яті](Volume-3/ch28-hardware-acceleration-and-storage.md)**
+- **[Глава 29. Захищений обмін знаннями між системами](Volume-3/ch29-secure-knowledge-exchange.md)**
+- **[Глава 30. Розподілені експертні системи та узгодженість даних](Volume-3/ch30-distributed-expert-systems.md)**
