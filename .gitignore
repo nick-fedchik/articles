@@ -4,6 +4,10 @@ __pycache__/
 ExpertSystem/translations/glossaries/
 translations/glossaries/
 AGENTS.md
+/Expert_Systems/AGENTS.md
+/Expert_Systems/Book_suggestions_review.md
+/Expert_Systems/Curriculum_Critical_Review.md
+/Expert_Systems/New_Book_Vision.md
 
 scripts/
 *.cff
