@@ -1,0 +1,1383 @@
+{
+  "hypothesis": "H5 (PREREGISTRATION-2026-11-03.md): register-to-register one-tick PREVALIDATED gate predicate",
+  "reference": "hardware.PrevalidatedGate (src/hardware/calculate.go), vectors by cmd/gatevectors",
+  "tool_versions": [
+    "go version go1.27.1 linux/amd64",
+    "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "Icarus Verilog version 12.0 (stable) ()",
+    "Verilator 5.032 2025-01-01 rev (Debian 5.032-1)",
+    "\"nextpnr-ice40\" -- Next Generation Place and Route (Version 0.9-3)",
+    "fpga-icestorm 0~20250207git7fbf8c0+dfsg1-1build1",
+    "Python 3.14.4"
+  ],
+  "target_frequency_mhz": 100.0,
+  "interpretation": [
+    "Fmax is nextpnr-ice40 post-route static timing estimate (tool model), not a silicon or HIL measurement.",
+    "One-tick claim at f on a device holds only if post-route Fmax >= f; reported per seed.",
+    "RTL implements PrevalidatedGate (the 9-condition postcondition comparator over pre-computed flags), NOT the Horn/normative closure engine of kernel K.",
+    "Excluded: kernel K Horn/defeasible/normative closure, SHA-256/custody verification, bus transfer of the word, actuation, serial loading time.",
+    "The pin wrapper (462-bit serial shift loader in gate_top) adds 462 FFs (934 FFs in top_with_wrapper vs 472 FFs in gate_only for one-tick variants; 1071 vs 609 FFs for pipelined_2stage) and routing pressure; it is not the gate.",
+    "Pins are unconstrained (--pcf-allow-unconstrained): placer chooses IO locations."
+  ],
+  "scope_and_wrapper_overhead": {
+    "implemented_function": "hardware.PrevalidatedGate (9-condition postcondition comparator over pre-computed flags, revisions, timestamps, and signed fixed-point bounds)",
+    "not_implemented_in_rtl": [
+      "Kernel K Horn/defeasible/normative closure engine (EvaluateKernel)",
+      "SHA-256 and Ed25519 custody/signature verification",
+      "Bus transfer and 462-clock serial shift-register loading time",
+      "Physical actuator transport and response time"
+    ],
+    "flip_flop_breakdown": {
+      "serial_shift_wrapper_ffs": 462,
+      "gate_word_input_ffs": 462,
+      "gate_result_output_ffs": 10,
+      "one_tick_direct_gate_only_ffs": 472,
+      "one_tick_direct_top_with_wrapper_ffs": 934,
+      "one_tick_prefix_gate_only_ffs": 472,
+      "one_tick_prefix_top_with_wrapper_ffs": 934,
+      "pipelined_2stage_gate_only_ffs": 609,
+      "pipelined_2stage_top_with_wrapper_ffs": 1071
+    }
+  },
+  "word_bits": 462,
+  "result_bits": 10,
+  "vectors": {
+    "vectors": 58627,
+    "allow": 5486,
+    "refuse": 53141,
+    "classes": {
+      "exhaustive": 27648,
+      "evidence_all_codes": 256,
+      "boundary_timestamp": 19,
+      "boundary_signed_compare": 144,
+      "boundary_revision_bit": 64,
+      "boundary_revision_extreme": 4,
+      "rounding_edge": 15,
+      "rounding_edge_negative_limit": 15,
+      "single_bit_flip": 462,
+      "random_uniform": 10000,
+      "random_near_pass": 10000,
+      "random_narrow": 10000
+    },
+    "reason_counts": {
+      "custody_not_validated": 18802,
+      "validation_binding_invalid": 30833,
+      "si_mismatch": 18828,
+      "numeric_invalid": 18756,
+      "norm_blocked": 28291,
+      "evidence_not_pro_only": 34799,
+      "policy_revision_mismatch": 30572,
+      "timestamp_invalid_or_stale": 29423,
+      "guard_band_exceeds_limit": 21474
+    }
+  },
+  "simulation": {
+    "iverilog": {
+      "one_tick": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "one_tick_prefix": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "pipelined": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "top_variant0": {
+        "checked": 512,
+        "mismatches": 0
+      },
+      "top_variant1": {
+        "checked": 512,
+        "mismatches": 0
+      },
+      "top_variant2": {
+        "checked": 512,
+        "mismatches": 0
+      }
+    },
+    "verilator": {
+      "one_tick": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "one_tick_prefix": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "pipelined": {
+        "checked": 58627,
+        "mismatches": 0
+      },
+      "top_variant0": {
+        "checked": 512,
+        "mismatches": 0
+      },
+      "top_variant1": {
+        "checked": 512,
+        "mismatches": 0
+      },
+      "top_variant2": {
+        "checked": 512,
+        "mismatches": 0
+      }
+    }
+  },
+  "simulation_total_mismatches": 0,
+  "lint": {
+    "lines": [
+      "verilator lint VARIANT=0 exit 0",
+      "verilator lint VARIANT=1 exit 0",
+      "verilator lint VARIANT=2 exit 0"
+    ],
+    "warnings": 0
+  },
+  "mutation_adequacy": [
+    {
+      "mutant": "drop_future_timestamp_guard",
+      "mismatches": 1694,
+      "status": "killed"
+    },
+    {
+      "mutant": "evidence_low_bits_only",
+      "mismatches": 11770,
+      "status": "killed"
+    },
+    {
+      "mutant": "ignore_undercut",
+      "mismatches": 9431,
+      "status": "killed"
+    },
+    {
+      "mutant": "policy_ignored",
+      "mismatches": 30572,
+      "status": "killed"
+    },
+    {
+      "mutant": "revision_31_bits",
+      "mismatches": 3,
+      "status": "killed"
+    },
+    {
+      "mutant": "stale_age_strict",
+      "mismatches": 11074,
+      "status": "killed"
+    },
+    {
+      "mutant": "threshold_equality",
+      "mismatches": 12318,
+      "status": "killed"
+    },
+    {
+      "mutant": "unsigned_guard_band",
+      "mismatches": 12601,
+      "status": "killed"
+    }
+  ],
+  "yosys_synth_ice40_top_with_wrapper": {
+    "p0": {
+      "SB_LUT4": 456,
+      "flip_flops": 934,
+      "SB_CARRY": 191,
+      "cells": {
+        "$scopeinfo": 2,
+        "SB_CARRY": 191,
+        "SB_DFF": 10,
+        "SB_DFFE": 924,
+        "SB_LUT4": 456
+      }
+    },
+    "p1": {
+      "SB_LUT4": 436,
+      "flip_flops": 1071,
+      "SB_CARRY": 191,
+      "cells": {
+        "$scopeinfo": 1,
+        "SB_CARRY": 191,
+        "SB_DFF": 147,
+        "SB_DFFE": 924,
+        "SB_LUT4": 436
+      }
+    },
+    "p2": {
+      "SB_LUT4": 554,
+      "flip_flops": 934,
+      "SB_CARRY": 0,
+      "cells": {
+        "$scopeinfo": 1,
+        "SB_DFF": 10,
+        "SB_DFFE": 924,
+        "SB_LUT4": 554
+      }
+    }
+  },
+  "yosys_synth_ice40_gate_only_no_pnr": {
+    "direct": {
+      "SB_LUT4": 446,
+      "flip_flops": 472,
+      "SB_CARRY": 191,
+      "cells": {
+        "$scopeinfo": 1,
+        "SB_CARRY": 191,
+        "SB_DFF": 10,
+        "SB_DFFE": 462,
+        "SB_LUT4": 446
+      }
+    },
+    "prefix": {
+      "SB_LUT4": 554,
+      "flip_flops": 472,
+      "SB_CARRY": 0,
+      "cells": {
+        "SB_DFF": 10,
+        "SB_DFFE": 462,
+        "SB_LUT4": 554
+      }
+    },
+    "pipe": {
+      "SB_LUT4": 430,
+      "flip_flops": 609,
+      "SB_CARRY": 191,
+      "cells": {
+        "SB_CARRY": 191,
+        "SB_DFF": 147,
+        "SB_DFFE": 462,
+        "SB_LUT4": 430
+      }
+    }
+  },
+  "nextpnr_aggregate": [
+    {
+      "device": "iCE40UP5K",
+      "package": "sg48",
+      "variant": "one_tick_direct",
+      "latency_cycles": 1,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 22.14,
+      "fmax_mhz_median": 22.4,
+      "fmax_mhz_max": 22.74,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1389,
+      "lc_available": 5280,
+      "io_used": 14,
+      "io_available": 96
+    },
+    {
+      "device": "iCE40UP5K",
+      "package": "sg48",
+      "variant": "pipelined_2stage",
+      "latency_cycles": 2,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 30.41,
+      "fmax_mhz_median": 30.41,
+      "fmax_mhz_max": 30.41,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1432,
+      "lc_available": 5280,
+      "io_used": 14,
+      "io_available": 96
+    },
+    {
+      "device": "iCE40UP5K",
+      "package": "sg48",
+      "variant": "one_tick_prefix",
+      "latency_cycles": 1,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 37.02,
+      "fmax_mhz_median": 37.67,
+      "fmax_mhz_max": 39.82,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1483,
+      "lc_available": 5280,
+      "io_used": 14,
+      "io_available": 96
+    },
+    {
+      "device": "iCE40HX8K",
+      "package": "ct256",
+      "variant": "one_tick_direct",
+      "latency_cycles": 1,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 57.33,
+      "fmax_mhz_median": 58.19,
+      "fmax_mhz_max": 59.67,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1389,
+      "lc_available": 7680,
+      "io_used": 14,
+      "io_available": 256
+    },
+    {
+      "device": "iCE40HX8K",
+      "package": "ct256",
+      "variant": "pipelined_2stage",
+      "latency_cycles": 2,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 67.8,
+      "fmax_mhz_median": 74.64,
+      "fmax_mhz_max": 74.64,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 0,
+      "claim_holds_at_target_all_seeds": false,
+      "lc_used": 1432,
+      "lc_available": 7680,
+      "io_used": 14,
+      "io_available": 256
+    },
+    {
+      "device": "iCE40HX8K",
+      "package": "ct256",
+      "variant": "one_tick_prefix",
+      "latency_cycles": 1,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "fmax_mhz_min": 104.5,
+      "fmax_mhz_median": 108.06,
+      "fmax_mhz_max": 110.57,
+      "target_mhz": 100.0,
+      "seeds_meeting_target": 5,
+      "claim_holds_at_target_all_seeds": true,
+      "lc_used": 1483,
+      "lc_available": 7680,
+      "io_used": 14,
+      "io_available": 256
+    }
+  ],
+  "nextpnr_runs": [
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p0",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 57.51,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1389
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 115,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 7.672,
+          "logic": 8.841,
+          "setup": 0.335
+        },
+        "total_ns": 17.388
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p0",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 58.62,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1389
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_62_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 6.944,
+          "logic": 9.177,
+          "setup": 0.398
+        },
+        "total_ns": 17.059
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p0",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 59.67,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1389
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 115,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 7.042,
+          "logic": 8.841,
+          "setup": 0.335
+        },
+        "total_ns": 16.758
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p0",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 58.19,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1389
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 115,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 7.469,
+          "logic": 8.841,
+          "setup": 0.335
+        },
+        "total_ns": 17.185
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p0",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 57.33,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1389
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 115,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 7.728,
+          "logic": 8.841,
+          "setup": 0.335
+        },
+        "total_ns": 17.444
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p1",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 67.8,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1432
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.max_age_s1_SB_DFF_Q_63_DFFLC",
+        "sink": "genblk1.g_pipe.gate.result_q_SB_DFF_Q_9_D_SB_LUT4_O_LC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 5.075,
+          "logic": 8.799,
+          "setup": 0.335
+        },
+        "total_ns": 14.749
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p1",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 74.64,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1432
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 3.591,
+          "logic": 8.799,
+          "setup": 0.468
+        },
+        "total_ns": 13.398
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p1",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 74.64,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1432
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 3.591,
+          "logic": 8.799,
+          "setup": 0.468
+        },
+        "total_ns": 13.398
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p1",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 74.64,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1432
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 3.591,
+          "logic": 8.799,
+          "setup": 0.468
+        },
+        "total_ns": 13.398
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p1",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 73.3,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1432
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_318_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 133,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 3.962,
+          "logic": 8.673,
+          "setup": 0.468
+        },
+        "total_ns": 13.643
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p2",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 104.96,
+      "constraint_mhz": 100,
+      "meets_constraint": true,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1483
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_254_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.g_prefix.core.u_stale.stale_fail_SB_LUT4_O_LC",
+        "steps": 15,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 6.286,
+          "logic": 2.366,
+          "setup": 0.335
+        },
+        "total_ns": 9.527
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p2",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 108.06,
+      "constraint_mhz": 100,
+      "meets_constraint": true,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1483
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_124_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.g_prefix.core.u_allow.allow_SB_LUT4_O_LC",
+        "steps": 15,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 5.859,
+          "logic": 2.436,
+          "setup": 0.419
+        },
+        "total_ns": 9.254
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p2",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 104.5,
+      "constraint_mhz": 100,
+      "meets_constraint": true,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1483
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_124_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.g_prefix.core.u_allow.allow_SB_LUT4_O_LC",
+        "steps": 15,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 6.174,
+          "logic": 2.436,
+          "setup": 0.419
+        },
+        "total_ns": 9.569
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p2",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 110.57,
+      "constraint_mhz": 100,
+      "meets_constraint": true,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1483
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_106_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.g_prefix.core.u_allow.allow_SB_LUT4_O_LC",
+        "steps": 15,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 5.803,
+          "logic": 2.282,
+          "setup": 0.419
+        },
+        "total_ns": 9.044
+      }
+    },
+    {
+      "device_tag": "hx8k-ct256",
+      "variant": "p2",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 109.22,
+      "constraint_mhz": 100,
+      "meets_constraint": true,
+      "ICESTORM_LC": {
+        "available": 7680,
+        "used": 1483
+      },
+      "SB_IO": {
+        "available": 256,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_318_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.g_prefix.core.u_allow.allow_SB_LUT4_O_LC",
+        "steps": 15,
+        "delay_ns": {
+          "clk-to-q": 0.54,
+          "routing": 5.915,
+          "logic": 2.282,
+          "setup": 0.419
+        },
+        "total_ns": 9.156
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p0",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 22.25,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1389
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_318_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 113,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 21.621,
+          "logic": 21.103,
+          "setup": 0.824
+        },
+        "total_ns": 44.938
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p0",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 22.14,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1389
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 115,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 21.581,
+          "logic": 21.381,
+          "setup": 0.824
+        },
+        "total_ns": 45.176
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p0",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 22.4,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1389
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 115,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 21.038,
+          "logic": 21.381,
+          "setup": 0.824
+        },
+        "total_ns": 44.633
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p0",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 22.46,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1389
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 115,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 20.933,
+          "logic": 21.381,
+          "setup": 0.824
+        },
+        "total_ns": 44.528
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p0",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 22.74,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1389
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "g_one_tick.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "g_one_tick.gate.result_q_SB_DFF_Q_1_D_SB_LUT4_O_LC",
+        "steps": 115,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 20.39,
+          "logic": 21.381,
+          "setup": 0.824
+        },
+        "total_ns": 43.985
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p1",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 30.41,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1432
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 10.393,
+          "logic": 19.871,
+          "setup": 1.234
+        },
+        "total_ns": 32.888
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p1",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 30.41,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1432
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 10.393,
+          "logic": 19.871,
+          "setup": 1.234
+        },
+        "total_ns": 32.888
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p1",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 30.41,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1432
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 10.393,
+          "logic": 19.871,
+          "setup": 1.234
+        },
+        "total_ns": 32.888
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p1",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 30.41,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1432
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 10.393,
+          "logic": 19.871,
+          "setup": 1.234
+        },
+        "total_ns": 32.888
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p1",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 30.41,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1432
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_pipe.gate.word_q_SB_DFFE_Q_319_DFFLC",
+        "sink": "genblk1.g_pipe.gate.ok_s1_SB_DFF_Q_1_DFFLC",
+        "steps": 135,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 10.393,
+          "logic": 19.871,
+          "setup": 1.234
+        },
+        "total_ns": 32.888
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p2",
+      "seed": 1,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 37.67,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1483
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_287_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.g_prefix.core.u_allow.allow_SB_LUT4_O_LC",
+        "steps": 15,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 17.301,
+          "logic": 6.673,
+          "setup": 1.181
+        },
+        "total_ns": 26.545
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p2",
+      "seed": 2,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 37.02,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1483
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_102_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.g_prefix.core.u_allow.allow_SB_LUT4_O_LC",
+        "steps": 15,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 17.739,
+          "logic": 6.699,
+          "setup": 1.181
+        },
+        "total_ns": 27.009
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p2",
+      "seed": 3,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 37.93,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1483
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_266_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.g_prefix.core.u_allow.allow_SB_LUT4_O_LC",
+        "steps": 15,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 17.196,
+          "logic": 6.62,
+          "setup": 1.155
+        },
+        "total_ns": 26.361
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p2",
+      "seed": 4,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 37.32,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1483
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_313_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.g_prefix.core.u_allow.allow_SB_LUT4_O_LC",
+        "steps": 15,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 17.196,
+          "logic": 7.03,
+          "setup": 1.181
+        },
+        "total_ns": 26.797
+      }
+    },
+    {
+      "device_tag": "up5k-sg48",
+      "variant": "p2",
+      "seed": 5,
+      "clock": "clk$SB_IO_IN_$glb_clk",
+      "fmax_mhz": 39.82,
+      "constraint_mhz": 100,
+      "meets_constraint": false,
+      "ICESTORM_LC": {
+        "available": 5280,
+        "used": 1483
+      },
+      "SB_IO": {
+        "available": 96,
+        "used": 14
+      },
+      "SB_GB": {
+        "available": 8,
+        "used": 3
+      },
+      "critical_reg_to_reg": {
+        "source": "genblk1.g_one_tick_prefix.gate.word_q_SB_DFFE_Q_316_DFFLC",
+        "sink": "genblk1.g_one_tick_prefix.gate.g_prefix.core.u_allow.allow_SB_LUT4_O_LC",
+        "steps": 15,
+        "delay_ns": {
+          "clk-to-q": 1.39,
+          "routing": 15.462,
+          "logic": 7.083,
+          "setup": 1.181
+        },
+        "total_ns": 25.116
+      }
+    }
+  ]
+}

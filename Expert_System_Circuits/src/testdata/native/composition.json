@@ -1,0 +1,69 @@
+{
+  "kind": "synthetic deterministic operator constructions",
+  "fan_out": {
+    "branches": 4,
+    "per_branch_rating": 0.6,
+    "rating_sum": 2.4,
+    "merged_rating": 0.6,
+    "merged_references": 1,
+    "balanced_without_creation": false,
+    "balanced_with_creation": true
+  },
+  "gates": [
+    {
+      "name": "inside",
+      "state": "TRUE",
+      "permitted": true,
+      "references": 2
+    },
+    {
+      "name": "boundary",
+      "state": "BOTH",
+      "permitted": false,
+      "references": 2
+    },
+    {
+      "name": "outside",
+      "state": "FALSE",
+      "permitted": false,
+      "references": 2
+    },
+    {
+      "name": "wrong_unit",
+      "state": "UNKNOWN",
+      "permitted": false,
+      "references": 2
+    },
+    {
+      "name": "fact_without_norm",
+      "state": "UNKNOWN",
+      "permitted": false,
+      "references": 1
+    }
+  ],
+  "countermodels": [
+    {
+      "name": "wrong_quote_interpretation_world_980_K",
+      "ledger_balanced": true,
+      "source_bytes_intact": true,
+      "entailed_by_quote": false,
+      "empirically_correct": false,
+      "gate_permitted": true
+    },
+    {
+      "name": "faithful_quote_but_false_source_world_980_K",
+      "ledger_balanced": true,
+      "source_bytes_intact": true,
+      "entailed_by_quote": true,
+      "empirically_correct": false,
+      "gate_permitted": true
+    }
+  ],
+  "example": {
+    "nominal_K": 930,
+    "standard_K": 5,
+    "expanded_K": 10,
+    "flow_score_per_tick": 0.42499999999999993,
+    "limit_925_state": "BOTH"
+  }
+}

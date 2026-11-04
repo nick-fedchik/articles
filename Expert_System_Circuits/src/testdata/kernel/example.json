@@ -1,0 +1,324 @@
+{
+  "Spec": {
+    "Action": "open_valve",
+    "Theory": {
+      "Atoms": 4,
+      "Evidence": [
+        {
+          "ID": "lock_engages_interlock",
+          "Version": "1",
+          "Premises": [
+            {
+              "Atom": 2,
+              "Negative": false
+            }
+          ],
+          "Conclusion": {
+            "Atom": 3,
+            "Negative": false
+          }
+        }
+      ],
+      "Norms": [
+        {
+          "ID": "open_when_safe",
+          "Version": "1",
+          "Action": "open_valve",
+          "Effect": "PERMIT",
+          "Conditions": [
+            {
+              "Atom": 0,
+              "Negative": false
+            },
+            {
+              "Atom": 1,
+              "Negative": false
+            }
+          ],
+          "Exception": {
+            "Atom": 3,
+            "Negative": false
+          }
+        },
+        {
+          "ID": "ban_under_lock",
+          "Version": "1",
+          "Action": "open_valve",
+          "Effect": "PROHIBIT",
+          "Conditions": [
+            {
+              "Atom": 2,
+              "Negative": false
+            }
+          ],
+          "Exception": null
+        },
+        {
+          "ID": "default_deny",
+          "Version": "1",
+          "Action": "open_valve",
+          "Effect": "PROHIBIT",
+          "Conditions": null,
+          "Exception": null
+        }
+      ],
+      "Priorities": [
+        {
+          "Higher": "ban_under_lock",
+          "Lower": "open_when_safe"
+        },
+        {
+          "Higher": "open_when_safe",
+          "Lower": "default_deny"
+        }
+      ]
+    },
+    "Guards": [
+      {
+        "Atom": 0,
+        "Quantity": "pressure",
+        "Unit": "bar",
+        "Low": 0,
+        "High": 8
+      }
+    ],
+    "TrustedSources": [
+      "plc-a",
+      "badge-reader",
+      "maintenance-db"
+    ],
+    "MaxAge": 2000000000
+  },
+  "Input": {
+    "Now": 1793700000000000000,
+    "Facts": [
+      {
+        "Literal": {
+          "Atom": 1,
+          "Negative": false
+        },
+        "Sources": [
+          "badge-reader"
+        ],
+        "Time": 1793699999000000000
+      },
+      {
+        "Literal": {
+          "Atom": 2,
+          "Negative": true
+        },
+        "Sources": [
+          "maintenance-db"
+        ],
+        "Time": 1793699999000000000
+      },
+      {
+        "Literal": {
+          "Atom": 3,
+          "Negative": true
+        },
+        "Sources": [
+          "plc-a"
+        ],
+        "Time": 1793700000000000000
+      }
+    ],
+    "Measurements": [
+      {
+        "Quantity": "pressure",
+        "Unit": "bar",
+        "Low": 5.8,
+        "High": 6.2,
+        "Sources": [
+          "plc-a"
+        ],
+        "Time": 1793699999900000000
+      }
+    ]
+  },
+  "Certificate": {
+    "SpecDigest": [
+      65,
+      239,
+      133,
+      207,
+      157,
+      195,
+      123,
+      4,
+      158,
+      173,
+      202,
+      243,
+      100,
+      151,
+      175,
+      99,
+      59,
+      192,
+      254,
+      124,
+      29,
+      23,
+      52,
+      80,
+      213,
+      201,
+      150,
+      255,
+      239,
+      81,
+      228,
+      162
+    ],
+    "InputDigest": [
+      186,
+      238,
+      107,
+      73,
+      197,
+      51,
+      222,
+      55,
+      97,
+      38,
+      204,
+      188,
+      82,
+      2,
+      73,
+      170,
+      176,
+      149,
+      118,
+      98,
+      165,
+      13,
+      217,
+      26,
+      66,
+      139,
+      62,
+      24,
+      34,
+      123,
+      213,
+      47
+    ],
+    "Atoms": "AgIBAQ==",
+    "Guards": "Ag==",
+    "Clean": "AgIBAQ==",
+    "Norm": {
+      "Theory": [
+        77,
+        37,
+        175,
+        92,
+        230,
+        174,
+        75,
+        121,
+        0,
+        132,
+        14,
+        195,
+        57,
+        227,
+        47,
+        173,
+        49,
+        79,
+        222,
+        252,
+        217,
+        200,
+        168,
+        75,
+        66,
+        168,
+        134,
+        39,
+        76,
+        117,
+        10,
+        65
+      ],
+      "Context": [
+        97,
+        22,
+        89,
+        238,
+        132,
+        239,
+        222,
+        97,
+        66,
+        118,
+        14,
+        144,
+        126,
+        148,
+        91,
+        108,
+        163,
+        104,
+        108,
+        184,
+        189,
+        61,
+        110,
+        46,
+        112,
+        219,
+        149,
+        0,
+        164,
+        225,
+        83,
+        215
+      ],
+      "Closure": "AgIBAQ==",
+      "Result": {
+        "Action": "open_valve",
+        "ConditionEvidence": 3,
+        "Applicable": 3,
+        "Surviving": 2,
+        "Decision": "ALLOW",
+        "Rules": [
+          {
+            "ID": "ban_under_lock",
+            "Condition": 1,
+            "Exception": 1,
+            "HasException": false,
+            "Status": "INACTIVE",
+            "DominatedBy": null
+          },
+          {
+            "ID": "default_deny",
+            "Condition": 2,
+            "Exception": 1,
+            "HasException": false,
+            "Status": "APPLICABLE",
+            "DominatedBy": [
+              "open_when_safe"
+            ]
+          },
+          {
+            "ID": "open_when_safe",
+            "Condition": 2,
+            "Exception": 1,
+            "HasException": true,
+            "Status": "APPLICABLE",
+            "DominatedBy": null
+          }
+        ]
+      }
+    },
+    "Fresh": true,
+    "Verified": true,
+    "Contained": true,
+    "Violations": null,
+    "Verdict": "ALLOW"
+  },
+  "Safety": null
+}

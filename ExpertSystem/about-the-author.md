@@ -1,7 +1,7 @@
 # Про автора: Микола Федчик
 
 > **Книга:** [Архітектура доказових експертних систем](README.md)  
-> **Зміст:** [README.md](README.md) · [Додаток А](appendix-a-evidence-governed-framework.md)  
+> **Зміст:** [README.md](README.md) · [Протокол доказового експерименту](ch36-knowledge-testing-pyramid-and-variational-calibration.md#59-протокол-доказового-експерименту-та-попередня-реєстрація)\
 > **Профіль:** [LinkedIn — Nick Fedchik](https://www.linkedin.com/in/nickfedchik/) · [GitHub — nick-fedchik](https://github.com/nick-fedchik)
 
 ---

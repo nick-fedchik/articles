@@ -65,7 +65,7 @@ def inspect_file(filepath: Path) -> list:
                 issues.append((idx, "ERR-STRUCT-01", f"Pseudo-heading bold line '**{heading_text}**' should be a formal H3/H4 markdown heading."))
 
         # Check unformatted authorial claims outside > [!NOTE]
-        if not in_note_block:
+        if not in_note_block and not (stripped.startswith('|') and stripped.endswith('|')):
             m = AUTHORIAL_CLAIM_PATTERN.search(line)
             if m:
                 # Exclude if it's already an H1-H4 heading or in a blockquote note

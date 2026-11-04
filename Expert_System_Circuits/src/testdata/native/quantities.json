@@ -1,0 +1,82 @@
+{
+  "status": "synthetic_conditional_calculations_not_empirical_calibration",
+  "assumptions": [
+    "w is a dimensionless model rating, not a calibrated probability",
+    "independent_conjunction treats 0.8 as hypothetical event probabilities only for that comparison",
+    "measurement is X+Y with standard uncertainties 1 kPa each and assumed correlation 0.8",
+    "error expectation uses fixed marginal probability 0.01; independence is not required",
+    "valve uses assumed U=2 or 6 kPa, tolerance width=10 kPa, w0=1 and phi0=1/tick",
+    "policy rate is an optional throttle, not measured verifier throughput",
+    "quadratic score has units tick^-2, not entropy/time or an error count"
+  ],
+  "composition": {
+    "a": 0.8,
+    "b": 0.8,
+    "generator_a": 0.24999999999999994,
+    "generator_b": 0.24999999999999994,
+    "hamacher": 0.6666666666666667,
+    "inverse_generator_sum": 0.6666666666666666,
+    "independent_conjunction": 0.64,
+    "equivalent_sequential_D": 0.5625
+  },
+  "measurement": {
+    "standard_1_kPa": 1,
+    "standard_2_kPa": 1,
+    "correlation": 0.8,
+    "uncorrelated_variance_kPa_squared": 2,
+    "correlated_variance_kPa_squared": 3.6
+  },
+  "expected_errors": [
+    {
+      "transactions": 100,
+      "assumed_error_probability": 0.01,
+      "expected_error_count": 1
+    },
+    {
+      "transactions": 200,
+      "assumed_error_probability": 0.01,
+      "expected_error_count": 2
+    },
+    {
+      "transactions": 400,
+      "assumed_error_probability": 0.01,
+      "expected_error_count": 4
+    }
+  ],
+  "valve_scenarios_A_B": [
+    {
+      "degradation": 0.04000000000000001,
+      "sigma": 0.9615384615384615,
+      "load_weight": 0.9615384615384615,
+      "policy_rate_per_tick": 0.9615384615384615,
+      "weighted_rate_per_tick": 0.9245562130177513,
+      "quadratic_score_per_tick_squared": 0.03698224852071006
+    },
+    {
+      "degradation": 0.36,
+      "sigma": 0.7352941176470589,
+      "load_weight": 0.7352941176470589,
+      "policy_rate_per_tick": 0.7352941176470589,
+      "weighted_rate_per_tick": 0.5406574394463669,
+      "quadratic_score_per_tick_squared": 0.19463667820069208
+    }
+  ],
+  "throttle_D_1_9": [
+    {
+      "degradation": 1,
+      "sigma": 0.5,
+      "load_weight": 0.5,
+      "policy_rate_per_tick": 0.5,
+      "weighted_rate_per_tick": 0.25,
+      "quadratic_score_per_tick_squared": 0.25
+    },
+    {
+      "degradation": 9,
+      "sigma": 0.1,
+      "load_weight": 0.1,
+      "policy_rate_per_tick": 0.1,
+      "weighted_rate_per_tick": 0.010000000000000002,
+      "quadratic_score_per_tick_squared": 0.09000000000000002
+    }
+  ]
+}
