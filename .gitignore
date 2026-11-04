@@ -11,9 +11,11 @@ scripts/
 
 !scripts/
 scripts/*
+!scripts/check_book.py
 !scripts/inspect_review_progress.py
 !scripts/tests/
 scripts/tests/*
+!scripts/tests/test_check_book.py
 !scripts/tests/test_inspect_review_progress.py
 !ExpertSystem/requirements/ch01-10-review-progress.json
 !scripts/inspect_render_syntax.mjs
@@ -23,4 +25,3 @@ scripts/tests/*
 scripts/render-validation/*
 !scripts/render-validation/package.json
 !scripts/render-validation/package-lock.json
-

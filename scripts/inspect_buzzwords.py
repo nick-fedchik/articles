@@ -63,8 +63,8 @@ def check_file(filepath: Path):
     issues = []
     try:
         text = filepath.read_text(encoding="utf-8")
-    except Exception as e:
-        return [f"Could not read {filepath}: {e}"]
+    except (OSError, UnicodeError) as e:
+        return [(0, "", f"Could not read {filepath}: {e}")]
 
     # We also do a general catch for any "контур" word
     kontur_word = re.compile(r"\bконтур\w*", re.IGNORECASE)
@@ -92,17 +92,18 @@ def check_file(filepath: Path):
 
 def main():
     root = Path(__file__).resolve().parent.parent
-    target_dir = root / "ExpertSystem"
-    if len(sys.argv) > 1:
-        target_dir = Path(sys.argv[1])
-
-    if target_dir.is_dir():
-        files = [p for p in sorted(target_dir.glob("**/*.md")) if "translations" not in p.parts or target_dir.name == "translations"]
-    else:
-        files = [target_dir]
+    targets = [Path(arg) for arg in sys.argv[1:]] or [root / "ExpertSystem"]
+    files = []
+    for target in targets:
+        if target.is_dir():
+            files.extend(p for p in target.glob("**/*.md")
+                         if "translations" not in p.parts or target.name == "translations")
+        else:
+            files.append(target)
+    files = sorted(set(files))
     total_issues = 0
 
-    print(f"=== Inspecting {len(files)} files in {target_dir} for 'контур' AI markers ===")
+    print(f"=== Inspecting {len(files)} files for 'контур' AI markers ===")
 
     for f in files:
         issues = check_file(f)

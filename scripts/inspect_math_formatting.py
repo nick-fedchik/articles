@@ -64,6 +64,11 @@ def strip_code_and_valid_backtick_math(line: str) -> str:
     return s
 
 
+def strip_code_preserving_backtick_math(line: str) -> str:
+    pattern = r"\$`[^`]*`\$|(?<!`)(`+)(?!`)(.*?)\1(?!`)"
+    return re.sub(pattern, lambda match: match.group(0) if match.group(1) is None else "", line)
+
+
 def protect_valid_math(text: str) -> Tuple[str, List[str]]:
     tokens = []
 
@@ -325,7 +330,8 @@ def inspect_file(filepath: str, fix: bool = False) -> Tuple[List[Tuple[int, str,
                     "ERR-MATH-08",
                     f"Corrupted tab-escaped LaTeX macro (\\text, \\tau, \\to, etc.): {repr(line[:60])}"
                 ))
-            if "\\operatorname" in line:
+            macro_line = line if in_math_fence or in_math_block else strip_code_preserving_backtick_math(line)
+            if "\\operatorname" in macro_line:
                 errors.append((
                     idx,
                     "ERR-MATH-11",

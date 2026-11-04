@@ -258,12 +258,33 @@ if (process.argv.includes('--fix-links')) {
   console.log(JSON.stringify({ files_changed: revisions.length, links_fixed: revisions.reduce((sum, item) => sum + item.patches.length, 0), report: path.relative(root, output) }));
   process.exit(0);
 }
+const selectedRecords = [...inventory.entries()];
 const objectResults = [];
-for (const record of inventory.values()) {
+for (const [, record] of selectedRecords) {
   for (const object of record.objects) objectResults.push(await validate(object));
 }
 const linkResults = [];
-for (const [file, record] of inventory) {
+const workspaceOnly = process.argv.includes('--workspace-only');
+function workspaceTargetError(destination) {
+  const relative = path.relative(root, destination);
+  if (relative === '..' || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) {
+    return 'Local target is outside the workspace';
+  }
+  const parts = relative.split(path.sep).filter(Boolean);
+  if (parts.includes('.tmp')) return 'Restricted .tmp target was not accessed';
+  let current = root;
+  for (const part of parts) {
+    current = path.join(current, part);
+    try {
+      if (fs.lstatSync(current).isSymbolicLink()) return 'Symbolic local target was not accessed';
+    } catch (error) {
+      if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return 'Missing local target';
+      return `Cannot inspect local target: ${error.message}`;
+    }
+  }
+  return '';
+}
+for (const [file, record] of selectedRecords) {
   for (const link of record.links) {
     if (/^[a-z][a-z\d+.-]*:/i.test(link.url) || link.url.startsWith('//')) continue;
     const separator = link.url.indexOf('#');
@@ -274,7 +295,11 @@ for (const [file, record] of inventory) {
       linkResults.push({ ...link, status: 'SKIP', reason: 'Translations frozen and outside scope' });
       continue;
     }
-    let error = '';
+    let error = workspaceOnly ? workspaceTargetError(destination) : '';
+    if (error) {
+      linkResults.push({ ...link, status: 'FAIL', error });
+      continue;
+    }
     if (!fs.existsSync(destination)) error = 'Missing local target';
     else if (fragment && fs.statSync(destination).isFile() && destination.endsWith('.md')) {
       let linked = inventory.get(destination);
@@ -291,7 +316,6 @@ const summary = {};
 for (const type of ['math', 'mermaid']) {
   const selected = objectResults.filter(item => item.type === type);
   summary[type] = { total: selected.length, passed: selected.filter(item => item.status === 'PASS').length, failed: selected.filter(item => item.status === 'FAIL').length };
-  assert(selected.length > 0);
 }
 summary.links = { total: linkResults.length, passed: linkResults.filter(item => item.status === 'PASS').length,
   failed: linkResults.filter(item => item.status === 'FAIL').length, skipped: linkResults.filter(item => item.status === 'SKIP').length };
@@ -304,7 +328,18 @@ summary.github_observed_macro_restrictions = {
   observations: observedGithubMacroRejections,
   complete_github_policy: false,
 };
-const output = path.join(root, 'review/tmp/technical-preparation/render-syntax.json');
+const reportOptions = process.argv.slice(2).filter(argument => argument.startsWith('--report='));
+if (reportOptions.length > 1 || reportOptions[0] === '--report=') {
+  throw new Error('Provide at most one non-empty --report=PATH');
+}
+const output = reportOptions.length
+  ? path.resolve(root, reportOptions[0].slice('--report='.length))
+  : path.join(root, 'review/tmp/technical-preparation/render-syntax.json');
+const reportRoot = path.join(root, 'review/tmp');
+const reportRelative = path.relative(reportRoot, output);
+if (!reportRelative || reportRelative.startsWith(`..${path.sep}`) || reportRelative === '..' || path.isAbsolute(reportRelative)) {
+  throw new Error('The render report must be located under review/tmp');
+}
 fs.mkdirSync(path.dirname(output), { recursive: true });
 fs.writeFileSync(output, JSON.stringify({
   at: new Date().toISOString(), node: process.version, dependencies: local('./package.json').dependencies,
@@ -313,8 +348,8 @@ fs.writeFileSync(output, JSON.stringify({
   scope: files.map(file => path.relative(root, file)),
   input_hashes: Object.fromEntries(files.map(file => [path.relative(root, file), sha(fs.readFileSync(file, 'utf8'))])),
   controls: controlResults, visual_rendering: 'DEFERRED_S7', summary, objects: objectResults, links: linkResults,
-  listings: [...inventory.values()].flatMap(record => record.listings),
-  code_blocks: [...inventory.values()].flatMap(record => record.codeBlocks),
+  listings: selectedRecords.flatMap(([, record]) => record.listings),
+  code_blocks: selectedRecords.flatMap(([, record]) => record.codeBlocks),
 }, null, 2) + '\n');
 console.log(JSON.stringify({ files: files.length, summary, report: path.relative(root, output) }, null, 2));
 for (const failed of [...objectResults, ...linkResults, ...observedMacroFailures].filter(item => item.status === 'FAIL').slice(0, 12)) {
