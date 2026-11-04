@@ -333,3 +333,70 @@ func TestEvaluateConcurrentEvaluators(t *testing.T) {
 		t.Fatal("concurrent evaluations differ")
 	}
 }
+
+// chapter6Example is the worked example of Chapter 6, §1.2: CaseSpec, MaxAge
+// 2 s, trusted identities of TrustedSources and a stale untrusted fact on the
+// unreferenced atom 7.
+func chapter6Example() kernel.Input {
+	ms := func(d int64) int64 { return Now - d*int64(time.Millisecond) }
+	return kernel.Input{
+		Now: Now,
+		Measurements: []kernel.Measurement{{Quantity: Quantity, Unit: "bar", Low: 6.1, High: 6.4,
+			Sources: []string{SourcePLC}, Time: ms(250)}},
+		Facts: []kernel.Fact{
+			fact(AtomAuthorized, true, SourceBadge, ms(400)),
+			fact(AtomLock, false, SourceMaint, ms(1200)),
+			fact(AtomInterlock, false, SourcePLC, ms(300)),
+			fact(AtomDemand, true, SourceDCS, ms(100)),
+			fact(AtomHotWork, true, SourcePTW, ms(1500)),
+			fact(AtomGasTest, true, SourceGas, ms(900)),
+			fact(AtomUnreferencedNoise, true, SourceLLM, ms(5000)),
+		},
+	}
+}
+
+func TestChapter6WorkedExample(t *testing.T) {
+	spec, in := CaseSpec(), chapter6Example()
+	if spec.MaxAge != 2*time.Second {
+		t.Fatalf("chapter assumes MaxAge 2 s, CaseSpec has %v", spec.MaxAge)
+	}
+	c, err := kernel.Evaluate(spec, in)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if c.Verdict != kernel.Allow || len(c.Violations) != 0 || !c.Fresh || !c.Verified || !c.Contained {
+		t.Fatalf("worked example must be ALLOW, got %s %v", c.Verdict, c.Violations)
+	}
+	if err := kernel.Verify(spec, in, c); err != nil {
+		t.Fatal(err)
+	}
+	if v := kernel.CheckSafety(spec, in); len(v) != 0 {
+		t.Fatalf("worked example must satisfy P: %v", v)
+	}
+	status := map[string]string{}
+	for _, o := range c.Norm.Result.Rules {
+		status[o.ID] = o.Status
+	}
+	want := map[string]string{"open_when_safe": "APPLICABLE", "hot_work_cleared": "APPLICABLE",
+		"ban_hot_work": "APPLICABLE", "ban_under_lock": "INACTIVE", "default_deny": "APPLICABLE"}
+	if !reflect.DeepEqual(status, want) {
+		t.Fatalf("norm statuses %v, want %v", status, want)
+	}
+
+	// Step 4 of the chapter: the former literal (source "sensor_p1" outside
+	// TrustedSources) and a hot-work fact aged 2.5 s > MaxAge each give DEFER_UNKNOWN.
+	untrusted := chapter6Example()
+	untrusted.Measurements[0].Sources = []string{"sensor_p1"}
+	stale := chapter6Example()
+	stale.Facts[findFact(stale, AtomHotWork)].Time = Now - int64(2500*time.Millisecond)
+	for name, bad := range map[string]kernel.Input{"untrusted": untrusted, "stale": stale} {
+		c, err := kernel.Evaluate(spec, bad)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if c.Verdict != kernel.Unknown || len(c.Violations) != 1 {
+			t.Fatalf("%s variant: want DEFER_UNKNOWN with one violation, got %s %v", name, c.Verdict, c.Violations)
+		}
+		t.Logf("%s variant: %s %v", name, c.Verdict, c.Violations)
+	}
+}

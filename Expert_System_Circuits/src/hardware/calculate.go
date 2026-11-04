@@ -130,6 +130,15 @@ func RAMB36SDP() Geometry {
 	return Geometry{"RAMB36E1_SDP_ECC_off", 72, 512}
 }
 
+// ICE40EBR is one iCE40 SB_RAM40_4K embedded block in its 256 x 16 mode.
+// ICE40HX8KEBRBlocks is the number of such blocks on iCE40HX8K
+// (32 x 4 Kbit = 131072 bits = 16 KiB), used to check whether a bank fits.
+func ICE40EBR() Geometry {
+	return Geometry{"iCE40_SB_RAM40_4K_256x16", 16, 256}
+}
+
+const ICE40HX8KEBRBlocks = uint64(32)
+
 type Memory struct {
 	RecordBits         uint64   `json:"record_bits"`
 	Records            uint64   `json:"records"`

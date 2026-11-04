@@ -16,7 +16,11 @@ VARIANTS := p0 p1 p2
 
 N = $(shell cat $(BUILD)/vectors.count)
 
-.PHONY: all versions vectors sim sim-iverilog sim-verilator lint mutants synth synth-gate pnr summary clean
+# Run a simulator, keep its log and propagate its exit status (a plain
+# `| tee` pipeline in /bin/sh would hide a fatal exit of the testbench).
+RUN_LOGGED = { $(1) > $(2) 2>&1; s=$$?; cat $(2); test $$s -eq 0; }
+
+.PHONY: all versions vectors sim sim-iverilog sim-verilator lint mutants equiv synth synth-gate pnr summary clean
 all: summary
 
 $(BUILD):
@@ -36,20 +40,20 @@ sim: sim-iverilog sim-verilator
 
 sim-iverilog: vectors
 	iverilog -g2005 -Wall -P tb_gate.N=$(N) -s tb_gate -o $(BUILD)/tb_gate.vvp $(RTL) tb/tb_gate.v
-	vvp -n $(BUILD)/tb_gate.vvp | tee $(BUILD)/sim_iverilog_gate.log
+	$(call RUN_LOGGED,vvp -n $(BUILD)/tb_gate.vvp,$(BUILD)/sim_iverilog_gate.log)
 	for p in 0 1 2; do \
 	  iverilog -g2005 -Wall -P tb_gate_top.N=$(N) -P tb_gate_top.M=$(TOP_M) -P tb_gate_top.VARIANT=$$p \
-	    -s tb_gate_top -o $(BUILD)/tb_top_p$$p.vvp $(RTL) tb/tb_gate_top.v && \
-	  vvp -n $(BUILD)/tb_top_p$$p.vvp | tee $(BUILD)/sim_iverilog_top_p$$p.log; done
+	    -s tb_gate_top -o $(BUILD)/tb_top_p$$p.vvp $(RTL) tb/tb_gate_top.v || exit 1; \
+	  $(call RUN_LOGGED,vvp -n $(BUILD)/tb_top_p$$p.vvp,$(BUILD)/sim_iverilog_top_p$$p.log) || exit 1; done
 
 sim-verilator: vectors
 	verilator --binary --timing -Wno-fatal -GN=$(N) --top-module tb_gate -Mdir $(BUILD)/vl_gate \
 	  $(RTL) tb/tb_gate.v > $(BUILD)/verilator_build_gate.log 2>&1
-	$(BUILD)/vl_gate/Vtb_gate | tee $(BUILD)/sim_verilator_gate.log
+	$(call RUN_LOGGED,$(BUILD)/vl_gate/Vtb_gate,$(BUILD)/sim_verilator_gate.log)
 	for p in 0 1 2; do \
 	  verilator --binary --timing -Wno-fatal -GN=$(N) -GM=$(TOP_M) -GVARIANT=$$p --top-module tb_gate_top \
-	    -Mdir $(BUILD)/vl_top_p$$p $(RTL) tb/tb_gate_top.v > $(BUILD)/verilator_build_top_p$$p.log 2>&1 && \
-	  $(BUILD)/vl_top_p$$p/Vtb_gate_top | tee $(BUILD)/sim_verilator_top_p$$p.log; done
+	    -Mdir $(BUILD)/vl_top_p$$p $(RTL) tb/tb_gate_top.v > $(BUILD)/verilator_build_top_p$$p.log 2>&1 || exit 1; \
+	  $(call RUN_LOGGED,$(BUILD)/vl_top_p$$p/Vtb_gate_top,$(BUILD)/sim_verilator_top_p$$p.log) || exit 1; done
 
 lint: | $(BUILD)
 	: > $(BUILD)/lint.log
@@ -59,6 +63,15 @@ lint: | $(BUILD)
 
 mutants: vectors
 	./scripts/mutants.sh $(BUILD)
+
+# Combinational equivalence of gate_core and gate_core_prefix over all 2^462
+# binary input words (SAT miter; no X/Z, reset or load-sequence properties).
+equiv: | $(BUILD)
+	yosys -q -l $(BUILD)/equiv.log -p "read_verilog rtl/gate_core.v rtl/prefix_carry.v rtl/gate_core_prefix.v; \
+	  hierarchy -check; proc; setattr -mod -unset keep_hierarchy *; flatten; opt_clean; \
+	  miter -equiv -flatten -make_assert gate_core gate_core_prefix miter; hierarchy -top miter; flatten; \
+	  sat -verify -prove-asserts miter"
+	grep 'SAT proof finished' $(BUILD)/equiv.log
 
 # Gate alone (word register + predicate + result register), no pin wrapper.
 # Cell counts only: 462+10 ports exceed package pins, so no place and route.

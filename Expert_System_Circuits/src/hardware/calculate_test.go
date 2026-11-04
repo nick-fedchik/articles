@@ -89,6 +89,31 @@ func TestMemoryCapacityVersusTiling(t *testing.T) {
 	}
 }
 
+// One reference64 bank (4096 records x 384 aligned bits = 192 KiB) needs at
+// least 384 iCE40 EBR blocks (12x the device), while iCE40HX8K has 32 (16 KiB); a ping-pong
+// pair needs twice as much. The Xilinx RAMB36 geometry is a separate,
+// conditional reference.
+func TestReference64BankVersusICE40HX8K(t *testing.T) {
+	got, err := DimensionMemory(384, 4096, ICE40EBR())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got.CapacityBytesMin != 196608 || got.CapacityBlocksMin != 384 || got.RectangularTiles != 384 {
+		t.Fatalf("unexpected iCE40 dimensioning: %+v", got)
+	}
+	available := ICE40HX8KEBRBlocks * got.Geometry.WordBits * got.Geometry.Depth
+	if available != 131072 || got.PayloadBits != 12*available {
+		t.Fatalf("available=%d payload=%d", available, got.PayloadBits)
+	}
+	xilinx, err := DimensionMemory(384, 4096, RAMB36SDP())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if xilinx.RectangularTiles != 48 || 2*xilinx.RectangularTiles != 96 {
+		t.Fatalf("unexpected RAMB36 tiling: %+v", xilinx)
+	}
+}
+
 func TestMemoryErrors(t *testing.T) {
 	for _, tt := range []struct {
 		width, records uint64

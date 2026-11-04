@@ -42,7 +42,9 @@
 // well-formed Spec S, Input I and Certificate c, Verify(S, I, c) == nil and
 // c.Verdict == ALLOW imply len(CheckSafety(S, I)) == 0. Conversely, because
 // validated measurements satisfy Low <= High, P implies ALLOW (Lean theorem
-// allow_iff_P), so every DENY or DEFER marks a violated clause of P.
+// allow_iff_P), so every DENY or DEFER marks a violated clause of P. The Lean
+// theorems cover the model only; that this Go code refines the model is not
+// mechanized and rests on tests and the bounded check.
 //
 // Scope limits: finite and acyclic theories, one action per Spec, no natural
 // language extraction, no signature cryptography (TrustedSources is the set of

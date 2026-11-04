@@ -24,7 +24,62 @@ type Atom struct {
 
 func A(pred string, args ...string) Atom { return Atom{pred, args} }
 
-func (a Atom) Key() string { return a.Pred + "(" + strings.Join(a.Args, ",") + ")" }
+var keyEscaper = strings.NewReplacer(`\`, `\\`, `(`, `\(`, `)`, `\)`, `,`, `\,`)
+
+// Key is an injective text encoding of the atom: the delimiters '(', ')', ','
+// and the escape '\' inside the predicate or an argument are prefixed with
+// '\', so p("a","b") gives p(a,b) while p("a,b") gives p(a\,b). Atoms with
+// ordinary identifiers keep the readable form pred(a,b).
+func (a Atom) Key() string {
+	if mutant == "M5" {
+		return a.Pred + "(" + strings.Join(a.Args, ",") + ")"
+	}
+	args := make([]string, len(a.Args))
+	for i, x := range a.Args {
+		args[i] = keyEscaper.Replace(x)
+	}
+	return keyEscaper.Replace(a.Pred) + "(" + strings.Join(args, ",") + ")"
+}
+
+// parseKey inverts Key; ok is false for text that Key cannot produce.
+func parseKey(k string) (Atom, bool) {
+	var parts []string
+	var cur strings.Builder
+	open, closed := false, false
+	for i := 0; i < len(k); i++ {
+		c := k[i]
+		switch {
+		case closed:
+			return Atom{}, false
+		case c == '\\':
+			if i+1 == len(k) {
+				return Atom{}, false
+			}
+			i++
+			cur.WriteByte(k[i])
+		case c == '(' && !open:
+			open = true
+			parts = append(parts, cur.String())
+			cur.Reset()
+		case c == ',' && open:
+			parts = append(parts, cur.String())
+			cur.Reset()
+		case c == ')' && open:
+			closed = true
+			if len(parts) > 1 || cur.Len() > 0 {
+				parts = append(parts, cur.String())
+			}
+		case c == '(' || c == ')' || c == ',':
+			return Atom{}, false
+		default:
+			cur.WriteByte(c)
+		}
+	}
+	if !closed {
+		return Atom{}, false
+	}
+	return Atom{Pred: parts[0], Args: parts[1:]}, true
+}
 
 func (a Atom) valid() bool {
 	if strings.TrimSpace(a.Pred) == "" || strings.HasPrefix(a.Pred, "?") {
@@ -322,7 +377,7 @@ func (s store) join(atom Atom, excluded map[string]bool) (evidence.State, []stri
 			roots[o.Root] = true
 		}
 	}
-	if excluded == nil {
+	if excluded == nil && mutant != "M3b" {
 		if d, ok := s.derived[atom.Key()]; ok {
 			v |= d.Status
 			for _, r := range d.Roots {
@@ -333,11 +388,22 @@ func (s store) join(atom Atom, excluded map[string]bool) (evidence.State, []stri
 	return v, sortedKeys(roots)
 }
 
+// observed reports whether some primary source gave the atom a value other
+// than UNKNOWN.
+func (s store) observed(atom Atom) bool {
+	for _, o := range s.byAtom[atom.Key()] {
+		if o.Value != evidence.Unknown {
+			return true
+		}
+	}
+	return false
+}
+
 func (s store) match(atom Atom, expected evidence.State, excluded map[string]bool) (Relation, evidence.State, []string) {
 	observed, roots := s.join(atom, excluded)
 	s.used[atom.Key()] = true
 	if excluded == nil {
-		if d, ok := s.derived[atom.Key()]; ok && len(d.Conflicts) > 0 {
+		if d, ok := s.derived[atom.Key()]; ok && len(d.Conflicts) > 0 && mutant != "M4" {
 			return Conflicted, observed, roots
 		}
 	}
@@ -419,6 +485,72 @@ func validate(q Query, m Model, obs []Observation) error {
 		if r.ExcludeRootVar != "" && !bound[r.ExcludeRootVar] {
 			return fmt.Errorf("reason: rule %q excludes unbound %s", r.ID, r.ExcludeRootVar)
 		}
+		if len(r.Premises) > 0 {
+			inHead := map[string]bool{}
+			for _, x := range r.Then.Args {
+				inHead[x] = true
+			}
+			for x := range bound {
+				if strings.HasPrefix(x, "?") && !inHead[x] {
+					return fmt.Errorf("reason: rule %q has premise variable %s absent from its conclusion (outside the grammar)", r.ID, x)
+				}
+			}
+		}
+	}
+	if mutant != "M8" {
+		if err := predicateCycle(m.Rules); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// predicateCycle rejects the model at acceptance if the predicate dependency
+// graph (premise predicate -> conclusion predicate) of all rules has a directed
+// cycle, whether or not a particular query or input would activate it. Every
+// cycle between ground rule instances maps to a cycle in this graph, so the
+// check is sound for the layered evaluation; it is conservative for rules such
+// as p(a) => p(b), which are rejected as recursive.
+func predicateCycle(rules []Rule) error {
+	edges := map[string][]string{}
+	for _, r := range rules {
+		for _, p := range r.premises() {
+			edges[p.Atom.Pred] = append(edges[p.Atom.Pred], r.Then.Pred)
+		}
+	}
+	nodes := make([]string, 0, len(edges))
+	for k := range edges {
+		nodes = append(nodes, k)
+	}
+	sort.Strings(nodes)
+	const (
+		white = iota
+		grey
+		black
+	)
+	color := map[string]int{}
+	var visit func(string) error
+	visit = func(n string) error {
+		color[n] = grey
+		for _, next := range edges[n] {
+			switch color[next] {
+			case grey:
+				return fmt.Errorf("reason: cycle in forward rules through predicate %s", next)
+			case white:
+				if err := visit(next); err != nil {
+					return err
+				}
+			}
+		}
+		color[n] = black
+		return nil
+	}
+	for _, n := range nodes {
+		if color[n] == white {
+			if err := visit(n); err != nil {
+				return err
+			}
+		}
 	}
 	return nil
 }
@@ -428,6 +560,23 @@ func validate(q Query, m Model, obs []Observation) error {
 func Reason(q Query, m Model, obs []Observation) (Answer, []Step, error) {
 	if err := validate(q, m, obs); err != nil {
 		return Answer{}, nil, err
+	}
+	premise, err := groundPremise(q, m)
+	if err != nil {
+		return Answer{}, nil, err
+	}
+	switch mutant {
+	case "M1":
+		rules := append([]Rule(nil), m.Rules...)
+		for i := range rules {
+			rules[i].Strength = Strong
+		}
+		m.Rules = rules
+	case "M2a":
+		obs = append([]Observation(nil), obs...)
+		for i := range obs {
+			obs[i].Root = obs[i].Relay
+		}
 	}
 	var trace []Step
 	emit := func(op string, kind StepKind, basis string, in, out []string) {
@@ -441,7 +590,6 @@ func Reason(q Query, m Model, obs []Observation) (Answer, []Step, error) {
 		obsLines = append(obsLines, fmt.Sprintf("%s=%s від %s через %s", o.Atom.Key(), o.Value, o.Root, o.Relay))
 	}
 	sort.Strings(obsLines)
-	premise := groundPremise(q, m)
 	qDesc := kindName(q.Kind) + "(" + q.Target.Key() + ")"
 	if q.Kind == Forecast {
 		qDesc = "Forecast(" + premise.Key() + "," + q.Target.Key() + ")"
@@ -464,8 +612,13 @@ func Reason(q Query, m Model, obs []Observation) (Answer, []Step, error) {
 	ans := Answer{Kind: q.Kind, Premise: premise, Target: q.Target}
 
 	if q.Kind == Whether {
-		if len(st.byAtom[q.Target.Key()]) == 0 && len(m.Schemes) == 0 && len(m.Rules) > 0 {
-			if err := forwardPropagate(&st, &ans, q, m, true, emit); err != nil {
+		// Observations and rule conclusions about the target are merged by the
+		// Belnap JOIN, exactly as in Forecast: an observed TRUE and a derived
+		// FALSE give BOTH. Models with explanation schemes are diagnostic; their
+		// If-rules state expected effects of hypotheses and are not run forward.
+		skip := mutant == "M6" && len(st.byAtom[q.Target.Key()]) > 0
+		if len(m.Schemes) == 0 && len(m.Rules) > 0 && !skip {
+			if err := forwardPropagate(&st, &ans, q, m, emit); err != nil {
 				return Answer{}, nil, err
 			}
 			ans.Derived = nil
@@ -502,7 +655,7 @@ func Reason(q Query, m Model, obs []Observation) (Answer, []Step, error) {
 			ans.UnusedObservations = unused(st)
 			return ans, trace, nil
 		}
-		if err := forwardPropagate(&st, &ans, q, m, false, emit); err != nil {
+		if err := forwardPropagate(&st, &ans, q, m, emit); err != nil {
 			return Answer{}, nil, err
 		}
 		ans.TargetStatus, ans.TargetRoots = st.join(q.Target, nil)
@@ -682,7 +835,7 @@ func Reason(q Query, m Model, obs []Observation) (Answer, []Step, error) {
 			switch n := len(h.SupportRoots); {
 			case n > bestN:
 				best, bestN, tie = k, n, false
-			case n == bestN:
+			case n == bestN && mutant != "M3a":
 				tie = true
 			}
 		}
@@ -705,80 +858,175 @@ func Reason(q Query, m Model, obs []Observation) (Answer, []Step, error) {
 	return ans, trace, nil
 }
 
-func groundPremise(q Query, m Model) Atom {
+// groundPremise instantiates the Forecast premise. Its variables are model
+// parameters shared by name with the conclusions that can produce the target:
+// they are bound by unifying the target with every rule conclusion, declared
+// derived atom or the premise itself that has the target's predicate and arity.
+// An unbound or ambiguously bound premise variable rejects the query.
+func groundPremise(q Query, m Model) (Atom, error) {
 	if q.Kind != Forecast || m.Premise.Pred == "" {
-		return Atom{}
+		return Atom{}, nil
+	}
+	inPremise := map[string]bool{}
+	for _, x := range m.Premise.Args {
+		inPremise[x] = true
+	}
+	patterns := append([]Atom{m.Premise}, m.Derived...)
+	for _, r := range m.Rules {
+		patterns = append(patterns, r.Then)
 	}
 	b := bindings{}
-	for i, x := range m.Premise.Args {
-		if strings.HasPrefix(x, "?") && i < len(q.Target.Args) {
-			b[x] = q.Target.Args[i]
+	for _, p := range patterns {
+		pb, ok := unify(p, q.Target, bindings{})
+		if !ok {
+			continue
+		}
+		for x, v := range pb {
+			if !inPremise[x] {
+				continue
+			}
+			if prev, seen := b[x]; seen && prev != v {
+				return Atom{}, fmt.Errorf("reason: premise variable %s bound to both %s and %s by target %s", x, prev, v, q.Target.Key())
+			}
+			b[x] = v
 		}
 	}
-	return substitute(m.Premise, b)
+	g := substitute(m.Premise, b)
+	if !g.ground() {
+		return Atom{}, fmt.Errorf("reason: premise %s is not determined by target %s", m.Premise.Key(), q.Target.Key())
+	}
+	return g, nil
 }
 
-func forwardPropagate(st *store, ans *Answer, q Query, m Model, onlyTargetAncestors bool, emit func(string, StepKind, string, []string, []string)) error {
-	b := bindings{}
-	bindFrom := func(pattern, ground Atom) {
-		for i, x := range pattern.Args {
-			if strings.HasPrefix(x, "?") && i < len(ground.Args) {
-				b[x] = ground.Args[i]
-			}
+// groundRules instantiates rules by unification, never by argument position.
+// Every rule instance receives its own substitution, consistent for repeated
+// variables, so variables of different rules, or positions of a multi-argument
+// atom, never overwrite each other.
+//
+// Backward step: a rule is instantiated for every needed ground atom that its
+// conclusion unifies with, starting from the target; premises of an instance
+// become needed atoms in turn. Forward step (Forecast only, forward=true): a
+// rule is also instantiated when each of its premises unifies with an already
+// known atom (target ancestors, observations, the premise or conclusions of
+// instances), so parallel consequences of the premise are evaluated too.
+// The model is acyclic and has no function symbols, so both steps terminate.
+func groundRules(target Atom, m Model, seeds []Atom, forward bool) ([]Rule, map[string]Atom, error) {
+	var out []Rule
+	known := map[string]Atom{target.Key(): target}
+	seen := map[string]bool{}
+	var queue []Atom
+	learn := func(a Atom) {
+		if _, ok := known[a.Key()]; !ok {
+			known[a.Key()] = a
+			queue = append(queue, a)
 		}
 	}
-	for _, d := range m.Derived {
-		bindFrom(d, q.Target)
-	}
-	for _, r := range m.Rules {
-		bindFrom(r.Then, q.Target)
-		for _, p := range r.premises() {
-			bindFrom(p.Atom, q.Target)
-		}
-	}
-
-	var gRules []Rule
-	for _, r := range m.Rules {
+	add := func(i int, r Rule, b bindings) (bool, error) {
 		gr := r
 		gr.Then = substitute(r.Then, b)
-		var ps []Premise
+		gr.Premises = nil
+		id := []string{fmt.Sprint(i), gr.Then.Key()}
 		for _, p := range r.premises() {
-			ps = append(ps, Premise{Atom: substitute(p.Atom, b), Expected: p.Expected})
+			a := substitute(p.Atom, b)
+			if !a.ground() {
+				return false, fmt.Errorf("reason: rule %q premise %s has a variable not bound by conclusion %s", r.ID, p.Atom.Key(), r.Then.Key())
+			}
+			gr.Premises = append(gr.Premises, Premise{Atom: a, Expected: p.Expected})
+			id = append(id, a.Key())
 		}
-		gr.Premises = ps
-		gRules = append(gRules, gr)
+		k := strings.Join(id, "\x00")
+		if seen[k] {
+			return false, nil
+		}
+		seen[k] = true
+		out = append(out, gr)
+		learn(gr.Then)
+		for _, p := range gr.Premises {
+			learn(p.Atom)
+		}
+		return true, nil
 	}
-
-	if onlyTargetAncestors {
-		needed := map[string]bool{q.Target.Key(): true}
-		for changed := true; changed; {
-			changed = false
-			for _, r := range gRules {
-				if !needed[r.Then.Key()] {
-					continue
+	backward := func(g Atom) error {
+		for i, r := range m.Rules {
+			if b, ok := unify(r.Then, g, bindings{}); ok {
+				if _, err := add(i, r, b); err != nil {
+					return err
 				}
-				for _, p := range r.Premises {
-					if !needed[p.Atom.Key()] {
-						needed[p.Atom.Key()] = true
-						changed = true
+			}
+		}
+		return nil
+	}
+	if err := backward(target); err != nil {
+		return nil, nil, err
+	}
+	for len(queue) > 0 {
+		g := queue[0]
+		queue = queue[1:]
+		if err := backward(g); err != nil {
+			return nil, nil, err
+		}
+	}
+	if !forward {
+		return out, known, nil
+	}
+	for _, a := range seeds {
+		if _, ok := known[a.Key()]; !ok {
+			known[a.Key()] = a
+		}
+	}
+	for changed := true; changed; {
+		changed = false
+		keys := make([]string, 0, len(known))
+		for k := range known {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+		for i, r := range m.Rules {
+			ps := r.premises()
+			var rec func(j int, b bindings) error
+			rec = func(j int, b bindings) error {
+				if j == len(ps) {
+					added, err := add(i, r, b)
+					changed = changed || added
+					return err
+				}
+				for _, k := range keys {
+					if b2, ok := unify(ps[j].Atom, known[k], b); ok {
+						if err := rec(j+1, b2); err != nil {
+							return err
+						}
 					}
 				}
+				return nil
+			}
+			if err := rec(0, bindings{}); err != nil {
+				return nil, nil, err
 			}
 		}
-		var filtered []Rule
-		for _, r := range gRules {
-			if needed[r.Then.Key()] {
-				filtered = append(filtered, r)
-			}
-		}
-		gRules = filtered
+		queue = nil
+	}
+	return out, known, nil
+}
+
+func forwardPropagate(st *store, ans *Answer, q Query, m Model, emit func(string, StepKind, string, []string, []string)) error {
+	var seeds []Atom
+	for _, os := range st.byAtom {
+		seeds = append(seeds, os[0].Atom)
+	}
+	if q.Kind == Forecast {
+		seeds = append(seeds, ans.Premise)
+	}
+	gRules, relevant, err := groundRules(q.Target, m, seeds, q.Kind == Forecast)
+	if err != nil {
+		return err
 	}
 
 	derivedSet := map[string]Atom{}
 	for _, d := range m.Derived {
-		gd := substitute(d, b)
-		if !onlyTargetAncestors || gd.Key() == q.Target.Key() {
-			derivedSet[gd.Key()] = gd
+		for k, a := range relevant {
+			if _, ok := unify(d, a, bindings{}); ok {
+				derivedSet[k] = a
+			}
 		}
 	}
 	for _, r := range gRules {
@@ -842,7 +1090,11 @@ func forwardPropagate(st *store, ans *Answer, q Query, m Model, onlyTargetAncest
 			for _, r := range rulesForAtom {
 				upstreamOK := true
 				for _, p := range r.Premises {
-					if _, isDerived := derivedSet[p.Atom.Key()]; isDerived && !reachedAtom[p.Atom.Key()] {
+					// A derived premise is usable if some rule reached it or it
+					// is observed directly; an observed fact needs no producer.
+					_, isDerived := derivedSet[p.Atom.Key()]
+					observed := st.observed(p.Atom) && mutant != "M7"
+					if isDerived && !reachedAtom[p.Atom.Key()] && !observed {
 						upstreamOK = false
 						break
 					}
@@ -915,6 +1167,9 @@ func forwardPropagate(st *store, ans *Answer, q Query, m Model, onlyTargetAncest
 						dres.DerivedBy = append(dres.DerivedBy, r.ID)
 						for rt := range ruleRoots {
 							rootsSet[rt] = true
+						}
+						if mutant == "M2b" {
+							rootsSet = map[string]bool{r.ID: true}
 						}
 					} else {
 						dres.TypicalSupport = append(dres.TypicalSupport, r.ID)

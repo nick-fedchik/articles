@@ -43,6 +43,9 @@ module tb_gate_top;
             end
         end
         $display("RESULT top_variant%0d checked=%0d mismatches=%0d", VARIANT, checked, mism);
+        if (mism != 0 || checked == 0)
+            $fatal(1, "FAIL tb_gate_top variant %0d: mismatches=%0d checked=%0d", VARIANT, mism, checked);
+        $display("PASS tb_gate_top variant %0d", VARIANT);
         $finish;
     end
 endmodule

@@ -4,6 +4,9 @@
 // halves (c_hi, c_lo) at level 5 using a radix-4 32-bit upper group propagate
 // (p_hi32 = &p0[31:16]) so the final OR c_hi | c_lo merges directly into the
 // output 4-LUTs of result[0] and result[8] (total core depth = 7 LUT4 levels).
+// Supported width: W = 64 only (elaboration guard below).
+// csa64: k_shift[0] = 1 supplies the "+1" of the two's complement ~now + 1, so
+// carry_out(s + k_shift) | k_top  <=>  max_age + ts + (2^64 - 1 - now) + 1 >= 2^64.
 `timescale 1ns/1ps
 `default_nettype none
 /* verilator lint_off DECLFILENAME */
@@ -25,6 +28,16 @@ module prefix_carry #(
     wire [W-1:0] a = INV_MSB ? {~a_in[W-1], a_in[W-2:0]} : a_in;
     wire [W-1:0] b_msb = INV_MSB ? {~b_in[W-1], b_in[W-2:0]} : b_in;
     wire [W-1:0] b = INV_B ? ~b_msb : b_msb;
+
+    // The tree below is hard-wired for 32 bit pairs (64 bits): with W=65 bit 64
+    // would be silently ignored, with W<64 indices go out of range. Any other W
+    // therefore fails elaboration (iverilog, Verilator, yosys hierarchy -check)
+    // through a reference to a module that intentionally does not exist.
+    generate
+        if (W != 64) begin : g_unsupported_w
+            prefix_carry_supports_only_W_64 u_unsupported_w ();
+        end
+    endgenerate
 
     wire [31:0] g0, p0;
     genvar m;

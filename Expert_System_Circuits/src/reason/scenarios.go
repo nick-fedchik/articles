@@ -280,29 +280,14 @@ func (r Renaming) Answer(a Answer) Answer {
 	return Canonical(b)
 }
 
-// renameKeyText renames an unused-observation key "pred(a,b)" token-wise.
+// renameKeyText renames an unused-observation or missing-fact key produced by
+// Atom.Key; it decodes the escaped encoding instead of splitting on commas.
 func (r Renaming) renameKeyText(k string) string {
-	open := -1
-	for i, c := range k {
-		if c == '(' {
-			open = i
-			break
-		}
-	}
-	if open < 0 || k[len(k)-1] != ')' {
+	a, ok := parseKey(k)
+	if !ok {
 		return r.s(k)
 	}
-	var args []string
-	if inner := k[open+1 : len(k)-1]; inner != "" {
-		start := 0
-		for i := 0; i <= len(inner); i++ {
-			if i == len(inner) || inner[i] == ',' {
-				args = append(args, inner[start:i])
-				start = i + 1
-			}
-		}
-	}
-	return Atom{r.s(k[:open]), r.ss(args)}.Key()
+	return r.Atom(a).Key()
 }
 
 func sortedCopy(xs []string) []string {

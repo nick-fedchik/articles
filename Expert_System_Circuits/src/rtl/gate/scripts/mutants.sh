@@ -24,7 +24,8 @@ for name in $(printf '%s\n' "${!MUT[@]}" | sort); do
   fi
   verilator --binary --timing -Wno-fatal -Wno-lint -GN="$N" --top-module tb_gate -Mdir "$BUILD/mut/vl_$name" \
     "$BUILD/mut/core_$name.v" $OTHER tb/tb_gate.v > "$BUILD/mut/build_$name.log" 2>&1
-  line=$("$BUILD/mut/vl_$name/Vtb_gate" | grep '^RESULT one_tick ')
+  # A killed mutant makes tb_gate exit non-zero via $fatal; that is expected here.
+  line=$("$BUILD/mut/vl_$name/Vtb_gate" 2>&1 | grep '^RESULT one_tick ' || true)
   mism=$(sed -E 's/.*mismatches=([0-9]+).*/\1/' <<< "$line")
   status=killed; [ "$mism" -gt 0 ] || status=SURVIVED
   echo "MUTANT $name mismatches=$mism $status" | tee -a "$BUILD/mutants.log"

@@ -134,9 +134,11 @@ structure Fact where
   time : Int
 deriving DecidableEq, Repr
 
-/-- compose.IntervalGuard: unit mismatch U, disjoint F, overlap BOTH, contained T. -/
+/-- compose.IntervalGuard: unit mismatch U, disjoint F, overlap BOTH, contained T.
+    An inverted measurement interval `m.hi < m.lo` is malformed: Go `validateInput`
+    rejects it with an error, the model maps it to U, so neither can yield ALLOW. -/
 def guardState (g : Guard) (m : Meas) : B4 :=
-  if m.unit ≠ g.unit then B4.U
+  if m.unit ≠ g.unit ∨ m.hi < m.lo then B4.U
   else if m.hi < g.lo ∨ m.lo > g.hi then B4.F
   else if m.lo < g.lo ∨ m.hi > g.hi then B4.Bo
   else B4.T
@@ -318,7 +320,7 @@ def P3 (S : Spec) (I : Input) : Prop :=
 
 def P4 (S : Spec) (I : Input) : Prop :=
   ∀ g ∈ S.guards, (∃ m ∈ I.meas, m.qty = g.qty) ∧
-    ∀ m ∈ I.meas, m.qty = g.qty → m.unit = g.unit ∧ g.lo ≤ m.lo ∧ m.hi ≤ g.hi
+    ∀ m ∈ I.meas, m.qty = g.qty → m.unit = g.unit ∧ g.lo ≤ m.lo ∧ m.lo ≤ m.hi ∧ m.hi ≤ g.hi
 
 def P5 (S : Spec) (I : Input) : Prop :=
   (∀ f ∈ I.facts, relevantAtom S f.lit.atom = true → I.now - S.maxAge ≤ f.time ∧ f.time ≤ I.now) ∧
@@ -686,15 +688,19 @@ theorem verdict_allow (S : Spec) (I : Input) (h : verdict S I = .allow) :
       · simp [a, b, c] at h
 
 theorem guard_true_contained (g : Guard) (m : Meas) (h : guardState g m = B4.T) :
-    m.unit = g.unit ∧ g.lo ≤ m.lo ∧ m.hi ≤ g.hi := by
+    m.unit = g.unit ∧ g.lo ≤ m.lo ∧ m.lo ≤ m.hi ∧ m.hi ≤ g.hi := by
   unfold guardState at h
-  by_cases hu : m.unit ≠ g.unit
+  by_cases hu : m.unit ≠ g.unit ∨ m.hi < m.lo
   · simp [hu, B4.U, B4.T] at h
-  · by_cases hd : m.hi < g.lo ∨ m.lo > g.hi
+  · have hu' : m.unit = g.unit ∧ m.lo ≤ m.hi := by
+      refine ⟨?_, ?_⟩
+      · exact Classical.not_not.mp (fun hne => hu (Or.inl hne))
+      · exact Int.not_lt.mp (fun hlt => hu (Or.inr hlt))
+    by_cases hd : m.hi < g.lo ∨ m.lo > g.hi
     · simp [hu, hd, B4.F, B4.T] at h
     · by_cases ho : m.lo < g.lo ∨ m.hi > g.hi
       · simp [hu, hd, ho, B4.Bo, B4.T] at h
-      · refine ⟨Classical.not_not.mp hu, ?_, ?_⟩ <;> omega
+      · refine ⟨hu'.1, ?_, hu'.2, ?_⟩ <;> omega
 
 /-! ### Main theorem -/
 
@@ -854,7 +860,22 @@ theorem allow_prohibitions_defeated_by_permit (S : Spec) (I : Input) (ho : Stric
       have := hproh g hg
       simp [happg, hgp, hmax] at this
 
-/-! ### Relative completeness: P forces ALLOW on well-formed measurements -/
+/-- Book form of P2: every applicable prohibition is dominated by an applicable PERMIT. -/
+def P2permit (S : Spec) (I : Input) : Prop :=
+  ∀ r ∈ S.norms, r.permit = false → status (closure S I) r = .applicable →
+    ∃ g ∈ S.norms, g.permit = true ∧ status (closure S I) g = .applicable ∧ S.dom g.id r.id = true
+
+/-- Certificate-level soundness with the book form of P2. The extra premise
+    `StrictOrd S.dom` is what Go `CompileNormative` is designed to guarantee
+    (cycle rejection and transitive closure); that link is not mechanized here. -/
+theorem soundness_permit (S : Spec) (I : Input) (c : Certificate)
+    (hwf : WellFormed S) (ho : StrictOrd S.dom)
+    (hv : verifyCert S I c = true) (ha : c.verdict = .allow) : P S I ∧ P2permit S I := by
+  have hv_eq := verifyCert_verdict_eq S I c hwf hv
+  rw [hv_eq] at ha
+  exact ⟨allow_sound S I ha, allow_prohibitions_defeated_by_permit S I ho ha⟩
+
+/-! ### Relative completeness: P forces ALLOW -/
 
 theorem lits_true_cond (cl : Nat → B4) (r : Norm) (h : ∀ l ∈ r.conds, litVal cl l = B4.T) :
     condVal cl r = B4.T := by
@@ -881,14 +902,15 @@ theorem determined_status (cl : Nat → B4) (r : Norm)
   rcases B4.cases4 (excVal cl r) with h2 | h2 | h2 | h2 <;>
   simp_all [isUnknown, isConflict, B4.U, B4.F, B4.T, B4.Bo]
 
-theorem contained_guard_true (g : Guard) (m : Meas) (hwf : m.lo ≤ m.hi)
-    (h : m.unit = g.unit ∧ g.lo ≤ m.lo ∧ m.hi ≤ g.hi) : guardState g m = B4.T := by
+theorem contained_guard_true (g : Guard) (m : Meas)
+    (h : m.unit = g.unit ∧ g.lo ≤ m.lo ∧ m.lo ≤ m.hi ∧ m.hi ≤ g.hi) : guardState g m = B4.T := by
   unfold guardState
   have h1 : ¬(m.hi < g.lo ∨ m.lo > g.hi) := by omega
   have h2 : ¬(m.lo < g.lo ∨ m.hi > g.hi) := by omega
-  simp [h.1, h1, h2]
+  have h3 : ¬(m.hi < m.lo) := by omega
+  simp [h.1, h1, h2, h3]
 
-theorem allow_complete (S : Spec) (I : Input) (hwf : ∀ m ∈ I.meas, m.lo ≤ m.hi) (hP : P S I) :
+theorem allow_complete (S : Spec) (I : Input) (hP : P S I) :
     verdict S I = .allow := by
   obtain ⟨⟨r, hr, hpm, hlits, hexc, hnd⟩, hp2, hp3, hp4, hp5, hp6⟩ := hP
   have happ : status (closure S I) r = .applicable :=
@@ -934,7 +956,7 @@ theorem allow_complete (S : Spec) (I : Input) (hwf : ∀ m ∈ I.meas, m.lo ≤ 
     unfold decision
     simp [hnc, hnu, hsurvT, hsurvF]
   have hT : ∀ g ∈ S.guards, ∀ m ∈ I.meas, m.qty = g.qty → guardState g m = B4.T :=
-    fun g hg m hm hq => contained_guard_true g m (hwf m hm) ((hp4 g hg).2 m hm hq)
+    fun g hg m hm hq => contained_guard_true g m ((hp4 g hg).2 m hm hq)
   have hnot : ∀ s, s ≠ B4.T → anyState S I s = false := by
     intro s hs
     unfold anyState
@@ -976,9 +998,10 @@ theorem allow_complete (S : Spec) (I : Input) (hwf : ∀ m ∈ I.meas, m.lo ≤ 
   unfold verdict mapVerdict
   simp [hdec, hF, hB, hcw, hfresh, hver, hcont]
 
-/-- On well-formed measurements K is exact for P: ALLOW iff P. -/
-theorem allow_iff_P (S : Spec) (I : Input) (hwf : ∀ m ∈ I.meas, m.lo ≤ m.hi) :
+/-- K is exact for P: ALLOW iff P. P4 itself demands ordered measurement
+    intervals, so no separate precondition on `I.meas` is needed. -/
+theorem allow_iff_P (S : Spec) (I : Input) :
     verdict S I = .allow ↔ P S I :=
-  ⟨allow_sound S I, allow_complete S I hwf⟩
+  ⟨allow_sound S I, allow_complete S I⟩
 
 end GateKernel

@@ -65,6 +65,12 @@ module tb_gate;
         $display("RESULT one_tick checked=%0d mismatches=%0d allow=%0d", checked_one, mism_one, allow_seen);
         $display("RESULT one_tick_prefix checked=%0d mismatches=%0d", checked_one, mism_prefix);
         $display("RESULT pipelined checked=%0d mismatches=%0d", checked_pipe, mism_pipe);
+        // Any mismatch or an incomplete check makes the simulator exit non-zero,
+        // so `make sim` fails instead of only printing the counters.
+        if (mism_one != 0 || mism_prefix != 0 || mism_pipe != 0 || checked_one != N || checked_pipe != N)
+            $fatal(1, "FAIL tb_gate: mismatches one=%0d prefix=%0d pipe=%0d, checked one=%0d pipe=%0d of N=%0d",
+                   mism_one, mism_prefix, mism_pipe, checked_one, checked_pipe, N);
+        $display("PASS tb_gate");
         $finish;
     end
 endmodule
