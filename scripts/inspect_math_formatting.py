@@ -325,6 +325,12 @@ def inspect_file(filepath: str, fix: bool = False) -> Tuple[List[Tuple[int, str,
                     "ERR-MATH-08",
                     f"Corrupted tab-escaped LaTeX macro (\\text, \\tau, \\to, etc.): {repr(line[:60])}"
                 ))
+            if "\\operatorname" in line:
+                errors.append((
+                    idx,
+                    "ERR-MATH-11",
+                    "Macro \\operatorname is not allowed by GitHub math renderer; use \\mathrm{...} instead"
+                ))
 
         if stripped.startswith("```"):
             if not in_fence:
