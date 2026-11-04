@@ -195,8 +195,8 @@ $$
 **Формула 16.7 — Довіра та правдоподібність**
 
 $$
-\operatorname{Bel}(A)=\sum_{B\subseteq A}m(B),\qquad
-\operatorname{Pl}(A)=\sum_{B\cap A\ne\varnothing}m(B)
+\mathrm{Bel}(A)=\sum_{B\subseteq A}m(B),\qquad
+\mathrm{Pl}(A)=\sum_{B\cap A\ne\varnothing}m(B)
 $$
 
 `A` — гіпотеза або множина гіпотез; `B` — множина з рамки `Θ`; `m(B)` — призначена їй маса. Для будь-якої `A` маємо `Bel(A)≤Pl(A)`. Інтервал `[Bel(A),Pl(A)]` показує межі підтримки в межах заданої моделі, а не частотний довірчий інтервал із статистики.

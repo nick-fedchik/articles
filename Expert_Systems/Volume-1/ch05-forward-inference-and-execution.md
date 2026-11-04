@@ -169,7 +169,7 @@ return I
 $$
 \begin{aligned}
 p \leftarrow q &\implies \mathrm{stratum}(p)\geq\mathrm{stratum}(q),\\
-p \leftarrow \operatorname{not} q
+p \leftarrow \mathrm{not} q
 &\implies \mathrm{stratum}(p)>\mathrm{stratum}(q).
 \end{aligned}
 $$
