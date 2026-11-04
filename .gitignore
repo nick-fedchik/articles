@@ -29,3 +29,9 @@ scripts/tests/*
 scripts/render-validation/*
 !scripts/render-validation/package.json
 !scripts/render-validation/package-lock.json
+
+
+/Other/
+/reports/
+/research_notes/
+/review/
