@@ -666,9 +666,9 @@ assert check_graph(links, {"P", "T"}, "G") == {"P", "T"}
 
 ```math
 \begin{aligned}
-\mathrm{MTH}(\varnothing)&=H(\varepsilon),\\
-\mathrm{MTH}([d])&=H(\texttt{0x00}\mathbin{\|}d),\\
-\mathrm{MTH}(D[0:n])&=
+\mathrm{MTH}(\varnothing)&=H(\varepsilon),
+\\ \mathrm{MTH}([d])&=H(\texttt{0x00}\mathbin{\|}d),
+\\ \mathrm{MTH}(D[0:n])&=
 H\!\left(\texttt{0x01}\mathbin{\|}
 \mathrm{MTH}(D[0:k])\mathbin{\|}
 \mathrm{MTH}(D[k:n])\right),\quad n\ge2.
