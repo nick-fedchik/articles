@@ -1,6 +1,6 @@
 # Військова Кібернетика початку XXI століття: системи управління, кіберфізичні комплекси та доказовий інтелект
 
-**Автор:** [Микола Федчик (Mykola Fedchyk)](../ExpertSystem/book/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
+**Автор:** [Микола Федчик (Mykola Fedchyk)](../ExpertSystem/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
 **Формат:** Академічна та інженерно-аналітична монографія  
 **Рік:** 2026
 
