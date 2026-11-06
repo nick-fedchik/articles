@@ -18,6 +18,7 @@ Checks performed:
   [ERR-MATH-08] Corrupted LaTeX escape sequences (control chars \x07, \x08, \x0b, \x0c, or split \r/\n/\t macros)
   [ERR-MATH-09] Unprotected inline math containing Markdown formatting characters ('_' or '*')
   [ERR-MATH-10] Unbalanced curly braces or broken subscript/superscript patterns (missing '_' or '^') in math
+  [ERR-MATH-12] Degree superscript attached to spacing or without an explicit base (use {}^\\circ)
   [ERR-ADV-01]  Missing blank line after `</summary>` inside `<details>` block
   [ERR-ADV-02]  Text on the same line after GitHub Alert tag `> [!NOTE|TIP|IMPORTANT|WARNING|CAUTION]`
 
@@ -337,6 +338,29 @@ def inspect_file(filepath: str, fix: bool = False) -> Tuple[List[Tuple[int, str,
                     "ERR-MATH-11",
                     "Macro \\operatorname is not allowed by GitHub math renderer; use \\mathrm{...} instead"
                 ))
+            if in_math_fence or in_math_block or "$$" in macro_line:
+                degree_expressions = [macro_line.strip().strip("$")]
+            else:
+                degree_expressions = [
+                    match.group(1) if match.group(1) is not None else match.group(2)
+                    for match in re.finditer(
+                        r"\$`([^`]+)`\$|(?<![\\$])\$(?!\$)([^$\n]+)\$",
+                        macro_line,
+                    )
+                ]
+            for expression in degree_expressions:
+                if re.search(
+                    r"(?:\\(?:[,;:!]|quad\b|qquad\b)\s*|^\s*|[(\[]\s*)"
+                    r"\^\s*(?:\\circ\b|\{\s*\\circ\s*\})",
+                    expression,
+                ):
+                    errors.append((
+                        idx,
+                        "ERR-MATH-12",
+                        "Degree superscript has no explicit base or follows a spacing command; "
+                        "use {}^\\circ (for example 85\\,{}^\\circ\\mathrm{C}) "
+                        "to avoid KaTeX internal-group errors",
+                    ))
 
         if stripped.startswith("```"):
             if not in_fence:
@@ -547,7 +571,8 @@ def main() -> int:
         print(f"\n[FIXED] Automatically repaired formatting in {fixed_files} file(s).")
 
     if total_errors == 0:
-        print("\n[OK] All mathematical expressions (inline & block) and advanced GFM formatting are 100% valid!")
+        print("\n[OK] No violations of the checked math and advanced GFM formatting rules found.")
+        print("Target-renderer compatibility still requires a rendering check.")
         return 0
     else:
         print(f"\n[ERROR] Found {total_errors} formatting violation(s). Run with --fix or repair manually.")
