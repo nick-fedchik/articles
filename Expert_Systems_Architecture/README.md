@@ -21,10 +21,10 @@
 Мета книги - навчити читача не лише користуватися відповідями інтелектуальної системи, а й **розуміти, на чому вони ґрунтуються, перевіряти їх та будувати власні системи роботи зі знаннями**.
 
 > [!NOTE]
-> **Multilingual Editions & Translations:**  
-> The original master edition of this monograph is written in Ukrainian. Executive summaries and chapter abstracts are available across 46 languages:  
-> [ar](translations/ar/) · [az](translations/az/) · [bg](translations/bg/) · [ca](translations/ca/) · [cs](translations/cs/) · [da](translations/da/) · [de](translations/de/) · [el](translations/el/) · [en](translations/en/) · [es](translations/es/) · [et](translations/et/) · [fa](translations/fa/) · [fi](translations/fi/) · [fr](translations/fr/) · [ga](translations/ga/) · [he](translations/he/) · [hi](translations/hi/) · [hr](translations/hr/) · [hu](translations/hu/) · [hy](translations/hy/) · [id](translations/id/) · [it](translations/it/) · [ja](translations/ja/) · [ka](translations/ka/) · [kk](translations/kk/) · [ko](translations/ko/) · [lb](translations/lb/) · [lt](translations/lt/) · [lv](translations/lv/) · [ms](translations/ms/) · [mt](translations/mt/) · [nl](translations/nl/) · [no](translations/no/) · [pl](translations/pl/) · [pt](translations/pt/) · [ro](translations/ro/) · [sk](translations/sk/) · [sl](translations/sl/) · [sr](translations/sr/) · [sv](translations/sv/) · [th](translations/th/) · [tr](translations/tr/) · [uz](translations/uz/) · [vi](translations/vi/) · [zh](translations/zh/) · [zh-TW](translations/zh-TW/).  
-> Full translations of the monograph are available in **[English](translations/en/)** and **[German](translations/de/)** (coverage is being actively supplemented and expanded). See the [Multilingual Architecture Guide](translations/README.md) for architectural and translation standards.
+> **Abstracts and translations:**
+> The Ukrainian text is the master edition. Abstracts are available in six languages:
+> [Українська (uk)](translations/uk/) · [English (en)](translations/en/) · [Deutsch (de)](translations/de/) · [Français (fr)](translations/fr/) · [日本語 (ja)](translations/ja/) · [한국어 (ko)](translations/ko/).
+> These pages contain abstracts, not full chapter translations. See the [Multilingual Architecture Guide](translations/README.md) for language scope and terminology principles.
 
 ### Від артефакта до перевірюваного рішення
 
@@ -411,7 +411,7 @@ flowchart TD
 
 ### Реєстр і відомості про автора
 
-* [Реєстр атрибутованих внесків і покажчик поглавних записів](../framework/authorial-contributions-registry.md) — навігація до 40 поглавних реєстрів; не є підтвердженням наукової новизни, правильності чи відсутності плагіату.
+* [Доступні поглавні реєстри](https://github.com/nick-fedchik/drafts/tree/main/framework/registry) — навігація до реєстрів, що ведуться окремо від майстер-тексту; вони не є підтвердженням наукової новизни, правильності чи відсутності плагіату.
 * [Про автора: Микола Федчик (Nick Fedchik)](about-the-author.md)
 
 ---
