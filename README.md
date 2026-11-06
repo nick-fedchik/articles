@@ -1,4 +1,4 @@
-# Mykola Fedchyk: Books and Articles / Микола Федчик: книги та статті
+# Mykola Fedchyk: Books and Monographs / Микола Федчик: книги та монографії
 
 [English](#english) · [Українська](#українська)
 
@@ -6,110 +6,24 @@
 
 ## English
 
-This repository contains books and articles by **Mykola Fedchyk** (Ukrainian: Микола Федчик; also known as Nick Fedchik) on expert systems and knowledge engineering, management of engineering projects and programmes, cybersecurity and military cybernetics. All texts are written in Ukrainian; the titles below are English translations.
+This repository contains Ukrainian-language books and monographs by **Mykola Fedchyk** (Микола Федчик, also known as Nick Fedchik). The English titles and descriptions below are translations.
 
-**Author:** Mykola Fedchyk (Микола Федчик) · [About the author](ExpertSystem/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/) · [GitHub](https://github.com/nick-fedchik)
+**Author:** Mykola Fedchyk (Микола Федчик) · [About the author](Expert_Systems_Architecture/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/) · [GitHub](https://github.com/nick-fedchik)
 
-### Books
+### Books and monographs
 
-1. **[Architecture of Evidence-Based Expert Systems: From Formal Ontologies to Neuro-Symbolic AI](ExpertSystem/README.md)**  
-   Epistemic foundations, mathematical models and zero-copy knowledge packs, input skepticism and knowledge elicitation, core architecture and deterministic inference, verification and safety cases, dual-mode neuro-symbolic abduction, and runtime cybernetics with distributed epistemic SOA.  
-   Structure: 7 parts, 40 chapters · [Authorial Contributions Registry (40 documents)](framework/authorial-contributions-registry.md) · [Multilingual editions (45 languages)](ExpertSystem/translations/README.md).
-2. **[Managing Complex Engineering Projects and Programmes: From Work Breakdown Structure to Digital Thread and Evidence-Based Release](Project_Management/book/README.md)**  
-   Work breakdown structure (WBS) and hybrid planning for hardware and software, baselines and change control, event-driven management and metrics, earned value and Monte Carlo schedule forecasting, continuous compliance, release evidence, product, programme and portfolio management, the project management office (PMO) and AI assistants.  
-   Structure: 6 parts, 18 chapters, 3 appendices.
-3. **[The Evolution of Cybersecurity: From the First Modem to Autonomous Systems](Inform_Security/book/README.md)**  
-   *How information systems learn not to trust external commands.* A popular-science book on attacks and defences, from shared computers of the 1970s to networks, digital identity, industrial control systems, vehicles, unmanned aerial vehicles, maritime and space systems.  
-   Structure: 10 chapters, 2 appendices. Editions: [EPUB](Inform_Security/book/dist/evolyutsiya-kiberbezpeky.epub), [HTML](Inform_Security/book/dist/evolyutsiya-kiberbezpeky.html).
-4. **[Military Cybernetics of the Early 21st Century: Control Systems, Cyber-Physical Complexes and Evidence-Based Intelligence](MilTech/README.md)**  
-   Control theory and the Ukrainian school of military cybernetics, weapon control systems, navigation without global navigation satellite systems (GNSS), swarm robotics, tactical, operational and strategic command levels, military expert systems and hardware root of trust. The book relies on open sources only.  
-   Structure: 4 parts, 12 chapters.
-5. **[Circuit Design of Expert Systems: From Four-Valued Evidence Logic and Rule DAGs to Verified Admission Gates and FPGA Execution](Expert_System_Circuits/README.md)**  
-   A textbook on building deterministic, traceable expert systems as finite acyclic circuits of operational gates over statement state records (Belnap four-valued logic, primary-source sets with reconvergent fan-out deduplication, interval comparators, and SHA-256 source custody). Covers three-tier architecture, forward multi-step consequence forecasting and backward diagnostic reasoning on a unified operator core, two-pass clean alternative proofs (`CleanProof`) and opposition-cone caching, normative rules with exceptions (*lex specialis*) and Goodhart-safe minimum repair synthesis, a Lean 4 mechanized action admission gate tested under 11 fault-injection classes, and compilation to loop-free EPU assembly and single-cycle FPGA comparators with Carry-Save Adder prefix trees (`104.5–110.6 MHz` on `iCE40HX8K`).  
-   Structure: 7 chapters, executable Go/Lean/Verilog codebase (`src/`).
+1. **[Expert Systems](Expert_Systems/README.md)**
+   A three-volume university textbook on expert systems, from logic and rule-based inference to knowledge engineering and neuro-symbolic systems. The planned curriculum includes 30 chapters and a practical course.
+2. **[Architecture of Evidence-Based Expert Systems: From Formal Ontologies to Neuro-Symbolic AI](Expert_Systems_Architecture/README.md)**
+   A 40-chapter book on knowledge engineering, evidence-based inference, system architecture, verification, safety cases and neuro-symbolic AI.
+3. **[Military Cybernetics of the Early 21st Century: Control Systems, Cyber-Physical Complexes and Evidence-Based Intelligence](MilTech/README.md)**
+   A 12-chapter monograph on military cybernetics, control systems and cyber-physical systems, based on open sources.
 
-### Articles
-
-#### Project, programme and portfolio management (DOU series)
-
-Management systems overview:
-
-- [Modern Project and Programme Management Systems: From Statuses to Decisions](Project_Management/DOU-Project-Programme-Management-Systems-UA.md)
-- [Project and Programme Management Systems: Where the Real Project State Gets Lost](Project_Management/DOU-Project-Programme-Management-Systems-Part-1-UA.md)
-- [Project and Programme Management Systems: What Comes After the Task Board](Project_Management/DOU-Project-Programme-Management-Systems-Part-2-AI-UA.md)
-
-Planning, baselines and traceability:
-
-- [Why the WBS Becomes a Pain in Large Hardware/Software Projects](Project_Management/DOU-WBS-Pain-Hardware-Software-UA.md)
-- [Baselines and the Change Control Board: How Not to Drown in Changes](Project_Management/DOU-Baselines-CCB-Digital-System-UA.md)
-- [Digital Thread for Engineering Projects: Linking Requirements, Code, Tests, Risks and Evidence](Project_Management/DOU-Digital-Thread-Engineering-Projects-UA.md)
-
-Events and metrics:
-
-- [Event-Driven Project Management: Why You Cannot Wait for the Report](Project_Management/DOU-Event-Driven-Project-Management-UA.md)
-- [Metrics Not for Reports: How to Notice Deviations in Time](Project_Management/DOU-Metrics-Not-For-Reports-UA.md)
-
-Compliance, release and audit:
-
-- [Compliance as an Operational State, Not Audit Preparation](Project_Management/DOU-Compliance-As-Operational-State-UA.md)
-- [Release Evidence: Why a Release Must Prove Itself](Project_Management/DOU-Release-Evidence-As-Engineering-Discipline-UA.md)
-- [Audit Readiness by Default: How the Management System Collects Evidence Continuously](Project_Management/DOU-Audit-Ready-By-Design-UA.md)
-
-Product, programme and portfolio:
-
-- [Integrated Project and Product Management System: Connecting Product Intent with Engineering Reality](Project_Management/DOU-Integrated-Project-Product-Management-UA.md)
-- [Product Management in R&D: Where the Market Meets Engineering Reality](Project_Management/DOU-Product-Management-In-RD-UA.md)
-- [The Product Manager in Regulated Engineering: Where the Boundary of Responsibility Lies](Project_Management/DOU-Product-Manager-Regulated-Engineering-UA.md)
-- [Programme Management: Why Green Projects Do Not Guarantee a Healthy Programme](Project_Management/DOU-Programme-Management-Not-Status-Sum-UA.md)
-- [Programme Analysis: A Discipline Between Project Management, Architecture and AI](Project_Management/DOU-Programme-Analysis-Discipline-UA.md)
-- [Engineering Portfolio Management: The Discipline of Uncomfortable Choices](Project_Management/DOU-Portfolio-Management-Engineering-UA.md)
-
-Project management office, platforms and AI:
-
-- [Maturity Model of Project Management Systems: How Management Memory Emerges](Project_Management/DOU-Project-Management-Maturity-PMO-UA.md)
-- [The PMO After AI: A Management Architect Instead of a Reporting Conveyor](Project_Management/DOU-PMO-After-AI-UA.md)
-- [Build vs Buy for Project and Programme Management Systems](Project_Management/DOU-Build-Vs-Buy-Project-Management-Systems-UA.md)
-- [An AI Assistant for the Project Manager: Why One Chat Is Not Enough](Project_Management/DOU-AI-Assistant-For-Project-Managers-UA.md)
-
-#### Information security
-
-- [Information Security and Cybersecurity: Evolution from the 1990s to the 2020s. Part 1: The 1990s and 2000s](Inform_Security/DOU-Information-Security-Cybersecurity-Evolution-UA-Part1.md)
-- [Information Security and Cybersecurity: Evolution from the 1990s to the 2020s. Part 2: The 2010s and 2020s](Inform_Security/DOU-Information-Security-Cybersecurity-Evolution-UA-Part2.md)
-
-#### Expert systems for R&D (DOU series)
-
-Framing and foundations:
-
-- [Why Expert Systems Are Needed in R&D Again: Manifest](Articles/DOU/01-DOU-Expert-Systems-for-RD.md)
-- [From Bayes' Theorem to Evidence-Based AI Decisions](Articles/DOU/02-DOU-Expert-Systems-Evolution-Evidence-UA.md)
-- [Expert System, AI Recommendation, and Corporate Memory: Triad of Trust](Articles/DOU/03-DOU-Expert-System-And-Evidence-Memory-UA.md)
-
-Mathematics and implementation:
-
-- [Applied Mathematics for Expert Systems: From Rules to Graphs and Causality](Articles/DOU/04-DOU-Expert-Systems-Applied-Mathematics-UA.md)
-- [From Mathematical Method to Technology Stack Selection](Articles/DOU/05-DOU-Expert-Systems-Implementation-Stack-UA.md)
-- [Architecture of an Evidence-Based Expert System: Knowledge, Rules, Evidence, Audit](Articles/DOU/06-DOU-Expert-Systems-Architecture-UA.md)
-- [Execution Infrastructure: Models, Hardware, and Deployment](Articles/DOU/07-DOU-Expert-Systems-Infrastructure-UA.md)
-- [Beyond Reference Systems: Why Search Is Not an Expert System](Articles/DOU/08-DOU-Expert-Systems-Beyond-Reference-UA.md)
-
-Knowledge as data:
-
-- [Engineering Artifacts as Data: Slicing, Triage, and Vectorization](Articles/DOU/09-DOU-Engineering-Artifacts-As-Data-UA.md)
-- [Knowledge Acquisition System: Controlled Harvesting Without Leakage](Articles/DOU/10-DOU-Knowledge-Acquisition-System-UA.md)
-- [Knowledge Base Types: Open vs Closed World Assumptions](Articles/DOU/11-DOU-Knowledge-Base-Types-UA.md)
-
-Verification, learning, and algorithmic skepticism:
-
-- [How Expert Systems Learn: Knowledge Lifecycle, Examination, and Regression Testing](Articles/DOU/12-DOU-How-Expert-Systems-Learn-UA.md)
-- [Popper vs. AI: Teaching Systems to Refute Themselves Before Production Does](Articles/DOU/13-DOU-Popperian-Testing-Algorithmic-Skepticism-UA.md)
+Drafts and working materials are maintained separately in the [drafts repository](https://github.com/nick-fedchik/drafts).
 
 ### Authorship and citation
 
-All books and articles listed above are written by **Mykola Fedchyk** (Микола Федчик). When quoting or reusing the material, credit the author and link to the source file.
-
-Citation example:
-
-> Fedchyk, M. (2026). *Architecture of Evidence-Based Expert Systems: From Formal Ontologies to Neuro-Symbolic AI* (in Ukrainian). https://github.com/nick-fedchik/articles/tree/main/ExpertSystem
+All works listed here are by **Mykola Fedchyk** (Микола Федчик). When quoting or reusing a work, credit the author and link to its source. Citation metadata for the evidence-based expert systems monograph is available in [`CITATION.cff`](CITATION.cff).
 
 Copyright © 2026 Mykola Fedchyk.
 
@@ -117,109 +31,23 @@ Copyright © 2026 Mykola Fedchyk.
 
 ## Українська
 
-Цей репозиторій містить книги та статті **Миколи Федчика** (англ. Mykola Fedchyk; також Nick Fedchik) про експертні системи та інженерію знань, керування інженерними проєктами й програмами, кібербезпеку та військову кібернетику. Усі тексти написано українською мовою.
+Цей репозиторій містить україномовні книги й монографії **Миколи Федчика** (англ. Mykola Fedchyk; також Nick Fedchik).
 
-**Автор:** Микола Федчик (Mykola Fedchyk) · [Про автора](ExpertSystem/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/) · [GitHub](https://github.com/nick-fedchik)
+**Автор:** Микола Федчик (Mykola Fedchyk) · [Про автора](Expert_Systems_Architecture/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/) · [GitHub](https://github.com/nick-fedchik)
 
-### Книги
+### Книги та монографії
 
-1. **[Архітектура доказових експертних систем: від формальних онтологій до нейро-символьного ШІ](ExpertSystem/README.md)**  
-   Епістемічний фундамент, математичні моделі та незмінні пакети знань, оцінювання входу й здобуття знань, архітектура ядра та детерміноване виведення, верифікація й обґрунтування безпеки, дворежимна нейро-символьна абдукція, інфраструктура виконання та розподілена епістемічна SOA.  
-   Структура: 7 частин, 40 глав · [Зведений реєстр авторського наукового доробку (40 документів)](framework/authorial-contributions-registry.md) · [Багатомовні видання (45 мов світу)](ExpertSystem/translations/README.md).
-2. **[Керування складними інженерними проєктами та програмами: від структури робіт до цифрової нитки й доказового релізу](Project_Management/book/README.md)**  
-   Структура декомпозиції робіт (WBS) і гібридне планування апаратної та програмної розробки, базові версії та контроль змін, подійно-орієнтоване управління й метрики, освоєний обсяг і прогноз строків методом Монте-Карло, безперервний комплаєнс, докази релізу, продуктовий, програмний і портфельний менеджмент, проєктний офіс (PMO) та ШІ-асистенти.  
-   Структура: 6 частин, 18 глав, 3 додатки.
-3. **[Еволюція кібербезпеки: від першого модема до автономних систем](Inform_Security/book/README.md)**  
-   *Як інформаційні системи вчаться не довіряти чужим командам.* Науково-популярна книга про атаки й захист: від спільних обчислювальних машин 1970-х років до мереж, цифрової ідентичності, промислових систем керування, автомобілів, безпілотних літальних апаратів, морських і космічних систем.  
-   Структура: 10 глав, 2 додатки. Електронні видання: [EPUB](Inform_Security/book/dist/evolyutsiya-kiberbezpeky.epub), [HTML](Inform_Security/book/dist/evolyutsiya-kiberbezpeky.html).
-4. **[Військова кібернетика початку XXI століття: системи управління, кіберфізичні комплекси та доказовий інтелект](MilTech/README.md)**  
-   Теорія керування й українська школа військової кібернетики, системи керування озброєнням, навігація без глобальних навігаційних супутникових систем (GNSS), ройова робототехніка, тактичний, оперативний і стратегічний рівні управління, військові експертні системи та апаратний корінь довіри. Книга спирається лише на відкриті джерела.  
-   Структура: 4 частини, 12 розділів.
-5. **[Схемотехніка експертних систем (СТЕС): від чотиризначної логіки свідчень і графів правил до верифікованого шлюзу допуску та ПЛІС](Expert_System_Circuits/README.md)**  
-   Підручник із побудови детермінованих доказових експертних систем у вигляді скінченних ациклічних схем операційних вентилів над пакетами стану тверджень (чотиризначна решітка Белнапа, множини першоджерел із дедуплікацією повторного сходження гілок, інтервальні компаратори та кастодія SHA-256). Охоплює трирівневу ієрархію реалізації, прямий багатоступеневий прогноз наслідків і зворотну діагностику на єдиному ядрі операторів, двопрохідні чисті доведення (`CleanProof`) та кешування з конусом заперечень, нормативні схеми з винятками (*lex specialis*) і синтез безпечних ремонтів без втручань Гудхарта, механізований у Lean 4 шлюз допуску дії з випробуванням інжекцією помилок, а також компіляцію у безцикловий асемблер EPU та однотактовий компаратор на ПЛІС із деревами збереження переносу (`104,5–110,6 МГц` на `iCE40HX8K`).  
-   Структура: 7 глав, виконувана база Go/Lean/Verilog (`src/`).
+1. **[Експертні системи](Expert_Systems/README.md)**
+   Тритомний університетський підручник: від логіки та продукційного виведення до інженерії знань і нейро-символьних систем. Навчальна програма охоплює 30 глав і практичний курс.
+2. **[Архітектура доказових експертних систем: від формальних онтологій до нейро-символьного ШІ](Expert_Systems_Architecture/README.md)**
+   Книга з 40 глав про інженерію знань, доказове виведення, архітектуру систем, верифікацію, обґрунтування безпеки та нейро-символьний ШІ.
+3. **[Військова кібернетика початку XXI століття: системи управління, кіберфізичні комплекси та доказовий інтелект](MilTech/README.md)**
+   Монографія з 12 глав про військову кібернетику, системи управління та кіберфізичні комплекси, що спирається на відкриті джерела.
 
-### Статті
-
-#### Проєктний, програмний і портфельний менеджмент (серія для DOU)
-
-Огляд систем управління:
-
-- [Сучасні системи проєктного й програмного менеджменту: від статусів до рішень](Project_Management/DOU-Project-Programme-Management-Systems-UA.md)
-- [Системи проєктного і програмного менеджменту: де губиться реальний стан проєкту](Project_Management/DOU-Project-Programme-Management-Systems-Part-1-UA.md)
-- [Системи проєктного і програмного менеджменту: що має бути після дошки задач](Project_Management/DOU-Project-Programme-Management-Systems-Part-2-AI-UA.md)
-
-Планування, базові версії та простежуваність:
-
-- [Чому WBS у великих hardware/software проектах стає болем](Project_Management/DOU-WBS-Pain-Hardware-Software-UA.md)
-- [Базові версії та комітет контролю змін: як не потонути в змінах](Project_Management/DOU-Baselines-CCB-Digital-System-UA.md)
-- [Цифрова нитка для інженерних проєктів: як пов'язати вимоги, код, тести, ризики й докази](Project_Management/DOU-Digital-Thread-Engineering-Projects-UA.md)
-
-Події та метрики:
-
-- [Управління подіями в проєкті: чому не можна чекати звіту](Project_Management/DOU-Event-Driven-Project-Management-UA.md)
-- [Метрики не для звіту: як помічати відхилення вчасно](Project_Management/DOU-Metrics-Not-For-Reports-UA.md)
-
-Комплаєнс, реліз і аудит:
-
-- [Комплаєнс як операційний стан, а не підготовка до аудиту](Project_Management/DOU-Compliance-As-Operational-State-UA.md)
-- [Release evidence: чому реліз має доводити себе сам](Project_Management/DOU-Release-Evidence-As-Engineering-Discipline-UA.md)
-- [Готовність до аудиту за замовчуванням: як система збирає докази постійно](Project_Management/DOU-Audit-Ready-By-Design-UA.md)
-
-Продукт, програма й портфель:
-
-- [Інтегрована система проектного і продуктового менеджменту: як зв'язати product intent з engineering reality](Project_Management/DOU-Integrated-Project-Product-Management-UA.md)
-- [Продуктовий менеджмент в R&D: де ринок зустрічається з інженерною реальністю](Project_Management/DOU-Product-Management-In-RD-UA.md)
-- [Product manager у regulated engineering: де проходить межа відповідальності](Project_Management/DOU-Product-Manager-Regulated-Engineering-UA.md)
-- [Programme management: чому зелені проекти не гарантують здорову програму](Project_Management/DOU-Programme-Management-Not-Status-Sum-UA.md)
-- [Програмна аналітика: дисципліна між project management, архітектурою і AI](Project_Management/DOU-Programme-Analysis-Discipline-UA.md)
-- [Engineering portfolio management: дисципліна неприємного вибору](Project_Management/DOU-Portfolio-Management-Engineering-UA.md)
-
-Проєктний офіс, платформи та ШІ:
-
-- [Модель зрілості систем управління проектами: як з'являється управлінська пам'ять](Project_Management/DOU-Project-Management-Maturity-PMO-UA.md)
-- [PMO після AI: архітектор управління замість конвеєра звітності](Project_Management/DOU-PMO-After-AI-UA.md)
-- [Build vs buy для project/programme management systems](Project_Management/DOU-Build-Vs-Buy-Project-Management-Systems-UA.md)
-- [AI-асистент для керівника проєкту: чому одного чату замало](Project_Management/DOU-AI-Assistant-For-Project-Managers-UA.md)
-
-#### Інформаційна безпека
-
-- [Інформаційна безпека і кібербезпека: еволюція від 1990-х до 2020-х. Частина 1: Періоди 1990-х та 2000-х років](Inform_Security/DOU-Information-Security-Cybersecurity-Evolution-UA-Part1.md)
-- [Інформаційна безпека і кібербезпека: еволюція від 1990-х до 2020-х. Частина 2: 2010-ті і 2020-ті](Inform_Security/DOU-Information-Security-Cybersecurity-Evolution-UA-Part2.md)
-
-#### Експертні системи для R&D (серія для DOU)
-
-Фреймінг і визначення:
-
-- [Експертні системи для досліджень і розробки (R&D): від хаосу до керованих знань](Articles/DOU/01-DOU-Expert-Systems-for-RD.md)
-- [Експертні системи: від теореми Байєса до доказових рішень ШІ](Articles/DOU/02-DOU-Expert-Systems-Evolution-Evidence-UA.md)
-- [Експертна система, доказова рекомендація ШІ і корпоративна пам'ять](Articles/DOU/03-DOU-Expert-System-And-Evidence-Memory-UA.md)
-
-Математика та імплементація:
-
-- [Прикладна математика експертних систем](Articles/DOU/04-DOU-Expert-Systems-Applied-Mathematics-UA.md)
-- [Експертні системи: крок від математичного методу до обрання технологій](Articles/DOU/05-DOU-Expert-Systems-Implementation-Stack-UA.md)
-- [Архітектура доказової ES: знання, правила, докази, аудит](Articles/DOU/06-DOU-Expert-Systems-Architecture-UA.md)
-- [Інфраструктура виконання ES: моделі, залізо, розгортання](Articles/DOU/07-DOU-Expert-Systems-Infrastructure-UA.md)
-- [Експертна система це більше ніж інформаційно-довідкова система](Articles/DOU/08-DOU-Expert-Systems-Beyond-Reference-UA.md)
-
-Знання як дані:
-
-- [Артефакти інженерії як дані: формати, нарізання, тріаж і векторизація](Articles/DOU/09-DOU-Engineering-Artifacts-As-Data-UA.md)
-- [Система здобуття знань: конвеєр збирання та контроль конфіденційності](Articles/DOU/10-DOU-Knowledge-Acquisition-System-UA.md)
-- [Типи баз знань і припущення відкритого/закритого світу](Articles/DOU/11-DOU-Knowledge-Base-Types-UA.md)
-
-Перевірка, навчання та алгоритмічний скептицизм:
-
-- [Як навчати експертну систему: знання, іспит і перевірка змін](Articles/DOU/12-DOU-How-Expert-Systems-Learn-UA.md)
-- [Поппер проти ШІ: як навчити систему спростовувати саму себе до того, як це зробить продакшен](Articles/DOU/13-DOU-Popperian-Testing-Algorithmic-Skepticism-UA.md)
+Чернетки й робочі матеріали зберігаються окремо в [репозиторії drafts](https://github.com/nick-fedchik/drafts).
 
 ### Авторство та цитування
 
-Автор усіх наведених книг і статей: **Микола Федчик** (Mykola Fedchyk). У разі цитування чи використання матеріалів зазначайте автора й посилання на вихідний файл.
-
-Приклад посилання:
-
-> Федчик М. Архітектура доказових експертних систем: від формальних онтологій до нейро-символьного ШІ. 2026. URL: https://github.com/nick-fedchik/articles/tree/main/ExpertSystem
+Автор усіх наведених праць — **Микола Федчик** (Mykola Fedchyk). У разі цитування чи використання матеріалів зазначайте автора й посилання на джерело. Бібліографічні метадані монографії про доказові експертні системи наведено у файлі [`CITATION.cff`](CITATION.cff).
 
 © 2026 Микола Федчик (Mykola Fedchyk).
