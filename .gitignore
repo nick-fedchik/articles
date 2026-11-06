@@ -9,6 +9,8 @@ AGENTS.md
 /Expert_Systems/Curriculum_Critical_Review.md
 /Expert_Systems/New_Book_Vision.md
 
+*-workspace
+
 scripts/
 *.cff
 *.json
