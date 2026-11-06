@@ -45,9 +45,9 @@ class TechnicalInspectorTests(unittest.TestCase):
         self.assertEqual(self.structure_codes("> [!NOTE]\n> **Закон перевірки М. Федчика**\n> 1. Опис.\n"), set())
 
     def test_source_reference_keeps_section_after_anchor(self):
-        source = '[Діалог](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11».'
+        source = '[Джерело](../../source.md#part-11), §11 «Джерело».'
         self.assertEqual(list(TRACE["source_references"](source)),
-                         [("../../PRO_ET_CONTRA.md", [("11", "Діалог до глави 11")])])
+                 [("../../source.md", [("11", "Джерело")])])
 
     def test_sections_belong_to_their_own_source(self):
         source = '[Глава](chapter.md), §3 «Метод»; [Діалог](dialogue.md#part), §7 «Межі».'

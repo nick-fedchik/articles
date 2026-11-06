@@ -1,0 +1,926 @@
+{
+  "at": "2026-10-30T07:58:02.348208+00:00",
+  "warnings_before": 60,
+  "warnings_after": 0,
+  "changed_requirement_sources": 58,
+  "changed_requirement_files": 32,
+  "requirement_invariants": {
+    "checked_files": 120,
+    "non_source_mismatches": [],
+    "unique_ids": {
+      "L1": 487,
+      "L2": 943,
+      "L3": 1177
+    },
+    "load_errors": [],
+    "header_warnings": []
+  },
+  "inputs": {
+    "ExpertSystem/requirements/L1-stakeholder/ch01-L1-stakeholder.md": "688c75fbc0dbc891063871b87eeadd51a4aa7ebae438d5eb863121f92a02d605",
+    "ExpertSystem/requirements/L1-stakeholder/ch02-L1-stakeholder.md": "edfb29a045de6b8db02f50d0c269d185c18ead44e1ced918d7d6bc92290f1275",
+    "ExpertSystem/requirements/L1-stakeholder/ch03-L1-stakeholder.md": "d08b081d97e6715a45c8ba3c438aeb3f874ebbd5e03dd67f5609d3093ccf36e7",
+    "ExpertSystem/requirements/L1-stakeholder/ch04-L1-stakeholder.md": "26ffb8502177e630807caf409c71917acc83bd4b00e32d92fa2d42afd165180c",
+    "ExpertSystem/requirements/L1-stakeholder/ch05-L1-stakeholder.md": "bd9b5be984adaea61a9eedd5ee91e78e2fe984ac3b06ac5750a9a61da18dcf3b",
+    "ExpertSystem/requirements/L1-stakeholder/ch06-L1-stakeholder.md": "8916049a53dfa71401f9032e6828eee1ee5c94f977f09e39fd57f2f9ecf581b4",
+    "ExpertSystem/requirements/L1-stakeholder/ch07-L1-stakeholder.md": "b2a5894c295716062199ff04418bbaf761530adecf0f1ab4cbbd7a53d0fdd5cc",
+    "ExpertSystem/requirements/L1-stakeholder/ch08-L1-stakeholder.md": "72d8b3ba459e1dd458916909618a99c6271fbc151072fd420fca9f850976ca9f",
+    "ExpertSystem/requirements/L1-stakeholder/ch09-L1-stakeholder.md": "66afd63b0cdf2e629f79e7a1e20a3d1d5d5128ff47398b34ab78679f10ee44cb",
+    "ExpertSystem/requirements/L1-stakeholder/ch10-L1-stakeholder.md": "587d2e156587ef76935ebbd4ddb934769192765e17d4ae4aa04a52500409e5d4",
+    "ExpertSystem/requirements/L1-stakeholder/ch11-L1-stakeholder.md": "baf09c28f746c607a1aad136e4a9a5c1eaabbd288cd740f5ac20a459289859fa",
+    "ExpertSystem/requirements/L1-stakeholder/ch12-L1-stakeholder.md": "54c532954048203b1a8c3aaff1867c89f38b97feb29f6d9ffd46a8ba7356ddf0",
+    "ExpertSystem/requirements/L1-stakeholder/ch13-L1-stakeholder.md": "9a1dd21c39ee8692d82a75803e8d663e6773f466487bde05dc98d62385f31f7e",
+    "ExpertSystem/requirements/L1-stakeholder/ch14-L1-stakeholder.md": "8d186c2afc05355d4c9fbf247f7476c78dcac9e6205a982c37415aac20682ffd",
+    "ExpertSystem/requirements/L1-stakeholder/ch15-L1-stakeholder.md": "92fa2dafd9ca4d533c229c4af23f6104856b56e770320dae066fe1d63f09ac5a",
+    "ExpertSystem/requirements/L1-stakeholder/ch16-L1-stakeholder.md": "4b9e487f1f4012848fee5760d3001cfe5a7fb5060e956d253efaf319d6c64348",
+    "ExpertSystem/requirements/L1-stakeholder/ch17-L1-stakeholder.md": "39607a2814f5198f4d6b6b27e12992b3415f8230ff5d3748034cabb1645a3471",
+    "ExpertSystem/requirements/L1-stakeholder/ch18-L1-stakeholder.md": "c1138e10ffa3ce19659e96d001cac94cdfca13095fd75d7b7ea97af1afadfa1d",
+    "ExpertSystem/requirements/L1-stakeholder/ch19-L1-stakeholder.md": "3cc42d1efe8b349b3b59190094eb1d6bbee647b895cbf4e8a5241b4bb0a213ff",
+    "ExpertSystem/requirements/L1-stakeholder/ch20-L1-stakeholder.md": "af4b34b59a1051e01e87c602b2dbde349a5b39b424d531215ab5624b64c186ef",
+    "ExpertSystem/requirements/L1-stakeholder/ch21-L1-stakeholder.md": "351c7ab539e95f6f81407cbd5b0a6621272205ac092ce87d71c29658c03e8690",
+    "ExpertSystem/requirements/L1-stakeholder/ch22-L1-stakeholder.md": "c4cb944bf8ac555c36a8634126d0574e6ef942b7487d154f122e2146fdc005c5",
+    "ExpertSystem/requirements/L1-stakeholder/ch23-L1-stakeholder.md": "121157daab001110f2cc481b08270f50344f44e48b1031c6073ebb5be313cdd6",
+    "ExpertSystem/requirements/L1-stakeholder/ch24-L1-stakeholder.md": "34680f6b26f8c41aa9dea2b862fa3f17e3a55ae3524b6696e78090b62b993616",
+    "ExpertSystem/requirements/L1-stakeholder/ch25-L1-stakeholder.md": "5ec0484cdb0771fbdd66fc44b7823009e2b73c4132959ec4c807d491d779f26f",
+    "ExpertSystem/requirements/L1-stakeholder/ch26-L1-stakeholder.md": "24f546f857b2cbdbc6941a543e76c8d2676bb955ad485b8e712ec72cd9d4dead",
+    "ExpertSystem/requirements/L1-stakeholder/ch27-L1-stakeholder.md": "770286dd528cbdb1bc138a133e54fc638160b11751215efc69f8282cf6ebc1ab",
+    "ExpertSystem/requirements/L1-stakeholder/ch28-L1-stakeholder.md": "b3615748679bf99a749b98d3ea3913d052ed8503790dc4f1cde18c76998a8576",
+    "ExpertSystem/requirements/L1-stakeholder/ch29-L1-stakeholder.md": "6c2d1f9612ceeaa0974f64867224af450228980f4e813512270a21ab604c3536",
+    "ExpertSystem/requirements/L1-stakeholder/ch30-L1-stakeholder.md": "1f574e8f17ca1fb5ae956c59000595045bb2822c2288efc4ff4823dcda02b45c",
+    "ExpertSystem/requirements/L1-stakeholder/ch31-L1-stakeholder.md": "53ccd1d99ad14585d6d1c0585b4b5319c876848c7cc9676e3b88d92994d5eda0",
+    "ExpertSystem/requirements/L1-stakeholder/ch32-L1-stakeholder.md": "cfbb5a4f92f875c54fe9da96384d1c31c5389f7ab1fc95427332d51b8a24f67e",
+    "ExpertSystem/requirements/L1-stakeholder/ch33-L1-stakeholder.md": "232e7e62757f403193ab2a034913618c6ac7c0e28e16d6f28fc8bec8c26860f2",
+    "ExpertSystem/requirements/L1-stakeholder/ch34-L1-stakeholder.md": "01193f22b990db594d912abc37569aedc7750ef6ebd018214f16c09ddf05137d",
+    "ExpertSystem/requirements/L1-stakeholder/ch35-L1-stakeholder.md": "1ea394ffbaf0c5e0d68a320bf89b07c49231989824624432668ee28f1bd085ca",
+    "ExpertSystem/requirements/L1-stakeholder/ch36-L1-stakeholder.md": "f55e91c1711795bc5b413620ac8fb0026bce8eab6e4b18577d4b81dd0112e590",
+    "ExpertSystem/requirements/L1-stakeholder/ch37-L1-stakeholder.md": "b768654cf10c7e5ca86dcd19cb955ff51e41c5803a0cfe33ecae79ec1a9e3411",
+    "ExpertSystem/requirements/L1-stakeholder/ch38-L1-stakeholder.md": "5cf8b4c3099c606cffeef24c6592e42e5f9846aab6eb28574275e849b1c0a974",
+    "ExpertSystem/requirements/L1-stakeholder/ch39-L1-stakeholder.md": "4b9efb4844daa072df68960c74ad406bfa230bbdfda8df33c2855970881ecf13",
+    "ExpertSystem/requirements/L1-stakeholder/ch40-L1-stakeholder.md": "8d93031b2eb13469111dd440f39a024d34f4226e415f6258d9329a45b1c86f0a",
+    "ExpertSystem/requirements/L2-system/ch01-L2-system.md": "06e937eb03d5cdaf37841e03ece7d7aebc8a38055b7cae63a3cd813038d4faa9",
+    "ExpertSystem/requirements/L2-system/ch02-L2-system.md": "14d32765c24608e03e4bc6328f426d9babc975ab0e8a6d26241920d1c1868a3c",
+    "ExpertSystem/requirements/L2-system/ch03-L2-system.md": "3f8c3ee97e688776a837116035c6d97b227923c2630157fb7a2287397ae4f0c2",
+    "ExpertSystem/requirements/L2-system/ch04-L2-system.md": "18fbb2cb219c16dd60261b206eff8181fc5af118ff494ed775f1824a2c881d4f",
+    "ExpertSystem/requirements/L2-system/ch05-L2-system.md": "96e6aadd94e58484bf22f7529df63d7e96c8f16a17ce159bcfc99e33ddbd95ca",
+    "ExpertSystem/requirements/L2-system/ch06-L2-system.md": "a2dd7eb128436390433c3909ab1ef9309e8b777aa38d53047962280fb491d881",
+    "ExpertSystem/requirements/L2-system/ch07-L2-system.md": "0849b52e73a324a78a8603ba3470eb20c51df047f27469c8b79acd3bd91c0c49",
+    "ExpertSystem/requirements/L2-system/ch08-L2-system.md": "01ca9b28bd66734c03d5b9f868597fb5fc013b81b6c27e4db0f8de71f4e5f9e0",
+    "ExpertSystem/requirements/L2-system/ch09-L2-system.md": "14b5af619c1bb2efc9b959b69e2f9b68a3b2711b7fb231ccd1723ae373647f34",
+    "ExpertSystem/requirements/L2-system/ch10-L2-system.md": "b2da8b37d99f83266c43ff9080caa1166b3597ac7f63c4afbb67a284567a32f6",
+    "ExpertSystem/requirements/L2-system/ch11-L2-system.md": "9c52a81403b3dc24f25e04ea9c0d335bbf55d9a1e9e9e5b7890b5cfe22102de1",
+    "ExpertSystem/requirements/L2-system/ch12-L2-system.md": "c28a82d124fdf800068beb5fa7fd1c836147f72f7594563a990512d0ce577b43",
+    "ExpertSystem/requirements/L2-system/ch13-L2-system.md": "74429cb17484b4993fe5aa46df8304b16ebf35bb469fa90d6d3bbe72cea411d1",
+    "ExpertSystem/requirements/L2-system/ch14-L2-system.md": "0852ae475ae4fce583cde8d6c598149e0e60fb81eec367e7bf46e448de797a85",
+    "ExpertSystem/requirements/L2-system/ch15-L2-system.md": "026af1d27c844bc2f4be9bf05ec916083a544aaf3e0a5ea6033e52f8b4de0411",
+    "ExpertSystem/requirements/L2-system/ch16-L2-system.md": "40b36ffdcac482c5cd48011dce333f9be3011ed6b82a41a262d72d64170f7359",
+    "ExpertSystem/requirements/L2-system/ch17-L2-system.md": "d94f304f522e4f885b59c8a27e5b48ebe0fd7a128f4e004ee1cf435cd22af145",
+    "ExpertSystem/requirements/L2-system/ch18-L2-system.md": "c646093696247c73ad152bec092035b24b3fddaa1aba99a44ff0ca942c348154",
+    "ExpertSystem/requirements/L2-system/ch19-L2-system.md": "673d0f97283a429d21e70daf708969f35cc9f46cac6533d676f1cee0c8408f2d",
+    "ExpertSystem/requirements/L2-system/ch20-L2-system.md": "0d887dc0a2dcba3019a2e3dc0173ac8d965b67492265ed7e4ba16328d2f5b3f5",
+    "ExpertSystem/requirements/L2-system/ch21-L2-system.md": "ff754b974427b6f43dca1aa94fa2c84a75a603039ca11d482b4b3f5622d29ebf",
+    "ExpertSystem/requirements/L2-system/ch22-L2-system.md": "c752f9f858631df2067db355495001321cf78c828b3d4efd8b85beb1774287ba",
+    "ExpertSystem/requirements/L2-system/ch23-L2-system.md": "7594fe45ec0623cc4d03714048668ebadfb3c93c1650e86e0b7499bca6fd6ccb",
+    "ExpertSystem/requirements/L2-system/ch24-L2-system.md": "4c8946c3c8e033162bc143a8044ec51c242283c4be7e04d9e72093865b0b32b3",
+    "ExpertSystem/requirements/L2-system/ch25-L2-system.md": "8fc6ef6806e386ebec4e4e281ed19f8b39195f264e593dbf7e238acce55bdd71",
+    "ExpertSystem/requirements/L2-system/ch26-L2-system.md": "4beb1bdf6163bd6c989a02a4b832691caec0034f8a450e30113b9c2674098cb8",
+    "ExpertSystem/requirements/L2-system/ch27-L2-system.md": "705132410be3b21a58f09acf3ef0dd030b4c4d6cd2ddecd854ad724489ec760e",
+    "ExpertSystem/requirements/L2-system/ch28-L2-system.md": "575212e8f386e88b170e12d2aaedff10d3361eb65137a567eb28f10b88ef3185",
+    "ExpertSystem/requirements/L2-system/ch29-L2-system.md": "8885be942476e98652359bbb52e677f4487d48748a5d692d07a53cb11cb248d4",
+    "ExpertSystem/requirements/L2-system/ch30-L2-system.md": "9ba51067f795b50152e31d9603dcffdf7e8741a4cbea4e0ed5e05ed308495d60",
+    "ExpertSystem/requirements/L2-system/ch31-L2-system.md": "2fc625bb4861e9939737780e698ceeaf982aa69f8b0594a891564c73a5b9ff3f",
+    "ExpertSystem/requirements/L2-system/ch32-L2-system.md": "f5031df9fc062c9c29925d5574f52631ebecec133bd96d16ab816213d1b19b5d",
+    "ExpertSystem/requirements/L2-system/ch33-L2-system.md": "ae49f925857307823eb262bed7e1d8565fa4c67c66d385bfaa8c54a59c29753f",
+    "ExpertSystem/requirements/L2-system/ch34-L2-system.md": "f7bf5e61676829ab0b4ed7ff849fd7c473811ed038075352222f3efd25c37f03",
+    "ExpertSystem/requirements/L2-system/ch35-L2-system.md": "bcbff9ad39f4f850af630e8afd627ac4566b1a45042c13610db293f1be4c0ee9",
+    "ExpertSystem/requirements/L2-system/ch36-L2-system.md": "d8f08dbc95856b0973b2dc4eabf710a18b96ac25b12a0aa3723593bda6789a2a",
+    "ExpertSystem/requirements/L2-system/ch37-L2-system.md": "6499182a51dc919020a723a2994356ee0ca5a80c6e32122197ff0e37b81c586f",
+    "ExpertSystem/requirements/L2-system/ch38-L2-system.md": "3fae79a7b70ad61e10c6fc0df3330414ed67e31b03fbd29dbf78f5923fd7939c",
+    "ExpertSystem/requirements/L2-system/ch39-L2-system.md": "820838bfe2feb1850e955ab4537440abd3d5440e0ffb107bb78ffc2ef0b85ae9",
+    "ExpertSystem/requirements/L2-system/ch40-L2-system.md": "72495c5de9ceca5a00d45a5ef6d3b2753a215637d73eed4ba2a5d564a949f499",
+    "ExpertSystem/requirements/L3-component/ch01-L3-component.md": "94a7734d37646196ab5064de3e25fa07bc405f64d94b4cce8ac115f6116b2456",
+    "ExpertSystem/requirements/L3-component/ch02-L3-component.md": "a3b8aab513b0ddf9dc6c223a4c2c2371e5a713cd3063d665b144ccd95166075c",
+    "ExpertSystem/requirements/L3-component/ch03-L3-component.md": "7efa76534d93fabe8c54e21f0200f31e2a014de67055bf9494409533b0a26f0c",
+    "ExpertSystem/requirements/L3-component/ch04-L3-component.md": "d9c7d931579847fe079d35936198eeac525d94398b5ef0c3899237a55689368d",
+    "ExpertSystem/requirements/L3-component/ch05-L3-component.md": "771df5e7db4e8050dec2e95aff137f482907830f5d6d979824fc3e3882856e5e",
+    "ExpertSystem/requirements/L3-component/ch06-L3-component.md": "9bc0cf137fde884534e02d81226023dbdfb4fd2541834df46e161b8f74525203",
+    "ExpertSystem/requirements/L3-component/ch07-L3-component.md": "30fe7ef4f2df0eb148c8c4a0f65e29dfd698850197bb83b0105b7ef13f40b3a0",
+    "ExpertSystem/requirements/L3-component/ch08-L3-component.md": "505b4633d59fdcbd1da772efad066cee31a06f4e8b28f52fe8dc5cbf86311951",
+    "ExpertSystem/requirements/L3-component/ch09-L3-component.md": "3e32dfd1b7bbccc9e4acd7d8af7a25338c7460754b8ffcf25be4818216f800fa",
+    "ExpertSystem/requirements/L3-component/ch10-L3-component.md": "da430dada4401eb227f876179823c64af01921a404735804aa90b52e8f5dc39c",
+    "ExpertSystem/requirements/L3-component/ch11-L3-component.md": "6c6bce1cadb4ac9bb7250e4595853464f7ce59bd8255473fb36156876bec55b1",
+    "ExpertSystem/requirements/L3-component/ch12-L3-component.md": "b2690b3196ab42dd41c6930e1423e727eeda2bd91a331f5bae896e63bc0f8e99",
+    "ExpertSystem/requirements/L3-component/ch13-L3-component.md": "68d73abd06d2498e1a1abc0b061c9d224d8ce8b49a1226bdc36cea814b681884",
+    "ExpertSystem/requirements/L3-component/ch14-L3-component.md": "dc0ef6edbe6c1ceecf9ba6008df8a07fb8133d584aa12b80a7b9f3ce1d451b14",
+    "ExpertSystem/requirements/L3-component/ch15-L3-component.md": "bd1cb6709a31b771503ed05454feedc4acf63a0c924d88a41c2fd452951182f9",
+    "ExpertSystem/requirements/L3-component/ch16-L3-component.md": "e1f450bad204126539cd1c2814b4cfafb1d8a3f943d470951ae0c2ebf566b883",
+    "ExpertSystem/requirements/L3-component/ch17-L3-component.md": "efa61b2548a0e779b70f130e59f38b4b7d72fc13ae751282796d069e3bd71b44",
+    "ExpertSystem/requirements/L3-component/ch18-L3-component.md": "c99876b1a6d4d6b819fdfc1d3574deadc0184ea9583fff1e55583264b81400df",
+    "ExpertSystem/requirements/L3-component/ch19-L3-component.md": "e9737e90ed3d748b81137e53724210448130325f7c4af240becaf70d9a467a9a",
+    "ExpertSystem/requirements/L3-component/ch20-L3-component.md": "913e1902f23a3794a481bbe3ba0d9d7d8b22915415fac4e32b56e8bad31d45b0",
+    "ExpertSystem/requirements/L3-component/ch21-L3-component.md": "e5a89b0b8bc68a171e517011ab5fe6c03eeb85bd30104bdf417729ad73aef883",
+    "ExpertSystem/requirements/L3-component/ch22-L3-component.md": "efca132fa518d17bb86dac0180b87e0d0dc0e3dea7d6145ed8a8b9e197ccbf14",
+    "ExpertSystem/requirements/L3-component/ch23-L3-component.md": "bf53e8ba809222a8e27e4042d2e0a485ad6cb21b8c9ad6a9eabded1b2ea495b7",
+    "ExpertSystem/requirements/L3-component/ch24-L3-component.md": "892e6c32340c17c8511e86dcc1190bf19c6bc897ebc5588937fbb8ed51764234",
+    "ExpertSystem/requirements/L3-component/ch25-L3-component.md": "62490fc8db1e2c53dc3f8f247343f2527a513aa1c6ab1fd74c0555aa8ccce606",
+    "ExpertSystem/requirements/L3-component/ch26-L3-component.md": "9550fd53db12901ace5adaca5f523ee91898a8cc1ce3b6c88bb08dfbaea27868",
+    "ExpertSystem/requirements/L3-component/ch27-L3-component.md": "9a4f7d7f36c38472e6d45b5b3edf950e68d971881a8970ae0bf8ce34df48f777",
+    "ExpertSystem/requirements/L3-component/ch28-L3-component.md": "dadb9a99748071e3ee04c42fd918a3746baa58b4f0fcc71a96031f3836325bb6",
+    "ExpertSystem/requirements/L3-component/ch29-L3-component.md": "78588c2d4bbd333b40b58b437fb27ef8b009e4f6dbf23bd8b4e415be94e4e9b7",
+    "ExpertSystem/requirements/L3-component/ch30-L3-component.md": "a201d014b3dc9181403d9188a67ce4a819911bba2ff28b40143c7c89b1cb468b",
+    "ExpertSystem/requirements/L3-component/ch31-L3-component.md": "c6e122e8834d3eec3adda28adb8bacd0aa3c9941c5d44793ad0fa810ddd573b3",
+    "ExpertSystem/requirements/L3-component/ch32-L3-component.md": "53f9013ecda83f011e44d6b68078ec64392bf280f78c4f0b94cc0910ae4b1fb1",
+    "ExpertSystem/requirements/L3-component/ch33-L3-component.md": "172c2a02060d4f3694490e3f4ed946b22251fdee71c655ecd19e2b8a2b707536",
+    "ExpertSystem/requirements/L3-component/ch34-L3-component.md": "aedff1b254daed38e738ae6f18701b4013f74b4dc693b579ec711c5eb366618e",
+    "ExpertSystem/requirements/L3-component/ch35-L3-component.md": "20a0994f326720858d6e234ca0b79604dd5379a15742d964be1b40687e5590c2",
+    "ExpertSystem/requirements/L3-component/ch36-L3-component.md": "f0642320959d11991fec01651ed850c77e39c02b7570f3447cbaa92d4f009175",
+    "ExpertSystem/requirements/L3-component/ch37-L3-component.md": "30eac7a5d038aba2360f94703e79ea43a8391e4df83cf604f3353f9d8e342562",
+    "ExpertSystem/requirements/L3-component/ch38-L3-component.md": "f6d84d915311a225e163f16bc2081282bfad6155d660bf53da5ac821daef50c1",
+    "ExpertSystem/requirements/L3-component/ch39-L3-component.md": "22a76bcf24dbcf72c1861e4a793533c6d7c9a65b31ff24ea36b99fb1025bcdf9",
+    "ExpertSystem/requirements/L3-component/ch40-L3-component.md": "e97062b746b67f178a286e5c8943a7bfe9a15fbc33b314c87b40fc81316db0ac"
+  },
+  "tools": {
+    "scripts/inspect_requirements_trace.py": "1057ece36d86837f46788e1c9c498a14ee2418ce210ab2e102ad81d7d31473a3",
+    "scripts/tests/test_technical_inspectors.py": "eb1aeb0d326f44dea2cffe1cf4318ea7e951d30d939421f90fc0b95b9d8ba3f2"
+  },
+  "source_changes": [
+    {
+      "id": "REQ-L1-11-14",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch11-L1-stakeholder.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», репліки автора (Микола Федчик). Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», репліки автора (Микола Федчик).",
+      "mappings": [
+        {
+          "chapter": 11,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§11 «Діалог до глави 11»",
+          "target_line": 612
+        }
+      ]
+    },
+    {
+      "id": "REQ-L1-19-03",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch19-L1-stakeholder.md",
+      "before": "[ch19](../../ch19-from-question-to-evidence.md), §2 «Слабкоструктурована природа запитань природною мовою та семантична декомпозиція»; §13 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 19](../../PRO_ET_CONTRA.md#ch19); позначення § наведено за структурою до перенесення.",
+      "after": "[ch19](../../ch19-from-question-to-evidence.md), §2 «Слабкоструктурована природа запитань природною мовою та семантична декомпозиція»; [Діалог до глави 19](../../PRO_ET_CONTRA.md#ch19), §19 «Діалог до глави 19».",
+      "mappings": [
+        {
+          "chapter": 19,
+          "old_section": "§13 «Діалог Pro et Contra»",
+          "new_section": "§19 «Діалог до глави 19»",
+          "target_line": 1103
+        }
+      ]
+    },
+    {
+      "id": "REQ-L1-19-05",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch19-L1-stakeholder.md",
+      "before": "[ch19](../../ch19-from-question-to-evidence.md), §8 «Проміжне представлення твердження з доказом»; §13 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 19](../../PRO_ET_CONTRA.md#ch19); позначення § наведено за структурою до перенесення.",
+      "after": "[ch19](../../ch19-from-question-to-evidence.md), §8 «Проміжне представлення твердження з доказом»; [Діалог до глави 19](../../PRO_ET_CONTRA.md#ch19), §19 «Діалог до глави 19».",
+      "mappings": [
+        {
+          "chapter": 19,
+          "old_section": "§13 «Діалог Pro et Contra»",
+          "new_section": "§19 «Діалог до глави 19»",
+          "target_line": 1103
+        }
+      ]
+    },
+    {
+      "id": "REQ-L1-21-13",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch21-L1-stakeholder.md",
+      "before": "[ch21](../../ch21-from-recommendation-to-action.md), §2 «Модель рівнів автономності системної дії (A0–A4)», §9.1 «Діалог з Девідом Парнасом». Джерело діалогу перенесено: [текст до глави 21](../../PRO_ET_CONTRA.md#ch21); позначення § наведено за структурою до перенесення.",
+      "after": "[ch21](../../ch21-from-recommendation-to-action.md), §2 «Модель рівнів автономності системної дії (A0–A4)»,; [Діалог до глави 21](../../PRO_ET_CONTRA.md#ch21), §21.1 «Діалог з Девідом Парнасом: межі автономного виконання дій програмними агентами та формальні гарантії середовища».",
+      "mappings": [
+        {
+          "chapter": 21,
+          "old_section": "§9.1 «Діалог з Девідом Парнасом»",
+          "new_section": "§21.1 «Діалог з Девідом Парнасом: межі автономного виконання дій програмними агентами та формальні гарантії середовища»",
+          "target_line": 1239
+        }
+      ]
+    },
+    {
+      "id": "REQ-L1-29-11",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch29-L1-stakeholder.md",
+      "before": "[ch29](../../ch29-neuro-symbolic-architecture.md), Анотація і §11 «Діалог Pro et Contra» (ISO 26262 і DO-178C). Джерело діалогу перенесено: [текст до глави 29](../../PRO_ET_CONTRA.md#ch29); позначення § наведено за структурою до перенесення.",
+      "after": "[ch29](../../ch29-neuro-symbolic-architecture.md), Анотація; [Діалог до глави 29](../../PRO_ET_CONTRA.md#ch29), §29 «Діалог до глави 29» (ISO 26262 і DO-178C).",
+      "mappings": [
+        {
+          "chapter": 29,
+          "old_section": "§11 «Діалог Pro et Contra»",
+          "new_section": "§29 «Діалог до глави 29»",
+          "target_line": 1570
+        }
+      ]
+    },
+    {
+      "id": "REQ-L1-29-12",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch29-L1-stakeholder.md",
+      "before": "[ch29](../../ch29-neuro-symbolic-architecture.md), §11 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 29](../../PRO_ET_CONTRA.md#ch29); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 29](../../PRO_ET_CONTRA.md#ch29), §29 «Діалог до глави 29».",
+      "mappings": [
+        {
+          "chapter": 29,
+          "old_section": "§11 «Діалог Pro et Contra»",
+          "new_section": "§29 «Діалог до глави 29»",
+          "target_line": 1570
+        }
+      ]
+    },
+    {
+      "id": "REQ-L1-34-12",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch34-L1-stakeholder.md",
+      "before": "[ch34](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md), §9.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги», інваріант закритої відмови при мовчанні оператора. Джерело діалогу перенесено: [текст до глави 34](../../PRO_ET_CONTRA.md#ch34); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 34](../../PRO_ET_CONTRA.md#ch34), §34.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги», інваріант закритої відмови при мовчанні оператора.",
+      "mappings": [
+        {
+          "chapter": 34,
+          "old_section": "§9.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги»",
+          "new_section": "§34.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги»",
+          "target_line": 1803
+        }
+      ]
+    },
+    {
+      "id": "REQ-L1-39-12",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch39-L1-stakeholder.md",
+      "before": "[ch39](../../ch39-active-compliance-auditor-and-popperian-testing.md), §4.3 «Автоматизація SAR: доказове полотно для аудиторів TÜV / Dekra», §9 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 39](../../PRO_ET_CONTRA.md#ch39); позначення § наведено за структурою до перенесення.",
+      "after": "[ch39](../../ch39-active-compliance-auditor-and-popperian-testing.md), §4.3 «Автоматизація SAR: доказове полотно для аудиторів TÜV / Dekra»,; [Діалог до глави 39](../../PRO_ET_CONTRA.md#ch39), §39 «Діалог до глави 39».",
+      "mappings": [
+        {
+          "chapter": 39,
+          "old_section": "§9 «Діалог Pro et Contra»",
+          "new_section": "§39 «Діалог до глави 39»",
+          "target_line": 1990
+        }
+      ]
+    },
+    {
+      "id": "REQ-L1-40-09",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch40-L1-stakeholder.md",
+      "before": "[ch40](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md), §6.3 «Автономний локальний WAL-буфер та протокол виведення з експлуатації (Lame Duck Mode)»; §10 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 40](../../PRO_ET_CONTRA.md#ch40); позначення § наведено за структурою до перенесення.",
+      "after": "[ch40](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md), §6.3 «Автономний локальний WAL-буфер та протокол виведення з експлуатації (Lame Duck Mode)»; [Діалог до глави 40](../../PRO_ET_CONTRA.md#ch40), §40 «Діалог до глави 40».",
+      "mappings": [
+        {
+          "chapter": 40,
+          "old_section": "§10 «Діалог Pro et Contra»",
+          "new_section": "§40 «Діалог до глави 40»",
+          "target_line": 2037
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-11-07",
+      "path": "ExpertSystem/requirements/L2-system/ch11-L2-system.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», репліка автора (арбітраж телеметрією через SMT-солвери). Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», репліка автора (арбітраж телеметрією через SMT-солвери).",
+      "mappings": [
+        {
+          "chapter": 11,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§11 «Діалог до глави 11»",
+          "target_line": 612
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-11-15",
+      "path": "ExpertSystem/requirements/L2-system/ch11-L2-system.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», репліка автора (калібрування за Брієром). Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», репліка автора (калібрування за Брієром).",
+      "mappings": [
+        {
+          "chapter": 11,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§11 «Діалог до глави 11»",
+          "target_line": 612
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-11-31",
+      "path": "ExpertSystem/requirements/L2-system/ch11-L2-system.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», репліка автора (інваріант детермінованого виведення). Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», репліка автора (інваріант детермінованого виведення).",
+      "mappings": [
+        {
+          "chapter": 11,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§11 «Діалог до глави 11»",
+          "target_line": 612
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-11-33",
+      "path": "ExpertSystem/requirements/L2-system/ch11-L2-system.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», репліка автора (протокол Fail-Closed при виході за межі ODD). Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», репліка автора (протокол Fail-Closed при виході за межі ODD).",
+      "mappings": [
+        {
+          "chapter": 11,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§11 «Діалог до глави 11»",
+          "target_line": 612
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-13-08",
+      "path": "ExpertSystem/requirements/L2-system/ch13-L2-system.md",
+      "before": "[ch13](../../ch13-language-variability-vs-determinism.md), §8 «Діалог Pro et Contra», продовження діалогу з Деном Ротом. Джерело діалогу перенесено: [текст до глави 13](../../PRO_ET_CONTRA.md#ch13); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 13](../../PRO_ET_CONTRA.md#ch13), §13 «Діалог до глави 13», продовження діалогу з Деном Ротом.",
+      "mappings": [
+        {
+          "chapter": 13,
+          "old_section": "§8 «Діалог Pro et Contra»",
+          "new_section": "§13 «Діалог до глави 13»",
+          "target_line": 731
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-13-17",
+      "path": "ExpertSystem/requirements/L2-system/ch13-L2-system.md",
+      "before": "[ch13](../../ch13-language-variability-vs-determinism.md), §3.2 «Доменне тегування та лексична ізоляція констант»; §8 «Діалог Pro et Contra», відповідь Федчика Дену Роту. Джерело діалогу перенесено: [текст до глави 13](../../PRO_ET_CONTRA.md#ch13); позначення § наведено за структурою до перенесення.",
+      "after": "[ch13](../../ch13-language-variability-vs-determinism.md), §3.2 «Доменне тегування та лексична ізоляція констант»; [Діалог до глави 13](../../PRO_ET_CONTRA.md#ch13), §13 «Діалог до глави 13», відповідь Федчика Дену Роту.",
+      "mappings": [
+        {
+          "chapter": 13,
+          "old_section": "§8 «Діалог Pro et Contra»",
+          "new_section": "§13 «Діалог до глави 13»",
+          "target_line": 731
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-13-22",
+      "path": "ExpertSystem/requirements/L2-system/ch13-L2-system.md",
+      "before": "[ch13](../../ch13-language-variability-vs-determinism.md), §7 «Розподіл архітектурної відповідальності та межі модулів»; §8 «Діалог Pro et Contra», Сократівський протокол допиту. Джерело діалогу перенесено: [текст до глави 13](../../PRO_ET_CONTRA.md#ch13); позначення § наведено за структурою до перенесення.",
+      "after": "[ch13](../../ch13-language-variability-vs-determinism.md), §7 «Розподіл архітектурної відповідальності та межі модулів»; [Діалог до глави 13](../../PRO_ET_CONTRA.md#ch13), §13 «Діалог до глави 13», Сократівський протокол допиту.",
+      "mappings": [
+        {
+          "chapter": 13,
+          "old_section": "§8 «Діалог Pro et Contra»",
+          "new_section": "§13 «Діалог до глави 13»",
+          "target_line": 731
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-13-23",
+      "path": "ExpertSystem/requirements/L2-system/ch13-L2-system.md",
+      "before": "[ch13](../../ch13-language-variability-vs-determinism.md), §8 «Діалог Pro et Contra», діалог з Крістофером Поттсом. Джерело діалогу перенесено: [текст до глави 13](../../PRO_ET_CONTRA.md#ch13); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 13](../../PRO_ET_CONTRA.md#ch13), §13 «Діалог до глави 13», діалог з Крістофером Поттсом.",
+      "mappings": [
+        {
+          "chapter": 13,
+          "old_section": "§8 «Діалог Pro et Contra»",
+          "new_section": "§13 «Діалог до глави 13»",
+          "target_line": 731
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-19-02",
+      "path": "ExpertSystem/requirements/L2-system/ch19-L2-system.md",
+      "before": "[ch19](../../ch19-from-question-to-evidence.md), §2 «Чотири інваріанти семантичної декомпозиції інженерних запитань»; §13 «Діалог Pro et Contra» (приклад «безпечного рівня»). Джерело діалогу перенесено: [текст до глави 19](../../PRO_ET_CONTRA.md#ch19); позначення § наведено за структурою до перенесення.",
+      "after": "[ch19](../../ch19-from-question-to-evidence.md), §2 «Чотири інваріанти семантичної декомпозиції інженерних запитань»; [Діалог до глави 19](../../PRO_ET_CONTRA.md#ch19), §19 «Діалог до глави 19» (приклад «безпечного рівня»).",
+      "mappings": [
+        {
+          "chapter": 19,
+          "old_section": "§13 «Діалог Pro et Contra»",
+          "new_section": "§19 «Діалог до глави 19»",
+          "target_line": 1103
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-19-12",
+      "path": "ExpertSystem/requirements/L2-system/ch19-L2-system.md",
+      "before": "[ch19](../../ch19-from-question-to-evidence.md), §13 «Діалог Pro et Contra» (маркер `PARTIAL`). Джерело діалогу перенесено: [текст до глави 19](../../PRO_ET_CONTRA.md#ch19); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 19](../../PRO_ET_CONTRA.md#ch19), §19 «Діалог до глави 19» (маркер `PARTIAL`).",
+      "mappings": [
+        {
+          "chapter": 19,
+          "old_section": "§13 «Діалог Pro et Contra»",
+          "new_section": "§19 «Діалог до глави 19»",
+          "target_line": 1103
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-21-09",
+      "path": "ExpertSystem/requirements/L2-system/ch21-L2-system.md",
+      "before": "[ch21](../../ch21-from-recommendation-to-action.md), §9.2 «Діалог з Ненсі Левесон». Джерело діалогу перенесено: [текст до глави 21](../../PRO_ET_CONTRA.md#ch21); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 21](../../PRO_ET_CONTRA.md#ch21), §21.2 «Діалог з Ненсі Левесон: компонентно-орієнтовані моделі безпеки та системно-теоретичний контроль STAMP».",
+      "mappings": [
+        {
+          "chapter": 21,
+          "old_section": "§9.2 «Діалог з Ненсі Левесон»",
+          "new_section": "§21.2 «Діалог з Ненсі Левесон: компонентно-орієнтовані моделі безпеки та системно-теоретичний контроль STAMP»",
+          "target_line": 1250
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-22-17",
+      "path": "ExpertSystem/requirements/L2-system/ch22-L2-system.md",
+      "before": "[ch22](../../ch22-cybernetics-edge-to-backend.md), §6 «Ієрархія часових горизонтів L0–L4»; §13 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 22](../../PRO_ET_CONTRA.md#ch22); позначення § наведено за структурою до перенесення.",
+      "after": "[ch22](../../ch22-cybernetics-edge-to-backend.md), §6 «Ієрархія часових горизонтів L0–L4»; [Діалог до глави 22](../../PRO_ET_CONTRA.md#ch22), §22 «Діалог до глави 22».",
+      "mappings": [
+        {
+          "chapter": 22,
+          "old_section": "§13 «Діалог Pro et Contra»",
+          "new_section": "§22 «Діалог до глави 22»",
+          "target_line": 1277
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-23-18",
+      "path": "ExpertSystem/requirements/L2-system/ch23-L2-system.md",
+      "before": "[ch23](../../ch23-knowledge-base-verification.md), §11 «Верифікація гібридних neuro-symbolic конфігурацій»; §17.4 «Продовження діалогу з Едмундом Кларком». Джерело діалогу перенесено: [текст до глави 23](../../PRO_ET_CONTRA.md#ch23); позначення § наведено за структурою до перенесення.",
+      "after": "[ch23](../../ch23-knowledge-base-verification.md), §11 «Верифікація гібридних neuro-symbolic конфігурацій»; [Діалог до глави 23](../../PRO_ET_CONTRA.md#ch23), §23.4 «Продовження діалогу з Едмундом Кларком: абстракція за контрприкладами CEGAR та неповнота доведення».",
+      "mappings": [
+        {
+          "chapter": 23,
+          "old_section": "§17.4 «Продовження діалогу з Едмундом Кларком»",
+          "new_section": "§23.4 «Продовження діалогу з Едмундом Кларком: абстракція за контрприкладами CEGAR та неповнота доведення»",
+          "target_line": 1350
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-29-08",
+      "path": "ExpertSystem/requirements/L2-system/ch29-L2-system.md",
+      "before": "[ch29](../../ch29-neuro-symbolic-architecture.md), §11 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 29](../../PRO_ET_CONTRA.md#ch29); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 29](../../PRO_ET_CONTRA.md#ch29), §29 «Діалог до глави 29».",
+      "mappings": [
+        {
+          "chapter": 29,
+          "old_section": "§11 «Діалог Pro et Contra»",
+          "new_section": "§29 «Діалог до глави 29»",
+          "target_line": 1570
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-29-13",
+      "path": "ExpertSystem/requirements/L2-system/ch29-L2-system.md",
+      "before": "[ch29](../../ch29-neuro-symbolic-architecture.md), §11 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 29](../../PRO_ET_CONTRA.md#ch29); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 29](../../PRO_ET_CONTRA.md#ch29), §29 «Діалог до глави 29».",
+      "mappings": [
+        {
+          "chapter": 29,
+          "old_section": "§11 «Діалог Pro et Contra»",
+          "new_section": "§29 «Діалог до глави 29»",
+          "target_line": 1570
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-33-03",
+      "path": "ExpertSystem/requirements/L2-system/ch33-L2-system.md",
+      "before": "[ch33](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md), §10 «Діалог Pro et Contra», відповідь щодо Fail-Closed. Джерело діалогу перенесено: [текст до глави 33](../../PRO_ET_CONTRA.md#ch33); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 33](../../PRO_ET_CONTRA.md#ch33), §33 «Діалог до глави 33», відповідь щодо Fail-Closed.",
+      "mappings": [
+        {
+          "chapter": 33,
+          "old_section": "§10 «Діалог Pro et Contra»",
+          "new_section": "§33 «Діалог до глави 33»",
+          "target_line": 1736
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-34-19",
+      "path": "ExpertSystem/requirements/L2-system/ch34-L2-system.md",
+      "before": "[ch34](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md), §9.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги». Джерело діалогу перенесено: [текст до глави 34](../../PRO_ET_CONTRA.md#ch34); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 34](../../PRO_ET_CONTRA.md#ch34), §34.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги».",
+      "mappings": [
+        {
+          "chapter": 34,
+          "old_section": "§9.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги»",
+          "new_section": "§34.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги»",
+          "target_line": 1803
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-37-10",
+      "path": "ExpertSystem/requirements/L2-system/ch37-L2-system.md",
+      "before": "[ch37](../../ch37-input-information-assessment-and-algorithmic-skepticism.md), §2.2 «Американська традиція: аналіз конкуруючих гіпотез»; §2.8 «Ізраїльська традиція: критика незмінної концепції»; §12 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 37](../../PRO_ET_CONTRA.md#ch37); позначення § наведено за структурою до перенесення.",
+      "after": "[ch37](../../ch37-input-information-assessment-and-algorithmic-skepticism.md), §2.2 «Американська традиція: аналіз конкуруючих гіпотез»; [ch37](../../ch37-input-information-assessment-and-algorithmic-skepticism.md), §2.8 «Ізраїльська традиція: критика незмінної концепції»; [Діалог до глави 37](../../PRO_ET_CONTRA.md#ch37), §37 «Діалог до глави 37».",
+      "mappings": [
+        {
+          "chapter": 37,
+          "old_section": "§12 «Діалог Pro et Contra»",
+          "new_section": "§37 «Діалог до глави 37»",
+          "target_line": 1902
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-39-20",
+      "path": "ExpertSystem/requirements/L2-system/ch39-L2-system.md",
+      "before": "[ch39](../../ch39-active-compliance-auditor-and-popperian-testing.md), §4.3 «Автоматизація SAR» і §9 «Діалог Pro et Contra», репліка Миколи Федчика щодо журналу WORM. Джерело діалогу перенесено: [текст до глави 39](../../PRO_ET_CONTRA.md#ch39); позначення § наведено за структурою до перенесення.",
+      "after": "[ch39](../../ch39-active-compliance-auditor-and-popperian-testing.md), §4.3 «Автоматизація SAR»; [Діалог до глави 39](../../PRO_ET_CONTRA.md#ch39), §39 «Діалог до глави 39», репліка Миколи Федчика щодо журналу WORM.",
+      "mappings": [
+        {
+          "chapter": 39,
+          "old_section": "§9 «Діалог Pro et Contra»",
+          "new_section": "§39 «Діалог до глави 39»",
+          "target_line": 1990
+        }
+      ]
+    },
+    {
+      "id": "REQ-L2-40-17",
+      "path": "ExpertSystem/requirements/L2-system/ch40-L2-system.md",
+      "before": "[ch40](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md), §7.2 «Ієрархічне Merkle-дерево та WORM-анкоринг»; §10 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 40](../../PRO_ET_CONTRA.md#ch40); позначення § наведено за структурою до перенесення.",
+      "after": "[ch40](../../ch40-distributed-epistemic-architectures-soa-and-cluster-scaling.md), §7.2 «Ієрархічне Merkle-дерево та WORM-анкоринг»; [Діалог до глави 40](../../PRO_ET_CONTRA.md#ch40), §40 «Діалог до глави 40».",
+      "mappings": [
+        {
+          "chapter": 40,
+          "old_section": "§10 «Діалог Pro et Contra»",
+          "new_section": "§40 «Діалог до глави 40»",
+          "target_line": 2037
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-11-08",
+      "path": "ExpertSystem/requirements/L3-component/ch11-L3-component.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», репліка автора (арбітраж через SMT-солвери). Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», репліка автора (арбітраж через SMT-солвери).",
+      "mappings": [
+        {
+          "chapter": 11,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§11 «Діалог до глави 11»",
+          "target_line": 612
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-11-26",
+      "path": "ExpertSystem/requirements/L3-component/ch11-L3-component.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», репліка автора (метод калібрування за оцінкою Брієра). Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», репліка автора (метод калібрування за оцінкою Брієра).",
+      "mappings": [
+        {
+          "chapter": 11,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§11 «Діалог до глави 11»",
+          "target_line": 612
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-11-32",
+      "path": "ExpertSystem/requirements/L3-component/ch11-L3-component.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», репліка автора (дельфійський протокол з вимірюванням дисперсії). Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», репліка автора (дельфійський протокол з вимірюванням дисперсії).",
+      "mappings": [
+        {
+          "chapter": 11,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§11 «Діалог до глави 11»",
+          "target_line": 612
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-11-46",
+      "path": "ExpertSystem/requirements/L3-component/ch11-L3-component.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», репліка автора (інваріант детермінованого виведення). Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», репліка автора (інваріант детермінованого виведення).",
+      "mappings": [
+        {
+          "chapter": 11,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§11 «Діалог до глави 11»",
+          "target_line": 612
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-11-48",
+      "path": "ExpertSystem/requirements/L3-component/ch11-L3-component.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», протокол Fail-Closed. Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», протокол Fail-Closed.",
+      "mappings": [
+        {
+          "chapter": 11,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§11 «Діалог до глави 11»",
+          "target_line": 612
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-12-39",
+      "path": "ExpertSystem/requirements/L3-component/ch12-L3-component.md",
+      "before": "[ch12](../../ch12-linguistic-analysis-and-local-models.md), §14.1 «Діалог з Крістофером Меннінгом» (авторська позиція, Микола Федчик). Джерело діалогу перенесено: [текст до глави 12](../../PRO_ET_CONTRA.md#ch12); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 12](../../PRO_ET_CONTRA.md#ch12), §12.1 «Діалог з Крістофером Меннінгом: роль формальних граматик GBNF у добу наскрізного глибокого навчання» (авторська позиція, Микола Федчик).",
+      "mappings": [
+        {
+          "chapter": 12,
+          "old_section": "§14.1 «Діалог з Крістофером Меннінгом»",
+          "new_section": "§12.1 «Діалог з Крістофером Меннінгом: роль формальних граматик GBNF у добу наскрізного глибокого навчання»",
+          "target_line": 684
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-12-73",
+      "path": "ExpertSystem/requirements/L3-component/ch12-L3-component.md",
+      "before": "[ch12](../../ch12-linguistic-analysis-and-local-models.md), §14.2.1 «Продовження діалогу з Ноамом Чомскі» (авторська позиція, Микола Федчик). Джерело діалогу перенесено: [текст до глави 12](../../PRO_ET_CONTRA.md#ch12); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 12](../../PRO_ET_CONTRA.md#ch12), §12.2.1 «Продовження діалогу з Ноамом Чомскі: бідність стимулу та межі семантичного заземлення символів» (авторська позиція, Микола Федчик).",
+      "mappings": [
+        {
+          "chapter": 12,
+          "old_section": "§14.2.1 «Продовження діалогу з Ноамом Чомскі»",
+          "new_section": "§12.2.1 «Продовження діалогу з Ноамом Чомскі: бідність стимулу та межі семантичного заземлення символів»",
+          "target_line": 714
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-12-76",
+      "path": "ExpertSystem/requirements/L3-component/ch12-L3-component.md",
+      "before": "[ch12](../../ch12-linguistic-analysis-and-local-models.md), §14.2.1 «Продовження діалогу з Ноамом Чомскі» (авторська позиція, Микола Федчик). Джерело діалогу перенесено: [текст до глави 12](../../PRO_ET_CONTRA.md#ch12); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 12](../../PRO_ET_CONTRA.md#ch12), §12.2.1 «Продовження діалогу з Ноамом Чомскі: бідність стимулу та межі семантичного заземлення символів» (авторська позиція, Микола Федчик).",
+      "mappings": [
+        {
+          "chapter": 12,
+          "old_section": "§14.2.1 «Продовження діалогу з Ноамом Чомскі»",
+          "new_section": "§12.2.1 «Продовження діалогу з Ноамом Чомскі: бідність стимулу та межі семантичного заземлення символів»",
+          "target_line": 714
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-13-07",
+      "path": "ExpertSystem/requirements/L3-component/ch13-L3-component.md",
+      "before": "[ch13](../../ch13-language-variability-vs-determinism.md), §8 «Діалог Pro et Contra», відповідь Федчика Дену Роту. Джерело діалогу перенесено: [текст до глави 13](../../PRO_ET_CONTRA.md#ch13); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 13](../../PRO_ET_CONTRA.md#ch13), §13 «Діалог до глави 13», відповідь Федчика Дену Роту.",
+      "mappings": [
+        {
+          "chapter": 13,
+          "old_section": "§8 «Діалог Pro et Contra»",
+          "new_section": "§13 «Діалог до глави 13»",
+          "target_line": 731
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-13-32",
+      "path": "ExpertSystem/requirements/L3-component/ch13-L3-component.md",
+      "before": "[ch13](../../ch13-language-variability-vs-determinism.md), §8 «Діалог Pro et Contra», продовження діалогу з Деном Ротом. Джерело діалогу перенесено: [текст до глави 13](../../PRO_ET_CONTRA.md#ch13); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 13](../../PRO_ET_CONTRA.md#ch13), §13 «Діалог до глави 13», продовження діалогу з Деном Ротом.",
+      "mappings": [
+        {
+          "chapter": 13,
+          "old_section": "§8 «Діалог Pro et Contra»",
+          "new_section": "§13 «Діалог до глави 13»",
+          "target_line": 731
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-13-33",
+      "path": "ExpertSystem/requirements/L3-component/ch13-L3-component.md",
+      "before": "[ch13](../../ch13-language-variability-vs-determinism.md), §8 «Діалог Pro et Contra», відповідь Федчика Дену Роту. Джерело діалогу перенесено: [текст до глави 13](../../PRO_ET_CONTRA.md#ch13); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 13](../../PRO_ET_CONTRA.md#ch13), §13 «Діалог до глави 13», відповідь Федчика Дену Роту.",
+      "mappings": [
+        {
+          "chapter": 13,
+          "old_section": "§8 «Діалог Pro et Contra»",
+          "new_section": "§13 «Діалог до глави 13»",
+          "target_line": 731
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-13-34",
+      "path": "ExpertSystem/requirements/L3-component/ch13-L3-component.md",
+      "before": "[ch13](../../ch13-language-variability-vs-determinism.md), §8 «Діалог Pro et Contra», відповідь Федчика Дену Роту. Джерело діалогу перенесено: [текст до глави 13](../../PRO_ET_CONTRA.md#ch13); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 13](../../PRO_ET_CONTRA.md#ch13), §13 «Діалог до глави 13», відповідь Федчика Дену Роту.",
+      "mappings": [
+        {
+          "chapter": 13,
+          "old_section": "§8 «Діалог Pro et Contra»",
+          "new_section": "§13 «Діалог до глави 13»",
+          "target_line": 731
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-13-38",
+      "path": "ExpertSystem/requirements/L3-component/ch13-L3-component.md",
+      "before": "[ch13](../../ch13-language-variability-vs-determinism.md), §8 «Діалог Pro et Contra», відповідь Федчика Крістоферу Поттсу (Сократівський протокол допиту). Джерело діалогу перенесено: [текст до глави 13](../../PRO_ET_CONTRA.md#ch13); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 13](../../PRO_ET_CONTRA.md#ch13), §13 «Діалог до глави 13», відповідь Федчика Крістоферу Поттсу (Сократівський протокол допиту).",
+      "mappings": [
+        {
+          "chapter": 13,
+          "old_section": "§8 «Діалог Pro et Contra»",
+          "new_section": "§13 «Діалог до глави 13»",
+          "target_line": 731
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-16-03",
+      "path": "ExpertSystem/requirements/L3-component/ch16-L3-component.md",
+      "before": "[ch16](../../ch16-expert-systems-architecture.md), §12 «Версіонування та походження рішень» і §14 «Діалог Pro et Contra» (корінь Меркла згадано лише в діалозі). Джерело діалогу перенесено: [текст до глави 16](../../PRO_ET_CONTRA.md#ch16); позначення § наведено за структурою до перенесення.",
+      "after": "[ch16](../../ch16-expert-systems-architecture.md), §12 «Версіонування та походження рішень»; [Діалог до глави 16](../../PRO_ET_CONTRA.md#ch16), §16 «Діалог до глави 16».",
+      "mappings": [
+        {
+          "chapter": 16,
+          "old_section": "§14 «Діалог Pro et Contra»",
+          "new_section": "§16 «Діалог до глави 16»",
+          "target_line": 918
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-17-14",
+      "path": "ExpertSystem/requirements/L3-component/ch17-L3-component.md",
+      "before": "[ch17](../../ch17-implementation-stack.md), §12 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 17](../../PRO_ET_CONTRA.md#ch17); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 17](../../PRO_ET_CONTRA.md#ch17), §17 «Діалог до глави 17».",
+      "mappings": [
+        {
+          "chapter": 17,
+          "old_section": "§12 «Діалог Pro et Contra»",
+          "new_section": "§17 «Діалог до глави 17»",
+          "target_line": 968
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-19-02",
+      "path": "ExpertSystem/requirements/L3-component/ch19-L3-component.md",
+      "before": "[ch19](../../ch19-from-question-to-evidence.md), §13 «Діалог Pro et Contra» (приклад «безпечного рівня»). Джерело діалогу перенесено: [текст до глави 19](../../PRO_ET_CONTRA.md#ch19); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 19](../../PRO_ET_CONTRA.md#ch19), §19 «Діалог до глави 19» (приклад «безпечного рівня»).",
+      "mappings": [
+        {
+          "chapter": 19,
+          "old_section": "§13 «Діалог Pro et Contra»",
+          "new_section": "§19 «Діалог до глави 19»",
+          "target_line": 1103
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-19-17",
+      "path": "ExpertSystem/requirements/L3-component/ch19-L3-component.md",
+      "before": "[ch19](../../ch19-from-question-to-evidence.md), §13 «Діалог Pro et Contra» (маркер `PARTIAL`). Джерело діалогу перенесено: [текст до глави 19](../../PRO_ET_CONTRA.md#ch19); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 19](../../PRO_ET_CONTRA.md#ch19), §19 «Діалог до глави 19» (маркер `PARTIAL`).",
+      "mappings": [
+        {
+          "chapter": 19,
+          "old_section": "§13 «Діалог Pro et Contra»",
+          "new_section": "§19 «Діалог до глави 19»",
+          "target_line": 1103
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-29-13",
+      "path": "ExpertSystem/requirements/L3-component/ch29-L3-component.md",
+      "before": "[ch29](../../ch29-neuro-symbolic-architecture.md), §11 «Діалог Pro et Contra». Джерело діалогу перенесено: [текст до глави 29](../../PRO_ET_CONTRA.md#ch29); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 29](../../PRO_ET_CONTRA.md#ch29), §29 «Діалог до глави 29».",
+      "mappings": [
+        {
+          "chapter": 29,
+          "old_section": "§11 «Діалог Pro et Contra»",
+          "new_section": "§29 «Діалог до глави 29»",
+          "target_line": 1570
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-29-19",
+      "path": "ExpertSystem/requirements/L3-component/ch29-L3-component.md",
+      "before": "[ch29](../../ch29-neuro-symbolic-architecture.md), §11 «Діалог Pro et Contra» і §9 «Інструментальні засоби керованої генерації та граматичного обмеження». Джерело діалогу перенесено: [текст до глави 29](../../PRO_ET_CONTRA.md#ch29); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 29](../../PRO_ET_CONTRA.md#ch29), §29 «Діалог до глави 29»; [ch29](../../ch29-neuro-symbolic-architecture.md), §9 «Інструментальні засоби керованої генерації та граматичного обмеження».",
+      "mappings": [
+        {
+          "chapter": 29,
+          "old_section": "§11 «Діалог Pro et Contra»",
+          "new_section": "§29 «Діалог до глави 29»",
+          "target_line": 1570
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-33-07",
+      "path": "ExpertSystem/requirements/L3-component/ch33-L3-component.md",
+      "before": "[ch33](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md), §3.2 «Формальні щити безпеки (Shielding) у навчанні агентів»; §10 «Діалог Pro et Contra», продовження діалогу з Джеффрі Гінтоном. Джерело діалогу перенесено: [текст до глави 33](../../PRO_ET_CONTRA.md#ch33); позначення § наведено за структурою до перенесення.",
+      "after": "[ch33](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md), §3.2 «Формальні щити безпеки (Shielding) у навчанні агентів»; [Діалог до глави 33](../../PRO_ET_CONTRA.md#ch33), §33 «Діалог до глави 33», продовження діалогу з Джеффрі Гінтоном.",
+      "mappings": [
+        {
+          "chapter": 33,
+          "old_section": "§10 «Діалог Pro et Contra»",
+          "new_section": "§33 «Діалог до глави 33»",
+          "target_line": 1736
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-33-08",
+      "path": "ExpertSystem/requirements/L3-component/ch33-L3-component.md",
+      "before": "[ch33](../../ch33-inter-system-knowledge-exchange-and-model-teaching.md), §10 «Діалог Pro et Contra», продовження діалогу з Леслі Лампортом. Джерело діалогу перенесено: [текст до глави 33](../../PRO_ET_CONTRA.md#ch33); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 33](../../PRO_ET_CONTRA.md#ch33), §33 «Діалог до глави 33», продовження діалогу з Леслі Лампортом.",
+      "mappings": [
+        {
+          "chapter": 33,
+          "old_section": "§10 «Діалог Pro et Contra»",
+          "new_section": "§33 «Діалог до глави 33»",
+          "target_line": 1736
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-34-17",
+      "path": "ExpertSystem/requirements/L3-component/ch34-L3-component.md",
+      "before": "[ch34](../../ch34-deterministic-relational-analysis-abduction-and-socratic-dialogue.md), §9.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги». Джерело діалогу перенесено: [текст до глави 34](../../PRO_ET_CONTRA.md#ch34); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 34](../../PRO_ET_CONTRA.md#ch34), §34.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги».",
+      "mappings": [
+        {
+          "chapter": 34,
+          "old_section": "§9.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги»",
+          "new_section": "§34.3 «Діалог з Джоном Маккарті: розв'язання проблеми кваліфікації через сократівські діалоги»",
+          "target_line": 1803
+        }
+      ]
+    },
+    {
+      "id": "REQ-L3-37-11",
+      "path": "ExpertSystem/requirements/L3-component/ch37-L3-component.md",
+      "before": "[ch37](../../ch37-input-information-assessment-and-algorithmic-skepticism.md), §12 «Діалог Pro et Contra», діалог з Річардсом Г'юером. Джерело діалогу перенесено: [текст до глави 37](../../PRO_ET_CONTRA.md#ch37); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 37](../../PRO_ET_CONTRA.md#ch37), §37 «Діалог до глави 37», діалог з Річардсом Г'юером.",
+      "mappings": [
+        {
+          "chapter": 37,
+          "old_section": "§12 «Діалог Pro et Contra»",
+          "new_section": "§37 «Діалог до глави 37»",
+          "target_line": 1902
+        }
+      ]
+    },
+    {
+      "id": "REQ-L1-11-15",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch11-L1-stakeholder.md",
+      "before": "[ch11](../../ch11-knowledge-elicitation-from-experts.md), §14 «Діалог Pro et Contra», репліка автора (протокол Fail-Closed). Джерело діалогу перенесено: [текст до глави 11](../../PRO_ET_CONTRA.md#ch11); позначення § наведено за структурою до перенесення.",
+      "after": "[Діалог до глави 11](../../PRO_ET_CONTRA.md#ch11), §11 «Діалог до глави 11», репліка автора (протокол Fail-Closed).",
+      "kind": "verified pilot"
+    },
+    {
+      "id": "REQ-L1-20-09",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch20-L1-stakeholder.md",
+      "before": "[ch20](../../ch20-explanation-engine.md), §3.1 «Інтерактивне налагодження мікрокоду знань (EISA Debugger)».",
+      "after": "[ch20](../../ch20-explanation-engine.md), §3.1 «Інтерактивне налагодження інструкцій логічного виведення: безпобічна інтроспекція, покрокова навігація деревами доведення та часовий відкат».",
+      "kind": "title synchronization"
+    },
+    {
+      "id": "REQ-L1-22-12",
+      "path": "ExpertSystem/requirements/L1-stakeholder/ch22-L1-stakeholder.md",
+      "before": "[ch22](../../ch22-cybernetics-edge-to-backend.md), §10.1 «Крос-архітектурна ізоморфність інтерпретаторів EISA: детермінізм порядку байтів і безпека вирівнювання»; §10.1.2 «Нормативний ISA-профіль EISA».",
+      "after": "[ch22](../../ch22-cybernetics-edge-to-backend.md), §10.1 «Кросархітектурна узгодженість виконання байткоду: порядок байтів і вирівнювання»; §10.1.2 «Нормативний версійований профіль інструкцій».",
+      "kind": "title synchronization"
+    },
+    {
+      "id": "REQ-L2-22-16",
+      "path": "ExpertSystem/requirements/L2-system/ch22-L2-system.md",
+      "before": "[ch22](../../ch22-cybernetics-edge-to-backend.md), §10.1 «Крос-архітектурна ізоморфність інтерпретаторів EISA: детермінізм порядку байтів і безпека вирівнювання»; §10.1.2 «Нормативний ISA-профіль EISA».",
+      "after": "[ch22](../../ch22-cybernetics-edge-to-backend.md), §10.1 «Кросархітектурна узгодженість виконання байткоду: порядок байтів і вирівнювання»; §10.1.2 «Нормативний версійований профіль інструкцій».",
+      "kind": "title synchronization"
+    },
+    {
+      "id": "REQ-L3-22-15",
+      "path": "ExpertSystem/requirements/L3-component/ch22-L3-component.md",
+      "before": "[ch22](../../ch22-cybernetics-edge-to-backend.md), §10.1.1 «Замкнений цикл інженерного розрахунку крос-архітектурної ізоморфності»; §10.1.2 «Нормативний ISA-профіль EISA».",
+      "after": "[ch22](../../ch22-cybernetics-edge-to-backend.md), §10.1.1 «Замкнений цикл інженерного розрахунку крос-архітектурної ізоморфності»; §10.1.2 «Нормативний версійований профіль інструкцій».",
+      "kind": "title synchronization"
+    },
+    {
+      "id": "REQ-L3-22-16",
+      "path": "ExpertSystem/requirements/L3-component/ch22-L3-component.md",
+      "before": "[ch22](../../ch22-cybernetics-edge-to-backend.md), §10.1.1 «Замкнений цикл інженерного розрахунку крос-архітектурної ізоморфності»; §10.1.2 «Нормативний ISA-профіль EISA».",
+      "after": "[ch22](../../ch22-cybernetics-edge-to-backend.md), §10.1.1 «Замкнений цикл інженерного розрахунку крос-архітектурної ізоморфності»; §10.1.2 «Нормативний версійований профіль інструкцій».",
+      "kind": "title synchronization"
+    }
+  ],
+  "delegation": {
+    "model": "Claude Haiku 5.5",
+    "completed_read_only_checks": [
+      "CH20/CH22 title comparison",
+      "CH11 pilot and mixed sources",
+      "selected migration plan records"
+    ],
+    "non_source_comparison": "Executed by main reviewer; Explore delegate reported lack of execution tools, not successful verification."
+  },
+  "acceptance_scope": "Source address/title consistency and non-source preservation only; semantic questions remain open."
+}

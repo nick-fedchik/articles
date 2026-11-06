@@ -35,5 +35,10 @@ scripts/render-validation/*
 /reports/
 /research_notes/
 /review/
+!/review/
+/review/*
+!/review/reports/
+/review/reports/*
+!/review/reports/author-attribution-inventory.md
 /framework/
 /scripts/
