@@ -22,9 +22,9 @@
 
 > [!NOTE]
 > **Abstracts and translations:**
-> The Ukrainian text is the master edition. Abstracts are available in six languages:
+> The Ukrainian text is the master edition. The book abstract and abstracts for all 40 chapters are available in six languages:
 > [Українська (uk)](translations/uk/) · [English (en)](translations/en/) · [Deutsch (de)](translations/de/) · [Français (fr)](translations/fr/) · [日本語 (ja)](translations/ja/) · [한국어 (ko)](translations/ko/).
-> These pages contain abstracts, not full chapter translations. See the [Multilingual Architecture Guide](translations/README.md) for language scope and terminology principles.
+> These pages contain summaries, not full chapter translations. See the [Multilingual Architecture Guide](translations/README.md) for language scope and terminology principles.
 
 ### Від артефакта до перевірюваного рішення
 
