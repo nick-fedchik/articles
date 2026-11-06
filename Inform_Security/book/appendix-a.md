@@ -527,7 +527,7 @@ Karl Koscher та співавтори. *Experimental Security Analysis of a Mod
 
 ### D01. Досліди з GPS-керованим рухом
 
-Cory Leahy. *UT Austin Researchers Successfully Spoof an $80 million Yacht at Sea*. University of Texas at Austin, 29 липня 2013 року. [Первинне університетське повідомлення](https://news.utexas.edu/2013/07/29/ut-austin-researchers-successfully-spoof-an-80-million-yacht-at-sea/). Описує яхту White Rose of Drachs і згадує демонстрацію GPS-керованого UAV 2012 року. Для UAV книга не виводить з цього короткого повідомлення невказаних параметрів досліду.
+Cory Leahy. *UT Austin Researchers Successfully Spoof an \$80 million Yacht at Sea*. University of Texas at Austin, 29 липня 2013 року. [Первинне університетське повідомлення](https://news.utexas.edu/2013/07/29/ut-austin-researchers-successfully-spoof-an-80-million-yacht-at-sea/). Описує яхту White Rose of Drachs і згадує демонстрацію GPS-керованого UAV 2012 року. Для UAV книга не виводить з цього короткого повідомлення невказаних параметрів досліду.
 
 ### D02. Походження повідомлень MAVLink
 
