@@ -4,8 +4,7 @@
 > **Попередній розділ:** [← Розділ 5. Автономна навігація БАС без GNSS: VIO, DSMAC та арбітраж цілісності](Autonomous-Navigation-GNSS-Denied-MilTech-UA.md)  
 > **Наступний розділ:** [Розділ 7. Військова кібернетика тактичного рівня: людино-машинна синергія відділення, взводу та роти →](Military-Cybernetics-Tactical-Level-UA.md)  
 > **Зміст монографії:** [README.md](README.md)  
-> **Автор:** [Микола Федчик (Mykola Fedchyk)](../ExpertSystem/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)  
-> **Пов'язана монографія:** [«Експертні системи: інженерія знань, нейросимволічні архітектури та доказовий ШІ»](../ExpertSystem/README.md)
+> **Автор:** [Микола Федчик (Mykola Fedchyk)](../Expert_Systems_Architecture/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)
 
 ---
 
@@ -25,10 +24,10 @@
 flowchart TB
     subgraph SwarmMesh["ГЕТЕРОГЕННА РОЙОВА МЕРЕЖА (MANET / Mesh)"]
         direction TB
-        UAS_R["Повітряний ретранслятор\n(UAS-R Relay & C2)"]
-        UGV["Наземний роботокомплекс\n(UGV Евакуація / БК)"]
-        UAS_A["Ударний безпілотник\n(UAS-A Strike Unit)"]
-        USV["Надводний дрон-катер\n(USV Maritime Patrol)"]
+        UAS_R["Повітряний ретранслятор<br/>(UAS-R Relay & C2)"]
+        UGV["Наземний роботокомплекс<br/>(UGV Евакуація / БК)"]
+        UAS_A["Ударний безпілотник<br/>(UAS-A Strike Unit)"]
+        USV["Надводний дрон-катер<br/>(USV Maritime Patrol)"]
 
         UAS_R <-->|"P2P Mesh Link"| UGV
         UAS_R <-->|"P2P Mesh Link"| UAS_A
@@ -37,10 +36,10 @@ flowchart TB
     end
 
     subgraph GroundC2["КОМАНДНИЙ ПУНКТ (C2)"]
-        Operator["Людина-оператор (C2 Console)\n(Режим Human-on-the-Loop)"]
+        Operator["Людина-оператор (C2 Console)<br/>(Режим Human-on-the-Loop)"]
     end
 
-    SwarmMesh <==>|"Низькошвидкісний захищений канал\n(Квитанції / Санкції / Зміна правил RoE)"| GroundC2
+    SwarmMesh <==>|"Низькошвидкісний захищений канал<br/>(Квитанції / Санкції / Зміна правил RoE)"| GroundC2
 ```
 
 ---
@@ -196,9 +195,12 @@ assign_task(WinnerPlatform, TaskId) :-
 
 Для практичної розробки ройових комплексів застосовується модульний стек на базі протоколів нульового копіювання:
 
-- **Мережевий транспорт:** Zenoh-P2P або Cyclone DDS через зашифровані тунелі WireGuard у топології Batman-adv / 802.11s Mesh.
+- **Мережевий транспорт:** Zenoh-P2P або Cyclone DDS через зашифровані тунелі WireGuard у топології Batman-adv / 802.11s Mesh, а також адаптивні стеки на базі протоколу `MAVLink 2` поверх IP/TCP із автоматичним перемиканням на вузькосмугові резервні радіоканали (`LoRa`, `CRSF`, `ELRS`).
 - **Бортові агенти:** мікросервіси на мовах Go та Rust із мінімальним споживанням пам'яті та гарантією відсутності панік (Memory Safety).
 - **Символічний рушій:** вбудована бібліотека Datalog (souffle-compiled або pure-Go datalog) для оцінки правил просторової безпеки з затримкою менше 2 мілісекунд.
+- **Практична реалізація в Україні (групове керування БпЛА та екосистема НРК «Хмарка»):**
+  - у повітряному домені українські розробники за підтримки кластера Brave1 успішно випробували в бойових умовах архітектуру супервізорного управління **«один пілот — п'ять дронів»**, де оператор задає сектор і пріоритети наземної цілі, а група БпЛА автономно утримує стрій, розподіляє кути заходу та здійснює ретрансляцію;
+  - у наземному домені українська операційна система управління наземними роботизованими комплексами **«Хмарка»** об'єднала 17 різнорідних типів НРК (логістичних, евакуаційних, інженерних та вогневих) у єдиний децентралізований тактичний контур, дозволяючи одному екіпажу одночасно керувати місією кількох наземних платформ із супутнім відеопотоком з дрона-ретранслятора без залежності від центрального хмарного сервера.
 
 ---
 
@@ -218,6 +220,8 @@ assign_task(WinnerPlatform, TaskId) :-
 - [Zenoh: Zero Overhead Pub/Sub, Store/Query and Compute for Robotics](https://zenoh.io/)
 - [Reynolds, C. W. (1987). Flocks, herds and schools: A distributed behavioral model](https://dl.acm.org/doi/10.1145/37401.37406)
 - [Eclipse Cyclone DDS: Ultra-reliable OMG DDS Implementation](https://cyclonedds.io/)
+- [Як «Хмарка» об'єднує 17 типів НРК у децентралізовану систему управління — DOU DefTech](https://dou.ua/lenta/interviews/hmarka-for-unmanned-ground-vehicle/)
+- [Brave1: випробування технологій групового керування дронами («один пілот — п'ять дронів»)](https://brave1.gov.ua/)
 - [Війська зв'язку та кібербезпеки Збройних Сил України](https://mod.gov.ua/pro-nas/vijska-zv-yazku-ta-kiberbezpeki)
 
 ---
