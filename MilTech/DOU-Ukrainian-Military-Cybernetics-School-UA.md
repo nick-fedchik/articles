@@ -1,7 +1,7 @@
 # Українська військова кібернетика: від КВІРТУ ППО до сучасних цифрових систем управління військами та озброєнням
 
 > **Автор:** Микола Федчик (Mykola Fedchyk) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/) · [GitHub](https://github.com/nick-fedchik)  
-> **Рубрика:** Історія ІТ / Defense Tech / Системна інженерія
+> **Рубрика:** Статті · **Теги:** miltech, defence tech, історія ІТ, архітектура, embedded, кібербезпека
 
 ---
 
