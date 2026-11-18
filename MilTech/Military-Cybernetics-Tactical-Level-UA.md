@@ -1,9 +1,7 @@
-# Розділ 7. Військова кібернетика тактичного рівня: людино-машинна синергія відділення, взводу та роти
+# Військова кібернетика тактичного рівня: людино-машинна синергія відділення, взводу та роти
 
-> **Монографія:** [Військова Кібернетика початку XXI століття](README.md) · [Частина III: Ієрархія бойового управління: Тактика, Операція, Стратегія](README.md#частина-iii-ієрархія-бойового-управління-тактика-операція-стратегія)  
-> **Попередній розділ:** [← Розділ 6. Ройовий інтелект і координація гетерогенних роботокомплексів](Swarm-Intelligence-And-Heterogeneous-Robotics-UA.md)  
-> **Наступний розділ:** [Розділ 8. Військова кібернетика оперативного рівня: міжвидова координація бригад, корпусів та JADC2 →](Military-Cybernetics-Operational-Level-UA.md)  
-> **Зміст монографії:** [README.md](README.md)  
+> **Тематичний напрям:** [Військова кібернетика та доказові системи управління](README.md) · Ієрархія бойового управління: Тактична ланка  
+> **Пов'язані статті:** [Ройовий інтелект і гетерогенні роботокомплекси](Swarm-Intelligence-And-Heterogeneous-Robotics-UA.md) · [Військова кібернетика оперативного рівня](Military-Cybernetics-Operational-Level-UA.md) · [Автономна навігація БАС та НРК без GNSS](Autonomous-Navigation-GNSS-Denied-MilTech-UA.md)  
 > **Автор:** [Микола Федчик (Mykola Fedchyk)](../Expert_Systems_Architecture/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)
 
 ---
@@ -211,4 +209,4 @@ action(seek_cover_and_wait) :-
 
 ---
 
-[← Розділ 6. Ройовий інтелект і координація гетерогенних роботокомплексів](Swarm-Intelligence-And-Heterogeneous-Robotics-UA.md) | [Зміст монографії](README.md) | [Розділ 8. Військова кібернетика оперативного рівня: міжвидова координація бригад, корпусів та JADC2 →](Military-Cybernetics-Operational-Level-UA.md)
+**Пов'язані публікації:** [Ройовий інтелект і гетерогенні роботокомплекси](Swarm-Intelligence-And-Heterogeneous-Robotics-UA.md) · [Військова кібернетика оперативного рівня](Military-Cybernetics-Operational-Level-UA.md) · [АСУ озброєнням та керована зброя](Military-Cybernetics-Weapons-Control-Systems-UA.md) · [Усі статті напряму «Військова кібернетика»](README.md)

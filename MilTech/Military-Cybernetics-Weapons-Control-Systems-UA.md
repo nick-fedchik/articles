@@ -1,9 +1,7 @@
-# Розділ 4. Військова кібернетика і АСУ озброєнням: внутрішні автоматизовані системи керованої зброї
+# Військова кібернетика і АСУ озброєнням: внутрішні автоматизовані системи керованої зброї
 
-> **Монографія:** [Військова Кібернетика початку XXI століття](README.md) · [Частина II: Внутрішня кібернетика озброєння та автономних платформ](README.md#частина-ii-внутрішня-кібернетика-озброєння-та-автономних-платформ)  
-> **Попередній розділ:** [← Розділ 3. Військова кібернетика в дії: C4ISTAR, моделювання та кіберфізичні системи](Military-Cybernetics-In-Action-UA.md)  
-> **Наступний розділ:** [Розділ 5. Автономна навігація БАС без GNSS: VIO, DSMAC та арбітраж цілісності →](Autonomous-Navigation-GNSS-Denied-MilTech-UA.md)  
-> **Зміст монографії:** [README.md](README.md)  
+> **Тематичний напрям:** [Військова кібернетика та доказові системи управління](README.md) · Внутрішня кібернетика озброєння та автономних платформ  
+> **Пов'язані статті:** [C4ISTAR, моделювання та кіберфізичні системи](Military-Cybernetics-In-Action-UA.md) · [Автономна навігація БАС та НРК без GNSS](Autonomous-Navigation-GNSS-Denied-MilTech-UA.md) · [Ройовий інтелект і гетерогенні роботокомплекси](Swarm-Intelligence-And-Heterogeneous-Robotics-UA.md)  
 > **Автор:** [Микола Федчик (Mykola Fedchyk)](../Expert_Systems_Architecture/about-the-author.md) · [LinkedIn](https://www.linkedin.com/in/nickfedchik/)
 
 ---
@@ -235,4 +233,4 @@ flowchart TB
 
 ---
 
-[← Розділ 3. Військова кібернетика в дії: C4ISTAR, моделювання та кіберфізичні системи](Military-Cybernetics-In-Action-UA.md) | [Зміст монографії](README.md) | [Розділ 5. Автономна навігація БАС без GNSS: VIO, DSMAC та арбітраж цілісності →](Autonomous-Navigation-GNSS-Denied-MilTech-UA.md)
+**Пов'язані публікації:** [C4ISTAR, моделювання та кіберфізичні системи](Military-Cybernetics-In-Action-UA.md) · [Автономна навігація БАС та НРК без GNSS](Autonomous-Navigation-GNSS-Denied-MilTech-UA.md) · [Ройовий інтелект і гетерогенні роботокомплекси](Swarm-Intelligence-And-Heterogeneous-Robotics-UA.md) · [Усі статті напряму «Військова кібернетика»](README.md)
