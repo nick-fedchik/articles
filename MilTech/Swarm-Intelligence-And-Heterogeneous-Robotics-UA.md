@@ -49,7 +49,7 @@ flowchart TB
 У розширеній моделі адаптивного рою сумарний вектор керуючого прискорення $\mathbf{a}_i$ для $i$-го агента розраховується як суперпозиція сил штучних потенційних полів (Artificial Potential Fields, APF):
 
 $$
-\mathbf{a}_i = w_{\text{sep}} \mathbf{F}_{\text{sep}, i} + w_{\text{align}} \mathbf{F}_{\text{align}, i} + w_{\text{coh}} \mathbf{F}_{\text{coh}, i} + w_{\text{goal}} \mathbf{F}_{\text{goal}, i} + w_{\text{obs}} \mathbf{F}_{\text{obs}, i}
+\mathbf{a} _ i = w _ {\text{sep}} \mathbf{F} _ {\text{sep}, i} + w _ {\text{align}} \mathbf{F} _ {\text{align}, i} + w _ {\text{coh}} \mathbf{F} _ {\text{coh}, i} + w _ {\text{goal}} \mathbf{F} _ {\text{goal}, i} + w _ {\text{obs}} \mathbf{F} _ {\text{obs}, i}
 $$
 
 ### Компоненти векторного поля
@@ -59,7 +59,7 @@ $$
 Гарантує відсутність колізій між сусідами у радіусі безпеки $R_{\text{safe}}$:
 
 $$
-\mathbf{F}_{\text{sep}, i} = \sum_{j \in \mathcal{N}_i, \, j \neq i} \frac{\mathbf{p}_i - \mathbf{p}_j}{\|\mathbf{p}_i - \mathbf{p}_j\|^3}
+\mathbf{F} _ {\text{sep}, i} = \sum _ {j \in \mathcal{N} _ i, \, j \neq i} \frac{\mathbf{p} _ i - \mathbf{p} _ j}{\|\mathbf{p} _ i - \mathbf{p} _ j\|^3}
 $$
 
 #### 2. Сила вирівнювання швидкостей (Alignment)
@@ -67,7 +67,7 @@ $$
 Синхронізує вектор курсу та швидкість із сусідніми апаратами у радіусі комунікації $R_{\text{comm}}$:
 
 $$
-\mathbf{F}_{\text{align}, i} = \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} (\mathbf{v}_j - \mathbf{v}_i)
+\mathbf{F} _ {\text{align}, i} = \frac{1}{|\mathcal{N} _ i|} \sum _ {j \in \mathcal{N} _ i} (\mathbf{v} _ j - \mathbf{v} _ i)
 $$
 
 #### 3. Сила когезії (Cohesion)
@@ -75,7 +75,7 @@ $$
 Утримує єдність групи та спрямовує агента до локального центру мас:
 
 $$
-\mathbf{F}_{\text{coh}, i} = \left( \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} \mathbf{p}_j \right) - \mathbf{p}_i
+\mathbf{F} _ {\text{coh}, i} = \left( \frac{1}{|\mathcal{N} _ i|} \sum _ {j \in \mathcal{N} _ i} \mathbf{p} _ j \right) - \mathbf{p} _ i
 $$
 
 #### 4. Сила цільового притягання (Goal Attraction)
@@ -83,7 +83,7 @@ $$
 Спрямовує центр мас рою до заданого рубежу або навігаційного коридору:
 
 $$
-\mathbf{F}_{\text{goal}, i} = \frac{\mathbf{p}_{\text{target}} - \mathbf{p}_i}{\|\mathbf{p}_{\text{target}} - \mathbf{p}_i\|}
+\mathbf{F} _ {\text{goal}, i} = \frac{\mathbf{p} _ {\text{target}} - \mathbf{p} _ i}{\|\mathbf{p} _ {\text{target}} - \mathbf{p} _ i\|}
 $$
 
 #### 5. Сила відштовхування від перешкод та зон РЕБ (Obstacle Avoidance)
@@ -91,10 +91,10 @@ $$
 Активується при наближенні до рельєфних перешкод або виявлених секторів ворожого радіовипромінювання:
 
 $$
-\mathbf{F}_{\text{obs}, i} = \sum_{k \in \mathcal{O}_i} \eta \left( \frac{1}{d_k} - \frac{1}{d_{\text{safe}}} \right) \frac{1}{d_k^2} \frac{\mathbf{p}_i - \mathbf{p}_{\text{obs}, k}}{d_k}
+\mathbf{F} _ {\text{obs}, i} = \sum _ {k \in \mathcal{O} _ i} \eta \left( \frac{1}{d _ k} - \frac{1}{d _ {\text{safe}}} \right) \frac{1}{d _ k^2} \frac{\mathbf{p} _ i - \mathbf{p} _ {\text{obs}, k}}{d _ k}
 $$
 
-де дистанція до $k$-ї перешкоди становить $d_k = \|\mathbf{p}_i - \mathbf{p}_{\text{obs}, k}\| \le d_{\text{safe}}$.
+де дистанція до $k$-ї перешкоди становить $d _ k = \|\mathbf{p} _ i - \mathbf{p} _ {\text{obs}, k}\| \le d _ {\text{safe}}$.
 
 ---
 

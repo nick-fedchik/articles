@@ -47,28 +47,28 @@ flowchart TD
 Вектор стану системи $\mathbf{x}_k$ містить стан інерціального вимірювального блока (IMU) та історію поз камери у вікні ковзання з $N$ кадрів:
 
 $$
-\mathbf{x}_k = \begin{bmatrix} \mathbf{x}_{IMU}^T & \mathbf{x}_{C_1}^T & \mathbf{x}_{C_2}^T & \dots & \mathbf{x}_{C_N}^T \end{bmatrix}^T
+\mathbf{x} _ k = \begin{bmatrix} \mathbf{x} _ {IMU}^T & \mathbf{x} _ {C _ 1}^T & \mathbf{x} _ {C _ 2}^T & \dots & \mathbf{x} _ {C _ N}^T \end{bmatrix}^T
 $$
 
 де стан інерціального блока $\mathbf{x}_{IMU}$ описується вектором 16-го або 15-го порядку:
 
 $$
-\mathbf{x}_{IMU} = \begin{bmatrix} {}^I_G \mathbf{q}^T & {}^G \mathbf{p}_I^T & {}^G \mathbf{v}_I^T & \mathbf{b}_g^T & \mathbf{b}_a^T \end{bmatrix}^T
+\mathbf{x} _ {IMU} = \begin{bmatrix} {}^I _ G \mathbf{q}^T & {}^G \mathbf{p} _ I^T & {}^G \mathbf{v} _ I^T & \mathbf{b} _ g^T & \mathbf{b} _ a^T \end{bmatrix}^T
 $$
 
-а стан кожної пози камери $\mathbf{x}_{C_i}$ у вікні ковзання визначається орієнтацією та позицією відносно глобальної СК:
+а стан кожної пози камери $\mathbf{x} _ {C _ i}$ у вікні ковзання визначається орієнтацією та позицією відносно глобальної СК:
 
 $$
-\mathbf{x}_{C_i} = \begin{bmatrix} {}^{C_i}_G \mathbf{q}^T & {}^G \mathbf{p}_{C_i}^T \end{bmatrix}^T
+\mathbf{x} _ {C _ i} = \begin{bmatrix} {}^{C _ i} _ G \mathbf{q}^T & {}^G \mathbf{p} _ {C _ i}^T \end{bmatrix}^T
 $$
 
 Тут:
 
 - ${}^I_G \mathbf{q}$ — одиничний кватерніон орієнтації корпусу щодо глобальної системи координат;
-- ${}^G \mathbf{p}_I \in \mathbb{R}^3$ та ${}^G \mathbf{v}_I \in \mathbb{R}^3$ — просторове положення та вектор лінійної швидкості;
-- $\mathbf{b}_g \in \mathbb{R}^3, \mathbf{b}_a \in \mathbb{R}^3$ — повільно дрейфуючі нулі гіроскопів та акселерометрів.
+- ${}^G \mathbf{p} _ I \in \mathbb{R}^3$ та ${}^G \mathbf{v} _ I \in \mathbb{R}^3$ — просторове положення та вектор лінійної швидкості;
+- $\mathbf{b} _ g \in \mathbb{R}^3, \mathbf{b} _ a \in \mathbb{R}^3$ — повільно дрейфуючі нулі гіроскопів та акселерометрів.
 
-Коли камера спостерігає 3D-точку місцевості $f_j$ у кількох кадрах вікна ковзання, формується вектор візуальної нев'язки $r_j = z_j - \hat{z}_j$. На відміну від класичного SLAM, MSCKF маргіналізує координати просторових точок $f_j$, спрощуючи задачу до оновлення лише коваріаційної матриці поз камери без росту обчислювальної складності від кількості орієнтирів.
+Коли камера спостерігає 3D-точку місцевості $f _ j$ у кількох кадрах вікна ковзання, формується вектор візуальної нев'язки $r _ j = z _ j - \hat{z} _ j$. На відміну від класичного SLAM, MSCKF маргіналізує координати просторових точок $f _ j$, спрощуючи задачу до оновлення лише коваріаційної матриці поз камери без росту обчислювальної складності від кількості орієнтирів.
 
 ---
 
@@ -86,7 +86,7 @@ $$
 - **Нормалізована взаємна кореляція (NCC / ZNCC) градієнтних мап:**
 
 $$
-  \text{NCC}(u, v) = \frac{\sum_{x, y} \big(I_{\text{curr}}(x, y) - \bar{I}_{\text{curr}}\big)\big(I_{\text{ref}}(x+u, y+v) - \bar{I}_{\text{ref}}(u,v)\big)}{\sqrt{\sum_{x, y} \big(I_{\text{curr}}(x, y) - \bar{I}_{\text{curr}}\big)^2 \cdot \sum_{x, y} \big(I_{\text{ref}}(x+u, y+v) - \bar{I}_{\text{ref}}(u,v)\big)^2}}
+  \text{NCC}(u, v) = \frac{\sum _ {x, y} \big(I _ {\text{curr}}(x, y) - \bar{I} _ {\text{curr}}\big)\big(I _ {\text{ref}}(x+u, y+v) - \bar{I} _ {\text{ref}}(u,v)\big)}{\sqrt{\sum _ {x, y} \big(I _ {\text{curr}}(x, y) - \bar{I} _ {\text{curr}}\big)^2 \cdot \sum _ {x, y} \big(I _ {\text{ref}}(x+u, y+v) - \bar{I} _ {\text{ref}}(u,v)\big)^2}}
 $$
 
   Пік кореляційного відгуку $\max_{(u, v)} \text{NCC}(u, v)$ визначає просторове зміщення БАС $(\Delta x, \Delta y)$ щодо еталонної матриці координат.
@@ -108,15 +108,15 @@ $$
 Для наземних роботизованих комплексів (НРК) ортогональний огляд зверху недоступний, а класична колісна або гусенична одометрія в умовах бездоріжжя, багнюки та артилерійських вирв страждає від поздовжнього й поперечного пробуксовування (slip ratio $s_k \in [-1, 1]$):
 
 $$
-\mathbf{v}_{\text{actual}}(t) = (1 - s_k)\,\mathbf{v}_{\text{wheel}}(t) + \boldsymbol{\eta}_{\text{slip}}(t)
+\mathbf{v} _ {\text{actual}}(t) = (1 - s _ k)\,\mathbf{v} _ {\text{wheel}}(t) + \boldsymbol{\eta} _ {\text{slip}}(t)
 $$
 
 Коли колеса чи гусениці буксують у глині ($s_k \to 1$), енкодери фіксують фіктивний рух уперед, тоді як платформа стоїть на місці або сповзає в яр. Щоб усунути цю похибку без GPS, сучасні НРК комбінують стерео-/тепловізійний VIO з **тривимірним лідарним зіставленням хмари точок (3D LiDAR Point-to-Plane ICP)** відносно апріорної цифрової 3D-карти маршруту, побудованої з розвідувальних БпЛА.
 
-Оптимальне перетворення пози НРК $(\mathbf{R}, \mathbf{t}) \in \text{SE}(3)$ між поточним сканом лідара $\{\mathbf{p}_i\}$ та опорною поверхнею місцевості з нормалями $\{\mathbf{n}_i\}$ у точках $\{\mathbf{q}_i\}$ знаходиться мінімізацією проєкційної нев'язки:
+Оптимальне перетворення пози НРК $(\mathbf{R}, \mathbf{t}) \in \text{SE}(3)$ між поточним сканом лідара $\{\mathbf{p} _ i\}$ та опорною поверхнею місцевості з нормалями $\{\mathbf{n} _ i\}$ у точках $\{\mathbf{q} _ i\}$ знаходиться мінімізацією проєкційної нев'язки:
 
 $$
-\min_{\mathbf{R} \in \text{SO}(3),\, \mathbf{t} \in \mathbb{R}^3} \sum_{i=1}^{M} w_i \Big( \big(\mathbf{R}\mathbf{p}_i + \mathbf{t} - \mathbf{q}_i\big) \cdot \mathbf{n}_i \Big)^2
+\min _ {\mathbf{R} \in \text{SO}(3),\, \mathbf{t} \in \mathbb{R}^3} \sum _ {i=1}^{M} w _ i \Big( \big(\mathbf{R}\mathbf{p} _ i + \mathbf{t} - \mathbf{q} _ i\big) \cdot \mathbf{n} _ i \Big)^2
 $$
 
 де $w_i$ — робастна вагова функція Г'юбера, що автоматично відсікає динамічні перешкоди (гілки, дим, рухому техніку). Така геометрична прив'язка дозволяє НРК визначати свої координати з точністю $10\text{--}25\text{ см}$ у повній темряві та при повному радіомовчанні.
@@ -130,13 +130,13 @@ $$
 Для захисту від інтеграції хибних геоприв'язок розроблено протокол **VAIM (Visual Autonomous Integrity Monitoring)** на основі статистичної відстані Махаланобіса та символічного дерева правил:
 
 $$
-d_M = \sqrt{\big(z_{DSMAC} - \mathbf{H}\hat{\mathbf{x}}_{k|k-1}\big)^T \mathbf{S}_k^{-1} \big(z_{DSMAC} - \mathbf{H}\hat{\mathbf{x}}_{k|k-1}\big)} \le \gamma_{\text{threshold}}
+d _ M = \sqrt{\big(z _ {DSMAC} - \mathbf{H}\hat{\mathbf{x}} _ {k|k-1}\big)^T \mathbf{S} _ k^{-1} \big(z _ {DSMAC} - \mathbf{H}\hat{\mathbf{x}} _ {k|k-1}\big)} \le \gamma _ {\text{threshold}}
 $$
 
 де коваріаційна матриця інновації (нев'язки) $\mathbf{S}_k$ визначається як:
 
 $$
-\mathbf{S}_k = \mathbf{H} \mathbf{P}_{k|k-1} \mathbf{H}^T + \mathbf{R}
+\mathbf{S} _ k = \mathbf{H} \mathbf{P} _ {k|k-1} \mathbf{H}^T + \mathbf{R}
 $$
 
 Тут:

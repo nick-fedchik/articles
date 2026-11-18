@@ -91,7 +91,7 @@ flowchart TD
 В архітектурі **Zero-Trust Sensor Fusion** кожен вимірювальний елемент має власний мікроконтролер із підтримкою ARM TrustZone, який формує самодостатній підписаний кадр:
 
 $$
-\text{TelemetryFrame} = \Big\langle \text{ID}_{\text{sensor}}, \, t_{\text{timestamp}}, \, C_{\text{seq}}, \, \mathbf{D}, \, \text{Sign}_{SK}\big(\text{SHA-256}(\text{ID}_{\text{sensor}} \parallel t_{\text{timestamp}} \parallel C_{\text{seq}} \parallel \mathbf{D})\big) \Big\rangle
+\text{TelemetryFrame} = \Big\langle \text{ID} _ {\text{sensor}}, \, t _ {\text{timestamp}}, \, C _ {\text{seq}}, \, \mathbf{D}, \, \text{Sign} _ {SK}\big(\text{SHA-256}(\text{ID} _ {\text{sensor}} \parallel t _ {\text{timestamp}} \parallel C _ {\text{seq}} \parallel \mathbf{D})\big) \Big\rangle
 $$
 
 де:
@@ -258,7 +258,7 @@ func (v *TelemetryVerifier) VerifyFrame(frame *SignedTelemetryFrame) error {
 1. **Криптографічне зв'язування верифікованих переходів L1–L4 із апаратним регістром `PCR[4]`:** перед тим як база правил перетворюється на бінарний `mmap`-образ для бортового обчислювача (наприклад, модуля `JARVIS` або `Tencore AI KIT`), вона проходить чотирирівневу кваліфікацію (L1 — формалізація правил без втрати сенсу; L2 — структурна цілісність графа; L3 — перевірка фізичних і граничних допусків; L4 — детермінована трасованість). Отриманий бінарний образ підписується ключем центру інженерії знань, а його SHA-256 хеш вимірюється у регістр конфігурації платформи `PCR[4]` чипа TPM перед вильотом:
 
 $$
-\text{PCR}[4]_{\text{new}} = \text{SHA-256}\Big(\text{PCR}[4]_{\text{old}} \parallel \text{SHA-256}\big(\text{KnowledgePack}_{\text{L1-L4}} \parallel \text{RoE\_Table}\big)\Big)
+\text{PCR}[4] _ {\text{new}} = \text{SHA-256}\Big(\text{PCR}[4] _ {\text{old}} \parallel \text{SHA-256}\big(\text{KnowledgePack} _ {\text{L1-L4}} \parallel \text{RoE\_Table}\big)\Big)
 $$
 
    Будь-яка спроба змінити хоча б один байт у таблиці правил RoE або сигнатур цілей на флеш-носії миттєво змінює значення `PCR[4]`, через що апаратний модуль безпеки (TPM / Secure Element) блокує розшифрування ключів бойової місії.
