@@ -43,7 +43,7 @@ flowchart LR
 2. **Потрібен Zephyr SDK 1.0.x.** У Zephyr v4.5.0 скрипт `FindZephyr-sdk.cmake` відхиляє SDK `0.17.0` і вимагає `1.0.x`. Я поставив мінімальний бандл `1.0.1` лише з тулчейном `arm-zephyr-eabi`. Звернув увагу, що в 1.0.1 змінився шлях до утиліт: замість `arm-zephyr-eabi/bin/` тепер `gnu/arm-zephyr-eabi/bin/`.
 3. **`LOAD_ADDR` і `ENTRY_ADDR` — це різні адреси.** Сирий `zephyr.bin` не містить ELF-заголовків. Якщо завантажити його командою `fatload` на адресу точки входу, усі абсолютні посилання з’їдуть. Тож `fatload` (або `tftpboot`) має класти бінарник на базову адресу першого сегмента `LOAD`, а `go` — стрибати на `Entry point address`:
 
-$$\text{LOAD\_ADDR} = \texttt{0x00100000}, \quad \text{ENTRY\_ADDR} = \texttt{0x00102BBC}, \quad \Delta = \texttt{0x2BBC}\text{ байт}$$
+$$A_{\text{load}} = \texttt{0x00100000}, \quad A_{\text{entry}} = \texttt{0x00102BBC}, \quad \Delta = \texttt{0x2BBC}\text{ байт}$$
 
 У скрипті обидві адреси автоматично дістаються з `zephyr.elf`:
 
@@ -52,7 +52,7 @@ LOAD_ADDR=$("$READELF" -lW build/zephyr/zephyr.elf | awk '$1 == "LOAD" {print $4
 ENTRY_ADDR=$("$READELF" -h build/zephyr/zephyr.elf | awk '/Entry point address:/ {print $4}')
 ```
 
-Ще одна важлива деталь — частота системного таймера Cortex-A9 Global Timer (GTC). На PYNQ-Z1 процесор працює на $650\text{ МГц}$, а GTC тактується половинною частотою (`CPU_3x2x`):
+Частота системного таймера Cortex-A9 Global Timer (GTC) на PYNQ-Z1 також відрізняється від ZedBoard: процесор працює на $650\text{ МГц}$, а GTC тактується половинною частотою (`CPU_3x2x`):
 
 $$f_{\text{GTC}} = \frac{f_{\text{CPU}}}{2} = \frac{650\text{ МГц}}{2} = 325\text{ МГц}$$
 
@@ -124,7 +124,7 @@ Error: ethernet@e000b000 No valid MAC address found.
 ```text
 [00:00:00.057,000] <inf> phy_mii: PHY (0) ID 1CC916
 [00:00:02.764,000] <inf> phy_mii: PHY (0) Link speed 1000 Mb, full duplex
-DHCPv4 lease acquired: IP=192.168.68.81 mask=255.255.252.0 gw=192.168.68.1
+DHCPv4 lease acquired: IP=192.168.0.11 mask=255.255.255.0 gw=192.168.0.1
 ```
 
 Мені стало цікаво перевірити реальну пропускну здатність цього каналу під Zephyr — надалі я планую поекспериментувати з пакетним стрімінгом сирими Ethernet-фреймами без IP-стеку, тож хотілося мати базову точку відліку. У самому Zephyr для цього вже є вбудована підсистема **`zperf`** (`CONFIG_NET_ZPERF=y`, `CONFIG_NET_ZPERF_SERVER=y`), яка сумісна зі стандартним Linux-клієнтом `iperf`.
@@ -158,8 +158,8 @@ $$R_{\max} \approx \frac{W}{\text{RTT}} = \frac{16 \times 1024 \times 8\text{ б
 Тепер весь цикл перевірки нової прошивки звівся до `./setup_and_build.sh` і натискання кнопки **`SRST`** на платі:
 
 ```text
-=== PYNQ-Z1 Boot: trying TFTP (192.168.68.57) ===
-TFTP from server 192.168.68.57; our IP address is 192.168.68.81
+=== PYNQ-Z1 Boot: trying TFTP (192.168.0.10) ===
+TFTP from server 192.168.0.10; our IP address is 192.168.0.11
 Filename 'pynq1/netboot.scr'.
 Load address: 0x3100000
 Bytes transferred = 210 (d2 hex)
@@ -223,7 +223,7 @@ Total wall time (parallel): 11574 us
 - Запустити актуальний **Zephyr RTOS v4.5.0** на **Digilent PYNQ-Z1** без встановлення Vivado/Vitis цілком реально: достатньо повторно використати `BOOT.BIN` із заводського образу PYNQ v3.1, оформити власний HWMv2-порт плати (`boards/digilent/pynq_z1/`) і не забути про `pinctrl` для `uart0` на 3.3 В.
 - Двоступеневий **TFTP netboot** (`boot.scr` → `netboot.scr` → `zephyr.bin`) повністю прибирає рутину з microSD — перепрошивка займає пару секунд після натискання `SRST`.
 - Попри офіційне обмеження `CONFIG_MP_MAX_NUM_CPUS = 1` для Zynq-7000 у Zephyr v4.5.0, обидва ядра Cortex-A9 реально підняти в режимі **SMP** двома невеликими патчами (`patches/0001..0002`), які додатково виправили реальні баги в upstream.
-- Наступний логічний крок (Частина 2) — асиметричний режим **AMP / OpenAMP**, де на CPU0 працює Linux (мережа, відео, Python), а на CPU1 — ізольований real-time Zephyr із обміном через `/dev/rpmsg0` і перспективою підключення FPGA.
+- Намір на наступні експерименти — запустити асиметричний режим **AMP / OpenAMP**, де на CPU0 працює Linux (мережа, відео, Python), а на CPU1 буде працювати ізольований real-time Zephyr із обміном через `/dev/rpmsg0` і можливістю підключення FPGA.
 
 ---
 
