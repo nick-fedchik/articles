@@ -112,6 +112,25 @@ virtio_rpmsg_bus virtio0: creating channel rpmsg-raw addr 0x400
 
 Тестовий Python-скрипт у PYNQ Linux відправив повідомлення на Zephyr CPU1 і отримав відповіді із затримкою **137–179 мкс** у два боки (разом із `select()` та перемиканням контексту в userspace Linux):
 
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as Linux userspace<br/>(Python / rpmsg-cli)
+    participant L as Linux CPU0<br/>(virtio_rpmsg + zynq_remoteproc)
+    participant M as Shared DDR<br/>(vring0/1 + vdev0buffer)
+    participant Z as Zephyr CPU1<br/>(OpenAMP ISR + worker)
+    participant P as FPGA PL<br/>(AXI GPIO)
+
+    U->>L: write("/dev/rpmsg0", "led 0x5")
+    L->>M: Запис пакета у vdev0buffer + vring0
+    L-->>Z: GICv1 SGI #14 (kick CPU1)
+    Z->>M: Читання дескриптора з vring0
+    Z->>P: AXI MMIO запис у 0x41250000 (< 1 мкс)
+    Z->>M: Запис відповіді "OK led=0x5" у vring1
+    Z-->>L: GICv1 SGI #15 (kick CPU0)
+    L->>U: read("/dev/rpmsg0") → ~100–140 мкс RTT
+```
+
 ```text
 TX: 'Hello Zephyr from PYNQ Linux!' -> RX (413 us): '[Zephyr CPU1 #1] echo: Hello Zephyr from PYNQ Linux!\n'
 TX: 'OpenAMP over GIC SGI 14/15'    -> RX (179 us): '[Zephyr CPU1 #2] echo: OpenAMP over GIC SGI 14/15\n'
@@ -199,6 +218,17 @@ $$f_{\text{GTC,AMP}} = \frac{325\text{ МГц}}{1 + 1} = 162.5\text{ МГц}$$
 2. Python шле команди `set` із частотою 50 Гц (кожні 20 мс).
 3. Python зупиняє відправку на 700 мс (імітація зависання Linux).
 
+```mermaid
+stateDiagram-v2
+    [*] --> DISARMED: Старт CPU1 (виходи = 0)
+    DISARMED --> ARMED: RPMsg "arm"<br/>(LD4–LD5 зелений, WDT 500 мс)
+    ARMED --> ARMED: RPMsg "set" (оновлює WDT)
+    ARMED --> DISARMED: RPMsg "disarm"
+    ARMED --> FAILSAFE: Таймаут Linux > 500 мс<br/>або фізична кнопка BTN0 (< 1 мс)
+    FAILSAFE --> FAILSAFE: "set" відхиляється (ERR)<br/>виходи = 0, LD4–LD5 червоний 4 Гц
+    FAILSAFE --> DISARMED: Явна команда "disarm"
+```
+
 Через 500 мс CPU1 сам переходить у `FAILSAFE`, обнуляє виходи `LD0–LD3`, відхиляє подальші `set` і починає блимати червоним `LD4–LD5` (4 Гц):
 
 ```text
@@ -276,7 +306,8 @@ Linux pynq-1 7.3.6-pynq-z1-rt #4 SMP PREEMPT_RT armv7l GNU/Linux
 - **`Dropbear SSH 2026.94`** із автоматичним підкладанням публічного SSH-ключа у `/root/.ssh/authorized_keys` для входу без пароля;
 - **`rt-tests` (`cyclictest`)**, **`i2c-tools`**, **`ethtool`**;
 - **`/usr/bin/rpmsg-cli`** — компактна C-утиліта (~60 рядків, `buildroot/rpmsg-cli.c`), яка напряму спілкується з `/dev/rpmsg0` і міряє RTT без потреби в Python;
-- **`/lib/firmware/zephyr_amp.elf`** і init-скрипт **`/etc/init.d/S90zephyr-amp`**, що автоматично запускає Zephyr `4.5.0` на CPU1 після старту (коли `fpga0 = operating`) і чисто зупиняє його перед `reboot`.
+- **`/lib/firmware/zephyr_amp.elf`** і init-скрипт **`/etc/init.d/S15zephyr-amp`** (спочатку був `S90`, але я переніс його перед мережею), що автоматично запускає Zephyr `4.5.0` на CPU1 після старту (коли `fpga0 = operating`) і чисто зупиняє його перед `reboot`;
+- **асинхронний `/etc/init.d/S40network`**, який піднімає `ifup -a` у фоні, щоб 3-секундне фізичне автоузгодження 1Gbps PHY (`RTL8211F`) не блокувало старт `dropbear` і консолі.
 
 Готовий образ `rootfs.cpio.uboot` вийшов розміром **3.37 МБ** (проти ~7 ГБ стокової Ubuntu) і вантажиться по TFTP прямо в RAM разом із `base.bin` і `zImage-7.3.6` (`bootz 0x02000000 0x06000000 0x04000000`). Після U-Boot microSD взагалі не використовується, тож файлова система не боїться раптового зняття живлення.
 
@@ -308,15 +339,39 @@ T: 0 (186) P:80 I:1000 C: 1000 Min: 13 Act: 15 Avg: 14 Max: 39
 probe of e000b000.ethernet with driver macb returned 0 after 19493203 usecs
 ```
 
-Декомпіляція стокового DTB із PYNQ v3.1 виявила кумедний баг міграції: `phy-handle` був прописаний у вузлі `/amba/ethernet@e000b000`, тоді як реальний контролер сидить у `/axi/ethernet@e000b000`. Причина проста: у старіших версіях `zynq-7000.dtsi` (часів Linux 4.x–5.x) шина периферії називалася `amba`, а з переходом на новіші правила `dt-schema` в Linux 6.6 її перейменували на `axi`; старий `system-user.dtsi` перевизначав Ethernet за шляхом, тому `dtc` без жодного попередження просто створив поруч «сирітський» вузол `/amba/ethernet@e000b000`. Через це `macb` не знав адреси PHY і на кожному завантаженні послідовно сканував усі 32 MDIO-адреси з таймаутом (~19.3 с). Додавання в `amp/openamp.dts` перекриття за міткою **`&gem0`** (з явним `phy-handle` на `ethernet-phy@0` та фіксованим `local-mac-address`) скоротило час старту всієї системи з **24.8 с** до **5.58 с** (`Run /init` уже на **`0.99 с`**, `rpmsg-raw` готовий на **`5.58 с`**):
+Декомпіляція стокового DTB із PYNQ v3.1 виявила кумедний баг міграції: `phy-handle` був прописаний у вузлі `/amba/ethernet@e000b000`, тоді як реальний контролер сидить у `/axi/ethernet@e000b000`. Причина проста: у старіших версіях `zynq-7000.dtsi` (часів Linux 4.x–5.x) шина периферії називалася `amba`, а з переходом на новіші правила `dt-schema` в Linux 6.6 її перейменували на `axi`; старий `system-user.dtsi` перевизначав Ethernet за шляхом, тому `dtc` без жодного попередження просто створив поруч «сирітський» вузол `/amba/ethernet@e000b000`. Через це `macb` не знав адреси PHY і на кожному завантаженні послідовно сканував усі 32 MDIO-адреси з таймаутом (~19.3 с). Додавання в `amp/openamp.dts` перекриття за міткою **`&gem0`** (з явним `phy-handle` на `ethernet-phy@0` та фіксованим `local-mac-address`) скоротило час старту з **24.8 с** до **5.58 с**.
+
+А перенесення автозапуску Zephyr перед мережею (`S15zephyr-amp`) разом із фоновим `S40network` дало ще кращий розподіл таймінгів (із повним логом ядра на UART0, повторювано до мілісекунд):
+
+```mermaid
+gantt
+    title Таймінг старту Buildroot + Mainline Linux 7.3.6 RT + Zephyr 4.5.0 (PYNQ-Z1)
+    dateFormat ss.SSS
+    axisFormat %S.%L с
+
+    section Ядро Linux 7.3.6 RT
+    Розпакування initramfs + драйвери (0.00–0.98 с) :a1, 00.000, 985ms
+
+    section Userspace + AMP (CPU1)
+    syslogd, klogd, mdev (0.98–2.03 с)              :a2, after a1, 1050ms
+    S15zephyr-amp → CPU1 + /dev/rpmsg0 (2.03–2.14 с) :crit, a3, after a2, 110ms
+    crond + dropbear sshd + login (2.14–2.40 с)     :a4, after a3, 260ms
+
+    section Мережа (у фоні)
+    S40network → 1Gbps PHY autoneg (2.15–5.52 с)    :active, n1, after a3, 3370ms
+```
+
+Чесно щодо цифр: фізичне автоузгодження `1Gbps/Full` на `RTL8211F` апаратно триває ~3.1 с, тому лінк Ethernet усе одно з’являється на **`5.52 с`**. Але завдяки ранньому `S15zephyr-amp` і фоновій мережі **контур реального часу на CPU1 (`/dev/rpmsg0`) готовий уже на `2.14 с`**, а `dropbear sshd` і `pynq-1 login:` — на **`2.40 с`** (якщо додатково додати `quiet` у `bootargs`, старт `/dev/rpmsg0` стискається до **`1.78 с`**):
 
 ```text
-[    0.650544] Freeing initrd memory: 3448K
-[    0.861264] macb e000b000.ethernet eth0: Cadence GEM rev 0x00020118 (9e:5c:1a:8a:bf:53)
-[    0.988965] Run /init as init process
-[    5.289902] macb e000b000.ethernet eth0: Link is Up - 1Gbps/Full - flow control tx
-[    5.550857] remoteproc remoteproc0: remote processor remoteproc@0 is now up
-[    5.580188] virtio_rpmsg_bus virtio0: creating channel rpmsg-raw addr 0x400
+[    0.983531] Run /init as init process
+Starting Zephyr CPU1 (zephyr_amp.elf)...
+[    2.136998] remoteproc remoteproc0: remote processor remoteproc@0 is now up
+[    2.157340] virtio_rpmsg_bus virtio0: creating channel rpmsg-raw addr 0x400
+Starting network (async): OK
+Starting dropbear sshd: OK
+pynq-1 login:
+[    5.517815] macb e000b000.ethernet eth0: Link is Up - 1Gbps/Full - flow control tx
 ```
 
 ---
@@ -332,9 +387,9 @@ probe of e000b000.ethernet with driver macb returned 0 after 19493203 usecs
 
 ## Висновки
 
-- На PYNQ-Z1 можна запустити **AMP / OpenAMP** як на заводському **PYNQ Linux 6.6.10** (без перезбірки ядра), так і на мінімальному **Mainline Linux 7.3.6 із `PREEMPT_RT`** (`5.3 МБ` `zImage`, портований `zynq_remoteproc.c`, вбудовані драйвери поверх стокового Debian-подібного rootfs).
+- На PYNQ-Z1 можна запустити **AMP / OpenAMP** як на заводському **PYNQ Linux 6.6.10** (без перезбірки ядра), так і на повністю самостійному **Embedded Linux** (`Mainline Linux 7.3.6 PREEMPT_RT` `5.3 МБ` + `Buildroot 2026.08.2` `initramfs` `3.37 МБ`, споживання **14 МБ RAM**, автостарт Zephyr CPU1 за **2.14 с**).
 - Для безпечного співіснування Zephyr на CPU1 поруч із Linux критичні три речі: `VBAR` у власній ділянці пам’яті з MMU-мапінгом, `CONFIG_GIC_SAFE_CONFIG=y` та когерентність із SCU (`ACTLR.SMP | ACTLR.FW`), а для доступу до PL — попередня прошивка FPGA (`base.bin`).
-- `PREEMPT_RT` (`SCHED_FIFO`) зменшує максимальний джитер Linux у 72 рази (до **128.4 мкс**) і прискорює `/dev/rpmsg0` до **94–110 мкс**, але виділений **Zephyr на CPU1** усе одно дає субмікросекундний джитер (**`< 1 мкс`**) і незалежний `FAILSAFE` при зависанні Linux.
+- `PREEMPT_RT` (`SCHED_FIFO`) зменшує максимальний джитер Linux із **9.28 мс** до **39 мкс** (нативний `cyclictest` на Buildroot) і прискорює `/dev/rpmsg0` до **94–110 мкс**, але виділений **Zephyr на CPU1** усе одно дає субмікросекундний джитер (**`< 1 мкс`**) і незалежний `FAILSAFE` при зависанні Linux.
 
 ---
 
