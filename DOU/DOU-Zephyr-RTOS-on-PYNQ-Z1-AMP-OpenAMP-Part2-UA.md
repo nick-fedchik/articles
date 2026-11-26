@@ -22,21 +22,13 @@
 ```mermaid
 flowchart TB
     subgraph Zynq7020["Xilinx Zynq-7020 (PYNQ-Z1)"]
-        subgraph PS["Processing System (Dual Cortex-A9)"]
-            direction LR
-            CPU0["CPU0: Linux 7.3.6 PREEMPT_RT<br/>Buildroot, SSH, мережа, телеметрія"]
-            CPU1["CPU1: Zephyr RTOS 4.5.0<br/>1 кГц RT-контур + failsafe watchdog"]
-            CPU0 <-->|"GICv1 SGI 14 / 15<br/>(/dev/rpmsg0)"| CPU1
-        end
+        CPU0["CPU0: Linux 7.3.6 PREEMPT_RT<br/>Buildroot, SSH, мережа, телеметрія"]
+        CPU1["CPU1: Zephyr RTOS 4.5.0<br/>1 кГц RT-контур + failsafe watchdog"]
+        IPC["Shared DDR (0x1f000000) + GICv1 SGI 14/15<br/>vring0 / vring1 + 1 MiB vdev0buffer (/dev/rpmsg0)"]
+        PL["FPGA (PL, Artix-7)<br/>AXI GPIO, апаратний PWM, сенсори"]
 
-        subgraph HW["Спільна пам’ять і програмована логіка"]
-            direction LR
-            SHM["Shared DDR (0x1f000000)<br/>vring0 / vring1 + 1 MiB vdev0buffer"]
-            PL["FPGA (PL, Artix-7)<br/>AXI GPIO, апаратний PWM, сенсори"]
-        end
-
-        CPU0 --- SHM
-        CPU1 --- SHM
+        CPU0 <-->|"SGI #14 / RPMsg"| IPC
+        CPU1 <-->|"SGI #15 / RPMsg"| IPC
         CPU1 <-->|"AXI GP0 MMIO"| PL
     end
 ```
