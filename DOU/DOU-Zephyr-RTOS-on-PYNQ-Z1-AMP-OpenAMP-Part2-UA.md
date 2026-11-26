@@ -126,16 +126,67 @@ $$\eta_{\text{IPC}} = \frac{\text{RTT}_{\text{RPMsg}}}{T_{\text{cmd}}} \approx \
 
 ---
 
-## 6. [TODO] Практичний приклад: FPGA PL і керування FPV-коптером
+## 6. Керування FPGA (PL) із Zephyr CPU1 без Vivado: AXI GPIO у `base.bin`
 
-*(Розділ-заготовка — буде доповнений після апаратних експериментів.)*
+PYNQ Linux автоматично прошиває в FPGA базовий бітстрім `base.bin` ще при старті системи (`fpga_manager fpga0: operating`). Із файла опису дизайну `base.hwh` на платі я витягнув фізичні адреси чотирьох блоків AXI GPIO:
 
-- [ ] **Крок 1 (перевірка PL без Vivado):** доступ із Zephyr CPU1 до AXI GPIO в уже завантаженому `base.bin` (`LD0–LD3`, `BTN0–BTN3`) за командами з Python через `/dev/rpmsg0`.
-- [ ] **Крок 2 (таймінг і джитер):** порівняння затримки реакції на апаратне переривання з PL (Linux userspace проти Zephyr CPU1).
-- [ ] **Крок 3 (керування FPV-коптером):**
-  - опитування IMU по SPI/I2C та цикл стабілізації (PID) на Zephyr CPU1;
-  - генерація керуючих сигналів моторів (PWM / DShot) у PL або таймерах PS;
-  - телеметрія, failsafe та верхньорівневі команди з Linux CPU0 через `/dev/rpmsg0`.
+- `0x41200000` — перемикачі `SW0–SW1`
+- `0x41210000` — кнопки `BTN0–BTN3`
+- `0x41240000` — RGB-світлодіоди `LD4–LD5`
+- `0x41250000` — світлодіоди `LD0–LD3`
+
+Я замапив діапазон `0x41200000` (`0x60000` байт) як `MT_DEVICE` у `soc.c` і додав у `amp/zephyr_cpu1` команди керування через `/dev/rpmsg0`: `led <hex>`, `rgb <hex>`, `blink <ms>` (апаратний таймер `k_timer` на CPU1, незалежний від Linux) та `read` (читання кнопок і перемикачів із PL).
+
+Перевірка з Python на PYNQ Linux:
+
+```text
+CMD: read       -> ( 461 us) OK btns=0x0 sw=0x0 leds=0xf rgb=0x00 blink_ms=0
+CMD: led 0x5    -> ( 164 us) OK led=0x5
+CMD: rgb 0x12   -> ( 133 us) OK rgb=0x12
+CMD: read       -> ( 128 us) OK btns=0x0 sw=0x0 leds=0x5 rgb=0x12 blink_ms=0
+CMD: blink 150  -> ( 127 us) OK blink=150 ms
+CMD: read       -> ( 128 us) OK btns=0x0 sw=0x0 leds=0x1 rgb=0x12 blink_ms=150
+```
+
+На платі `LD0–LD3` запустили стабільний «біжучий вогник» кожні 150 мс під керуванням Zephyr на CPU1, а `LD4–LD5` засвітилися зеленим — повний трирівневий ланцюжок **Linux (CPU0) ↔ `/dev/rpmsg0` ↔ Zephyr (CPU1) ↔ FPGA PL** запрацював без жодного рядка в Vivado.
+
+---
+
+## 7. Бенчмарк 1 кГц реального часу: Linux (CPU0) проти Zephyr (CPU1)
+
+Щоб перевірити на практиці, що саме дає ізольований Zephyr на CPU1 для задач на кшталт 1 кГц циклу стабілізації FPV-коптера, я додав у `amp/zephyr_cpu1` команду `jitter 1000` (1000 тіків `k_timer` із періодом 1000 мкс, вимір по 325 МГц Global Timer + перемикання `LD0` через AXI GPIO у кожному тіку) і порівняв її з аналогічною C-програмою на Linux (`clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME)`):
+
+- спочатку при вільному CPU0;
+- потім під 100% завантаженням CPU0 (4 паралельні Python-процеси, що імітують важку обробку відео або телеметрії).
+
+Реальний вивід із плати:
+
+```text
+=== [1] IDLE CPU0 ===
+LINUX  n=1000 min_us=43.760 max_us=3808.991 avg_us=1000.077 max_jitter_us=2808.991
+ZEPHYR OK n=1000 min_us=999.473 max_us=1000.175 avg_us=999.996 max_jitter_us=0.526
+
+=== [2] 100% CPU0 STRESS LOAD (4 busy workers on Linux CPU0) ===
+LINUX  n=1000 min_us=40.142 max_us=10279.523 avg_us=1000.081 max_jitter_us=9279.523
+ZEPHYR OK n=1000 min_us=999.640 max_us=1000.163 avg_us=999.996 max_jitter_us=0.360
+```
+
+| Сценарій | Linux userspace (C, `CLOCK_MONOTONIC`) | Zephyr RTOS на CPU1 (`k_timer` + PL GPIO) | Різниця (max jitter) |
+|---|---|---|---|
+| CPU0 у простої | `max_jitter = 2808.99 мкс` (2.81 мс) | `max_jitter = 0.526 мкс` (526 нс) | **~5 300×** |
+| CPU0 під 100% навантаженням | `max_jitter = 9279.52 мкс` (9.28 мс) | `max_jitter = 0.360 мкс` (360 нс) | **~25 700×** |
+
+Навіть коли Linux на CPU0 завантажений на 100% і пропускає майже 10 мс (10 пропущених циклів 1 кГц поспіль!), Zephyr на CPU1 тримає період із джитером **менше півмікросекунди**, одночасно смикаючи лінію `LD0` у FPGA. *(Зазначу чесно: у Linux тест запускався без `PREEMPT_RT` і без `SCHED_FIFO`, тобто в типовому заводському PYNQ Linux — саме в такому режимі працює більшість Python/OpenCV-сервісів.)*
+
+---
+
+## 8. [TODO] Далі: керування FPV-коптером
+
+*(Розділ-заготовка — буде доповнений після підключення сенсорів і регуляторів.)*
+
+- [ ] Опитування IMU по SPI/I2C та цикл стабілізації (PID) на Zephyr CPU1;
+- [ ] Генерація керуючих сигналів моторів (PWM / DShot) у PL або таймерах PS;
+- [ ] Телеметрія, failsafe та верхньорівневі команди з Linux CPU0 через `/dev/rpmsg0`.
 
 ---
 
