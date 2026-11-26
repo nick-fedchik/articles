@@ -227,6 +227,7 @@ stateDiagram-v2
     ARMED --> FAILSAFE: Таймаут Linux > 500 мс<br/>або фізична кнопка BTN0 (< 1 мс)
     FAILSAFE --> FAILSAFE: "set" відхиляється (ERR)<br/>виходи = 0, LD4–LD5 червоний 4 Гц
     FAILSAFE --> DISARMED: Явна команда "disarm"
+    FAILSAFE --> [*]: 5 с без Linux (timeout)<br/>→ SLCR.PSS_RST_CTRL = 1 (скид PS)
 ```
 
 Через 500 мс CPU1 сам переходить у `FAILSAFE`, обнуляє виходи `LD0–LD3`, відхиляє подальші `set` і починає блимати червоним `LD4–LD5` (4 Гц):
@@ -376,7 +377,53 @@ pynq-1 login:
 
 ---
 
-## 11. [TODO] Далі: апаратний PWM у FPGA PL і зовнішні сенсори
+## 11. Два живі експерименти: Core Ping-Pong і самовідновлення після `kernel panic`
+
+Щоб закрити два практичних питання — як із Linux переконатися, що Zephyr на CPU1 справді активний, і що CPU1 здатний зробити при реальному краху Linux, — я провів два живі тести на зв’язці **Buildroot + Mainline Linux `7.3.6 PREEMPT_RT` + Zephyr `4.5.0`**.
+
+### Експеримент 1: Core Ping-Pong (перевірка «живості» CPU1)
+
+Самого запису `remoteproc0/state = running` замало — він показує лише, що прошивку запускали, але не гарантує, що CPU1 не завис. Надійна перевірка поєднує системні ознаки (`cpu/online = 0`, `remoteproc0 = running`, `MPIDR=0x80000001` у `trace0`) з активним ping-pong через `/dev/rpmsg0`, де Zephyr у відповідь перемикає світлодіоди в FPGA PL (`LD0–LD3`, `LD4–LD5`) і повертає лічильник повідомлень у консоль:
+
+```text
+=== EXPERIMENT 1: Linux CPU0 <-> Zephyr CPU1 Ping-Pong ===
+cpu/online=0, remoteproc0=running
+  [round 1] [Zephyr CPU1 #18] echo: ping-pong #1 (168.4 us) | OK led=0x1 (237.0 us) | OK rgb=0x09 (164.1 us)
+  [round 2] [Zephyr CPU1 #21] echo: ping-pong #2 (227.2 us) | OK led=0x2 (173.1 us) | OK rgb=0x12 (174.9 us)
+  ...
+  [round 8] [Zephyr CPU1 #39] echo: ping-pong #8 (179.1 us) | OK led=0x8 (158.4 us) | OK rgb=0x12 (162.8 us)
+```
+
+### Експеримент 2: Реальний `kernel panic` Linux → Zephyr Watchdog → апаратний скид `SLCR`
+
+Я додав у `soc.c` MMU-мапінг `slcr_reset` (`0xF8000000`, `4 КБ`), а в 1 кГц супервізор `amp/zephyr_cpu1/src/main.c` — другу фазу реакції на таймаут Linux: якщо після 500 мс таймауту система пробула в `FAILSAFE` ще **5 секунд** (блимаючи червоним `LD4–LD5` із обнуленими виходами `LD0–LD3`), Zephyr на CPU1 розблоковує `SLCR_UNLOCK` (`0xF8000008 = 0xDF0D`) і записує `1` у **`SLCR.PSS_RST_CTRL` (`0xF8000200`)**.
+
+Далі я перевів CPU1 у `ARMED` і навмисно «вбив» ядро Linux на CPU0 через `echo c > /proc/sysrq-trigger`:
+
+```text
+1) OK state=ARMED timeout_ms=500 (183.4 us)
+2) OK state=ARMED mask=0xf age_ms=117 (2827.8 us)
+3) Triggering REAL Linux kernel panic on CPU0 NOW!
+[   28.388308] Kernel panic - not syncing: sysrq triggered crash
+[   28.433272] ---[ end Kernel panic - not syncing: sysrq triggered crash ]---
+
+   (через 500 мс Zephyr CPU1 гасить LD0–LD3 і 5 с блимає червоним LD4–LD5)
+   (на 5-й секунді Zephyr CPU1 записує SLCR.PSS_RST_CTRL = 1)
+
+U-Boot 2024.01 (May 14 2024 - 03:31:48 +0000)
+CPU:   Zynq 7z020
+...
+=== AUTO-RECOVERED AFTER LINUX KERNEL PANIC (ZERO BUTTONS PRESSED!) ===
+cpu/online=0, remoteproc0=running
+[Zephyr CPU1 #1] echo: ping alive-after-panic (194.1 us)
+OK rgb=0x12 (176.5 us)
+```
+
+Важливий архітектурний нюанс: запис у `SLCR.PSS_RST_CTRL` скидає **весь процесорний комплекс (PS)** — обидва ядра CPU0 і CPU1 та всі контролери периферії, після чого плата проходить чистий старт BootROM → U-Boot → `Linux 7.3.6 RT` → `S15zephyr-amp`. Хоча в Zynq-7000 існує окремий біт скиду лише CPU0 (`A9_CPU_RST_CTRL.A9_RST0`), після `kernel panic` спільні контролери PS (GIC, Ethernet, DMA, SDHCI) залишаються в неузгодженому стані — тому двоетапна схема (**миттєвий `FAILSAFE` у Zephyr CPU1 → повний чистий скид PS**) значно надійніша.
+
+---
+
+## 12. [TODO] Далі: апаратний PWM у FPGA PL і зовнішні сенсори
 
 *(Розділ-заготовка — буде доповнений після тестів периферії.)*
 
