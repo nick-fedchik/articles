@@ -217,7 +217,38 @@ FAILSAFE: Linux command timeout (>500 ms) on CPU1
 
 ---
 
-## 9. [TODO] Далі: апаратний PWM у FPGA PL і керування FPV-коптером
+## 9. Mainline Linux 7.3.6 із `PREEMPT_RT`: чи може він замінити Zephyr на CPU1?
+
+Коли я отримав джитер `9.28 мс` на заводському PYNQ Linux `6.6.10`, виникло логічне питання: а якщо замість старого vendor-ядра зібрати актуальний **Mainline Linux 7.3.6** із увімкненим `CONFIG_PREEMPT_RT=y` і мінімальним набором вбудованих драйверів?
+
+На Zynq-7000 підтримка `arch/arm/mach-zynq`, `zynq-fpga` (`fpga_manager`) і `PREEMPT_RT` уже є прямо в mainline-ядрі. Не вистачало лише одного драйвера — `zynq_remoteproc.c` (він історично живе в `Xilinx/linux-xlnx`). Оскільки `zynq_cpun_start()` у mainline `arch/arm/mach-zynq/platsmp.c` збереглася, я портував `zynq_remoteproc.c` під API Linux 7.3 (`void remove()`, `request_percpu_irq()` для GIC SGI 14/15, `of_iomap()` для запису в `GICD_SGIR` і `rproc_of_resm_mem_entry_init()` для `vdev0buffer`).
+
+Мінімальний конфіг `linux/pynq_z1_min_defconfig` (лише `ARCH_ZYNQ`, усі потрібні драйвери вбудовані `=y` без зовнішніх модулів) зібрався за ~25 секунд у `zImage` розміром **5.0 МБ** і завантажився по TFTP поверх наявної rootfs на microSD (`374 МБ` вільної RAM із `490 МБ`):
+
+```text
+Linux pynq-1 7.3.6-pynq-z1-rt #3 SMP PREEMPT_RT armv7l GNU/Linux
+/sys/class/fpga_manager/fpga0/state      -> operating
+/sys/class/remoteproc/remoteproc0/state  -> running
+```
+
+Окрема знахідка під час запуску: на відміну від важкого образу PYNQ, де сервіс `pynq` автоматично прошиває `base.bin` під час старту, на мінімальному mainline-ядрі FPGA PL за замовчуванням порожня (`fpga0/state = unknown`). Якщо запустити `zephyr_amp.elf` до прошивки PL, перше звернення CPU1 до AXI GPIO (`0x41250000`) вішає шину AXI GP0 і обидва ядра. Завантаження `base.bin` в U-Boot (`fpga load 0 0x05000000 $filesize`) вирішує це ще до старту ядра Linux.
+
+Порівняння 1 кГц циклу під 100% навантаженням CPU на тій самій платі PYNQ-Z1:
+
+| Конфігурація (1 кГц, 100% навантаження CPU) | avg | p99 | max джитер |
+|---|---:|---:|---:|
+| PYNQ Linux `6.6.10` (non-RT, `SCHED_OTHER`) | — | — | **9 279.5 мкс** |
+| Mainline Linux `7.3.6 PREEMPT_RT` (`SCHED_OTHER`) | 552.9 мкс | 8 244.1 мкс | **10 196.0 мкс** |
+| Mainline Linux `7.3.6 PREEMPT_RT` (`SCHED_FIFO 80`) | 50.7 мкс | 69.9 мкс | **128.4 мкс** |
+| **Zephyr `4.5.0` на CPU1** (поруч із Linux `7.3.6 RT`) | — | — | **0.966 мкс** |
+
+Що це дало на практиці:
+- **`PREEMPT_RT` із `SCHED_FIFO`** зменшив максимальний джитер Linux у **72 рази** (із `9.28 мс` до **`128.4 мкс`**), а середня затримка `/dev/rpmsg0` знизилася зі `137–179 мкс` до **`94–110 мкс`**.
+- Водночас **Zephyr на CPU1** усе одно залишається на два порядки точнішим (**`< 1 мкс`** проти `128.4 мкс`) і повністю ізольованим від навантаження, планувальника та зависань Linux — тому зв’язка **Mainline Linux `7.3.6 PREEMPT_RT` (CPU0) + Zephyr `4.5.0` (CPU1) + FPGA PL** дає найкращий баланс для бортового контролера.
+
+---
+
+## 10. [TODO] Далі: апаратний PWM у FPGA PL і керування FPV-коптером
 
 *(Розділ-заготовка — буде доповнений після підключення сенсорів і регуляторів.)*
 
@@ -229,9 +260,9 @@ FAILSAFE: Linux command timeout (>500 ms) on CPU1
 
 ## Висновки
 
-- На PYNQ-Z1 із заводським **PYNQ Linux 6.6.10** не потрібно перезбирати ядро Linux, щоб запустити **AMP / OpenAMP** — `zynq_remoteproc` та модулі `rpmsg` уже є в образі.
-- Для безпечного співіснування Zephyr на CPU1 поруч із Linux критичні три речі: `VBAR` у власній ділянці пам’яті з MMU-мапінгом, `CONFIG_GIC_SAFE_CONFIG=y` та когерентність із SCU (`ACTLR.SMP | ACTLR.FW`).
-- Двосторонній обмін між Python у Linux і Zephyr на CPU1 через `/dev/rpmsg0` працює зі стабільною затримкою **137–179 мкс**, чого із запасом вистачає для розділення високорівневих задач (Linux) і реального часу (Zephyr) у бортовій інженерній системі.
+- На PYNQ-Z1 можна запустити **AMP / OpenAMP** як на заводському **PYNQ Linux 6.6.10** (без перезбірки ядра), так і на мінімальному **Mainline Linux 7.3.6 із `PREEMPT_RT`** (`5.0 МБ` `zImage`, портований `zynq_remoteproc.c`).
+- Для безпечного співіснування Zephyr на CPU1 поруч із Linux критичні три речі: `VBAR` у власній ділянці пам’яті з MMU-мапінгом, `CONFIG_GIC_SAFE_CONFIG=y` та когерентність із SCU (`ACTLR.SMP | ACTLR.FW`), а для доступу до PL — попередня прошивка FPGA (`base.bin`).
+- `PREEMPT_RT` (`SCHED_FIFO`) зменшує максимальний джитер Linux у 72 рази (до **128.4 мкс**) і прискорює `/dev/rpmsg0` до **94–110 мкс**, але виділений **Zephyr на CPU1** усе одно дає субмікросекундний джитер (**`< 1 мкс`**) і незалежний `FAILSAFE` при зависанні Linux.
 
 ---
 
@@ -245,8 +276,10 @@ FAILSAFE: Linux command timeout (>500 ms) on CPU1
 - **IMU** (*Inertial Measurement Unit*) — інерціальний вимірювальний модуль (гіроскоп + акселерометр).
 - **IPC** (*Inter-Processor Communication*) — міжпроцесорний обмін даними.
 - **PID** — пропорційно-інтегрально-диференціальний регулятор стабілізації.
+- **PREEMPT_RT** — режим реального часу в ядрі Linux із витісненням критичних секцій та потоковими обробниками переривань.
 - **RPMsg** (*Remote Processor Messaging*) — протокол обміну повідомленнями поверх VirtIO vring.
 - **RTT** (*Round-Trip Time*) — повний час проходження запиту і відповіді.
+- **SCHED_FIFO** — політика планувальника реального часу POSIX (фіксований пріоритет без квантування часу).
 - **SCU** (*Snoop Control Unit*) — блок когерентності L1-кешів між ядрами Cortex-A9.
 - **VBAR** (*Vector Base Address Register*) — регістр базової адреси таблиці векторів виключень ARM.
 
@@ -254,6 +287,7 @@ FAILSAFE: Linux command timeout (>500 ms) on CPU1
 
 ## Посилання
 
-- Репозиторій проєкту (папка `amp/`, `patches/`, `ROADMAP.md`): [github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1)
+- Репозиторій проєкту (папки `amp/`, `linux/`, `patches/`, `ROADMAP.md`): [github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1)
 - Частина 1: [Zephyr RTOS на FPGA-платі PYNQ-Z1 без Vivado](DOU-Zephyr-RTOS-on-PYNQ-Z1-without-Vivado-UA.md)
+- Mainline Linux 7.3.6: [kernel.org](https://www.kernel.org/)
 - Драйвер `zynq_remoteproc.c` у `Xilinx/linux-xlnx` (`v6.6`): [github.com/Xilinx/linux-xlnx](https://github.com/Xilinx/linux-xlnx)
