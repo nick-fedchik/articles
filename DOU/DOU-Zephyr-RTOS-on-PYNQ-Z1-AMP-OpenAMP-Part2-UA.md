@@ -300,6 +300,25 @@ T: 0 (186) P:80 I:1000 C: 1000 Min: 13 Act: 15 Avg: 14 Max: 39
 
 Нативний C-бенчмарк **`cyclictest`** (1 кГц, `SCHED_FIFO 80`) на чистому **Buildroot + Mainline Linux `7.3.6 PREEMPT_RT`** показав максимальну затримку всього **39 мкс** (avg **14 мкс**), а весь Embedded Linux займає лише **14 МБ RAM** із автоматично запущеним **Zephyr `4.5.0`** на CPU1 (**`0.763 мкс`** max jitter).
 
+### Бонус-знахідка: як одруківка в стоковому DTB крала 19.3 секунди старту
+
+На першому запуску Buildroot я помітив у `dmesg` дивну тиху паузу між `Freeing initrd memory` (`0.66 с`) та ініціалізацією `macb` (`20.00 с`). Прогін із `initcall_debug` миттєво показав винуватця:
+
+```text
+probe of e000b000.ethernet with driver macb returned 0 after 19493203 usecs
+```
+
+Декомпіляція стокового DTB із PYNQ v3.1 виявила кумедний баг: `phy-handle` був прописаний у вузлі `/amba/ethernet@e000b000`, тоді як реальний контролер сидить у `/axi/ethernet@e000b000`. Через це `macb` не знав адреси PHY і на кожному завантаженні послідовно сканував усі 32 MDIO-адреси з таймаутом (~19.3 с). Додавання в `amp/openamp.dts` явного `phy-handle` на `ethernet-phy@0` та фіксованого `local-mac-address` скоротило час старту всієї системи з **24.8 с** до **5.58 с** (`Run /init` уже на **`0.99 с`**, `rpmsg-raw` готовий на **`5.58 с`**):
+
+```text
+[    0.650544] Freeing initrd memory: 3448K
+[    0.861264] macb e000b000.ethernet eth0: Cadence GEM rev 0x00020118 (9e:5c:1a:8a:bf:53)
+[    0.988965] Run /init as init process
+[    5.289902] macb e000b000.ethernet eth0: Link is Up - 1Gbps/Full - flow control tx
+[    5.550857] remoteproc remoteproc0: remote processor remoteproc@0 is now up
+[    5.580188] virtio_rpmsg_bus virtio0: creating channel rpmsg-raw addr 0x400
+```
+
 ---
 
 ## 11. [TODO] Далі: апаратний PWM у FPGA PL і зовнішні сенсори
