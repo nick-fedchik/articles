@@ -398,6 +398,30 @@ cpu/online=0, remoteproc0=running
 
 Я додав у `soc.c` MMU-мапінг `slcr_reset` (`0xF8000000`, `4 КБ`), а в 1 кГц супервізор `amp/zephyr_cpu1/src/main.c` — другу фазу реакції на таймаут Linux: якщо після 500 мс таймауту система пробула в `FAILSAFE` ще **5 секунд** (блимаючи червоним `LD4–LD5` із обнуленими виходами `LD0–LD3`), Zephyr на CPU1 розблоковує `SLCR_UNLOCK` (`0xF8000008 = 0xDF0D`) і записує `1` у **`SLCR.PSS_RST_CTRL` (`0xF8000200`)**.
 
+```mermaid
+sequenceDiagram
+    autonumber
+    participant L as Linux CPU0<br/>(7.3.6 PREEMPT_RT)
+    participant Z as Zephyr CPU1<br/>(1 кГц Watchdog)
+    participant P as FPGA PL<br/>(LD0–LD3 / RGB)
+    participant S as Zynq SLCR &<br/>BootROM / U-Boot
+
+    L->>Z: RPMsg "arm" + "set 0xf"
+    Z->>P: LD0–LD3 = ON, LD4–LD5 = Зелений
+    Note over L: echo c > /proc/sysrq-trigger<br/>Kernel panic (CPU0 зупинився)
+    L--xZ: Немає команд > 500 мс
+    Z->>P: FAILSAFE: LD0–LD3 = 0 (виходи вимкнено)
+    loop Протягом 5 секунд без відповіді Linux
+        Z->>P: Блимання LD4–LD5 червоним (4 Гц)
+    end
+    Z->>S: SLCR_UNLOCK (0xDF0D) + PSS_RST_CTRL = 1
+    Note over S: Повний апаратний скид PS (CPU0 + CPU1)
+    S->>L: BootROM → U-Boot → TFTP (base.bin + Linux + Buildroot)
+    L->>Z: S15zephyr-amp (2.15 с) → запуск CPU1 + /dev/rpmsg0
+    L->>Z: rpmsg-cli "ping alive-after-panic"
+    Z-->>L: OK (194 мкс) + LD4–LD5 = Зелений
+```
+
 Далі я перевів CPU1 у `ARMED` і навмисно «вбив» ядро Linux на CPU0 через `echo c > /proc/sysrq-trigger`:
 
 ```text
