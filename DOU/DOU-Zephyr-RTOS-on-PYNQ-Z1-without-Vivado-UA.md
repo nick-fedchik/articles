@@ -1,6 +1,6 @@
 # Zephyr RTOS на FPGA-платі PYNQ-Z1
 
-*Запуск Zephyr RTOS v4.5.0 на процесорній частині (PS) Zynq-7000 без встановлення Vivado: консоль UART0, out-of-tree порт плати, Ethernet, TFTP netboot і експериментальний 2-ядерний SMP. Робота з програмованою логікою FPGA (PL) — у подальших планах.*
+*Запуск Zephyr RTOS 4.5.0 на процесорній частині (PS) Zynq-7000 без встановлення Vivado: консоль UART0, out-of-tree порт плати, Ethernet, TFTP netboot і експериментальний 2-ядерний SMP. Робота з програмованою логікою FPGA (PL) — у подальших планах.*
 
 Плати на базі **Xilinx (AMD) Zynq-7000** дуже популярні серед інженерів: такі SoC ставлять у свої рішення багато виробників — від Digilent (PYNQ-Z1, Zybo, Arty Z7) та Avnet (ZedBoard, MicroZed) до ALINX та інших. Причина проста: в одному чипі поєднано повноцінний двоядерний процесор **ARM Cortex-A9** (частина **PS** — *Processing System*) і матрицю програмованої логіки **FPGA** (частина **PL** — *Programmable Logic*).
 
@@ -8,7 +8,7 @@
 
 Для embedded-програмістів із базовим досвідом STM32/ESP32 та Linux/Git такий перехід відкриває ширший простір для інженерної творчості без різкої зміни інструментів. Замість фіксованого набору периферії та кількох сотень кілобайтів ОЗП ви отримуєте 512 МБ DDR3, гігабітний Ethernet, два ядра з MMU (де можна на практиці розібратися з кешами, віртуальною пам’яттю, багатоядерним плануванням або запуском RTOS поруч із Linux) і матрицю FPGA, у якій за потреби можна «добудувати» власну периферію. І все це — на тому самому Zephyr RTOS із Devicetree, Kconfig і `west`. Повний покроковий рецепт налаштування хост-машини я виніс у [`README.md`](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1/blob/main/README.md) та [`setup_and_build.sh`](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1/blob/main/setup_and_build.sh), а тут зосереджуся на інженерних рішеннях і граблях, на які натрапив на живому залізі.
 
-Зазвичай із PYNQ-Z1 працюють у Linux із Python/Jupyter, а для низькорівневої розробки ставлять AMD Vivado/Vitis на десятки гігабайтів. Я перевірив інший підхід: запустив **Zephyr RTOS v4.5.0** на процесорній частині PS без встановлення Vivado (синтез бітстрімів `.bit` для PL тут не розглядається — це окремий наступний етап). Далі — шлях від порожньої папки до консолі UART0, Ethernet, TFTP-завантаження, підтвердженого бага в upstream Zephyr і експериментального 2-ядерного SMP.
+Зазвичай із PYNQ-Z1 працюють у Linux із Python/Jupyter, а для низькорівневої розробки ставлять AMD Vivado/Vitis на десятки гігабайтів. Я перевірив інший підхід: запустив **Zephyr RTOS 4.5.0** на процесорній частині PS без встановлення Vivado (синтез бітстрімів `.bit` для PL тут не розглядається — це окремий наступний етап). Далі — шлях від порожньої папки до консолі UART0, Ethernet, TFTP-завантаження, підтвердженого бага в upstream Zephyr і експериментального 2-ядерного SMP.
 
 ---
 
@@ -31,20 +31,20 @@ flowchart LR
     C -->|Fallback за 3 с| E[zephyr.bin з FAT32 microSD]
     D --> F["dcache/icache off → go ENTRY_ADDR"]
     E --> F
-    F --> G[Zephyr RTOS v4.5.0]
+    F --> G[Zephyr RTOS 4.5.0]
 ```
 
 ---
 
 ## 2. Перша збірка: на що звернути увагу при `west build`
 
-Усі інструменти я ізолював всередині папки проєкту скриптом [`setup_and_build.sh`](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1/blob/main/setup_and_build.sh) (`.venv/`, `.tools/`, `zephyr-ws/`), щоб не засмічувати систему. Під час розгортання **Zephyr v4.5.0** вилізли три нюанси:
+Усі інструменти я ізолював всередині папки проєкту скриптом [`setup_and_build.sh`](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1/blob/main/setup_and_build.sh) (`.venv/`, `.tools/`, `zephyr-ws/`), щоб не засмічувати систему. Під час розгортання **Zephyr 4.5.0** вилізли три нюанси:
 
 1. **У маніфесті немає модуля `hal_xilinx`.** Код для Zynq-7000 лежить прямо в основному дереві Zephyr (`soc/xlnx/zynq7000/`). Крім того, `west config manifest.project-filter` приймає регулярний вираз, а не glob (`-*` падає з помилкою). Мінімальний робочий фільтр:
    ```sh
    west config manifest.project-filter -- "-.*,+cmsis,+picolibc"
    ```
-2. **Потрібен Zephyr SDK 1.0.x.** У Zephyr v4.5.0 скрипт `FindZephyr-sdk.cmake` відхиляє SDK `0.17.0` і вимагає `1.0.x`. Я поставив мінімальний бандл `1.0.1` лише з тулчейном `arm-zephyr-eabi`. Звернув увагу, що в 1.0.1 змінився шлях до утиліт: замість `arm-zephyr-eabi/bin/` тепер `gnu/arm-zephyr-eabi/bin/`.
+2. **Потрібен Zephyr SDK 1.0.x.** У Zephyr 4.5.0 скрипт `FindZephyr-sdk.cmake` відхиляє SDK `0.17.0` і вимагає `1.0.x`. Я поставив мінімальний бандл `1.0.1` лише з тулчейном `arm-zephyr-eabi`. Звернув увагу, що в 1.0.1 змінився шлях до утиліт: замість `arm-zephyr-eabi/bin/` тепер `gnu/arm-zephyr-eabi/bin/`.
 3. **`LOAD_ADDR` і `ENTRY_ADDR` — це різні адреси.** Сирий `zephyr.bin` не містить ELF-заголовків. Якщо завантажити його командою `fatload` на адресу точки входу, усі абсолютні посилання з’їдуть. Тож `fatload` (або `tftpboot`) має класти бінарник на базову адресу першого сегмента `LOAD`, а `go` — стрибати на `Entry point address`:
 
 $$A_{\text{load}} = \texttt{0x00100000}, \quad A_{\text{entry}} = \texttt{0x00102BBC}, \quad \Delta = \texttt{0x2BBC}\text{ байт}$$
@@ -185,7 +185,7 @@ Bytes transferred = 293104 (478f0 hex)
 
 ## 7. Друге ядро: баг у GICv1/v2 і експериментальний 2-ядерний SMP
 
-У `soc/xlnx/zynq7000/xc7zxxx/Kconfig.defconfig` у Zephyr v4.5.0 прописано `CONFIG_MP_MAX_NUM_CPUS = 1` із коментарем, що SMP на AArch32 Zynq-7000 не підтримується. На Zynq-7000 немає PSCI: після старту друге ядро спить у циклі `WFE` (*Wait For Event*) у BootROM і чекає, поки CPU0 запише адресу входу в `0xFFFFFFF0` і подасть інструкцію `sev` (*Send Event*).
+У `soc/xlnx/zynq7000/xc7zxxx/Kconfig.defconfig` у Zephyr 4.5.0 прописано `CONFIG_MP_MAX_NUM_CPUS = 1` із коментарем, що SMP на AArch32 Zynq-7000 не підтримується. На Zynq-7000 немає PSCI: після старту друге ядро спить у циклі `WFE` (*Wait For Event*) у BootROM і чекає, поки CPU0 запише адресу входу в `0xFFFFFFF0` і подасть інструкцію `sev` (*Send Event*).
 
 Щоб перевірити друге ядро окремо, я додав у прошивку невеликий ARM-трамплін (`src/cpu1_trampoline.S`) і shell-команди `cpu1 start` / `cpu1 stop` / `cpu1 status` / `cpu1 ping`. CPU0 записує адресу `cpu1_entry` у `0xFFFFFFF0` і дає `sev`, а CPU1 читає свій `MPIDR`, крутить лічильник `heartbeat` у спільній некешованій пам’яті `__nocache` (`0x00147000`), відповідає на `cpu1 ping <N>` апаратним перериванням **GIC SGI #7** і за командою `cpu1 stop` паркується в `WFE`:
 
@@ -204,9 +204,9 @@ uart:~$ cpu1 ping 123
 CPU1 SGI#7 reply: 123^2 = 15129 (seq=2, sgi_irqs=2, rtt=7 us)
 ```
 
-Під час цього експерименту та наступної спроби ввімкнути SMP я зіткнувся з двома проблемами у Zephyr v4.5.0 (`41d10b597304`):
+Під час цього експерименту та наступної спроби ввімкнути SMP я зіткнувся з двома проблемами у Zephyr 4.5.0 (`41d10b597304`):
 
-1. **Підтверджений баг у релізі `v4.5.0` — втрата між’ядерних SGI у GICv1/v2 (`arch/arm/core/cortex_a_r/isr_wrapper.S`).** Коли CPU1 шле переривання SGI #7 на CPU0, апаратний регістр `GICC_IAR` повертає номер ядра-відправника (`CPUID=1`) у бітах `[12:10]`, тобто `0x407` (`1031`). У `isr_wrapper.S` (в обох гілках — із `CONFIG_USE_SWITCH` і без нього) це значення без маскування порівнювалося з `CONFIG_NUM_IRQS` (`96`), і переривання тихо відкидалося як spurious — хоча в `arch/arm64/core/isr_wrapper.S:71-73` маска `bic x0, x0, #0x1c00` уже є. Одна інструкція `ubfx r0, r0, #0, #10` після `push {r0, r1}` (щоб зберегти повний `IAR` на стеку для `arm_gic_eoi`) одразу оживила SGI #7 із затримкою **7 мкс** із режиму `WFE`. Перевірка upstream показала, що цей самий баг уже зафіксовано в [issue #122600](https://github.com/zephyrproject-rtos/zephyr/issues/122600) і виправлено на гілці `main` після `v4.5.0` у [PR #123040](https://github.com/zephyrproject-rtos/zephyr/pull/123040) (маскою `bic r0, r0, #0x1c00`), але для релізної збірки `v4.5.0` локальний патч усе ще потрібен. Повний розбір із мінімальним відтворенням лежить у [`docs/zephyr-gic-v1-v2-sgi-bug.md`](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1/blob/main/docs/zephyr-gic-v1-v2-sgi-bug.md) та `patches/0001-...patch`.
+1. **Підтверджений баг у релізі `4.5.0` — втрата між’ядерних SGI у GICv1/v2 (`arch/arm/core/cortex_a_r/isr_wrapper.S`).** Коли CPU1 шле переривання SGI #7 на CPU0, апаратний регістр `GICC_IAR` повертає номер ядра-відправника (`CPUID=1`) у бітах `[12:10]`, тобто `0x407` (`1031`). У `isr_wrapper.S` (в обох гілках — із `CONFIG_USE_SWITCH` і без нього) це значення без маскування порівнювалося з `CONFIG_NUM_IRQS` (`96`), і переривання тихо відкидалося як spurious — хоча в `arch/arm64/core/isr_wrapper.S:71-73` маска `bic x0, x0, #0x1c00` уже є. Одна інструкція `ubfx r0, r0, #0, #10` після `push {r0, r1}` (щоб зберегти повний `IAR` на стеку для `arm_gic_eoi`) одразу оживила SGI #7 із затримкою **7 мкс** із режиму `WFE`. Перевірка upstream показала, що цей самий баг уже зафіксовано в [issue #122600](https://github.com/zephyrproject-rtos/zephyr/issues/122600) і виправлено на гілці `main` після `4.5.0` у [PR #123040](https://github.com/zephyrproject-rtos/zephyr/pull/123040) (маскою `bic r0, r0, #0x1c00`), але для релізної збірки `4.5.0` локальний патч усе ще потрібен. Повний розбір із мінімальним відтворенням лежить у [`docs/zephyr-gic-v1-v2-sgi-bug.md`](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1/blob/main/docs/zephyr-gic-v1-v2-sgi-bug.md) та `patches/0001-...patch`.
 2. **Конфлікт конфігурації `CONFIG_USE_SWITCH=y` + `CONFIG_FPU_SHARING=y` (`thread.c:160` vs `exc.S:256`).** При ввімкненні `CONFIG_SMP=y` (який вимагає `CONFIG_USE_SWITCH=y`) функція `arch_new_thread()` кладе знизу стеку 232 байти нулів `struct __fpu_sf`, але `z_arm_cortex_ar_exit_exc` їх не знімає — і перший перехід у `main` стрибає на `pc=0x0`. Наразі я обійшов цей конфлікт вимкненням `CONFIG_FPU=n` (повноцінне виправлення FPU-фрейму для `CONFIG_USE_SWITCH` потребує окремої перевірки).
 
 ### Експериментальний прототип: 2-ядерний SMP на Zynq-7000
@@ -228,8 +228,8 @@ Total wall time (parallel): 11574 us
 
 ## Висновки
 
-- **Що перевірено на залізі:** запуск Zephyr RTOS v4.5.0 на PS-частині PYNQ-Z1 через `BOOT.BIN` із PYNQ v3.1, out-of-tree порт `boards/digilent/pynq_z1/`, консоль UART0 (`pinctrl`), лінк 1G Ethernet + DHCPv4 + `zperf`, двоступеневий TFTP netboot без смикання microSD, між’ядерне переривання GICv1 SGI #7 (7 мкс RTT) та експериментальний запуск 2-ядерного SMP.
-- **Що потребує додаткової перевірки:** повноцінний кабельний тест пропускної здатності GEM (і сирих Ethernet-фреймів без IP), розбір сумісності `CONFIG_FPU_SHARING` із `CONFIG_USE_SWITCH` та перехід на наступний реліз Zephyr після `v4.5.0`, де фікс [#123040](https://github.com/zephyrproject-rtos/zephyr/pull/123040) вже буде в ядрі.
+- **Що перевірено на залізі:** запуск Zephyr RTOS 4.5.0 на PS-частині PYNQ-Z1 через `BOOT.BIN` із PYNQ v3.1, out-of-tree порт `boards/digilent/pynq_z1/`, консоль UART0 (`pinctrl`), лінк 1G Ethernet + DHCPv4 + `zperf`, двоступеневий TFTP netboot без смикання microSD, між’ядерне переривання GICv1 SGI #7 (7 мкс RTT) та експериментальний запуск 2-ядерного SMP.
+- **Що потребує додаткової перевірки:** повноцінний кабельний тест пропускної здатності GEM (і сирих Ethernet-фреймів без IP), розбір сумісності `CONFIG_FPU_SHARING` із `CONFIG_USE_SWITCH` та перехід на наступний реліз Zephyr після `4.5.0`, де фікс [#123040](https://github.com/zephyrproject-rtos/zephyr/pull/123040) вже буде в ядрі.
 - **Намір на наступні експерименти:** запустити асиметричний режим **AMP / OpenAMP**, де на CPU0 працює Linux (мережа, відео, Python), а на CPU1 буде працювати ізольований real-time Zephyr із обміном через `/dev/rpmsg0` і можливістю підключення програмованої логіки FPGA (PL).
 
 ---
@@ -267,7 +267,7 @@ Total wall time (parallel): 11574 us
 ## Посилання
 
 - Репозиторій проєкту (out-of-tree порт `boards/digilent/pynq_z1/`, `setup_and_build.sh`, патчі `patches/`, `ROADMAP.md`): [github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1)
-- Детальне технічне мемо по знайденому багу GICv1/v2 SGI у Zephyr v4.5.0: [docs/zephyr-gic-v1-v2-sgi-bug.md](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1/blob/main/docs/zephyr-gic-v1-v2-sgi-bug.md)
+- Детальне технічне мемо по знайденому багу GICv1/v2 SGI у Zephyr 4.5.0: [docs/zephyr-gic-v1-v2-sgi-bug.md](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1/blob/main/docs/zephyr-gic-v1-v2-sgi-bug.md)
 - Upstream Zephyr issue та фікс на `main`: [#122600](https://github.com/zephyrproject-rtos/zephyr/issues/122600), [PR #123040](https://github.com/zephyrproject-rtos/zephyr/pull/123040)
 - Офіційні образи Digilent PYNQ-Z1: [pynq.io](https://www.pynq.io/)
 - Zephyr RTOS: [github.com/zephyrproject-rtos/zephyr](https://github.com/zephyrproject-rtos/zephyr)
