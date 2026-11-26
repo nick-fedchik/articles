@@ -268,11 +268,44 @@ Linux pynq-1 7.3.6-pynq-z1-rt #4 SMP PREEMPT_RT armv7l GNU/Linux
 
 ---
 
-## 10. [TODO] Далі: Buildroot rootfs і апаратний PWM у FPGA PL
+## 10. Buildroot `2026.08.2`: справжній Embedded Linux (`3.37 МБ` у RAM)
 
-*(Розділ-заготовка — буде доповнений після збірки Buildroot і тестів периферії.)*
+Для повної відмови від стокового образу PYNQ я зібрав мінімальний `initramfs` у **Buildroot `2026.08.2`** (із готовим Bootlin `armv7-eabihf` external toolchain, тож не довелося компілювати GCC з нуля). До конфігурації `buildroot/pynq_z1_defconfig` увійшли:
 
-- [ ] Збірка мінімального Embedded Linux rootfs у **Buildroot** (`initramfs` / `squashfs` + `dropbear` + автозапуск `zephyr_amp.elf`) поверх ядра `7.3.6 PREEMPT_RT`;
+- **`BusyBox 1.38.0`** (ініціалізація, `mdev`, `udhcpc`, базові утиліти);
+- **`Dropbear SSH 2026.94`** із автоматичним підкладанням публічного SSH-ключа у `/root/.ssh/authorized_keys` для входу без пароля;
+- **`rt-tests` (`cyclictest`)**, **`i2c-tools`**, **`ethtool`**;
+- **`/usr/bin/rpmsg-cli`** — компактна C-утиліта (~60 рядків, `buildroot/rpmsg-cli.c`), яка напряму спілкується з `/dev/rpmsg0` і міряє RTT без потреби в Python;
+- **`/lib/firmware/zephyr_amp.elf`** і init-скрипт **`/etc/init.d/S90zephyr-amp`**, що автоматично запускає Zephyr `4.5.0` на CPU1 після старту (коли `fpga0 = operating`) і чисто зупиняє його перед `reboot`.
+
+Готовий образ `rootfs.cpio.uboot` вийшов розміром **3.37 МБ** (проти ~7 ГБ стокової Ubuntu) і вантажиться по TFTP прямо в RAM разом із `base.bin` і `zImage-7.3.6` (`bootz 0x02000000 0x06000000 0x04000000`). Після U-Boot microSD взагалі не використовується, тож файлова система не боїться раптового зняття живлення.
+
+Перевірка на живому PYNQ-Z1 після завантаження:
+
+```text
+Linux pynq-1 7.3.6-pynq-z1-rt #4 SMP PREEMPT_RT armv7l GNU/Linux
+Mem: 479 MB total, 14 MB used, 449 MB available (Swap: 0)
+online CPUs: 0   |   fpga0: operating   |   remoteproc0: running
+
+# rpmsg-cli "ping buildroot"
+[Zephyr CPU1 #1] echo: ping buildroot (169.6 us)
+# rpmsg-cli "blink 150"
+OK blink=150 ms (139.2 us)
+# rpmsg-cli jitter
+OK n=1000 min_us=999.236 max_us=1000.301 avg_us=999.993 max_jitter_us=0.763 (1001167.8 us)
+
+# cyclictest -m -Sp80 -i1000 -l1000 -q
+T: 0 (186) P:80 I:1000 C: 1000 Min: 13 Act: 15 Avg: 14 Max: 39
+```
+
+Нативний C-бенчмарк **`cyclictest`** (1 кГц, `SCHED_FIFO 80`) на чистому **Buildroot + Mainline Linux `7.3.6 PREEMPT_RT`** показав максимальну затримку всього **39 мкс** (avg **14 мкс**), а весь Embedded Linux займає лише **14 МБ RAM** із автоматично запущеним **Zephyr `4.5.0`** на CPU1 (**`0.763 мкс`** max jitter).
+
+---
+
+## 11. [TODO] Далі: апаратний PWM у FPGA PL і зовнішні сенсори
+
+*(Розділ-заготовка — буде доповнений після тестів периферії.)*
+
 - [ ] Генерація апаратного PWM (50 Гц / 400 Гц) у FPGA PL із керуванням із Zephyr CPU1;
 - [ ] Опитування зовнішніх сенсорів по SPI/I2C на Zephyr CPU1 і телеметрія в Linux CPU0 через `/dev/rpmsg0`.
 
@@ -304,7 +337,7 @@ Linux pynq-1 7.3.6-pynq-z1-rt #4 SMP PREEMPT_RT armv7l GNU/Linux
 
 ## Посилання
 
-- Репозиторій проєкту (папки `amp/`, `linux/`, `patches/`, `ROADMAP.md`): [github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1)
+- Репозиторій проєкту (папки `amp/`, `linux/`, `buildroot/`, `patches/`, `ROADMAP.md`): [github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1](https://github.com/nick-fedchik/Zephyr-RTOS-PYNC-Z1)
 - Частина 1: [Zephyr RTOS на FPGA-платі PYNQ-Z1 без Vivado](DOU-Zephyr-RTOS-on-PYNQ-Z1-without-Vivado-UA.md)
 - Mainline Linux 7.3.6: [kernel.org](https://www.kernel.org/)
 - Драйвер `zynq_remoteproc.c` у `Xilinx/linux-xlnx` (`v6.6`): [github.com/Xilinx/linux-xlnx](https://github.com/Xilinx/linux-xlnx)
